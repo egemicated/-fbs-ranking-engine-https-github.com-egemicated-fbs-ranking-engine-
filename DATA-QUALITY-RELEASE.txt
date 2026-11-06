@@ -20,6 +20,26 @@ never copied. No additional CFBD requests are made for evidence retention.
 The Sunday 08:00 America/Denver schedule and the two-call successful refresh
 remain the same. This release does not trigger a manual provider refresh.
 
+FOLLOW-UP: OPPONENT AUDIT AND FROZEN RESEARCH COLLECTION
+
+Four official cancellation cases have narrowly scoped future-import rules.
+A provider-reported zero-zero completed result is quarantined only if its
+season, ID, participant IDs and original-date window match the documented
+canceled slot. Nonzero ties, later rematches and unresolved cases survive.
+Source URLs and correction audit entries are retained. The existing current
+snapshot is not rewritten by these rules.
+
+The weekly job also calculates frozen original-parameter SOR beside Colley,
+using exactly the published game's input set and FBS reference population.
+It saves immutable small observations in research/observations and includes
+the result in the evidence artifact. This is research collection only; public
+rankings are not replaced. Research failure does not block the normal ranking
+publication. No extra provider calls or new scheduled job are introduced.
+
+The protocol pins numerical parameters and implementation checksums. A code
+change requires an explicit new protocol version. A post-freeze publication
+is not automatically a pregame forecast or proof of ranking superiority.
+
 Validation: 29 Node checks, including mocked successful/rejected refreshes,
 exactly-two-request checks, byte-preservation of the prior publication on
 rejection, evidence checksums, and exclusion of credentials/stale evidence.

@@ -28,6 +28,9 @@ jobs:
         env:
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
         run: node scripts/refresh-weekly.js
+      - name: Record frozen achievement comparison
+        continue-on-error: true
+        run: node scripts/record-research-comparison.js
       - name: Retain weekly source evidence
         if: always()
         uses: actions/upload-artifact@v7
@@ -41,6 +44,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add published/latest.json
+          git add research/observations/
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Publish weekly CFBD rankings'
           git push origin HEAD:main
