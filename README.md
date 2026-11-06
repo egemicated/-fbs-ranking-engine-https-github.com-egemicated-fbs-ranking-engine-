@@ -23,6 +23,21 @@ administration endpoints. Data acquisition/builds run from the command line or
 deployment pipeline. HTTPS is provided by the host. Credentials belong in host
 environment variables, never in source code or API responses.
 
+## Frontend design preview
+
+`npm run preview` serves the frontend and committed ranking publication at
+`http://127.0.0.1:3100`. It makes no CFBD API calls. The approved design is served by the existing Render web service, with a home dashboard, searchable rankings and conference filters, team
+dashboards, an experimental matchup lab, and methodology/data coverage views.
+The working brand is FBS Intelligence; it can change when the team name is set.
+
+The frontend is buildless HTML, CSS and JavaScript in `frontend/`. Only an
+explicit static-file allowlist is served. Ranking JSON routes remain intact;
+service metadata is available at `/api`. Team logos load from ESPN's public
+image CDN, with initials as a fallback. Display fonts are bundled under the
+SIL Open Font License. The unbranded stadium illustration was generated with
+the built-in image tool; its production prompt is in
+`frontend/assets/ASSET-NOTES.txt`.
+
 To update the current season, run `npm run import -- --from 2026 --to 2026 --refresh`
 and `npm run build`. To reconstruct a cutoff use
 `npm run build -- --before 2025-10-01T00:00:00Z`.

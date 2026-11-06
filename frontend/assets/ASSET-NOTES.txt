@@ -1,0 +1,20 @@
+Asset: stadium.png
+Method: Built-in image_gen tool; no external paid API or API key.
+Purpose: Illustrative, unbranded mountain-stadium background for the frontend.
+Reference images informed atmosphere only. No reference UI, branding, rankings,
+or statistical claims are embedded in this asset.
+
+Prompt:
+Use case: photorealistic-natural. Asset type: wide cinematic background for an
+independent college football rankings dashboard. Primary request: an unbranded
+American college football stadium nestled below dramatic snow-dusted Rocky
+Mountain peaks at blue hour, inspired by the supplied dashboard references'
+mountain-stadium atmosphere. Photorealistic architectural sports photography,
+very wide panoramic 16:9 composition from elevated end-zone seats, football
+field occupying lower third, packed stands on either side, brilliant realistic
+white stadium lights, deep midnight navy sky with a restrained warm sunset band
+behind mountains, electric blue ambient light. The central upper sky is calm
+and dark enough for website headline overlays. No typography, no UI, no logos,
+no school emblems, no flags, no watermarks. Realistic field markings and stadium
+scale, rich crisp detail, high-end broadcast-sports atmosphere, grounded
+photography rather than fantasy.

@@ -12,6 +12,7 @@
     "report": "node scripts/summarize.js",
     "prepare:render": "node scripts/prepare-render.js",
     "refresh:weekly": "node scripts/refresh-weekly.js",
+    "preview": "node scripts/preview.js",
     "start": "node src/server.js"
   }
 }

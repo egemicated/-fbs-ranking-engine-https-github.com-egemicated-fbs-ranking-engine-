@@ -16,5 +16,11 @@ test('API serves ratings without login, rejects writes, and keeps paths constrai
     assert.equal((await fetch(base + '/rankings/2024')).status, 503);
     assert.equal((await fetch(base + '/.env')).status, 404);
     assert.equal((await fetch(base + '/health')).status, 200);
+    const page = await fetch(base + '/'); assert.equal(page.status, 200);
+    assert.match(page.headers.get('content-type'), /text\/html/);
+    assert.match(await page.text(), /FBS Intelligence/);
+    assert.equal((await fetch(base + '/app.js')).status, 200);
+    assert.equal((await fetch(base + '/src/engine.js')).status, 404);
+    assert.equal((await fetch(base + '/published/latest.json')).status, 404);
   } finally { await new Promise(resolve => server.close(resolve)); await rm(dir, { recursive: true }); }
 });
