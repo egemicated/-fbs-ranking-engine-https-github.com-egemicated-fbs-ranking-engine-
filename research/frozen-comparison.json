@@ -1,0 +1,25 @@
+{
+  "id": "sor-colley-v1",
+  "status": "frozen-research-comparison; no production model promotion",
+  "frozenAt": "2026-11-06T08:22:48Z",
+  "baselineSnapshotHash": "561b2fc679400576c79dcbaca5cc076b2d98e3295e31d700f84908f369b88e14",
+  "parameters": {
+    "slope": 4.2967562253807925,
+    "homeLogOdds": 0.47455471946025424
+  },
+  "implementationSha256": {
+    "research/lib/sor_candidate.mjs": "f778361975512b7cfe23221adcffd8c367e22201d9f17d87475ecf49cee8ff73",
+    "src/engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+    "scripts/record-research-comparison.js": "6bed4dd8cf7a79dfa47e278d9268bf11aaf42c0cd25d7ca600c6788d83f8f294"
+  },
+  "benchmark": "Unchanged current-season Colley achievement, prior 2 centered on 0.5",
+  "challenger": "Exact leave-one-game-out SOR using average source-designated FBS reference strength and venue",
+  "gameEligibility": "Exactly the confirmed completed game set used by the contemporaneous published weekly snapshot",
+  "population": "Same full opponent graph; publish research rows only for source-designated FBS teams, including unranked idle teams in the reference mean",
+  "nonFbsTies": "Zero-outcome non-FBS context edges follow the source input policy and remain graph edges; FBS-involving ties require a new explicit policy and reject the research calculation",
+  "sourceCorrections": "Documented source corrections are allowed under the shared input policy; record normalized input hash, policy version and raw-response hash. Never change a team's rank manually.",
+  "collection": "Existing Sunday 08:00 America/Denver update; no additional provider requests; immutable observations in Git and source evidence in existing artifact",
+  "scope": "Prospectively collected achievement comparisons are not pregame forecasts or proof that either achievement order is correct",
+  "excluded": ["Human poll inputs or targets", "Conference prestige bonuses", "Team overrides", "Historical team achievement credit", "Scoring margins in achievement", "Blended master score"],
+  "changePolicy": "A numerical implementation or parameter change requires a new version; do not rewrite prior observations"
+}

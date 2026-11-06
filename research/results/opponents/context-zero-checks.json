@@ -1,0 +1,146 @@
+{
+  "status": "Read-only primary-source review of six lower-division zero-margin context edges",
+  "snapshotAsOf": "2026-11-06T03:39:55.757Z",
+  "snapshotEvidenceLimit": "The saved contributions expose finalMargin=0 and result=T, not the absolute scores or original kickoff timestamp. A zero-margin edge must not automatically be described as a 0-0 final.",
+  "summary": {
+    "cases": 6,
+    "confirmedCanceledOrUnplayedOriginalSlots": 4,
+    "confirmedLegitimateCompletedTies": 1,
+    "unresolvedUnderPrimaryOnlyStandard": 1
+  },
+  "cases": [
+    {
+      "gameId": "401908619",
+      "teams": [
+        {"id": "110", "name": "Mass Maritime"},
+        {"id": "2909", "name": "Westfield State"}
+      ],
+      "savedResult": "T",
+      "savedFinalMargin": 0,
+      "verifiedStatus": "unresolved-primary-evidence-unavailable",
+      "verifiedFact": "The official school and conference pages could not be read with the browsing tool. A primary Plymouth State release confirms its game at Mass Maritime was moved to October 10, but does not itself explicitly cancel a Mass Maritime-Westfield fixture. That inference is insufficient to adjudicate this game ID.",
+      "primarySourceUrlsAttempted": [
+        "https://www.mmabucs.com/sports/fball/2026-27/schedule",
+        "https://mmabucs.com/sports/fball/2026-27/schedule",
+        "https://www.westfieldstateowls.com/sports/fball/2026-27/schedule",
+        "https://westfieldstateowls.com/sports/fball/2026-27/schedule",
+        "https://mascac.com/sports/fball/2026-27/schedule",
+        "https://mascac.com/sports/fball/2026-27/standings"
+      ],
+      "retrievalIssue": "School pages returned 403/unavailable and conference pages were unavailable through this tool.",
+      "availablePrimaryContextUrl": "https://athletics.plymouth.edu/news/2026/9/25/football-fb-saturdays-game-at-mass-maritime-postponed.aspx",
+      "auxiliaryNonPrimaryEvidence": {
+        "status": "Likely canceled October 10 fixture; separate October 31 rematch listed as Mass Maritime 21, Westfield State 7",
+        "sourceUrls": [
+          "https://varsityslate.com/schools/westfield-state-owls/football",
+          "https://varsityslate.com/schools/mass-maritime-buccaneers/football"
+        ],
+        "limitation": "These are third-party schedules and may share an upstream provider. Not accepted as independent school/conference adjudication. Exact assignment of the dates to saved game IDs is not certified here."
+      },
+      "suggestedResearchTreatment": "Leave this case explicitly unresolved; if testing exclusion, label it a sensitivity experiment rather than a verified correction. Do not merge it with the separately played rematch."
+    },
+    {
+      "gameId": "401906581",
+      "teams": [
+        {"id": "200", "name": "Southern Nazarene"},
+        {"id": "2927", "name": "Southwestern Oklahoma State"}
+      ],
+      "savedResult": "T",
+      "savedFinalMargin": 0,
+      "verifiedStatus": "original-slot-canceled-rescheduled-after-snapshot",
+      "originalDateOnSouthwesternOfficialSchedule": "2026-10-17",
+      "alternativeOriginalDateOnOlderSouthernNazareneSchedule": "2026-10-15",
+      "rescheduledDateOnConferenceSchedule": "2026-11-21",
+      "verifiedFact": "Southwestern Oklahoma State's official 2026 schedule labels its October 17 home game against Southern Nazarene Canceled. The official Great American Conference schedule lists the matchup on November 21 and conference statistics list both teams' eight completed games through October 31 without this matchup. Southern Nazarene's older schedule page still lists October 15 without a result, so the original timestamp is inconsistent across sources.",
+      "sourceUrls": [
+        "https://swosuathletics.com/sports/football/schedule/2026?grid=true",
+        "https://greatamericanconference.com/schedule.aspx?schedule=3217",
+        "https://greatamericanconference.com/stats.aspx?conf=true&path=football&year=2026",
+        "https://snuathletics.com/sports/football/schedule/2026"
+      ],
+      "suggestedResearchTreatment": "Exclude the unplayed original slot from a completed-results research graph; do not count a tie. A later November 21 result must be admitted only if actually completed and available at its own cutoff. Preserve the date discrepancy in the audit."
+    },
+    {
+      "gameId": "401907138",
+      "teams": [
+        {"id": "2146", "name": "Colorado School of Mines"},
+        {"id": "2687", "name": "Washburn"}
+      ],
+      "savedResult": "T",
+      "savedFinalMargin": 0,
+      "verifiedDate": "2026-09-05",
+      "verifiedStatus": "legitimate-completed-tie",
+      "officialFinalScores": {"Colorado School of Mines": 16, "Washburn": 16},
+      "verifiedFact": "Both schools' official September 5 recaps state that regulation ended 16-16, extreme heat prevented overtime, and the teams and officials declared the contest complete as a tie. The official schedules and RMAC schedule also label it T 16-16.",
+      "sourceUrls": [
+        "https://minesathletics.com/news/2026/9/5/football-mines-washburn-end-in-weather-halted-tie.aspx",
+        "https://wusports.com/news/2026/9/5/football-ichaods-orediggers-play-to-16-all-tie-after-game-called-for-extreme-heat.aspx",
+        "https://minesathletics.com/sports/football/schedule/2026",
+        "https://wusports.com/sports/football/schedule/2026",
+        "https://rmacsports.org/schedule.aspx?schedule=4455"
+      ],
+      "sourceDiscrepancy": "Mines' cumulative-statistics result table labels the same 16-16 score L and has an inconsistent running record. The two dated official recaps explicitly certify a tie, so that single table label must not be used to invent a winner.",
+      "suggestedResearchTreatment": "Retain this zero-outcome edge. The saved final margin is already mathematically correct. Absolute score metadata could be corrected to 16-16 if stored, but changing 0-margin totals does not change the existing margin/outcome-based calculations. Do not apply a blanket ban on tied lower-division games."
+    },
+    {
+      "gameId": "401907150",
+      "teams": [
+        {"id": "2237", "name": "Fort Lewis"},
+        {"id": "2911", "name": "William Jewell"}
+      ],
+      "savedResult": "T",
+      "savedFinalMargin": 0,
+      "verifiedDate": "2026-08-29",
+      "verifiedStatus": "canceled-no-final-result",
+      "verifiedFact": "Both Fort Lewis and William Jewell official 2026 schedules mark the August 29 matchup in Liberty, Missouri Canceled. The official GLVC schedule leaves that entry without a final result.",
+      "sourceUrls": [
+        "https://goskyhawks.com/sports/football/schedule/2026",
+        "https://jewellcardinals.com/sports/football/schedule",
+        "https://glvcsports.com/schedule.aspx?schedule=6596"
+      ],
+      "suggestedResearchTreatment": "Exclude from completed-results research input; no win, loss or tie should be invented."
+    },
+    {
+      "gameId": "401873405",
+      "teams": [
+        {"id": "2843", "name": "Western Connecticut State"},
+        {"id": "2871", "name": "Kean"}
+      ],
+      "savedResult": "T",
+      "savedFinalMargin": 0,
+      "verifiedDate": "2026-09-26",
+      "verifiedStatus": "canceled-no-final-result",
+      "verifiedFact": "A Western Connecticut State release dated September 25, 2026 explicitly cancels the September 26 home football game against Kean due to the impending storm. The official NJAC Kean schedule omits that game from its completed results.",
+      "sourceUrls": [
+        "https://westconnathletics.com/news/2026/9/25/football-saturdays-westconn-athletic-events-canceled-and-postponed-due-to-pending-storm.aspx",
+        "https://njacsports.com/schedule.aspx?schedule=4621"
+      ],
+      "suggestedResearchTreatment": "Exclude from completed-results research input; the dated pregame cancellation is positive evidence, unlike simply finding an empty score field."
+    },
+    {
+      "gameId": "401908594",
+      "teams": [
+        {"id": "2967", "name": "Framingham State"},
+        {"id": "2972", "name": "Plymouth State"}
+      ],
+      "savedResult": "T",
+      "savedFinalMargin": 0,
+      "verifiedDate": "2026-10-10",
+      "verifiedStatus": "canceled-original-slot",
+      "verifiedFact": "Plymouth State's official September 25 release states that its previously scheduled October 10 non-conference home game against Framingham State was canceled so that the postponed Mass Maritime game could occupy that date. Plymouth's official season schedule separately lists an October 31 game at Framingham State, lost 0-14.",
+      "sourceUrls": [
+        "https://athletics.plymouth.edu/news/2026/9/25/football-fb-saturdays-game-at-mass-maritime-postponed.aspx",
+        "https://athletics.plymouth.edu/sports/football/schedule/2026?grid=true"
+      ],
+      "separatePlayedRematch": {"date": "2026-10-31", "FraminghamStatePoints": 14, "PlymouthStatePoints": 0},
+      "suggestedResearchTreatment": "Exclude the canceled October 10 slot, retaining the separate completed October 31 game. Never collapse legitimate rematches solely because opponent identities match."
+    }
+  ],
+  "caveats": [
+    "None of these six IDs appeared in the local data/seasons/2026.json archive; saved contribution records supplied the ID-to-team mapping and zero final margins only.",
+    "Official schedule dates attach to the identified team matchups. Exact provider-ID-to-original-kickoff mapping still requires the current raw provider response when available.",
+    "Primary pages were fetched after the saved snapshot. Dated cancellation releases and game recaps provide stronger historical evidence than undated current schedule tables, but this is not an archive of every source as it appeared at the cutoff.",
+    "These findings propose research eligibility treatments; no production correction, provider refresh, or source-score replacement was performed.",
+    "Zero final margin alone is insufficient to distinguish a valid tie, cancellation, placeholder, or missing-score problem."
+  ]
+}

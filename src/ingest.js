@@ -2,7 +2,7 @@ import { mkdir, readFile, writeFile, rename } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { createHash } from 'node:crypto';
 import { validateSeason } from './engine.js';
-import { assertNoLogicalDuplicates, logicalDuplicateGroups } from './data-quality.js';
+import { assertNoLogicalDuplicates, logicalDuplicateGroups, quarantineConfirmedCancellations } from './data-quality.js';
 
 // RFC 4180 quoting, embedded newlines, and escaped quotes; no CSV dependency.
 export function parseCsv(text) {
@@ -69,7 +69,7 @@ export function normalizeCsv(text, year, source = {}) {
 export function normalizeCfbd(games, roster, year, source = {}) {
   const audit = { incompleteFinals: [] };
   const teams = new Map(roster.map(t => [String(t.id), { id: String(t.id), name: t.school, division: 'fbs', conference: t.conference ?? 'Independent / unassigned' }]));
-  const normalized = games.filter(g => ['regular', 'postseason'].includes(g.seasonType)).map(g => {
+  let normalized = games.filter(g => ['regular', 'postseason'].includes(g.seasonType)).map(g => {
     if (g.season !== year) throw new Error('Source season mismatch');
     for (const side of ['home', 'away']) {
       const rawId = g[`${side}Id`];
@@ -85,6 +85,10 @@ export function normalizeCfbd(games, roster, year, source = {}) {
       completed: incomplete ? false : g.completed, neutral: g.neutralSite, home: String(g.homeId), away: String(g.awayId),
       homePoints: g.homePoints, awayPoints: g.awayPoints, ...(confirmedOT ? { regulationMargin: 0 } : {}) };
   });
+  const cancellations=quarantineConfirmedCancellations(normalized,year);
+  normalized=cancellations.games;
+  audit.confirmedCanceledRecords=cancellations.audit;
+  audit.inputPolicyVersion='quality-1.1';
   audit.unknownDivisionTeams = [...teams.values()].filter(t => t.division === 'unknown').length;
   audit.latestCompletedKickoff = normalized.filter(g => g.completed).map(g => g.startDate).sort().at(-1) ?? null;
   assertNoLogicalDuplicates(normalized);

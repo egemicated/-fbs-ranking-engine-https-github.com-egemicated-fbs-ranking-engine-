@@ -6,11 +6,32 @@ import { join, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
-import { logicalDuplicateGroups, assertNoLogicalDuplicates, DataQualityError } from '../src/data-quality.js';
+import { logicalDuplicateGroups, assertNoLogicalDuplicates, DataQualityError,quarantineConfirmedCancellations } from '../src/data-quality.js';
 import { normalizeCfbd, normalizeCsv } from '../src/ingest.js';
 import { saveEvidence } from '../src/evidence.js';
 
 const game = (id, date = '2026-09-05T12:00:00Z') => ({ id, home: 'a', away: 'b', homePoints: 21, awayPoints: 7, completed: true, neutral: false, startDate: date });
+
+test('confirmed canceled zero-zero slots are quarantined while ties, rematches and uncertain records survive',()=>{
+  const canceled={...game('401908594','2026-10-10T18:00:00Z'),home:'2967',away:'2972',homePoints:0,awayPoints:0};
+  assert.equal(quarantineConfirmedCancellations([canceled],2026).games[0].completed,false);
+  for(const valid of [{...canceled,id:'401907138',home:'2146',away:'2687',homePoints:16,awayPoints:16},
+                     {...canceled,startDate:'2026-10-31T18:00:00Z'},
+                     {...canceled,id:'401908619',home:'110',away:'2909'},
+                     {...canceled,homePoints:14,awayPoints:0}]) {
+    assert.equal(quarantineConfirmedCancellations([valid],2026).games[0].completed,true);
+  }
+  assert.equal(quarantineConfirmedCancellations([canceled],2025).games[0].completed,true);
+});
+
+test('CFBD ingestion records the narrow cancellation correction in its source audit',()=>{
+  const raw={id:401907150,season:2026,week:1,seasonType:'regular',startDate:'2026-08-29T18:00:00Z',completed:true,neutralSite:false,
+    homeId:2911,awayId:2237,homeTeam:'William Jewell',awayTeam:'Fort Lewis',homePoints:0,awayPoints:0,homeClassification:'ii',awayClassification:'ii'};
+  const season=normalizeCfbd([raw],[],2026);
+  assert.equal(season.games[0].completed,false);
+  assert.equal(season.source.audit.confirmedCanceledRecords[0].id,'401907150');
+  assert.equal(season.source.audit.inputPolicyVersion,'quality-1.1');
+});
 
 test('logical duplicate detection ignores provider IDs, kickoff offsets and home/away encoding', () => {
   const first = game('one'), other = { ...game('two', '2026-09-05T13:00:00-06:00'), home: 'b', away: 'a', homePoints: 7, awayPoints: 21 };

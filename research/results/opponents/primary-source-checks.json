@@ -1,0 +1,150 @@
+{
+  "status": "Targeted read-only primary-source audit; no production changes",
+  "snapshotAsOf": "2026-11-06T03:39:55.757Z",
+  "scope": "Selected 2026 membership transitions and two complete direct-FCS-opponent schedule spot checks",
+  "membershipChecks": [
+    {
+      "id": "2449",
+      "name": "North Dakota State",
+      "savedClassification": "fbs",
+      "savedConference": "Mountain West",
+      "verifiedClassification": "fbs",
+      "verifiedFact": "The official February 9, 2026 school announcement states that NDSU accepted a football affiliate invitation to the Mountain West and would compete at the Football Bowl Subdivision level beginning fall 2026.",
+      "sourceUrls": [
+        "https://gobison.com/news/2026/2/9/ndsu-football-joining-mountain-west-conference"
+      ],
+      "correctionWarranted": false
+    },
+    {
+      "id": "16",
+      "name": "Sacramento State",
+      "savedClassification": "fbs",
+      "savedConference": "Mid-American",
+      "verifiedClassification": "fbs",
+      "verifiedFact": "The official February 16, 2026 announcement states that Sacramento State joins the MAC as a football-only member beginning July 1, 2026 and explicitly describes the FBS transition. The accompanying FAQ identifies the 2026 season as the first MAC schedule.",
+      "sourceUrls": [
+        "https://hornetsports.com/news/2026/2/16/hornet-football-to-join-the-mac-in-2026.aspx"
+      ],
+      "correctionWarranted": false
+    },
+    {
+      "id": "2598",
+      "name": "Saint Francis",
+      "identityNote": "Saint Francis University in Pennsylvania; not St. Francis (IL), saved ID 2595",
+      "savedClassification": "iii",
+      "savedConference": "Presidents'",
+      "verifiedClassification": "iii",
+      "verifiedFact": "The official transition FAQ states that Saint Francis becomes a Division III reclassifying member beginning fall 2026. The NCAA directory's sponsored-sports row lists football as Division III in the Presidents' Athletic Conference for 2026-2027.",
+      "sourceUrls": [
+        "https://www.francis.edu/D3TransitionFAQ",
+        "https://web3.ncaa.org/directory/orgDetail?id=600"
+      ],
+      "correctionWarranted": false
+    },
+    {
+      "id": "110242",
+      "name": "West Florida",
+      "savedClassification": "fcs",
+      "savedConference": "UAC",
+      "verifiedClassification": "fcs",
+      "verifiedFact": "The official April 20, 2026 school announcement states that the university moves to NCAA Division I beginning fall 2026, with football playing as an FCS member of the United Athletic Conference. It identifies the August 27 opener against Southern Illinois as the first FCS game.",
+      "sourceUrls": [
+        "https://goargos.com/story.aspx?file_date=4-20-2026&filename=football-argos-to-host-southern-illinois-for-first-fcs-game"
+      ],
+      "correctionWarranted": false
+    },
+    {
+      "id": "2698",
+      "name": "West Georgia",
+      "savedClassification": "fcs",
+      "savedConference": "UAC",
+      "verifiedClassification": "fcs",
+      "verifiedFact": "The NCAA directory's football row lists FCS and United Athletic Conference for 2026-2027. The official 2026 schedule announcement describes the third year of Division I football; the official Kennesaw State game announcement explicitly calls West Georgia FCS for 2026.",
+      "sourceUrls": [
+        "https://web3.ncaa.org/directory/orgDetail?id=766",
+        "https://uwgathletics.com/news/2026/4/2/uwg-athletics-announces-finalized-2026-football-schedule.aspx",
+        "https://uwgathletics.com/news/2025/4/24/uwg-announces-2026-football-matchup-at-kennesaw-state.aspx"
+      ],
+      "interpretationCaveat": "The directory's general organization header still describes Division II reclassifying membership; use the sport-specific football designation for this audit.",
+      "correctionWarranted": false
+    }
+  ],
+  "recordSpotChecks": [
+    {
+      "id": "292",
+      "name": "UT Rio Grande Valley",
+      "savedClassification": "fcs",
+      "sourceRecord": "4-5",
+      "sourceCompletedGames": 9,
+      "lastListedCompletedDate": "2026-10-31",
+      "nextScheduledDate": "2026-11-07",
+      "matched": [
+        "Nine-game opponent set",
+        "Win/loss outcomes and aggregate 4-5 record",
+        "All nine team-perspective final score margins",
+        "All nine home/away orientations"
+      ],
+      "notVerifiedFromSnapshot": [
+        "Absolute final scores, because snapshot contributions retain margins rather than the actual two scores",
+        "Kickoff timestamps, because snapshot contributions omit dates"
+      ],
+      "sourceUrls": [
+        "https://goutrgv.com/sports/football/stats/2026",
+        "https://goutrgv.com/sports/football/schedule/2026"
+      ],
+      "sourceObservation": "The cumulative-statistics results table lists all nine completed games. One crawled schedule-page version displayed only the first two scores, so empty schedule score fields alone are not evidence of missing games in our dataset.",
+      "gamesIndependentlyReadFromOfficialSource": [
+        {"date": "2026-08-29", "opponent": "UT Permian Basin", "venue": "home", "pointsFor": 44, "pointsAgainst": 0},
+        {"date": "2026-09-05", "opponent": "UTSA", "venue": "away", "pointsFor": 16, "pointsAgainst": 45},
+        {"date": "2026-09-12", "opponent": "Nicholls", "venue": "away", "pointsFor": 28, "pointsAgainst": 31},
+        {"date": "2026-09-19", "opponent": "McNeese", "venue": "home", "pointsFor": 27, "pointsAgainst": 10},
+        {"date": "2026-10-03", "opponent": "East Texas A&M", "venue": "away", "pointsFor": 17, "pointsAgainst": 20},
+        {"date": "2026-10-10", "opponent": "Southeastern La.", "venue": "home", "pointsFor": 13, "pointsAgainst": 3},
+        {"date": "2026-10-17", "opponent": "UIW", "venue": "away", "pointsFor": 16, "pointsAgainst": 41},
+        {"date": "2026-10-24", "opponent": "Central Ark.", "venue": "away", "pointsFor": 30, "pointsAgainst": 27},
+        {"date": "2026-10-31", "opponent": "Lamar University", "venue": "home", "pointsFor": 23, "pointsAgainst": 52}
+      ]
+    },
+    {
+      "id": "2385",
+      "name": "Mercyhurst",
+      "savedClassification": "fcs",
+      "sourceRecord": "1-8",
+      "sourceCompletedGames": 9,
+      "lastListedCompletedDate": "2026-10-31",
+      "nextScheduledDate": "2026-11-07",
+      "matched": [
+        "Nine-game opponent set",
+        "Win/loss outcomes and aggregate 1-8 record",
+        "All nine team-perspective final score margins",
+        "All nine home/away orientations"
+      ],
+      "notVerifiedFromSnapshot": [
+        "Absolute final scores, because snapshot contributions retain margins rather than the actual two scores",
+        "Kickoff timestamps, because snapshot contributions omit dates"
+      ],
+      "sourceUrls": [
+        "https://hurstathletics.com/sports/football/schedule/2026"
+      ],
+      "gamesIndependentlyReadFromOfficialSource": [
+        {"date": "2026-08-27", "opponent": "Youngstown State", "venue": "away", "pointsFor": 10, "pointsAgainst": 43},
+        {"date": "2026-09-05", "opponent": "New Mexico State", "venue": "away", "pointsFor": 14, "pointsAgainst": 51},
+        {"date": "2026-09-12", "opponent": "New Mexico", "venue": "away", "pointsFor": 7, "pointsAgainst": 70},
+        {"date": "2026-09-19", "opponent": "Glenville State", "venue": "home", "pointsFor": 49, "pointsAgainst": 20},
+        {"date": "2026-09-26", "opponent": "Western Kentucky", "venue": "away", "pointsFor": 7, "pointsAgainst": 52},
+        {"date": "2026-10-03", "opponent": "LIU", "venue": "away", "pointsFor": 24, "pointsAgainst": 27},
+        {"date": "2026-10-17", "opponent": "Central Connecticut State", "venue": "home", "pointsFor": 40, "pointsAgainst": 43},
+        {"date": "2026-10-24", "opponent": "Robert Morris", "venue": "away", "pointsFor": 14, "pointsAgainst": 28},
+        {"date": "2026-10-31", "opponent": "Stonehill", "venue": "away", "pointsFor": 28, "pointsAgainst": 34}
+      ]
+    }
+  ],
+  "caveats": [
+    "Primary sources were fetched after the saved snapshot. Matching later-fetched results do not establish exactly what information was available on those websites at the historical snapshot cutoff.",
+    "All independently listed completed spot-check games occurred by October 31; the two official schedules list November 7 as the next game.",
+    "Snapshot final margins, opponent identities and model-inferred venue orientations can be checked. Dates and absolute final scores cannot be independently verified from contribution-only snapshot records.",
+    "This targeted audit does not independently certify all 138 FBS memberships, all FCS memberships or every game's metadata.",
+    "Institution-wide NCAA reclassification descriptions and postseason eligibility can differ from the sport-specific football classification; neither implies a ranking bonus or penalty.",
+    "No CFBD calls, account writes, source data corrections or production edits were made."
+  ]
+}

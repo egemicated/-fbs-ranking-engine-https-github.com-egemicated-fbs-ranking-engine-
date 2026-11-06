@@ -1,0 +1,19 @@
+{
+  "file": "opponent-audit-2026-11-05.json.gz",
+  "bytes": 101048,
+  "sha256": "1674c2f845f63ae3d44d6e17734cc4623a248abfaf93390a4dc3be01478c0d1e",
+  "snapshotHash": "561b2fc679400576c79dcbaca5cc076b2d98e3295e31d700f84908f369b88e14",
+  "auditFingerprint": "17711b9bc8c152927c13a81bc1b1fb95a76df4717d7c3c1295528aa1ca3754f7",
+  "counts": {
+    "auditedTeams": 236,
+    "auditedFbs": 138,
+    "auditedDirectFcs": 98,
+    "schedulesWithoutEligibleDiscrepancy": 236,
+    "uniquePublishedGamesCorroborated": 1078,
+    "uniqueConflictedGames": 0,
+    "candidateOmissions": 0,
+    "publicViewDisputes": 0,
+    "recentOrLaterFinalsHeldAside": 3
+  },
+  "scenarios": 10
+}

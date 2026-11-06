@@ -1,0 +1,24 @@
+{
+  "snapshotHash": "561b2fc679400576c79dcbaca5cc076b2d98e3295e31d700f84908f369b88e14",
+  "sourceFileSha256": "c9b6b95e6aa060e06e5364d2d88bee0cfb0b34cb56b24d76d4425a42997163b5",
+  "teams": 716,
+  "completedGames": 2842,
+  "fbsRows": 138,
+  "allRecordsAndRanksMatch": true,
+  "elapsedMs": 924.3236,
+  "maxAbsoluteError": {
+    "colley": 7.090661391373487e-12,
+    "sor": 1.4701129202876473e-11,
+    "tail": 6.605938018822144e-12,
+    "expectedWins": 2.4030555323406588e-11
+  },
+  "nonFbsTieContextIds": [
+    "401873405",
+    "401906581",
+    "401907138",
+    "401907150",
+    "401908594",
+    "401908619"
+  ],
+  "note": "One local warm filesystem/current snapshot run; portable tests use synthetic inputs and have no current-file dependency. Lower-division tie context is preserved for reproduction, not source certification."
+}
