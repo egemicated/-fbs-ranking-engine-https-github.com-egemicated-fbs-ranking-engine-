@@ -2,7 +2,8 @@
 
 An independent, experimental college football ranking engine. No human polls,
 recruiting ratings, betting lines, third-party team ratings, conference bonuses,
-or manual team overrides enter its calculations. No website design yet.
+or manual team overrides enter its calculations. The FBS Intelligence site serves
+cached rankings without a login.
 
 ## Run
 
@@ -38,17 +39,29 @@ SIL Open Font License. The unbranded stadium illustration was generated with
 the built-in image tool; its production prompt is in
 `frontend/assets/ASSET-NOTES.txt`.
 
-To update the current season, run `npm run import -- --from 2026 --to 2026 --refresh`
-and `npm run build`. To reconstruct a cutoff use
+The current site refreshes from CFBD on Sunday at 8 AM Mountain through the
+existing GitHub workflow. Its two successful provider requests are unchanged.
+Render promotes the committed CFBD snapshot using the pinned publication policy;
+deployment does not request newer CFBD data. The next weekly snapshot is promoted
+before its source evidence and publication are saved. To reconstruct an archive cutoff use
 `npm run build -- --before 2025-10-01T00:00:00Z`.
 
 ## Two separate ratings
 
-**Achievement (primary national and conference rank)** is the Colley matrix
-method applied to this season's completed results. Every modeled team starts
-equal. Wins, losses, ties and the opponent network determine the score; prior
-seasons, score margin, venue and conference labels do not change it. Identical
-achievement scores share a rank; idle teams are unranked.
+**Strength of Record (primary current national and conference rank)** uses the
+tested, frozen division-aware SOR calculation. It asks how likely an average FBS
+reference team would be to earn at least the observed wins against that schedule.
+Each game's difficulty is measured after removing that game. Fixed historical
+coefficients account for venue and the residual FBS/FCS gap. Score margins, past
+team success, polls and conference prestige supply no achievement credit.
+
+Colley remains the underlying opponent network, displayed SOS and retained
+baseline. In JSON, `displayRank`/`sor` identify the current ordering;
+`rank`/`achievement` retain Colley for reproducible comparisons. Historical
+snapshots remain Colley and are labeled accordingly. Identical SOR scores share
+a rank; idle teams remain unranked. The previous full current publication is
+preserved at `published/archive/colley-2026-11-06.json`. The data's original
+`asOf` stays unchanged when a model is promoted; `modelPublishedAt` is separate.
 
 **Strength (experimental predictive rating)** fits opponent-adjusted, bounded
 score margins with a location adjustment. It starts with our own previous

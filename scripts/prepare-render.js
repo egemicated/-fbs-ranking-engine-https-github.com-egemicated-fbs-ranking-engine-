@@ -3,6 +3,7 @@ import { resolve, join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { importSeason, atomicJson } from '../src/ingest.js';
 import { buildHistory } from '../src/history.js';
+import { readPublicationPolicy, publishDivisionSnapshot } from '../src/publication.js';
 
 // Build artifacts are carried into Render's runtime filesystem. A fresh build
 // reconstructs the ratings without requiring a database or persistent disk.
@@ -12,6 +13,7 @@ const data = resolve(process.env.DATA_DIR || 'data');
 const year = Number(process.env.RANKING_SEASON || 2026);
 if (!Number.isInteger(year) || year < 2004 || year > 2100) throw new Error('Invalid RANKING_SEASON');
 const config = JSON.parse(await readFile(join(data, 'model.json'), 'utf8'));
+const publicationPolicy = await readPublicationPolicy();
 const seasons = [];
 for (let season = 2004; season <= year; season++) {
   seasons.push(await importSeason(season, data, { refresh: true }));
@@ -28,8 +30,8 @@ for (const snapshot of buildHistory(seasons, config, before)) {
 try {
   const published = JSON.parse(await readFile('published/latest.json', 'utf8'));
   if (published.season !== year || !published.rankings?.length || published.source?.provider !== 'cfbd') throw new Error('Invalid published CFBD snapshot');
-  latest = published;
-  await atomicJson(join(data, 'snapshots', `${year}.json`), published);
+  latest = publishDivisionSnapshot(published, publicationPolicy);
+  await atomicJson(join(data, 'snapshots', `${year}.json`), latest);
 } catch (e) { if (e.code !== 'ENOENT') throw e; }
 if (!latest?.rankings.length || !latest.gamesUsed) throw new Error('Build produced no rankings');
 await atomicJson(join(data, 'snapshots', 'latest.json'), latest);
