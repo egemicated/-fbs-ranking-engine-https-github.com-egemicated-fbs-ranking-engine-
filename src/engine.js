@@ -34,7 +34,7 @@ export function validateSeason(season) {
   if (!Number.isInteger(season.year) || !Array.isArray(season.teams) || !season.teams.length || !Array.isArray(season.games)) throw new Error('Invalid season');
   const ids = new Set();
   for (const t of season.teams) {
-    if (typeof t.id !== 'string' || !t.id || ids.has(t.id) || !t.name || !t.division) throw new Error('Invalid or duplicate team');
+    if (typeof t.id !== 'string' || !t.id || ids.has(t.id) || !t.name || !t.division) throw new Error(`Invalid or duplicate team: ${t.id} (${t.name})`);
     ids.add(t.id);
   }
   const games = new Set();

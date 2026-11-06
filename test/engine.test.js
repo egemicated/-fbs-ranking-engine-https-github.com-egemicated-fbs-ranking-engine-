@@ -76,6 +76,12 @@ test('CFBD ingest recognizes overtime from tied regulation period totals', () =>
   assert.ok(r.ratings.find(t => t.id === 'a').strength < 1);
 });
 
+test('CFBD opponents with absent classifications remain modeled but are not labeled FBS', () => {
+  const s = normalizeCfbd([{ id: 1, season: 2025, week: 1, seasonType: 'regular', startDate: '2025-09-01T12:00:00Z', completed: true, neutralSite: true, homeId: 'a', awayId: 'b', homeTeam: 'A', awayTeam: 'B', homeClassification: 'fbs', awayClassification: null, homePoints: 7, awayPoints: 0 }], [{ id: 'a', school: 'A', conference: 'X' }], 2025);
+  assert.equal(s.teams.find(t => t.id === 'b').division, 'unknown');
+  assert.equal(rankSeason(s).fbsTeams, 1);
+});
+
 test('historical priors decay across missing seasons and new teams start neutral', () => {
   const s = season([game('1', 'a', 'b', 21, 0)]);
   const previous = rankSeason({ ...s, year: 2023 });

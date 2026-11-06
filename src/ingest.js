@@ -67,8 +67,10 @@ export function normalizeCfbd(games, roster, year, source = {}) {
   const normalized = games.filter(g => ['regular', 'postseason'].includes(g.seasonType)).map(g => {
     if (g.season !== year) throw new Error('Source season mismatch');
     for (const side of ['home', 'away']) {
-      const id = String(g[`${side}Id`]);
-      if (!teams.has(id)) teams.set(id, { id, name: g[`${side}Team`], division: g[`${side}Classification`], conference: g[`${side}Conference`] ?? 'Independent / unassigned' });
+      const rawId = g[`${side}Id`];
+      if (rawId === null || rawId === undefined || rawId === '') throw new Error(`Missing ${side} team identity in game ${g.id}`);
+      const id = String(rawId);
+      if (!teams.has(id)) teams.set(id, { id, name: g[`${side}Team`], division: g[`${side}Classification`] || 'unknown', conference: g[`${side}Conference`] ?? 'Independent / unassigned' });
     }
     const h = g.homeLineScores, a = g.awayLineScores;
     const confirmedOT = Array.isArray(h) && Array.isArray(a) && h.length > 4 && a.length > 4 && h.slice(0, 4).every(Number.isFinite) && a.slice(0, 4).every(Number.isFinite) && h.slice(0, 4).reduce((s, v) => s + v, 0) === a.slice(0, 4).reduce((s, v) => s + v, 0);
