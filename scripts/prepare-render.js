@@ -23,6 +23,14 @@ for (const snapshot of buildHistory(seasons, config, before)) {
   await atomicJson(join(data, 'snapshots', `${snapshot.season}.json`), snapshot);
   latest = snapshot;
 }
+// A committed CFBD snapshot is authoritative. Rebuilds/restarts never replace
+// that weekly publication with a newer archive CSV or spend API calls.
+try {
+  const published = JSON.parse(await readFile('published/latest.json', 'utf8'));
+  if (published.season !== year || !published.rankings?.length || published.source?.provider !== 'cfbd') throw new Error('Invalid published CFBD snapshot');
+  latest = published;
+  await atomicJson(join(data, 'snapshots', `${year}.json`), published);
+} catch (e) { if (e.code !== 'ENOENT') throw e; }
 if (!latest?.rankings.length || !latest.gamesUsed) throw new Error('Build produced no rankings');
 await atomicJson(join(data, 'snapshots', 'latest.json'), latest);
 console.log(`Ready: ${latest.season}, ${latest.fbsTeams} FBS teams, ${latest.gamesUsed} completed games`);

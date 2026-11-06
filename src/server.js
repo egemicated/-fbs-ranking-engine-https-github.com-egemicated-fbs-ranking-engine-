@@ -2,6 +2,7 @@ import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { VERSION } from './engine.js';
+import { UPDATE_SCHEDULE } from './weekly.js';
 
 const directory = resolve(process.env.DATA_DIR || 'data', 'snapshots');
 // Read-only API. No login to view public sports ratings; no write/admin routes.
@@ -14,7 +15,7 @@ export function createApi(snapshotDirectory = directory) {
     if (req.method !== 'GET' && req.method !== 'HEAD') { res.setHeader('Allow', 'GET, HEAD'); return send(405, { error: 'Read-only API' }); }
     const path = new URL(req.url, 'http://localhost').pathname;
     if (path === '/health') return send(200, { status: 'ok', modelVersion: VERSION });
-    if (path === '/') return send(200, { service: 'Independent FBS Ranking Engine', modelVersion: VERSION, status: 'experimental', endpoints: ['/health', '/rankings', '/rankings/2025'], interface: 'API only; visual design comes later' });
+    if (path === '/') return send(200, { service: 'Independent FBS Ranking Engine', modelVersion: VERSION, status: 'experimental', updateSchedule: UPDATE_SCHEDULE, endpoints: ['/health', '/rankings', '/rankings/2025'], interface: 'API only; visual design comes later' });
     const match = /^\/rankings(?:\/(\d{4}))?$/.exec(path);
     if (!match) return send(404, { error: 'Not found' });
     try {

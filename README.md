@@ -69,8 +69,9 @@ retrieval times and SHA-256 checksums are retained locally. Raw and normalized
 data are excluded from Git. Source availability and downstream usage rights
 must be reviewed before broad redistribution of raw data.
 
-An optional direct provider supports CFBD: set `CFBD_API_KEY` in the server
-environment, then add `--provider cfbd` to import. It fetches a year-specific
+The weekly publisher uses CFBD directly: store `CFBD_API_KEY` as a GitHub Actions
+repository secret. For a local manual import, set the same environment variable
+and add `--provider cfbd` to import. It fetches a year-specific
 FBS roster and game period scores. No key is needed for the default public
 schedule import. See [CFBD data availability](https://api.collegefootballdata.com/data-availability).
 
@@ -91,5 +92,36 @@ The preparation script runs tests, imports the historical schedules afresh,
 and generates all season snapshots before the service starts. No data API key
 or paid database is required. Render supplies `PORT`, `RENDER`, and HTTPS.
 
-The service exposes the JSON API only. Data refreshes on each deployment;
-scheduled ingestion is not configured. The free plan can sleep when idle.
+The service exposes the JSON API only. The free plan can sleep when idle.
+
+## Weekly CFBD publication
+
+`.github/workflows/weekly.yml` targets **Sunday at 08:00 America/Denver**, using
+GitHub's timezone-aware schedule (including daylight saving time). GitHub jobs
+and the subsequent Render deployment can start late; this is a target start
+time, not an exact publication-time guarantee.
+
+Set the repository secret `CFBD_API_KEY` once. The workflow fetches the current
+season's games and FBS roster (two API calls per update, normally 8–10/month),
+uses our stored prior-season strength from `published/prior-2025.json`, and
+commits the derived `published/latest.json`. Render automatically deploys that
+commit. No paid cron service, database, or additional user login is required.
+The workflow uses a standard Linux runner and a five-minute maximum, drawing
+from GitHub's included Actions usage; it does not enable paid usage or alter
+billing settings. No workflow artifacts or caches are uploaded.
+
+Confirmed completed Saturday games count even if they finished less than
+24 hours earlier. In-progress games do not count. Data missing from CFBD at
+retrieval waits until the next successful publication. Failed imports leave
+the previous snapshot intact. API traffic never spends CFBD calls. The key
+never leaves GitHub's secret-backed job environment for Render or a browser.
+
+Run the workflow manually for setup or an intentional one-off update; creating
+or updating `published/refresh-request.json` on main also requests a run. To
+move to another season, update `RANKING_SEASON` in the workflow and Render,
+and supply our calculated strength prior for that season's previous year.
+
+Render builds continue reconstructing archived historical seasons, then restore
+the committed weekly snapshot as the authoritative current-season publication.
+Restarts and source-code deploys therefore preserve that publication until the
+next successful weekly update. Historical CSV coverage limitations remain.

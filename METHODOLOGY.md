@@ -1,4 +1,4 @@
-# Methodology v0.1.0
+# Methodology v0.2.0
 
 ## Achievement
 
@@ -57,6 +57,19 @@ input hash, records, opponent scores, per-game contributions, sample sizes,
 and connected-component sizes. Rank ties use a 1e-9 tolerance. Hashes include
 the previous snapshot hash, preserving the historical lineage. To reproduce a
 run, retain the same raw files and config. Source refreshes can change history.
+
+Each team also exposes an exact achievement decomposition:
+`(1 + (wins-losses)/2 + sum(opponent achievement)) / (games+2)`.
+The baseline, record, and opponent terms sum to the published score. Per-game
+terms are accounting contributions within the solved opponent network, not
+independent causal estimates of what removing a game would do.
+
+The weekly publisher fetches results directly from CFBD on Sunday at 08:00
+America/Denver and counts only games that CFBD marks complete, with kickoff
+no later than retrieval. It intentionally does not impose the retrospective
+24-hour kickoff buffer on confirmed current results. Historical backtest rules
+and rating formulas are unchanged. The API key is stored as a GitHub Actions
+repository secret. There is no live-scoreboard overlay or continuous refresh.
 
 ## Known limitations and next evidence needed
 

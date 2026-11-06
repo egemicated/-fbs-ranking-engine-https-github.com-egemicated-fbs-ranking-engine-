@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 
-export const VERSION = '0.1.0';
+export const VERSION = '0.2.0';
 export const DEFAULT_CONFIG = Object.freeze({ ridge: 5, retention: 0.65, homeAdvantage: 2.5, marginCap: 28, probabilityScale: 14 });
 
 // Conjugate gradient for (ridge * I + game-graph Laplacian). Positive ridge
@@ -105,6 +105,23 @@ export function rankSeason(input, { config = DEFAULT_CONFIG, previous = null, be
       if (t.games && (lastScore === null || Math.abs(t.achievement - lastScore) > 1e-9)) conferenceRank = i + 1;
       t.conferenceRank = t.games ? conferenceRank : null; lastScore = t.achievement;
     });
+  }
+  for (const team of ratings) {
+    const divisor = team.games + 2;
+    team.explanation = {
+      baseline: 1 / divisor,
+      record: (team.wins - team.losses) / (2 * divisor),
+      opponents: (team.achievementScheduleStrength ?? 0) * team.games / divisor,
+      formula: '(1 + (wins - losses)/2 + sum(opponent achievement)) / (games + 2)'
+    };
+    for (const detail of team.contributions) {
+      const opponent = ratings[index.get(detail.opponentId)];
+      detail.opponentName = opponent.name;
+      detail.opponentRank = opponent.rank ?? null;
+      detail.opponentRecord = `${opponent.wins}-${opponent.losses}${opponent.ties ? `-${opponent.ties}` : ''}`;
+      detail.opponentAchievement = opponent.achievement;
+      detail.achievementContribution = (opponent.achievement + (detail.result === 'W' ? 0.5 : detail.result === 'L' ? -0.5 : 0)) / divisor;
+    }
   }
   const canonical = { year: input.year, teams, games, config, previousHash: previous?.snapshotHash ?? null, before };
   return { modelVersion: VERSION, season: input.year, before, config, status: 'experimental',
