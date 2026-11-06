@@ -1,0 +1,52 @@
+ROUND 2 - DIVISION-AWARE SHADOW RESEARCH
+
+Public Colley ranking formula, snapshot, displayed SOS and frontend unchanged.
+The existing Sunday 08:00 America/Denver workflow additionally records frozen
+division-aware research tables and saves available next-seven-day forecasts.
+Subsequent updates evaluate first eligible forecasts against confirmed results.
+No extra CFBD calls or paid services. The existing frozen sor-colley-v1 remains.
+
+New frozen candidate: research/frozen-division-comparison.json (division-sor-v1).
+Separate coefficients are used for retrospective achievement and pregame
+probabilities; each has a matching refitted division-blind control. Inputs,
+implementation hashes and actual forecast capture times are retained. Same-time
+achievement observations are not pregame forecasts. New numerical rules require
+a new version; prior observations are immutable. Research failures do not block
+the ordinary ranking refresh or the older frozen comparison.
+
+The first scheduled capture after freeze is Sunday November 8, 2026, at 8 AM
+Mountain. No genuine future evidence exists at this release. Tests use synthetic
+fixtures. Available future fixtures are not a claim of complete schedule coverage.
+
+Historical findings
+34 missing FCS games added and three winner-preserving absolute scores corrected
+in a separate research dataset. NCAA normal-season tournaments match253/253;
+SWAC and Celebration Bowl checks bring those categories to274/274 outside2020.
+Many earlier playoffs were already present under provider regular-season labels.
+Season2020 spring2021 roster/coverage gaps remain and are excluded from fitting.
+
+The crossdivision probability improvement persists across all five2021-2025
+evaluation years and declared network checks. The training years are2014-2019.
+The current candidate Top25 is identical in membership/order to Round1's candidate;
+all-FBS ranks35/36 exchange. This is not the same comparison as candidate versus
+public Colley or old frozenSOR. No ranking appearance was an optimization target.
+FBS-FBS gains are small; some individual-year metrics worsen. Selected mostly-home
+crossdivision schedules and incomplete indirect context limit general conclusions.
+
+Detailed reproducible work is retained on codex/data-integrity-research:
+research/results/round2/6489ccaec521/summary.html
+research/results/round2/6489ccaec521/round2.json.gz
+research/results/round2/primary-fcs-checks.json.gz
+research/releases/fcs-coverage-v1.json.gz
+
+Restore older parent release, then the FCS supplement:
+  python research/apply_release.py
+  python research/repair_fcs_history.py --restore
+  python research/round2_experiment.py
+  python research/write_round2_report.py
+
+Weekly commands, invoked after the ordinary refresh retains validated evidence:
+  node scripts/record-division-comparison.js
+  node research/evaluate_division_forecasts.mjs
+They read the existing refresh and never call a data provider. Do not manually
+refresh CFBD merely to test these scripts; the automated tests use fixture data.
