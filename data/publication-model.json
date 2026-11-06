@@ -1,0 +1,24 @@
+{
+  "id": "division-sor-v2",
+  "name": "Division-aware Strength of Record",
+  "publicationVersion": "1.0.0",
+  "status": "experimental-live",
+  "promotedAt": "2026-11-06T13:14:17Z",
+  "parameters": {
+    "slope": 5.159563190867806,
+    "homeLogOdds": 0.3809700209732449,
+    "divisionLogOdds": 2.401314541603099
+  },
+  "candidateProtocolPath": "research/frozen-division-comparison-v2.json",
+  "candidateProtocolSha256": "0a18680a9cbc61a90966908689c7c7981fb212c8be3ace343171753bb6e59da3",
+  "implementationSha256": {
+    "research/lib/division_candidate.mjs": "dcf3e3e7b9c5029b1c46c3e52a0f150f4855c53a24bec57ab184016b070442a5",
+    "src/engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+    "src/publication.js": "6ee52b8ceef086930f6d6e9462e8508b61925c20ea63da41d484650b59488421"
+  },
+  "dataPolicy": "Use the identical confirmed-completed CFBD game set and preserved Colley baseline; unknown direct-opponent subdivision or FBS ties require review before publication. No silent model fallback.",
+  "userAuthorization": "Promote the tested division-aware SOR method while observing scheduled Sunday updates and continuing validation.",
+  "validation": "Historical calibration improved; independent prospective superiority is not established. Frozen comparisons remain unchanged.",
+  "asOfPolicy": "Keep original data asOf and source fetchedAt; modelPublishedAt records model publication separately.",
+  "apiContract": "rank/achievement/conferenceRank remain Colley baseline; displayRank/sor/displayConferenceRank are primary current publication."
+}

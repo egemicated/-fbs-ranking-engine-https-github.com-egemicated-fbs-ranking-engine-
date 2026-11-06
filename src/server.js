@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { VERSION } from './engine.js';
 import { UPDATE_SCHEDULE } from './weekly.js';
+import publicationPolicy from '../data/publication-model.json' with { type: 'json' };
 
 const directory = resolve(process.env.DATA_DIR || 'data', 'snapshots');
 // Read-only API. No login to view public sports ratings; no write/admin routes.
@@ -31,8 +32,10 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
         res.writeHead(200); res.end(req.method === 'HEAD' ? undefined : body); return;
       } catch (e) { return send(e.code === 'ENOENT' ? 404 : 500, { error: 'Page unavailable' }); }
     }
-    if (path === '/health') return send(200, { status: 'ok', modelVersion: VERSION });
-    if (path === '/api') return send(200, { service: 'Independent FBS Ranking Engine', modelVersion: VERSION, status: 'experimental', updateSchedule: UPDATE_SCHEDULE, endpoints: ['/health', '/rankings', '/rankings/2025'] });
+    if (path === '/health') return send(200, { status: 'ok', modelVersion: VERSION, rankingMethod: publicationPolicy.id });
+    if (path === '/api') return send(200, { service: 'Independent FBS Ranking Engine', modelVersion: VERSION, status: 'experimental',
+      rankingMethod: { id: publicationPolicy.id, name: publicationPolicy.name, rankField: 'displayRank', scoreField: 'sor', baselineRankField: 'rank', baselineScoreField: 'achievement' },
+      historicalMethod: 'Colley; inspect the selected snapshot metadata', updateSchedule: UPDATE_SCHEDULE, endpoints: ['/health', '/rankings', '/rankings/2025'] });
     const match = /^\/rankings(?:\/(\d{4}))?$/.exec(path);
     if (!match) return send(404, { error: 'Not found' });
     try {
