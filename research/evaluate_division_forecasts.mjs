@@ -62,7 +62,7 @@ export function evaluateForecasts({observations,season,asOf}) {
 }
 
 async function main(){
-  const protocol=JSON.parse(await readFile('research/frozen-division-comparison.json','utf8'));
+  const protocol=JSON.parse(await readFile('research/frozen-division-comparison-v2.json','utf8'));
   const self='research/evaluate_division_forecasts.mjs';
   if(protocol.evaluationImplementationSha256?.[self]!==sha(await readFile(self)))throw Error('Frozen forecast evaluator changed; create a new protocol version');
   const year=Number(process.env.RANKING_SEASON||2026),directory='research/division-observations';

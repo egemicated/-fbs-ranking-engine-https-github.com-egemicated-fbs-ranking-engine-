@@ -1,0 +1,71 @@
+{
+  "id": "division-sor-v2",
+  "status": "frozen-shadow-research; public Colley unchanged",
+  "frozenAt": "2026-11-06T13:02:48Z",
+  "parameters": {
+    "slope": 5.159563190867806,
+    "homeLogOdds": 0.3809700209732449,
+    "divisionLogOdds": 2.401314541603099
+  },
+  "controlParameters": {
+    "slope": 5.037479998087216,
+    "homeLogOdds": 0.5700751731613587,
+    "divisionLogOdds": 0
+  },
+  "pregameParameters": {
+    "slope": 4.324350282686707,
+    "homeLogOdds": 0.3864661962213115,
+    "divisionLogOdds": 2.364209064768193
+  },
+  "pregameControlParameters": {
+    "slope": 4.237296483984539,
+    "homeLogOdds": 0.5937205978643566,
+    "divisionLogOdds": 0
+  },
+  "forecastHorizonDays": 7,
+  "implementationSha256": {
+    "research/lib/division_candidate.mjs": "dcf3e3e7b9c5029b1c46c3e52a0f150f4855c53a24bec57ab184016b070442a5",
+    "src/engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+    "scripts/record-division-comparison.js": "197cda54267cb223cc1879ead060d205721bd4406bdfb5cd05a0f9e509109459"
+  },
+  "evaluationImplementationSha256": {
+    "research/evaluate_division_forecasts.mjs": "b75798672a72f246560513171aab1cfaddc4809897902d0cc9cf69c4a7f5b42a"
+  },
+  "trainingYears": [
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019
+  ],
+  "trainingInputSha256": {
+    "2014": "f6c41ef2dd5b751407efa196c2c6a76aaef7e226ab4766678120e7eb8783f193",
+    "2015": "ec50d753edeb723aa0b2a2bc2c7b5f4e9d81ba152f950b8cd54819f51b9875be",
+    "2016": "3846e2ea6963eda4baec894c901f7cd12a80893e525e006d2d7e4df4f1f1200a",
+    "2017": "b2610ad25d7ebd931de5dd05f4e14df8f8bf2b0052a2549c0d65a4530b8af3f4",
+    "2018": "089672a2e3509990c36a75e30910ebe4abf2e37091a89551166aaf287f41fdb3",
+    "2019": "8966102ad775cf682a905f70d7b6a50fa204019135587a6fe287871a7994fd53"
+  },
+  "researchReportFingerprint": "6489ccaec521c1337e8859fc5eb18205519ca8f7711805890815127b6636aaa0",
+  "researchReportSha256": "7e141ba6d45ba94517b008794290a31900796d61bc151d90004feafca5a71be8",
+  "dataset": "fcs-coverage-v1",
+  "datasetFingerprint": "7d5cfee8c63646882a8f351d69f6a81de9a6a47a38749bd3a3b8c793c1bc98ce",
+  "selection": "Full-source network and nested training population declared before Round2. Parameters estimated only from 2014-2019. Historical results and 2026 ranking illustrations were inspected before this freeze; only later saved-before-kickoff forecasts qualify as future evidence.",
+  "achievement": "Exact excluded-game SOR with average source-FBS reference; unchanged all-source Colley network, no extra division weight in graph or record. The baseline refit has the same training games and zero division coefficient.",
+  "forecasts": "Separate prior-week-calibrated coefficients on current full graph, no target outcome. Available known-D1 FBS-involving unfinished fixtures only; kickoff strictly after snapshot and actual checksummed capture, within seven days. No complete-schedule claim.",
+  "evaluation": "First eligible immutable forecast per model/game, never selected by result; confirmed later outcomes with matched identity/venue. Exclude corrected kickoff outside the seven-day window or before capture. Score FBS-FBS and FBS-FCS separately. Recurring teams and small future samples require caution.",
+  "sourceCorrections": "Documented versioned corrections may change shared inputs; keep normalized/source hashes and original observations. No team overrides, polls, conference prestige or parameter retuning.",
+  "operations": "Existing Sunday08:00America/Denver refresh, same two successful CFBD calls; no new service or additional provider calls. Research failures do not block public rankings or old frozenv1.",
+  "limits": [
+    "Historical FCS regular-season and lower-division coverage is not universally certified.",
+    "Season2020 spring tournament and roster gaps remain; excluded from fitting and pooled later evaluation.",
+    "Selected mostly-FBS-home schedules do not identify a causal neutral-field division gap.",
+    "A better probability mapping does not alone validate a fairer achievement order."
+  ],
+  "changePolicy": "New parameters or numerical code require a new protocol version; preserve this file and prior observations.",
+  "archivedProtocolPath": "research/frozen-division-comparison.json",
+  "archivedProtocolSha256": "2c62379fef4124478701ef90efc8cea310db44cd83d771d650ea6e53a5f988b2",
+  "archivedImplementationCommit": "3ff94df6d321d764bcb0cd6db13377d24651ba49",
+  "versionNotes": "Before any real collection, v2 adds prewrite and completed-write kickoff guards. A failed new capture cannot become prospective evidence. Coefficients and numerical probability calculations are unchanged from division-sor-v1. Both protocol files and Git implementation history are retained."
+}

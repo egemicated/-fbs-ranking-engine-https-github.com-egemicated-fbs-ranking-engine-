@@ -1,7 +1,7 @@
 // Frozen division-aware shadow observations and genuinely saved future forecasts.
 // No fetching, parameter fitting, paid infrastructure or public rank replacement.
 import { createHash } from 'node:crypto';
-import { readFile, mkdir, writeFile } from 'node:fs/promises';
+import { readFile, mkdir, writeFile, unlink } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { validateSeason } from '../src/engine.js';
@@ -101,20 +101,49 @@ export function makeDivisionObservation({ season, snapshot, protocol, sourceEvid
   return { ...data, resultSha256: hash(JSON.stringify(data)), recordedAt, runtime: process.version };
 }
 
-export async function persistDivisionObservation(observation, { directory, evidenceDirectory }) {
+export async function persistDivisionObservation(observation, { directory, evidenceDirectory, clock = Date.now }) {
   if (resultHash(observation) !== observation.resultSha256) throw Error('Division observation checksum is invalid');
   if (!Number.isFinite(numericTime(observation.forecastCapturedAt))) throw Error('Invalid hashed forecast capture time');
   await mkdir(directory, { recursive: true });
   const path = observationPath(observation, directory);
   let saved = observation;
-  try { await writeFile(path, JSON.stringify(observation, null, 2) + '\n', { flag: 'wx' }); }
-  catch (error) {
-    if (error.code !== 'EEXIST') throw error;
-    const existing = JSON.parse(await readFile(path, 'utf8'));
+  const verifyExisting = existing => {
     if (resultHash(existing) !== existing.resultSha256 || existing.resultSha256 !== observation.resultSha256) {
       throw Error('Existing division observation differs; refusing to rewrite frozen history');
     }
-    saved = existing;
+    return existing;
+  };
+  const readExisting = async () => {
+    try { return JSON.parse(await readFile(path, 'utf8')); }
+    catch (error) { if (error.code !== 'ENOENT') throw error; }
+  };
+  const prospectiveKickoffs = observation.forecasts.filter(f => f.phase === 'post-freeze-saved-before-kickoff').map(f => numericTime(f.kickoff));
+  const requireBeforeKickoff = stage => {
+    if (!prospectiveKickoffs.length) return;
+    const now = clock();
+    if (!Number.isFinite(now) || prospectiveKickoffs.some(kickoff => !Number.isFinite(kickoff) || now >= kickoff)) {
+      throw Error(`Prospective forecast kickoff reached ${stage}; no new observation retained`);
+    }
+  };
+  const existing = await readExisting();
+  if (existing !== undefined) saved = verifyExisting(existing);
+  else {
+    requireBeforeKickoff('before observation write');
+    let created = false;
+    try { await writeFile(path, JSON.stringify(observation, null, 2) + '\n', { flag: 'wx' }); created = true; }
+    catch (error) {
+      if (error.code !== 'EEXIST') throw error;
+      saved = verifyExisting(await readExisting());
+    }
+    if (created) {
+      try { requireBeforeKickoff('at observation write completion'); }
+      catch (error) {
+        // Only this successful exclusive write created the path. Existing
+        // immutable records never enter this cleanup or either clock guard.
+        await unlink(path);
+        throw error;
+      }
+    }
   }
   const evidenceName = 'division-comparison.json';
   await atomicJson(join(evidenceDirectory, evidenceName), saved);
@@ -150,7 +179,7 @@ export async function recordDivisionObservation(input, paths) {
 async function main() {
   const year = Number(process.env.RANKING_SEASON || 2026);
   const normalizedBytes = await readFile(`data/seasons/${year}.json`), snapshotBytes = await readFile('published/latest.json');
-  const protocol = JSON.parse(await readFile('research/frozen-division-comparison.json', 'utf8'));
+  const protocol = JSON.parse(await readFile('research/frozen-division-comparison-v2.json', 'utf8'));
   const sourceEvidence = JSON.parse(await readFile('evidence/weekly/manifest.json', 'utf8'));
   const implementationHashes = Object.fromEntries(await Promise.all(IMPLEMENTATION_PATHS.map(async path => [path, hash(await readFile(path))])));
   const result = await recordDivisionObservation({ season: JSON.parse(normalizedBytes), snapshot: JSON.parse(snapshotBytes), protocol,

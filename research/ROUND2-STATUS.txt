@@ -6,7 +6,11 @@ division-aware research tables and saves available next-seven-day forecasts.
 Subsequent updates evaluate first eligible forecasts against confirmed results.
 No extra CFBD calls or paid services. The existing frozen sor-colley-v1 remains.
 
-New frozen candidate: research/frozen-division-comparison.json (division-sor-v1).
+Active frozen candidate: research/frozen-division-comparison-v2.json (division-sor-v2).
+The first division freeze remains intact at frozen-division-comparison.json.
+Before real collection began, v2 added checks that a new forecast file finishes
+writing before kickoff. Coefficients are unchanged; the implementation has its
+own pinned version. Existing genuine captures remain reusable on reruns.
 Separate coefficients are used for retrospective achievement and pregame
 probabilities; each has a matching refitted division-blind control. Inputs,
 implementation hashes and actual forecast capture times are retained. Same-time

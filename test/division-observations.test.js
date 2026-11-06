@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdtemp, readFile, writeFile } from 'node:fs/promises';
+import { mkdtemp, readFile, writeFile, readdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { rankSeason } from '../src/engine.js';
@@ -83,7 +83,7 @@ test('checksums, implementation pins, source matching and published game eligibi
 });
 
 test('committed division freeze pins its actual numerical implementations', async () => {
-  const protocol = JSON.parse(await readFile('research/frozen-division-comparison.json', 'utf8'));
+  const protocol = JSON.parse(await readFile('research/frozen-division-comparison-v2.json', 'utf8'));
   for (const path of IMPLEMENTATION_PATHS) assert.equal(hash(await readFile(path)), protocol.implementationSha256[path], path);
   assert.equal(protocol.forecastHorizonDays, 7); assert.equal(protocol.pregameControlParameters.divisionLogOdds, 0);
   assert.equal(protocol.controlParameters.divisionLogOdds, 0);
@@ -91,7 +91,7 @@ test('committed division freeze pins its actual numerical implementations', asyn
 
 test('division records are immutable, verify their contents and preserve v1 evidence metadata', async () => {
   const input = fixture(), result = makeDivisionObservation(input), root = await mkdtemp(join(tmpdir(), 'fbs-division-observation-'));
-  const paths = { directory: join(root, 'observations'), evidenceDirectory: join(root, 'evidence') };
+  const paths = { directory: join(root, 'observations'), evidenceDirectory: join(root, 'evidence'), clock: () => Date.parse(input.recordedAt) };
   const manifest = { ...input.sourceEvidence, files: [...input.sourceEvidence.files, { name: 'research-comparison.json', sha256: hash('v1') }],
     researchComparison: { protocolId: 'sor-colley-v1', resultSha256: hash('v1'), phase: 'post-freeze-publication' } };
   await atomicJson(join(paths.evidenceDirectory, 'manifest.json'), manifest);
@@ -112,10 +112,12 @@ test('division records are immutable, verify their contents and preserve v1 evid
 
 test('reruns preserve the first hashed capture and verify identical source and protocol inputs', async () => {
   const input = fixture(), root = await mkdtemp(join(tmpdir(), 'fbs-division-rerun-'));
-  const paths = { directory: join(root, 'observations'), evidenceDirectory: join(root, 'evidence') };
+  let now = Date.parse(input.recordedAt);
+  const paths = { directory: join(root, 'observations'), evidenceDirectory: join(root, 'evidence'), clock: () => now };
   await atomicJson(join(paths.evidenceDirectory, 'manifest.json'), input.sourceEvidence);
   const first = await recordDivisionObservation(input, paths), bytes = await readFile(first.path, 'utf8');
   const later = { ...input, recordedAt: '2026-09-09T12:00:00Z' };
+  now = Date.parse(later.recordedAt);
   assert.equal(makeDivisionObservation(later).forecasts.length, 0);
   const reused = await recordDivisionObservation(later, paths);
   assert.equal(reused.observation.forecastCapturedAt, input.recordedAt);
@@ -125,4 +127,42 @@ test('reruns preserve the first hashed capture and verify identical source and p
   const tampered = JSON.parse(bytes); tampered.forecastCapturedAt = '2026-09-04T00:00:00Z';
   await writeFile(first.path, JSON.stringify(tampered));
   await assert.rejects(recordDivisionObservation(input, paths), /checksum or captured time/);
+});
+
+test('new prospective write timing rejects kickoff exactly at prewrite without retaining a record', async () => {
+  const input = fixture(), result = makeDivisionObservation(input), root = await mkdtemp(join(tmpdir(), 'fbs-division-prewrite-'));
+  const paths = { directory: join(root, 'observations'), evidenceDirectory: join(root, 'evidence'),
+    clock: () => Date.parse(result.forecasts[0].kickoff) };
+  await atomicJson(join(paths.evidenceDirectory, 'manifest.json'), input.sourceEvidence);
+  const originalManifest = await readFile(join(paths.evidenceDirectory, 'manifest.json'), 'utf8');
+  await assert.rejects(persistDivisionObservation(result, paths), /kickoff reached before observation write/);
+  assert.deepEqual(await readdir(paths.directory), []);
+  assert.equal(await readFile(join(paths.evidenceDirectory, 'manifest.json'), 'utf8'), originalManifest);
+  await assert.rejects(readFile(join(paths.evidenceDirectory, 'division-comparison.json')), { code: 'ENOENT' });
+});
+
+test('new prospective write timing removes only its newly created file if completion reaches kickoff', async () => {
+  const input = fixture(), result = makeDivisionObservation(input), root = await mkdtemp(join(tmpdir(), 'fbs-division-postwrite-'));
+  const deadline = Date.parse(result.forecasts[0].kickoff); let calls = 0;
+  const paths = { directory: join(root, 'observations'), evidenceDirectory: join(root, 'evidence'),
+    clock: () => (++calls === 1 ? deadline - 1 : deadline) };
+  await atomicJson(join(paths.evidenceDirectory, 'manifest.json'), input.sourceEvidence);
+  const originalManifest = await readFile(join(paths.evidenceDirectory, 'manifest.json'), 'utf8');
+  await assert.rejects(persistDivisionObservation(result, paths), /kickoff reached at observation write completion/);
+  assert.equal(calls, 2); assert.deepEqual(await readdir(paths.directory), []);
+  assert.equal(await readFile(join(paths.evidenceDirectory, 'manifest.json'), 'utf8'), originalManifest);
+  await assert.rejects(readFile(join(paths.evidenceDirectory, 'division-comparison.json')), { code: 'ENOENT' });
+});
+
+test('new prospective write timing accepts completion just before kickoff and preserves existing history later', async () => {
+  const input = fixture(), result = makeDivisionObservation(input), root = await mkdtemp(join(tmpdir(), 'fbs-division-in-time-'));
+  const deadline = Date.parse(result.forecasts[0].kickoff); let calls = 0;
+  const paths = { directory: join(root, 'observations'), evidenceDirectory: join(root, 'evidence'),
+    clock: () => (++calls === 1 ? deadline - 2 : deadline - 1) };
+  await atomicJson(join(paths.evidenceDirectory, 'manifest.json'), input.sourceEvidence);
+  const saved = await persistDivisionObservation(result, paths), bytes = await readFile(saved.path, 'utf8');
+  assert.equal(calls, 2);
+  const reused = await persistDivisionObservation(result, { ...paths, clock: () => { throw Error('Existing record must not use new-capture clock'); } });
+  assert.equal(reused.observation.resultSha256, result.resultSha256);
+  assert.equal(await readFile(saved.path, 'utf8'), bytes);
 });

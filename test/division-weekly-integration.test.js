@@ -11,7 +11,7 @@ import { evaluateForecasts } from '../research/evaluate_division_forecasts.mjs';
 
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
 test('two weekly checkpoints preserve the first forecast, then score a confirmed result without provider access',async()=>{
-  const protocol=JSON.parse(await readFile('research/frozen-division-comparison.json','utf8'));
+  const protocol=JSON.parse(await readFile('research/frozen-division-comparison-v2.json','utf8'));
   const implementationHashes=Object.fromEntries(await Promise.all(IMPLEMENTATION_PATHS.map(async p=>[p,sha(await readFile(p))])));
   const source={provider:'cfbd',sha256:sha('fixture-first-source'),fetchedAt:'2026-11-08T14:59:00Z'};
   const season={year:2026,source,teams:[{id:'a',name:'A',division:'fbs',conference:'Example'},{id:'b',name:'B',division:'fbs',conference:'Example'},{id:'c',name:'C',division:'fcs',conference:'Example'}],games:[
@@ -22,7 +22,7 @@ test('two weekly checkpoints preserve the first forecast, then score a confirmed
   const sourceEvidence={status:'validated',snapshotHash:snapshot.snapshotHash,files:[{name:'normalized-season.json',sha256:sha(normalizedBytes)},{name:'snapshot.json',sha256:sha(snapshotBytes)},{name:'provider-responses.json',sha256:sha('fixture-raw')}],researchComparison:{protocolId:'sor-colley-v1'}};
   const input={season,snapshot,protocol,sourceEvidence,implementationHashes,normalizedBytes,snapshotBytes,recordedAt:'2026-11-08T15:00:01Z'};
   const observed=makeDivisionObservation(input);assert.equal(observed.forecasts.length,1);assert.equal(observed.controlRows.length,observed.rows.length);
-  const root=await mkdtemp(join(tmpdir(),'division-weekly-integration-')),paths={directory:join(root,'observations'),evidenceDirectory:join(root,'evidence')};
+  const root=await mkdtemp(join(tmpdir(),'division-weekly-integration-')),paths={directory:join(root,'observations'),evidenceDirectory:join(root,'evidence'),clock:()=>Date.parse('2026-11-08T15:00:03Z')};
   await atomicJson(join(paths.evidenceDirectory,'manifest.json'),sourceEvidence);
   const first=await recordDivisionObservation(input,paths);
   const again=await recordDivisionObservation({...input,recordedAt:'2026-11-15T15:00:00Z'},paths);
@@ -36,7 +36,7 @@ test('two weekly checkpoints preserve the first forecast, then score a confirmed
   assert.equal(manifest.researchComparison.protocolId,'sor-colley-v1');
 });
 test('frozen evaluator pin and existing weekly fetch/schedule are preserved',async()=>{
-  const protocol=JSON.parse(await readFile('research/frozen-division-comparison.json','utf8'));
+  const protocol=JSON.parse(await readFile('research/frozen-division-comparison-v2.json','utf8'));
   const path='research/evaluate_division_forecasts.mjs';assert.equal(protocol.evaluationImplementationSha256[path],sha(await readFile(path)));
   const workflow=await readFile('.github/workflows/weekly.yml','utf8');
   assert.match(workflow,/cron: '0 8 \* \* 0'/);assert.match(workflow,/timezone: 'America\/Denver'/);
