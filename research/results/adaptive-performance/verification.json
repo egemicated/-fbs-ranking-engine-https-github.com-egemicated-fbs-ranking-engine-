@@ -1,0 +1,61 @@
+{
+  "candidate": "adaptive-net-success-rate",
+  "runFingerprint": "a2232c44772a04ef2d2dc01e40a86a707c035f792fb47a5ce9dfc905c0e0e03c",
+  "decision": "hold-public-promotion",
+  "engineeringChecks": {
+    "completeCurrentCoverage": true,
+    "evaluationCoverage": true,
+    "exactScores": true,
+    "exactContext": true,
+    "repeated2023to2025BiasWithinTwoPoints": false,
+    "repeated2023to2025MseBeatsMatchedRaw": true,
+    "repeated2023to2025BlockIntervalFavorsAdaptive": true,
+    "supplemental2021to2022BiasWithinTwoPoints": true,
+    "supplemental2021to2022MseBeatsMatchedRaw": true,
+    "supplemental2021to2022BlockIntervalFavorsAdaptive": true
+  },
+  "passedEngineeringChecks": 9,
+  "totalEngineeringChecks": 10,
+  "nodeTests": 99,
+  "pythonPerformanceTests": 59,
+  "apiCallsThisRound": 12,
+  "remainingCallsReported": 978,
+  "liveModelChanged": false,
+  "weeklyWorkflowChanged": false,
+  "rawSourcesPublic": false,
+  "decryptedSourcesInIgnoredCache": true,
+  "sourceCaptureCommit": "89a191ecb54bc90ef29b23a28da025221bbf90a1",
+  "v1ProtocolCommit": "057d151afec30f43fcfc95501f010cfc72e3566d",
+  "v2ProtocolCommit": "b5d7d6fea175b2060e4dd8eba21c89f975f8022b",
+  "v2ReplayCommit": "d47fad337293afaf0cf7dbda69c628b317e7950f",
+  "sourceRunIds": [
+    42294863699,
+    42296552955
+  ],
+  "artifactZipSha256": [
+    "1a9e43835fc437826a5473dc372e1e53921de50677d18886675d221ece774c77",
+    "65f3c7c15bdce1ab5b3d5d0c11632906abd2d2a41f4eaff3acab4704db43dec0"
+  ],
+  "files": {
+    "research/results/adaptive-performance/REPORT.txt": {
+      "bytes": 7971,
+      "sha256": "a456639957b7871ef44599e8c7f064d70b79163f0a64ea71f4f8ddade9c56fda"
+    },
+    "research/results/adaptive-performance/a2232c44772a/experiment.json.gz": {
+      "bytes": 406248,
+      "sha256": "81412fbc9aed61448576cba22f0776792b909aa8b0b883e114b037c0222f5df8"
+    },
+    "research/results/adaptive-performance/a2232c44772a/current-ratings.csv": {
+      "bytes": 14777,
+      "sha256": "98e6f76688e35d34d6e624c5344cc890ef0646fee078d56e8175894e7dd61ff8"
+    },
+    "research/results/adaptive-performance/a2232c44772a/snapshot-comparison.csv": {
+      "bytes": 14724,
+      "sha256": "b82cf2114b36a8549b4a090d5fae13056e88bee03dad850256a1c2b9b6ef0e43"
+    },
+    "research/results/advanced-performance/4bf5494b85bc/experiment.json.gz": {
+      "bytes": 387553,
+      "sha256": "3f477c6b9fdbc304ce3b1d2e6b1a8be03f541f193ea334ff691e924fe05c7081"
+    }
+  }
+}
