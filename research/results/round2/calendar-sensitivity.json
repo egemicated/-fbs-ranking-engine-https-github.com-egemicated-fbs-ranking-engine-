@@ -1,0 +1,1268 @@
+{
+  "status": "Bounded in-memory source-choice sensitivity; not a verified correction, selected model or freeze change",
+  "primaryRunFingerprint": "6489ccaec521c1337e8859fc5eb18205519ca8f7711805890815127b6636aaa0",
+  "primaryReportSha256": "7e141ba6d45ba94517b008794290a31900796d61bc151d90004feafca5a71be8",
+  "inputSha256": {
+    "2014": "f6c41ef2dd5b751407efa196c2c6a76aaef7e226ab4766678120e7eb8783f193",
+    "2015": "ec50d753edeb723aa0b2a2bc2c7b5f4e9d81ba152f950b8cd54819f51b9875be",
+    "2016": "3846e2ea6963eda4baec894c901f7cd12a80893e525e006d2d7e4df4f1f1200a",
+    "2017": "b2610ad25d7ebd931de5dd05f4e14df8f8bf2b0052a2549c0d65a4530b8af3f4",
+    "2018": "089672a2e3509990c36a75e30910ebe4abf2e37091a89551166aaf287f41fdb3",
+    "2019": "8966102ad775cf682a905f70d7b6a50fa204019135587a6fe287871a7994fd53",
+    "2021": "0984695be1618d188d80d9d62de550ebda1d8afe542fde20075a8f54e45e0bd6",
+    "2022": "58935e17f016e04abc58f5aa3d7e3ad91822430459828108bb98ba872e7db694",
+    "2023": "5e7e5975fcde9caf5b1e12f5a39449005fac05a7b41a9399b6ed86621f2dd397",
+    "2024": "84a3f1132e3805d71c9ba02ba285b9e66806646804c570f1dfd6e6568bddae98",
+    "2025": "2b652655b8bdb89d92a939a0bc4c34b0e3036526edef3c442e36b0df129907ff"
+  },
+  "repairManifestSha256": "829d28772be256814fbdf7a88a5b95c09df3637830454c9efa8116c2def17b32",
+  "implementationSha256": {
+    "round2_experiment.py": "5b2fafc733991d631ecd2dc05ff47cd9851cf8c4359295a1e26022c2c15e6924",
+    "division_experiment.py": "cb7dcd2ed9009210172d899c61ddb2fdaa903bffd87ccdc36527dabfa0ac15ea",
+    "compare_merit.py": "7756400de628989ec35439260346be1a8a710ca430b3995d67e55de12562990a",
+    "replay_weekly.py": "286db8fc077464f9a6df0b81b3430b44ada4bc89863705427cdefb2cc94f4058"
+  },
+  "context": "prior-week-only",
+  "population": "fullSource",
+  "trainingYears": [
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019
+  ],
+  "evaluationYears": [
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "patchPolicy": "Only differing week, seasonType and startDate from the 67 retained FCS-FCS source disagreements are substituted in memory. Nodes, outcomes, scores, venue, identities and source files remain unchanged.",
+  "patchedContextGames": 29,
+  "fieldCounts": {
+    "week": 6,
+    "startDate": 2,
+    "seasonType": 24
+  },
+  "patches": [
+    {
+      "season": 2019,
+      "id": "401127020",
+      "before": {
+        "week": 12
+      },
+      "alternative": {
+        "week": 13
+      },
+      "sources": [
+        "fcs-201911.json"
+      ]
+    },
+    {
+      "season": 2019,
+      "id": "401127013",
+      "before": {
+        "week": 12
+      },
+      "alternative": {
+        "week": 13
+      },
+      "sources": [
+        "fcs-201911.json"
+      ]
+    },
+    {
+      "season": 2019,
+      "id": "401126995",
+      "before": {
+        "week": 12
+      },
+      "alternative": {
+        "week": 13
+      },
+      "sources": [
+        "fcs-201911.json"
+      ]
+    },
+    {
+      "season": 2022,
+      "id": "401422971",
+      "before": {
+        "startDate": "2022-11-05T19:00:00.000Z"
+      },
+      "alternative": {
+        "startDate": "2022-11-05T19:22:00.000Z"
+      },
+      "sources": [
+        "fcs-202211.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401614603",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202311.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401614601",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202311.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401614616",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202311.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401614599",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202311.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401614602",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202311.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401614615",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202311.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401614604",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202311.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401614600",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202311.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401615860",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202312.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401615939",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202312.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401615901",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202312.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401615819",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202312.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401615899",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202312.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401615900",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202312.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401539485",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202312.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401615859",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202312.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401615879",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202312.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401617310",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202312.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401617307",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202312.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401617308",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202312.json"
+      ]
+    },
+    {
+      "season": 2023,
+      "id": "401617309",
+      "before": {
+        "seasonType": "postseason"
+      },
+      "alternative": {
+        "seasonType": "regular"
+      },
+      "sources": [
+        "fcs-202312.json"
+      ]
+    },
+    {
+      "season": 2024,
+      "id": "401729783",
+      "before": {
+        "startDate": "2024-12-14T21:00:00.000Z"
+      },
+      "alternative": {
+        "startDate": "2024-12-14T20:00:00.000Z"
+      },
+      "sources": [
+        "fcs-202412.json"
+      ]
+    },
+    {
+      "season": 2025,
+      "id": "401833986",
+      "before": {
+        "week": 16,
+        "seasonType": "regular"
+      },
+      "alternative": {
+        "week": 1,
+        "seasonType": "postseason"
+      },
+      "sources": [
+        "fcs-202512.json"
+      ]
+    },
+    {
+      "season": 2025,
+      "id": "401833987",
+      "before": {
+        "week": 16,
+        "seasonType": "regular"
+      },
+      "alternative": {
+        "week": 1,
+        "seasonType": "postseason"
+      },
+      "sources": [
+        "fcs-202512.json"
+      ]
+    },
+    {
+      "season": 2025,
+      "id": "401836219",
+      "before": {
+        "week": 16,
+        "seasonType": "regular"
+      },
+      "alternative": {
+        "week": 1,
+        "seasonType": "postseason"
+      },
+      "sources": [
+        "fcs-202512.json"
+      ]
+    }
+  ],
+  "targetFeatureChangesByYear": {
+    "2014": {
+      "patchedContextGames": 0,
+      "fbsInvolvingTargets": 868,
+      "fbsInvolvingRatingFeaturesChanged": 0,
+      "maxAbsFbsRatingDifferenceChange": 0.0,
+      "otherFbsTargetFieldsChanged": [],
+      "changedTargetIds": []
+    },
+    "2015": {
+      "patchedContextGames": 0,
+      "fbsInvolvingTargets": 870,
+      "fbsInvolvingRatingFeaturesChanged": 0,
+      "maxAbsFbsRatingDifferenceChange": 0.0,
+      "otherFbsTargetFieldsChanged": [],
+      "changedTargetIds": []
+    },
+    "2016": {
+      "patchedContextGames": 0,
+      "fbsInvolvingTargets": 873,
+      "fbsInvolvingRatingFeaturesChanged": 0,
+      "maxAbsFbsRatingDifferenceChange": 0.0,
+      "otherFbsTargetFieldsChanged": [],
+      "changedTargetIds": []
+    },
+    "2017": {
+      "patchedContextGames": 0,
+      "fbsInvolvingTargets": 874,
+      "fbsInvolvingRatingFeaturesChanged": 0,
+      "maxAbsFbsRatingDifferenceChange": 0.0,
+      "otherFbsTargetFieldsChanged": [],
+      "changedTargetIds": []
+    },
+    "2018": {
+      "patchedContextGames": 0,
+      "fbsInvolvingTargets": 884,
+      "fbsInvolvingRatingFeaturesChanged": 0,
+      "maxAbsFbsRatingDifferenceChange": 0.0,
+      "otherFbsTargetFieldsChanged": [],
+      "changedTargetIds": []
+    },
+    "2019": {
+      "patchedContextGames": 3,
+      "fbsInvolvingTargets": 888,
+      "fbsInvolvingRatingFeaturesChanged": 0,
+      "maxAbsFbsRatingDifferenceChange": 0.0,
+      "otherFbsTargetFieldsChanged": [],
+      "changedTargetIds": []
+    },
+    "2021": {
+      "patchedContextGames": 0,
+      "fbsInvolvingTargets": 887,
+      "fbsInvolvingRatingFeaturesChanged": 0,
+      "maxAbsFbsRatingDifferenceChange": 0.0,
+      "otherFbsTargetFieldsChanged": [],
+      "changedTargetIds": []
+    },
+    "2022": {
+      "patchedContextGames": 1,
+      "fbsInvolvingTargets": 896,
+      "fbsInvolvingRatingFeaturesChanged": 0,
+      "maxAbsFbsRatingDifferenceChange": 0.0,
+      "otherFbsTargetFieldsChanged": [],
+      "changedTargetIds": []
+    },
+    "2023": {
+      "patchedContextGames": 21,
+      "fbsInvolvingTargets": 910,
+      "fbsInvolvingRatingFeaturesChanged": 0,
+      "maxAbsFbsRatingDifferenceChange": 0.0,
+      "otherFbsTargetFieldsChanged": [],
+      "changedTargetIds": []
+    },
+    "2024": {
+      "patchedContextGames": 1,
+      "fbsInvolvingTargets": 919,
+      "fbsInvolvingRatingFeaturesChanged": 0,
+      "maxAbsFbsRatingDifferenceChange": 0.0,
+      "otherFbsTargetFieldsChanged": [],
+      "changedTargetIds": []
+    },
+    "2025": {
+      "patchedContextGames": 3,
+      "fbsInvolvingTargets": 934,
+      "fbsInvolvingRatingFeaturesChanged": 0,
+      "maxAbsFbsRatingDifferenceChange": 0.0,
+      "otherFbsTargetFieldsChanged": [],
+      "changedTargetIds": []
+    }
+  },
+  "fits": {
+    "declaredPrimary": {
+      "refitControl": [
+        4.237296483984539,
+        0.5937205978643566
+      ],
+      "divisionResidual": [
+        4.324350282686707,
+        0.3864661962213115,
+        2.364209064768193
+      ],
+      "convergence": {
+        "control": {
+          "iterations": 6,
+          "maxAbsGradient": 1.2811973704174306e-13,
+          "hessianConditionNumber": 28.220737780051874
+        },
+        "candidate": {
+          "iterations": 7,
+          "maxAbsGradient": 1.9761969838327786e-14,
+          "hessianConditionNumber": 27.889432891707777
+        }
+      }
+    },
+    "alternativeSourceCalendar": {
+      "refitControl": [
+        4.237296483984539,
+        0.5937205978643566
+      ],
+      "divisionResidual": [
+        4.324350282686707,
+        0.3864661962213115,
+        2.364209064768193
+      ],
+      "convergence": {
+        "control": {
+          "iterations": 6,
+          "maxAbsGradient": 1.2811973704174306e-13,
+          "hessianConditionNumber": 28.220737780051874
+        },
+        "candidate": {
+          "iterations": 7,
+          "maxAbsGradient": 1.9761969838327786e-14,
+          "hessianConditionNumber": 27.889432891707777
+        }
+      }
+    }
+  },
+  "scores": {
+    "declaredPrimary": {
+      "pooled": {
+        "FBS-involving": {
+          "refitControl": {
+            "games": 4546,
+            "logLoss": 0.5920404247097375,
+            "brier": 0.20295199989706053,
+            "predictedWinRate": 0.6219331610609887,
+            "observedWinRate": 0.6302243730752309,
+            "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+          },
+          "divisionResidual": {
+            "games": 4546,
+            "logLoss": 0.5552958071182741,
+            "brier": 0.18948253739076146,
+            "predictedWinRate": 0.6251418459540465,
+            "observedWinRate": 0.6302243730752309,
+            "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+          }
+        },
+        "FBS-FBS": {
+          "refitControl": {
+            "games": 3944,
+            "logLoss": 0.6108575648605862,
+            "brier": 0.21141713398664422,
+            "predictedWinRate": 0.6165813047477195,
+            "observedWinRate": 0.5824036511156186,
+            "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+          },
+          "divisionResidual": {
+            "games": 3944,
+            "logLoss": 0.6075497732545365,
+            "brier": 0.21022926737176248,
+            "predictedWinRate": 0.5776668288308664,
+            "observedWinRate": 0.5824036511156186,
+            "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+          }
+        },
+        "FBS-FCS": {
+          "refitControl": {
+            "games": 602,
+            "logLoss": 0.4687600247845762,
+            "brier": 0.14749271609420664,
+            "predictedWinRate": 0.6569958210269907,
+            "observedWinRate": 0.9435215946843853,
+            "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+          },
+          "divisionResidual": {
+            "games": 602,
+            "logLoss": 0.2129542083783754,
+            "brier": 0.053560439309253124,
+            "predictedWinRate": 0.9361741840500977,
+            "observedWinRate": 0.9435215946843853,
+            "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+          }
+        }
+      },
+      "byYear": {
+        "2021": {
+          "FBS-involving": {
+            "refitControl": {
+              "games": 887,
+              "logLoss": 0.5908831184080768,
+              "brier": 0.20244529518546012,
+              "predictedWinRate": 0.6201993338795407,
+              "observedWinRate": 0.6178128523111612,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 887,
+              "logLoss": 0.5660858786675523,
+              "brier": 0.1921693423545419,
+              "predictedWinRate": 0.6234005778380702,
+              "observedWinRate": 0.6178128523111612,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FBS": {
+            "refitControl": {
+              "games": 770,
+              "logLoss": 0.6051385826457379,
+              "brier": 0.2085196012684304,
+              "predictedWinRate": 0.6150238735782172,
+              "observedWinRate": 0.5753246753246753,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 770,
+              "logLoss": 0.6012172804624298,
+              "brier": 0.2072349716069596,
+              "predictedWinRate": 0.5760844410139767,
+              "observedWinRate": 0.5753246753246753,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FCS": {
+            "refitControl": {
+              "games": 117,
+              "logLoss": 0.49706510590381137,
+              "brier": 0.1624690927590745,
+              "predictedWinRate": 0.6542600555207295,
+              "observedWinRate": 0.8974358974358975,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 117,
+              "logLoss": 0.33487921728246167,
+              "brier": 0.0930194746249555,
+              "predictedWinRate": 0.9347973757402247,
+              "observedWinRate": 0.8974358974358975,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          }
+        },
+        "2022": {
+          "FBS-involving": {
+            "refitControl": {
+              "games": 896,
+              "logLoss": 0.6130862240877544,
+              "brier": 0.21139296208324984,
+              "predictedWinRate": 0.6281931690092438,
+              "observedWinRate": 0.625,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 896,
+              "logLoss": 0.5776387235885735,
+              "brier": 0.1983742624559691,
+              "predictedWinRate": 0.6313167584206241,
+              "observedWinRate": 0.625,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FBS": {
+            "refitControl": {
+              "games": 776,
+              "logLoss": 0.6345935893326303,
+              "brier": 0.22097099468310066,
+              "predictedWinRate": 0.6237490741805999,
+              "observedWinRate": 0.5773195876288659,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 776,
+              "logLoss": 0.6302383976972703,
+              "brier": 0.2196174092659866,
+              "predictedWinRate": 0.5843751173084324,
+              "observedWinRate": 0.5773195876288659,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FCS": {
+            "refitControl": {
+              "games": 120,
+              "logLoss": 0.47400526217088923,
+              "brier": 0.1494550179375483,
+              "predictedWinRate": 0.6569316489011415,
+              "observedWinRate": 0.9333333333333333,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 120,
+              "logLoss": 0.2374941643523337,
+              "brier": 0.061001913084522505,
+              "predictedWinRate": 0.934872704279464,
+              "observedWinRate": 0.9333333333333333,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          }
+        },
+        "2023": {
+          "FBS-involving": {
+            "refitControl": {
+              "games": 910,
+              "logLoss": 0.5820906078270329,
+              "brier": 0.19798961459079592,
+              "predictedWinRate": 0.6171363945913654,
+              "observedWinRate": 0.6296703296703297,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 910,
+              "logLoss": 0.5367779588152107,
+              "brier": 0.18180866118577652,
+              "predictedWinRate": 0.6202756832330307,
+              "observedWinRate": 0.6296703296703297,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FBS": {
+            "refitControl": {
+              "games": 792,
+              "logLoss": 0.5985142837772048,
+              "brier": 0.20528332721490664,
+              "predictedWinRate": 0.6128967437136162,
+              "observedWinRate": 0.5795454545454546,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 792,
+              "logLoss": 0.5944484860478785,
+              "brier": 0.20380873012118614,
+              "predictedWinRate": 0.5738264768600584,
+              "observedWinRate": 0.5795454545454546,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FCS": {
+            "refitControl": {
+              "games": 118,
+              "logLoss": 0.47185712178859146,
+              "brier": 0.14903520443574764,
+              "predictedWinRate": 0.6455923564149018,
+              "observedWinRate": 0.9661016949152542,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 118,
+              "logLoss": 0.1497011997620504,
+              "brier": 0.03414718155150194,
+              "predictedWinRate": 0.932036458210946,
+              "observedWinRate": 0.9661016949152542,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          }
+        },
+        "2024": {
+          "FBS-involving": {
+            "refitControl": {
+              "games": 919,
+              "logLoss": 0.6014174729916391,
+              "brier": 0.2068936109357943,
+              "predictedWinRate": 0.6237828524989005,
+              "observedWinRate": 0.6322089227421109,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 919,
+              "logLoss": 0.5649496779948113,
+              "brier": 0.19394891539769088,
+              "predictedWinRate": 0.6275466735934682,
+              "observedWinRate": 0.6322089227421109,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FBS": {
+            "refitControl": {
+              "games": 798,
+              "logLoss": 0.623686343448202,
+              "brier": 0.21720175333704447,
+              "predictedWinRate": 0.6182025382572405,
+              "observedWinRate": 0.5839598997493735,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 798,
+              "logLoss": 0.6208832185608728,
+              "brier": 0.21609674480701288,
+              "predictedWinRate": 0.5801134759542653,
+              "observedWinRate": 0.5839598997493735,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FCS": {
+            "refitControl": {
+              "games": 121,
+              "logLoss": 0.4545533521293479,
+              "brier": 0.1389109858432518,
+              "predictedWinRate": 0.660585255514146,
+              "observedWinRate": 0.9504132231404959,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 121,
+              "logLoss": 0.19606566665830566,
+              "brier": 0.047883065243649985,
+              "predictedWinRate": 0.9403705720735008,
+              "observedWinRate": 0.9504132231404959,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          }
+        },
+        "2025": {
+          "FBS-involving": {
+            "refitControl": {
+              "games": 934,
+              "logLoss": 0.5734176414539169,
+              "brier": 0.19629223013739067,
+              "predictedWinRate": 0.620427945476646,
+              "observedWinRate": 0.645610278372591,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 934,
+              "logLoss": 0.5321579998363167,
+              "brier": 0.18148301308334053,
+              "predictedWinRate": 0.6232467225325402,
+              "observedWinRate": 0.645610278372591,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FBS": {
+            "refitControl": {
+              "games": 808,
+              "logLoss": 0.5929404542420805,
+              "brier": 0.20530222435071743,
+              "predictedWinRate": 0.6131920237068954,
+              "observedWinRate": 0.5952970297029703,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 808,
+              "logLoss": 0.5914678140906471,
+              "brier": 0.20456494576050874,
+              "predictedWinRate": 0.5740801222922784,
+              "observedWinRate": 0.5952970297029703,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FCS": {
+            "refitControl": {
+              "games": 126,
+              "logLoss": 0.448223730875852,
+              "brier": 0.1385138545471684,
+              "predictedWinRate": 0.6668297295239369,
+              "observedWinRate": 0.9682539682539683,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 126,
+              "logLoss": 0.15182204811013492,
+              "brier": 0.03346554004245252,
+              "predictedWinRate": 0.9385373018510443,
+              "observedWinRate": 0.9682539682539683,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          }
+        }
+      }
+    },
+    "alternativeSourceCalendar": {
+      "pooled": {
+        "FBS-involving": {
+          "refitControl": {
+            "games": 4546,
+            "logLoss": 0.5920404247097375,
+            "brier": 0.20295199989706053,
+            "predictedWinRate": 0.6219331610609887,
+            "observedWinRate": 0.6302243730752309,
+            "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+          },
+          "divisionResidual": {
+            "games": 4546,
+            "logLoss": 0.5552958071182741,
+            "brier": 0.18948253739076146,
+            "predictedWinRate": 0.6251418459540465,
+            "observedWinRate": 0.6302243730752309,
+            "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+          }
+        },
+        "FBS-FBS": {
+          "refitControl": {
+            "games": 3944,
+            "logLoss": 0.6108575648605862,
+            "brier": 0.21141713398664422,
+            "predictedWinRate": 0.6165813047477195,
+            "observedWinRate": 0.5824036511156186,
+            "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+          },
+          "divisionResidual": {
+            "games": 3944,
+            "logLoss": 0.6075497732545365,
+            "brier": 0.21022926737176248,
+            "predictedWinRate": 0.5776668288308664,
+            "observedWinRate": 0.5824036511156186,
+            "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+          }
+        },
+        "FBS-FCS": {
+          "refitControl": {
+            "games": 602,
+            "logLoss": 0.4687600247845762,
+            "brier": 0.14749271609420664,
+            "predictedWinRate": 0.6569958210269907,
+            "observedWinRate": 0.9435215946843853,
+            "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+          },
+          "divisionResidual": {
+            "games": 602,
+            "logLoss": 0.2129542083783754,
+            "brier": 0.053560439309253124,
+            "predictedWinRate": 0.9361741840500977,
+            "observedWinRate": 0.9435215946843853,
+            "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+          }
+        }
+      },
+      "byYear": {
+        "2021": {
+          "FBS-involving": {
+            "refitControl": {
+              "games": 887,
+              "logLoss": 0.5908831184080768,
+              "brier": 0.20244529518546012,
+              "predictedWinRate": 0.6201993338795407,
+              "observedWinRate": 0.6178128523111612,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 887,
+              "logLoss": 0.5660858786675523,
+              "brier": 0.1921693423545419,
+              "predictedWinRate": 0.6234005778380702,
+              "observedWinRate": 0.6178128523111612,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FBS": {
+            "refitControl": {
+              "games": 770,
+              "logLoss": 0.6051385826457379,
+              "brier": 0.2085196012684304,
+              "predictedWinRate": 0.6150238735782172,
+              "observedWinRate": 0.5753246753246753,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 770,
+              "logLoss": 0.6012172804624298,
+              "brier": 0.2072349716069596,
+              "predictedWinRate": 0.5760844410139767,
+              "observedWinRate": 0.5753246753246753,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FCS": {
+            "refitControl": {
+              "games": 117,
+              "logLoss": 0.49706510590381137,
+              "brier": 0.1624690927590745,
+              "predictedWinRate": 0.6542600555207295,
+              "observedWinRate": 0.8974358974358975,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 117,
+              "logLoss": 0.33487921728246167,
+              "brier": 0.0930194746249555,
+              "predictedWinRate": 0.9347973757402247,
+              "observedWinRate": 0.8974358974358975,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          }
+        },
+        "2022": {
+          "FBS-involving": {
+            "refitControl": {
+              "games": 896,
+              "logLoss": 0.6130862240877544,
+              "brier": 0.21139296208324984,
+              "predictedWinRate": 0.6281931690092438,
+              "observedWinRate": 0.625,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 896,
+              "logLoss": 0.5776387235885735,
+              "brier": 0.1983742624559691,
+              "predictedWinRate": 0.6313167584206241,
+              "observedWinRate": 0.625,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FBS": {
+            "refitControl": {
+              "games": 776,
+              "logLoss": 0.6345935893326303,
+              "brier": 0.22097099468310066,
+              "predictedWinRate": 0.6237490741805999,
+              "observedWinRate": 0.5773195876288659,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 776,
+              "logLoss": 0.6302383976972703,
+              "brier": 0.2196174092659866,
+              "predictedWinRate": 0.5843751173084324,
+              "observedWinRate": 0.5773195876288659,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FCS": {
+            "refitControl": {
+              "games": 120,
+              "logLoss": 0.47400526217088923,
+              "brier": 0.1494550179375483,
+              "predictedWinRate": 0.6569316489011415,
+              "observedWinRate": 0.9333333333333333,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 120,
+              "logLoss": 0.2374941643523337,
+              "brier": 0.061001913084522505,
+              "predictedWinRate": 0.934872704279464,
+              "observedWinRate": 0.9333333333333333,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          }
+        },
+        "2023": {
+          "FBS-involving": {
+            "refitControl": {
+              "games": 910,
+              "logLoss": 0.5820906078270329,
+              "brier": 0.19798961459079592,
+              "predictedWinRate": 0.6171363945913654,
+              "observedWinRate": 0.6296703296703297,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 910,
+              "logLoss": 0.5367779588152107,
+              "brier": 0.18180866118577652,
+              "predictedWinRate": 0.6202756832330307,
+              "observedWinRate": 0.6296703296703297,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FBS": {
+            "refitControl": {
+              "games": 792,
+              "logLoss": 0.5985142837772048,
+              "brier": 0.20528332721490664,
+              "predictedWinRate": 0.6128967437136162,
+              "observedWinRate": 0.5795454545454546,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 792,
+              "logLoss": 0.5944484860478785,
+              "brier": 0.20380873012118614,
+              "predictedWinRate": 0.5738264768600584,
+              "observedWinRate": 0.5795454545454546,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FCS": {
+            "refitControl": {
+              "games": 118,
+              "logLoss": 0.47185712178859146,
+              "brier": 0.14903520443574764,
+              "predictedWinRate": 0.6455923564149018,
+              "observedWinRate": 0.9661016949152542,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 118,
+              "logLoss": 0.1497011997620504,
+              "brier": 0.03414718155150194,
+              "predictedWinRate": 0.932036458210946,
+              "observedWinRate": 0.9661016949152542,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          }
+        },
+        "2024": {
+          "FBS-involving": {
+            "refitControl": {
+              "games": 919,
+              "logLoss": 0.6014174729916391,
+              "brier": 0.2068936109357943,
+              "predictedWinRate": 0.6237828524989005,
+              "observedWinRate": 0.6322089227421109,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 919,
+              "logLoss": 0.5649496779948113,
+              "brier": 0.19394891539769088,
+              "predictedWinRate": 0.6275466735934682,
+              "observedWinRate": 0.6322089227421109,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FBS": {
+            "refitControl": {
+              "games": 798,
+              "logLoss": 0.623686343448202,
+              "brier": 0.21720175333704447,
+              "predictedWinRate": 0.6182025382572405,
+              "observedWinRate": 0.5839598997493735,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 798,
+              "logLoss": 0.6208832185608728,
+              "brier": 0.21609674480701288,
+              "predictedWinRate": 0.5801134759542653,
+              "observedWinRate": 0.5839598997493735,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FCS": {
+            "refitControl": {
+              "games": 121,
+              "logLoss": 0.4545533521293479,
+              "brier": 0.1389109858432518,
+              "predictedWinRate": 0.660585255514146,
+              "observedWinRate": 0.9504132231404959,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 121,
+              "logLoss": 0.19606566665830566,
+              "brier": 0.047883065243649985,
+              "predictedWinRate": 0.9403705720735008,
+              "observedWinRate": 0.9504132231404959,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          }
+        },
+        "2025": {
+          "FBS-involving": {
+            "refitControl": {
+              "games": 934,
+              "logLoss": 0.5734176414539169,
+              "brier": 0.19629223013739067,
+              "predictedWinRate": 0.620427945476646,
+              "observedWinRate": 0.645610278372591,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 934,
+              "logLoss": 0.5321579998363167,
+              "brier": 0.18148301308334053,
+              "predictedWinRate": 0.6232467225325402,
+              "observedWinRate": 0.645610278372591,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FBS": {
+            "refitControl": {
+              "games": 808,
+              "logLoss": 0.5929404542420805,
+              "brier": 0.20530222435071743,
+              "predictedWinRate": 0.6131920237068954,
+              "observedWinRate": 0.5952970297029703,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 808,
+              "logLoss": 0.5914678140906471,
+              "brier": 0.20456494576050874,
+              "predictedWinRate": 0.5740801222922784,
+              "observedWinRate": 0.5952970297029703,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          },
+          "FBS-FCS": {
+            "refitControl": {
+              "games": 126,
+              "logLoss": 0.448223730875852,
+              "brier": 0.1385138545471684,
+              "predictedWinRate": 0.6668297295239369,
+              "observedWinRate": 0.9682539682539683,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            },
+            "divisionResidual": {
+              "games": 126,
+              "logLoss": 0.15182204811013492,
+              "brier": 0.03346554004245252,
+              "predictedWinRate": 0.9385373018510443,
+              "observedWinRate": 0.9682539682539683,
+              "calibrationOrientation": "FBS win for crossdivision games; home/listed-A win otherwise"
+            }
+          }
+        }
+      }
+    }
+  },
+  "cfbdCalls": 0,
+  "limitations": [
+    "Alternative source calendar values have not been individually adjudicated as factual corrections.",
+    "Historical preweek results use corrected retrospective data and a conservative kickoff-plus24h availability rule.",
+    "This diagnostic does not replace the declared primary calendar or frozen candidate.",
+    "Neutral/orientation disagreements are outside this calendar diagnostic; their FCS-FCS-only status means they do not enter the FBS-involving calibration fit."
+  ],
+  "numericalComparison": {
+    "fbsInvolvingTargets": 9803,
+    "fbsInvolvingRatingFeaturesChanged": 0,
+    "coefficientsExactlyEqual": true,
+    "fbsInvolvingScoreReportsExactlyEqual": true,
+    "allOriginalDatasetHashesStillMatch": true
+  }
+}

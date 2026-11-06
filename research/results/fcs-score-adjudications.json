@@ -1,0 +1,28 @@
+{
+  "version": "fcs-score-adjudications-v1",
+  "scope": "Three 2022 FCS quarterfinal absolute-score corrections; winners, participants, dates and venues unchanged",
+  "verification": "Independently checked against NCAA records PDF page 30 and each winning school's primary result source by the primary-source review agent on 2026-11-06",
+  "ncaaPdfSha256": "c6998f297937ef216307fc0649d5499c41e1a538f8aedd31dc6f86ed2132ef2c",
+  "seasons": {
+    "2022": [
+      {
+        "id": "401507650",
+        "expected": {"home": "2449", "away": "2535", "startDate": "2022-12-10T00:00:00.000Z", "homePoints": 24, "awayPoints": 3},
+        "correctedScores": {"homePoints": 27, "awayPoints": 9},
+        "sourceUrls": ["https://s3.amazonaws.com/fs.ncaa.org/Docs/stats/football_records/FCSchamps.pdf", "https://gobison.com/news/2022/12/9/football-bison-turn-back-bulldogs-in-quarterfinals-27-9"]
+      },
+      {
+        "id": "401507670",
+        "expected": {"home": "147", "away": "2729", "startDate": "2022-12-10T03:15:00.000Z", "homePoints": 55, "awayPoints": 0},
+        "correctedScores": {"homePoints": 55, "awayPoints": 7},
+        "sourceUrls": ["https://s3.amazonaws.com/fs.ncaa.org/Docs/stats/football_records/FCSchamps.pdf", "https://msubobcats.com/news/2022/12/10/football-bobcats-put-william-mary-on-ice", "https://tribeathletics.com/news/2022/12/10/footballs-record-breaking-season-concludes-at-montana-state-in-ncaa-quarterfinals.aspx"]
+      },
+      {
+        "id": "401507651",
+        "expected": {"home": "2571", "away": "107", "startDate": "2022-12-10T17:00:00.000Z", "homePoints": 41, "awayPoints": 21},
+        "correctedScores": {"homePoints": 42, "awayPoints": 21},
+        "sourceUrls": ["https://s3.amazonaws.com/fs.ncaa.org/Docs/stats/football_records/FCSchamps.pdf", "https://gojacks.com/news/2022/12/10/football-jacks-survive-and-advance"]
+      }
+    ]
+  }
+}
