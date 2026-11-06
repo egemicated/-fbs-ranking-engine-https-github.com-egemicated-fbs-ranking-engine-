@@ -1,0 +1,40 @@
+ADVANCED PERFORMANCE V1: RECORD THE FAILED CHECK
+
+Run 4bf5494b85bc is the declared, older-calibrated net-success-rate model.
+It is research-only. No SOR, predictive strength or live website changes.
+
+Global settings selected using 2018-2019 after calibration on 2014-2017:
+ridge 1; venue adjustment 0.017656116284371904;
+FBS-FCS adjustment 0.15668999167895398 (success-rate fraction units).
+
+Across 2,759 later FBS-involving games in 2023-2025, RMSE is 0.11340
+versus 0.11495 for the independently calibrated shrunken raw-rate control.
+The paired week-block MSE-improvement interval is [0.00010597,0.00061111].
+This is a sensitivity analysis; teams recur across weeks and the interval is
+not a calibrated significance/prospective-confidence claim. Subgroup results
+are mixed: cross-division RMSE is 0.13678 versus raw-control 0.13646.
+
+Six declared engineering checks pass. The cross-subdivision bias check fails:
+mean FBS-oriented error is -0.02804, beyond the unchanged +/-0.02 target.
+By year it is -0.01389 (2023), -0.02544 (2024), -0.04380 (2025).
+The zero-subdivision control is much worse at -0.14989, but improvement alone
+does not satisfy the original target. All current 627 FBS games/138 teams are
+covered; every score and its FBS-reference display reconcile numerically.
+
+The older advanced source contains no matched FCS-FCS games in 2014-2019.
+Later coverage is 563/635 in 2023,647/692 in 2024,669/691 in 2025,
+and467/467 in the saved current2026 context. Fixed older population estimates
+may not handle this context/era difference. This is a hypothesis, not a proven
+cause or permission to change the result after inspecting holdout performance.
+
+V2 is declared separately in adaptive-performance-protocol.json. It updates
+general venue/division context from eligible current-season past games around
+older priors, without carrying any previous team rating. Ridges/prior strengths
+will still be chosen using2018-2019; repeated2023-2025 results remain explicitly
+previously inspected. Two uninspected advanced-stat seasons2021-2022 provide
+additional retrospective evidence. There is no threshold relaxation.
+
+Full derived V1 report: 4bf5494b85bc/experiment.json.gz.
+The initial pre-provenance-audit run32be14f7ecf0 has identical numeric outputs;
+later fixes pin raw source identity/amendment hashes, align paired rows by
+(year,gameId), label interval dependence and reconcile the displayed reference.

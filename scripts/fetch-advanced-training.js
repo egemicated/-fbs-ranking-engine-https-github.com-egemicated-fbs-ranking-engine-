@@ -4,13 +4,17 @@ import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { gzipSync } from 'node:zlib';
 
-const YEARS = [2014, 2015, 2016, 2017, 2018, 2019, 2023, 2024, 2025, 2026];
+const SCOPES = new Map([
+  ['success-rate-training-v1-nov06', [2014, 2015, 2016, 2017, 2018, 2019, 2023, 2024, 2025, 2026]],
+  ['success-rate-supplement-v2-nov06', [2021, 2022]]
+]);
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 
 function validatedKey(request) {
-  if (!request || request.id !== 'success-rate-training-v1-nov06' || request.maxRequests !== 10 ||
+  const years = SCOPES.get(request?.id);
+  if (!years || request.maxRequests !== years.length ||
       request.excludeGarbageTime !== false || request.seasonType !== 'both' ||
-      !Array.isArray(request.years) || JSON.stringify(request.years) !== JSON.stringify(YEARS) ||
+      !Array.isArray(request.years) || JSON.stringify(request.years) !== JSON.stringify(years) ||
       typeof request.publicKey !== 'string' || !request.publicKey.startsWith('-----BEGIN PUBLIC KEY-----') ||
       (request.protocolSha256 !== undefined && !/^[a-f0-9]{64}$/.test(request.protocolSha256)))
     throw new Error('Invalid fixed training request');
@@ -45,7 +49,7 @@ export async function fetchAdvancedTraining({ request, apiKey, fetchImpl = fetch
   finally { await lock.close(); }
 
   const manifest = { version: 1, id: request.id, provider: 'CollegeFootballData', protocolSha256: request.protocolSha256 ?? null,
-    status: 'started', startedAt: now(), completedAt: null, maxRequests: 10,
+    status: 'started', startedAt: now(), completedAt: null, maxRequests: request.maxRequests,
     requestsAttempted: 0, retries: 0, remainingCalls: null,
     encryption: { scheme: 'RSA-OAEP-SHA256 + AES-256-GCM', compression: 'gzip',
       recipientPublicKeySha256: sha(publicKey.export({ type: 'spki', format: 'der' })) },
@@ -54,7 +58,7 @@ export async function fetchAdvancedTraining({ request, apiKey, fetchImpl = fetch
   const save = () => writeFile(join(outputDir, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
   await save();
   let failure = null;
-  for (const year of YEARS) {
+  for (const year of request.years) {
     const endpoint = `https://api.collegefootballdata.com/stats/game/advanced?year=${year}&seasonType=both&excludeGarbageTime=false`;
     const entry = { year, endpoint, startedAt: now(), completedAt: null,
       status: 'requesting', httpStatus: null, remainingCalls: null,
@@ -96,7 +100,7 @@ export async function fetchAdvancedTraining({ request, apiKey, fetchImpl = fetch
       entry.file = filename; entry.encryptedSha256 = sha(encoded);
       entry.status = 'encrypted'; entry.completedAt = now();
       await save();
-      const unfetched = YEARS.length - manifest.requestsAttempted;
+      const unfetched = request.years.length - manifest.requestsAttempted;
       if (entry.remainingCalls !== null && entry.remainingCalls < unfetched) {
         manifest.status = 'quota-stopped';
         throw new Error('Remaining quota cannot cover the unfetched years; no extra request was made');
@@ -120,7 +124,10 @@ export async function fetchAdvancedTraining({ request, apiKey, fetchImpl = fetch
 }
 
 async function main() {
-  const request = JSON.parse(await readFile('research/advanced-training-request.json', 'utf8'));
+  const filename = process.argv[2] || 'advanced-training-request.json';
+  if (!['advanced-training-request.json', 'advanced-supplement-request.json'].includes(filename) || process.argv.length > 3)
+    throw new Error('Use one of the two fixed research request filenames');
+  const request = JSON.parse(await readFile(join('research', filename), 'utf8'));
   const manifest = await fetchAdvancedTraining({ request, apiKey: process.env.CFBD_API_KEY,
     outputDir: resolve('research/cache/advanced-training-export') });
   console.log(JSON.stringify({ id: manifest.id, status: manifest.status,

@@ -4,11 +4,19 @@ on:
     paths:
       - 'research/performance*'
       - 'research/test_performance*'
+      - 'research/advanced_performance*'
+      - 'research/test_advanced_performance*'
+      - 'research/adaptive_performance*'
+      - 'research/test_adaptive_performance*'
       - '.github/workflows/performance.yml'
   pull_request:
     paths:
       - 'research/performance*'
       - 'research/test_performance*'
+      - 'research/advanced_performance*'
+      - 'research/test_advanced_performance*'
+      - 'research/adaptive_performance*'
+      - 'research/test_adaptive_performance*'
       - '.github/workflows/performance.yml'
 permissions:
   contents: read
@@ -23,3 +31,5 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install -r research/performance-requirements.txt
       - run: python -m unittest discover -s research -p 'test_performance*.py' -v
+      - run: python -m unittest discover -s research -p 'test_advanced_performance*.py' -v
+      - run: python -m unittest discover -s research -p 'test_adaptive_performance*.py' -v

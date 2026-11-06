@@ -27,7 +27,8 @@ if (process.argv[2] === 'generate') {
   console.log('Created public recipient request; private key stays in the ignored local cache.');
 } else if (process.argv[2] === 'decrypt') {
   const privateKey = await readFile(privatePath, 'utf8');
-  const folder = join(cache, 'encrypted');
+  const targetCache = process.argv[3] ? resolve(process.argv[3]) : cache;
+  const folder = join(targetCache, 'encrypted');
   const manifestBytes = await readFile(join(folder, 'manifest.json'));
   const manifest = JSON.parse(manifestBytes); let files = 0;
   for (const file of manifest.files) {
@@ -43,8 +44,8 @@ if (process.argv[2] === 'generate') {
     const raw = gunzipSync(compressed, { maxOutputLength: 64 * 1024 * 1024 });
     if (raw.length !== file.rawBytes || createHash('sha256').update(raw).digest('hex') !== file.rawSha256) throw new Error('Private source checksum differs');
     if (!Array.isArray(JSON.parse(raw))) throw new Error('Source is not an array');
-    await writeFile(join(cache, `${file.year}.json`), raw, { mode: 0o600 }); files++;
+    await writeFile(join(targetCache, `${file.year}.json`), raw, { mode: 0o600 }); files++;
   }
-  await writeFile(join(cache, 'manifest.json'), manifestBytes);
-  console.log(JSON.stringify({ decryptedFiles: files, privateCache: 'research/cache/advanced-training-v1', cfbdCalls: 0 }));
+  await writeFile(join(targetCache, 'manifest.json'), manifestBytes);
+  console.log(JSON.stringify({ decryptedFiles: files, privateCache: process.argv[3] || 'research/cache/advanced-training-v1', cfbdCalls: 0 }));
 } else throw new Error('Use generate or decrypt');

@@ -105,7 +105,33 @@ test('training quota guard stops before unfetched years can exceed the reported 
 test('training fixed-scope and key validation fail before network requests', async t => {
   const base = await options(t); let calls = 0; const fetchImpl = async () => { calls++; throw new Error('Must not run'); };
   for (const changed of [{ ...request, years: [...YEARS, 2020] }, { ...request, years: [...YEARS].reverse() },
-    { ...request, maxRequests: 11 }, { ...request, excludeGarbageTime: true }, { ...request, publicKey: 'not-a-key' }])
+    { ...request, maxRequests: 11 }, { ...request, excludeGarbageTime: true }, { ...request, publicKey: 'not-a-key' },
+    { ...request, id: 'success-rate-supplement-v2-nov06' },
+    { ...request, id: 'success-rate-supplement-v2-nov06', years: [2021, 2022], maxRequests: 10 }])
     await assert.rejects(fetchAdvancedTraining({ ...base, request: changed, fetchImpl }));
   assert.equal(calls, 0); assert.deepEqual(await readdir(base.outputDir), []);
+});
+
+test('supplement fetch is limited to the two new fixed years and preserves encrypted exact bytes', async t => {
+  const base = await options(t); let calls = 0;
+  const years = [2021, 2022];
+  const supplement = { ...request, id: 'success-rate-supplement-v2-nov06', years, maxRequests: 2 };
+  const manifest = await fetchAdvancedTraining({ ...base, request: supplement, fetchImpl: async (url, init) => {
+    const year = years[calls]; calls++;
+    assert.equal(url, `https://api.collegefootballdata.com/stats/game/advanced?year=${year}&seasonType=both&excludeGarbageTime=false`);
+    assert.equal(init.headers.Authorization, `Bearer ${apiKey}`); assert.equal(init.redirect, 'error');
+    return new Response(JSON.stringify([{ season: year, privateField: `supplement-${year}` }]),
+      { headers: { 'X-CallLimit-Remaining': String(980 - calls) } });
+  } });
+  assert.equal(calls, 2); assert.equal(manifest.maxRequests, 2); assert.equal(manifest.requestsAttempted, 2);
+  assert.equal(manifest.remainingCalls, 978); assert.equal(manifest.status, 'complete');
+  assert.deepEqual(manifest.files.map(f => f.year), years);
+  for (const file of manifest.files) {
+    const encoded = await readFile(join(base.outputDir, file.file));
+    const raw = decrypt(JSON.parse(encoded));
+    assert.deepEqual(JSON.parse(raw), [{ season: file.year, privateField: `supplement-${file.year}` }]);
+    assert.equal(file.encryptedSha256, sha(encoded)); assert.equal(file.rawSha256, sha(raw));
+    assert.equal(encoded.toString().includes('supplement-'), false);
+  }
+  assert.equal((await readdir(base.outputDir)).length, 4);
 });

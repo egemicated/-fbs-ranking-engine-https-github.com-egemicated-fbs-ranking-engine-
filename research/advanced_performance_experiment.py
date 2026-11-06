@@ -129,6 +129,7 @@ def bootstrap(rows, configurations, settings):
         improvements.append(float(chosen[:, 0].sum()/chosen[:, 1].sum()))
     return dict(blocks=len(values), replicates=settings['replicates'], seed=settings['seed'],
                 comparison='matched calibrated raw MSE minus adjusted MSE; positive favors adjusted',
+                interpretation='Paired week-block sensitivity interval; recurring teams connect weeks, so this is not a calibrated significance or prospective-coverage claim',
                 meanPairedImprovement=float(values[:, 0].sum()/values[:, 1].sum()),
                 interval=[float(v) for v in np.quantile(improvements, settings['interval'])])
 
@@ -140,7 +141,9 @@ def main():
     amendment = json.loads(amendment_bytes)
     selection = protocol['selection']; train = selection['venueDivisionTrainingYears']; valid = selection['ridgeSelectionYears']
     later = selection['retrospectiveEvaluationYears']; years = train+valid+later
-    cache = HERE/'cache/advanced-training-v1'; manifest = json.loads((cache/'manifest.json').read_bytes())
+    if amendment['baseProtocolSha256'] != sha(protocol_bytes):
+        raise ValueError('Control amendment does not match declared base protocol')
+    cache = HERE/'cache/advanced-training-v1'; manifest_bytes = (cache/'manifest.json').read_bytes(); manifest = json.loads(manifest_bytes)
     if manifest['protocolSha256'] != sha(protocol_bytes) or manifest['status'] != 'complete':
         raise ValueError('Source collection does not match declared base protocol')
     source = {f['year']: f for f in manifest['files']}; datasets = {}; parents = {}; inputs = {}; parent_hashes = {}
@@ -160,7 +163,7 @@ def main():
     code_paths = ['advanced_performance_model.py', 'advanced_performance_ingest.py', 'advanced_performance_experiment.py',
                   'performance_ingest.py', 'replay_weekly.py', 'compare_merit.py']
     code = {p: sha((HERE/p).read_bytes()) for p in code_paths}
-    fingerprint = sha(protocol_bytes+amendment_bytes+json.dumps(dict(inputs=inputs, parents=parent_hashes, code=code), sort_keys=True).encode())
+    fingerprint = sha(protocol_bytes+amendment_bytes+manifest_bytes+json.dumps(dict(inputs=inputs, parents=parent_hashes, code=code), sort_keys=True).encode())
     feature_cache = cache/'features'; feature_cache.mkdir(exist_ok=True); grid = []; saved = {}
     for ridge in selection['ridgeGrid']:
         features = {}
@@ -195,16 +198,22 @@ def main():
                 byYear={str(y): metrics([r for r in features[y] if predicate(r)], family, config) for y in later})
     # Align independently selected-ridge predictions by ID before paired bootstrap.
     held = []
-    raw_by_id = {r['id']: r for y in later for r in saved[selected['naive']['ridge']][y]}
+    raw_rows = [r for y in later for r in saved[selected['naive']['ridge']][y]]
+    raw_by_id = {(r['year'], r['id']): r for r in raw_rows}
+    assert len(raw_by_id) == len(raw_rows), 'Duplicate held game identity'
     for year in later:
         for r in saved[selected['adjusted']['ridge']][year]:
-            held.append({**r, 'naive': raw_by_id[r['id']]['naive']})
+            raw_row = raw_by_id[(r['year'], r['id'])]
+            assert all(raw_row[k] == r[k] for k in ('target', 'block', 'group')), 'Held game alignment changed'
+            held.append({**r, 'naive': raw_row['naive']})
     interval = bootstrap(held, configs, protocol['evaluation']['bootstrap'])
     chosen = selected['adjusted']; current_config = dict(ridge=chosen['ridge'], homeRate=chosen['config']['homeRate'], divisionRate=chosen['config']['divisionRate'])
     current = fit_advanced_performance(datasets[2026]['teams'], observations(datasets[2026]['games']), current_config)
     fbs_mean = sum(r['rating'] for r in current['rows'] if r['measuredGames'])/current['measuredFbsTeams']
     for row in current['rows']:
         row['aboveFbsMeanPercentagePoints'] = 100*(row['rating']-fbs_mean) if row['measuredGames'] else None
+        row['explanation']['fbsReferenceAdjustment'] = -fbs_mean
+        row['explanation']['reconstructedAboveFbsMeanPercentagePoints'] = 100*(row['explanation']['reconstructedRating']-fbs_mean)
         row['coverage'] = datasets[2026]['audit']['teamCoverage'][row['id']]
     top25 = {r['id'] for r in current['rows'][:25]}; sensitivity = {}
     variants = [('ridge-'+str(r), dict(current_config, ridge=r), datasets[2026]['games']) for r in selection['ridgeGrid'] if r != chosen['ridge']]
@@ -212,7 +221,7 @@ def main():
                  ('fbsOnly', dict(current_config, divisionRate=0.), [g for g in datasets[2026]['games'] if all(next(t['division'] for t in datasets[2026]['teams'] if t['id'] == g[k]) == 'fbs' for k in ['home', 'away'])])]
     for name, config, games in variants:
         model = fit_advanced_performance(datasets[2026]['teams'], observations(games), config)
-        sensitivity[name] = dict(config=config, games=model['gamesUsed'],
+        sensitivity[name] = dict(config=config, games=model['gamesUsed'], interpretation='Conditional ridge-only changes keep selected venue/division coefficients fixed; zeroDivision is its independently selected control; fbsOnly is an input-removal diagnostic',
             top25SymmetricDifference=sorted(top25^{r['id'] for r in model['rows'][:25]}),
             rows=[dict(id=r['id'], rank=r['rank'], rating=r['rating']) for r in model['rows']])
     bias = evaluation['adjusted']['FBS-FCS']['pooled']['meanFbsOrientedResidual']
