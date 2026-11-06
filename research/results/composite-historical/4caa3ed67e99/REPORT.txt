@@ -1,0 +1,47 @@
+THREE-MODEL HISTORICAL COMPARISON
+Protocol: three-model-equal-percentile-historical-v1
+Fingerprint: 4caa3ed67e9906d56f70530de81c582791597d53ef8cfb4ee0fb9f6d6880671c
+Primary: established FBS-FBS games, 2024-2025; corrected, previously inspected retrospective data.
+Same-game support; no current-week/future game in a checkpoint. No polls, no weight search.
+Probabilities are separately calibrated on2018-2019 only; the index itself is not a probability.
+
+Model | Games | Rank-pick accuracy | Brier (lower) | Log loss (lower)
+sor | 1155 | 66.407% | 0.205224 | 0.594983
+strength | 1155 | 70.303% | 0.192887 | 0.565366
+performance | 1155 | 67.273% | 0.203594 | 0.590035
+triple | 1155 | 69.913% | 0.191797 | 0.561460
+sor+strength | 1155 | 68.268% | 0.195767 | 0.572210
+sor+performance | 1155 | 68.701% | 0.194793 | 0.568434
+strength+performance | 1155 | 70.130% | 0.192538 | 0.563202
+
+2024: 573 games
+sor: 65.271% accuracy; Brier 0.210776; log loss 0.608976
+strength: 69.110% accuracy; Brier 0.200005; log loss 0.582252
+performance: 65.445% accuracy; Brier 0.206471; log loss 0.596825
+triple: 69.284% accuracy; Brier 0.197282; log loss 0.574535
+sor+strength: 66.579% accuracy; Brier 0.202595; log loss 0.589167
+sor+performance: 67.452% accuracy; Brier 0.199231; log loss 0.578614
+strength+performance: 69.372% accuracy; Brier 0.197440; log loss 0.574699
+
+2025: 582 games
+sor: 67.526% accuracy; Brier 0.199759; log loss 0.581206
+strength: 71.478% accuracy; Brier 0.185878; log loss 0.548740
+performance: 69.072% accuracy; Brier 0.200762; log loss 0.583350
+triple: 70.533% accuracy; Brier 0.186397; log loss 0.548587
+sor+strength: 69.931% accuracy; Brier 0.189045; log loss 0.555516
+sor+performance: 69.931% accuracy; Brier 0.190423; log loss 0.558411
+strength+performance: 70.876% accuracy; Brier 0.187712; log loss 0.551882
+
+Paired week-block sensitivity intervals: triple minus each standalone. Positive accuracy is better; negative Brier/logloss is better.
+sor: {"accuracy": {"tripleMinusStandalone": 0.03506493506493506, "sensitivity95": [0.01669336891838669, 0.05702147746046729]}, "brier": {"tripleMinusStandalone": -0.013427419166021345, "sensitivity95": [-0.01974782188560085, -0.007411863249245455]}, "logLoss": {"tripleMinusStandalone": -0.03352270676753077, "sensitivity95": [-0.04822876956217805, -0.01905735510812015]}}
+strength: {"accuracy": {"tripleMinusStandalone": -0.003896103896103896, "sensitivity95": [-0.021744275237596346, 0.014970657840235175]}, "brier": {"tripleMinusStandalone": -0.0010896589660187943, "sensitivity95": [-0.003946593998895891, 0.0015505857352293986]}, "logLoss": {"tripleMinusStandalone": -0.0039055548673856853, "sensitivity95": [-0.010975367696290279, 0.0022850192938068743]}}
+performance: {"accuracy": {"tripleMinusStandalone": 0.026406926406926406, "sensitivity95": [0.002651141961486789, 0.04935508710212608]}, "brier": {"tripleMinusStandalone": -0.011797238130406937, "sensitivity95": [-0.018485020708217052, -0.004755461175194305]}, "logLoss": {"tripleMinusStandalone": -0.028574885831237077, "sensitivity95": [-0.04446670343187878, -0.011416731263768564]}}
+
+Interpretation limits:
+Future-game prediction assesses predictive usefulness, not a uniquely correct earned-achievement ranking.
+Blending imports own-team historical Strength priors and margin evidence into the combined index.
+Performance/Strength overlap; ablations are diagnostics, not a search for publishable winning weights.
+Previously inspected seasons and the selected Performance variant prevent an untouched-test claim.
+Resampled weeks share teams; intervals are sensitivity summaries, not calibrated prospective significance.
+No public formula/deployment change and zero CFBD calls.
+Protected production files: 33 unchanged.
