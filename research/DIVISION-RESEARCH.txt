@@ -1,0 +1,70 @@
+FBS/FCS RESIDUAL EXPERIMENT V1
+
+Decision: retain production Colley and the existing frozen SOR comparison.
+The new division-aware mapping is a promising research candidate, not a live
+replacement, and no schedule or provider usage changes are made here.
+
+Question
+Does the Colley opponent network already capture enough of the difference
+between FBS and FCS, or does its probability mapping miss a residual gap?
+
+Design fixed before running the new comparisons
+Train 2014-2019; evaluate 2021-2025; report pandemic 2020 separately.
+Retain each season's source membership. Fit both models on the same 5,257
+FBS-involving training games, including 650 FBS-FCS games. Refit the control's
+rating slope and venue term; add one freely signed subdivision coefficient to
+the challenger. There are no poll inputs, conference bonuses or team overrides.
+Preweek and final-network excluded-game contexts get separate fits.
+
+First findings (full-source network)
+602 later-season FBS-FCS games: FBS won 568, or 94.35%.
+Preweek estimated mean FBS win rate: refit control 65.70%, candidate 93.62%.
+Crossdivision log loss: 0.468760 -> 0.212954; Brier 0.147493 -> 0.053560.
+Final-network excluded-game mean: control 71.65%, candidate 93.73%.
+Excluded-game log loss: 0.377582 -> 0.162155.
+Crossdivision probability scores improve in each of the five evaluation years,
+in both contexts, and with D1-only and regular-season-only network checks.
+The improvement is not limited to the sparsest preweek schedules.
+
+FBS-FBS probabilities improve slightly when pooled, but not universally by year
+or against the frozen original. For example, excluded-game 2025 log loss is
+0.527692 for the refit control and 0.527942 for the new candidate. Probability
+calibration is not proof of the fairest current-season achievement order.
+
+Current snapshot illustration (2026-11-06T03:39:55.757Z)
+Colley ranks and displayed SOS do not change. The SOR probability experiment
+would move Texas from refit-control #15 to #6, and UTSA from #14 to #17.
+Original frozen SOR has Texas #15 and UTSA #12. The refit control and new
+candidate have the same 25 teams, with different order; compare all 138 in CSV.
+These previously inspected ranks were not fitting inputs or selection targets.
+
+Material limits
+The later years were already inspected in previous research; they are not an
+untouched prospective test. Historical FCS playoffs and some indirect schedules
+are incomplete. Of 602 crossdivision evaluation games, 595 list FBS at home,
+seven are neutral, and none list FBS away. The learned residual is conditional
+on selected schedules and the current network, not a causal neutral-field gap.
+It can partly compensate for regularization or incomplete context. Never apply
+it a second time as a win multiplier or a separate network penalty.
+
+Reproduce without API calls
+  python research/apply_release.py
+  python -m unittest discover -s research -p "test_*.py" -v
+  python research/division_experiment.py
+NumPy is required. Restore requires exact original cached seasons, verified by
+the existing historical-coverage-v1 release. No provider credentials are read.
+The experiment verifies protected production and frozen implementation hashes.
+Its features cache stays under ignored research/cache/divisions/.
+
+Outputs
+results/divisions/1fef2d825b08/summary.html: readable report and current Top 25.
+results/divisions/1fef2d825b08/current-sor-comparison.csv: all 138 teams.
+results/divisions/1fef2d825b08/experiment.json: detailed generated results.
+results/divisions/data-audit.json: counts, membership and coverage audit.
+The Git research branch stores a losslessly compressed experiment.json.gz
+instead of the large generated JSON. Decompress with Python gzip or rerun.
+
+Next evidence needed
+Audit/repair missing FCS postseason context, then preserve a separately
+versioned candidate for genuinely future comparison. Review consequences for
+achievement independently before changing the public ranking formula.

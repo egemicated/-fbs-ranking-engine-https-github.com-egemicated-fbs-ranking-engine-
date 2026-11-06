@@ -1,0 +1,75 @@
+{
+  "id": "experimental-performance-recent-prior-v1",
+  "version": "1.0.0",
+  "name": "Experimental Performance — Scrimmage Consistency",
+  "status": "experimental",
+  "season": 2026,
+  "parameters": {
+    "ridge": 1,
+    "contextPriorStrength": 64,
+    "homePrior": 0.012139211680326556,
+    "divisionPrior": 0.2133624494542888
+  },
+  "limitations": [
+    "Experimental scrimmage consistency on provider-covered plays.",
+    "The original historical FBS–FCS forecast test remains recorded as failed; the recent-prior candidate has separate retrospective checks.",
+    "Success rate does not fully measure turnovers, special teams, short fields or overtime.",
+    "Withholding one game can materially change positions; close rankings carry uncertainty.",
+    "Scores describe measured efficiency and are not win probabilities."
+  ],
+  "validation": {
+    "historicalForecastModel": "adaptive-net-success-rate-joint-ridge-v2",
+    "historicalForecastBiasPP": 2.295530263316677,
+    "forecastBiasTargetPP": 2,
+    "originalGatePassed": false,
+    "interpretation": "The retained historical next-game diagnostic does not certify or invalidate every current descriptive ranking. Experimental display is authorized; further calibration remains research.",
+    "currentCandidate": "recent-prior",
+    "originalFailedForecastGate": {
+      "status": "failed",
+      "target": 0.02,
+      "historicalCrossBias": -0.02295530263316677,
+      "scope": "Repeated2023-2025 next-game forecast diagnostic for originalV2; retained unchanged",
+      "reference": "research/results/adaptive-performance/a2232c44772a/experiment.json.gz"
+    },
+    "selectionChecks": {
+      "crossBiasImproves": true,
+      "pooledFbsMseHarmAtMostOnePercent": true,
+      "eachYearFbsMseHarmAtMostThreePercent": true
+    },
+    "recentForward": {
+      "years": [
+        2024,
+        2025
+      ],
+      "fbsFcsBiasPP": -1.0706206090400203,
+      "baselineFbsFcsBiasPP": -2.9699352457418495,
+      "fbsFbsMseChangePercent": 0.18603093142075533
+    },
+    "withheld": {
+      "scope": "As-of-publication descriptive leave-one-game-out; NOT a pregame forecast",
+      "games": 627,
+      "fbsFcsBiasPP": -0.32164996698467746,
+      "maximumIndividualRankMovement": 26,
+      "gamesChangingTop25Membership": 54,
+      "maximumTop25SymmetricDifference": 4
+    }
+  },
+  "inputPolicy": "Exact primary snapshot game graph; complete matching FBS game coverage; no raw API response or normalized source arrays published.",
+  "candidateProtocolPath": "research/performance_display_protocol.json",
+  "implementationSha256": {
+    "research/advanced_performance_ingest.py": "0c8a8534f1c90f08cd23b22a1159b479e8cecfdbe2df7bb369c35ca7fe99b0b7",
+    "research/advanced_performance_model.py": "9efc9ca486b0ec5961e336bc04468bf90299b187aeb1adf86c41452e1ddd9a9c",
+    "research/adaptive_performance_model.py": "c3b298c70de75a76860eac3c4c515d945511003c1186060516f51d0701dcb156"
+  },
+  "priorSeason": 2025,
+  "candidateProtocolSha256": "5230ea07fa5fa1c1000103043889163194c9fe246dea6a659b6beea8ea3c9cc0",
+  "researchFingerprint": "3121ef9793077c5f0bab1d0af42cf6d8569c9b27a4d28ac7b1b600e55fb10098",
+  "candidate": "recent-prior",
+  "priorSource": {
+    "season": 2025,
+    "normalizedSha256": "243b6f10eff8df3a7ae4b0cdc7a35a77ec48e6c60c3ac455b048d14c449735d1",
+    "rawSha256": "56d576086eb56a6d844834691bb8627514d85e583b0c5ba51fb8d1ced53be45f",
+    "fetchedAt": "2026-11-06T21:16:20.151Z",
+    "interpretation": "General population context from a completed earlier season; no inherited individual-team effects"
+  }
+}

@@ -1,0 +1,131 @@
+FBS INTELLIGENCE: ADVANCED PERFORMANCE VALIDATION
+
+Decision
+Research and validation are complete for the two declared candidates. The
+revised candidate passes nine of ten engineering checks. Do not promote it to
+the live website as an approved Performance ranking: one FBS-FCS bias gate
+remains failed. SOR, Predictive Strength and the Sunday workflow are unchanged.
+
+What was built
+An opponent-adjusted net-success-rate model, with an exact explanation for every
+score. A successful play gains at least50% of needed yards on first down,70% on
+second and100% on third/fourth, following CFBD's documented scoring exceptions.
+The observed game target is a team's offensive success rate minus its opponent's.
+Each paired game has one weight. Teams retain individual identities, including
+FCS opponents. There are no poll, odds, recruiting, conference-reputation,
+win/loss, margin or previous-team-rating features in this Performance candidate.
+
+This measures scrimmage consistency on provider-covered plays. It does not yet
+measure complete football performance, special teams or the full cost of a
+turnover/short field. CFBD gates these observations on non-null PPA. We consume
+the deterministic success-rate field and play counts, not proprietary PPA values,
+but do not claim that every box-score play is covered.
+
+Research process
+V1 learns general venue/subdivision coefficients on2014-2017, chooses ridge on
+2018-2019, then tests2023-2025. Its fixed older FBS-FCS adjustment left2.804pp
+of FBS-oriented underprediction, beyond the predeclared2pp target. V1 remains
+recorded as failed; see ../advanced-performance/V1-RESULT.txt.
+
+V2 was declared after those results. It allows current-season completed-game
+evidence to update general venue/division context around the older priors.
+No previous team rating carries over. Ridges and context-prior strength still
+select solely on2018-2019;2023-2025 is explicitly a repeated retrospective check.
+The previously uninspected success-rate fields for2021-2022 were fetched only
+after declaring V2 and provide additional retrospective evidence. Outcomes and
+later-corrected provider data are familiar, so no prospective/untouched claim.
+
+All replay steps exclude the target and other same-week statistics. The full
+parent schedule anchors each week's earliest cutoff, with a24h kickoff buffer.
+Effects and context use the identical eligible past graph, including available
+FCS-FCS games. The simple-rate comparator learns scale and contextual feature
+weights on older data and selects its own shrinkage. It has one additional
+global calibration coefficient. We compare whole calibrated models rather than
+claiming a causal, isolated benefit of opponent adjustment.
+
+Results (errors are net-success-rate percentage points, not win probabilities)
+                              Games  V2 RMSE  Raw-control RMSE  FBS-FCS bias
+Repeated2023-2025              2759   11.314       11.495          -2.296
+Supplemental2021-2022          1783   11.396       11.542          +0.269
+
+V2 reduces pooled MSE versus the calibrated raw control by3.13% in repeated
+years and2.52% in supplemental years. Paired week-block sensitivity intervals
+favor V2 in both pools. Teams recur across blocks, so those intervals are not
+calibrated significance levels or prospective confidence guarantees. Individual
+subgroup/year results remain mixed; the complete derived report includes them.
+
+The remaining failed gate
+The unchanged target is absolute FBS-oriented FBS-FCS mean error <=2pp in each
+evaluation pool. Supplemental years pass; repeated years remain -2.296pp.
+By repeated year:2023 -0.884pp,2024 -2.207pp,2025 -3.703pp.
+Improvement over V1's-2.804pp does not convert this into a pass.
+
+Diagnostic breakdown of the365 repeated cross-division games:
+  Sparse prior measured context (<4games for either team):340,-2.408pp.
+  Both teams have at least4prior measured games:25,-0.764pp.
+  Weeks1-2:251,-1.683pp; weeks3+:114,-3.645pp.
+  The89 sparse-context games in weeks3+ average-4.454pp.
+Thus this is not solely a first-week problem. Sparse-context labels describe
+measured source history, not just calendar position. These small subgroup
+diagnostics do not identify a cause. The next declared experiment should examine
+coverage-era/context effects before changing the formula or relaxing a gate.
+
+Coverage and explanations
+The current illustration uses the exact website snapshot as of
+2026-11-06T03:39:55.757Z, rather than adding later results to only one model.
+All627 FBS games and138 FBS teams have paired valid success-rate observations;
+467 FCS-FCS games provide context. Historical evaluation FBS coverage is
+2021:887/887,2022:896/896,2023:910/910,2024:915/919,2025:934/934.
+Older2014-2019 data has no matched FCS-FCS observations and some missing FBS
+games. Later context coverage differs by year; exact counts/exclusions are saved.
+Exact game IDs and reciprocal names are required. Historical name aliases are
+allowed only through the same stable team ID in the pinned CFBD snapshot.
+
+Selected V2 settings: individual-effect ridge1; population prior strength64;
+older home prior0.017656116284371904 and division prior0.15668999167895398.
+The saved2026 evidence updates these to home0.019785613460735704 and
+division0.1826156864544841. Those are general context estimates in rate units,
+not fixed bonuses assigned to individual teams.
+
+Every current score reconciles to its per-game observed net-rate, venue,
+subdivision and opponent contributions plus the population offset. Displayed
+scores subtract the measured-FBS mean and multiply by100. Maximum displayed
+reconciliation error is below2e-14 percentage points. Raw offense/defense rates
+are diagnostics, not separately adjusted unit grades.
+
+The same25teams remain in the Top25 across tested prior strengths1,4,16,64.
+Ordering changes for up to9of those teams, with maximum overall rank movement3.
+Membership stability is a diagnostic; it does not override the failed bias gate.
+
+Deliverables
+a2232c44772a/current-ratings.csv: experimental order and diagnostics for138teams.
+a2232c44772a/snapshot-comparison.csv: Performance alongside saved SOR,SOS(Colley)
+and Predictive Strength at the identical game cutoff.
+a2232c44772a/experiment.json.gz: full derived V2 metrics, score explanations,
+candidate grid, coverage, sensitivity, fingerprints and failed/pass flags.
+../advanced-performance/4bf5494b85bc/experiment.json.gz: full derived V1 report.
+verification.json: source/CI/test identity and release checksums.
+These are research artifacts, not a replacement for the live rankings.
+
+Cost, storage and checks
+This round made12new CFBD calls:10declared source seasons and2supplemental.
+The final response reports978calls remaining. No paid service or billing setting
+was enabled. Source files transfer only as recipient-encrypted envelopes; their
+decrypted inputs stay in ignored local caches. The API key never leaves the
+GitHub secret/environment. No new user password is required. Public outputs are
+derived reports/rankings and source fingerprints, never raw API responses or
+normalized source-stat datasets. The earlier one-call probe retained only its
+derived audit; this experiment retains reproducible private raw inputs.
+
+99Node checks and59Python performance checks pass locally. Public CI runs
+synthetic model/ingestion/time-cutoff checks; its private-cache integrity check
+is explicitly skipped when private inputs are absent. Independent reviews
+verified source definitions, paired identities, normal equations, time cutoffs,
+calibrated controls and reported numeric results. Code tests demonstrate correct
+implementation; the separate engineering bias test still fails.
+
+Primary definitions and source boundaries
+https://api.collegefootballdata.com/metrics-and-definitions
+https://api.collegefootballdata.com/methodology-overview
+https://github.com/CFBD/cfb-api-v2/blob/e983aff8fa3e5dddf2e58d78a6717938a4c3d28f/src/app/stats/service.ts
+https://collegefootballdata.com/terms

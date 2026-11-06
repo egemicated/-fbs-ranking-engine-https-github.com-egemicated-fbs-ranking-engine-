@@ -1,0 +1,21 @@
+{
+  "experimentId": "division-residual-experiment-v1",
+  "runFingerprint": "1fef2d825b083109f13d6d77552ee15ce2b1bcd31d4cfbe22eea59aaad5de06a",
+  "uncompressedSha256": "4afc367ea58b669fada1b575c631c4a74a5b5e3d3814e0d02ce4b1c2f653c031",
+  "compressedSha256": "4429890037f9531fd4ae784eb1a1fa07f388480560105a5c9d32da1945a156d1",
+  "uncompressedBytes": 1962293,
+  "compressedBytes": 164310,
+  "format": "gzip-compressed UTF-8 JSON; exact generated report, no private credentials or raw HTTP responses",
+  "tests": {
+    "pythonResearch": {
+      "passed": 39,
+      "failed": 0
+    },
+    "node": {
+      "passed": 44,
+      "failed": 0
+    }
+  },
+  "liveEngineChanged": false,
+  "cfbdCalls": 0
+}

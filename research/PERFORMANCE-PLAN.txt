@@ -1,0 +1,115 @@
+FBS INTELLIGENCE: A SEPARATE PERFORMANCE VIEW
+
+Recommendation
+Build the statistics component as a third view with a different question:
+  Strength of Record: What record did the team earn against its schedule?
+  Performance: How efficiently did the team play in the games we measured?
+  Predictive strength: What should we expect in the next matchup?
+
+Keep the approved SOR calculation and existing forecast model intact. Do not
+blend the three scores into a hidden consensus. A team can earn a strong record
+while playing less efficiently, or play well in a loss. That disagreement is
+useful information rather than a reason to force the ranks to agree.
+
+First deliverable
+Inventory the actual free data before choosing a formula. Count measured games
+against every eligible game in the SOR snapshot, not just against the games for
+which statistics happened to download. Check both teams, FCS/opponent context,
+identities, retrieval dates, available fields and opportunity denominators.
+Missing is not zero. A missing box score is not an average performance.
+
+Start with the simplest defensible measurement
+If reproducible, well-covered play data is available, examine offensive EPA per
+scrimmage play and defensive EPA allowed. EPA measures how a play changes its
+team's expected scoring position, rather than treating every yard identically.
+Use a pinned model artifact; different EPA model generations give different
+answers. Audit its inputs and training dates. We must not import polls, recruiting
+or betting information through an apparently innocent advanced-stat column.
+
+If only basic game boxes are available, start with offensive yards per play and
+yards per play allowed. Call it a scrimmage-efficiency prototype. It does not
+fully measure short fields, turnovers, situational execution or special teams.
+It is a useful first component, not automatically a complete third ranking.
+
+Opponent adjustment
+The initial executable candidate fits one opponent-adjusted net-YPP graph.
+It does not yet estimate separate offensive and defensive unit grades. A future
+unit model should fit offensive units against the defensive units actually faced,
+with shrinkage and a declared reference, and show those components separately.
+More plays must not earn points simply because a team plays faster, but more
+observed plays can affect precision. Compare game- and play-weighted approaches
+in a written older-season experiment instead of assigning attractive weights.
+
+Test venue and subdivision effects in the new metric's own units. The existing
+SOR FBS/FCS coefficient measures win log-odds; it is not a yards/play or EPA/play
+adjustment. Retain opponents individually, and inspect residual group bias and
+schedule connections. Do not turn unknown opponents into FCS teams or subtract
+an arbitrary fixed percentage from every FCS game.
+
+Account for the game correctly
+Sacks already affect college rushing/total-yard accounting. Reconcile the source
+before reconstructing totals, and do not subtract sack yardage a second time.
+An EPA measure already contains a turnover's observed effect. Do not add another
+turnover bonus, or erase a real turnover under the label of luck. A separately
+named luck-adjusted forecast experiment is a different question.
+
+Start with an explicit all-eligible-plays policy. Kneels, spikes, penalties and
+no-plays need documented treatment. A garbage-time sensitivity must use pre-play
+state or an audited frozen model, not the final winning margin or Vegas-based WP.
+Without period/play data, do not pretend full-game box totals exclude overtime.
+
+Keep special teams visible as a coverage/component issue. Raw field-goal or punt
+percentages alone do not establish a fair unit grade. Any eventual total measure
+needs consistent attribution, opportunity counts and common-unit accounting so
+that a defensive or return touchdown is not counted twice.
+
+Validation and release
+After the inventory, write the exact experiment protocol before reading its
+rankings. Select general settings on covered older seasons, using chronological
+splits and cutoff-safe upstream models. Historical data already inspected in
+this project is retrospective evidence, even when a new statistic is added.
+
+Compare opponent-adjusted performance with a simple unadjusted-rate baseline.
+Check future efficiency error, subdivision bias, missingness, sparse samples and
+meaningful game-level disagreements. Tests must cover identity/orientation,
+denominators, no double counting, deterministic reproduction and future leakage.
+Plays are related within games and teams repeat across weeks; do not publish
+independent-play error bars as if they were calibrated uncertainty intervals.
+
+Freeze a candidate before collecting genuinely future evidence. Neither matching
+the polls nor producing familiar Top25 teams selects a formula. Better next-game
+efficiency prediction also does not prove a uniquely correct performance order.
+
+Cost and operation
+Stay free. Prefer verified cached/bulk data, or a supported bulk-season endpoint,
+over a request for every team/game. Current weekly operation uses two successful
+CFBD calls; no new calls are authorized or performed by this document. Any later
+collector must record its call budget and remain within the user's free allowance.
+Use the existing Sunday 8 AM Mountain refresh. Public clicks keep reading stored
+snapshots. Save measured data, coverage and model versions separately from SOR.
+
+Current executable prototype
+research/performance_model.py accepts paired offensive yards/play observations
+and explicit ridge/homeYpp settings. Each matched game contributes one net-YPP
+rate difference. A ridge graph estimates opponent-adjusted team differences in
+the same YPP units. Raw offense/defense rates are diagnostics, not separate
+adjusted unit grades. Idle teams stay unranked; sparse samples and minimum play
+counts are reported without discarding short observed games.
+
+The declared settings-selection experiment uses 2014-2017 for the global venue
+response, selects ridge from [0.5, 1, 2, 4, 8] on chronological 2018-2019 efficiency
+error, and evaluates 2023-2025 later. The home's affine effect can be reconstructed
+exactly from otherwise identical fits at homeYpp 0 and 1. No 2026 performance,
+poll or win/loss outcome selects those settings. This is not a complete unit or
+all-stats grade. Source reconstruction and coverage must still pass their audits.
+
+The offline experiment selected ridge 2 and homeYpp 0.2925614235611466 from the
+declared older years. These settings are research results, not an approved public
+ranking. See results/performance/REPORT.txt for coverage, validation and remaining
+subdivision bias. No paid service or production ranking change is enabled.
+
+Primary technical references
+https://cfbfastr.sportsdataverse.org/articles/college-football-expected-points-model-fundamentals-part-i.html
+https://github.com/sportsdataverse/cfbfastR-cfb-data/blob/main/docs/models/ep.md
+https://fs.ncaa.org/Docs/stats/Stats_Manuals/Football.pdf
+https://arxiv.org/abs/2409.04889

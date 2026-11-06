@@ -1,0 +1,44 @@
+{
+  "scope": "Selected independent primary-source checks, not an audit of every school. Texas snapshot permits margin/outcome checks only; absolute scores were not retained in its contribution records.",
+  "sources": [
+    {
+      "team": "Texas",
+      "season": 2026,
+      "url": "https://texaslonghorns.com/sports/football/stats/2026",
+      "record": "6-2",
+      "kind": "current_snapshot_margins",
+      "games": [
+        {"opponent": "Texas State", "pointsFor": 59, "pointsAgainst": 7},
+        {"opponent": "Ohio State", "pointsFor": 24, "pointsAgainst": 23},
+        {"opponent": "UTSA", "pointsFor": 30, "pointsAgainst": 6},
+        {"opponent": "Tennessee", "pointsFor": 20, "pointsAgainst": 17},
+        {"opponent": "Oklahoma", "pointsFor": 24, "pointsAgainst": 27},
+        {"opponent": "Florida", "pointsFor": 24, "pointsAgainst": 27},
+        {"opponent": "Ole Miss", "pointsFor": 34, "pointsAgainst": 27},
+        {"opponent": "Mississippi State", "pointsFor": 31, "pointsAgainst": 3}
+      ]
+    },
+    {
+      "team": "Michigan",
+      "season": 2024,
+      "url": "https://s3.us-east-2.amazonaws.com/sidearm.nextgen.sites/mgoblue.com/stats/football/2024/pdf/cume.pdf",
+      "record": "8-5",
+      "kind": "archive_full_scores",
+      "games": [
+        {"opponent": "Fresno State", "pointsFor": 30, "pointsAgainst": 10},
+        {"opponent": "Texas", "pointsFor": 12, "pointsAgainst": 31},
+        {"opponent": "Arkansas State", "pointsFor": 28, "pointsAgainst": 18},
+        {"opponent": "USC", "pointsFor": 27, "pointsAgainst": 24},
+        {"opponent": "Minnesota", "pointsFor": 27, "pointsAgainst": 24},
+        {"opponent": "Washington", "pointsFor": 17, "pointsAgainst": 27},
+        {"opponent": "Illinois", "pointsFor": 7, "pointsAgainst": 21},
+        {"opponent": "Michigan State", "pointsFor": 24, "pointsAgainst": 17},
+        {"opponent": "Oregon", "pointsFor": 17, "pointsAgainst": 38},
+        {"opponent": "Indiana", "pointsFor": 15, "pointsAgainst": 20},
+        {"opponent": "Northwestern", "pointsFor": 50, "pointsAgainst": 6},
+        {"opponent": "Ohio State", "pointsFor": 13, "pointsAgainst": 10},
+        {"opponent": "Alabama", "pointsFor": 19, "pointsAgainst": 13}
+      ]
+    }
+  ]
+}

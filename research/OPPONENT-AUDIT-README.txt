@@ -26,3 +26,10 @@ model blend, additional CFBD calls or extra scheduled service are introduced.
 Public rankings stay on the current engine. A failed research calculation
 does not prevent normal publication. Observations are retained in Git; source
 response artifacts have the existing 14-day retention.
+
+The research branch also stores the frozen normalized audit packet at
+research/releases/opponent-audit-2026-11-05.json.gz. With Python and NumPy,
+run python research/restore_opponent_audit.py to verify its checksum,
+restore the report and reproduce all 138 baseline records/ranks and ten
+sensitivity cases without network access. It preserves normalized evidence
+and source hashes, not the complete original public response bytes.

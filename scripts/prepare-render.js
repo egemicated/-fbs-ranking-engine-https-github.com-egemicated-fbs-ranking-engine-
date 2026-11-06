@@ -4,6 +4,7 @@ import { spawnSync } from 'node:child_process';
 import { importSeason, atomicJson } from '../src/ingest.js';
 import { buildHistory } from '../src/history.js';
 import { readPublicationPolicy, publishDivisionSnapshot } from '../src/publication.js';
+import { performanceForSnapshot } from '../src/performance-publication.js';
 
 // Build artifacts are carried into Render's runtime filesystem. A fresh build
 // reconstructs the ratings without requiring a database or persistent disk.
@@ -35,4 +36,11 @@ try {
 } catch (e) { if (e.code !== 'ENOENT') throw e; }
 if (!latest?.rankings.length || !latest.gamesUsed) throw new Error('Build produced no rankings');
 await atomicJson(join(data, 'snapshots', 'latest.json'), latest);
+// Experimental scores are calculated by the weekly runner and committed once.
+// Render only serves the derived artifact; builds and page views spend no calls.
+try {
+  const performance = performanceForSnapshot(JSON.parse(await readFile('published/performance-latest.json', 'utf8')), latest);
+  if (performance) await atomicJson(join(data, 'snapshots', 'performance-latest.json'), performance);
+  else console.log('Experimental Performance does not match this snapshot; the existing rankings remain available.');
+} catch (error) { if (error.code !== 'ENOENT') throw error; }
 console.log(`Ready: ${latest.season}, ${latest.fbsTeams} FBS teams, ${latest.gamesUsed} completed games`);

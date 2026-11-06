@@ -1,0 +1,36 @@
+{
+  "id": "performance-display-validation-v1",
+  "status": "Declared before the new numeric fits and withheld-game calculations; all underlying seasons are already familiar retrospective data",
+  "purpose": "Choose a transparent experimental scrimmage-consistency view and assess completed-game reliability; do not rewrite the failed historical forecasting gate",
+  "baseline": {
+    "report": "research/results/adaptive-performance/a2232c44772a/experiment.json",
+    "model": "adaptive-net-success-rate-joint-ridge-v2",
+    "config": {"ridge": 1, "contextPriorStrength": 64, "homePrior": 0.017656116284371904, "divisionPrior": 0.15668999167895398},
+    "forecastGate": "Historical repeated2023-2025 FBS-FCS prediction bias -0.02295530263316677 fails the unchanged +/-0.02 target; that result remains failed regardless of display choice"
+  },
+  "recentPriorCandidate": {
+    "estimator": "Fit a full completed previous-season graph with ridge1 and contextPriorStrength1 around the original older general priors; retain only its learned venue/division context, never team effects",
+    "forwardPairs": [[2023, 2024], [2024, 2025]],
+    "currentPair": [2025, 2026],
+    "currentSettings": {"ridge": 1, "contextPriorStrength": 64},
+    "predictiveEligibility": "Reuse the existing target-excluded full-parent-week plus24h-buffer preweek features and only earlier completed-season general priors",
+    "evaluation": "Compare fixed baseline and recent-prior candidate on the identical2024-2025 FBS game rows; report pooled and per-year FBS-FBS and FBS-FCS MSE/RMSE/MAE/bias",
+    "selection": "Recommend recent-prior only if pooled absolute cross-division mean error improves, pooled FBS-FBS MSE is <=1.01 times baseline, and each evaluation-year FBS-FBS MSE is <=1.03 times baseline. These are declared conservative engineering comparison rules, not statistical/prospective proof. Otherwise retain baseline.",
+    "noTuning": "No hyperparameter search or current-ranking selection; all model/prior strengths fixed in this declaration"
+  },
+  "withheldGameCheck": {
+    "scope": "All627 FBS-involving games in the exact saved2026 snapshot, retaining all other eligible FBS/FCS observations completed by that snapshot",
+    "method": "Remove each target game's paired observation and refit the same joint ridge model, including venue/division context. Exact Sherman-Morrison removal is permitted after brute-force proof on synthetic fixtures and numeric verification against the full joint normal equations.",
+    "notPregame": "This is an as-of-publication descriptive leave-one-game-out check; other games may occur after the omitted game's kickoff. Never label it a pregame forecast or use it to retrospectively pass the historical forecasting gate.",
+    "metrics": ["FBS-FBS and FBS-FCS omitted net-success-rate residuals", "minimum removal denominator", "maximum individual ranking movement", "Top25 membership-change count", "per-team maximum movement"],
+    "interpretation": "Influence and reconstruction diagnostics do not prove a uniquely correct ranking or create calibrated uncertainty intervals"
+  },
+  "publication": {
+    "label": "Experimental Performance - Scrimmage Consistency",
+    "scope": "Opponent-adjusted net success rate on provider PPA-eligible plays, including all retained game states; not a complete special-teams/turnover/scoring-opportunity grade",
+    "display": "Percentage points above the current measured FBS mean; preserve exact per-game score reconciliation and report source coverage",
+    "retain": "SOR and Predictive Strength unchanged; original failed forecasting check remains visible; individual FCS context retained",
+    "rawData": "No raw API responses or normalized source-stat arrays in public outputs",
+    "apiCalls": 0
+  }
+}

@@ -1,0 +1,33 @@
+name: CFBD advanced coverage probe
+on:
+  push:
+    branches: ['codex/performance-ranking']
+    paths: ['research/advanced-probe-request.json']
+permissions:
+  contents: read
+concurrency:
+  group: cfbd-advanced-research-probe
+  cancel-in-progress: false
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm test
+      - name: Make the single research request
+        if: github.run_attempt == 1
+        env:
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+        run: node scripts/probe-cfbd-advanced.js
+      - name: Retain the derived coverage audit
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: advanced-coverage-audit-${{ github.run_id }}
+          path: research/results/advanced-probe/*/audit.json
+          retention-days: 14
+          if-no-files-found: warn

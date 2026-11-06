@@ -1,0 +1,8 @@
+{
+  "file": "historical-coverage-v1.json.gz",
+  "sha256": "00757b0602c79df47fa9ed2b7b3c523ee28f56683650841bca1d5a6dcc74fc39",
+  "bytes": 27012,
+  "datasetFingerprint": "eb66dbd39008a7e21e9c620fb7b6a4b26e00cc89d94b77455b0e51231b74f724",
+  "addedGames": 674,
+  "removedDuplicates": 8
+}

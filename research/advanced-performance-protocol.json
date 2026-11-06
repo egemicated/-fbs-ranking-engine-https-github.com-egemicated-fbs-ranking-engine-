@@ -1,0 +1,67 @@
+{
+  "id": "net-success-performance-experiment-v1",
+  "status": "Declared before fetching or inspecting historical success-rate observations or current rankings",
+  "purpose": "A separate current-season scrimmage-consistency ranking; no changes to SOR or predictive strength",
+  "metric": {
+    "target": "home offense.successRate minus away offense.successRate",
+    "definition": "CFBD stored successful plays: at least 50% of needed yards on first down, 70% on second, 100% on third/fourth; scoring-play exceptions follow its documented classification",
+    "denominator": "Provider-covered PPA-eligible plays; excludeGarbageTime=false; no claim of all box-score plays or regulation-only coverage",
+    "notFeatures": ["PPA values", "explosiveness", "polls", "betting lines", "recruiting", "conference prestige", "wins", "final score margin", "previous team-season strength"],
+    "scope": "Scrimmage consistency, not a complete special-teams/turnover/scoring-opportunity grade"
+  },
+  "sources": {
+    "endpoint": "/stats/game/advanced?year=YEAR&seasonType=both&excludeGarbageTime=false",
+    "years": [2014, 2015, 2016, 2017, 2018, 2019, 2023, 2024, 2025, 2026],
+    "maximumNewCfbdRequests": 10,
+    "retention": "Raw inputs encrypted to a locally held recipient key for transfer; decrypted caches remain ignored/private. Only derived research and source/code fingerprints are public.",
+    "outcomes": "Existing repaired historical season contexts; current exact saved published snapshot. Full parent schedule fixes weekly cutoff even when a statistic is missing.",
+    "identity": "Exact game ID then reciprocal canonical names. Explicit aliases may only come from the current CFBD snapshot via the same stable team ID; no fuzzy matching or invented membership.",
+    "validation": "Require positive integer plays, overall rate in [0,1], near-integral rate*plays within 1e-5 and mirrored opponent defense; reject invalid pairs and report them against the full eligible denominator.",
+    "currentReplay": "Current snapshot has no recoverable kickoff/week fields; compute a current illustration only, not a 2026 pregame replay. Newer outside-snapshot games excluded.",
+    "excludedYears": "2020 pandemic/spring coverage differs; 2021-2022 are not needed for this declared first train/selection/evaluation split.",
+    "methodologySourceCommit": "e983aff8fa3e5dddf2e58d78a6717938a4c3d28f"
+  },
+  "model": {
+    "observation": "One paired net success-rate observation and weight per game, rather than two independent observations or weights proportional to tempo",
+    "equation": "netRate = individualEffectA - individualEffectB + homeRate*venue + divisionRate*divisionSign + residual",
+    "divisionSign": "+1 for FBS against FCS, -1 reversed, zero within subdivision",
+    "fit": "Ridge penalty on individual current-season effects. All measured FCS opponents remain individual. Total team rating = individual effect plus divisionRate/2 for FBS or minus divisionRate/2 for FCS.",
+    "calibration": "For each ridge/family, fit the exact affine venue/division response by older FBS-involving future-week least squares, with no coefficient sign restriction.",
+    "families": ["opponent-adjusted with learned subdivision", "opponent-adjusted zero-subdivision control", "matched shrunken raw-rate control with learned venue/subdivision"],
+    "matchedRawControl": "Same paired games, same unit-game weighting and ridge grid; own signed adjusted-net sums divided by games+ridge, with subdivision offset, but without opponent effects. Fit venue/division via the same older-only affine procedure.",
+    "simpleControls": ["older-only venue plus subdivision", "zero net-rate prediction"],
+    "output": "All FBS teams with measured games; idle unranked, fewer than four provisional. Display in percentage points above the current measured FBS mean, preserving total-score ordering.",
+    "explanations": "Exact normal-equation per-game additive reconciliation plus model/context offset. Never imply raw offensive/defensive diagnostics are separate adjusted unit ratings."
+  },
+  "selection": {
+    "venueDivisionTrainingYears": [2014, 2015, 2016, 2017],
+    "ridgeSelectionYears": [2018, 2019],
+    "ridgeGrid": [0.5, 1, 2, 4, 8],
+    "criterion": "Pooled per-game net-rate mean squared error across FBS-FBS and FBS-FCS games; ties select smaller ridge",
+    "retrospectiveEvaluationYears": [2023, 2024, 2025],
+    "cutoff": "Exclude target and all same-week statistics; only previously processed full-parent-schedule weeks with kickoff at least 24h before earliest target-week kickoff",
+    "noTeamHistory": "Every season starts neutral; only global learned coefficients carry forward",
+    "currentOrder": "Compute/inspect 2026 ranking only after older-only selection; it cannot select settings"
+  },
+  "evaluation": {
+    "groups": ["FBS-FBS", "FBS-FCS (FBS-oriented bias)", "established FBS-FBS (both at least four measured prior games)"],
+    "metrics": ["games and coverage", "MSE", "RMSE", "MAE", "mean residual", "FBS-oriented cross-subdivision mean residual", "per-year results", "paired week-block bootstrap improvement interval"],
+    "bootstrap": {"unit": "season-type/week blocks", "replicates": 1000, "seed": 1729, "interval": [0.025, 0.975]},
+    "sensitivity": ["ridge neighbors on current order", "learned subdivision versus zero-subdivision", "exclude cross-subdivision games on current order", "report sparse-opponent and connectivity diagnostics"],
+    "engineeringReadinessChecks": [
+      "At least 98% paired FBS-game coverage in each historical evaluation year and complete paired coverage of the saved current FBS snapshot",
+      "Exact per-team score reconciliation and finite stable solutions",
+      "Selected adjusted model improves pooled held-later FBS efficiency MSE over the matched raw control; report paired block interval without claiming independent games",
+      "Report all subgroup/year regressions; no silent claim of uniform superiority or complete football performance",
+      "Absolute pooled FBS-oriented cross-subdivision bias at most 0.02 net-rate units (two percentage points) and smaller than the zero-subdivision control",
+      "No automatic replacement of SOR/predictive strength; expose limitations and source scope if any Performance view is later published"
+    ],
+    "interpretation": "These are declared engineering/research checks, not proof of one objectively correct order or genuinely prospective superiority. Corrected retrospective source availability and PPA-based coverage remain limitations."
+  },
+  "primaryReferences": [
+    "https://api.collegefootballdata.com/metrics-and-definitions",
+    "https://api.collegefootballdata.com/methodology-overview",
+    "https://api.collegefootballdata.com/ppa",
+    "https://github.com/CFBD/cfb-api-v2/blob/e983aff8fa3e5dddf2e58d78a6717938a4c3d28f/src/app/stats/service.ts"
+  ]
+}

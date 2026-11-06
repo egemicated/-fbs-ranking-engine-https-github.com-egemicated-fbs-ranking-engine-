@@ -1,0 +1,23 @@
+{
+  "commit": "afe5736a994e3eaf47c57440973f9dd3d1fded61",
+  "renderDeploy": "dep-dbmnk07avr4c738v1r6g",
+  "endpoints": [
+    {
+      "path": "/health",
+      "status": 200
+    },
+    {
+      "path": "/rankings",
+      "status": 200
+    },
+    {
+      "path": "/",
+      "status": 200
+    }
+  ],
+  "publishedSnapshotHash": "561b2fc679400576c79dcbaca5cc076b2d98e3295e31d700f84908f369b88e14",
+  "publishedAsOf": "2026-11-06T03:39:55.757Z",
+  "fbsTeams": 138,
+  "rankingsAndPredictiveStrengthUnchanged": true,
+  "frontendUnchanged": true
+}

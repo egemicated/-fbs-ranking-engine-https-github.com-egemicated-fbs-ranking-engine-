@@ -1,0 +1,32 @@
+name: Supplemental private success-rate inputs
+on:
+  push:
+    branches: ['codex/performance-ranking']
+    paths: ['research/advanced-supplement-request.json']
+permissions:
+  contents: read
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm test
+      - name: Fetch the two declared supplemental seasons once
+        if: github.run_attempt == 1
+        env:
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+        run: node scripts/fetch-advanced-training.js advanced-supplement-request.json
+      - name: Retain recipient-encrypted inputs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: encrypted-advanced-supplement-${{ github.run_id }}
+          path: |
+            research/cache/advanced-training-export/manifest.json
+            research/cache/advanced-training-export/*.envelope.json
+          retention-days: 14
+          if-no-files-found: warn

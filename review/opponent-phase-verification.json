@@ -1,0 +1,32 @@
+{
+  "status": "Audit complete; frozen research collection configured; public rankings unchanged",
+  "productionCommit": "5ea5f06e09292447dadb7d66c224488f7ff9fe62",
+  "renderDeploy": "dep-dbmov0vf3r2c73al59c0",
+  "deploymentStatus": "live",
+  "nodeChecksPassed": 44,
+  "pythonResearchChecksPassed": 30,
+  "githubProductionCi": "success",
+  "teamsAudited": 236,
+  "fbsTeams": 138,
+  "directFcsOpponents": 98,
+  "publishedGamesCorroborated": 1078,
+  "eligibleOlderGameConflicts": 0,
+  "recentFinalsHeldAside": 3,
+  "sensitivityScenarios": 10,
+  "colleyTop25MembershipChangesInTestedScenarios": 0,
+  "sorTop25MembershipChangesInTestedScenarios": 0,
+  "confirmedCanceledContextSlots": 4,
+  "legitimateWeatherShortenedTiesRetained": 1,
+  "unresolvedContextCases": 1,
+  "frozenProtocol": "sor-colley-v1",
+  "firstRealResearchObservation": "Next scheduled Sunday 08:00 America/Denver refresh",
+  "actualCfbdRefreshTriggeredForTesting": false,
+  "additionalCfbdCalls": 0,
+  "publishedSnapshotHash": "561b2fc679400576c79dcbaca5cc076b2d98e3295e31d700f84908f369b88e14",
+  "limitations": [
+    "Later-source agreement is not proof of historical availability or complete provider independence",
+    "Selected membership checks do not certify every historical membership entry",
+    "Sensitivity ranges are not confidence intervals or estimates of actual missing-game bias",
+    "First real future collection has not yet executed; pipeline components were tested with fixtures"
+  ]
+}

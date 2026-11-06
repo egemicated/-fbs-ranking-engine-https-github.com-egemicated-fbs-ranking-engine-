@@ -1,0 +1,23 @@
+{
+  "status": "Research-only identity deduplication overlay; canonical data and venue metadata unchanged",
+  "limitation": "Choosing one occurrence resolves double counting, not all timestamp/venue/classification questions. The 2004 duplicate variants also disagree on venue; those require separate adjudication.",
+  "seasons": {
+    "2004": {
+      "source": "https://static.famuathletics.com/custompages/stats/football/2004/teamstat.htm",
+      "dropIds": ["63827", "63828", "63831", "63833", "63835", "63837", "63841"],
+      "keepIds": ["242690050", "242760050", "242830050", "242970050", "243040050", "243252065", "243322229"],
+      "expectedTeam": "Florida A&M",
+      "expectedRepairedGames": 11,
+      "expectedRepairedRecord": "3-8"
+    },
+    "2025": {
+      "source": "https://athletics.augsburg.edu/sports/football/schedule/2025",
+      "dropIds": ["401806686"],
+      "keepIds": ["401833370"],
+      "expectedTeam": "Augsburg",
+      "expectedRepairedGames": 10,
+      "expectedRepairedRecord": "4-6",
+      "kickoffEvidence": "Official kickoff Friday November 14 at 19:30 Central equals November 15 at 01:30 UTC; the other row uses November 15 at 18:00 UTC."
+    }
+  }
+}

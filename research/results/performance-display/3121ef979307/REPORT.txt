@@ -1,0 +1,46 @@
+PERFORMANCE DISPLAY TESTS: EXPERIMENTAL PUBLICATION
+
+Recommendation: recent-prior. The declared recent-prior selection checks are
+{"crossBiasImproves": true, "eachYearFbsMseHarmAtMostThreePercent": true, "pooledFbsMseHarmAtMostOnePercent": true}.
+
+The only changed candidate input is its general venue/division prior, learned
+from completed earlier seasons. Teams do not inherit previous-year effects.
+Ridge1 and context-prior strength64 were fixed before this test. Known seasons
+remain retrospective; this is not an untouched or prospective validation claim.
+
+Forward2024-2025 FBS-FCS mean error: baseline
+-2.969935pp, recent-prior
+-1.070621pp.
+FBS-FBS pooled MSE: baseline 0.0119353789,
+recent-prior 0.0119575824.
+All per-year/group comparisons, prior estimates and declared selection rules
+are in tests.json.gz. No settings were chosen from the2026 order.
+
+As-of-date withheld-game check for selected candidate: 627 FBS
+games removed individually from the joint effect+context fit. It retains every
+other eligible game completed by the publication cutoff, including games later
+than the omitted kickoff. It is descriptive, NOT a pregame prediction test.
+FBS-FBS withheld RMSE: 10.152798pp.
+FBS-FCS withheld RMSE: 10.250355pp;
+FBS-oriented withheld mean error: -0.321650pp.
+Maximum individual rank movement after one omitted FBS game:
+26. Games altering Top25 membership:
+54. These are influence diagnostics, not
+calibrated confidence intervals. Exact removal matches independent full joint
+normal equations; minimum removal denominator 0.74438182.
+
+Every selected current score has exact conditional per-game reconciliation.
+Current source coverage: 627/
+627 FBS games,
+138 complete FBS teams, at the exact
+saved snapshot cutoff 2026-11-06T03:39:55.757Z.
+
+Original forecasting gate: FAILED, unchanged. OriginalV2 historical repeated
+FBS-FCS bias was -2.295530pp against the2pp target. Publishing a separately
+labeled experimental descriptive view does not turn that earlier result into
+a pass. Preserve the scope, date, source coverage and limitations in the UI.
+
+Files: publisher-input.json provides derived FBS scores, score explanations,
+coverage, chosen config and validation metadata. tests.json.gz retains the full
+derived experiment. No raw API records/normalized source-stat arrays are public.
+API calls for this test:0. SOR and Predictive Strength were not changed.

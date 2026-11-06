@@ -1,0 +1,17 @@
+{
+  "id": "division-round2-v1",
+  "status": "Repair audit, retrospective replication, case review and prospective shadow preparation; no public ranking replacement",
+  "trainingYears": [2014, 2015, 2016, 2017, 2018, 2019],
+  "evaluationYears": [2021, 2022, 2023, 2024, 2025],
+  "stressYear": 2020,
+  "parentDataset": "historical-coverage-v1",
+  "candidateDataset": "fcs-coverage-v1",
+  "parentExperimentFingerprint": "1fef2d825b083109f13d6d77552ee15ce2b1bcd31d4cfbe22eea59aaad5de06a",
+  "repairPolicy": "Add only verified missing game identities to season-specific known FCS nodes. Preserve conflicting or unknown evidence for review. Do not infer absence of FCS playoffs from provider seasonType labels.",
+  "modelPolicy": "Identical unchanged Colley network for nested two-variable control and three-variable division challenger; fit both on the same FBS-involving older-season games. Separate prior-week-only and final-network excluded-game fits; no forced coefficient signs, polls, team overrides or parameter selection by current ranks.",
+  "replications": ["Full source network", "Known FBS/FCS-only network", "Provider regular-season labels only; this can retain actual early FCS playoff rounds and must not be called a true playoff exclusion"],
+  "caseReview": ["Biggest current candidate/control rank differences", "Individual reference probabilities for each scheduled opponent", "Separate parameter refit and direct subdivision term", "FCS upset outcomes and proper scoring penalties", "Strong FCS and weak FBS opponents can overlap; no forced team ordering", "Count each outcome once; no extra division multiplier in the network or actual record"],
+  "prospectivePolicy": "Freeze a new separately versioned candidate after this analysis. Save shadow achievement comparisons and available future-game probabilities with immutable source/input/implementation checksums. Future forecasts must be recorded after freeze and before kickoff. Same-time achievement comparisons are not pregame forecasts.",
+  "operations": "Use existing Sunday 08:00 America/Denver retrieval and evidence. No additional CFBD request, paid service, public formula change or frontend change. New research failures must not block publication or the existing frozen v1 comparison.",
+  "limits": ["Previously inspected historical seasons are not untouched evaluation", "NCAA tournament coverage and non-NCAA FCS postseason require distinct checks", "2020 spring championship falls in calendar 2021 and has source roster omissions", "Predominantly FBS-home selected crossdivision schedules prevent causal population interpretations", "Probability quality alone cannot establish a uniquely correct achievement order"]
+}

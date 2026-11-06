@@ -1,0 +1,222 @@
+{
+  "version": "performance-box-source-v1",
+  "provider": "sportsdataverse ESPN raw team boxscore release",
+  "releaseTag": "espn_cfb_team_box",
+  "releaseUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/tag/espn_cfb_team_box",
+  "schemaUrl": "https://github.com/sportsdataverse/cfbfastR-cfb-data/blob/main/DATASETS.md",
+  "cfbdCalls": 0,
+  "assets": [
+    {
+      "year": 2014,
+      "name": "team_box_2014.csv",
+      "expectedBytes": 185751,
+      "githubAssetId": 610425246,
+      "releaseUpdatedAt": "2026-10-04T18:53:14Z",
+      "releaseDigest": "sha256:bbc5fd2a00a846f955d841fac7b07373a79b2095cd9290e07d5c521cd60490e1",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2014.csv"
+    },
+    {
+      "year": 2015,
+      "name": "team_box_2015.csv",
+      "expectedBytes": 186579,
+      "githubAssetId": 609922868,
+      "releaseUpdatedAt": "2026-10-04T13:43:18Z",
+      "releaseDigest": "sha256:7ca01274ad12399f99f0a2443f93d837b1098154fe14219b7167abe78e1c9eb8",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2015.csv"
+    },
+    {
+      "year": 2016,
+      "name": "team_box_2016.csv",
+      "expectedBytes": 187075,
+      "githubAssetId": 608676636,
+      "releaseUpdatedAt": "2026-10-03T22:51:19Z",
+      "releaseDigest": "sha256:28a14e829dd607e97c13042d7fa3d1e03622e14ea321fa73c2511583e0e6382a",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2016.csv"
+    },
+    {
+      "year": 2017,
+      "name": "team_box_2017.csv",
+      "expectedBytes": 188360,
+      "githubAssetId": 608038524,
+      "releaseUpdatedAt": "2026-10-03T15:27:37Z",
+      "releaseDigest": "sha256:b08efecdb672aef5302349477bb98159c5971da3786e0d42ea004c770cc98b22",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2017.csv"
+    },
+    {
+      "year": 2018,
+      "name": "team_box_2018.csv",
+      "expectedBytes": 190320,
+      "githubAssetId": 607636710,
+      "releaseUpdatedAt": "2026-10-03T10:43:09Z",
+      "releaseDigest": "sha256:74b6ff13c4c1e09043699d4c2711739d53793c5eb3f0ebfe9fb15a1e2db2961e",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2018.csv"
+    },
+    {
+      "year": 2019,
+      "name": "team_box_2019.csv",
+      "expectedBytes": 189624,
+      "githubAssetId": 607107017,
+      "releaseUpdatedAt": "2026-10-03T04:08:51Z",
+      "releaseDigest": "sha256:6076dbb7d9188071d909315fcbd3a5adf46d771162284bbc29bed439d7eca3e2",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2019.csv"
+    },
+    {
+      "year": 2023,
+      "name": "team_box_2023.csv",
+      "expectedBytes": 193808,
+      "githubAssetId": 605143416,
+      "releaseUpdatedAt": "2026-10-02T08:16:22Z",
+      "releaseDigest": "sha256:41637076d7bd57c0943c2a8d75d39ae3093e808681514dfa69c87b3c0d91b799",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2023.csv"
+    },
+    {
+      "year": 2024,
+      "name": "team_box_2024.csv",
+      "expectedBytes": 205716,
+      "githubAssetId": 604709691,
+      "releaseUpdatedAt": "2026-10-02T03:22:29Z",
+      "releaseDigest": "sha256:02baf937b43da8f1a9f0e25cefaa243bad572389b47090a92a44dfa2c1bff324",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2024.csv"
+    },
+    {
+      "year": 2025,
+      "name": "team_box_2025.csv",
+      "expectedBytes": 203897,
+      "githubAssetId": 624070615,
+      "releaseUpdatedAt": "2026-10-09T06:08:05Z",
+      "releaseDigest": "sha256:4ecc44939c4a90760fced98b8802a6d2483556516fe47410c41ccb79f8ed10b8",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2025.csv"
+    },
+    {
+      "year": 2026,
+      "name": "team_box_2026.csv",
+      "expectedBytes": 132972,
+      "githubAssetId": 708975523,
+      "releaseUpdatedAt": "2026-11-04T09:31:10Z",
+      "releaseDigest": "sha256:71ed815020d6d7e8c73b6ff62a4634601cf81be195c30c80827430e89dc2d74c",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2026.csv"
+    }
+  ],
+  "files": [
+    {
+      "year": 2014,
+      "name": "team_box_2014.csv",
+      "expectedBytes": 185751,
+      "githubAssetId": 610425246,
+      "releaseUpdatedAt": "2026-10-04T18:53:14Z",
+      "releaseDigest": "sha256:bbc5fd2a00a846f955d841fac7b07373a79b2095cd9290e07d5c521cd60490e1",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2014.csv",
+      "fetchedAt": "2026-11-06T19:52:27.218Z",
+      "sha256": "bbc5fd2a00a846f955d841fac7b07373a79b2095cd9290e07d5c521cd60490e1",
+      "bytes": 185751
+    },
+    {
+      "year": 2015,
+      "name": "team_box_2015.csv",
+      "expectedBytes": 186579,
+      "githubAssetId": 609922868,
+      "releaseUpdatedAt": "2026-10-04T13:43:18Z",
+      "releaseDigest": "sha256:7ca01274ad12399f99f0a2443f93d837b1098154fe14219b7167abe78e1c9eb8",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2015.csv",
+      "fetchedAt": "2026-11-06T19:52:27.229Z",
+      "sha256": "7ca01274ad12399f99f0a2443f93d837b1098154fe14219b7167abe78e1c9eb8",
+      "bytes": 186579
+    },
+    {
+      "year": 2016,
+      "name": "team_box_2016.csv",
+      "expectedBytes": 187075,
+      "githubAssetId": 608676636,
+      "releaseUpdatedAt": "2026-10-03T22:51:19Z",
+      "releaseDigest": "sha256:28a14e829dd607e97c13042d7fa3d1e03622e14ea321fa73c2511583e0e6382a",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2016.csv",
+      "fetchedAt": "2026-11-06T19:52:27.220Z",
+      "sha256": "28a14e829dd607e97c13042d7fa3d1e03622e14ea321fa73c2511583e0e6382a",
+      "bytes": 187075
+    },
+    {
+      "year": 2017,
+      "name": "team_box_2017.csv",
+      "expectedBytes": 188360,
+      "githubAssetId": 608038524,
+      "releaseUpdatedAt": "2026-10-03T15:27:37Z",
+      "releaseDigest": "sha256:b08efecdb672aef5302349477bb98159c5971da3786e0d42ea004c770cc98b22",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2017.csv",
+      "fetchedAt": "2026-11-06T19:52:27.459Z",
+      "sha256": "b08efecdb672aef5302349477bb98159c5971da3786e0d42ea004c770cc98b22",
+      "bytes": 188360
+    },
+    {
+      "year": 2018,
+      "name": "team_box_2018.csv",
+      "expectedBytes": 190320,
+      "githubAssetId": 607636710,
+      "releaseUpdatedAt": "2026-10-03T10:43:09Z",
+      "releaseDigest": "sha256:74b6ff13c4c1e09043699d4c2711739d53793c5eb3f0ebfe9fb15a1e2db2961e",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2018.csv",
+      "fetchedAt": "2026-11-06T19:52:27.465Z",
+      "sha256": "74b6ff13c4c1e09043699d4c2711739d53793c5eb3f0ebfe9fb15a1e2db2961e",
+      "bytes": 190320
+    },
+    {
+      "year": 2019,
+      "name": "team_box_2019.csv",
+      "expectedBytes": 189624,
+      "githubAssetId": 607107017,
+      "releaseUpdatedAt": "2026-10-03T04:08:51Z",
+      "releaseDigest": "sha256:6076dbb7d9188071d909315fcbd3a5adf46d771162284bbc29bed439d7eca3e2",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2019.csv",
+      "fetchedAt": "2026-11-06T19:52:27.451Z",
+      "sha256": "6076dbb7d9188071d909315fcbd3a5adf46d771162284bbc29bed439d7eca3e2",
+      "bytes": 189624
+    },
+    {
+      "year": 2023,
+      "name": "team_box_2023.csv",
+      "expectedBytes": 193808,
+      "githubAssetId": 605143416,
+      "releaseUpdatedAt": "2026-10-02T08:16:22Z",
+      "releaseDigest": "sha256:41637076d7bd57c0943c2a8d75d39ae3093e808681514dfa69c87b3c0d91b799",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2023.csv",
+      "fetchedAt": "2026-11-06T19:52:27.669Z",
+      "sha256": "41637076d7bd57c0943c2a8d75d39ae3093e808681514dfa69c87b3c0d91b799",
+      "bytes": 193808
+    },
+    {
+      "year": 2024,
+      "name": "team_box_2024.csv",
+      "expectedBytes": 205716,
+      "githubAssetId": 604709691,
+      "releaseUpdatedAt": "2026-10-02T03:22:29Z",
+      "releaseDigest": "sha256:02baf937b43da8f1a9f0e25cefaa243bad572389b47090a92a44dfa2c1bff324",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2024.csv",
+      "fetchedAt": "2026-11-06T19:52:27.677Z",
+      "sha256": "02baf937b43da8f1a9f0e25cefaa243bad572389b47090a92a44dfa2c1bff324",
+      "bytes": 205716
+    },
+    {
+      "year": 2025,
+      "name": "team_box_2025.csv",
+      "expectedBytes": 203897,
+      "githubAssetId": 624070615,
+      "releaseUpdatedAt": "2026-10-09T06:08:05Z",
+      "releaseDigest": "sha256:4ecc44939c4a90760fced98b8802a6d2483556516fe47410c41ccb79f8ed10b8",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2025.csv",
+      "fetchedAt": "2026-11-06T19:52:27.703Z",
+      "sha256": "4ecc44939c4a90760fced98b8802a6d2483556516fe47410c41ccb79f8ed10b8",
+      "bytes": 203897
+    },
+    {
+      "year": 2026,
+      "name": "team_box_2026.csv",
+      "expectedBytes": 132972,
+      "githubAssetId": 708975523,
+      "releaseUpdatedAt": "2026-11-04T09:31:10Z",
+      "releaseDigest": "sha256:71ed815020d6d7e8c73b6ff62a4634601cf81be195c30c80827430e89dc2d74c",
+      "downloadUrl": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_2026.csv",
+      "fetchedAt": "2026-11-06T19:52:27.911Z",
+      "sha256": "71ed815020d6d7e8c73b6ff62a4634601cf81be195c30c80827430e89dc2d74c",
+      "bytes": 132972
+    }
+  ]
+}

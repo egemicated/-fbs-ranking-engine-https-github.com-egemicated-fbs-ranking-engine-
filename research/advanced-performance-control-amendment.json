@@ -1,0 +1,11 @@
+{
+  "id": "calibrated-naive-control-amendment-v1",
+  "baseProtocolSha256": "08e14d76ef7dcbc25efa81438fbaead55ce7a200ae71756daa3dd42c83648cb8",
+  "timing": "Declared after the private-source collection was started but before its encrypted inputs were downloaded/decrypted, any success-rate observation inspected, any fitting or any current ranking computed",
+  "reason": "An unscaled difference of raw net rates can have an avoidable scale error. A fair comparator should learn its scale, not be handicapped to make opponent adjustment look stronger.",
+  "control": "For each original ridge grid value, regress target net rate on three preweek columns: raw shrunken rate difference, exact naive venue-response column, exact naive subdivision-response column. Fit all three coefficients on original 2014-2017 years; choose ridge on original 2018-2019 pooled MSE.",
+  "coefficients": ["scale", "venueFeatureWeight", "divisionFeatureWeight"],
+  "interpretation": "The latter two are predictive feature weights rather than physical venue/division effects when scale differs from one. The naive control has one more global calibration degree of freedom than the adjusted candidate. Compare complete calibrated models, not an isolated causal opponent-adjustment benefit.",
+  "diagnostics": "Record calibration design rank, number of columns and condition number. No coefficient sign restriction. No changes to adjusted formula, target, input eligibility, split years, grid or current-order selection restriction.",
+  "conservativeReadinessGate": "In addition to original checks, require a positive lower bound on the declared paired week-block 95% MSE-improvement interval for any historical-superiority readiness claim. Report year/subgroup regressions even if pooled checks pass."
+}

@@ -1,0 +1,23 @@
+{
+  "version": "fcs-coverage-v1",
+  "file": "fcs-coverage-v1.json.gz",
+  "sha256": "5b493c3e3ec9e13b4f52670daf22d012912093810b377ed54d444f5c0b3aa699",
+  "bytes": 23292,
+  "datasetFingerprint": "7d5cfee8c63646882a8f351d69f6a81de9a6a47a38749bd3a3b8c793c1bc98ce",
+  "addedGames": 34,
+  "scoreCorrections": 3,
+  "years": [
+    "2014",
+    "2015",
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023",
+    "2024",
+    "2025"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "id": "adaptive-net-success-performance-v2",
+  "status": "Declared after inspecting V1 retrospective results; no untouched claim for repeated 2023-2025 evaluation",
+  "baseProtocolSha256": "08e14d76ef7dcbc25efa81438fbaead55ce7a200ae71756daa3dd42c83648cb8",
+  "v1Fingerprint": "4bf5494b85bc",
+  "problemObserved": "V1 fixed older population adjustment understates held-later FBS-FCS net success by 2.804 percentage points, exceeding the unchanged two-point engineering target. Bias grows across 2023-2025 while FBS-FBS mean residual is near zero.",
+  "hypothesis": "Let current-season completed-game evidence update the general venue/subdivision context around an older learned prior, without importing any previous team rating or a manually chosen gap.",
+  "model": {
+    "objective": "sum(netRate - effectA + effectB - H*venue - D*divisionSign)^2 + ridge*sum(effect^2) + contextPriorStrength*((H-homePrior)^2 + (D-divisionPrior)^2)",
+    "solution": "Exact joint ridge solution via Schur complement; prior has zero previous-team-season effects. Current H and D are learned only from the eligible current-season past graph.",
+    "units": "Same net success-rate units as V1; current team total is effect +/- D/2. No PPA value or human ranking input.",
+    "explanation": "Conditional per-game normal-equation contributions reconcile every team score; report separate context normal equations and population prior. Current display subtracts the measured-FBS mean and multiplies by 100.",
+    "noFuture": "Preweek H/D posterior uses the same target-excluded, full-parent-week plus 24h-buffer past graph as effects. No same-week statistics or later game may enter either fit."
+  },
+  "selection": {
+    "populationPriorYears": [2014, 2015, 2016, 2017],
+    "ridgeSelectionYears": [2018, 2019],
+    "ridgeGrid": [0.5, 1, 2, 4, 8],
+    "contextPriorStrengthGrid": [1, 4, 16, 64],
+    "criterion": "Pooled FBS-involving future-week MSE on 2018-2019; tie smaller ridge then stronger context prior",
+    "baseline": "Compare the already declared V1 adjusted/zero-division models and the independently selected three-column calibrated shrunken raw control. Whole-model comparison; no claim that gains isolate opponent adjustment or adaptation causally.",
+    "repeatedEvaluationYears": [2023, 2024, 2025],
+    "supplementalEvaluationYears": [2021, 2022],
+    "supplementalTiming": "Advanced success-rate fields for 2021-2022 have not been requested or inspected when this extension is declared. They are supplementary retrospective evidence, with familiar outcomes and later-corrected coverage, not a prospective trial.",
+    "currentOrder": "The original V1 file exists but current order has not selected V2 parameters; compute V2 current ranking only after older-only selection."
+  },
+  "source": {
+    "inherit": "Same exact identities, ID-linked aliases, positive plays, integer-success reconciliation, mirror checks and provider-covered-play caveats as V1",
+    "additionalRequests": 2,
+    "additionalYears": [2021, 2022],
+    "rawRetention": "Reuse locally held recipient key; transfer only encrypted raw envelopes. Keep decrypted sources and normalized arrays in ignored private caches."
+  },
+  "checks": {
+    "coverage": "At least 98% paired eligible FBS games per evaluation year, complete saved-current FBS coverage",
+    "math": "Joint-normal-equation proof, finite stable solve, exact score and displayed-reference reconciliation",
+    "pooledBias": "Retain absolute FBS-oriented cross-subdivision mean error at most 0.02 for both repeated and supplementary year pools; report every year separately",
+    "performance": "Report RMSE/MAE/MSE against all frozen V1 controls, including subgroup/year regressions",
+    "uncertainty": "Paired season-type/week-block sensitivity intervals with original 1000 replicates/seed1729; repeated teams connect weeks, so no calibrated significance/prospective confidence claim",
+    "interpretation": "A failed check remains failed. No threshold change or silent auto-promotion of SOR/predictive. Any future Performance view must retain scrimmage-consistency scope and experimental retrospective status."
+  }
+}

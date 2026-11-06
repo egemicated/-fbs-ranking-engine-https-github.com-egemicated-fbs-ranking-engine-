@@ -1,0 +1,180 @@
+{
+  "datasetVersion": "performance-box-v1",
+  "cfbdCalls": 0,
+  "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee",
+  "seasons": {
+    "2014": {
+      "sha256": "fb140c3685f454322fda46056572d2c4eac09798b3db906deb2cfea2d7f13e43",
+      "rawSourceSha256": "bbc5fd2a00a846f955d841fac7b07373a79b2095cd9290e07d5c521cd60490e1",
+      "games": 866,
+      "acceptedByDivisionPair": {
+        "fbs-fbs": 759,
+        "fbs-fcs": 107
+      },
+      "expectedFbsInvolvingGames": 868,
+      "acceptedFbsInvolvingGames": 866,
+      "exclusionReasons": {
+        "yards-components-disagree": 1,
+        "not-in-known-D1-outcome-reference": 6
+      },
+      "fbsTeamsWithStats": 128,
+      "fbsTeamsWithCompleteStats": 125
+    },
+    "2015": {
+      "sha256": "2d4da1b6e2d7cc2995e9beda0fbb12a8cc32852eff6ee7602ab61f976fa3f8b5",
+      "rawSourceSha256": "7ca01274ad12399f99f0a2443f93d837b1098154fe14219b7167abe78e1c9eb8",
+      "games": 870,
+      "acceptedByDivisionPair": {
+        "fbs-fbs": 765,
+        "fbs-fcs": 105
+      },
+      "expectedFbsInvolvingGames": 870,
+      "acceptedFbsInvolvingGames": 870,
+      "exclusionReasons": {
+        "not-in-known-D1-outcome-reference": 6
+      },
+      "fbsTeamsWithStats": 128,
+      "fbsTeamsWithCompleteStats": 128
+    },
+    "2016": {
+      "sha256": "e5eeb8dc0b8397d6dcc34714ecda1006cd9dd4c0a2db55a08dc64e6e351e5d3e",
+      "rawSourceSha256": "28a14e829dd607e97c13042d7fa3d1e03622e14ea321fa73c2511583e0e6382a",
+      "games": 855,
+      "acceptedByDivisionPair": {
+        "fbs-fcs": 112,
+        "fbs-fbs": 743
+      },
+      "expectedFbsInvolvingGames": 873,
+      "acceptedFbsInvolvingGames": 855,
+      "exclusionReasons": {
+        "missing-yards": 1,
+        "yards-components-disagree": 17,
+        "not-in-known-D1-outcome-reference": 6
+      },
+      "fbsTeamsWithStats": 128,
+      "fbsTeamsWithCompleteStats": 99
+    },
+    "2017": {
+      "sha256": "4b87152e047c343cc7dcbde3f048648c12c95a8efd40e0e3b10725fc99e95e82",
+      "rawSourceSha256": "b08efecdb672aef5302349477bb98159c5971da3786e0d42ea004c770cc98b22",
+      "games": 867,
+      "acceptedByDivisionPair": {
+        "fbs-fbs": 770,
+        "fbs-fcs": 97
+      },
+      "expectedFbsInvolvingGames": 874,
+      "acceptedFbsInvolvingGames": 867,
+      "exclusionReasons": {
+        "not-in-known-D1-outcome-reference": 16,
+        "yards-components-disagree": 7
+      },
+      "fbsTeamsWithStats": 130,
+      "fbsTeamsWithCompleteStats": 117
+    },
+    "2018": {
+      "sha256": "56c2d210bdadc085a6091ecc4c4b5d3ba96dbde772d05e7300f1017a8cde3b33",
+      "rawSourceSha256": "74b6ff13c4c1e09043699d4c2711739d53793c5eb3f0ebfe9fb15a1e2db2961e",
+      "games": 875,
+      "acceptedByDivisionPair": {
+        "fbs-fbs": 764,
+        "fbs-fcs": 111
+      },
+      "expectedFbsInvolvingGames": 884,
+      "acceptedFbsInvolvingGames": 875,
+      "exclusionReasons": {
+        "not-in-known-D1-outcome-reference": 14,
+        "yards-components-disagree": 9
+      },
+      "fbsTeamsWithStats": 130,
+      "fbsTeamsWithCompleteStats": 115
+    },
+    "2019": {
+      "sha256": "c4a48f3f6065749075f9521d71997ff38f279e960105f592ce46546114c71e7c",
+      "rawSourceSha256": "6076dbb7d9188071d909315fcbd3a5adf46d771162284bbc29bed439d7eca3e2",
+      "games": 882,
+      "acceptedByDivisionPair": {
+        "fbs-fbs": 769,
+        "fbs-fcs": 113
+      },
+      "expectedFbsInvolvingGames": 888,
+      "acceptedFbsInvolvingGames": 882,
+      "exclusionReasons": {
+        "yards-components-disagree": 6,
+        "not-in-known-D1-outcome-reference": 4
+      },
+      "fbsTeamsWithStats": 130,
+      "fbsTeamsWithCompleteStats": 120
+    },
+    "2023": {
+      "sha256": "c625093392b82c7d291cfd81fb0fd5383031d8a174930af602823e9f8b271a92",
+      "rawSourceSha256": "41637076d7bd57c0943c2a8d75d39ae3093e808681514dfa69c87b3c0d91b799",
+      "games": 896,
+      "acceptedByDivisionPair": {
+        "fbs-fbs": 779,
+        "fbs-fcs": 116,
+        "fcs-fcs": 1
+      },
+      "expectedFbsInvolvingGames": 910,
+      "acceptedFbsInvolvingGames": 895,
+      "exclusionReasons": {
+        "yards-components-disagree": 13,
+        "nonneutral-home-away-disagrees": 2
+      },
+      "fbsTeamsWithStats": 133,
+      "fbsTeamsWithCompleteStats": 108
+    },
+    "2024": {
+      "sha256": "252c138b1eca761cc963d1e45177f2abe643f2ec53587ccf969a38f0a6197041",
+      "rawSourceSha256": "02baf937b43da8f1a9f0e25cefaa243bad572389b47090a92a44dfa2c1bff324",
+      "games": 960,
+      "acceptedByDivisionPair": {
+        "fbs-fbs": 793,
+        "fbs-fcs": 121,
+        "fcs-fcs": 46
+      },
+      "expectedFbsInvolvingGames": 919,
+      "acceptedFbsInvolvingGames": 914,
+      "exclusionReasons": {
+        "yards-components-disagree": 4,
+        "not-in-known-D1-outcome-reference": 1,
+        "nonneutral-home-away-disagrees": 1
+      },
+      "fbsTeamsWithStats": 134,
+      "fbsTeamsWithCompleteStats": 125
+    },
+    "2025": {
+      "sha256": "3c9e823ff4526954ed93116bde29a0702c6f7be5566a8012f8335a618bb266f6",
+      "rawSourceSha256": "4ecc44939c4a90760fced98b8802a6d2483556516fe47410c41ccb79f8ed10b8",
+      "games": 957,
+      "acceptedByDivisionPair": {
+        "fbs-fbs": 807,
+        "fbs-fcs": 126,
+        "fcs-fcs": 24
+      },
+      "expectedFbsInvolvingGames": 934,
+      "acceptedFbsInvolvingGames": 933,
+      "exclusionReasons": {
+        "no-offensive-plays": 1
+      },
+      "fbsTeamsWithStats": 136,
+      "fbsTeamsWithCompleteStats": 134
+    },
+    "2026": {
+      "sha256": "91628f1d3a4a6df9386bfaa009259b4349a8c8fcb83b0aa1ee22a4f20d5414b9",
+      "rawSourceSha256": "71ed815020d6d7e8c73b6ff62a4634601cf81be195c30c80827430e89dc2d74c",
+      "games": 621,
+      "acceptedByDivisionPair": {
+        "fbs-fbs": 499,
+        "fbs-fcs": 122
+      },
+      "expectedFbsInvolvingGames": 627,
+      "acceptedFbsInvolvingGames": 621,
+      "exclusionReasons": {
+        "yards-components-disagree": 3
+      },
+      "fbsTeamsWithStats": 138,
+      "fbsTeamsWithCompleteStats": 128
+    }
+  },
+  "datasetFingerprint": "7e3d5f12c569f825a781bc76d1a5ab89dae5f425b1d3c4bb4273f34f5851cca9"
+}
