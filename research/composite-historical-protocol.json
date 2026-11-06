@@ -1,0 +1,37 @@
+{
+  "id": "three-model-equal-percentile-historical-v1",
+  "status": "Frozen before computing the combined historical results. All source seasons and several component experiments were previously inspected; no untouched or prospective claim.",
+  "question": "Does the exact equal-weight percentile blend preview add useful future-game ordering information beyond the three existing models, and what achievement tradeoffs does it introduce?",
+  "costAndScope": "Offline saved data only; zero CFBD calls, no paid services, no deployment, no production formula changes.",
+  "models": {
+    "sor": "Actual deployed division-sor-v2 with frozen data/publication-model.json parameters, exact excluded-game opponent Colley and mean-FBS reference; current-season outcomes only.",
+    "strength": "Actual deployed src/engine.js model with data/model.json, smooth 28-point margin saturation and older own-team snapshot prior; no target-season future game in a prior.",
+    "performance": "Actual deployed experimental recent-prior success-rate model: ridge1/context64. Previous completed season joint fit ridge1/context1 around the original older general prior supplies only H,D; no previous team effects.",
+    "normalization": "For each checkpoint, tie-aware midrank percentile 100*(N-midrank)/(N-1) on the COMMON FBS population having at least one measured Performance game and one outcome game. Equal scores within 1e-10 share a midrank. Higher is better.",
+    "primaryBlend": "Arithmetic mean of the three percentile scores, each weight exactly one third. No weight or normalization search.",
+    "ablations": ["sor+strength equal halves", "sor+performance equal halves", "strength+performance equal halves"],
+    "ties": "Fractional credit 0.5 for an exact ranking tie, tolerance1e-10; deterministic displayed ordering must never break a numeric tie."
+  },
+  "time": {
+    "primaryEvaluationYears": [2024, 2025],
+    "supplementaryEvaluationYears": [2023],
+    "probabilityCalibrationYears": [2018, 2019],
+    "checkpoint": "Before earliest kickoff of each distinct repaired fcs-coverage-v1 parent regular/postseason competition week. Only completed games from fully earlier processed parent weeks with kickoff+24hours<=cutoff are eligible. Identical outcome parent graph and cutoff for all components, with Performance additionally requiring verified paired source statistics. Repaired current-season graph is shared; historical Strength prior is the saved production older-season snapshot, fingerprinted separately.",
+    "limits": "Later-corrected bulk source statistics and season rosters reconstruct a conservative historical cutoff, not actual contemporaneous availability. General SOR parameters learned in2014-2019 may overlap calibration years, which are training only. Current Performance variant was selected after prior inspection of2024-2025, so their repeated evaluation is descriptive. Strength intentionally carries only earlier own-team ratings."
+  },
+  "evaluation": {
+    "targetUniverse": "Completed FBS-FBS parent outcome games, independent of availability of target-game success-rate data. No FCS percentile rank is invented.",
+    "primaryEligibility": "Both opponents in common ranking population with at least4 eligible completed outcome games AND4 measured Performance games before cutoff.",
+    "secondaryEligibility": "Both opponents have at least1 eligible outcome game and1 measured Performance game.",
+    "primaryMetric": "Higher preweek percentile index selects the winner; fractional tie credit. This tests neutral team ordering, without adding a home bonus to any rank.",
+    "secondaryProbabilities": "For each of7 fixed model indices, fit a symmetric logistic mapping on2018-2019 eligible game rows only: logitP(homewin)=betaIndex*(homeIndex-awayIndex)/100 + betaVenue*nonNeutral. No intercept, no evaluation refit, no automated selection. Report Brier, log loss, probability-pick accuracy and home calibration bias.",
+    "groups": ["pooled2024-2025", "each evaluation season", "regular season", "postseason", "neutral venue", "home venue", "games with a preweek component Top25 team", "three components disagree about the winner"],
+    "uncertainty": "2000 paired resamples of full season-type-week blocks, within each evaluation year, seed1729. Report95% sensitivity intervals for triple-minus-each-standalone accuracy/Brier/logloss differences. Shared teams connect weeks and there are only2 primary years; these are not calibrated independent/prospective significance claims. No weight selection from ablations.",
+    "coverage": "Count every target, exclusions, checkpoint common-team population, eligible source/stat games, early sample counts and all input/code hashes. Fail on target/future inclusion, mismatched identities or graph disagreements."
+  },
+  "interpretation": {
+    "achievement": "Future winner prediction has an observed outcome but cannot prove the correct earned-achievement order. Examine component dependence and the historical team prior entering the blend; no AP/Coaches/CFP polls are inputs or scoring targets.",
+    "recommendation": "Report paired pooled and annual comparisons to EACH standalone, including strongest competitor, not merely SOR. Tiny gains, mixed years or intervals spanning zero do not establish superiority. No live replacement is authorized by this experiment.",
+    "future": "Only a separately frozen, saved-before-kickoff future trial can establish genuinely new evidence."
+  }
+}

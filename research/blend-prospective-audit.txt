@@ -1,0 +1,105 @@
+INDEPENDENT AUDIT: FROZEN FUTURE-GAME BLEND TRACKING
+
+Protocol: three-model-blend-prospective-2026-v1
+Frozen at: 2026-11-06T22:49:59.146Z
+Protocol file SHA256:
+828bf110280c0f314188667dd1265af5afe16f0d8a83962eb577c807cf09a1c8
+Protocol object SHA256 used in observations (JSON.stringify parsed object):
+667669f3315fabd1eb9c0ee28642f05e6f8d475971f68410cf320a982fd4b5eb
+
+Scope and result
+PASS for the reviewed prospective research design, capture implementation,
+evaluator and workflow integration. This is readiness to collect future
+evidence, not a finding that the blend performs better. SOR, Predictive
+Strength and Performance remain separate public rankings. There are no
+prospective observations at setup and no retrospective backfill is counted.
+
+Frozen numerical design
+- Same three deployed components and same common measured FBS cohort.
+- Anchored tie-aware midrank percentiles, tolerance 1e-10; singleton = 50.
+- Seven fixed models: three standalones, equal-thirds triple, and three
+  equal-half pairwise blends. No automatic selection or interim retuning.
+- Primary games require both teams to have four prior outcome games and
+  four measured Performance games; secondary requires one of each.
+- Seven venue-aware probability mappings are exactly those fitted on the
+  1,097 established 2018-2019 games in the historical study. They are not
+  refitted on future games. The index itself is not a win probability.
+- Fixed seven-day forecast horizon avoids grading distant games forever
+  against an initial weeks-old forecast under the earliest-capture rule.
+
+Capture checks observed
+- Reads existing normalized schedule, primary publication and matching
+  Performance publication. There are no provider requests in capture.
+- Reconciles parsed input bytes, source hashes, season/team/division and
+  completed game sets, paired participants, margins and venue adjustment.
+- Requires matching main/Performance snapshot hash and source asOf, exact
+  frozen model configurations, finite scores and measured-game counts.
+- Capture time is taken after numerical assembly. The CLI has no backdating
+  override. Freeze, source cutoff, source fetch and Performance generation
+  times must all be at or before capture.
+- Only unfinished source FBS-FBS fixtures strictly after capture and within
+  seven days are saved; missing Performance is never zero-filled.
+- Hashes bind the protocol, producer/configuration pins, input checksums,
+  cohort indices/counts, schedule and actual forecast capture timestamp.
+- Exclusive writes refuse replacement. Identical reruns retain the first
+  actual capture time; different evidence cannot rewrite that observation.
+- Wall-clock checks before and after a new write prevent a capture crossing
+  kickoff from being retained. Existing valid history is preserved.
+
+Evaluation checks observed
+- Verifies the observation checksum, frozen protocol and implementation
+  pins, timing, identity, prior counts and primary eligibility.
+- Independently checks common-population percentile/midrank spacing,
+  equal-weight arithmetic, picks, differences and frozen probabilities.
+- Selects the earliest immutable capture per season/game before consulting
+  outcome-dependent exclusions. Duplicate checkpoints are one game.
+- Conflicting material forecasts at the same capture time fail closed.
+- Reconciles actual result participants, venue, subdivision and kickoff.
+  A game moved before capture, changed in participants/venue or moved beyond
+  the seven-day horizon is explicitly excluded; a later favorable forecast
+  cannot replace the excluded earliest one.
+- Pending/missing results are not scored as success. Invalid final scores
+  and corrupt evidence fail closed.
+- All seven models use exactly the same primary or secondary games.
+  Ranking ties receive half credit. Probability accuracy, Brier and log
+  loss are separate from neutral ordering accuracy.
+- Regular/postseason, venue, component-Top25 union and disagreement groups
+  use common saved pregame evidence; Top25 boundary ties are included.
+- Tracking coverage counts all currently sourced completed FBS-FBS games
+  since freeze, including games with no forecast. A failed optional capture
+  or setup gap therefore cannot disappear silently from coverage reporting.
+
+Operations and time evidence
+- Existing Sunday 08:00 America/Denver refresh remains the collection point.
+- Capture runs only after a successful current Performance publication;
+  scoring can still process older saved forecasts after primary success.
+- Both research steps continue on error, so they do not block the primary
+  ranking refresh. The final save includes only derived research evidence.
+- Total planned weekly CFBD requests remain the existing three. No new
+  service, account, password, payment or frontend feature is introduced.
+- Local capture timestamps and eventual public repository history are
+  retained. Neither code nor documentation claims an externally certified
+  registration timestamp. First genuine collection is the next successful
+  weekly run; earlier Friday/Saturday games remain explicitly uncaptured.
+
+Independent verification performed
+PASS: Independently ran all 24 final capture/scoring/protocol tests, all passing.
+PASS: Independently exercised producer -> evaluator in memory with a full
+synthetic source/snapshot/Performance/protocol chain. Actual producer schema
+was accepted; the expected seven-model scores, tie credit, primary gate and
+uncaptured-outcome coverage reconciled. No files or provider calls were used.
+PASS: All 12 producer/configuration pins and the evaluator pin match actual
+file bytes in the reviewed protocol.
+PASS: All seven calibration objects exactly equal the historical result;
+the compressed historical artifact decompresses to the pinned SHA256
+3072009bb75282bedbd88a2fc37d84e8abc37ad6758ab4e076610b86d5c892f8.
+PASS: Frozen SOR parameters, Strength configuration and Performance
+configuration exactly match their current production policy files.
+
+Interpretation limits
+Historical 2024-2025 results remain previously inspected retrospective
+baseline evidence; they are not pooled with new prospective games. The
+protocol fixes review after 2026 postseason results and prohibits selecting
+a favorable stopping week. Weekly summaries are descriptive. Future-game
+prediction cannot establish a uniquely correct earned-achievement order,
+and any live formula change still needs separate evidence and review.

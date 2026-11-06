@@ -1,0 +1,31 @@
+THREE-MODEL HISTORICAL RESEARCH DECLARATION
+
+Original protocol SHA256 before historical blend calculations:
+899a2724fe4cabd31cd85ff8b2c4c5c4ef58b7aed10bed5327bac18036654591
+
+Pre-results clarification SHA256 (used for the actual completed experiment):
+db561b1beb05d22eb4010862e44c1aba9dfda3585b98f9cbddcf35aa1f579877
+
+The sole protocol clarification names the actual shared repaired fcs-coverage-v1
+current-season parent and separately identifies the saved production older-season
+Strength prior. This was done after source inspection and before any combined
+historical results. Weights, years, eligibility, metrics and intervals did not
+change. The initial adapter proposals incorrectly named the base archive; their
+source inspection found missing FCS context there and aligned both adapters to
+the canonical parent already used by prior Performance research.
+
+The first experiment execution stopped before evaluation because the normalized
+2022 file was not on disk. Its raw data was already cached from prior authorized
+research. It was restored offline through the unchanged normalizer, checking the
+cached raw manifest checksum and reproducing the EXACT normalized-input checksum
+in the earlier adaptive experiment. This supplied only the completed 2022 general
+population prior for supplementary 2023. No new provider calls were made.
+
+After results were inspected, coverage reporting was expanded to include the
+adapters' existing per-checkpoint Performance coverage and native outcome-only
+pair counts. This changes reporting, not eligibility, formulas or metric values.
+
+All evaluated source seasons were previously inspected. The recent-prior
+Performance variant had been selected using 2024-2025 comparisons. These results
+are repeated retrospective evidence, not an untouched or prospective evaluation.
+No public ranking model, website, service, schedule or provider quota was changed.

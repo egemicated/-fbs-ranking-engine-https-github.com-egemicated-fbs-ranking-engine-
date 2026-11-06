@@ -65,6 +65,14 @@ jobs:
           path: published/performance-latest.json
           retention-days: 14
           if-no-files-found: warn
+      - name: Save frozen blend predictions before upcoming kickoffs
+        if: steps.performance-publish.outcome == 'success'
+        continue-on-error: true
+        run: node scripts/record-blend-comparison.js
+      - name: Score previously saved blend predictions
+        if: always() && steps.primary-publish.outcome == 'success'
+        continue-on-error: true
+        run: node research/evaluate_blend_forecasts.mjs
       - name: Retain derived results and source checksums
         if: always()
         continue-on-error: true
@@ -78,6 +86,8 @@ jobs:
             evidence/weekly/snapshot.json
             evidence/weekly/research-comparison.json
             evidence/weekly/division-comparison.json
+            research/blend-observations/*.json
+            research/blend-evaluations/latest.json
           retention-days: 14
           if-no-files-found: warn
       - name: Save the weekly snapshot
@@ -89,6 +99,8 @@ jobs:
           git add published/performance-latest.json
           git add research/observations/
           git add research/division-observations/
+          git add research/blend-observations/
+          git add research/blend-evaluations/
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Publish weekly CFBD rankings'
           git push origin HEAD:main

@@ -1,0 +1,138 @@
+INDEPENDENT METHODOLOGY REVIEW: THREE-MODEL HISTORICAL COMPARISON
+
+Scope
+Reviewed the frozen three-model-equal-percentile-historical-v1 protocol and
+the offline outcome replay, Performance replay, and comparison implementation.
+No provider requests, live formula changes, or deployment are part of this audit.
+This note covers study design and the independent numerical verification below.
+
+Protocol reviewed
+Original SHA256: 899a2724fe4cabd31cd85ff8b2c4c5c4ef58b7aed10bed5327bac18036654591
+Actual-run SHA256: db561b1beb05d22eb4010862e44c1aba9dfda3585b98f9cbddcf35aa1f579877
+The research declaration documents a pre-results source clarification only:
+the shared repaired current-season parent and saved older production prior.
+Weights, years, eligibility and metrics did not change. A missing normalized
+2022 prior source was restored offline from already cached raw inputs, with an
+exact previously recorded normalized checksum. Post-results coverage additions
+did not change predictions, eligibility or numerical evaluation summaries.
+
+Design findings
+1. Fixed equal thirds and fixed pairwise equal-half ablations make this an
+   interpretable comparison. They are design choices, not evidence of optimal
+   weights. No poll target or extra SOS term is needed.
+2. Tie-aware percentiles solve incompatible score units. They discard score
+   magnitude and give correlated evidence repeated influence; equal weights do
+   not mean three independent votes. The 0-100 index is not a probability.
+3. All components are normalized on the same eligible FBS population at each
+   preweek checkpoint. Missing or idle Performance teams are not zero-filled.
+   Primary targets require four prior outcome and measured Performance games
+   for both teams; report early exclusions and native coverage separately.
+4. Completed FBS-FBS outcome games define targets even when the target game's
+   Performance statistics are unavailable. This avoids a future-stat-coverage
+   filter that could improve apparent accuracy selectively.
+5. Replay graph, cutoff, game identities and venue are reconciled across
+   components. Only fully earlier processed parent weeks with a 24-hour
+   kickoff buffer enter a checkpoint. Later-corrected records and full-season
+   rosters still make this reconstructed retrospective availability.
+6. Predictive Strength intentionally retains an earlier own-team prior.
+   Performance retains only venue/subdivision estimates from the immediately
+   previous completed season and resets individual team effects. SOR retains
+   no earlier own-team achievement. Reusing a 2025 prior in a 2024 replay or
+   using final target-season scores would be leakage; the replay rejects this.
+7. Raw ordering accuracy gives ties half credit and asks a neutral-strength
+   question. Venue-aware Brier/log loss use the same older-only logistic
+   architecture for every model. Its parameters are trained separately for
+   each index on 2018-2019 only. Existing uncalibrated Strength probabilities
+   must not replace that matched comparison.
+8. The Top25 subgroup is the common union of preweek component Top25 sets,
+   with boundary ties included. It is not defined from end-season rankings or
+   separately selected per model.
+9. Pairing by game and resampling complete season/type/week blocks preserve
+   direct model comparisons. Shared teams connect different weeks; two main
+   seasons are a small evidence base. The reported intervals are sensitivity
+   summaries, not independent prospective significance claims.
+10. Report pooled and individual years against every standalone, especially
+    the strongest one. Pairwise ablations diagnose redundancy; they are not
+    permission to select new winning weights after inspecting these years.
+
+Implementation checks observed
+- Outcome/Performance target IDs and parent eligible graphs must agree.
+- Any target ID in a training graph is rejected.
+- Duplicate targets, mismatched seasons, future priors and impossible source
+  timing are rejected.
+- Performance's direct normal-equation fit is checked against the deployed
+  Schur implementation on representative checkpoints.
+- Outcome replay has a Node parity test covering SOR, Strength, FCS, neutral
+  venue, overtime and previous-team history.
+- Percentile tie groups use a fixed score anchor, not transitive chaining.
+- Logistic fitting checks design rank, finite coefficients, final gradient
+  and Hessian condition diagnostics. No evaluation-year refit is permitted.
+- Production protection is hash based; source, prior and code provenance are
+  fingerprinted for review.
+
+Interpretation
+Future winner accuracy can measure forecast usefulness, but cannot establish
+the uniquely correct earned-achievement order. The triple blend is a hybrid:
+it intentionally adds prior own-team strength and margin evidence to SOR's
+current-season achievement. Human-poll-free does not mean assumption-free.
+The tested seasons and current Performance variant were already inspected;
+these results cannot be described as untouched validation. A separately
+frozen trial with scores saved before kickoff is needed for new prospective
+evidence. No automatic live replacement follows from this experiment.
+
+Independent numerical verification
+Final artifact: research/results/composite-historical/4caa3ed67e99/results.json
+Result fingerprint: 4caa3ed67e99 (directory prefix; complete fingerprint in JSON).
+The earlier 0dd83c920cbe result has identical prediction CSV bytes and identical
+calibration, evaluation and supplementary summaries to this final artifact.
+
+PASS: All 3,713 prediction rows have unique (season, game ID) identities.
+PASS: Recomputed 798 reported metric values from CSV, including pooled,
+annual, early-inclusive and every reported subgroup; maximum floating-point
+error was 2.22e-16. Top25 membership was independently reconstructed from
+preweek component scores; it contained 269 games in 2024, 263 in 2025 and
+258 in supplementary 2023.
+PASS: Independently refit the seven logistic likelihoods using the 1,097 older
+calibration games; coefficients agreed within 1e-10.
+PASS: Independently regenerated all paired block sensitivity intervals for
+both main and supplementary comparisons; endpoints matched within 1e-12.
+PASS: Reconstructed 15,813 component/blend target-score comparisons for
+2023-2025 independently of join_replays. Maximum difference was 3.38e-14;
+target identity, winner, venue and primary eligibility also reconciled.
+PASS: Saved Performance team IDs are parent-roster subsets with zero division
+mismatches in 2017-2019 and 2022-2025, including calibration and context priors.
+PASS: Artifact records zero CFBD calls, no live changes and 33 unchanged
+protected production files.
+
+Established FBS-FBS games, 2024-2025, 1,155 shared targets:
+Model          Rank-pick accuracy   Brier       Log loss
+SOR            66.4069%             0.205224303 0.594982726
+Strength       70.3030%             0.192886543 0.565365574
+Performance    67.2727%             0.203594122 0.590034905
+Equal triple   69.9134%             0.191796884 0.561460020
+
+Triple minus Strength:
+- Accuracy: -0.3896 percentage points; sensitivity range -2.1744 to +1.4971.
+- Brier: -0.001089659; sensitivity range -0.003946594 to +0.001550586.
+- Log loss: -0.003905555; sensitivity range -0.010975368 to +0.002285019.
+All three ranges span zero. Lower Brier/log loss are better.
+2024 rank-pick accuracy: Strength 69.1100%, triple 69.2845% (573 games).
+2025 rank-pick accuracy: Strength 71.4777%, triple 70.5326% (582 games).
+Supplementary 2023: Strength 70.6806%, triple 69.1099% (573 games);
+the triple also has worse Brier and log loss there.
+In preweek component-Top25 games the triple is 71.9925% versus Strength
+74.0602% over 532 games. Subgroups are diagnostics, not weight-selection data.
+
+Coverage and conclusion
+The 2024-2025 parent universe contains 1,606 FBS-FBS games. Of those, 87
+have not yet reached common support and 364 additional games are early-only,
+leaving 1,155 primary games. Outcome-only four-game eligibility would contain
+1,158, so measured Performance availability excludes three additional 2024
+games from primary comparison. These counts must accompany the skill results.
+
+The triple improves on SOR and Performance as a forecasting index in this
+main retrospective sample, but shows no clear forecasting advantage over
+Predictive Strength. Its slight pooled proper-score gains are uncertain and
+do not persist in supplementary 2023. Keep the triple experimental; retain
+SOR's separate achievement role and Strength's forecasting role. Do not
+replace the live formulas or choose new weights based on these same results.

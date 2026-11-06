@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "id": "three-model-blend-prospective-2026-v1",
+  "status": "frozen-prospective-research",
+  "frozenAt": "2026-11-06T22:49:59.146Z",
+  "season": 2026,
+  "forecastHorizonDays": 7,
+  "tieTolerance": 1e-10,
+  "minimumPrimaryGames": 4,
+  "models": {
+    "sor": {
+      "methodId": "division-sor-v2",
+      "parameters": {
+        "slope": 5.159563190867806,
+        "homeLogOdds": 0.3809700209732449,
+        "divisionLogOdds": 2.401314541603099
+      },
+      "publicationVersion": "1.0.0"
+    },
+    "strength": {
+      "config": {
+        "ridge": 3,
+        "retention": 0.75,
+        "homeAdvantage": 2.5,
+        "marginCap": 28,
+        "probabilityScale": 14
+      }
+    },
+    "performance": {
+      "methodId": "experimental-performance-recent-prior-v1",
+      "config": {
+        "ridge": 1,
+        "contextPriorStrength": 64,
+        "homePrior": 0.012139211680326556,
+        "divisionPrior": 0.2133624494542888
+      }
+    }
+  },
+  "normalization": "Anchored tie-aware midrank percentile 100*(N-midrank)/(N-1) over common FBS teams with at least one completed outcome and one measured Performance game; a singleton receives50. No zero-filled missing model.",
+  "weights": {
+    "triple": {
+      "sor": 0.3333333333333333,
+      "strength": 0.3333333333333333,
+      "performance": 0.3333333333333333
+    },
+    "sor+strength": {
+      "sor": 0.5,
+      "strength": 0.5
+    },
+    "sor+performance": {
+      "sor": 0.5,
+      "performance": 0.5
+    },
+    "strength+performance": {
+      "strength": 0.5,
+      "performance": 0.5
+    }
+  },
+  "calibration": {
+    "trainingYears": [
+      2018,
+      2019
+    ],
+    "trainingGames": 1097,
+    "formula": "logitP(homewin)=betaIndex*(homeIndex-awayIndex)/100+betaVenue*nonNeutral; no intercept, no future refit",
+    "models": {
+      "sor": {
+        "coefficients": [
+          2.808864975416882,
+          0.41340446881177123
+        ],
+        "diagnostics": {
+          "iterations": 6,
+          "maxAbsGradient": 4.773959005888173e-15,
+          "hessianConditionNumber": 9.08740639585984
+        },
+        "games": 1097
+      },
+      "strength": {
+        "coefficients": [
+          3.8092063214277516,
+          0.42636783783121257
+        ],
+        "diagnostics": {
+          "iterations": 6,
+          "maxAbsGradient": 2.5012708895640376e-15,
+          "hessianConditionNumber": 12.849655912723883
+        },
+        "games": 1097
+      },
+      "performance": {
+        "coefficients": [
+          3.4079249463695693,
+          0.40068551399626434
+        ],
+        "diagnostics": {
+          "iterations": 6,
+          "maxAbsGradient": 6.772360450213455e-15,
+          "hessianConditionNumber": 11.661344244820627
+        },
+        "games": 1097
+      },
+      "triple": {
+        "coefficients": [
+          3.9858203566248185,
+          0.4284200265686809
+        ],
+        "diagnostics": {
+          "iterations": 6,
+          "maxAbsGradient": 1.2323475573339238e-14,
+          "hessianConditionNumber": 13.65799922560788
+        },
+        "games": 1097
+      },
+      "sor+strength": {
+        "coefficients": [
+          3.554615656968454,
+          0.42628864307592584
+        ],
+        "diagnostics": {
+          "iterations": 6,
+          "maxAbsGradient": 2.55351295663786e-15,
+          "hessianConditionNumber": 11.83777834703558
+        },
+        "games": 1097
+      },
+      "sor+performance": {
+        "coefficients": [
+          3.768284925781287,
+          0.4224202173989294
+        ],
+        "diagnostics": {
+          "iterations": 6,
+          "maxAbsGradient": 9.769962616701378e-15,
+          "hessianConditionNumber": 12.900533778003448
+        },
+        "games": 1097
+      },
+      "strength+performance": {
+        "coefficients": [
+          4.077903414794248,
+          0.4240817147628416
+        ],
+        "diagnostics": {
+          "iterations": 6,
+          "maxAbsGradient": 7.66053886991358e-15,
+          "hessianConditionNumber": 14.117549712826769
+        },
+        "games": 1097
+      }
+    },
+    "historicalFingerprint": "4caa3ed67e9906d56f70530de81c582791597d53ef8cfb4ee0fb9f6d6880671c",
+    "historicalResultsPath": "research/results/composite-historical/4caa3ed67e99/results.json.gz",
+    "uncompressedHistoricalResultsSha256": "3072009bb75282bedbd88a2fc37d84e8abc37ad6758ab4e076610b86d5c892f8",
+    "historicalProtocolSha256": "db561b1beb05d22eb4010862e44c1aba9dfda3585b98f9cbddcf35aa1f579877",
+    "interpretation": "Older-only2018-2019 probability mapping from the frozen retrospective comparison. The model percentile index is not itself a probability."
+  },
+  "implementationSha256": {
+    "scripts/record-blend-comparison.js": "df74e3e308ecb352d7c97a356f7b1619bddd39bf838b9094ea5cf43fc644d67e",
+    "src/engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+    "src/publication.js": "6ee52b8ceef086930f6d6e9462e8508b61925c20ea63da41d484650b59488421",
+    "src/performance-publication.js": "37f28801089f9b9c156b8184f6b5685a593789e5e0dea91b3b3e1c9731e8016a",
+    "research/lib/division_candidate.mjs": "dcf3e3e7b9c5029b1c46c3e52a0f150f4855c53a24bec57ab184016b070442a5",
+    "data/model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+    "data/publication-model.json": "177ef4d5248bc56f133944edd80bf6db76a304f5662b5e9c741672ddaa331bc9",
+    "data/performance-model.json": "f768d939f97ee5cad5bbcafb90f38df4188afc3f588ab3f59fb15efba1afea35",
+    "scripts/publish-performance.py": "676f6e5c59a1b05dc2ac366f7cae41c7d53136595a2293af6f9d3a863b318887",
+    "research/advanced_performance_ingest.py": "0c8a8534f1c90f08cd23b22a1159b479e8cecfdbe2df7bb369c35ca7fe99b0b7",
+    "research/advanced_performance_model.py": "9efc9ca486b0ec5961e336bc04468bf90299b187aeb1adf86c41452e1ddd9a9c",
+    "research/adaptive_performance_model.py": "c3b298c70de75a76860eac3c4c515d945511003c1186060516f51d0701dcb156"
+  },
+  "evaluationImplementationSha256": {
+    "research/evaluate_blend_forecasts.mjs": "e4d565efe355902a7c9e92190631efb43d97189f561f8ad77fc9431bae8affdb"
+  },
+  "eligibility": "Available unfinished source FBS-FBS fixtures strictly after actual completed capture, source timestamps and source cutoff, within seven days of capture. Primary both teams>=4 outcome and>=4 measured Performance games; secondary both>=1. The same fixtures score all seven fixed models.",
+  "capturePolicy": "Actual capture must follow freeze and all retained source/generation times. Older retained inputs are allowed if honestly dated. Exclusive immutable write and pre/postwrite kickoff guards; no retrospective backfill. A matching current Performance artifact is required. Capture timestamps are local evidence, not an externally certified public-registration service.",
+  "selectionPolicy": "Earliest eligible immutable capture per season/game, selected before examining results. Never replace an excluded earliest capture with a newer favorable forecast. Participant/venue changes or corrected kickoff at/before capture are excluded; rescheduling beyond seven days is excluded. Duplicate checkpoints count as one game.",
+  "sourcePolicy": "Read the existing weekly completed primary snapshot, matching derived Performance artifact and normalized season/schedule. No extra source requests. Store derived model evidence and source hashes only; never raw API responses, normalized source arrays or credentials.",
+  "scoring": "Rank-pick accuracy with half credit for a tie; separately calibrated venue-aware probability accuracy, Brier error and log loss. Report primary/all-eligible, year/regular/postseason/venue/Top25-union/disagreement groups, pending/excluded fixtures and current-source tracking coverage. No scored games means evidence pending.",
+  "reviewPolicy": "Weekly summaries are descriptive. Review the frozen experiment after2026 postseason results are available; do not choose a favorable stopping week or tune weights to interim outcomes. Future-game prediction does not establish a uniquely correct earned-achievement order. No automatic promotion; public formula changes require a separate benefit/tradeoff review.",
+  "operations": "Existing Sunday08:00America/Denver workflow; zero additional CFBD calls, services or charges. Optional research failures do not block primary rankings. Keep SOR, Predictive Strength and Performance separate on the site.",
+  "setupStatus": "No prospective observations at setup. First actual capture is the next successful existing weekly refresh; Friday/Saturday fixtures before it remain explicitly uncaptured.",
+  "changePolicy": "Version and preserve old protocols and observations for any numerical model, calibration, eligibility or pinned implementation change. No silent retuning."
+}

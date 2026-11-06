@@ -1,0 +1,10 @@
+{
+  "fingerprint": "4caa3ed67e9906d56f70530de81c582791597d53ef8cfb4ee0fb9f6d6880671c",
+  "deterministicRepeat": true,
+  "resultSha256": "3072009bb75282bedbd88a2fc37d84e8abc37ad6758ab4e076610b86d5c892f8",
+  "newSafeguardTestsPassed": 22,
+  "primaryGames": 1155,
+  "olderProbabilityCalibrationGames": 1097,
+  "cfbdCalls": 0,
+  "productionFilesChanged": 0
+}
