@@ -63,6 +63,7 @@ export function normalizeCsv(text, year, source = {}) {
 }
 
 export function normalizeCfbd(games, roster, year, source = {}) {
+  const audit = { incompleteFinals: [] };
   const teams = new Map(roster.map(t => [String(t.id), { id: String(t.id), name: t.school, division: 'fbs', conference: t.conference ?? 'Independent / unassigned' }]));
   const normalized = games.filter(g => ['regular', 'postseason'].includes(g.seasonType)).map(g => {
     if (g.season !== year) throw new Error('Source season mismatch');
@@ -74,11 +75,15 @@ export function normalizeCfbd(games, roster, year, source = {}) {
     }
     const h = g.homeLineScores, a = g.awayLineScores;
     const confirmedOT = Array.isArray(h) && Array.isArray(a) && h.length > 4 && a.length > 4 && h.slice(0, 4).every(Number.isFinite) && a.slice(0, 4).every(Number.isFinite) && h.slice(0, 4).reduce((s, v) => s + v, 0) === a.slice(0, 4).reduce((s, v) => s + v, 0);
+    const incomplete = g.completed && ![g.homePoints, g.awayPoints].every(v => Number.isInteger(v) && v >= 0);
+    if (incomplete) audit.incompleteFinals.push(String(g.id));
     return { id: String(g.id), week: g.week, seasonType: g.seasonType, startDate: g.startDate,
-      completed: g.completed, neutral: g.neutralSite, home: String(g.homeId), away: String(g.awayId),
+      completed: incomplete ? false : g.completed, neutral: g.neutralSite, home: String(g.homeId), away: String(g.awayId),
       homePoints: g.homePoints, awayPoints: g.awayPoints, ...(confirmedOT ? { regulationMargin: 0 } : {}) };
   });
-  return validateSeason({ year, teams: [...teams.values()], games: normalized, source: { ...source, format: 'CFBD API', rosterCoverage: 'Year-specific FBS roster plus all scheduled opponents' } });
+  audit.unknownDivisionTeams = [...teams.values()].filter(t => t.division === 'unknown').length;
+  audit.latestCompletedKickoff = normalized.filter(g => g.completed).map(g => g.startDate).sort().at(-1) ?? null;
+  return validateSeason({ year, teams: [...teams.values()], games: normalized, source: { ...source, audit, format: 'CFBD API', rosterCoverage: 'Year-specific FBS roster plus all scheduled opponents' } });
 }
 
 export async function atomicJson(path, data) {

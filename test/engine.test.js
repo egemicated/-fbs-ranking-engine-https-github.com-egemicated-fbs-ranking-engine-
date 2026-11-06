@@ -82,6 +82,12 @@ test('CFBD opponents with absent classifications remain modeled but are not labe
   assert.equal(rankSeason(s).fbsTeams, 1);
 });
 
+test('CFBD complete flags without valid final scores are quarantined and audited', () => {
+  const s = normalizeCfbd([{ id: 1, season: 2025, week: 1, seasonType: 'regular', startDate: '2025-09-01T12:00:00Z', completed: true, neutralSite: true, homeId: 'a', awayId: 'b', homeTeam: 'A', awayTeam: 'B', homeClassification: 'fbs', awayClassification: 'fbs', homePoints: null, awayPoints: null }], [], 2025);
+  assert.deepEqual(s.source.audit.incompleteFinals, ['1']);
+  assert.equal(rankSeason(s).gamesUsed, 0);
+});
+
 test('historical priors decay across missing seasons and new teams start neutral', () => {
   const s = season([game('1', 'a', 'b', 21, 0)]);
   const previous = rankSeason({ ...s, year: 2023 });

@@ -1,4 +1,4 @@
 {
-  "requestedAt": "2026-11-06T03:37:55.145Z",
-  "reason": "Handle missing CFBD opponent divisions and publish initial snapshot"
+  "requestedAt": "2026-11-06T03:39:26.974Z",
+  "reason": "Exclude and audit CFBD completed flags without final scores"
 }
