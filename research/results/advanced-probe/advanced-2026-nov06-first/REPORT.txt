@@ -1,0 +1,85 @@
+FBS INTELLIGENCE: CFBD ADVANCED-GAME TEST PULL
+
+Result
+The single authenticated request succeeded on November 6, 2026, at 20:36 UTC.
+HTTP 200; one request attempt, zero retries. The response quota header reported
+990 calls remaining. No subscription or billing settings changed.
+
+The existing CFBD secret works for the year-wide advanced-game endpoint:
+/stats/game/advanced?year=2026&seasonType=both&excludeGarbageTime=false
+It returned 2,322 team-game rows for 1,161 game IDs (4,299,347 bytes).
+
+Coverage against the saved SOR baseline
+The baseline is the completed-game snapshot as of 2026-11-06T03:39:55.757Z;
+this probe does not update that snapshot or change any published ranking.
+
+  FBS-FBS: 505/505 games, both exact participant identities matched.
+  FBS-FCS: 122/122 games, both exact participant identities matched.
+  Total involving FBS: 627/627 games, all 138 FBS teams covered completely.
+  FCS-FCS context: 467/467 games in the saved baseline matched.
+
+All matched pairs have positive provider play counts and finite PPA, success-rate
+and explosiveness fields. All six game IDs excluded/missing in the public
+box-score prototype have paired advanced statistics here. This establishes a
+better-covered alternative source for those games; it does not repair the
+incorrect yardage components in the separate box-score files.
+
+Across 61,264 mirrored offense/opponent-defense field comparisons, no mismatch
+was found at the declared 1e-7 relative/absolute tolerance. No wrong-season,
+malformed-identity or duplicate/participant-matching defect was found.
+
+Three game IDs are outside the saved completed-game graph, including 401862817
+(the later FAU-UTSA game). They were excluded from the baseline denominator.
+Another 64 returned games have other known lower-division participants and sit
+outside this FBS/FCS coverage comparison. The endpoint has no classification
+filter; returned-row totals must not be mistaken for eligible FBS game totals.
+
+What this resolves
+We have verified actual account access, response shape, exact game/team joins,
+current advanced-stat game coverage and much richer FCS internal-game context.
+Those are substantially stronger source foundations than the initial public
+box-score archive. The current six-game advanced-stat coverage gap is closed.
+
+What this does not establish
+The earlier net-YPP prototype's subdivision bias has not been recalibrated or
+retested using these metrics. Complete game coverage alone cannot fix a formula.
+Historical-year coverage also remains to be checked before older-only fitting.
+
+The provider aggregates plays where PPA is non-null. Disabling garbage-time
+filtering therefore includes all its PPA-eligible game states, not every box-score
+scrimmage play. Upstream aggregate nulls can become zero during serialization;
+finite JSON numbers do not prove a valid denominator for every conditional rate.
+The endpoint does not identify the PPA model version, training dates or complete
+feature provenance. These need auditing before claiming a fully independent
+performance measure or chronological forecast validation. Special teams,
+turnovers, short fields and overtime still need explicit accounting policies.
+
+Retention and reproducibility
+The provider response was analyzed inside the temporary private runner workspace.
+It was not uploaded as a public artifact or committed. No durable copy of that
+raw response is claimed. The durable research output is the derived audit,
+source response hash, saved-baseline hash, query and retrieval times. A later
+model experiment must fetch/cache its own source privately and pin its inputs.
+The same-workspace attempt lock and workflow rerun guard prevent an automatic
+second provider request from this test. Ordinary research commits do not trigger
+the probe; only the dedicated request marker does. No weekly collector was added.
+
+audit.json.gz holds the full derived coverage/schema report, with no per-game
+statistic arrays. verification.json records hashes, source commit, CI runs and
+artifact identity. Decompress the audit using Python gzip/json. All 92 Node tests
+passed locally and in the research CI; the real one-call probe job also passed.
+
+Next research step
+Use the verified endpoint in a declared performance experiment with older-year
+source coverage and provider-model provenance audited first. Compare a matched,
+calibrated simple-rate control; retain FCS opponents individually; measure any
+remaining subdivision bias in the new metric's own units. Freeze settings before
+prospective observation. No new Performance ranking is enabled on the website.
+
+Sources
+https://github.com/CFBD/cfb-api-v2/blob/main/src/app/stats/controller.ts
+https://github.com/CFBD/cfb-api-v2/blob/main/src/app/stats/service.ts
+https://github.com/CFBD/cfb-api-v2/blob/main/src/app/stats/types.ts
+https://github.com/CFBD/cfb-api-v2/blob/main/src/config/middleware/quotas.ts
+https://collegefootballdata.com/terms
+https://github.com/egemicated/-fbs-ranking-engine-https-github.com-egemicated-fbs-ranking-engine-/actions/runs/42289714123
