@@ -11,11 +11,13 @@ Historical CSV imports expose those collisions in source.audit.logicalDuplicates
 They retain the original records until a versioned corrected dataset is selected.
 The historical-coverage-v1 repair is research only and is not activated here.
 
-The weekly workflow saves provider responses, normalized input, a candidate
-snapshot, and file checksums as a GitHub Actions artifact for 14 days. Rejected
-imports retain current-attempt raw responses and a structured rejection audit
-when available. Environment files, authentication headers and credentials are
-never copied. No additional CFBD requests are made for evidence retention.
+Provider responses and normalized input are private temporary job files.
+The public workflow artifact retains only derived ranking snapshots, research
+comparisons and source checksums for 14 days. Raw API bodies and full normalized
+source datasets are not uploaded; they expire with the private job workspace.
+Rejected imports can still retain a structured rejection audit and checksums.
+Environment files, authentication headers and credentials are never copied.
+No additional CFBD requests are made for evidence generation.
 
 The Sunday 08:00 America/Denver schedule and the two-call successful refresh
 remain the same. This release does not trigger a manual provider refresh.
