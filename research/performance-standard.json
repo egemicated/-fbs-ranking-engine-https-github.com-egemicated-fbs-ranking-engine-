@@ -1,0 +1,185 @@
+{
+  "id": "performance-research-standard-v1",
+  "status": "Offline methodology and explicit-configuration net-YPP prototype; calibration/source coverage under research; no new public ranking",
+  "question": "How efficiently did each team play in the completed games we can actually measure?",
+  "threeViews": {
+    "strengthOfRecord": "What record did the team earn against its schedule? Keep the approved division-aware SOR calculation unchanged.",
+    "performance": "How well did the team execute on the field after opponent and context adjustment? Current-season observed performance, with its own coverage record.",
+    "predictiveStrength": "What does the model expect in the next matchup? Keep the existing margin/history model separate until a separately tested forecast replacement is justified."
+  },
+  "prohibitedInputs": [
+    "Human polls or manually ranked teams",
+    "Conference or team reputation bonuses",
+    "Recruiting ratings",
+    "Betting lines, spreads or Vegas win probabilities",
+    "Manual corrections selected to produce familiar ranks",
+    "A hidden blend with SOR or predictive strength"
+  ],
+  "dataGate": {
+    "requiredInventory": [
+      "Endpoint or immutable bulk-file identity and usage terms",
+      "Free-tier access verified without assuming every endpoint is included",
+      "Data dictionary and actual sample fields",
+      "Season/team/game identity joins",
+      "Retrieval times and SHA256 checksums",
+      "Game-level FBS coverage, FCS/opponent context coverage, and missingness by year",
+      "Whether special teams, overtime and situational fields are available",
+      "Existing EPA model artifact, features and training dates if supplied"
+    ],
+    "publicationDenominator": "All completed eligible games in the corresponding SOR snapshot, plus a separate denominator for all FBS teams. Missing measured games must not silently disappear from either denominator.",
+    "noFabrication": "Missing statistics are unavailable, not zero. Unknown subdivision is not FCS. A mismatched identity, partial game or unsupported field cannot be filled by team name, reputation or an invented national-average game.",
+    "timing": "Use actual retained retrieval times. Old corrected bulk files support retrospective analysis, not proof that advanced statistics were available at a historical cutoff."
+  },
+  "minimalCandidates": {
+    "preferredIfVerified": {
+      "name": "Opponent-adjusted scrimmage EPA per play",
+      "reason": "Measures changes in field-position/down/distance scoring value in point units. Offense and defense remain inspectable components.",
+      "requirements": [
+        "Audited eligible scrimmage play types and possession direction",
+        "Known EP/EPA artifact version and scoring transformations",
+        "No poll/recruiting/betting feature directly or through an auxiliary model",
+        "Training-window provenance for chronological evaluation",
+        "Adequate linked FCS/opponent play coverage"
+      ],
+      "restriction": "A supplied EPA column is a model output, not automatically our own objective ground truth. Distinct EPA generations cannot be mixed into one unversioned series."
+    },
+    "fallbackIfOnlyBoxesAreVerified": {
+      "name": "Opponent-adjusted yards per scrimmage play",
+      "publicLabelIfExposed": "Scrimmage efficiency prototype; incomplete performance coverage",
+      "formula": "Offensive yards divided by offensive scrimmage plays; defense is the corresponding yards per play allowed, with the same source definitions on both sides.",
+      "requirements": [
+        "Verified total offensive yards and scrimmage-play denominator, or an exactly reconcilable reconstruction",
+        "Both teams' game statistics and explicit missing-field detection",
+        "NCAA/provider sack accounting and overtime inclusion documented"
+      ],
+      "limits": [
+        "Yards do not price down/distance, short fields, turnovers or scoring opportunities correctly",
+        "No play-level garbage-time, kneel or overtime correction is possible when the source only supplies full-game totals",
+        "A yards/play-only result must not be called a complete overall-performance ranking"
+      ]
+    },
+    "diagnosticsNotAutomaticExtraWeights": [
+      "Success rate under one explicitly versioned definition",
+      "Explosive-play rates",
+      "Sacks and pressure when their denominator is known",
+      "Turnovers and fumble recovery context",
+      "Starting field position",
+      "Penalties",
+      "Special-teams results with opportunity counts"
+    ]
+  },
+  "adjustmentModel": {
+    "unitStructure": "The initial executable prototype fits one-dimensional paired net YPP, not separate offense/defense ratings. A later candidate may fit offensive production against defensive allowance jointly.",
+    "proposedObservationEquation": "Future unit-decomposition candidate only: game offensive rate = season baseline + team offensive effect - opponent defensive effect + learned venue/context terms + residual",
+    "signConvention": "Higher offensive effect and higher defensive effect are better. A defensive observation describes production allowed, so the opponent defensive effect enters with a minus sign.",
+    "regularization": "Shrink sparse current-season unit effects toward a neutral reference using an explicitly chosen regularization method. No previous team season supplies unearned current-season performance credit. Select shrinkage only through the declared older-season training procedure.",
+    "paceAndWeights": "Rates remove the direct reward for accumulating more plays. Play counts still control precision and can create leverage. Compare declared play-weighted and game-weighted fits; estimate uncertainty with game/team dependence acknowledged. Do not imply per-play rates remove every pace or game-state effect.",
+    "overallScore": "Show offense and defense separately first. If a single scrimmage score is justified, use effects in the same declared units and show its derivation. Do not invent a percentage blend of EPA, success rate, yards, sacks and turnovers.",
+    "subdivision": "Use season-specific membership, retain opponents individually, and test residual FBS/FCS bias within this metric. The SOR division coefficient is in win log-odds and cannot be reused in yards/play or EPA/play. Unknown or sparse opponent context requires explicit coverage/sensitivity reporting rather than an automatic penalty.",
+    "venue": "Estimate venue effects from older matched performance observations. The SOR home log-odds and predictive home points are not interchangeable with this model's units.",
+    "conference": "No conference prestige parameter or manual group multiplier. Cross-conference/subdivision connectivity and uncertainty must be reported.",
+    "reference": "Use a declared same-season reference population and report how inactive or sparsely observed teams enter it. Do not rank a team solely from its shrinkage baseline."
+  },
+  "accountingRules": {
+    "sacks": "Reconcile the source's college-football totals before reconstructing plays or yards. Never subtract sack yardage again when the source rushing/total-yard figure already includes it.",
+    "turnovers": "A turnover's observed EPA belongs in an observed-performance EPA measure. Do not add a second turnover bonus. A separate luck-adjusted predictive variant must be named and validated separately; do not retroactively erase a real play from earned performance.",
+    "specialTeams": "Initially show coverage and raw diagnostics separately. A total team-performance composite needs defensible common-unit attribution for field goals, punts, kickoffs and returns, without counting a return/defensive score twice. Missing special teams are not average special teams.",
+    "overtime": "Regulation-only and full-game views require explicit play/period data. Do not infer regulation box totals from the final score. Freeze an overtime policy and compare its effect before model promotion.",
+    "gameState": "Use an all-eligible-plays baseline, with separately declared kneel/spike/no-play rules. Any garbage-time sensitivity must use only pre-play observable state or an audited frozen model; never the eventual winning margin or a Vegas-derived win-probability filter.",
+    "uncertainty": "Plays within drives/games and teams across weeks are dependent. Naive independent-play standard errors or a percentile rank are not calibrated confidence intervals."
+  },
+  "validation": {
+    "beforeFit": "Write and checksum a concrete experiment protocol after the source/field inventory. Freeze candidate definitions, training windows, excluded years, tuning method and diagnostics before examining the new ranking order.",
+    "trainingSelection": "The concrete net-YPP experiment uses the older years and fixed ridge grid in initialExecutablePrototype.settingsSelectionProposal. Other metric families remain future candidates and require their own written selection protocol.",
+    "alreadyInspected": "The current project has inspected historical game-result seasons and 2026 ranking illustrations. New advanced fields do not magically make the familiar seasons untouched prospective evidence. A downstream split also fails if the upstream EPA model trained on its future evaluation data.",
+    "metrics": [
+      "Identity and paired offense/defense reconciliation",
+      "Coverage and missingness by team, season, opponent subdivision and field",
+      "Excluded-game adjustment checks",
+      "Future game efficiency prediction error against an unadjusted-rate benchmark",
+      "Subgroup bias and calibration where a probability model is actually used",
+      "Component stability and schedule connectivity",
+      "Consequential game-level disagreements explained from measured statistics"
+    ],
+    "interpretation": "Future efficiency prediction is a useful reliability check, not proof of a uniquely correct performance or achievement order. Poll agreement, pleasing Top25 membership and low volatility cannot select the winner.",
+    "correctnessChecks": [
+      "Team/conference renaming and input order leave numbers unchanged",
+      "A game appears once per team with matched opponent orientation",
+      "Raw counts reconstruct published rates within declared rounding tolerances",
+      "Sacks and turnovers are not double counted",
+      "No future result, advanced statistic or model-trained-on-future feature enters a claimed historical forecast",
+      "Missing or zero-opportunity denominators produce an unavailable metric",
+      "Venue and subdivision terms have correct units and reverse orientation correctly",
+      "Idle teams stay unranked and sparse teams are marked provisional",
+      "Existing SOR and predictive-strength outputs remain numerically unchanged"
+    ],
+    "promotion": "Publish source coverage, a reproducible report and limitations; freeze the performance candidate before genuine future observation. A complete third ranking requires adequate all-FBS measurement and explicit component scope, not just a third button."
+  },
+  "operations": {
+    "budget": "Zero dollars. The user reports a 1000-call monthly CFBD allowance; current weekly operation uses two successful calls per run. Verify endpoint eligibility and planned call count before changing it.",
+    "preferredPath": "Reuse cached/bulk free raw statistics or one bulk season endpoint when the verified free tier supports it. Avoid one request per team or game when bulk fields suffice.",
+    "refresh": "Attach any eventual approved component to the existing Sunday 08:00 America/Denver publication. Visitors read stored snapshots and do not trigger provider calls.",
+    "storage": "Retain normalized measured-game records, raw-source hashes, coverage counts, definitions and model version in a separate namespace. Preserve the existing SOR and forecast observation histories.",
+    "currentStage": "Methodology plus a pure explicit-configuration offline fitter. These files make no CFBD calls, add no schedule, change no public ranking and require no paid service."
+  },
+  "primaryReferences": [
+    {
+      "title": "cfbfastR expected points model fundamentals and model generations",
+      "url": "https://cfbfastr.sportsdataverse.org/articles/college-football-expected-points-model-fundamentals-part-i.html",
+      "use": "EP/EPA interpretation and the need to pin distinct model artifacts; not proof of this project's source coverage or cutoff safety"
+    },
+    {
+      "title": "SportsDataverse EP model feature and lineage documentation",
+      "url": "https://github.com/sportsdataverse/cfbfastR-cfb-data/blob/main/docs/models/ep.md",
+      "use": "Audit example for pre-play EP inputs; actual chosen artifact and training dates still require verification"
+    },
+    {
+      "title": "NCAA Football Statisticians' Manual",
+      "url": "https://fs.ncaa.org/Docs/stats/Stats_Manuals/Football.pdf",
+      "use": "College-football sack and overtime accounting; verify the provider's implementation against the relevant season manual"
+    },
+    {
+      "title": "Moving from Machine Learning to Statistics: the case of Expected Points in American football",
+      "url": "https://arxiv.org/abs/2409.04889",
+      "use": "Research caution about selection, overfitting and dependent football observations; it does not establish a particular college model as correct"
+    }
+  ],
+  "initialExecutablePrototype": {
+    "modelId": "net-ypp-ridge-prototype-v1",
+    "implementation": "research/performance_model.py",
+    "question": "Opponent-adjusted net yards per scrimmage play in measured current-season games",
+    "observation": "One matched game, target teamA yards/plays minus teamB yards/plays; one game weight, not one weight per team row",
+    "equation": "netYpp_game = ratingA - ratingB + homeYpp * orientedVenue + residual",
+    "objective": "Sum of squared game residuals plus ridge times sum of squared team effects",
+    "configuration": "Explicit ridge and homeYpp; no learned or engineering defaults, no history, wins, final margins, polls or conference effects",
+    "settingsSelectionProposal": {
+      "ridgeGrid": [
+        0.5,
+        1,
+        2,
+        4,
+        8
+      ],
+      "homeTrainingYears": [
+        2014,
+        2015,
+        2016,
+        2017
+      ],
+      "ridgeSelectionYears": [
+        2018,
+        2019
+      ],
+      "laterEvaluationYears": [
+        2023,
+        2024,
+        2025
+      ],
+      "homeFit": "For each fixed ridge, use the exact affine homeYpp response on cutoff-safe prior-week networks to fit older FBS-FBS net-YPP residuals; then select ridge on chronological validation MSE",
+      "limits": "Previously inspected seasons and corrected box-score data; later results do not constitute genuinely prospective evidence"
+    },
+    "unitDiagnostics": "Raw offensive YPP and defensive YPP allowed are shown separately but are not adjusted offense/defense unit ratings",
+    "coverage": "All measured opponents retain individual identity. Idle teams unranked, fewer than four games marked provisional without dropping observed games; minimum play counts and opponent measured-game counts reported",
+    "scope": "Scrimmage-efficiency research proxy only; no special-teams/turnover/situational composite or automatic promotion"
+  }
+}

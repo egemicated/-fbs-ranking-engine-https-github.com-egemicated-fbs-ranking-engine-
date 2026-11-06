@@ -37,12 +37,18 @@ jobs:
       - name: Score previously saved division forecasts
         continue-on-error: true
         run: node research/evaluate_division_forecasts.mjs
-      - name: Retain weekly source evidence
+      - name: Retain derived results and source checksums
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: cfbd-evidence-${{ github.run_id }}-${{ github.run_attempt }}
-          path: evidence/weekly/
+          # The public repository must not distribute raw CFBD responses or
+          # normalized source datasets. They remain in the private job workspace.
+          path: |
+            evidence/weekly/manifest.json
+            evidence/weekly/snapshot.json
+            evidence/weekly/research-comparison.json
+            evidence/weekly/division-comparison.json
           retention-days: 14
           if-no-files-found: warn
       - name: Save the weekly snapshot

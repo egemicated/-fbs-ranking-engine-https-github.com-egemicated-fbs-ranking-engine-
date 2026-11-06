@@ -1,0 +1,23 @@
+{
+  "runFingerprint": "cd92a33f1fd0a064db4f2c1ee0f8efc25a813eb78ed376230f846b8a4d04a1d7",
+  "reportSha256": "522eac8a3b766a72e705005637d74386d44e66d6a61400e4a1eb3dae2a09d713",
+  "compressedReportSha256": "7c06a04adf8492e64d1d53fc65f5b6aec40e958a0a6c15da52b86cbff38c257a",
+  "csvSha256": "9f0ef553701b0ad94a2ca6f196c889c572db02b0f6e784ec371a816553259dd2",
+  "numpyVersion": "2.3.5",
+  "cfbdCalls": 0,
+  "publicBulkFilesDownloaded": 10,
+  "publicBulkBytes": 1864102,
+  "productionRankingUnchanged": true,
+  "initialRunFingerprint": "de08587d4d3ad3b932311bddb24b62dd6d7fc68a3e0d0a68a163e1559882ce76",
+  "auditChanges": "Pinned parent outcome/helper hashes and cache keys, included outcome cutoff, clarified stale generic protocol wording. Candidate settings and every numeric result identical to initial run; no tuning from current ranks.",
+  "tests": {
+    "production": 80,
+    "performanceLocal": 23,
+    "performanceWithoutPrivateCaches": {
+      "run": 23,
+      "skip": 1
+    }
+  },
+  "rawBoxesCommitted": false,
+  "normalizedInputsCommitted": false
+}

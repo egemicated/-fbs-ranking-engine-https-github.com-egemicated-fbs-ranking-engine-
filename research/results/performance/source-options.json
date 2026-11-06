@@ -1,0 +1,239 @@
+{
+  "checkedAtUtc": "2026-11-06T19:53:02.202238+00:00",
+  "scope": "Primary-source documentation review for a separate game-performance research ranking; no production or billing changes",
+  "cfbdDataRequestsMade": 0,
+  "authenticatedRequestsMade": 0,
+  "credentialsRead": false,
+  "recommendation": {
+    "start": "Use public ESPN-derived per-game boxscore files for an offline performance prototype, with source freshness and coverage checked first. Keep it separate from SOR and predictive strength until validated.",
+    "optionalCfbdUpgrade": "A single privately cached year-wide advanced-game request is a documented free-tier path to per-game PPA, success rate and explosiveness. Verify one response against expected completed-game coverage before enabling it weekly.",
+    "noNewUserCredentialExpected": "Existing CFBD secret is sufficient for the documented free endpoints; this review did not access it. No paid plan is needed for ordinary completed-game stats.",
+    "publicOutputs": "Publish derived rankings, explanations and provenance/hash metadata. Keep raw CFBD response bodies and equivalent bulk normalized tables private."
+  },
+  "cfbd": {
+    "freeTier": {
+      "callsPerMonth": 1000,
+      "known": "Official tier page includes historical data, game/season team stats and advanced EPA/PPA metrics. Live play-by-play is a separate paid feature.",
+      "sources": [
+        "cfbdTier"
+      ]
+    },
+    "coverage": {
+      "officialVerifiedAsOf": "2026-09-03",
+      "boxScores": "2004-present",
+      "rawPlays": "2001-present",
+      "advancedTeamAndGame": "2001-present",
+      "havoc": "2004-present",
+      "knownLimit": "These ranges do not guarantee every game, subdivision or field. Current-season data can lag; missing values are not zeros.",
+      "sources": [
+        "cfbdCoverage"
+      ]
+    },
+    "endpoints": [
+      {
+        "path": "/stats/game/advanced",
+        "candidateQuery": "year=2026&excludeGarbageTime=true&seasonType=both",
+        "grain": "team-game",
+        "estimatedRequestsForOneSeason": 1,
+        "accessEvidence": "Official stats controller uses standard quota middleware and no paid-tier decorator; free tier explicitly includes advanced metrics.",
+        "known": "Year alone satisfies documented query selection; week/team/opponent optional. Contains offense/defense plays, drives, PPA, success rate, explosiveness and rushing-line metrics.",
+        "uncertain": "Not called: actual account entitlement, 2026 rows, null rates, full game coverage, payload size and production deployment/schema remain unverified.",
+        "sources": [
+          "cfbdTier",
+          "cfbdStatsController",
+          "cfbdAdvancedGameSchema"
+        ]
+      },
+      {
+        "path": "/stats/season/advanced",
+        "candidateQuery": "year=2026&classification=fbs&excludeGarbageTime=true",
+        "grain": "team-season summary",
+        "estimatedRequestsForOneSeason": 1,
+        "known": "Bulk year query; team optional; startWeek/endWeek optional. Current controller defaults classification to FBS. Does not expose seasonType in this operation.",
+        "uncertain": "Aggregate alone cannot support game-by-game opponent adjustment or exact weekly backtests without dated inputs.",
+        "sources": [
+          "cfbdStatsController"
+        ]
+      },
+      {
+        "path": "/stats/season",
+        "candidateQuery": "year=2026&classification=fbs",
+        "grain": "team-season statistical categories",
+        "estimatedRequestsForOneSeason": 1,
+        "known": "Bulk year query, optional team/conference/week bounds. Current server and Python SDK use /stats/season; an older .NET documentation page uses /stats/season/team, so do not copy that outdated spelling.",
+        "uncertain": "Category availability and rates must be inspected in a controlled response; current controller has no seasonType parameter here.",
+        "sources": [
+          "cfbdStatsController"
+        ]
+      },
+      {
+        "path": "/games/teams",
+        "candidateQuery": "year=2026&week=10&classification=fbs&seasonType=regular",
+        "grain": "game boxscore, both teams",
+        "estimatedRequestsForOneWeek": 1,
+        "known": "Year requires at least one of week/team/conference unless id selects a game. Do not assume year-only fetch returns a full season. Cache historical weeks and refresh recent completed weeks for corrections.",
+        "uncertain": "Week numbering/seasonType and FBS-FCS availability must be joined to the existing schedule; postseason is a separate scope.",
+        "sources": [
+          "cfbdGamesController"
+        ]
+      },
+      {
+        "path": "/ppa/games",
+        "candidateQuery": "year=2026&classification=fbs&excludeGarbageTime=true&seasonType=both",
+        "grain": "team-game PPA",
+        "estimatedRequestsForOneSeason": 1,
+        "known": "Year required; week/team/conference optional. No paid-tier decorator in current controller. More compact PPA-only alternative to advanced game stats, not necessarily an additional required request.",
+        "uncertain": "Provider PPA is a model-derived metric, not raw play observation. Capture source/method version where available.",
+        "sources": [
+          "cfbdPpaController",
+          "cfbdTier"
+        ]
+      },
+      {
+        "path": "/plays",
+        "candidateQuery": "year=2026&week=10&classification=fbs&seasonType=regular",
+        "grain": "play",
+        "estimatedRequestsForOneWeek": 1,
+        "known": "Year AND week required; optional team/offense/defense filters. Schema contains game/drive/play ids, down/distance, yards gained, clock/period, scores and ppa. Standard historical endpoint differs from paid live endpoint.",
+        "uncertain": "PPA may be absent and historical fields vary; raw play processing is substantially more work than consuming game-level efficiency.",
+        "sources": [
+          "cfbdPlaysController",
+          "cfbdPlaySchema",
+          "cfbdCoverage"
+        ]
+      },
+      {
+        "path": "/live/plays",
+        "candidateQuery": null,
+        "recommended": false,
+        "known": "Official controller requires Patreon tier2. Unnecessary for Sunday completed-game updates; do not request or attempt to bypass the tier.",
+        "sources": [
+          "cfbdLiveController"
+        ]
+      }
+    ],
+    "terms": {
+      "effectiveDate": "2026-08-12",
+      "known": "Private caching, analysis/model training, derived rankings and reasonable product display are allowed. Bulk raw-data publication and public raw-response mirrors are prohibited; normalized copies retaining the same informational content are also API Data. API keys must remain server-side. Attribution is appreciated, not required. Quota is shared with CBBD.",
+      "implementation": "Temporary private job caches may feed hashes and derived outputs. Public GitHub artifact allowlists should exclude provider-response and full normalized-season payloads.",
+      "suggestedAttribution": "Data provided by CollegeFootballData.com.",
+      "sources": [
+        "cfbdTerms"
+      ]
+    }
+  },
+  "publicAlternatives": [
+    {
+      "name": "SportsDataverse ESPN-derived team box files",
+      "cfbdCalls": 0,
+      "authentication": "No auth for GitHub release asset files; separate SportsDataverse hosted Data API requires bearer token.",
+      "seasonRangeAdvertised": "2004-2026",
+      "assetPattern": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_team_box/team_box_{season}.parquet",
+      "known": "One row per team per game. Public boxscore records allow an initial yards-per-play/turnover/special-teams research pass without consuming CFBD quota.",
+      "freshness": "Release description read during this review reports last asset written2026-10-01. This is not proof of complete Nov6 coverage; inspect actual file game dates/ids and timestamps before current rankings.",
+      "uncertain": "Individual game coverage, normalization correctness, current update lag and source-specific data rights require validation.",
+      "sources": [
+        "sportsdataverseBoxes",
+        "sportsdataverseDictionary"
+      ]
+    },
+    {
+      "name": "SportsDataverse ESPN-derived advanced game tables",
+      "cfbdCalls": 0,
+      "authentication": "No auth for GitHub release assets",
+      "seasonRangeAdvertised": "2004-2026",
+      "assetPattern": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_adv_team/adv_team_{season}.parquet",
+      "known": "Compact per-game advanced team data derived by the maintainer pipeline from ESPN; other tags expose drives, turnovers, special teams and situational data.",
+      "freshness": "Release description says last asset written2026-10-01; inspect actual file cutoff.",
+      "uncertain": "EPA/success definitions and model artifacts must be versioned. Do not mix this EPA with CFBD PPA as though they were interchangeable.",
+      "sources": [
+        "sportsdataverseAdvanced",
+        "sportsdataverseDictionary",
+        "sportsdataverseRawPipeline"
+      ]
+    },
+    {
+      "name": "SportsDataverse ESPN-derived play-by-play",
+      "cfbdCalls": 0,
+      "authentication": "No auth for GitHub release assets",
+      "seasonRangeAdvertised": "2004-2026",
+      "assetPattern": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_pbp/play_by_play_{season}.parquet",
+      "known": "Public season files contain enriched EPA/WPA. Use espn_cfb_pbp, not the old committed cfbfastR-data/pbp tree frozen at2002-2021. Read individual needed seasons rather than downloading the full12.4GB release.",
+      "freshness": "Release description says last asset written2026-10-01; check actual games/timestamps.",
+      "uncertain": "Retrospectively rebuilt EPA may use later-trained models; not automatically valid for prospective prediction evaluation.",
+      "sources": [
+        "sportsdataversePbp",
+        "sportsdataverseLegacyWarning"
+      ]
+    },
+    {
+      "name": "Direct public ESPN summary feeds",
+      "cfbdCalls": 0,
+      "authentication": "Public ESPN-derived pipeline captures unkeyed site/core API responses",
+      "summaryPattern": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/summary?event={gameId}",
+      "known": "Maintainer pipeline captures raw ESPN summaries and derives team-box extras from them; incremental per-game caching can fill freshness gaps.",
+      "uncertain": "No official ESPN stability/support/usage guarantee was located here. A public endpoint is not a promise of unlimited requests or unrestricted redistribution. Treat schema as changeable; avoid repeated whole-season per-game polling.",
+      "sources": [
+        "sportsdataverseRawPipeline",
+        "sportsdataverseDictionary"
+      ]
+    }
+  ],
+  "licenseAndAttribution": {
+    "known": "cfbfastR and sportsdataverse-data repository software licenses are MIT. Preserve applicable copyright/license notices when reusing their software. This does not by itself establish rights to every underlying third-party sports datum, logo or model asset.",
+    "suggestedAttribution": "Source: ESPN via SportsDataverse/cfbfastR; identify the specific release/tag, asset and transformation.",
+    "notEstablished": "No separate blanket data redistribution license or ESPN SLA was established from the inspected documentation.",
+    "sources": [
+      "sportsdataverseLicense",
+      "cfbfastRLicense"
+    ]
+  },
+  "budgetEstimatesNotActualUse": {
+    "existingWeeklyCfbdRequests": 2,
+    "minimumAdvancedGameOption": {
+      "extraRequestsPerSunday": 1,
+      "totalPerSunday": 3,
+      "estimatedFourToFiveSundayMonth": [
+        12,
+        15
+      ]
+    },
+    "advancedPlusTwoRecentBoxscoreWeeks": {
+      "extraRequestsPerSunday": 3,
+      "totalPerSunday": 5,
+      "estimatedFourToFiveSundayMonth": [
+        20,
+        25
+      ]
+    },
+    "oneTimeAdvancedBackfill2014Through2025": 12,
+    "publicBoxscorePrototypeExtraCfbdRequests": 0,
+    "assumptions": "One successful bulk response per documented scope, cached locally/private. Retries, independent coverage probes, categories/calendar reads, additional subdivisions and other CFBD/CBBD users add calls. No per-visitor fetching. Recheck remaining monthly budget before any future authenticated backfill."
+  },
+  "acceptanceBeforeUse": [
+    "Match per-game stats to known completed-game ids and both team identities; report missing coverage rather than use zeros.",
+    "Capture source URL/query, retrieval time, effective data cutoff, schema/method version and checksums.",
+    "Separate raw observations from provider-modeled PPA/EPA and human-derived inputs; do not ingest polls, FPI, recruiting or prestige fields into earned performance.",
+    "Freeze feature definitions and training periods; check outcome/prediction leakage and subdivision coverage before presenting a new ranking as validated."
+  ],
+  "primarySources": {
+    "cfbdTier": "https://collegefootballdata.com/api-tiers",
+    "cfbdCoverage": "https://api.collegefootballdata.com/data-availability",
+    "cfbdTerms": "https://collegefootballdata.com/terms",
+    "cfbdStatsController": "https://github.com/CFBD/cfb-api-v2/blob/main/src/app/stats/controller.ts",
+    "cfbdGamesController": "https://github.com/CFBD/cfb-api-v2/blob/main/src/app/games/controller.ts",
+    "cfbdPpaController": "https://github.com/CFBD/cfb-api-v2/blob/main/src/app/metrics/controller.ts",
+    "cfbdPlaysController": "https://github.com/CFBD/cfb-api-v2/blob/main/src/app/plays/controller.ts",
+    "cfbdLiveController": "https://github.com/CFBD/cfb-api-v2/blob/main/src/app/live/controller.ts",
+    "cfbdPlaySchema": "https://github.com/CFBD/cfbd-python/blob/main/docs/Play.md",
+    "cfbdAdvancedGameSchema": "https://github.com/CFBD/cfbd-python/blob/main/docs/AdvancedGameStatOffense.md",
+    "sportsdataverseBoxes": "https://github.com/sportsdataverse/sportsdataverse-data/releases/tag/espn_cfb_team_box",
+    "sportsdataversePbp": "https://github.com/sportsdataverse/sportsdataverse-data/releases/tag/espn_cfb_pbp",
+    "sportsdataverseAdvanced": "https://github.com/sportsdataverse/sportsdataverse-data/releases/tag/espn_cfb_adv_team",
+    "sportsdataverseDictionary": "https://github.com/sportsdataverse/cfbfastR-cfb-data/blob/main/DATASETS.md",
+    "sportsdataverseRawPipeline": "https://github.com/sportsdataverse/cfbfastR-cfb-raw/blob/main/README.md",
+    "sportsdataverseLegacyWarning": "https://github.com/sportsdataverse/cfbfastR-data/blob/main/README.md",
+    "sportsdataverseLicense": "https://github.com/sportsdataverse/sportsdataverse-data/blob/main/LICENSE",
+    "cfbfastRLicense": "https://github.com/sportsdataverse/cfbfastR/blob/main/LICENSE.md"
+  }
+}

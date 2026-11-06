@@ -137,9 +137,12 @@ commit. No paid cron service, database, or additional user login is required.
 The repository is public and the workflow uses standard `ubuntu-latest` runners,
 whose compute is free outside the shared private-repository Actions allowance.
 The five-minute maximum, Sunday schedule and two CFBD requests are unchanged.
-No paid usage or billing setting is enabled. Source evidence and frozen research
-comparisons are uploaded with 14-day retention; artifact storage remains subject
-to GitHub's included storage allowance. No Actions cache is used.
+No paid usage or billing setting is enabled. Derived ranking snapshots, frozen
+research comparisons and source checksums are uploaded with 14-day retention;
+raw CFBD responses and normalized source datasets stay in the private job
+workspace and are not uploaded publicly. Exact raw inputs are not retained
+after that job workspace expires. Artifact storage remains subject to GitHub's
+included storage allowance. No Actions cache is used.
 
 Confirmed completed Saturday games count even if they finished less than
 24 hours earlier. In-progress games do not count. Data missing from CFBD at

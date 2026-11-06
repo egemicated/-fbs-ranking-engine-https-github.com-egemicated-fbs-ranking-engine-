@@ -1,0 +1,135 @@
+FBS INTELLIGENCE: PERFORMANCE RESEARCH, FIRST RESULTS
+
+Decision
+Use three separate questions: SOR measures the record earned against a schedule;
+Performance measures execution in the games actually observed; Predictive
+Strength estimates a future matchup. Keep their scores and explanations separate.
+There is no new combined overall score, public Performance table or change to
+the approved SOR/predictive formulas in this release.
+
+The first working candidate is opponent-adjusted net yards per scrimmage play.
+It is a useful scrimmage-efficiency prototype, not a complete football grade.
+It does not yet price turnovers, short fields, red-zone opportunities, special
+teams, overtime or garbage time correctly. Raw offensive/defensive rates in the
+CSV are diagnostics, not separately adjusted offensive/defensive unit ratings.
+
+How the prototype works
+For each matched game, divide each team's offensive yards by its passing plus
+rushing attempts. Subtract the opponent's rate. College rushing totals already
+include sacks: no extra sack subtraction or extra sack plays are added.
+Fit the resulting net rate against the individual opponents played, with one
+weight per game, a learned venue adjustment and shrinkage for sparse samples.
+The shrinkage reduces the temptation to declare a team great from one game.
+No wins, scores, polls, conference prestige, betting inputs or prior team-season
+ratings enter this performance fit. Lower-division opponents retain their own
+identities; they are not all replaced by one imaginary average opponent.
+
+Experiment and results
+The ridge grid [0.5, 1, 2, 4, 8] and years were written before inspecting the
+new current-season order. Fit the global venue response on 2014-2017, choose
+ridge on 2018-2019 future-week efficiency error, then evaluate 2023-2025.
+No target game or other same-week box score enters its preweek prediction.
+The full outcome schedule anchors each week's cutoff even when a box is missing;
+past games also need a 24-hour kickoff buffer. Historical files have since been
+corrected, so this is a chronological retrospective replay, not retained proof
+of what a live provider supplied at those old cutoffs.
+
+Selected research settings: ridge 2; venue effect 0.2925614235611466 YPP.
+Across 2,379 FBS-FBS games in 2023-2025, next-game net-YPP RMSE was:
+  Opponent-adjusted prototype: 1.8331
+  Raw prior net-rate difference plus older learned venue: 2.1318
+  Older learned venue alone: 2.1299
+  Always predict equal efficiency: 2.1690
+This is about 14% lower RMSE than the simple raw-rate comparator. The adjusted
+candidate improved on that comparator in each of the three years. For the
+1,707 games where both teams had at least four measured prior games, RMSE was
+1.7139 versus 1.8734. These are descriptive errors, with no independence-based
+significance claim. The comparator is a simple benchmark, not an optimized
+competitor. The gain compares the whole tuned candidate with that simple
+baseline; it does not isolate the benefit of opponent adjustment from shrinkage
+or venue treatment. A matched calibrated/regularized raw-rate control remains
+to be tested. Future efficiency prediction is a reliability check, not proof of a
+uniquely correct ranking, and does not compare directly with win probabilities.
+
+The FBS-FCS result is a material limitation. Across 363 games the prototype's
+RMSE was 3.3341 and home-oriented mean prediction error was -2.5783 YPP.
+Most of these games have the FBS team at home. The model substantially
+understates that observed efficiency gap. Older sources contain almost no
+FCS-FCS boxes, leaving many FCS opponents connected only by their FBS games.
+Shrinking sparse opponents toward the same neutral point cannot be assumed to
+solve that missing context. Do not reuse the SOR division coefficient: win
+log-odds and yards per play are different units. Test any new performance-unit
+subdivision candidate with its own older-only calibration and full sensitivity
+report before promotion. No such correction is fitted in this first control.
+
+Current illustration: coverage matters
+The saved SOR game set is as of 2026-11-06T03:39:55.757Z. The bulk statistics
+asset was last updated 2026-11-04T09:31:10Z and fetched on November 6. This is
+not a new live pull of the SOR game set, and does not include later finals.
+The illustration measures 621 of 627 eligible FBS-involving games: 499 FBS-FBS
+and 122 FBS-FCS. All 138 FBS teams have statistics; 128 have every eligible game.
+Three games are absent from the bulk source (Ball State-Massachusetts,
+Toledo-Sacramento State, Eastern Michigan-Central Michigan). Three more fail
+total-yards component checks and are excluded as whole games, without guessed
+repairs. They involve Sacramento State, Hawai'i-Stanford and Air Force.
+The affected teams are UMass, Sacramento State, Air Force, Ball State, Central
+Michigan, Eastern Michigan, Stanford, Toledo, UConn and Hawai'i.
+Missing optional stats remain null. Malformed optional stats currently also
+exclude a pair, although no present exclusion is caused by an optional field.
+The current snapshot has no recoverable kickoff/week/absolute-score fields;
+those remain null and there is no claimed 2026 pregame replay.
+
+Files and reproducibility
+cd92a33f1fd0/current-ratings.csv contains the full illustrative order and coverage
+diagnostics. It is research-only and should not be presented as a complete
+Performance Top25. cd92a33f1fd0/experiment.json.gz contains derived ratings,
+errors, coverage and input/code fingerprints. Decompress with Python gzip/json.
+run-manifest.json records hashes and the identical numeric outcome before and
+after provenance-only audit changes. source-manifest.json identifies each public
+source asset, its retrieval time and checksum; dataset-manifest.json records the
+normalized input hashes. Raw CSVs and normalized stat arrays are not committed.
+local-inventory.json.gz and source-options.json record actual field availability
+and the distinction between documented endpoints and verified response coverage.
+
+Run with Python 3.12+ and research/performance-requirements.txt. Restore the
+historical outcome releases using the existing research helpers first. Restore
+pinned public boxes with performance_sources.py, then run performance_ingest.py
+and performance_experiment.py. A changed upstream file must fail its checksum
+rather than silently rewrite the experiment. The older outcome releases are
+patch packets: a full rerun also needs the matching original schedule caches
+(apply_release.py, then repair_fcs_history.py --restore). A clean public checkout
+does not contain all those private/local input files. The compressed derived
+report can be inspected without them. This prototype uses no CFBD key.
+
+Cost, checks and remaining work
+Ten public bulk files totaled 1,864,102 bytes; zero CFBD requests were made.
+The existing Sunday operation remains two CFBD calls and the website reads its
+saved rankings. No subscription, account or new login is needed from Bryan.
+The existing 80 JavaScript tests and 23 local performance tests pass. The latter
+include paired identity, sack/denominator accounting, order/name invariance,
+analytic fit checks, invalid/missing inputs and future-statistic leakage checks.
+The private-cache integrity check is intentionally skipped in a clean public CI
+checkout; the remaining synthetic checks do not need downloaded data or secrets.
+
+Before a third live ranking: resolve coverage and sparse FCS context, inspect
+game-level explanations, compare declared sensitivities, and freeze a version
+for prospective observation. Then assess richer situational data with audited
+definitions and upstream model provenance. EPA, success rate and explosiveness
+are candidates; correlated stats do not automatically deserve extra weights.
+Special teams need opportunity-aware, common-unit attribution rather than an
+arbitrary percentage. The current yardage proxy cannot fulfill those promises.
+
+Primary source references
+https://github.com/sportsdataverse/sportsdataverse-data/releases/tag/espn_cfb_team_box
+https://github.com/sportsdataverse/cfbfastR-cfb-data/blob/main/DATASETS.md
+https://collegefootballdata.com/api-tiers
+https://api.collegefootballdata.com/data-availability
+https://collegefootballdata.com/terms
+https://s3.us-east-2.amazonaws.com/sidearm.nextgen.sites/collegefootballplayoff.sidearmsports.com/documents/2024/12/22/241221gamebook_tennessee_ohiostate.pdf
+
+CFBD lists game/season statistics and advanced metrics on its free tier. A
+year-wide advanced-game request is a documented possible next source, not an
+enabled collector: actual coverage, fields and model provenance remain to be
+verified. Derived results and source fingerprints can be public; raw CFBD
+responses stay private. The weekly public artifact list has been narrowed to
+derived snapshots/comparisons and source checksums without raw response bodies.
