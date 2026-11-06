@@ -1,0 +1,970 @@
+{
+  "version": "division-data-audit-v1",
+  "scope": "Offline source-labeled 2014-2025 repaired seasons; no independent NCAA membership certification",
+  "inputs": {
+    "2014": {
+      "repairedPath": "research/datasets/historical-coverage-v1/seasons/2014.json",
+      "repairedSha256": "8bc036e57b7eb66836a260cdfb61074257afbaae7c64352a7d85595d2048a851",
+      "originalPath": "data/seasons/2014.json",
+      "originalSha256": "526f81ee2c9872f5e48fd93e054d8bd1bef1dff82e5ccc7bfd0eb3cfcb0e4e60",
+      "rawCsvPath": "data/raw/2014.csv",
+      "rawCsvSha256": "5b1a1f78bc63114c1e076b10e0d9316d079091afa9ac798982048fce6ce5a128"
+    },
+    "2015": {
+      "repairedPath": "research/datasets/historical-coverage-v1/seasons/2015.json",
+      "repairedSha256": "23bea6fd0ee06225c11226f37862d24a110871c349e3bc6c03764e891faa2bf9",
+      "originalPath": "data/seasons/2015.json",
+      "originalSha256": "f757271e4b22c089e91d7ce7738b220a3aeeec2e722b600fc8cda375347d3045",
+      "rawCsvPath": "data/raw/2015.csv",
+      "rawCsvSha256": "3044e8911721a711202f976133230a0c2cb557cfaf621cb1f3c21722cfd86fe9"
+    },
+    "2016": {
+      "repairedPath": "research/datasets/historical-coverage-v1/seasons/2016.json",
+      "repairedSha256": "861dd1cf8c95f2c0e0c02d686aece60e65141b2905f340d2ecd77e510f10d403",
+      "originalPath": "data/seasons/2016.json",
+      "originalSha256": "fc2b316f685d8e3b6403b90abc2215216f36b55647bd0eb629a2439f2a5e7d28",
+      "rawCsvPath": "data/raw/2016.csv",
+      "rawCsvSha256": "f60e57cdab028d2d35bd589c46139a6dce11ee8c52c3f4ca975c5d98522f403c"
+    },
+    "2017": {
+      "repairedPath": "research/datasets/historical-coverage-v1/seasons/2017.json",
+      "repairedSha256": "09bfa60d24601a9472e592b1fb730dfdf6752c45b534397800fd205a5e7a5178",
+      "originalPath": "data/seasons/2017.json",
+      "originalSha256": "0fbce674b39930a32bf8e8dbb72cf15d6a88a257d3114eb7be114ba01a19cf8b",
+      "rawCsvPath": "data/raw/2017.csv",
+      "rawCsvSha256": "c5a6f47dc1b121e366c0e9ef6cf1524e6ea54f58cf997874bf6d818e46fa3b26"
+    },
+    "2018": {
+      "repairedPath": "research/datasets/historical-coverage-v1/seasons/2018.json",
+      "repairedSha256": "c8b87876aa34b9930625db6b1c36f6696b545e8d7c9a9c181ede6c3c337cc082",
+      "originalPath": "data/seasons/2018.json",
+      "originalSha256": "9c9da1d5839b5ee8ff3508ac0cb2261d55225349b34491a4f25878a5bfae9cb4",
+      "rawCsvPath": "data/raw/2018.csv",
+      "rawCsvSha256": "a4d4c2ccd06f933c1b6848b3ef4fddbc56695f6b066c9376b1249bfb9d29c00f"
+    },
+    "2019": {
+      "repairedPath": "research/datasets/historical-coverage-v1/seasons/2019.json",
+      "repairedSha256": "e58aaf3ef47f47c82aeac986d16a749a06b27ab5adf668ae5f3c79bda728f173",
+      "originalPath": "data/seasons/2019.json",
+      "originalSha256": "4dc4de9a8d68be4c782c4f1965e7d522cfaebc90d80aa10c832a7067634757ef",
+      "rawCsvPath": "data/raw/2019.csv",
+      "rawCsvSha256": "d8665fa0aced3d02d59405c8b9ff157ba00ef128a90c1c5eab31d268d917abac"
+    },
+    "2020": {
+      "repairedPath": "research/datasets/historical-coverage-v1/seasons/2020.json",
+      "repairedSha256": "21d0ecf8d755fe66bde73b3613b3d579f434568ef189bf8c8603188feef1fc01",
+      "originalPath": "data/seasons/2020.json",
+      "originalSha256": "8045e8d5ed305754db95596463fcebb1d6e6d78b7ee184b4f13b3326b6565b72",
+      "rawCsvPath": "data/raw/2020.csv",
+      "rawCsvSha256": "f902a845a7e79199ab15dff7c3ed91ee7ef1cb54d32ef80fed5aad5c0ac6c316"
+    },
+    "2021": {
+      "repairedPath": "research/datasets/historical-coverage-v1/seasons/2021.json",
+      "repairedSha256": "56fd595b272d384e36deddf042d9f79d3be2284206f9f7c47fb3810b275da1fe",
+      "originalPath": "data/seasons/2021.json",
+      "originalSha256": "0c010a3a5cf1ce302516fad11cc5d2f90b55081a9ce5be66a4453c93c27af269",
+      "rawCsvPath": "data/raw/2021.csv",
+      "rawCsvSha256": "91616be40e7f4d611a6e714ee7284cdd7372249888287b05b790019e9397d5fd"
+    },
+    "2022": {
+      "repairedPath": "research/datasets/historical-coverage-v1/seasons/2022.json",
+      "repairedSha256": "5de369e133a6bcefee82782c0962ece41b6350c5aff5d23a73276488f1e18252",
+      "originalPath": "data/seasons/2022.json",
+      "originalSha256": "6059d7b8e0bd4ef593388e16912b3d821e6f71a0de2ffd3c58536d94e5b3d1e4",
+      "rawCsvPath": "data/raw/2022.csv",
+      "rawCsvSha256": "bfee92544d7269f764dcb5726ce5c037837cb100a8c6326e0e4c7103a2e6656d"
+    },
+    "2023": {
+      "repairedPath": "research/datasets/historical-coverage-v1/seasons/2023.json",
+      "repairedSha256": "58da5da5079c52f0b175e145e3eaec52b11183e45786ae0015e6d2d840b657dc",
+      "originalPath": "data/seasons/2023.json",
+      "originalSha256": "b5011bcdd7df9750d92c8827316f1a8300a3b4c623adc6f1c2acb92bd6d6c241",
+      "rawCsvPath": "data/raw/2023.csv",
+      "rawCsvSha256": "7ffc245da1242fc44c021dae724029074aece78544ba498937cc7703417f0dff"
+    },
+    "2024": {
+      "repairedPath": "research/datasets/historical-coverage-v1/seasons/2024.json",
+      "repairedSha256": "1b4e5d1845f04f9bb9326eb01755343e85d775c0fb8dc816073f1859213154a8",
+      "originalPath": "data/seasons/2024.json",
+      "originalSha256": "2c4834a1ce6c5ae94c3f496e9a61d9b60cb5a841f603a561c90e7298433ae798",
+      "rawCsvPath": "data/raw/2024.csv",
+      "rawCsvSha256": "3e4f3cab542657015ff73d1b527c41df58e6a17acf5fbe7d6fb518a1aabcac61"
+    },
+    "2025": {
+      "repairedPath": "research/datasets/historical-coverage-v1/seasons/2025.json",
+      "repairedSha256": "de6280daa0806fa5d4d4e8956dd72594919410d4edc7a2a1a8811357e5cfa548",
+      "originalPath": "data/seasons/2025.json",
+      "originalSha256": "d41572b4895deb8c2f3663cdab9910e2147b868b44dc34d2bcbe3d7709b30caa",
+      "rawCsvPath": "data/raw/2025.csv",
+      "rawCsvSha256": "bfecf10bc5a8ffd2e3b6a76b5f0b03b406e17c1a0e03b2000bdf7e2263712db4"
+    }
+  },
+  "seasons": {
+    "2014": {
+      "divisionTeamCounts": {
+        "fcs": 124,
+        "fbs": 128,
+        "unknown": 21,
+        "ii": 40,
+        "iii": 5
+      },
+      "completedGames": 1581,
+      "completedGamesByDivisionPair": {
+        "fbs-fbs": 760,
+        "fbs-fcs": 108,
+        "fcs-fcs": 636,
+        "fcs-ii": 45,
+        "fcs-iii": 5,
+        "fcs-unknown": 27
+      },
+      "completedPostseasonGamesByDivisionPair": {
+        "fbs-fbs": 39
+      },
+      "fbsFcs": {
+        "games": 108,
+        "wins": 100,
+        "losses": 8
+      },
+      "fbsFcsVenue": {
+        "neutral": 7,
+        "fbsHome": 100,
+        "fbsAway": 1
+      },
+      "directFcsOpponents": 81,
+      "directFcsCompletedGameCountHistogram": {
+        "10": 3,
+        "11": 12,
+        "12": 46,
+        "13": 8,
+        "14": 12
+      },
+      "directFcsWithFewerThan4Games": [],
+      "fbsOpponentsOutsideFbsFcs": [],
+      "directUnknownOpponents": [],
+      "rawWithinSeasonDivisionConflicts": {},
+      "repairedRosterExactlyMatchesOriginal": true,
+      "retrospectiveRosterCoverage": "Teams appearing in the season schedule, including unplayed games",
+      "indirectContextCoverage": {
+        "nonD1ContextNodesConnectedToFcs": 66,
+        "fcsToNonD1GamesByOppDivision": {
+          "unknown": 27,
+          "ii": 45,
+          "iii": 5
+        },
+        "unknownContextNodesConnectedToFcs": 21,
+        "unknownContextNodesWithFewerThan4Games": 21,
+        "nonD1ContextNodesWithFewerThan4Games": 66,
+        "directFcsTeamsPlayingUnknownContext": 15,
+        "directFcsTeamsPlayingNonD1Context": 39
+      }
+    },
+    "2015": {
+      "divisionTeamCounts": {
+        "fcs": 125,
+        "fbs": 128,
+        "ii": 34,
+        "unknown": 10,
+        "iii": 3
+      },
+      "completedGames": 1532,
+      "completedGamesByDivisionPair": {
+        "fbs-fbs": 765,
+        "fbs-fcs": 105,
+        "fcs-fcs": 607,
+        "fcs-ii": 40,
+        "fcs-iii": 3,
+        "fcs-unknown": 12
+      },
+      "completedPostseasonGamesByDivisionPair": {
+        "fbs-fbs": 41
+      },
+      "fbsFcs": {
+        "games": 105,
+        "wins": 96,
+        "losses": 9
+      },
+      "fbsFcsVenue": {
+        "fbsHome": 98,
+        "neutral": 7
+      },
+      "directFcsOpponents": 80,
+      "directFcsCompletedGameCountHistogram": {
+        "8": 1,
+        "9": 1,
+        "10": 13,
+        "11": 47,
+        "12": 7,
+        "13": 9,
+        "14": 2
+      },
+      "directFcsWithFewerThan4Games": [],
+      "fbsOpponentsOutsideFbsFcs": [],
+      "directUnknownOpponents": [],
+      "rawWithinSeasonDivisionConflicts": {},
+      "repairedRosterExactlyMatchesOriginal": true,
+      "retrospectiveRosterCoverage": "Teams appearing in the season schedule, including unplayed games",
+      "indirectContextCoverage": {
+        "nonD1ContextNodesConnectedToFcs": 47,
+        "fcsToNonD1GamesByOppDivision": {
+          "ii": 40,
+          "unknown": 12,
+          "iii": 3
+        },
+        "unknownContextNodesConnectedToFcs": 10,
+        "unknownContextNodesWithFewerThan4Games": 10,
+        "nonD1ContextNodesWithFewerThan4Games": 47,
+        "directFcsTeamsPlayingUnknownContext": 4,
+        "directFcsTeamsPlayingNonD1Context": 23
+      }
+    },
+    "2016": {
+      "divisionTeamCounts": {
+        "fbs": 128,
+        "fcs": 125,
+        "ii": 36,
+        "unknown": 12,
+        "iii": 1
+      },
+      "completedGames": 1543,
+      "completedGamesByDivisionPair": {
+        "fbs-fbs": 760,
+        "fbs-fcs": 113,
+        "fcs-fcs": 616,
+        "fcs-ii": 41,
+        "fcs-iii": 1,
+        "fcs-unknown": 12
+      },
+      "completedPostseasonGamesByDivisionPair": {
+        "fbs-fbs": 41
+      },
+      "fbsFcs": {
+        "games": 113,
+        "wins": 103,
+        "losses": 10
+      },
+      "fbsFcsVenue": {
+        "fbsHome": 111,
+        "neutral": 2
+      },
+      "directFcsOpponents": 88,
+      "directFcsCompletedGameCountHistogram": {
+        "10": 7,
+        "11": 60,
+        "12": 10,
+        "13": 8,
+        "14": 3
+      },
+      "directFcsWithFewerThan4Games": [],
+      "fbsOpponentsOutsideFbsFcs": [],
+      "directUnknownOpponents": [],
+      "rawWithinSeasonDivisionConflicts": {},
+      "repairedRosterExactlyMatchesOriginal": true,
+      "retrospectiveRosterCoverage": "Teams appearing in the season schedule, including unplayed games",
+      "indirectContextCoverage": {
+        "nonD1ContextNodesConnectedToFcs": 49,
+        "fcsToNonD1GamesByOppDivision": {
+          "ii": 41,
+          "unknown": 12,
+          "iii": 1
+        },
+        "unknownContextNodesConnectedToFcs": 12,
+        "unknownContextNodesWithFewerThan4Games": 12,
+        "nonD1ContextNodesWithFewerThan4Games": 49,
+        "directFcsTeamsPlayingUnknownContext": 6,
+        "directFcsTeamsPlayingNonD1Context": 26
+      }
+    },
+    "2017": {
+      "divisionTeamCounts": {
+        "fcs": 124,
+        "fbs": 130,
+        "unknown": 10,
+        "ii": 28,
+        "iii": 4
+      },
+      "completedGames": 1545,
+      "completedGamesByDivisionPair": {
+        "fbs-fbs": 776,
+        "fbs-fcs": 98,
+        "fcs-fcs": 625,
+        "fcs-ii": 30,
+        "fcs-iii": 5,
+        "fcs-unknown": 11
+      },
+      "completedPostseasonGamesByDivisionPair": {
+        "fbs-fbs": 40
+      },
+      "fbsFcs": {
+        "games": 98,
+        "wins": 89,
+        "losses": 9
+      },
+      "fbsFcsVenue": {
+        "fbsHome": 92,
+        "neutral": 6
+      },
+      "directFcsOpponents": 82,
+      "directFcsCompletedGameCountHistogram": {
+        "10": 3,
+        "11": 58,
+        "12": 13,
+        "13": 6,
+        "14": 2
+      },
+      "directFcsWithFewerThan4Games": [],
+      "fbsOpponentsOutsideFbsFcs": [],
+      "directUnknownOpponents": [],
+      "rawWithinSeasonDivisionConflicts": {},
+      "repairedRosterExactlyMatchesOriginal": true,
+      "retrospectiveRosterCoverage": "Teams appearing in the season schedule, including unplayed games",
+      "indirectContextCoverage": {
+        "nonD1ContextNodesConnectedToFcs": 42,
+        "fcsToNonD1GamesByOppDivision": {
+          "unknown": 11,
+          "ii": 30,
+          "iii": 5
+        },
+        "unknownContextNodesConnectedToFcs": 10,
+        "unknownContextNodesWithFewerThan4Games": 10,
+        "nonD1ContextNodesWithFewerThan4Games": 42,
+        "directFcsTeamsPlayingUnknownContext": 5,
+        "directFcsTeamsPlayingNonD1Context": 24
+      }
+    },
+    "2018": {
+      "divisionTeamCounts": {
+        "fbs": 130,
+        "fcs": 125,
+        "ii": 33,
+        "unknown": 12,
+        "iii": 5
+      },
+      "completedGames": 1550,
+      "completedGamesByDivisionPair": {
+        "fbs-fbs": 772,
+        "fbs-fcs": 112,
+        "fcs-fcs": 607,
+        "fcs-ii": 39,
+        "fcs-iii": 5,
+        "fcs-unknown": 15
+      },
+      "completedPostseasonGamesByDivisionPair": {
+        "fbs-fbs": 39
+      },
+      "fbsFcs": {
+        "games": 112,
+        "wins": 105,
+        "losses": 7
+      },
+      "fbsFcsVenue": {
+        "fbsHome": 110,
+        "neutral": 1,
+        "fbsAway": 1
+      },
+      "directFcsOpponents": 89,
+      "directFcsCompletedGameCountHistogram": {
+        "9": 1,
+        "10": 12,
+        "11": 58,
+        "12": 7,
+        "13": 11
+      },
+      "directFcsWithFewerThan4Games": [],
+      "fbsOpponentsOutsideFbsFcs": [],
+      "directUnknownOpponents": [],
+      "rawWithinSeasonDivisionConflicts": {},
+      "repairedRosterExactlyMatchesOriginal": true,
+      "retrospectiveRosterCoverage": "Teams appearing in the season schedule, including unplayed games",
+      "indirectContextCoverage": {
+        "nonD1ContextNodesConnectedToFcs": 50,
+        "fcsToNonD1GamesByOppDivision": {
+          "ii": 39,
+          "unknown": 15,
+          "iii": 5
+        },
+        "unknownContextNodesConnectedToFcs": 12,
+        "unknownContextNodesWithFewerThan4Games": 11,
+        "nonD1ContextNodesWithFewerThan4Games": 49,
+        "directFcsTeamsPlayingUnknownContext": 9,
+        "directFcsTeamsPlayingNonD1Context": 32
+      }
+    },
+    "2019": {
+      "divisionTeamCounts": {
+        "fcs": 126,
+        "fbs": 130,
+        "unknown": 16,
+        "ii": 34,
+        "iii": 4
+      },
+      "completedGames": 1617,
+      "completedGamesByDivisionPair": {
+        "fbs-fbs": 774,
+        "fbs-fcs": 114,
+        "fcs-fcs": 662,
+        "fcs-ii": 40,
+        "fcs-iii": 4,
+        "fcs-unknown": 23
+      },
+      "completedPostseasonGamesByDivisionPair": {
+        "fbs-fbs": 40
+      },
+      "fbsFcs": {
+        "games": 114,
+        "wins": 111,
+        "losses": 3
+      },
+      "fbsFcsVenue": {
+        "fbsHome": 114
+      },
+      "directFcsOpponents": 87,
+      "directFcsCompletedGameCountHistogram": {
+        "11": 15,
+        "12": 53,
+        "13": 9,
+        "14": 8,
+        "15": 2
+      },
+      "directFcsWithFewerThan4Games": [],
+      "fbsOpponentsOutsideFbsFcs": [],
+      "directUnknownOpponents": [],
+      "rawWithinSeasonDivisionConflicts": {},
+      "repairedRosterExactlyMatchesOriginal": true,
+      "retrospectiveRosterCoverage": "Teams appearing in the season schedule, including unplayed games",
+      "indirectContextCoverage": {
+        "nonD1ContextNodesConnectedToFcs": 54,
+        "fcsToNonD1GamesByOppDivision": {
+          "unknown": 23,
+          "ii": 40,
+          "iii": 4
+        },
+        "unknownContextNodesConnectedToFcs": 16,
+        "unknownContextNodesWithFewerThan4Games": 15,
+        "nonD1ContextNodesWithFewerThan4Games": 53,
+        "directFcsTeamsPlayingUnknownContext": 13,
+        "directFcsTeamsPlayingNonD1Context": 36
+      }
+    },
+    "2020": {
+      "divisionTeamCounts": {
+        "fcs": 17,
+        "fbs": 127,
+        "ii": 5
+      },
+      "completedGames": 589,
+      "completedGamesByDivisionPair": {
+        "fbs-fbs": 534,
+        "fbs-fcs": 34,
+        "fcs-fcs": 15,
+        "fcs-ii": 6
+      },
+      "completedPostseasonGamesByDivisionPair": {
+        "fbs-fbs": 26
+      },
+      "fbsFcs": {
+        "games": 34,
+        "wins": 33,
+        "losses": 1
+      },
+      "fbsFcsVenue": {
+        "fbsHome": 34
+      },
+      "directFcsOpponents": 14,
+      "directFcsCompletedGameCountHistogram": {
+        "1": 1,
+        "3": 4,
+        "4": 5,
+        "6": 1,
+        "9": 2,
+        "10": 1
+      },
+      "directFcsWithFewerThan4Games": [
+        "Austin Peay",
+        "Chattanooga",
+        "Mercer",
+        "Missouri State",
+        "Western Carolina"
+      ],
+      "fbsOpponentsOutsideFbsFcs": [],
+      "directUnknownOpponents": [],
+      "rawWithinSeasonDivisionConflicts": {},
+      "repairedRosterExactlyMatchesOriginal": true,
+      "retrospectiveRosterCoverage": "Teams appearing in the season schedule, including unplayed games",
+      "indirectContextCoverage": {
+        "nonD1ContextNodesConnectedToFcs": 5,
+        "fcsToNonD1GamesByOppDivision": {
+          "ii": 6
+        },
+        "unknownContextNodesConnectedToFcs": 0,
+        "unknownContextNodesWithFewerThan4Games": 0,
+        "nonD1ContextNodesWithFewerThan4Games": 5,
+        "directFcsTeamsPlayingUnknownContext": 0,
+        "directFcsTeamsPlayingNonD1Context": 3
+      }
+    },
+    "2021": {
+      "divisionTeamCounts": {
+        "fbs": 130,
+        "ii": 165,
+        "fcs": 128,
+        "unknown": 22,
+        "iii": 5
+      },
+      "completedGames": 2446,
+      "completedGamesByDivisionPair": {
+        "fbs-fbs": 770,
+        "fbs-fcs": 117,
+        "fcs-fcs": 629,
+        "fcs-ii": 30,
+        "fcs-iii": 1,
+        "fcs-unknown": 17,
+        "ii-ii": 854,
+        "ii-iii": 4,
+        "ii-unknown": 24
+      },
+      "completedPostseasonGamesByDivisionPair": {
+        "fbs-fbs": 38
+      },
+      "fbsFcs": {
+        "games": 117,
+        "wins": 105,
+        "losses": 12
+      },
+      "fbsFcsVenue": {
+        "fbsHome": 116,
+        "neutral": 1
+      },
+      "directFcsOpponents": 97,
+      "directFcsCompletedGameCountHistogram": {
+        "10": 9,
+        "11": 67,
+        "12": 11,
+        "13": 9,
+        "14": 1
+      },
+      "directFcsWithFewerThan4Games": [],
+      "fbsOpponentsOutsideFbsFcs": [],
+      "directUnknownOpponents": [],
+      "rawWithinSeasonDivisionConflicts": {},
+      "repairedRosterExactlyMatchesOriginal": true,
+      "retrospectiveRosterCoverage": "Teams appearing in the season schedule, including unplayed games",
+      "indirectContextCoverage": {
+        "nonD1ContextNodesConnectedToFcs": 40,
+        "fcsToNonD1GamesByOppDivision": {
+          "ii": 30,
+          "unknown": 17,
+          "iii": 1
+        },
+        "unknownContextNodesConnectedToFcs": 12,
+        "unknownContextNodesWithFewerThan4Games": 9,
+        "nonD1ContextNodesWithFewerThan4Games": 10,
+        "directFcsTeamsPlayingUnknownContext": 9,
+        "directFcsTeamsPlayingNonD1Context": 26
+      }
+    },
+    "2022": {
+      "divisionTeamCounts": {
+        "fbs": 131,
+        "fcs": 130,
+        "unknown": 31,
+        "ii": 164,
+        "iii": 241
+      },
+      "completedGames": 3699,
+      "completedGamesByDivisionPair": {
+        "fbs-fbs": 776,
+        "fbs-fcs": 120,
+        "fcs-fcs": 641,
+        "fcs-ii": 30,
+        "fcs-iii": 1,
+        "fcs-unknown": 26,
+        "ii-ii": 869,
+        "ii-iii": 7,
+        "ii-unknown": 21,
+        "iii-iii": 1194,
+        "iii-unknown": 14
+      },
+      "completedPostseasonGamesByDivisionPair": {
+        "fbs-fbs": 42
+      },
+      "fbsFcs": {
+        "games": 120,
+        "wins": 112,
+        "losses": 8
+      },
+      "fbsFcsVenue": {
+        "fbsHome": 119,
+        "neutral": 1
+      },
+      "directFcsOpponents": 97,
+      "directFcsCompletedGameCountHistogram": {
+        "9": 1,
+        "10": 1,
+        "11": 71,
+        "12": 9,
+        "13": 15
+      },
+      "directFcsWithFewerThan4Games": [],
+      "fbsOpponentsOutsideFbsFcs": [],
+      "directUnknownOpponents": [],
+      "rawWithinSeasonDivisionConflicts": {},
+      "repairedRosterExactlyMatchesOriginal": true,
+      "retrospectiveRosterCoverage": "Teams appearing in the season schedule, including unplayed games",
+      "indirectContextCoverage": {
+        "nonD1ContextNodesConnectedToFcs": 45,
+        "fcsToNonD1GamesByOppDivision": {
+          "ii": 30,
+          "unknown": 26,
+          "iii": 1
+        },
+        "unknownContextNodesConnectedToFcs": 15,
+        "unknownContextNodesWithFewerThan4Games": 12,
+        "nonD1ContextNodesWithFewerThan4Games": 12,
+        "directFcsTeamsPlayingUnknownContext": 12,
+        "directFcsTeamsPlayingNonD1Context": 27
+      }
+    },
+    "2023": {
+      "divisionTeamCounts": {
+        "fbs": 133,
+        "fcs": 128,
+        "ii": 164,
+        "iii": 240,
+        "unknown": 39
+      },
+      "completedGames": 3724,
+      "completedGamesByDivisionPair": {
+        "fbs-fbs": 792,
+        "fbs-fcs": 118,
+        "fcs-fcs": 635,
+        "fcs-ii": 30,
+        "fcs-iii": 2,
+        "fcs-unknown": 26,
+        "ii-ii": 859,
+        "ii-iii": 4,
+        "ii-unknown": 34,
+        "iii-iii": 1202,
+        "iii-unknown": 22
+      },
+      "completedPostseasonGamesByDivisionPair": {
+        "fcs-fcs": 25,
+        "iii-iii": 43,
+        "fbs-fbs": 42,
+        "ii-ii": 29
+      },
+      "fbsFcs": {
+        "games": 118,
+        "wins": 114,
+        "losses": 4
+      },
+      "fbsFcsVenue": {
+        "fbsHome": 117,
+        "neutral": 1
+      },
+      "directFcsOpponents": 96,
+      "directFcsCompletedGameCountHistogram": {
+        "9": 1,
+        "10": 1,
+        "11": 72,
+        "12": 9,
+        "13": 12,
+        "15": 1
+      },
+      "directFcsWithFewerThan4Games": [],
+      "fbsOpponentsOutsideFbsFcs": [],
+      "directUnknownOpponents": [],
+      "rawWithinSeasonDivisionConflicts": {},
+      "repairedRosterExactlyMatchesOriginal": true,
+      "retrospectiveRosterCoverage": "Teams appearing in the season schedule, including unplayed games",
+      "indirectContextCoverage": {
+        "nonD1ContextNodesConnectedToFcs": 41,
+        "fcsToNonD1GamesByOppDivision": {
+          "ii": 30,
+          "iii": 2,
+          "unknown": 26
+        },
+        "unknownContextNodesConnectedToFcs": 12,
+        "unknownContextNodesWithFewerThan4Games": 10,
+        "nonD1ContextNodesWithFewerThan4Games": 10,
+        "directFcsTeamsPlayingUnknownContext": 16,
+        "directFcsTeamsPlayingNonD1Context": 30
+      }
+    },
+    "2024": {
+      "divisionTeamCounts": {
+        "ii": 164,
+        "unknown": 41,
+        "fbs": 134,
+        "fcs": 129,
+        "iii": 241
+      },
+      "completedGames": 3799,
+      "completedGamesByDivisionPair": {
+        "fbs-fbs": 798,
+        "fbs-fcs": 121,
+        "fcs-fcs": 692,
+        "fcs-ii": 40,
+        "fcs-iii": 2,
+        "fcs-unknown": 16,
+        "ii-ii": 867,
+        "ii-iii": 6,
+        "ii-unknown": 24,
+        "iii-iii": 1210,
+        "iii-unknown": 18,
+        "unknown-unknown": 5
+      },
+      "completedPostseasonGamesByDivisionPair": {
+        "fcs-fcs": 4,
+        "fbs-fbs": 46,
+        "iii-iii": 3,
+        "ii-ii": 1
+      },
+      "fbsFcs": {
+        "games": 121,
+        "losses": 6,
+        "wins": 115
+      },
+      "fbsFcsVenue": {
+        "fbsHome": 117,
+        "neutral": 4
+      },
+      "directFcsOpponents": 96,
+      "directFcsCompletedGameCountHistogram": {
+        "11": 6,
+        "12": 69,
+        "13": 7,
+        "14": 10,
+        "15": 2,
+        "16": 2
+      },
+      "directFcsWithFewerThan4Games": [],
+      "fbsOpponentsOutsideFbsFcs": [],
+      "directUnknownOpponents": [],
+      "rawWithinSeasonDivisionConflicts": {},
+      "repairedRosterExactlyMatchesOriginal": true,
+      "retrospectiveRosterCoverage": "Teams appearing in the season schedule, including unplayed games",
+      "indirectContextCoverage": {
+        "nonD1ContextNodesConnectedToFcs": 48,
+        "fcsToNonD1GamesByOppDivision": {
+          "ii": 40,
+          "unknown": 16,
+          "iii": 2
+        },
+        "unknownContextNodesConnectedToFcs": 10,
+        "unknownContextNodesWithFewerThan4Games": 9,
+        "nonD1ContextNodesWithFewerThan4Games": 9,
+        "directFcsTeamsPlayingUnknownContext": 8,
+        "directFcsTeamsPlayingNonD1Context": 26
+      }
+    },
+    "2025": {
+      "divisionTeamCounts": {
+        "fbs": 136,
+        "fcs": 129,
+        "ii": 163,
+        "unknown": 31,
+        "iii": 240
+      },
+      "completedGames": 3828,
+      "completedGamesByDivisionPair": {
+        "fbs-fbs": 808,
+        "fbs-fcs": 126,
+        "fcs-fcs": 691,
+        "fcs-ii": 44,
+        "fcs-iii": 4,
+        "fcs-unknown": 14,
+        "ii-ii": 874,
+        "ii-iii": 5,
+        "ii-unknown": 12,
+        "iii-iii": 1214,
+        "iii-unknown": 36
+      },
+      "completedPostseasonGamesByDivisionPair": {
+        "fcs-fcs": 4,
+        "fbs-fbs": 46,
+        "iii-iii": 19,
+        "ii-ii": 17
+      },
+      "fbsFcs": {
+        "games": 126,
+        "wins": 122,
+        "losses": 4
+      },
+      "fbsFcsVenue": {
+        "fbsHome": 126
+      },
+      "directFcsOpponents": 94,
+      "directFcsCompletedGameCountHistogram": {
+        "11": 3,
+        "12": 73,
+        "13": 8,
+        "14": 6,
+        "15": 2,
+        "16": 1,
+        "17": 1
+      },
+      "directFcsWithFewerThan4Games": [],
+      "fbsOpponentsOutsideFbsFcs": [],
+      "directUnknownOpponents": [],
+      "rawWithinSeasonDivisionConflicts": {},
+      "repairedRosterExactlyMatchesOriginal": true,
+      "retrospectiveRosterCoverage": "Teams appearing in the season schedule, including unplayed games",
+      "indirectContextCoverage": {
+        "nonD1ContextNodesConnectedToFcs": 50,
+        "fcsToNonD1GamesByOppDivision": {
+          "ii": 44,
+          "unknown": 14,
+          "iii": 4
+        },
+        "unknownContextNodesConnectedToFcs": 10,
+        "unknownContextNodesWithFewerThan4Games": 9,
+        "nonD1ContextNodesWithFewerThan4Games": 9,
+        "directFcsTeamsPlayingUnknownContext": 6,
+        "directFcsTeamsPlayingNonD1Context": 33
+      }
+    }
+  },
+  "transitions": [
+    {
+      "year": 2015,
+      "id": "2429",
+      "name": "Charlotte",
+      "before": "fcs",
+      "after": "fbs"
+    },
+    {
+      "year": 2017,
+      "id": "324",
+      "name": "Coastal Carolina",
+      "before": "fcs",
+      "after": "fbs"
+    },
+    {
+      "year": 2018,
+      "id": "2335",
+      "name": "Liberty",
+      "before": "fcs",
+      "after": "fbs"
+    },
+    {
+      "year": 2018,
+      "id": "70",
+      "name": "Idaho",
+      "before": "fbs",
+      "after": "fcs"
+    },
+    {
+      "year": 2022,
+      "id": "256",
+      "name": "James Madison",
+      "before": "fcs",
+      "after": "fbs"
+    },
+    {
+      "year": 2023,
+      "id": "2534",
+      "name": "Sam Houston",
+      "before": "fcs",
+      "after": "fbs"
+    },
+    {
+      "year": 2023,
+      "id": "55",
+      "name": "Jacksonville State",
+      "before": "fcs",
+      "after": "fbs"
+    },
+    {
+      "year": 2024,
+      "id": "338",
+      "name": "Kennesaw State",
+      "before": "fcs",
+      "after": "fbs"
+    },
+    {
+      "year": 2025,
+      "id": "2623",
+      "name": "Missouri State",
+      "before": "fcs",
+      "after": "fbs"
+    },
+    {
+      "year": 2025,
+      "id": "48",
+      "name": "Delaware",
+      "before": "fcs",
+      "after": "fbs"
+    }
+  ],
+  "fbsRosterDiscontinuities": [
+    {
+      "missingYear": 2020,
+      "id": "41",
+      "name": "UConn"
+    },
+    {
+      "missingYear": 2020,
+      "id": "295",
+      "name": "Old Dominion"
+    },
+    {
+      "missingYear": 2020,
+      "id": "166",
+      "name": "New Mexico State"
+    }
+  ],
+  "totals": {
+    "fbsFcs": {
+      "games": 1286,
+      "wins": 1205,
+      "losses": 81
+    },
+    "fbsFcsVenue": {
+      "neutral": 30,
+      "fbsHome": 1254,
+      "fbsAway": 2
+    },
+    "completedGamesByDivisionPair": {
+      "fbs-fbs": 9085,
+      "fbs-fcs": 1286,
+      "fcs-fcs": 7056,
+      "fcs-ii": 415,
+      "fcs-iii": 33,
+      "fcs-unknown": 199,
+      "ii-ii": 4323,
+      "ii-iii": 26,
+      "ii-unknown": 115,
+      "iii-iii": 4820,
+      "iii-unknown": 90,
+      "unknown-unknown": 5
+    },
+    "yearsWithWithinSeasonSourceDivisionConflicts": [],
+    "yearsWithUnknownDirectFbsOpponents": [],
+    "sourceFbsFcsWinPercentage": 93.701399688958
+  },
+  "repairManifestSha256": "f09a6bb6a140c384d77dd973643affb65f0afdb43fc7f8c4bfcf923d7452596d",
+  "rosterInterpretation": {
+    "seasonSpecific": true,
+    "withinSeason": "One source classification per team per year, reconstructed retrospectively from every scheduled CSV appearance, including unplayed games. Importer throws on conflicting team metadata; this audit independently found no within-season division conflicts in 2014-2025 raw CSVs.",
+    "historicalAsOfKnown": false,
+    "repairPolicy": "Repairs preserve each year's original roster exactly; no current-year roster is retroactively applied.",
+    "transitionInterpretation": "Listed transitions are changes in stored source labels, not independently certified institutional transition dates."
+  },
+  "limitations": [
+    "These counts certify internal cache consistency, not complete source coverage, independent NCAA membership certification, or historical as-of availability.",
+    "FBS-FCS scheduling is heavily selected: almost all recorded games are at FBS venues. A fitted division term is a conditional empirical association, not a causal estimate of division strength or a neutral-site win rate.",
+    "Repaired older postseason coverage adds FBS-v-FBS only. Older FCS postseason and lower-division histories remain incomplete; a cross-division residual may absorb those coverage differences.",
+    "2020 has only 127 source FBS nodes and three adjacent-year programs missing. Pandemic FCS spring schedules may be absent or season-coded differently; flag separately rather than assume comparability.",
+    "Many lower-division nodes are unknown or sparse. Their results indirectly affect FCS and FBS network strength even when no FBS opponent has an unknown classification.",
+    "FCS program resources and membership vary; one shared division term cannot justify a fixed per-team penalty or replace individual opponent results.",
+    "End-season leave-one-game-out and chronological preweek ratings use different information sets and require separately evaluated calibration.",
+    "2023-2025 have been inspected previously and are retrospective evaluation, not untouched prospective holdouts."
+  ],
+  "recommendedRobustnessChecks": [
+    "Fit primary cross-division calibration after accounting for existing opponent-network rating difference and venue.",
+    "Compare identical game targets under full-source and FBS/FCS-only context networks; this isolates sensitivity to lowerdivision context without relabeling FBS publication membership.",
+    "Compare regular-season-only contexts between training and evaluation to assess the changing postseason coverage; never call this a correction to missing playoff facts.",
+    "Treat2020 separately because of anomalous coverage, seasoncoding and pandemic schedules.",
+    "Report subgroup game counts and venue imbalance, not just a pooled performance metric."
+  ]
+}

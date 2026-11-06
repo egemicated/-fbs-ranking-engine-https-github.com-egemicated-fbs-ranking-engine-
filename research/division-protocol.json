@@ -1,0 +1,23 @@
+{
+  "id": "division-residual-experiment-v1",
+  "status": "Exploratory offline experiment; never a production or frozen-SOR replacement",
+  "question": "After individual opponent results and venue are accounted for, is there a residual FBS-FCS probability calibration error?",
+  "trainingYears": [2014, 2015, 2016, 2017, 2018, 2019],
+  "evaluationYears": [2021, 2022, 2023, 2024, 2025],
+  "stressYear": 2020,
+  "currentSeason": "2026 snapshot is ranking-impact illustration only, never a fitted input or validation target",
+  "contexts": ["prior-week-only", "excluded-game-final-network"],
+  "cutoff": "Before earliest target-week kickoff; only earlier processed weeks with kickoff plus 24 hours at or before cutoff. Corrected retrospective data, not archived real-time availability.",
+  "network": "Existing Colley, regularization 2, all eligible source nodes; identical network for each nested comparison",
+  "primaryFitPopulation": "Untied FBS-FBS and FBS-FCS games with both subdivisions explicitly known",
+  "models": {
+    "frozenOriginal": "Existing frozen slope/home mapping, gap zero; context only",
+    "refitControl": "Fit slope and home coefficient on the same primary training games as challenger",
+    "divisionResidual": "Fit slope, home coefficient, and signed FBS-versus-FCS indicator; no intercept, no sign restriction, no team or conference effects"
+  },
+  "sensitivities": ["FBS/FCS-only network, identical known-D1 target games", "Regular-season-only graph and targets to reduce unequal postseason coverage", "All known-D1 calibration games rather than only FBS-involving games; primary full-source network"],
+  "report": ["Counts and input checksums", "Coefficients, convergence, leave-one-training-season-out stability", "Per-year and pooled log loss, Brier and mean predicted/observed rates", "FBS-FCS and FBS-FBS separately", "FCS-FCS diagnostic outside primary fitting population", "FBS-home/neutral/away crossdivision samples", "Fewer-than-four available games and later crossdivision samples; preweek means prior games, excluded-game context means all other final-network games", "Paired week-block score resampling and coefficient stability; descriptive, not calibrated confidence intervals", "Current snapshot SOR impact using excluded-game coefficients only"],
+  "dataLimits": ["Historical source labels are season-specific and retrospective; not universal NCAA certification", "FCS postseason missing or incomplete, lower-division coverage changes substantially across years", "2020 pandemic coverage and FBS roster omissions require separate stress reporting", "Selected crossdivision schedules and predominantly FBS home venues prevent a causal population talent-gap interpretation"],
+  "interpretation": "A positive residual can improve selected-game probability calibration without proving a better achievement order. A residual may compensate for shrinkage or incomplete context. Do not double-count by also applying a division penalty to the network or win totals.",
+  "decision": "Report evidence and limitations; no automatic promotion, poll matching, parameters chosen by 2026 rank appearance, deployment, CFBD calls or paid services"
+}
