@@ -1,0 +1,32 @@
+{
+  "status": "ready-for-experimental-deployment",
+  "primarySnapshotHash": "561b2fc679400576c79dcbaca5cc076b2d98e3295e31d700f84908f369b88e14",
+  "performancePublicationHash": "7b57fe186565caae429acd3ce79235d21904108ce0efb4f7d608476720328dc0",
+  "all138ScoresMatchResearch": true,
+  "nodeTests": 109,
+  "pythonTests": 73,
+  "coverage": {
+    "measuredFbsTeams": 138,
+    "sourceFbsTeams": 138,
+    "measuredFbsGames": 627,
+    "eligibleFbsGames": 627,
+    "measuredFcsContextGames": 467,
+    "eligibleFcsContextGames": 467
+  },
+  "cachedProviderCalls": 0,
+  "normalWeeklyProviderCalls": 3,
+  "primaryFormulaChanged": false,
+  "predictiveFormulaChanged": false,
+  "forecastGateRemainsFailed": true,
+  "displayTestsFingerprint": "3121ef9793077c5f0bab1d0af42cf6d8569c9b27a4d28ac7b1b600e55fb10098",
+  "displayProtocolSha256": "5230ea07fa5fa1c1000103043889163194c9fe246dea6a659b6beea8ea3c9cc0",
+  "implementationFiles": {
+    "src/engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+    "src/publication.js": "6ee52b8ceef086930f6d6e9462e8508b61925c20ea63da41d484650b59488421",
+    "src/performance-publication.js": "37f28801089f9b9c156b8184f6b5685a593789e5e0dea91b3b3e1c9731e8016a",
+    "frontend/app.js": "53573010fb2ba25b1f08d3d5e982f626af2f7c7cf3589ca17d50c5850e7f7c03",
+    "scripts/publish-performance.py": "676f6e5c59a1b05dc2ac366f7cae41c7d53136595a2293af6f9d3a863b318887",
+    "data/performance-model.json": "f768d939f97ee5cad5bbcafb90f38df4188afc3f588ab3f59fb15efba1afea35",
+    ".github/workflows/weekly.yml": "37efe48b8485eb544a2cf119219fef26f1d66e7ebff91389ffd2938c3281ee73"
+  }
+}

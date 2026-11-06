@@ -4,6 +4,7 @@ import { resolve, join } from 'node:path';
 import { VERSION } from './engine.js';
 import { UPDATE_SCHEDULE } from './weekly.js';
 import publicationPolicy from '../data/publication-model.json' with { type: 'json' };
+import { readPerformance } from './performance-publication.js';
 
 const directory = resolve(process.env.DATA_DIR || 'data', 'snapshots');
 // Read-only API. No login to view public sports ratings; no write/admin routes.
@@ -35,12 +36,22 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     if (path === '/health') return send(200, { status: 'ok', modelVersion: VERSION, rankingMethod: publicationPolicy.id });
     if (path === '/api') return send(200, { service: 'Independent FBS Ranking Engine', modelVersion: VERSION, status: 'experimental',
       rankingMethod: { id: publicationPolicy.id, name: publicationPolicy.name, rankField: 'displayRank', scoreField: 'sor', baselineRankField: 'rank', baselineScoreField: 'achievement' },
-      historicalMethod: 'Colley; inspect the selected snapshot metadata', updateSchedule: UPDATE_SCHEDULE, endpoints: ['/health', '/rankings', '/rankings/2025'] });
+      historicalMethod: 'Colley; inspect the selected snapshot metadata', updateSchedule: UPDATE_SCHEDULE,
+      experimentalPerformance: { endpoint: '/performance', name: 'Scrimmage consistency', status: 'experimental', providerCallsPerPageView: 0 },
+      endpoints: ['/health', '/rankings', '/rankings/2025', '/performance'] });
+    if (path === '/performance') {
+      try {
+        const snapshot = JSON.parse(await readFile(join(snapshotDirectory, 'latest.json'), 'utf8'));
+        const performance = await readPerformance(snapshotDirectory, snapshot);
+        return performance ? send(200, performance) : send(503, { error: 'Experimental Performance is unavailable for this snapshot' });
+      } catch { return send(503, { error: 'Experimental Performance is unavailable for this snapshot' }); }
+    }
     const match = /^\/rankings(?:\/(\d{4}))?$/.exec(path);
     if (!match) return send(404, { error: 'Not found' });
     try {
       const snapshot = JSON.parse(await readFile(join(snapshotDirectory, `${match[1] || 'latest'}.json`), 'utf8'));
       const { ratings, ...publicSnapshot } = snapshot;
+      if (await readPerformance(snapshotDirectory, snapshot)) publicSnapshot.performanceEndpoint = '/performance';
       return send(200, publicSnapshot);
     } catch (e) { return send(e.code === 'ENOENT' ? 503 : 500, { error: e.code === 'ENOENT' ? 'Rankings have not been built for this season' : 'Could not read rankings' }); }
   });

@@ -25,6 +25,7 @@ jobs:
           node-version: '24'
       - run: npm test
       - name: Fetch CFBD and calculate rankings
+        id: primary-publish
         env:
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
         run: node scripts/refresh-weekly.js
@@ -37,8 +38,36 @@ jobs:
       - name: Score previously saved division forecasts
         continue-on-error: true
         run: node research/evaluate_division_forecasts.mjs
+      - name: Set up the optional Performance calculator
+        id: performance-python
+        continue-on-error: true
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the Performance calculator dependency
+        id: performance-deps
+        if: steps.performance-python.outcome == 'success'
+        continue-on-error: true
+        run: python -m pip install -r research/performance-requirements.txt
+      - name: Publish experimental Performance from one extra CFBD request
+        id: performance-publish
+        if: steps.performance-deps.outcome == 'success'
+        continue-on-error: true
+        env:
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+        run: python scripts/publish-performance.py --snapshot published/latest.json --season data/seasons/2026.json --output published/performance-latest.json
+      - name: Retain the successful derived Performance snapshot
+        if: steps.performance-publish.outcome == 'success'
+        continue-on-error: true
+        uses: actions/upload-artifact@v7
+        with:
+          name: experimental-performance-${{ github.run_id }}
+          path: published/performance-latest.json
+          retention-days: 14
+          if-no-files-found: warn
       - name: Retain derived results and source checksums
         if: always()
+        continue-on-error: true
         uses: actions/upload-artifact@v7
         with:
           name: cfbd-evidence-${{ github.run_id }}-${{ github.run_attempt }}
@@ -52,10 +81,12 @@ jobs:
           retention-days: 14
           if-no-files-found: warn
       - name: Save the weekly snapshot
+        if: always() && steps.primary-publish.outcome == 'success'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add published/latest.json
+          git add published/performance-latest.json
           git add research/observations/
           git add research/division-observations/
           if git diff --cached --quiet; then exit 0; fi

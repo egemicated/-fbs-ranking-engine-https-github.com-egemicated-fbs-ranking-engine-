@@ -8,6 +8,11 @@ on:
       - 'research/test_advanced_performance*'
       - 'research/adaptive_performance*'
       - 'research/test_adaptive_performance*'
+      - 'research/performance_display*'
+      - 'research/test_performance_display*'
+      - 'scripts/publish-performance.py'
+      - 'scripts/test_publish_performance.py'
+      - 'data/performance-model.json'
       - '.github/workflows/performance.yml'
   pull_request:
     paths:
@@ -17,6 +22,11 @@ on:
       - 'research/test_advanced_performance*'
       - 'research/adaptive_performance*'
       - 'research/test_adaptive_performance*'
+      - 'research/performance_display*'
+      - 'research/test_performance_display*'
+      - 'scripts/publish-performance.py'
+      - 'scripts/test_publish_performance.py'
+      - 'data/performance-model.json'
       - '.github/workflows/performance.yml'
 permissions:
   contents: read
@@ -33,3 +43,4 @@ jobs:
       - run: python -m unittest discover -s research -p 'test_performance*.py' -v
       - run: python -m unittest discover -s research -p 'test_advanced_performance*.py' -v
       - run: python -m unittest discover -s research -p 'test_adaptive_performance*.py' -v
+      - run: python -m unittest discover -s scripts -p 'test_publish_performance.py' -v

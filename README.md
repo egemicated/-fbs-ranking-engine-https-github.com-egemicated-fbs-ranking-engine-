@@ -130,13 +130,19 @@ and the subsequent Render deployment can start late; this is a target start
 time, not an exact publication-time guarantee.
 
 Set the repository secret `CFBD_API_KEY` once. The workflow fetches the current
-season's games and FBS roster (two API calls per update, normally 8–10/month),
+season's games and FBS roster (two API calls for the existing models),
 uses our stored prior-season strength from `published/prior-2025.json`, and
-commits the derived `published/latest.json`. Render automatically deploys that
-commit. No paid cron service, database, or additional user login is required.
+commits the derived `published/latest.json`. The separate experimental Performance
+step fetches advanced game statistics once and commits
+`published/performance-latest.json`. Normal successful operation therefore uses
+three CFBD calls each Sunday, usually 12–15/month. Render automatically deploys
+the commit. No paid cron service, database, or additional user login is required.
 The repository is public and the workflow uses standard `ubuntu-latest` runners,
 whose compute is free outside the shared private-repository Actions allowance.
-The five-minute maximum, Sunday schedule and two CFBD requests are unchanged.
+The five-minute maximum and Sunday schedule are unchanged. The optional
+Performance calculator has its own failure handling: its failure preserves the
+existing SOR/predictive publication. A stale Performance artifact is hidden
+until it matches the same primary snapshot, season and cutoff.
 No paid usage or billing setting is enabled. Derived ranking snapshots, frozen
 research comparisons and source checksums are uploaded with 14-day retention;
 raw CFBD responses and normalized source datasets stay in the private job
@@ -159,3 +165,27 @@ Render builds continue reconstructing archived historical seasons, then restore
 the committed weekly snapshot as the authoritative current-season publication.
 Restarts and source-code deploys therefore preserve that publication until the
 next successful weekly update. Historical CSV coverage limitations remain.
+
+## Experimental Performance
+
+The third ranking is **scrimmage consistency**, a separate opponent-adjusted
+net-success-rate model. Scores are percentage points above the measured FBS
+average. It retains individual FCS opponents, uses learned venue/subdivision
+context and gives no previous-season team credit. Its general starting context
+comes from the completed previous season; current team effects start neutral.
+The selected 2026 parameters and prior-input fingerprints live in
+`data/performance-model.json`.
+
+`GET /performance` serves only the committed derived artifact. The main API
+advertises it only when the season, source snapshot, cutoff and FBS identities
+match. Browsers never call CFBD. Render builds copy the artifact and do not need
+Python, NumPy, provider credentials or another data request.
+
+This is an experimental completed-game view, not a complete football grade or
+a calibrated forecast. The original historical FBS/FCS forecasting gate remains
+failed and is retained in its validation metadata. Recent-prior forward tests
+and as-of-date withheld-game checks are documented in
+`research/results/performance-display/`; those checks do not retrospectively
+turn the original result into a pass. Individual games can materially influence
+positions. Special teams and full turnover/scoring-opportunity costs remain
+outside this success-rate measure. It does not affect SOR, SOS or the matchup lab.
