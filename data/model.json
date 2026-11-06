@@ -1,0 +1,7 @@
+{
+  "ridge": 3,
+  "retention": 0.75,
+  "homeAdvantage": 2.5,
+  "marginCap": 28,
+  "probabilityScale": 14
+}

@@ -1,0 +1,16 @@
+{
+  "name": "independent-fbs-ranking-engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24 <25" },
+  "scripts": {
+    "test": "node --test",
+    "import": "node src/cli.js import",
+    "build": "node src/cli.js build",
+    "backtest": "node src/cli.js backtest",
+    "report": "node scripts/summarize.js",
+    "prepare:render": "node scripts/prepare-render.js",
+    "start": "node src/server.js"
+  }
+}

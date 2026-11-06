@@ -1,0 +1,225 @@
+{
+  "status": "experimental",
+  "validationYears": [
+    2019,
+    2020,
+    2021,
+    2022
+  ],
+  "holdoutYears": [
+    2023,
+    2024,
+    2025
+  ],
+  "config": {
+    "ridge": 3,
+    "retention": 0.75,
+    "homeAdvantage": 2.5,
+    "marginCap": 28,
+    "probabilityScale": 14
+  },
+  "overall": {
+    "games": 2398,
+    "accuracy": 0.7126772310258549,
+    "brier": 0.19712311141753305,
+    "logLoss": 0.581151626108637,
+    "marginMAE": 13.072435808925857,
+    "baselineAccuracy": 0.5863219349457881,
+    "baselineBrier": 0.24238298582152043,
+    "baselineLogLoss": 0.6778321798209805
+  },
+  "bySeason": {
+    "2023": {
+      "games": 792,
+      "accuracy": 0.7209595959595959,
+      "brier": 0.1953902275601108,
+      "logLoss": 0.5780913168789162,
+      "marginMAE": 13.124986431368544,
+      "baselineAccuracy": 0.5795454545454546,
+      "baselineBrier": 0.24377777777777748,
+      "baselineLogLoss": 0.6806462726103081
+    },
+    "2024": {
+      "games": 798,
+      "accuracy": 0.6904761904761905,
+      "brier": 0.20115915175561688,
+      "logLoss": 0.5891729188835558,
+      "marginMAE": 13.15482745589448,
+      "baselineAccuracy": 0.5839598997493735,
+      "baselineBrier": 0.24175538847117775,
+      "baselineLogLoss": 0.6765654931578791
+    },
+    "2025": {
+      "games": 808,
+      "accuracy": 0.7264851485148515,
+      "brier": 0.19483559139932563,
+      "logLoss": 0.5762293158061039,
+      "marginMAE": 12.9395538445007,
+      "baselineAccuracy": 0.5952970297029703,
+      "baselineBrier": 0.24163564356435616,
+      "baselineLogLoss": 0.6763248214892968
+    }
+  },
+  "limitations": [
+    "Retrospective corrected source, not historical as-published data.",
+    "24-hour kickoff buffer approximates result availability.",
+    "Probabilities remain experimental and are not calibrated.",
+    "No OT correction when source omits period scores.",
+    "Fixed home-only baseline uses 0.58 at home and 0.50 on neutral fields."
+  ],
+  "selection": [
+    {
+      "config": {
+        "ridge": 3,
+        "retention": 0.75,
+        "homeAdvantage": 2.5,
+        "marginCap": 28,
+        "probabilityScale": 14
+      },
+      "games": 2708,
+      "accuracy": 0.7178729689807977,
+      "brier": 0.1953711861537131,
+      "logLoss": 0.5771303330207507,
+      "marginMAE": 13.455703752054294,
+      "baselineAccuracy": 0.5823485967503693,
+      "baselineBrier": 0.24282717872968942,
+      "baselineLogLoss": 0.6787315617384049
+    },
+    {
+      "config": {
+        "ridge": 5,
+        "retention": 0.75,
+        "homeAdvantage": 2.5,
+        "marginCap": 28,
+        "probabilityScale": 14
+      },
+      "games": 2708,
+      "accuracy": 0.7167651403249631,
+      "brier": 0.19792702440139867,
+      "logLoss": 0.583221476272025,
+      "marginMAE": 13.628345098563509,
+      "baselineAccuracy": 0.5823485967503693,
+      "baselineBrier": 0.24282717872968942,
+      "baselineLogLoss": 0.6787315617384049
+    },
+    {
+      "config": {
+        "ridge": 3,
+        "retention": 0.5,
+        "homeAdvantage": 2.5,
+        "marginCap": 28,
+        "probabilityScale": 14
+      },
+      "games": 2708,
+      "accuracy": 0.71602658788774,
+      "brier": 0.20004866598516438,
+      "logLoss": 0.5880764701997573,
+      "marginMAE": 13.778764266071947,
+      "baselineAccuracy": 0.5823485967503693,
+      "baselineBrier": 0.24282717872968942,
+      "baselineLogLoss": 0.6787315617384049
+    },
+    {
+      "config": {
+        "ridge": 8,
+        "retention": 0.75,
+        "homeAdvantage": 2.5,
+        "marginCap": 28,
+        "probabilityScale": 14
+      },
+      "games": 2708,
+      "accuracy": 0.7138109305760709,
+      "brier": 0.2013309240194209,
+      "logLoss": 0.5910826452556952,
+      "marginMAE": 13.849048040125226,
+      "baselineAccuracy": 0.5823485967503693,
+      "baselineBrier": 0.24282717872968942,
+      "baselineLogLoss": 0.6787315617384049
+    },
+    {
+      "config": {
+        "ridge": 5,
+        "retention": 0.5,
+        "homeAdvantage": 2.5,
+        "marginCap": 28,
+        "probabilityScale": 14
+      },
+      "games": 2708,
+      "accuracy": 0.71602658788774,
+      "brier": 0.2034177768116939,
+      "logLoss": 0.5959347828266172,
+      "marginMAE": 13.988971458178618,
+      "baselineAccuracy": 0.5823485967503693,
+      "baselineBrier": 0.24282717872968942,
+      "baselineLogLoss": 0.6787315617384049
+    },
+    {
+      "config": {
+        "ridge": 8,
+        "retention": 0.5,
+        "homeAdvantage": 2.5,
+        "marginCap": 28,
+        "probabilityScale": 14
+      },
+      "games": 2708,
+      "accuracy": 0.7079025110782866,
+      "brier": 0.2076371758188147,
+      "logLoss": 0.6054341150913182,
+      "marginMAE": 14.240832042932388,
+      "baselineAccuracy": 0.5823485967503693,
+      "baselineBrier": 0.24282717872968942,
+      "baselineLogLoss": 0.6787315617384049
+    },
+    {
+      "config": {
+        "ridge": 3,
+        "retention": 0,
+        "homeAdvantage": 2.5,
+        "marginCap": 28,
+        "probabilityScale": 14
+      },
+      "games": 2708,
+      "accuracy": 0.6960856720827179,
+      "brier": 0.21003708304951088,
+      "logLoss": 0.6098310026432042,
+      "marginMAE": 14.43440971933785,
+      "baselineAccuracy": 0.5823485967503693,
+      "baselineBrier": 0.24282717872968942,
+      "baselineLogLoss": 0.6787315617384049
+    },
+    {
+      "config": {
+        "ridge": 5,
+        "retention": 0,
+        "homeAdvantage": 2.5,
+        "marginCap": 28,
+        "probabilityScale": 14
+      },
+      "games": 2708,
+      "accuracy": 0.6923929098966026,
+      "brier": 0.21438700454191123,
+      "logLoss": 0.6195947502162285,
+      "marginMAE": 14.684696303794759,
+      "baselineAccuracy": 0.5823485967503693,
+      "baselineBrier": 0.24282717872968942,
+      "baselineLogLoss": 0.6787315617384049
+    },
+    {
+      "config": {
+        "ridge": 8,
+        "retention": 0,
+        "homeAdvantage": 2.5,
+        "marginCap": 28,
+        "probabilityScale": 14
+      },
+      "games": 2708,
+      "accuracy": 0.6872230428360414,
+      "brier": 0.219192240077449,
+      "logLoss": 0.63004041566427,
+      "marginMAE": 14.9638905749353,
+      "baselineAccuracy": 0.5823485967503693,
+      "baselineBrier": 0.24282717872968942,
+      "baselineLogLoss": 0.6787315617384049
+    }
+  ]
+}
