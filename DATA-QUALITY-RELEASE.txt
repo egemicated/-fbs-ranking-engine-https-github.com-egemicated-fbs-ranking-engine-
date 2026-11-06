@@ -1,0 +1,25 @@
+DATA QUALITY SAFEGUARDS
+
+Ranking formulas, the dashboard, and the committed current/prior snapshots are unchanged.
+
+Weekly CFBD imports now stop when completed records contain the same pair of
+teams on the same UTC date under multiple IDs or kickoff times. The previous
+publication remains available. Conflicting scores or venue flags are recorded
+for review; the importer does not silently choose an occurrence.
+
+Historical CSV imports expose those collisions in source.audit.logicalDuplicates.
+They retain the original records until a versioned corrected dataset is selected.
+The historical-coverage-v1 repair is research only and is not activated here.
+
+The weekly workflow saves provider responses, normalized input, a candidate
+snapshot, and file checksums as a GitHub Actions artifact for 14 days. Rejected
+imports retain current-attempt raw responses and a structured rejection audit
+when available. Environment files, authentication headers and credentials are
+never copied. No additional CFBD requests are made for evidence retention.
+
+The Sunday 08:00 America/Denver schedule and the two-call successful refresh
+remain the same. This release does not trigger a manual provider refresh.
+
+Validation: 29 Node checks, including mocked successful/rejected refreshes,
+exactly-two-request checks, byte-preservation of the prior publication on
+rejection, evidence checksums, and exclusion of credentials/stale evidence.

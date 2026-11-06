@@ -2,6 +2,7 @@ import { mkdir, readFile, writeFile, rename } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { createHash } from 'node:crypto';
 import { validateSeason } from './engine.js';
+import { assertNoLogicalDuplicates, logicalDuplicateGroups } from './data-quality.js';
 
 // RFC 4180 quoting, embedded newlines, and escaped quotes; no CSV dependency.
 export function parseCsv(text) {
@@ -59,6 +60,9 @@ export function normalizeCsv(text, year, source = {}) {
   audit.postseasonGames = games.filter(g => g.seasonType === 'postseason').length;
   audit.unknownDivisionTeams = [...teams.values()].filter(t => t.division === 'unknown').length;
   audit.latestCompletedKickoff = games.filter(g => g.completed).map(g => g.startDate).sort().at(-1) ?? null;
+  // Historical defects remain visible until a versioned correction dataset is
+  // selected. Never silently choose a timestamp/venue from conflicting rows.
+  audit.logicalDuplicates = logicalDuplicateGroups(games);
   return validateSeason({ year, teams: [...teams.values()], games, source: { ...source, audit, format: 'cfbfastR schedules CSV', overtimePeriodScores: false, rosterCoverage: 'Teams appearing in the season schedule, including unplayed games' } });
 }
 
@@ -83,6 +87,7 @@ export function normalizeCfbd(games, roster, year, source = {}) {
   });
   audit.unknownDivisionTeams = [...teams.values()].filter(t => t.division === 'unknown').length;
   audit.latestCompletedKickoff = normalized.filter(g => g.completed).map(g => g.startDate).sort().at(-1) ?? null;
+  assertNoLogicalDuplicates(normalized);
   return validateSeason({ year, teams: [...teams.values()], games: normalized, source: { ...source, audit, format: 'CFBD API', rosterCoverage: 'Year-specific FBS roster plus all scheduled opponents' } });
 }
 
@@ -103,8 +108,10 @@ export async function importSeason(year, dataDir, { refresh = false, provider = 
     const urls = [`https://api.collegefootballdata.com/games?year=${year}&seasonType=both`, `https://api.collegefootballdata.com/teams/fbs?year=${year}`];
     const responses = [];
     for (const url of urls) { const r = await fetch(url, { headers: { Authorization: `Bearer ${process.env.CFBD_API_KEY}` }, signal: AbortSignal.timeout(60000) }); if (!r.ok) throw new Error(`CFBD returned ${r.status}`); responses.push(await r.json()); }
-    season = normalizeCfbd(responses[0], responses[1], year, { provider, urls, fetchedAt, sha256: createHash('sha256').update(JSON.stringify(responses)).digest('hex') });
+    // Preserve the provider evidence even if normalization subsequently rejects
+    // ambiguous records. This file contains responses only, never auth headers.
     await atomicJson(join(dataDir, 'raw', `cfbd-${year}.json`), responses);
+    season = normalizeCfbd(responses[0], responses[1], year, { provider, urls, fetchedAt, sha256: createHash('sha256').update(JSON.stringify(responses)).digest('hex') });
   } else if (provider === 'sportsdataverse') {
     const url = `https://raw.githubusercontent.com/sportsdataverse/cfbfastR-data/main/schedules/csv/cfb_schedules_${year}.csv`;
     const response = await fetch(url, { signal: AbortSignal.timeout(60000) });

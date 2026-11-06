@@ -28,6 +28,14 @@ jobs:
         env:
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
         run: node scripts/refresh-weekly.js
+      - name: Retain weekly source evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cfbd-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: evidence/weekly/
+          retention-days: 14
+          if-no-files-found: warn
       - name: Save the weekly snapshot
         run: |
           git config user.name 'github-actions[bot]'
