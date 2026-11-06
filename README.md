@@ -120,7 +120,7 @@ The preparation script runs tests, imports the historical schedules afresh,
 and generates all season snapshots before the service starts. No data API key
 or paid database is required. Render supplies `PORT`, `RENDER`, and HTTPS.
 
-The service exposes the JSON API only. The free plan can sleep when idle.
+The service serves the frontend and read-only JSON API. The free plan can sleep when idle.
 
 ## Weekly CFBD publication
 
@@ -134,9 +134,12 @@ season's games and FBS roster (two API calls per update, normally 8–10/month),
 uses our stored prior-season strength from `published/prior-2025.json`, and
 commits the derived `published/latest.json`. Render automatically deploys that
 commit. No paid cron service, database, or additional user login is required.
-The workflow uses a standard Linux runner and a five-minute maximum, drawing
-from GitHub's included Actions usage; it does not enable paid usage or alter
-billing settings. No workflow artifacts or caches are uploaded.
+The repository is public and the workflow uses standard `ubuntu-latest` runners,
+whose compute is free outside the shared private-repository Actions allowance.
+The five-minute maximum, Sunday schedule and two CFBD requests are unchanged.
+No paid usage or billing setting is enabled. Source evidence and frozen research
+comparisons are uploaded with 14-day retention; artifact storage remains subject
+to GitHub's included storage allowance. No Actions cache is used.
 
 Confirmed completed Saturday games count even if they finished less than
 24 hours earlier. In-progress games do not count. Data missing from CFBD at
