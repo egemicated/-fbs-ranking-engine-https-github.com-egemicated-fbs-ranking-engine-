@@ -1,0 +1,49 @@
+{
+  "version": "1.0.0",
+  "status": "Research standard; no production model selection or deployment",
+  "primaryQuestion": "What has each FBS team earned from completed games in the current season, accounting for schedule difficulty?",
+  "humanControl": {
+    "allowed": ["Published, versioned rules chosen before evaluation", "Documented correction of verified source errors"],
+    "excluded": ["Human polls as inputs or optimization targets", "Team-specific rank overrides", "Conference prestige bonuses", "Selecting parameters because familiar teams move up"]
+  },
+  "achievementInputs": ["Completed game outcomes", "Individually identified opponents and their game network", "Season-specific source FBS membership", "Venue for the SOR challenger"],
+  "historicalRole": "Estimate general parameters using older seasons; historical team success supplies no current-season achievement credit.",
+  "predictiveRole": "Keep opponent-adjusted margins and decayed historical team strength separate from achievement. Margin-cap experiments cannot alter this comparison.",
+  "candidates": {
+    "benchmark": "Current Colley achievement, prior 2 centered at 0.5",
+    "challenger": "Exact leave-one-game-out SOR using mean FBS reference strength",
+    "frozenSorSlope": 4.2967562253807925,
+    "frozenSorHomeLogOdds": 0.47455471946025424,
+    "blend": "None"
+  },
+  "historicalReplay": {
+    "years": [2021, 2022, 2023, 2024, 2025],
+    "buckets": "Distinct regular-season/postseason competition weeks, ordered by earliest kickoff",
+    "cutoff": "Before the earliest kickoff of the target week; only previously processed weeks and games with kickoff + 24 hours <= cutoff",
+    "finalCheckpoint": "After the last completed game kickoff + 24 hours; uses all eligible completed games",
+    "population": "Same complete source opponent population for both candidates; publish only source-designated FBS",
+    "tiePolicy": "Shared ranks within 1e-9; no-games teams unranked. Completed tied FBS results require an explicit additional policy and halt SOR evaluation.",
+    "knownLimits": ["Corrected retrospective data, not contemporaneously archived results", "24-hour rule approximates final-result availability", "Season roster identities are retrospectively known", "2021-2022 archive lacks postseason; do not label these complete final seasons", "Previously inspected years cannot establish independent prospective superiority"]
+  },
+  "requiredChecks": [
+    "Validate identities, unique game IDs, scores, timestamps and membership",
+    "No target-week or later result enters a preweek snapshot",
+    "Team or conference renaming cannot change scores",
+    "Identical inputs and protocol reproduce the same numeric outputs",
+    "Removing a game analytically agrees with a full refit",
+    "With game probabilities fixed, a higher win total improves SOR",
+    "Report early-season sample sizes and disconnected FBS components",
+    "Keep code, published snapshots, frontend and service configuration unchanged"
+  ],
+  "diagnostics": ["All-team weekly rank differences", "Top-25 overlap", "Week-to-week movement", "Connected FBS components", "Teams with fewer than four completed games", "Coverage and excluded records"],
+  "diagnosticInterpretation": "No diagnostic is an automatic winner-selection score. Agreement, low volatility and next-game accuracy do not alone establish earned achievement.",
+  "promotionRequirements": [
+    "Pass correctness and data-eligibility checks",
+    "Resolve or disclose material data-coverage issues",
+    "Explain consequential disagreements through game evidence",
+    "Validate probability mapping in the context where it is used",
+    "Freeze the challenger before collecting genuinely future evidence",
+    "Publish a review of benefits, tradeoffs and uncertainty before any replacement"
+  ],
+  "costAndOperations": "Offline stored data only. No CFBD calls, paid services, deployment, or new scheduled job required by this research."
+}

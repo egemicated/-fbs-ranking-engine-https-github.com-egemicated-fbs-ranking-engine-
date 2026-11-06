@@ -1,0 +1,2555 @@
+{
+  "status": "Exploratory retrospective validation; no parameter or production changes",
+  "trainingYears": [
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019
+  ],
+  "evaluationYears": [
+    2023,
+    2024,
+    2025
+  ],
+  "populations": {
+    "fullSourceNetwork": {
+      "pregame": {
+        "trainingGames": 4607,
+        "fittedSlope": 4.318408478395477,
+        "fittedHomeLogOdds": 0.3855656313030436,
+        "years": {
+          "2023": {
+            "originalFrozen": {
+              "games": 792,
+              "logLoss": 0.595152592202259,
+              "brier": 0.20397631813998768,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 1,
+                  "predicted": 0.09022321409836809,
+                  "observed": 1.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 20,
+                  "predicted": 0.1652519060438299,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.2,
+                  "games": 50,
+                  "predicted": 0.25875758224481415,
+                  "observed": 0.2
+                },
+                {
+                  "lower": 0.3,
+                  "games": 79,
+                  "predicted": 0.3505438163188649,
+                  "observed": 0.34177215189873417
+                },
+                {
+                  "lower": 0.4,
+                  "games": 90,
+                  "predicted": 0.45113542039395976,
+                  "observed": 0.4111111111111111
+                },
+                {
+                  "lower": 0.5,
+                  "games": 126,
+                  "predicted": 0.5511250045873003,
+                  "observed": 0.5714285714285714
+                },
+                {
+                  "lower": 0.6,
+                  "games": 176,
+                  "predicted": 0.637066101184389,
+                  "observed": 0.6704545454545454
+                },
+                {
+                  "lower": 0.7,
+                  "games": 123,
+                  "predicted": 0.7457147853351068,
+                  "observed": 0.7154471544715447
+                },
+                {
+                  "lower": 0.8,
+                  "games": 101,
+                  "predicted": 0.8468818457544567,
+                  "observed": 0.8118811881188119
+                },
+                {
+                  "lower": 0.9,
+                  "games": 26,
+                  "predicted": 0.9310978203293517,
+                  "observed": 0.9230769230769231
+                }
+              ],
+              "scope": "Prior-week-only retrospective pregame probabilities"
+            },
+            "repairedHistoryFit": {
+              "games": 792,
+              "logLoss": 0.5944550673407695,
+              "brier": 0.2038139561319098,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 2,
+                  "predicted": 0.0888024435825873,
+                  "observed": 0.5
+                },
+                {
+                  "lower": 0.1,
+                  "games": 26,
+                  "predicted": 0.16504838540882957,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.2,
+                  "games": 60,
+                  "predicted": 0.26229006145934414,
+                  "observed": 0.26666666666666666
+                },
+                {
+                  "lower": 0.3,
+                  "games": 78,
+                  "predicted": 0.35199128022084497,
+                  "observed": 0.3333333333333333
+                },
+                {
+                  "lower": 0.4,
+                  "games": 92,
+                  "predicted": 0.4517214412488727,
+                  "observed": 0.44565217391304346
+                },
+                {
+                  "lower": 0.5,
+                  "games": 196,
+                  "predicted": 0.5637814588379718,
+                  "observed": 0.6479591836734694
+                },
+                {
+                  "lower": 0.6,
+                  "games": 112,
+                  "predicted": 0.6517507319931528,
+                  "observed": 0.6428571428571429
+                },
+                {
+                  "lower": 0.7,
+                  "games": 111,
+                  "predicted": 0.7446821581377439,
+                  "observed": 0.7207207207207207
+                },
+                {
+                  "lower": 0.8,
+                  "games": 89,
+                  "predicted": 0.8415787166915407,
+                  "observed": 0.8089887640449438
+                },
+                {
+                  "lower": 0.9,
+                  "games": 26,
+                  "predicted": 0.9262041940452808,
+                  "observed": 0.9230769230769231
+                }
+              ],
+              "scope": "Prior-week-only retrospective pregame probabilities"
+            },
+            "originalSlopeNoVenue": {
+              "games": 792,
+              "logLoss": 0.6089765201547427,
+              "brier": 0.21095581991952606,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 6,
+                  "predicted": 0.07916511052929717,
+                  "observed": 0.16666666666666666
+                },
+                {
+                  "lower": 0.1,
+                  "games": 49,
+                  "predicted": 0.15501793892672858,
+                  "observed": 0.08163265306122448
+                },
+                {
+                  "lower": 0.2,
+                  "games": 94,
+                  "predicted": 0.2503650601679219,
+                  "observed": 0.32978723404255317
+                },
+                {
+                  "lower": 0.3,
+                  "games": 86,
+                  "predicted": 0.3505612372716599,
+                  "observed": 0.3953488372093023
+                },
+                {
+                  "lower": 0.4,
+                  "games": 130,
+                  "predicted": 0.45111743836625734,
+                  "observed": 0.5769230769230769
+                },
+                {
+                  "lower": 0.5,
+                  "games": 178,
+                  "predicted": 0.5306421246142403,
+                  "observed": 0.6797752808988764
+                },
+                {
+                  "lower": 0.6,
+                  "games": 108,
+                  "predicted": 0.6436663261684608,
+                  "observed": 0.7129629629629629
+                },
+                {
+                  "lower": 0.7,
+                  "games": 88,
+                  "predicted": 0.7499863755475743,
+                  "observed": 0.7840909090909091
+                },
+                {
+                  "lower": 0.8,
+                  "games": 43,
+                  "predicted": 0.8436893733616818,
+                  "observed": 0.9069767441860465
+                },
+                {
+                  "lower": 0.9,
+                  "games": 10,
+                  "predicted": 0.9240521473436104,
+                  "observed": 0.8
+                }
+              ],
+              "scope": "Prior-week-only retrospective pregame probabilities"
+            }
+          },
+          "2024": {
+            "originalFrozen": {
+              "games": 798,
+              "logLoss": 0.6211438990215153,
+              "brier": 0.2161717151518273,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 1,
+                  "predicted": 0.09998341437869683,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 18,
+                  "predicted": 0.15607696504243107,
+                  "observed": 0.2777777777777778
+                },
+                {
+                  "lower": 0.2,
+                  "games": 40,
+                  "predicted": 0.2530495193060476,
+                  "observed": 0.375
+                },
+                {
+                  "lower": 0.3,
+                  "games": 74,
+                  "predicted": 0.34869175855367107,
+                  "observed": 0.25675675675675674
+                },
+                {
+                  "lower": 0.4,
+                  "games": 101,
+                  "predicted": 0.4506735814320735,
+                  "observed": 0.4752475247524752
+                },
+                {
+                  "lower": 0.5,
+                  "games": 128,
+                  "predicted": 0.547656186959249,
+                  "observed": 0.5703125
+                },
+                {
+                  "lower": 0.6,
+                  "games": 191,
+                  "predicted": 0.6375894531194773,
+                  "observed": 0.6178010471204188
+                },
+                {
+                  "lower": 0.7,
+                  "games": 106,
+                  "predicted": 0.7468935197798383,
+                  "observed": 0.6792452830188679
+                },
+                {
+                  "lower": 0.8,
+                  "games": 108,
+                  "predicted": 0.8496358373779823,
+                  "observed": 0.8240740740740741
+                },
+                {
+                  "lower": 0.9,
+                  "games": 31,
+                  "predicted": 0.9272689401665817,
+                  "observed": 0.8709677419354839
+                }
+              ],
+              "scope": "Prior-week-only retrospective pregame probabilities"
+            },
+            "repairedHistoryFit": {
+              "games": 798,
+              "logLoss": 0.6208534336138615,
+              "brier": 0.21608774476099668,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 3,
+                  "predicted": 0.09437116235651938,
+                  "observed": 0.6666666666666666
+                },
+                {
+                  "lower": 0.1,
+                  "games": 22,
+                  "predicted": 0.16270893082805402,
+                  "observed": 0.22727272727272727
+                },
+                {
+                  "lower": 0.2,
+                  "games": 48,
+                  "predicted": 0.2591939825206199,
+                  "observed": 0.3333333333333333
+                },
+                {
+                  "lower": 0.3,
+                  "games": 79,
+                  "predicted": 0.3520369893193245,
+                  "observed": 0.31645569620253167
+                },
+                {
+                  "lower": 0.4,
+                  "games": 103,
+                  "predicted": 0.4524755611580771,
+                  "observed": 0.49514563106796117
+                },
+                {
+                  "lower": 0.5,
+                  "games": 201,
+                  "predicted": 0.5635023548515896,
+                  "observed": 0.5771144278606966
+                },
+                {
+                  "lower": 0.6,
+                  "games": 127,
+                  "predicted": 0.6534511401705991,
+                  "observed": 0.6614173228346457
+                },
+                {
+                  "lower": 0.7,
+                  "games": 87,
+                  "predicted": 0.7515205550463777,
+                  "observed": 0.6666666666666666
+                },
+                {
+                  "lower": 0.8,
+                  "games": 102,
+                  "predicted": 0.8467080053711098,
+                  "observed": 0.8333333333333334
+                },
+                {
+                  "lower": 0.9,
+                  "games": 26,
+                  "predicted": 0.9267855620725659,
+                  "observed": 0.9230769230769231
+                }
+              ],
+              "scope": "Prior-week-only retrospective pregame probabilities"
+            },
+            "originalSlopeNoVenue": {
+              "games": 798,
+              "logLoss": 0.6360438609299832,
+              "brier": 0.2227551713292457,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 8,
+                  "predicted": 0.08090118104244354,
+                  "observed": 0.25
+                },
+                {
+                  "lower": 0.1,
+                  "games": 41,
+                  "predicted": 0.1599795478148335,
+                  "observed": 0.3170731707317073
+                },
+                {
+                  "lower": 0.2,
+                  "games": 79,
+                  "predicted": 0.2517916980315847,
+                  "observed": 0.3037974683544304
+                },
+                {
+                  "lower": 0.3,
+                  "games": 100,
+                  "predicted": 0.35124044473880356,
+                  "observed": 0.47
+                },
+                {
+                  "lower": 0.4,
+                  "games": 135,
+                  "predicted": 0.4536320200594313,
+                  "observed": 0.562962962962963
+                },
+                {
+                  "lower": 0.5,
+                  "games": 192,
+                  "predicted": 0.5303438139247514,
+                  "observed": 0.6145833333333334
+                },
+                {
+                  "lower": 0.6,
+                  "games": 95,
+                  "predicted": 0.6479367894699897,
+                  "observed": 0.6736842105263158
+                },
+                {
+                  "lower": 0.7,
+                  "games": 79,
+                  "predicted": 0.748424178136307,
+                  "observed": 0.7468354430379747
+                },
+                {
+                  "lower": 0.8,
+                  "games": 59,
+                  "predicted": 0.8438351750185116,
+                  "observed": 0.8983050847457628
+                },
+                {
+                  "lower": 0.9,
+                  "games": 10,
+                  "predicted": 0.9195445648161836,
+                  "observed": 1.0
+                }
+              ],
+              "scope": "Prior-week-only retrospective pregame probabilities"
+            }
+          },
+          "2025": {
+            "originalFrozen": {
+              "games": 808,
+              "logLoss": 0.5910708135337008,
+              "brier": 0.2044424749828431,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 1,
+                  "predicted": 0.09460901296579964,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 18,
+                  "predicted": 0.1555495613608984,
+                  "observed": 0.1111111111111111
+                },
+                {
+                  "lower": 0.2,
+                  "games": 43,
+                  "predicted": 0.25988629584227,
+                  "observed": 0.3023255813953488
+                },
+                {
+                  "lower": 0.3,
+                  "games": 84,
+                  "predicted": 0.34885891990810447,
+                  "observed": 0.32142857142857145
+                },
+                {
+                  "lower": 0.4,
+                  "games": 108,
+                  "predicted": 0.4498058837477099,
+                  "observed": 0.5092592592592593
+                },
+                {
+                  "lower": 0.5,
+                  "games": 121,
+                  "predicted": 0.5481251170114239,
+                  "observed": 0.5289256198347108
+                },
+                {
+                  "lower": 0.6,
+                  "games": 191,
+                  "predicted": 0.6402832648448097,
+                  "observed": 0.6387434554973822
+                },
+                {
+                  "lower": 0.7,
+                  "games": 110,
+                  "predicted": 0.7504069735557486,
+                  "observed": 0.7181818181818181
+                },
+                {
+                  "lower": 0.8,
+                  "games": 102,
+                  "predicted": 0.8470049711573441,
+                  "observed": 0.8823529411764706
+                },
+                {
+                  "lower": 0.9,
+                  "games": 30,
+                  "predicted": 0.92720137475936,
+                  "observed": 0.9666666666666667
+                }
+              ],
+              "scope": "Prior-week-only retrospective pregame probabilities"
+            },
+            "repairedHistoryFit": {
+              "games": 808,
+              "logLoss": 0.5914842457798616,
+              "brier": 0.20456696317721565,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 3,
+                  "predicted": 0.09137268871027243,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 21,
+                  "predicted": 0.1614294600251069,
+                  "observed": 0.19047619047619047
+                },
+                {
+                  "lower": 0.2,
+                  "games": 53,
+                  "predicted": 0.26068317197429525,
+                  "observed": 0.2830188679245283
+                },
+                {
+                  "lower": 0.3,
+                  "games": 86,
+                  "predicted": 0.34819070476385977,
+                  "observed": 0.3488372093023256
+                },
+                {
+                  "lower": 0.4,
+                  "games": 109,
+                  "predicted": 0.44762324537870624,
+                  "observed": 0.5321100917431193
+                },
+                {
+                  "lower": 0.5,
+                  "games": 189,
+                  "predicted": 0.5628781240875964,
+                  "observed": 0.6031746031746031
+                },
+                {
+                  "lower": 0.6,
+                  "games": 124,
+                  "predicted": 0.6498002475162463,
+                  "observed": 0.6048387096774194
+                },
+                {
+                  "lower": 0.7,
+                  "games": 103,
+                  "predicted": 0.7490079705368566,
+                  "observed": 0.7281553398058253
+                },
+                {
+                  "lower": 0.8,
+                  "games": 95,
+                  "predicted": 0.8447766120864657,
+                  "observed": 0.9052631578947369
+                },
+                {
+                  "lower": 0.9,
+                  "games": 25,
+                  "predicted": 0.9266801270065848,
+                  "observed": 0.96
+                }
+              ],
+              "scope": "Prior-week-only retrospective pregame probabilities"
+            },
+            "originalSlopeNoVenue": {
+              "games": 808,
+              "logLoss": 0.6107971855890797,
+              "brier": 0.21267592118823359,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 9,
+                  "predicted": 0.07893460455952381,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 44,
+                  "predicted": 0.16644529951284096,
+                  "observed": 0.29545454545454547
+                },
+                {
+                  "lower": 0.2,
+                  "games": 93,
+                  "predicted": 0.25065597600503015,
+                  "observed": 0.3225806451612903
+                },
+                {
+                  "lower": 0.3,
+                  "games": 101,
+                  "predicted": 0.35025697621796237,
+                  "observed": 0.48514851485148514
+                },
+                {
+                  "lower": 0.4,
+                  "games": 124,
+                  "predicted": 0.44779052754151444,
+                  "observed": 0.5564516129032258
+                },
+                {
+                  "lower": 0.5,
+                  "games": 194,
+                  "predicted": 0.5315485083594053,
+                  "observed": 0.634020618556701
+                },
+                {
+                  "lower": 0.6,
+                  "games": 97,
+                  "predicted": 0.6500162815760792,
+                  "observed": 0.6907216494845361
+                },
+                {
+                  "lower": 0.7,
+                  "games": 85,
+                  "predicted": 0.7462117572441237,
+                  "observed": 0.8470588235294118
+                },
+                {
+                  "lower": 0.8,
+                  "games": 53,
+                  "predicted": 0.846260925353573,
+                  "observed": 0.9433962264150944
+                },
+                {
+                  "lower": 0.9,
+                  "games": 8,
+                  "predicted": 0.9244451251564172,
+                  "observed": 1.0
+                }
+              ],
+              "scope": "Prior-week-only retrospective pregame probabilities"
+            }
+          }
+        },
+        "parameterStability": {
+          "replicates": 200,
+          "seed": 20261106,
+          "slopeRange95": [
+            3.9659584999630013,
+            4.670060742488563
+          ],
+          "homeLogOddsRange95": [
+            0.332776008352949,
+            0.44622180646332854
+          ],
+          "interpretation": "Week-block resampling stability ranges, not calibrated confidence intervals; teams recur across blocks."
+        }
+      },
+      "leaveOneOut": {
+        "trainingGames": 4607,
+        "fittedSlope": 5.1735004794325,
+        "fittedHomeLogOdds": 0.38062635862303773,
+        "years": {
+          "2023": {
+            "originalFrozen": {
+              "games": 792,
+              "logLoss": 0.5504061267531294,
+              "brier": 0.18684234100861946,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 3,
+                  "predicted": 0.09142978369681538,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 38,
+                  "predicted": 0.1544858571688326,
+                  "observed": 0.05263157894736842
+                },
+                {
+                  "lower": 0.2,
+                  "games": 60,
+                  "predicted": 0.25549789780496635,
+                  "observed": 0.25
+                },
+                {
+                  "lower": 0.3,
+                  "games": 69,
+                  "predicted": 0.345948976386621,
+                  "observed": 0.2898550724637681
+                },
+                {
+                  "lower": 0.4,
+                  "games": 100,
+                  "predicted": 0.4553047696552236,
+                  "observed": 0.46
+                },
+                {
+                  "lower": 0.5,
+                  "games": 101,
+                  "predicted": 0.5519535739164503,
+                  "observed": 0.5247524752475248
+                },
+                {
+                  "lower": 0.6,
+                  "games": 135,
+                  "predicted": 0.650746530796329,
+                  "observed": 0.6888888888888889
+                },
+                {
+                  "lower": 0.7,
+                  "games": 109,
+                  "predicted": 0.7496039372103296,
+                  "observed": 0.6880733944954128
+                },
+                {
+                  "lower": 0.8,
+                  "games": 122,
+                  "predicted": 0.8462111677397997,
+                  "observed": 0.819672131147541
+                },
+                {
+                  "lower": 0.9,
+                  "games": 55,
+                  "predicted": 0.9328995235556506,
+                  "observed": 1.0
+                }
+              ],
+              "scope": "Retrospective excluded-game reconstruction, not pregame forecasts"
+            },
+            "repairedHistoryFit": {
+              "games": 792,
+              "logLoss": 0.5481996199076903,
+              "brier": 0.18647340062301251,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 20,
+                  "predicted": 0.07364289726580724,
+                  "observed": 0.05
+                },
+                {
+                  "lower": 0.1,
+                  "games": 61,
+                  "predicted": 0.15448757469160532,
+                  "observed": 0.16393442622950818
+                },
+                {
+                  "lower": 0.2,
+                  "games": 70,
+                  "predicted": 0.250973041104532,
+                  "observed": 0.24285714285714285
+                },
+                {
+                  "lower": 0.3,
+                  "games": 55,
+                  "predicted": 0.35349022289552745,
+                  "observed": 0.4
+                },
+                {
+                  "lower": 0.4,
+                  "games": 97,
+                  "predicted": 0.44689159429949055,
+                  "observed": 0.4536082474226804
+                },
+                {
+                  "lower": 0.5,
+                  "games": 96,
+                  "predicted": 0.5575816441978001,
+                  "observed": 0.6354166666666666
+                },
+                {
+                  "lower": 0.6,
+                  "games": 109,
+                  "predicted": 0.6520249392719011,
+                  "observed": 0.6788990825688074
+                },
+                {
+                  "lower": 0.7,
+                  "games": 93,
+                  "predicted": 0.7507466282836639,
+                  "observed": 0.6666666666666666
+                },
+                {
+                  "lower": 0.8,
+                  "games": 117,
+                  "predicted": 0.8508756055641098,
+                  "observed": 0.8376068376068376
+                },
+                {
+                  "lower": 0.9,
+                  "games": 74,
+                  "predicted": 0.9402960775552971,
+                  "observed": 0.9459459459459459
+                }
+              ],
+              "scope": "Retrospective excluded-game reconstruction, not pregame forecasts"
+            },
+            "originalSlopeNoVenue": {
+              "games": 792,
+              "logLoss": 0.5611572518570414,
+              "brier": 0.19149270959664033,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 16,
+                  "predicted": 0.07719356158775398,
+                  "observed": 0.0625
+                },
+                {
+                  "lower": 0.1,
+                  "games": 79,
+                  "predicted": 0.15761029508675095,
+                  "observed": 0.17721518987341772
+                },
+                {
+                  "lower": 0.2,
+                  "games": 75,
+                  "predicted": 0.24937223041088535,
+                  "observed": 0.28
+                },
+                {
+                  "lower": 0.3,
+                  "games": 91,
+                  "predicted": 0.3535836904049567,
+                  "observed": 0.4065934065934066
+                },
+                {
+                  "lower": 0.4,
+                  "games": 112,
+                  "predicted": 0.4514405431123126,
+                  "observed": 0.5892857142857143
+                },
+                {
+                  "lower": 0.5,
+                  "games": 131,
+                  "predicted": 0.548159488361508,
+                  "observed": 0.6564885496183206
+                },
+                {
+                  "lower": 0.6,
+                  "games": 96,
+                  "predicted": 0.6473811813429357,
+                  "observed": 0.6979166666666666
+                },
+                {
+                  "lower": 0.7,
+                  "games": 99,
+                  "predicted": 0.7481569631407042,
+                  "observed": 0.8080808080808081
+                },
+                {
+                  "lower": 0.8,
+                  "games": 69,
+                  "predicted": 0.8443100897214788,
+                  "observed": 0.9130434782608695
+                },
+                {
+                  "lower": 0.9,
+                  "games": 24,
+                  "predicted": 0.9305102081010842,
+                  "observed": 1.0
+                }
+              ],
+              "scope": "Retrospective excluded-game reconstruction, not pregame forecasts"
+            }
+          },
+          "2024": {
+            "originalFrozen": {
+              "games": 798,
+              "logLoss": 0.5721450491803878,
+              "brier": 0.19584432666264226,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 4,
+                  "predicted": 0.07795137842702148,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 27,
+                  "predicted": 0.15799321961709883,
+                  "observed": 0.14814814814814814
+                },
+                {
+                  "lower": 0.2,
+                  "games": 49,
+                  "predicted": 0.25864623406427284,
+                  "observed": 0.2857142857142857
+                },
+                {
+                  "lower": 0.3,
+                  "games": 81,
+                  "predicted": 0.35089290045096133,
+                  "observed": 0.345679012345679
+                },
+                {
+                  "lower": 0.4,
+                  "games": 118,
+                  "predicted": 0.4493702035458949,
+                  "observed": 0.4576271186440678
+                },
+                {
+                  "lower": 0.5,
+                  "games": 111,
+                  "predicted": 0.5516380133904287,
+                  "observed": 0.4594594594594595
+                },
+                {
+                  "lower": 0.6,
+                  "games": 129,
+                  "predicted": 0.6504319268135917,
+                  "observed": 0.6124031007751938
+                },
+                {
+                  "lower": 0.7,
+                  "games": 105,
+                  "predicted": 0.7537099996973279,
+                  "observed": 0.7428571428571429
+                },
+                {
+                  "lower": 0.8,
+                  "games": 126,
+                  "predicted": 0.8533612918794086,
+                  "observed": 0.8968253968253969
+                },
+                {
+                  "lower": 0.9,
+                  "games": 48,
+                  "predicted": 0.9345641054413844,
+                  "observed": 0.9375
+                }
+              ],
+              "scope": "Retrospective excluded-game reconstruction, not pregame forecasts"
+            },
+            "repairedHistoryFit": {
+              "games": 798,
+              "logLoss": 0.5741519980764472,
+              "brier": 0.19635837322304756,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 14,
+                  "predicted": 0.06550489232354048,
+                  "observed": 0.07142857142857142
+                },
+                {
+                  "lower": 0.1,
+                  "games": 44,
+                  "predicted": 0.1514217429853081,
+                  "observed": 0.25
+                },
+                {
+                  "lower": 0.2,
+                  "games": 79,
+                  "predicted": 0.25643680053944834,
+                  "observed": 0.3291139240506329
+                },
+                {
+                  "lower": 0.3,
+                  "games": 79,
+                  "predicted": 0.3556355419303563,
+                  "observed": 0.45569620253164556
+                },
+                {
+                  "lower": 0.4,
+                  "games": 98,
+                  "predicted": 0.45192134399859824,
+                  "observed": 0.3877551020408163
+                },
+                {
+                  "lower": 0.5,
+                  "games": 100,
+                  "predicted": 0.5514837115172273,
+                  "observed": 0.54
+                },
+                {
+                  "lower": 0.6,
+                  "games": 108,
+                  "predicted": 0.6515087555310816,
+                  "observed": 0.6203703703703703
+                },
+                {
+                  "lower": 0.7,
+                  "games": 86,
+                  "predicted": 0.7548758543326399,
+                  "observed": 0.7325581395348837
+                },
+                {
+                  "lower": 0.8,
+                  "games": 109,
+                  "predicted": 0.85112535547079,
+                  "observed": 0.8807339449541285
+                },
+                {
+                  "lower": 0.9,
+                  "games": 81,
+                  "predicted": 0.9358626796531395,
+                  "observed": 0.9135802469135802
+                }
+              ],
+              "scope": "Retrospective excluded-game reconstruction, not pregame forecasts"
+            },
+            "originalSlopeNoVenue": {
+              "games": 798,
+              "logLoss": 0.5860333082426027,
+              "brier": 0.2009270939831251,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 13,
+                  "predicted": 0.0732481161808223,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 51,
+                  "predicted": 0.15725386373967107,
+                  "observed": 0.21568627450980393
+                },
+                {
+                  "lower": 0.2,
+                  "games": 94,
+                  "predicted": 0.250888357692336,
+                  "observed": 0.3617021276595745
+                },
+                {
+                  "lower": 0.3,
+                  "games": 105,
+                  "predicted": 0.346587251993692,
+                  "observed": 0.47619047619047616
+                },
+                {
+                  "lower": 0.4,
+                  "games": 133,
+                  "predicted": 0.4514512504058544,
+                  "observed": 0.45112781954887216
+                },
+                {
+                  "lower": 0.5,
+                  "games": 122,
+                  "predicted": 0.5504284681264313,
+                  "observed": 0.6229508196721312
+                },
+                {
+                  "lower": 0.6,
+                  "games": 89,
+                  "predicted": 0.6514493300764211,
+                  "observed": 0.7303370786516854
+                },
+                {
+                  "lower": 0.7,
+                  "games": 99,
+                  "predicted": 0.7515009053144518,
+                  "observed": 0.8888888888888888
+                },
+                {
+                  "lower": 0.8,
+                  "games": 70,
+                  "predicted": 0.8467381089448859,
+                  "observed": 0.8857142857142857
+                },
+                {
+                  "lower": 0.9,
+                  "games": 22,
+                  "predicted": 0.9266362887401253,
+                  "observed": 0.9090909090909091
+                }
+              ],
+              "scope": "Retrospective excluded-game reconstruction, not pregame forecasts"
+            }
+          },
+          "2025": {
+            "originalFrozen": {
+              "games": 808,
+              "logLoss": 0.531096545362963,
+              "brier": 0.17877004883079567,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 5,
+                  "predicted": 0.07808905001881536,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 30,
+                  "predicted": 0.16245751691221508,
+                  "observed": 0.23333333333333334
+                },
+                {
+                  "lower": 0.2,
+                  "games": 69,
+                  "predicted": 0.25649679885506693,
+                  "observed": 0.21739130434782608
+                },
+                {
+                  "lower": 0.3,
+                  "games": 80,
+                  "predicted": 0.3491798015940236,
+                  "observed": 0.275
+                },
+                {
+                  "lower": 0.4,
+                  "games": 108,
+                  "predicted": 0.45300671196242986,
+                  "observed": 0.4166666666666667
+                },
+                {
+                  "lower": 0.5,
+                  "games": 110,
+                  "predicted": 0.5548923873701619,
+                  "observed": 0.5818181818181818
+                },
+                {
+                  "lower": 0.6,
+                  "games": 117,
+                  "predicted": 0.6496071795560545,
+                  "observed": 0.6495726495726496
+                },
+                {
+                  "lower": 0.7,
+                  "games": 113,
+                  "predicted": 0.748171509607128,
+                  "observed": 0.7610619469026548
+                },
+                {
+                  "lower": 0.8,
+                  "games": 121,
+                  "predicted": 0.8506083782211815,
+                  "observed": 0.9338842975206612
+                },
+                {
+                  "lower": 0.9,
+                  "games": 55,
+                  "predicted": 0.9357019794911625,
+                  "observed": 0.9636363636363636
+                }
+              ],
+              "scope": "Retrospective excluded-game reconstruction, not pregame forecasts"
+            },
+            "repairedHistoryFit": {
+              "games": 808,
+              "logLoss": 0.5279364049057562,
+              "brier": 0.17781459460766333,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 15,
+                  "predicted": 0.06901814416652888,
+                  "observed": 0.06666666666666667
+                },
+                {
+                  "lower": 0.1,
+                  "games": 58,
+                  "predicted": 0.14890735163653948,
+                  "observed": 0.22413793103448276
+                },
+                {
+                  "lower": 0.2,
+                  "games": 83,
+                  "predicted": 0.24707786366804504,
+                  "observed": 0.24096385542168675
+                },
+                {
+                  "lower": 0.3,
+                  "games": 77,
+                  "predicted": 0.3564665265174644,
+                  "observed": 0.38961038961038963
+                },
+                {
+                  "lower": 0.4,
+                  "games": 89,
+                  "predicted": 0.44671467226078915,
+                  "observed": 0.4606741573033708
+                },
+                {
+                  "lower": 0.5,
+                  "games": 100,
+                  "predicted": 0.5515231441157448,
+                  "observed": 0.64
+                },
+                {
+                  "lower": 0.6,
+                  "games": 100,
+                  "predicted": 0.650765803727866,
+                  "observed": 0.62
+                },
+                {
+                  "lower": 0.7,
+                  "games": 97,
+                  "predicted": 0.749638750830105,
+                  "observed": 0.7628865979381443
+                },
+                {
+                  "lower": 0.8,
+                  "games": 112,
+                  "predicted": 0.8546491410501024,
+                  "observed": 0.9017857142857143
+                },
+                {
+                  "lower": 0.9,
+                  "games": 77,
+                  "predicted": 0.9404910196882904,
+                  "observed": 0.974025974025974
+                }
+              ],
+              "scope": "Retrospective excluded-game reconstruction, not pregame forecasts"
+            },
+            "originalSlopeNoVenue": {
+              "games": 808,
+              "logLoss": 0.5499128590939879,
+              "brier": 0.18554843918974892,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 12,
+                  "predicted": 0.07112937055054587,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 74,
+                  "predicted": 0.15479792706442919,
+                  "observed": 0.24324324324324326
+                },
+                {
+                  "lower": 0.2,
+                  "games": 91,
+                  "predicted": 0.24432844321989508,
+                  "observed": 0.27472527472527475
+                },
+                {
+                  "lower": 0.3,
+                  "games": 114,
+                  "predicted": 0.3543985906041586,
+                  "observed": 0.38596491228070173
+                },
+                {
+                  "lower": 0.4,
+                  "games": 114,
+                  "predicted": 0.45276169207575384,
+                  "observed": 0.6052631578947368
+                },
+                {
+                  "lower": 0.5,
+                  "games": 113,
+                  "predicted": 0.5505542260065156,
+                  "observed": 0.6371681415929203
+                },
+                {
+                  "lower": 0.6,
+                  "games": 100,
+                  "predicted": 0.6473786328412016,
+                  "observed": 0.76
+                },
+                {
+                  "lower": 0.7,
+                  "games": 89,
+                  "predicted": 0.7496145717686639,
+                  "observed": 0.898876404494382
+                },
+                {
+                  "lower": 0.8,
+                  "games": 77,
+                  "predicted": 0.8407454761007648,
+                  "observed": 0.948051948051948
+                },
+                {
+                  "lower": 0.9,
+                  "games": 24,
+                  "predicted": 0.937166014253835,
+                  "observed": 1.0
+                }
+              ],
+              "scope": "Retrospective excluded-game reconstruction, not pregame forecasts"
+            }
+          }
+        }
+      }
+    },
+    "fbsFcsOnly": {
+      "pregame": {
+        "trainingGames": 4607,
+        "fittedSlope": 4.329692748844055,
+        "fittedHomeLogOdds": 0.3850133659996314,
+        "years": {
+          "2023": {
+            "originalFrozen": {
+              "games": 792,
+              "logLoss": 0.595081638060719,
+              "brier": 0.2039562311588178,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 1,
+                  "predicted": 0.08945927083217389,
+                  "observed": 1.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 20,
+                  "predicted": 0.1649672487726053,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.2,
+                  "games": 50,
+                  "predicted": 0.2597179738786163,
+                  "observed": 0.2
+                },
+                {
+                  "lower": 0.3,
+                  "games": 77,
+                  "predicted": 0.349797826019512,
+                  "observed": 0.33766233766233766
+                },
+                {
+                  "lower": 0.4,
+                  "games": 92,
+                  "predicted": 0.45028952633792324,
+                  "observed": 0.41304347826086957
+                },
+                {
+                  "lower": 0.5,
+                  "games": 128,
+                  "predicted": 0.552340885733104,
+                  "observed": 0.578125
+                },
+                {
+                  "lower": 0.6,
+                  "games": 174,
+                  "predicted": 0.636435183540091,
+                  "observed": 0.6666666666666666
+                },
+                {
+                  "lower": 0.7,
+                  "games": 125,
+                  "predicted": 0.7461298543934941,
+                  "observed": 0.72
+                },
+                {
+                  "lower": 0.8,
+                  "games": 97,
+                  "predicted": 0.8464575263881888,
+                  "observed": 0.8041237113402062
+                },
+                {
+                  "lower": 0.9,
+                  "games": 28,
+                  "predicted": 0.9289913007168297,
+                  "observed": 0.9285714285714286
+                }
+              ],
+              "scope": "Prior-week-only retrospective pregame probabilities"
+            },
+            "repairedHistoryFit": {
+              "games": 792,
+              "logLoss": 0.594390958731137,
+              "brier": 0.20379906805958567,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 2,
+                  "predicted": 0.08745670040255309,
+                  "observed": 0.5
+                },
+                {
+                  "lower": 0.1,
+                  "games": 26,
+                  "predicted": 0.1641355664334083,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.2,
+                  "games": 62,
+                  "predicted": 0.2634658006133586,
+                  "observed": 0.27419354838709675
+                },
+                {
+                  "lower": 0.3,
+                  "games": 76,
+                  "predicted": 0.3534297199223694,
+                  "observed": 0.34210526315789475
+                },
+                {
+                  "lower": 0.4,
+                  "games": 92,
+                  "predicted": 0.4512373386536851,
+                  "observed": 0.43478260869565216
+                },
+                {
+                  "lower": 0.5,
+                  "games": 196,
+                  "predicted": 0.563765005777116,
+                  "observed": 0.6428571428571429
+                },
+                {
+                  "lower": 0.6,
+                  "games": 112,
+                  "predicted": 0.6502572100616045,
+                  "observed": 0.6428571428571429
+                },
+                {
+                  "lower": 0.7,
+                  "games": 109,
+                  "predicted": 0.7433683400145916,
+                  "observed": 0.7431192660550459
+                },
+                {
+                  "lower": 0.8,
+                  "games": 92,
+                  "predicted": 0.8415654988578175,
+                  "observed": 0.7934782608695652
+                },
+                {
+                  "lower": 0.9,
+                  "games": 25,
+                  "predicted": 0.9276428529552564,
+                  "observed": 0.92
+                }
+              ],
+              "scope": "Prior-week-only retrospective pregame probabilities"
+            },
+            "originalSlopeNoVenue": {
+              "games": 792,
+              "logLoss": 0.6090227970313946,
+              "brier": 0.21100810757346547,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 7,
+                  "predicted": 0.08173347561579074,
+                  "observed": 0.14285714285714285
+                },
+                {
+                  "lower": 0.1,
+                  "games": 49,
+                  "predicted": 0.1576719307021761,
+                  "observed": 0.08163265306122448
+                },
+                {
+                  "lower": 0.2,
+                  "games": 92,
+                  "predicted": 0.25087955193494216,
+                  "observed": 0.34782608695652173
+                },
+                {
+                  "lower": 0.3,
+                  "games": 90,
+                  "predicted": 0.35165880581149617,
+                  "observed": 0.3888888888888889
+                },
+                {
+                  "lower": 0.4,
+                  "games": 128,
+                  "predicted": 0.45262794050541577,
+                  "observed": 0.578125
+                },
+                {
+                  "lower": 0.5,
+                  "games": 177,
+                  "predicted": 0.5300719157807764,
+                  "observed": 0.6892655367231638
+                },
+                {
+                  "lower": 0.6,
+                  "games": 110,
+                  "predicted": 0.6444084100627814,
+                  "observed": 0.7090909090909091
+                },
+                {
+                  "lower": 0.7,
+                  "games": 84,
+                  "predicted": 0.7494151097046531,
+                  "observed": 0.7619047619047619
+                },
+                {
+                  "lower": 0.8,
+                  "games": 44,
+                  "predicted": 0.8401978851737812,
+                  "observed": 0.9090909090909091
+                },
+                {
+                  "lower": 0.9,
+                  "games": 11,
+                  "predicted": 0.9219077984242116,
+                  "observed": 0.8181818181818182
+                }
+              ],
+              "scope": "Prior-week-only retrospective pregame probabilities"
+            }
+          },
+          "2024": {
+            "originalFrozen": {
+              "games": 798,
+              "logLoss": 0.6203505947776901,
+              "brier": 0.21577750859635367,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 1,
+                  "predicted": 0.09882677661055102,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 17,
+                  "predicted": 0.15487150962980709,
+                  "observed": 0.29411764705882354
+                },
+                {
+                  "lower": 0.2,
+                  "games": 41,
+                  "predicted": 0.25034694682829667,
+                  "observed": 0.36585365853658536
+                },
+                {
+                  "lower": 0.3,
+                  "games": 74,
+                  "predicted": 0.3490154769024043,
+                  "observed": 0.25675675675675674
+                },
+                {
+                  "lower": 0.4,
+                  "games": 104,
+                  "predicted": 0.4520103739691453,
+                  "observed": 0.4807692307692308
+                },
+                {
+                  "lower": 0.5,
+                  "games": 124,
+                  "predicted": 0.548091385707951,
+                  "observed": 0.5725806451612904
+                },
+                {
+                  "lower": 0.6,
+                  "games": 187,
+                  "predicted": 0.635957516336236,
+                  "observed": 0.6096256684491979
+                },
+                {
+                  "lower": 0.7,
+                  "games": 109,
+                  "predicted": 0.7433003512200477,
+                  "observed": 0.6880733944954128
+                },
+                {
+                  "lower": 0.8,
+                  "games": 110,
+                  "predicted": 0.8491634951687025,
+                  "observed": 0.8090909090909091
+                },
+                {
+                  "lower": 0.9,
+                  "games": 31,
+                  "predicted": 0.9272451627827264,
+                  "observed": 0.9032258064516129
+                }
+              ],
+              "scope": "Prior-week-only retrospective pregame probabilities"
+            },
+            "repairedHistoryFit": {
+              "games": 798,
+              "logLoss": 0.6201316877996803,
+              "brier": 0.21571342914768815,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 3,
+                  "predicted": 0.09367024606872111,
+                  "observed": 0.6666666666666666
+                },
+                {
+                  "lower": 0.1,
+                  "games": 22,
+                  "predicted": 0.16215822506896133,
+                  "observed": 0.2727272727272727
+                },
+                {
+                  "lower": 0.2,
+                  "games": 47,
+                  "predicted": 0.2567820924359217,
+                  "observed": 0.2978723404255319
+                },
+                {
+                  "lower": 0.3,
+                  "games": 81,
+                  "predicted": 0.3516167793714556,
+                  "observed": 0.3333333333333333
+                },
+                {
+                  "lower": 0.4,
+                  "games": 104,
+                  "predicted": 0.4531832206703751,
+                  "observed": 0.49038461538461536
+                },
+                {
+                  "lower": 0.5,
+                  "games": 201,
+                  "predicted": 0.5642443072816777,
+                  "observed": 0.5621890547263682
+                },
+                {
+                  "lower": 0.6,
+                  "games": 122,
+                  "predicted": 0.6538217970678427,
+                  "observed": 0.680327868852459
+                },
+                {
+                  "lower": 0.7,
+                  "games": 91,
+                  "predicted": 0.7497528420732517,
+                  "observed": 0.6703296703296703
+                },
+                {
+                  "lower": 0.8,
+                  "games": 101,
+                  "predicted": 0.8480284338907833,
+                  "observed": 0.8415841584158416
+                },
+                {
+                  "lower": 0.9,
+                  "games": 26,
+                  "predicted": 0.9269274327004051,
+                  "observed": 0.9230769230769231
+                }
+              ],
+              "scope": "Prior-week-only retrospective pregame probabilities"
+            },
+            "originalSlopeNoVenue": {
+              "games": 798,
+              "logLoss": 0.6353066168314738,
+              "brier": 0.22237832465531487,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 8,
+                  "predicted": 0.08196892090414815,
+                  "observed": 0.25
+                },
+                {
+                  "lower": 0.1,
+                  "games": 40,
+                  "predicted": 0.15823061292715726,
+                  "observed": 0.35
+                },
+                {
+                  "lower": 0.2,
+                  "games": 78,
+                  "predicted": 0.24967717041778967,
+                  "observed": 0.28205128205128205
+                },
+                {
+                  "lower": 0.3,
+                  "games": 102,
+                  "predicted": 0.3500531000937344,
+                  "observed": 0.47058823529411764
+                },
+                {
+                  "lower": 0.4,
+                  "games": 135,
+                  "predicted": 0.45366298161389956,
+                  "observed": 0.562962962962963
+                },
+                {
+                  "lower": 0.5,
+                  "games": 195,
+                  "predicted": 0.531776309394289,
+                  "observed": 0.6153846153846154
+                },
+                {
+                  "lower": 0.6,
+                  "games": 91,
+                  "predicted": 0.6479743074272326,
+                  "observed": 0.6813186813186813
+                },
+                {
+                  "lower": 0.7,
+                  "games": 79,
+                  "predicted": 0.7475059581624428,
+                  "observed": 0.7468354430379747
+                },
+                {
+                  "lower": 0.8,
+                  "games": 60,
+                  "predicted": 0.8439907339252856,
+                  "observed": 0.8833333333333333
+                },
+                {
+                  "lower": 0.9,
+                  "games": 10,
+                  "predicted": 0.9189862473587953,
+                  "observed": 1.0
+                }
+              ],
+              "scope": "Prior-week-only retrospective pregame probabilities"
+            }
+          },
+          "2025": {
+            "originalFrozen": {
+              "games": 808,
+              "logLoss": 0.5906283228526056,
+              "brier": 0.2042318074789479,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 1,
+                  "predicted": 0.09482861789562406,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 19,
+                  "predicted": 0.1600185251533655,
+                  "observed": 0.15789473684210525
+                },
+                {
+                  "lower": 0.2,
+                  "games": 44,
+                  "predicted": 0.2610196097144793,
+                  "observed": 0.2727272727272727
+                },
+                {
+                  "lower": 0.3,
+                  "games": 80,
+                  "predicted": 0.35000678640057437,
+                  "observed": 0.325
+                },
+                {
+                  "lower": 0.4,
+                  "games": 107,
+                  "predicted": 0.4483978724129461,
+                  "observed": 0.514018691588785
+                },
+                {
+                  "lower": 0.5,
+                  "games": 122,
+                  "predicted": 0.5461942830618683,
+                  "observed": 0.5327868852459017
+                },
+                {
+                  "lower": 0.6,
+                  "games": 196,
+                  "predicted": 0.6413341083144267,
+                  "observed": 0.6275510204081632
+                },
+                {
+                  "lower": 0.7,
+                  "games": 110,
+                  "predicted": 0.7516072336722094,
+                  "observed": 0.7272727272727273
+                },
+                {
+                  "lower": 0.8,
+                  "games": 100,
+                  "predicted": 0.8493933613687669,
+                  "observed": 0.89
+                },
+                {
+                  "lower": 0.9,
+                  "games": 29,
+                  "predicted": 0.9275556532739349,
+                  "observed": 0.9655172413793104
+                }
+              ],
+              "scope": "Prior-week-only retrospective pregame probabilities"
+            },
+            "repairedHistoryFit": {
+              "games": 808,
+              "logLoss": 0.5910245447751378,
+              "brier": 0.20435779979931767,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 3,
+                  "predicted": 0.09211718735801326,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 22,
+                  "predicted": 0.16357452156516505,
+                  "observed": 0.18181818181818182
+                },
+                {
+                  "lower": 0.2,
+                  "games": 52,
+                  "predicted": 0.25950384548282024,
+                  "observed": 0.2692307692307692
+                },
+                {
+                  "lower": 0.3,
+                  "games": 87,
+                  "predicted": 0.34988919543429164,
+                  "observed": 0.3563218390804598
+                },
+                {
+                  "lower": 0.4,
+                  "games": 110,
+                  "predicted": 0.44888159361137997,
+                  "observed": 0.5454545454545454
+                },
+                {
+                  "lower": 0.5,
+                  "games": 187,
+                  "predicted": 0.5634584676909328,
+                  "observed": 0.5828877005347594
+                },
+                {
+                  "lower": 0.6,
+                  "games": 127,
+                  "predicted": 0.6513922004452609,
+                  "observed": 0.6299212598425197
+                },
+                {
+                  "lower": 0.7,
+                  "games": 103,
+                  "predicted": 0.7509860844103735,
+                  "observed": 0.7378640776699029
+                },
+                {
+                  "lower": 0.8,
+                  "games": 92,
+                  "predicted": 0.847190236955408,
+                  "observed": 0.9021739130434783
+                },
+                {
+                  "lower": 0.9,
+                  "games": 25,
+                  "predicted": 0.9265435101322193,
+                  "observed": 0.96
+                }
+              ],
+              "scope": "Prior-week-only retrospective pregame probabilities"
+            },
+            "originalSlopeNoVenue": {
+              "games": 808,
+              "logLoss": 0.6103015938446116,
+              "brier": 0.2124587280003929,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 9,
+                  "predicted": 0.08052556791311799,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 46,
+                  "predicted": 0.1671066720436194,
+                  "observed": 0.2826086956521739
+                },
+                {
+                  "lower": 0.2,
+                  "games": 84,
+                  "predicted": 0.24893244797240785,
+                  "observed": 0.3333333333333333
+                },
+                {
+                  "lower": 0.3,
+                  "games": 110,
+                  "predicted": 0.3485324296672491,
+                  "observed": 0.4727272727272727
+                },
+                {
+                  "lower": 0.4,
+                  "games": 122,
+                  "predicted": 0.44856000681208313,
+                  "observed": 0.5327868852459017
+                },
+                {
+                  "lower": 0.5,
+                  "games": 198,
+                  "predicted": 0.5333669476846081,
+                  "observed": 0.6464646464646465
+                },
+                {
+                  "lower": 0.6,
+                  "games": 94,
+                  "predicted": 0.6512191413259056,
+                  "observed": 0.7127659574468085
+                },
+                {
+                  "lower": 0.7,
+                  "games": 80,
+                  "predicted": 0.7440830262800046,
+                  "observed": 0.825
+                },
+                {
+                  "lower": 0.8,
+                  "games": 58,
+                  "predicted": 0.8440377051454366,
+                  "observed": 0.9482758620689655
+                },
+                {
+                  "lower": 0.9,
+                  "games": 7,
+                  "predicted": 0.9293143709777455,
+                  "observed": 1.0
+                }
+              ],
+              "scope": "Prior-week-only retrospective pregame probabilities"
+            }
+          }
+        },
+        "parameterStability": {
+          "replicates": 200,
+          "seed": 20261106,
+          "slopeRange95": [
+            3.9752529866214767,
+            4.677186531520904
+          ],
+          "homeLogOddsRange95": [
+            0.3319100529473141,
+            0.4461724041803031
+          ],
+          "interpretation": "Week-block resampling stability ranges, not calibrated confidence intervals; teams recur across blocks."
+        }
+      },
+      "leaveOneOut": {
+        "trainingGames": 4607,
+        "fittedSlope": 5.177648715195778,
+        "fittedHomeLogOdds": 0.3797367874782457,
+        "years": {
+          "2023": {
+            "originalFrozen": {
+              "games": 792,
+              "logLoss": 0.5502084850995018,
+              "brier": 0.18676244786814578,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 3,
+                  "predicted": 0.08954809918052786,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 38,
+                  "predicted": 0.1543593108563108,
+                  "observed": 0.05263157894736842
+                },
+                {
+                  "lower": 0.2,
+                  "games": 60,
+                  "predicted": 0.2558912402125158,
+                  "observed": 0.25
+                },
+                {
+                  "lower": 0.3,
+                  "games": 70,
+                  "predicted": 0.34711585419993596,
+                  "observed": 0.3
+                },
+                {
+                  "lower": 0.4,
+                  "games": 98,
+                  "predicted": 0.4554049795036104,
+                  "observed": 0.45918367346938777
+                },
+                {
+                  "lower": 0.5,
+                  "games": 100,
+                  "predicted": 0.5510008998318351,
+                  "observed": 0.52
+                },
+                {
+                  "lower": 0.6,
+                  "games": 136,
+                  "predicted": 0.6494181900725946,
+                  "observed": 0.6838235294117647
+                },
+                {
+                  "lower": 0.7,
+                  "games": 110,
+                  "predicted": 0.7492209650044598,
+                  "observed": 0.6909090909090909
+                },
+                {
+                  "lower": 0.8,
+                  "games": 123,
+                  "predicted": 0.8467831162680955,
+                  "observed": 0.8211382113821138
+                },
+                {
+                  "lower": 0.9,
+                  "games": 54,
+                  "predicted": 0.9337184180530899,
+                  "observed": 1.0
+                }
+              ],
+              "scope": "Retrospective excluded-game reconstruction, not pregame forecasts"
+            },
+            "repairedHistoryFit": {
+              "games": 792,
+              "logLoss": 0.5479654901836134,
+              "brier": 0.18638255214053565,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 22,
+                  "predicted": 0.0754091367857426,
+                  "observed": 0.045454545454545456
+                },
+                {
+                  "lower": 0.1,
+                  "games": 59,
+                  "predicted": 0.15636008248015476,
+                  "observed": 0.1694915254237288
+                },
+                {
+                  "lower": 0.2,
+                  "games": 69,
+                  "predicted": 0.25041800397487235,
+                  "observed": 0.2463768115942029
+                },
+                {
+                  "lower": 0.3,
+                  "games": 57,
+                  "predicted": 0.352732394843782,
+                  "observed": 0.40350877192982454
+                },
+                {
+                  "lower": 0.4,
+                  "games": 97,
+                  "predicted": 0.4479603407618687,
+                  "observed": 0.44329896907216493
+                },
+                {
+                  "lower": 0.5,
+                  "games": 94,
+                  "predicted": 0.5580152918778473,
+                  "observed": 0.648936170212766
+                },
+                {
+                  "lower": 0.6,
+                  "games": 109,
+                  "predicted": 0.6506631575225066,
+                  "observed": 0.6788990825688074
+                },
+                {
+                  "lower": 0.7,
+                  "games": 92,
+                  "predicted": 0.749139868067783,
+                  "observed": 0.6630434782608695
+                },
+                {
+                  "lower": 0.8,
+                  "games": 118,
+                  "predicted": 0.849749657524595,
+                  "observed": 0.8305084745762712
+                },
+                {
+                  "lower": 0.9,
+                  "games": 75,
+                  "predicted": 0.9399833471829134,
+                  "observed": 0.9466666666666667
+                }
+              ],
+              "scope": "Retrospective excluded-game reconstruction, not pregame forecasts"
+            },
+            "originalSlopeNoVenue": {
+              "games": 792,
+              "logLoss": 0.5609253882305072,
+              "brier": 0.19140393775642936,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 16,
+                  "predicted": 0.07693174197184396,
+                  "observed": 0.0625
+                },
+                {
+                  "lower": 0.1,
+                  "games": 77,
+                  "predicted": 0.1566517650316975,
+                  "observed": 0.18181818181818182
+                },
+                {
+                  "lower": 0.2,
+                  "games": 75,
+                  "predicted": 0.24695718082925414,
+                  "observed": 0.28
+                },
+                {
+                  "lower": 0.3,
+                  "games": 93,
+                  "predicted": 0.35248702599729836,
+                  "observed": 0.3978494623655914
+                },
+                {
+                  "lower": 0.4,
+                  "games": 111,
+                  "predicted": 0.4512359712511448,
+                  "observed": 0.5855855855855856
+                },
+                {
+                  "lower": 0.5,
+                  "games": 132,
+                  "predicted": 0.5477810349257802,
+                  "observed": 0.6590909090909091
+                },
+                {
+                  "lower": 0.6,
+                  "games": 97,
+                  "predicted": 0.6481169930206704,
+                  "observed": 0.7010309278350515
+                },
+                {
+                  "lower": 0.7,
+                  "games": 96,
+                  "predicted": 0.7475473567687323,
+                  "observed": 0.8020833333333334
+                },
+                {
+                  "lower": 0.8,
+                  "games": 70,
+                  "predicted": 0.8424907690016772,
+                  "observed": 0.9142857142857143
+                },
+                {
+                  "lower": 0.9,
+                  "games": 25,
+                  "predicted": 0.9299007571512129,
+                  "observed": 1.0
+                }
+              ],
+              "scope": "Retrospective excluded-game reconstruction, not pregame forecasts"
+            }
+          },
+          "2024": {
+            "originalFrozen": {
+              "games": 798,
+              "logLoss": 0.5719703857584885,
+              "brier": 0.19574116612884734,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 4,
+                  "predicted": 0.07810338146844985,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 27,
+                  "predicted": 0.15784833555250585,
+                  "observed": 0.14814814814814814
+                },
+                {
+                  "lower": 0.2,
+                  "games": 50,
+                  "predicted": 0.2590916181829124,
+                  "observed": 0.3
+                },
+                {
+                  "lower": 0.3,
+                  "games": 82,
+                  "predicted": 0.35247557303291605,
+                  "observed": 0.34146341463414637
+                },
+                {
+                  "lower": 0.4,
+                  "games": 116,
+                  "predicted": 0.4503983413017107,
+                  "observed": 0.4482758620689655
+                },
+                {
+                  "lower": 0.5,
+                  "games": 112,
+                  "predicted": 0.5516235257517322,
+                  "observed": 0.48214285714285715
+                },
+                {
+                  "lower": 0.6,
+                  "games": 128,
+                  "predicted": 0.6511469561860541,
+                  "observed": 0.59375
+                },
+                {
+                  "lower": 0.7,
+                  "games": 106,
+                  "predicted": 0.7541835967969788,
+                  "observed": 0.7547169811320755
+                },
+                {
+                  "lower": 0.8,
+                  "games": 125,
+                  "predicted": 0.8538866296796315,
+                  "observed": 0.896
+                },
+                {
+                  "lower": 0.9,
+                  "games": 48,
+                  "predicted": 0.9347910072961249,
+                  "observed": 0.9375
+                }
+              ],
+              "scope": "Retrospective excluded-game reconstruction, not pregame forecasts"
+            },
+            "repairedHistoryFit": {
+              "games": 798,
+              "logLoss": 0.5740202240994045,
+              "brier": 0.19625754501270623,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 14,
+                  "predicted": 0.06510409259242586,
+                  "observed": 0.07142857142857142
+                },
+                {
+                  "lower": 0.1,
+                  "games": 45,
+                  "predicted": 0.15218623652922278,
+                  "observed": 0.24444444444444444
+                },
+                {
+                  "lower": 0.2,
+                  "games": 78,
+                  "predicted": 0.25616798140887315,
+                  "observed": 0.3333333333333333
+                },
+                {
+                  "lower": 0.3,
+                  "games": 80,
+                  "predicted": 0.3556169995392456,
+                  "observed": 0.45
+                },
+                {
+                  "lower": 0.4,
+                  "games": 98,
+                  "predicted": 0.453123209777575,
+                  "observed": 0.3877551020408163
+                },
+                {
+                  "lower": 0.5,
+                  "games": 99,
+                  "predicted": 0.5514737254589173,
+                  "observed": 0.5555555555555556
+                },
+                {
+                  "lower": 0.6,
+                  "games": 109,
+                  "predicted": 0.6520798671864673,
+                  "observed": 0.6055045871559633
+                },
+                {
+                  "lower": 0.7,
+                  "games": 85,
+                  "predicted": 0.7554788225150763,
+                  "observed": 0.7411764705882353
+                },
+                {
+                  "lower": 0.8,
+                  "games": 109,
+                  "predicted": 0.8512376167107558,
+                  "observed": 0.8807339449541285
+                },
+                {
+                  "lower": 0.9,
+                  "games": 81,
+                  "predicted": 0.9361734491594366,
+                  "observed": 0.9135802469135802
+                }
+              ],
+              "scope": "Retrospective excluded-game reconstruction, not pregame forecasts"
+            },
+            "originalSlopeNoVenue": {
+              "games": 798,
+              "logLoss": 0.585885026273955,
+              "brier": 0.20083881681099647,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 14,
+                  "predicted": 0.07506877681956296,
+                  "observed": 0.07142857142857142
+                },
+                {
+                  "lower": 0.1,
+                  "games": 50,
+                  "predicted": 0.15825930437109634,
+                  "observed": 0.2
+                },
+                {
+                  "lower": 0.2,
+                  "games": 94,
+                  "predicted": 0.25038007919419186,
+                  "observed": 0.3617021276595745
+                },
+                {
+                  "lower": 0.3,
+                  "games": 104,
+                  "predicted": 0.3461690996190087,
+                  "observed": 0.4807692307692308
+                },
+                {
+                  "lower": 0.4,
+                  "games": 131,
+                  "predicted": 0.44987474300970787,
+                  "observed": 0.44274809160305345
+                },
+                {
+                  "lower": 0.5,
+                  "games": 125,
+                  "predicted": 0.5494217095418575,
+                  "observed": 0.624
+                },
+                {
+                  "lower": 0.6,
+                  "games": 91,
+                  "predicted": 0.652682135997477,
+                  "observed": 0.7362637362637363
+                },
+                {
+                  "lower": 0.7,
+                  "games": 97,
+                  "predicted": 0.752638231373898,
+                  "observed": 0.8865979381443299
+                },
+                {
+                  "lower": 0.8,
+                  "games": 70,
+                  "predicted": 0.8470932553104292,
+                  "observed": 0.8857142857142857
+                },
+                {
+                  "lower": 0.9,
+                  "games": 22,
+                  "predicted": 0.9269142248731671,
+                  "observed": 0.9090909090909091
+                }
+              ],
+              "scope": "Retrospective excluded-game reconstruction, not pregame forecasts"
+            }
+          },
+          "2025": {
+            "originalFrozen": {
+              "games": 808,
+              "logLoss": 0.5311521154093839,
+              "brier": 0.17879165349978585,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 5,
+                  "predicted": 0.07808683247702491,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 29,
+                  "predicted": 0.16142017712654516,
+                  "observed": 0.20689655172413793
+                },
+                {
+                  "lower": 0.2,
+                  "games": 69,
+                  "predicted": 0.2553018862618839,
+                  "observed": 0.2318840579710145
+                },
+                {
+                  "lower": 0.3,
+                  "games": 81,
+                  "predicted": 0.3483106735560111,
+                  "observed": 0.2716049382716049
+                },
+                {
+                  "lower": 0.4,
+                  "games": 110,
+                  "predicted": 0.45353255202875864,
+                  "observed": 0.41818181818181815
+                },
+                {
+                  "lower": 0.5,
+                  "games": 107,
+                  "predicted": 0.5561112545735227,
+                  "observed": 0.5887850467289719
+                },
+                {
+                  "lower": 0.6,
+                  "games": 119,
+                  "predicted": 0.6502047958487542,
+                  "observed": 0.6470588235294118
+                },
+                {
+                  "lower": 0.7,
+                  "games": 113,
+                  "predicted": 0.7492342138751837,
+                  "observed": 0.7610619469026548
+                },
+                {
+                  "lower": 0.8,
+                  "games": 121,
+                  "predicted": 0.8513155356859077,
+                  "observed": 0.9338842975206612
+                },
+                {
+                  "lower": 0.9,
+                  "games": 54,
+                  "predicted": 0.9362612594186452,
+                  "observed": 0.9629629629629629
+                }
+              ],
+              "scope": "Retrospective excluded-game reconstruction, not pregame forecasts"
+            },
+            "repairedHistoryFit": {
+              "games": 808,
+              "logLoss": 0.5280048181768665,
+              "brier": 0.17785161446807574,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 15,
+                  "predicted": 0.06860905886261053,
+                  "observed": 0.06666666666666667
+                },
+                {
+                  "lower": 0.1,
+                  "games": 59,
+                  "predicted": 0.1499091742466965,
+                  "observed": 0.22033898305084745
+                },
+                {
+                  "lower": 0.2,
+                  "games": 84,
+                  "predicted": 0.2483732229328846,
+                  "observed": 0.25
+                },
+                {
+                  "lower": 0.3,
+                  "games": 74,
+                  "predicted": 0.3565151769791223,
+                  "observed": 0.3918918918918919
+                },
+                {
+                  "lower": 0.4,
+                  "games": 88,
+                  "predicted": 0.44433969106044774,
+                  "observed": 0.4659090909090909
+                },
+                {
+                  "lower": 0.5,
+                  "games": 102,
+                  "predicted": 0.5516908267320055,
+                  "observed": 0.6372549019607843
+                },
+                {
+                  "lower": 0.6,
+                  "games": 99,
+                  "predicted": 0.6506328173590903,
+                  "observed": 0.6060606060606061
+                },
+                {
+                  "lower": 0.7,
+                  "games": 98,
+                  "predicted": 0.7491237992828289,
+                  "observed": 0.7653061224489796
+                },
+                {
+                  "lower": 0.8,
+                  "games": 113,
+                  "predicted": 0.8549838165215391,
+                  "observed": 0.9026548672566371
+                },
+                {
+                  "lower": 0.9,
+                  "games": 76,
+                  "predicted": 0.941126884473731,
+                  "observed": 0.9736842105263158
+                }
+              ],
+              "scope": "Retrospective excluded-game reconstruction, not pregame forecasts"
+            },
+            "originalSlopeNoVenue": {
+              "games": 808,
+              "logLoss": 0.5499179314968579,
+              "brier": 0.18556139833034876,
+              "bins": [
+                {
+                  "lower": 0.0,
+                  "games": 12,
+                  "predicted": 0.071091298703503,
+                  "observed": 0.0
+                },
+                {
+                  "lower": 0.1,
+                  "games": 75,
+                  "predicted": 0.1555922639035563,
+                  "observed": 0.22666666666666666
+                },
+                {
+                  "lower": 0.2,
+                  "games": 89,
+                  "predicted": 0.24414018064729628,
+                  "observed": 0.2808988764044944
+                },
+                {
+                  "lower": 0.3,
+                  "games": 114,
+                  "predicted": 0.3530162691305848,
+                  "observed": 0.38596491228070173
+                },
+                {
+                  "lower": 0.4,
+                  "games": 114,
+                  "predicted": 0.45287780755551227,
+                  "observed": 0.6052631578947368
+                },
+                {
+                  "lower": 0.5,
+                  "games": 114,
+                  "predicted": 0.5504659526700896,
+                  "observed": 0.6491228070175439
+                },
+                {
+                  "lower": 0.6,
+                  "games": 99,
+                  "predicted": 0.6470826434545756,
+                  "observed": 0.7474747474747475
+                },
+                {
+                  "lower": 0.7,
+                  "games": 91,
+                  "predicted": 0.7494200951502167,
+                  "observed": 0.9010989010989011
+                },
+                {
+                  "lower": 0.8,
+                  "games": 76,
+                  "predicted": 0.841312195034428,
+                  "observed": 0.9473684210526315
+                },
+                {
+                  "lower": 0.9,
+                  "games": 24,
+                  "predicted": 0.9371092066672393,
+                  "observed": 1.0
+                }
+              ],
+              "scope": "Retrospective excluded-game reconstruction, not pregame forecasts"
+            }
+          }
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Exploratory analysis after earlier evaluation results were inspected; not untouched holdout evidence.",
+    "Repaired older FBS postseason coverage does not fix all lower-division or roster gaps.",
+    "Pregame and final-snapshot leave-one-out rating contexts differ; coefficients are not interchangeable by assumption.",
+    "Outcome probability quality is not independent proof of a better achievement order.",
+    "No team-specific adjustments, human polls, or current 2026 results were used to fit coefficients."
+  ]
+}

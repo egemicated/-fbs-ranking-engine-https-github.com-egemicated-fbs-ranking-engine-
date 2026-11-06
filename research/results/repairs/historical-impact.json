@@ -1,0 +1,966 @@
+{
+  "status": "Offline data-repair experiment; no parameter tuning or production publication",
+  "config": {
+    "ridge": 3,
+    "retention": 0.75,
+    "homeAdvantage": 2.5,
+    "marginCap": 28,
+    "probabilityScale": 14
+  },
+  "evaluationYears": [
+    2023,
+    2024,
+    2025
+  ],
+  "baseline": {
+    "overall": {
+      "games": 2398,
+      "accuracy": 0.7126772310258549,
+      "brier": 0.19712311141753305,
+      "logLoss": 0.581151626108637,
+      "marginMAE": 13.072435808925857,
+      "baselineAccuracy": 0.5863219349457881,
+      "baselineBrier": 0.24238298582152043,
+      "baselineLogLoss": 0.6778321798209805
+    },
+    "bySeason": {
+      "2023": {
+        "games": 792,
+        "accuracy": 0.7209595959595959,
+        "brier": 0.1953902275601108,
+        "logLoss": 0.5780913168789162,
+        "marginMAE": 13.124986431368544,
+        "baselineAccuracy": 0.5795454545454546,
+        "baselineBrier": 0.24377777777777748,
+        "baselineLogLoss": 0.6806462726103081
+      },
+      "2024": {
+        "games": 798,
+        "accuracy": 0.6904761904761905,
+        "brier": 0.20115915175561688,
+        "logLoss": 0.5891729188835558,
+        "marginMAE": 13.15482745589448,
+        "baselineAccuracy": 0.5839598997493735,
+        "baselineBrier": 0.24175538847117775,
+        "baselineLogLoss": 0.6765654931578791
+      },
+      "2025": {
+        "games": 808,
+        "accuracy": 0.7264851485148515,
+        "brier": 0.19483559139932563,
+        "logLoss": 0.5762293158061039,
+        "marginMAE": 12.9395538445007,
+        "baselineAccuracy": 0.5952970297029703,
+        "baselineBrier": 0.24163564356435616,
+        "baselineLogLoss": 0.6763248214892968
+      }
+    }
+  },
+  "repaired": {
+    "overall": {
+      "games": 2398,
+      "accuracy": 0.7110091743119266,
+      "brier": 0.1970752508234454,
+      "logLoss": 0.5810351034817128,
+      "marginMAE": 13.072706235443956,
+      "baselineAccuracy": 0.5863219349457881,
+      "baselineBrier": 0.24238298582152043,
+      "baselineLogLoss": 0.6778321798209805
+    },
+    "bySeason": {
+      "2023": {
+        "games": 792,
+        "accuracy": 0.7171717171717171,
+        "brier": 0.19524731515577698,
+        "logLoss": 0.5777371263528328,
+        "marginMAE": 13.125670023738317,
+        "baselineAccuracy": 0.5795454545454546,
+        "baselineBrier": 0.24377777777777748,
+        "baselineLogLoss": 0.6806462726103081
+      },
+      "2024": {
+        "games": 798,
+        "accuracy": 0.6892230576441103,
+        "brier": 0.2011567889122082,
+        "logLoss": 0.589173207995417,
+        "marginMAE": 13.155048158530146,
+        "baselineAccuracy": 0.5839598997493735,
+        "baselineBrier": 0.24175538847117775,
+        "baselineLogLoss": 0.6765654931578791
+      },
+      "2025": {
+        "games": 808,
+        "accuracy": 0.7264851485148515,
+        "brier": 0.1948359657417129,
+        "logLoss": 0.5762303887343597,
+        "marginMAE": 12.939468395156847,
+        "baselineAccuracy": 0.5952970297029703,
+        "baselineBrier": 0.24163564356435616,
+        "baselineLogLoss": 0.6763248214892968
+      }
+    }
+  },
+  "examples": [
+    {
+      "year": 2019,
+      "team": "LSU",
+      "originalRecord": "13-0",
+      "repairedRecord": "15-0"
+    },
+    {
+      "year": 2021,
+      "team": "Georgia",
+      "originalRecord": "12-1",
+      "repairedRecord": "14-1"
+    },
+    {
+      "year": 2022,
+      "team": "Georgia",
+      "originalRecord": "13-0",
+      "repairedRecord": "15-0"
+    }
+  ],
+  "currentScenario": {
+    "asOf": "2026-11-06T03:39:55.757Z",
+    "achievementChanged": false,
+    "sorChanged": false,
+    "maxFbsStrengthChange": 0.0053916306533445335,
+    "predictivePositionsChanged": 0,
+    "differences": [
+      {
+        "team": "Utah",
+        "oldPredictiveRank": 6,
+        "researchPredictiveRank": 6,
+        "strengthDelta": -0.0053916306533445335
+      },
+      {
+        "team": "Arizona",
+        "oldPredictiveRank": 13,
+        "researchPredictiveRank": 13,
+        "strengthDelta": -0.005015016084606933
+      },
+      {
+        "team": "Colorado",
+        "oldPredictiveRank": 88,
+        "researchPredictiveRank": 88,
+        "strengthDelta": -0.00481078905366753
+      },
+      {
+        "team": "Kansas State",
+        "oldPredictiveRank": 60,
+        "researchPredictiveRank": 60,
+        "strengthDelta": -0.0047767534950994926
+      },
+      {
+        "team": "BYU",
+        "oldPredictiveRank": 14,
+        "researchPredictiveRank": 14,
+        "strengthDelta": -0.004483855529867364
+      },
+      {
+        "team": "UCF",
+        "oldPredictiveRank": 71,
+        "researchPredictiveRank": 71,
+        "strengthDelta": -0.004365484011134858
+      },
+      {
+        "team": "Baylor",
+        "oldPredictiveRank": 29,
+        "researchPredictiveRank": 29,
+        "strengthDelta": -0.004273243080881335
+      },
+      {
+        "team": "Arizona State",
+        "oldPredictiveRank": 70,
+        "researchPredictiveRank": 70,
+        "strengthDelta": -0.004243514201395372
+      },
+      {
+        "team": "Cincinnati",
+        "oldPredictiveRank": 57,
+        "researchPredictiveRank": 57,
+        "strengthDelta": -0.004230697794080834
+      },
+      {
+        "team": "Houston",
+        "oldPredictiveRank": 22,
+        "researchPredictiveRank": 22,
+        "strengthDelta": -0.00409100815842006
+      },
+      {
+        "team": "Oklahoma State",
+        "oldPredictiveRank": 49,
+        "researchPredictiveRank": 49,
+        "strengthDelta": -0.004058864565778294
+      },
+      {
+        "team": "TCU",
+        "oldPredictiveRank": 42,
+        "researchPredictiveRank": 42,
+        "strengthDelta": -0.004057231956735246
+      },
+      {
+        "team": "West Virginia",
+        "oldPredictiveRank": 74,
+        "researchPredictiveRank": 74,
+        "strengthDelta": -0.0036061977598911407
+      },
+      {
+        "team": "Kansas",
+        "oldPredictiveRank": 67,
+        "researchPredictiveRank": 67,
+        "strengthDelta": -0.003538362911370753
+      },
+      {
+        "team": "Texas Tech",
+        "oldPredictiveRank": 11,
+        "researchPredictiveRank": 11,
+        "strengthDelta": -0.0035084990075772687
+      },
+      {
+        "team": "Iowa State",
+        "oldPredictiveRank": 56,
+        "researchPredictiveRank": 56,
+        "strengthDelta": -0.0034176225857438305
+      },
+      {
+        "team": "Washington State",
+        "oldPredictiveRank": 100,
+        "researchPredictiveRank": 100,
+        "strengthDelta": -0.003229067580428496
+      },
+      {
+        "team": "Buffalo",
+        "oldPredictiveRank": 114,
+        "researchPredictiveRank": 114,
+        "strengthDelta": 0.003134189567866484
+      },
+      {
+        "team": "Eastern Michigan",
+        "oldPredictiveRank": 129,
+        "researchPredictiveRank": 129,
+        "strengthDelta": 0.0029699499697516734
+      },
+      {
+        "team": "Massachusetts",
+        "oldPredictiveRank": 124,
+        "researchPredictiveRank": 124,
+        "strengthDelta": 0.002858213095773649
+      },
+      {
+        "team": "Kent State",
+        "oldPredictiveRank": 131,
+        "researchPredictiveRank": 131,
+        "strengthDelta": 0.002766436538159832
+      },
+      {
+        "team": "Ball State",
+        "oldPredictiveRank": 128,
+        "researchPredictiveRank": 128,
+        "strengthDelta": 0.0027366540339514127
+      },
+      {
+        "team": "Utah State",
+        "oldPredictiveRank": 89,
+        "researchPredictiveRank": 89,
+        "strengthDelta": -0.0027165410138558633
+      },
+      {
+        "team": "Akron",
+        "oldPredictiveRank": 134,
+        "researchPredictiveRank": 134,
+        "strengthDelta": 0.0027109616807767505
+      },
+      {
+        "team": "Western Michigan",
+        "oldPredictiveRank": 62,
+        "researchPredictiveRank": 62,
+        "strengthDelta": 0.0026630085543847227
+      },
+      {
+        "team": "Oregon State",
+        "oldPredictiveRank": 52,
+        "researchPredictiveRank": 52,
+        "strengthDelta": -0.0026365732849953087
+      },
+      {
+        "team": "Colorado State",
+        "oldPredictiveRank": 117,
+        "researchPredictiveRank": 117,
+        "strengthDelta": -0.0026318386282428493
+      },
+      {
+        "team": "Western Kentucky",
+        "oldPredictiveRank": 119,
+        "researchPredictiveRank": 119,
+        "strengthDelta": 0.002622519660730547
+      },
+      {
+        "team": "Toledo",
+        "oldPredictiveRank": 65,
+        "researchPredictiveRank": 65,
+        "strengthDelta": 0.0024573929972746974
+      },
+      {
+        "team": "Florida International",
+        "oldPredictiveRank": 108,
+        "researchPredictiveRank": 108,
+        "strengthDelta": 0.002437546012999529
+      },
+      {
+        "team": "Ohio",
+        "oldPredictiveRank": 84,
+        "researchPredictiveRank": 84,
+        "strengthDelta": 0.002388995628675637
+      },
+      {
+        "team": "Wisconsin",
+        "oldPredictiveRank": 38,
+        "researchPredictiveRank": 38,
+        "strengthDelta": 0.0023223154677014957
+      },
+      {
+        "team": "Central Michigan",
+        "oldPredictiveRank": 104,
+        "researchPredictiveRank": 104,
+        "strengthDelta": 0.002292399808097263
+      },
+      {
+        "team": "Ohio State",
+        "oldPredictiveRank": 4,
+        "researchPredictiveRank": 4,
+        "strengthDelta": 0.0022547626279946814
+      },
+      {
+        "team": "Michigan State",
+        "oldPredictiveRank": 83,
+        "researchPredictiveRank": 83,
+        "strengthDelta": 0.002223411381105723
+      },
+      {
+        "team": "Alabama",
+        "oldPredictiveRank": 3,
+        "researchPredictiveRank": 3,
+        "strengthDelta": 0.002204750756425566
+      },
+      {
+        "team": "Miami (OH)",
+        "oldPredictiveRank": 92,
+        "researchPredictiveRank": 92,
+        "strengthDelta": 0.0021840654830545653
+      },
+      {
+        "team": "Maryland",
+        "oldPredictiveRank": 98,
+        "researchPredictiveRank": 98,
+        "strengthDelta": 0.0021192915168949207
+      },
+      {
+        "team": "Liberty",
+        "oldPredictiveRank": 37,
+        "researchPredictiveRank": 37,
+        "strengthDelta": 0.002093114591085109
+      },
+      {
+        "team": "New Mexico State",
+        "oldPredictiveRank": 130,
+        "researchPredictiveRank": 130,
+        "strengthDelta": 0.0020822719434943483
+      },
+      {
+        "team": "Rutgers",
+        "oldPredictiveRank": 102,
+        "researchPredictiveRank": 102,
+        "strengthDelta": 0.002033234013452505
+      },
+      {
+        "team": "Minnesota",
+        "oldPredictiveRank": 61,
+        "researchPredictiveRank": 61,
+        "strengthDelta": 0.0020256673234353697
+      },
+      {
+        "team": "Indiana",
+        "oldPredictiveRank": 8,
+        "researchPredictiveRank": 8,
+        "strengthDelta": 0.0019635402017790936
+      },
+      {
+        "team": "Bowling Green",
+        "oldPredictiveRank": 125,
+        "researchPredictiveRank": 125,
+        "strengthDelta": 0.0019565753858357903
+      },
+      {
+        "team": "Penn State",
+        "oldPredictiveRank": 31,
+        "researchPredictiveRank": 31,
+        "strengthDelta": 0.00191654803278108
+      },
+      {
+        "team": "Michigan",
+        "oldPredictiveRank": 40,
+        "researchPredictiveRank": 40,
+        "strengthDelta": 0.0019083680377405023
+      },
+      {
+        "team": "San Diego State",
+        "oldPredictiveRank": 97,
+        "researchPredictiveRank": 97,
+        "strengthDelta": -0.0018910151139083728
+      },
+      {
+        "team": "Jacksonville State",
+        "oldPredictiveRank": 82,
+        "researchPredictiveRank": 82,
+        "strengthDelta": 0.0018537708872587973
+      },
+      {
+        "team": "Iowa",
+        "oldPredictiveRank": 17,
+        "researchPredictiveRank": 17,
+        "strengthDelta": 0.0018416879393689952
+      },
+      {
+        "team": "Tennessee",
+        "oldPredictiveRank": 12,
+        "researchPredictiveRank": 12,
+        "strengthDelta": 0.0017957206870919523
+      },
+      {
+        "team": "Middle Tennessee",
+        "oldPredictiveRank": 127,
+        "researchPredictiveRank": 127,
+        "strengthDelta": 0.0017646435202450718
+      },
+      {
+        "team": "Georgia",
+        "oldPredictiveRank": 7,
+        "researchPredictiveRank": 7,
+        "strengthDelta": 0.001762674949217525
+      },
+      {
+        "team": "Kennesaw State",
+        "oldPredictiveRank": 112,
+        "researchPredictiveRank": 112,
+        "strengthDelta": 0.0016874107145097978
+      },
+      {
+        "team": "San José State",
+        "oldPredictiveRank": 116,
+        "researchPredictiveRank": 116,
+        "strengthDelta": -0.0016275592605500876
+      },
+      {
+        "team": "Hawai'i",
+        "oldPredictiveRank": 120,
+        "researchPredictiveRank": 120,
+        "strengthDelta": -0.0016247349058961017
+      },
+      {
+        "team": "Wyoming",
+        "oldPredictiveRank": 113,
+        "researchPredictiveRank": 113,
+        "strengthDelta": -0.0015263300855750327
+      },
+      {
+        "team": "Illinois",
+        "oldPredictiveRank": 48,
+        "researchPredictiveRank": 48,
+        "strengthDelta": 0.0015246061246619658
+      },
+      {
+        "team": "Mississippi State",
+        "oldPredictiveRank": 58,
+        "researchPredictiveRank": 58,
+        "strengthDelta": 0.001459306052590082
+      },
+      {
+        "team": "Missouri State",
+        "oldPredictiveRank": 122,
+        "researchPredictiveRank": 122,
+        "strengthDelta": 0.0014485556853372744
+      },
+      {
+        "team": "Northwestern",
+        "oldPredictiveRank": 23,
+        "researchPredictiveRank": 23,
+        "strengthDelta": 0.0014382957253786638
+      },
+      {
+        "team": "Boise State",
+        "oldPredictiveRank": 18,
+        "researchPredictiveRank": 18,
+        "strengthDelta": -0.0014317740929657961
+      },
+      {
+        "team": "Oklahoma",
+        "oldPredictiveRank": 43,
+        "researchPredictiveRank": 43,
+        "strengthDelta": 0.0014245244308137349
+      },
+      {
+        "team": "Texas State",
+        "oldPredictiveRank": 53,
+        "researchPredictiveRank": 53,
+        "strengthDelta": -0.0013591942836523687
+      },
+      {
+        "team": "South Carolina",
+        "oldPredictiveRank": 27,
+        "researchPredictiveRank": 27,
+        "strengthDelta": 0.0013339515946888365
+      },
+      {
+        "team": "UConn",
+        "oldPredictiveRank": 79,
+        "researchPredictiveRank": 79,
+        "strengthDelta": 0.001313689955293846
+      },
+      {
+        "team": "Delaware",
+        "oldPredictiveRank": 95,
+        "researchPredictiveRank": 95,
+        "strengthDelta": 0.0012621253478041535
+      },
+      {
+        "team": "Fresno State",
+        "oldPredictiveRank": 59,
+        "researchPredictiveRank": 59,
+        "strengthDelta": -0.0012483117724979072
+      },
+      {
+        "team": "Nebraska",
+        "oldPredictiveRank": 25,
+        "researchPredictiveRank": 25,
+        "strengthDelta": 0.0012255864499520152
+      },
+      {
+        "team": "Stanford",
+        "oldPredictiveRank": 110,
+        "researchPredictiveRank": 110,
+        "strengthDelta": -0.0011689908814036625
+      },
+      {
+        "team": "Temple",
+        "oldPredictiveRank": 109,
+        "researchPredictiveRank": 109,
+        "strengthDelta": 0.0011489745434970727
+      },
+      {
+        "team": "Sam Houston",
+        "oldPredictiveRank": 132,
+        "researchPredictiveRank": 132,
+        "strengthDelta": 0.0010731282456252515
+      },
+      {
+        "team": "LSU",
+        "oldPredictiveRank": 5,
+        "researchPredictiveRank": 5,
+        "strengthDelta": 0.0010696842831553013
+      },
+      {
+        "team": "South Florida",
+        "oldPredictiveRank": 54,
+        "researchPredictiveRank": 54,
+        "strengthDelta": 0.0010374236676809448
+      },
+      {
+        "team": "Vanderbilt",
+        "oldPredictiveRank": 73,
+        "researchPredictiveRank": 73,
+        "strengthDelta": 0.0010300360959403562
+      },
+      {
+        "team": "East Carolina",
+        "oldPredictiveRank": 76,
+        "researchPredictiveRank": 76,
+        "strengthDelta": 0.0009431174615929528
+      },
+      {
+        "team": "SMU",
+        "oldPredictiveRank": 34,
+        "researchPredictiveRank": 34,
+        "strengthDelta": -0.0009395832641905837
+      },
+      {
+        "team": "Coastal Carolina",
+        "oldPredictiveRank": 106,
+        "researchPredictiveRank": 106,
+        "strengthDelta": -0.0009315289549584705
+      },
+      {
+        "team": "UAB",
+        "oldPredictiveRank": 118,
+        "researchPredictiveRank": 118,
+        "strengthDelta": 0.0009185073038113032
+      },
+      {
+        "team": "UTEP",
+        "oldPredictiveRank": 137,
+        "researchPredictiveRank": 137,
+        "strengthDelta": 0.0009148691610773475
+      },
+      {
+        "team": "Northern Illinois",
+        "oldPredictiveRank": 136,
+        "researchPredictiveRank": 136,
+        "strengthDelta": 0.0009006839299214395
+      },
+      {
+        "team": "Florida Atlantic",
+        "oldPredictiveRank": 103,
+        "researchPredictiveRank": 103,
+        "strengthDelta": 0.0008918643904841241
+      },
+      {
+        "team": "Auburn",
+        "oldPredictiveRank": 50,
+        "researchPredictiveRank": 50,
+        "strengthDelta": 0.0008758315552609556
+      },
+      {
+        "team": "Georgia Southern",
+        "oldPredictiveRank": 80,
+        "researchPredictiveRank": 80,
+        "strengthDelta": -0.0008506234842846529
+      },
+      {
+        "team": "California",
+        "oldPredictiveRank": 115,
+        "researchPredictiveRank": 115,
+        "strengthDelta": -0.0008454232280526774
+      },
+      {
+        "team": "Kentucky",
+        "oldPredictiveRank": 24,
+        "researchPredictiveRank": 24,
+        "strengthDelta": 0.0008032763213375873
+      },
+      {
+        "team": "Memphis",
+        "oldPredictiveRank": 45,
+        "researchPredictiveRank": 45,
+        "strengthDelta": 0.0007453144960935437
+      },
+      {
+        "team": "Purdue",
+        "oldPredictiveRank": 69,
+        "researchPredictiveRank": 69,
+        "strengthDelta": 0.0007233095571802479
+      },
+      {
+        "team": "Oregon",
+        "oldPredictiveRank": 19,
+        "researchPredictiveRank": 19,
+        "strengthDelta": -0.0007220698776426871
+      },
+      {
+        "team": "Texas A&M",
+        "oldPredictiveRank": 28,
+        "researchPredictiveRank": 28,
+        "strengthDelta": 0.0006153186230109215
+      },
+      {
+        "team": "Southern Miss",
+        "oldPredictiveRank": 123,
+        "researchPredictiveRank": 123,
+        "strengthDelta": 0.0006140095806405993
+      },
+      {
+        "team": "Arkansas",
+        "oldPredictiveRank": 77,
+        "researchPredictiveRank": 77,
+        "strengthDelta": 0.0006095059063151189
+      },
+      {
+        "team": "North Carolina",
+        "oldPredictiveRank": 51,
+        "researchPredictiveRank": 51,
+        "strengthDelta": -0.0005789225658176219
+      },
+      {
+        "team": "Texas",
+        "oldPredictiveRank": 10,
+        "researchPredictiveRank": 10,
+        "strengthDelta": 0.0005783232832907701
+      },
+      {
+        "team": "Georgia Tech",
+        "oldPredictiveRank": 91,
+        "researchPredictiveRank": 91,
+        "strengthDelta": -0.000565610635667524
+      },
+      {
+        "team": "Missouri",
+        "oldPredictiveRank": 15,
+        "researchPredictiveRank": 15,
+        "strengthDelta": 0.0005655135196751106
+      },
+      {
+        "team": "App State",
+        "oldPredictiveRank": 105,
+        "researchPredictiveRank": 105,
+        "strengthDelta": -0.0005636142804508228
+      },
+      {
+        "team": "Georgia State",
+        "oldPredictiveRank": 101,
+        "researchPredictiveRank": 101,
+        "strengthDelta": -0.0005281900487583367
+      },
+      {
+        "team": "Army",
+        "oldPredictiveRank": 66,
+        "researchPredictiveRank": 66,
+        "strengthDelta": 0.0004934044670770499
+      },
+      {
+        "team": "Charlotte",
+        "oldPredictiveRank": 133,
+        "researchPredictiveRank": 133,
+        "strengthDelta": 0.0004819289722621588
+      },
+      {
+        "team": "Duke",
+        "oldPredictiveRank": 35,
+        "researchPredictiveRank": 35,
+        "strengthDelta": 0.0004805446777135803
+      },
+      {
+        "team": "UTSA",
+        "oldPredictiveRank": 46,
+        "researchPredictiveRank": 46,
+        "strengthDelta": -0.00047836954627371
+      },
+      {
+        "team": "Nevada",
+        "oldPredictiveRank": 93,
+        "researchPredictiveRank": 93,
+        "strengthDelta": -0.0004498682883723523
+      },
+      {
+        "team": "James Madison",
+        "oldPredictiveRank": 33,
+        "researchPredictiveRank": 33,
+        "strengthDelta": -0.00044825975581272697
+      },
+      {
+        "team": "UNLV",
+        "oldPredictiveRank": 85,
+        "researchPredictiveRank": 85,
+        "strengthDelta": -0.00044714570335901424
+      },
+      {
+        "team": "Wake Forest",
+        "oldPredictiveRank": 16,
+        "researchPredictiveRank": 16,
+        "strengthDelta": 0.00040113979346257257
+      },
+      {
+        "team": "Syracuse",
+        "oldPredictiveRank": 81,
+        "researchPredictiveRank": 81,
+        "strengthDelta": -0.00038741323037275475
+      },
+      {
+        "team": "Navy",
+        "oldPredictiveRank": 86,
+        "researchPredictiveRank": 86,
+        "strengthDelta": 0.0003803330107504898
+      },
+      {
+        "team": "South Alabama",
+        "oldPredictiveRank": 96,
+        "researchPredictiveRank": 96,
+        "strengthDelta": -0.00036414826364098064
+      },
+      {
+        "team": "Florida State",
+        "oldPredictiveRank": 55,
+        "researchPredictiveRank": 55,
+        "strengthDelta": 0.000363817418502674
+      },
+      {
+        "team": "Louisiana Tech",
+        "oldPredictiveRank": 68,
+        "researchPredictiveRank": 68,
+        "strengthDelta": 0.00034541269831764
+      },
+      {
+        "team": "Ole Miss",
+        "oldPredictiveRank": 9,
+        "researchPredictiveRank": 9,
+        "strengthDelta": 0.000342431270138445
+      },
+      {
+        "team": "Arkansas State",
+        "oldPredictiveRank": 99,
+        "researchPredictiveRank": 99,
+        "strengthDelta": -0.0002992985070590765
+      },
+      {
+        "team": "Pittsburgh",
+        "oldPredictiveRank": 44,
+        "researchPredictiveRank": 44,
+        "strengthDelta": -0.0002881800575059775
+      },
+      {
+        "team": "UL Monroe",
+        "oldPredictiveRank": 138,
+        "researchPredictiveRank": 138,
+        "strengthDelta": 0.0002826093893843407
+      },
+      {
+        "team": "Clemson",
+        "oldPredictiveRank": 47,
+        "researchPredictiveRank": 47,
+        "strengthDelta": -0.0002782822273087797
+      },
+      {
+        "team": "Washington",
+        "oldPredictiveRank": 36,
+        "researchPredictiveRank": 36,
+        "strengthDelta": -0.00027188230949518565
+      },
+      {
+        "team": "Sacramento State",
+        "oldPredictiveRank": 135,
+        "researchPredictiveRank": 135,
+        "strengthDelta": 0.00025919443815227545
+      },
+      {
+        "team": "Louisville",
+        "oldPredictiveRank": 21,
+        "researchPredictiveRank": 21,
+        "strengthDelta": 0.00025108322627233207
+      },
+      {
+        "team": "Troy",
+        "oldPredictiveRank": 107,
+        "researchPredictiveRank": 107,
+        "strengthDelta": 0.00024247849224139114
+      },
+      {
+        "team": "Florida",
+        "oldPredictiveRank": 30,
+        "researchPredictiveRank": 30,
+        "strengthDelta": 0.00023118401531672795
+      },
+      {
+        "team": "Boston College",
+        "oldPredictiveRank": 94,
+        "researchPredictiveRank": 94,
+        "strengthDelta": -0.00022980963718197847
+      },
+      {
+        "team": "Old Dominion",
+        "oldPredictiveRank": 126,
+        "researchPredictiveRank": 126,
+        "strengthDelta": -0.00022963012821199854
+      },
+      {
+        "team": "Miami",
+        "oldPredictiveRank": 2,
+        "researchPredictiveRank": 2,
+        "strengthDelta": 0.00021680658956195917
+      },
+      {
+        "team": "Virginia",
+        "oldPredictiveRank": 63,
+        "researchPredictiveRank": 63,
+        "strengthDelta": -0.0001881656042023254
+      },
+      {
+        "team": "Tulsa",
+        "oldPredictiveRank": 87,
+        "researchPredictiveRank": 87,
+        "strengthDelta": -0.00016967832155237697
+      },
+      {
+        "team": "UCLA",
+        "oldPredictiveRank": 20,
+        "researchPredictiveRank": 20,
+        "strengthDelta": -0.00016062091767954698
+      },
+      {
+        "team": "Virginia Tech",
+        "oldPredictiveRank": 64,
+        "researchPredictiveRank": 64,
+        "strengthDelta": -0.00015997784994493217
+      },
+      {
+        "team": "Air Force",
+        "oldPredictiveRank": 78,
+        "researchPredictiveRank": 78,
+        "strengthDelta": -0.000139797238083369
+      },
+      {
+        "team": "Tulane",
+        "oldPredictiveRank": 90,
+        "researchPredictiveRank": 90,
+        "strengthDelta": -0.00013804340476173736
+      },
+      {
+        "team": "Marshall",
+        "oldPredictiveRank": 111,
+        "researchPredictiveRank": 111,
+        "strengthDelta": 0.00013708443477382555
+      },
+      {
+        "team": "North Dakota State",
+        "oldPredictiveRank": 32,
+        "researchPredictiveRank": 32,
+        "strengthDelta": 0.0001258891586352277
+      },
+      {
+        "team": "USC",
+        "oldPredictiveRank": 26,
+        "researchPredictiveRank": 26,
+        "strengthDelta": 0.00012132362436242068
+      },
+      {
+        "team": "Rice",
+        "oldPredictiveRank": 121,
+        "researchPredictiveRank": 121,
+        "strengthDelta": -0.00010763709354187584
+      },
+      {
+        "team": "North Texas",
+        "oldPredictiveRank": 41,
+        "researchPredictiveRank": 41,
+        "strengthDelta": 0.00009249117236240486
+      },
+      {
+        "team": "Louisiana",
+        "oldPredictiveRank": 72,
+        "researchPredictiveRank": 72,
+        "strengthDelta": -0.00009235016780455998
+      },
+      {
+        "team": "New Mexico",
+        "oldPredictiveRank": 39,
+        "researchPredictiveRank": 39,
+        "strengthDelta": -0.00005624779191670122
+      },
+      {
+        "team": "NC State",
+        "oldPredictiveRank": 75,
+        "researchPredictiveRank": 75,
+        "strengthDelta": 0.00004185197962808137
+      },
+      {
+        "team": "Notre Dame",
+        "oldPredictiveRank": 1,
+        "researchPredictiveRank": 1,
+        "strengthDelta": 0.000011077362028480967
+      }
+    ]
+  },
+  "limits": [
+    "Previously consumed retrospective evaluation years, not untouched prospective evidence.",
+    "Lower-division schedules, 2020 roster gaps and old venue questions remain.",
+    "The same fixed predictive parameters are used before and after repair.",
+    "Only historical inputs changed in the current scenario; no actual current snapshot was rewritten."
+  ]
+}

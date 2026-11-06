@@ -1,0 +1,39 @@
+FBS INTELLIGENCE: RANKING EVALUATION
+
+Purpose
+Rank teams by what they earned from completed current-season games, accounting
+for schedule difficulty. Keep forecasts separate from earned achievement.
+
+Rules
+No human polls as inputs or optimization targets. No team overrides or prestige
+bonuses. Historical team strength supplies no current-season achievement credit.
+General historical evidence may inform frozen probability and venue parameters.
+
+Current decision
+Keep production unchanged. Current Colley achievement is the benchmark.
+Original-parameter, exact leave-one-game-out Strength of Record is a challenger.
+Do not blend models or promote a challenger just because its order looks familiar.
+
+What is saved
+evaluation-standard.json: complete versioned evaluation rules and limitations.
+results/weekly/<run fingerprint>/weekly-review.html: readable weekly replay report.
+results/weekly/<run fingerprint>/weekly-rankings.csv: every ranked team/checkpoint.
+results/weekly/<run fingerprint>/weekly-replay.json: diagnostics and input/code hashes.
+
+How to reproduce (Python with NumPy; Node for production-equivalence test)
+From the project folder:
+  python research/test_research.py
+  python research/replay_weekly.py
+
+The replay uses stored 2021-2025 seasons. It writes only research/results.
+No API credentials, network access, provider calls or new services are required.
+Production code, snapshots, frontend and configuration are hashed before/after.
+
+How to interpret results
+Top-25 agreement, small movement and forecast success are not automatic measures
+of achievement-ranking correctness. Check data completeness, underlying game
+evidence, probability assumptions and uncertainty before proposing a replacement.
+The 2021-2022 archive has no postseason. All replay years were previously inspected;
+they cannot be relabeled as untouched tests. Genuine future evidence is still needed.
+
+Research is local. These files do not schedule work or change the public rankings.
