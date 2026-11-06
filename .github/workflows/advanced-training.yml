@@ -1,0 +1,35 @@
+name: Private advanced-stat research inputs
+on:
+  push:
+    branches: ['codex/performance-ranking']
+    paths: ['research/advanced-training-request.json']
+permissions:
+  contents: read
+concurrency:
+  group: cfbd-advanced-training-inputs
+  cancel-in-progress: false
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm test
+      - name: Fetch the declared season files once
+        if: github.run_attempt == 1
+        env:
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+        run: node scripts/fetch-advanced-training.js
+      - name: Retain recipient-encrypted sources and provenance
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: encrypted-advanced-training-${{ github.run_id }}
+          path: |
+            research/cache/advanced-training-export/manifest.json
+            research/cache/advanced-training-export/*.envelope.json
+          retention-days: 14
+          if-no-files-found: warn

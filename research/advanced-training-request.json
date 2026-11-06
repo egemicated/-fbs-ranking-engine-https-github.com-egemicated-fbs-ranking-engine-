@@ -1,0 +1,20 @@
+{
+  "id": "success-rate-training-v1-nov06",
+  "years": [
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2023,
+    2024,
+    2025,
+    2026
+  ],
+  "maxRequests": 10,
+  "excludeGarbageTime": false,
+  "seasonType": "both",
+  "publicKey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkRHAWxTYh/K9pl1aflol\nFxrP8ueHoWRE+L9ngtr7aYafFSW2oAmYlsDRd+jcKtL35D2EEX0IiQ4MUbp19DWM\nfiSWG7n3XCT3FpgZIdsw0+VNMaWqPBUOrDw5BWAq3y8cxdRrHQwfj/EYr1tlE3CO\nrSqwm5G7Z7KdW/0xsVU7MxTRy10XwYbh67/5sUrcfQB9aVfCE1rrEZIrTE85tYxk\n/oREDZWJb6E1tEf4bGZ/5FTXYtYLZtodlVp5K7hK7DZZXHUypazz2HdfACzEigGy\n5vTTw9zhOB7KwoTvx64A1iHYAPEcDA9l7GvZlUm6CjUKv1qCn98XwP19/viwpLf+\nvwIDAQAB\n-----END PUBLIC KEY-----\n",
+  "protocolSha256": "08e14d76ef7dcbc25efa81438fbaead55ce7a200ae71756daa3dd42c83648cb8"
+}
