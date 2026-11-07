@@ -14,6 +14,7 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     ['/styles.css', ['styles.css', 'text/css; charset=utf-8']],
     ['/app.js', ['app.js', 'text/javascript; charset=utf-8']],
     ['/assets/stadium.png', ['assets/stadium.png', 'image/png']],
+    ['/assets/stadium.webp', ['assets/stadium.webp', 'image/webp']],
     ['/fonts/BarlowCondensed-Bold.ttf', ['fonts/BarlowCondensed-Bold.ttf', 'font/ttf']],
     ['/fonts/BarlowCondensed-SemiBold.ttf', ['fonts/BarlowCondensed-SemiBold.ttf', 'font/ttf']]
   ]);
@@ -35,7 +36,7 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     }
     if (path === '/health') return send(200, { status: 'ok', modelVersion: VERSION, rankingMethod: publicationPolicy.id });
     if (path === '/api') return send(200, { service: 'Independent FBS Ranking Engine', modelVersion: VERSION, status: 'experimental',
-      rankingMethod: { id: publicationPolicy.id, name: publicationPolicy.name, rankField: 'displayRank', scoreField: 'sor', baselineRankField: 'rank', baselineScoreField: 'achievement' },
+      rankingMethod: { id: publicationPolicy.id, name: publicationPolicy.name, publicationStatus: 'official', rankField: 'displayRank', scoreField: 'sor', baselineRankField: 'rank', baselineScoreField: 'achievement' },
       historicalMethod: 'Colley; inspect the selected snapshot metadata', updateSchedule: UPDATE_SCHEDULE,
       experimentalPerformance: { endpoint: '/performance', name: 'Scrimmage consistency', status: 'experimental', providerCallsPerPageView: 0 },
       endpoints: ['/health', '/rankings', '/rankings/2025', '/performance'] });
@@ -51,6 +52,9 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     try {
       const snapshot = JSON.parse(await readFile(join(snapshotDirectory, `${match[1] || 'latest'}.json`), 'utf8'));
       const { ratings, ...publicSnapshot } = snapshot;
+      if (snapshot.rankingMethod?.id === publicationPolicy.id) {
+        publicSnapshot.rankingMethod = { ...snapshot.rankingMethod, publicationStatus: 'official' };
+      }
       if (await readPerformance(snapshotDirectory, snapshot)) publicSnapshot.performanceEndpoint = '/performance';
       return send(200, publicSnapshot);
     } catch (e) { return send(e.code === 'ENOENT' ? 503 : 500, { error: e.code === 'ENOENT' ? 'Rankings have not been built for this season' : 'Could not read rankings' }); }
