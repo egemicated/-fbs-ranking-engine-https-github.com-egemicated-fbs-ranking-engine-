@@ -6,6 +6,7 @@ data/raw/
 data/seasons/
 data/snapshots/
 data/reports/
+/static-dist/
 *.tmp
 evidence/weekly/
 research/cache/
