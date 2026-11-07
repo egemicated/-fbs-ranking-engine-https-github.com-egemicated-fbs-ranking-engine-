@@ -1,0 +1,40 @@
+{
+  "modelVersion": "0.2.0",
+  "strengthConfig": {
+    "ridge": 3,
+    "retention": 0.75,
+    "homeAdvantage": 2.5,
+    "marginCap": 28,
+    "probabilityScale": 14
+  },
+  "winProbability": {
+    "method": "Strength margin logistic calibration",
+    "scale": 6.147406563247917,
+    "fit": { "firstSeason": 2014, "lastSeason": 2019, "games": 4367 },
+    "evaluation": {
+      "firstSeason": 2023,
+      "lastSeason": 2025,
+      "games": 2398,
+      "baselineBrier": 0.19712311141753344,
+      "brier": 0.18324625192894178,
+      "baselineLogLoss": 0.5811516261086369,
+      "logLoss": 0.5413543664418606
+    },
+    "extendedEvaluation": {
+      "firstSeason": 2021,
+      "lastSeason": 2025,
+      "games": 3864,
+      "baselineBrier": 0.19814467509830075,
+      "brier": 0.18585633378139155,
+      "baselineLogLoss": 0.5832868582605675,
+      "logLoss": 0.5491737365809596
+    }
+  },
+  "marginBand": {
+    "targetCoverage": 0.8,
+    "halfWidth": 22,
+    "minTeamGames": 4,
+    "fit": { "season": 2023, "games": 573 },
+    "evaluation": { "firstSeason": 2024, "lastSeason": 2025, "games": 1158, "inside": 963 }
+  }
+}
