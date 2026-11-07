@@ -1,0 +1,56 @@
+ORIGINAL PREDICTIVE RESEARCH: FIRST RECORDED-COUNT CANDIDATE
+
+The candidate is implemented and tested. It is research-only. The current
+SOR, Strength, Performance and frozen prospective blend remain unchanged.
+
+Files
+predictive-v2-input-audit.json / PREDICTIVE-V2-INPUT-AUDIT.txt: metric provenance,
+raw/derived/model-output contracts and current Performance dependency findings.
+predictive-v2-protocol.json: pre-results experiment definition.
+predictive_v2_ingest.py: nine independently reconstructed recorded-count metrics.
+predictive_v2_model.py: separate opponent-adjusted offense/allowance unit fits.
+predictive_v2_experiment.py: chronological fitting, selection, evaluation and
+pure predict_matchup helper with additive prediction explanations.
+results/predictive-v2/ab24aeeb21fa/model.json: portable fitted research candidate.
+results/predictive-v2/ab24aeeb21fa/REPORT.txt: readable results and limitations.
+results/predictive-v2/ab24aeeb21fa/SUMMARY.json: compact public derived evidence.
+results/predictive-v2/ab24aeeb21fa/results.json.gz: full local derived evidence.
+results/predictive-v2/ab24aeeb21fa/verification.json: numeric/protection checks.
+
+Result
+Older validation selected Strength plus our raw efficiency unit estimates.
+On1,723 common established2023-2025 games, calibrated Strength accuracy was
+70.2844%; the selected broader candidate was70.3424%, one extra correct pick.
+Small Brier/logloss improvements have week-block ranges crossing zero;2025
+regresses. This does not establish superiority. Larger-family later results
+are diagnostic and did not choose the published research candidate.
+
+What original means here
+Recorded game facts may come from a data provider. Standard football definitions
+and public statistical methods are reusable. Our feature calculations, opponent
+adjustments, fitted coefficients and predictions are inspectable and reproducible.
+No CFBD PPA/EPA, provider success flags, PPA-based explosiveness, team/player
+ratings, win probabilities, polls, recruiting stars or betting inputs enter
+this candidate. Current Performance remains a disclosed provider-aggregate
+benchmark; it is not relabeled as an independently rebuilt all-play statistic.
+
+Current boundary
+This first candidate uses the nine reliable count-based feature contracts in
+the retained box archive. It does not invent raw-play success, explosive-play
+frequency, drive finishing, player availability/contribution or complete
+special-teams grades. Those extensions need audited recorded inputs, matching
+opportunity populations, timing and their own declared tests. More fields are
+not an automatic improvement and cannot be selected by familiar rankings.
+
+Reproduce
+python -m unittest discover -s research -p 'test_predictive_v2*.py'
+The33 synthetic/math/source/timing safeguards require NumPy only and run without
+private caches or network access. The full experiment additionally requires the
+already held private pinned box/outcome/prior caches:
+python research/predictive_v2_experiment.py
+Raw sources, normalized arrays and credentials are not public repository files.
+
+Operations
+All work reused existing saved data. Zero CFBD calls, new services or charges.
+No public model promotion or new prospective collection is enabled for this
+candidate. The separately frozen Sunday blend tracker remains unchanged.

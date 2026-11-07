@@ -1,0 +1,55 @@
+ORIGINAL RECORDED-COUNT PREDICTIVE CHALLENGER
+Fingerprint: ab24aeeb21fae5b2953aeffeaf15135a858cb7e70d65bc0e7b6fdc488184ddfa
+Research only; no public rankings, frozen blend, schedules or provider requests changed.
+Own deterministic rates and fitted offense/defense/context/logistic weights; no provider success/PPA/ratings/probabilities.
+Recorded counts are ESPN/SportsDataverse; canonical outcomes, identities and timing are repaired CFBD histories.
+Older fitting2014-2017; selection2018-2019; refit2014-2019; familiar retrospective evaluation2023-2025.
+Target-week statistics/outcomes excluded; target download availability never selects future outcome games.
+
+Selected broader family (older validation only): strength+efficiency
+Model | Games | Accuracy | Brier(lower) | Logloss(lower)
+strength | 1723 | 70.284% | 0.188738 | 0.554719
+raw-units | 1723 | 69.820% | 0.193018 | 0.564908
+strength+efficiency | 1723 | 70.342% | 0.187988 | 0.552496
+strength+efficiency+sustain | 1723 | 70.923% | 0.187092 | 0.550275
+strength+all-counts | 1723 | 70.691% | 0.187245 | 0.550533
+
+Selected candidate versus Strength by evaluation year:
+2023: n=565; accuracy 71.150% -> 71.504%; Brier 0.188259 -> 0.187449; logloss 0.554450 -> 0.552631
+2024: n=576; accuracy 68.229% -> 68.924%; Brier 0.196345 -> 0.192500; logloss 0.572204 -> 0.563501
+2025: n=582; accuracy 71.478% -> 70.619%; Brier 0.181675 -> 0.184045; logloss 0.537675 -> 0.541472
+
+Paired week-block sensitivity (candidate minus Strength):
+{
+  "accuracy": {
+    "candidateMinusBaseline": 0.0005803830528148578,
+    "weekBlockSensitivity95": [
+      -0.009113184677436208,
+      0.009332337421391222
+    ]
+  },
+  "brier": {
+    "candidateMinusBaseline": -0.0007502544608226379,
+    "weekBlockSensitivity95": [
+      -0.0027320214057150937,
+      0.0014908789844124614
+    ]
+  },
+  "logLoss": {
+    "candidateMinusBaseline": -0.0022234240909942905,
+    "weekBlockSensitivity95": [
+      -0.006811914731468293,
+      0.0027734863854460934
+    ]
+  }
+}
+
+Scope and limits:
+This is a recorded-box-count candidate, not an all-football or all-player model. Missing play/drive/special-teams/player features are not invented.
+Provider source conventions, including college sacks and whole-team turnover/penalty attribution, remain disclosed.
+Sparse unit parameters shrink toward zero effects; this is an explicit modeling prior, not a fabricated zero-valued raw observation.
+Historical source and evaluation outcomes were already inspected. A later-year comparison here is not an untouched/prospective trial.
+Recurring teams connect weeks; sensitivity intervals are not calibrated independent significance.
+The broadest family is not automatically selected. Only older validation selects a candidate.
+New independent model calculations do not establish a uniquely correct earned-achievement ranking.
+Current SOR, Strength, Performance and frozen future blend are preserved. Protected files=34.

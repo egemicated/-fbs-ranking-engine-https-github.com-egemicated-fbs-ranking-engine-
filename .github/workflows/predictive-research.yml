@@ -1,0 +1,25 @@
+name: Original predictive research checks
+on:
+  push:
+    paths:
+      - 'research/predictive*'
+      - 'research/test_predictive*'
+      - '.github/workflows/predictive-research.yml'
+  pull_request:
+    paths:
+      - 'research/predictive*'
+      - 'research/test_predictive*'
+      - '.github/workflows/predictive-research.yml'
+permissions:
+  contents: read
+jobs:
+  raw-count-model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r research/performance-requirements.txt
+      - run: python -m unittest discover -s research -p 'test_predictive_v2*.py' -v

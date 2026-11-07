@@ -1,0 +1,270 @@
+{
+  "id": "predictive-v2-original-input-audit-v1",
+  "scope": "Source and metric-contract audit for a new research challenger only. Existing published models, snapshots and frozen blend protocols are unchanged.",
+  "decision": "Build the first challenger from verified recorded box-score counts and our own arithmetic/opponent model. Do not import provider team/player ratings or modeled play values. Rebuild play-level metrics only after their underlying play population and attribution are audited.",
+  "meaningOfOriginal": "Our input rules, implementation, fitted coefficients, opponent adjustments and predictions must be reproducible. Standard football definitions and public statistical methods need not be reinvented or described as our inventions. Agreement with a provider's current ranking is not proof that its hidden method matches ours.",
+  "sources": {
+    "cfbdPublicImplementation": {
+      "repository": "https://github.com/CFBD/cfb-api-v2",
+      "commit": "e983aff8fa3e5dddf2e58d78a6717938a4c3d28f",
+      "commitDate": "2026-10-27T22:43:55Z",
+      "statsPath": "src/app/stats/service.ts",
+      "statsUrl": "https://github.com/CFBD/cfb-api-v2/blob/e983aff8fa3e5dddf2e58d78a6717938a4c3d28f/src/app/stats/service.ts",
+      "observedAdvancedGameLines": {
+        "ppaEligibilityFilter": 1863,
+        "storedSuccessField": 1878,
+        "playsCount": 1933,
+        "successFraction": [
+          1968,
+          1969
+        ],
+        "providerExplosiveness": 1973
+      },
+      "limit": "Public source inspection, not attestation of the deployed database's historical transformations or completeness. No authenticated data endpoint was called."
+    },
+    "cfbdDefinitions": "https://api.collegefootballdata.com/metrics-and-definitions",
+    "cfbdModelBoundary": "https://api.collegefootballdata.com/methodology-overview",
+    "cfbdCoverage": "https://api.collegefootballdata.com/data-availability",
+    "cfbdPlayerApi": "https://api.collegefootballdata.com/api/players",
+    "localRawBoxes": {
+      "manifest": "research/results/performance/source-manifest.json",
+      "provider": "SportsDataverse release of ESPN recorded team box scores; these files are not CFBD advanced-stat responses",
+      "cache": "research/cache/performance/team_box_{year}.csv",
+      "cachedYears": [
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019,
+        2023,
+        2024,
+        2025,
+        2026
+      ],
+      "sourcePins": "Use the existing manifest's exact file hashes and paired game/team IDs. Raw caches remain private."
+    }
+  },
+  "currentPerformanceAudit": {
+    "ourCode": [
+      "research/advanced_performance_ingest.py",
+      "research/adaptive_performance_model.py",
+      "scripts/publish-performance.py"
+    ],
+    "consumed": "Provider offense/defense successRate and positive play count, reciprocal-pair checks and reconstructed integer successes. Our own joint-ridge opponent/context adjustment produces the displayed Performance score.",
+    "notConsumed": [
+      "PPA numeric values",
+      "provider team ratings",
+      "betting lines",
+      "polls",
+      "provider win probabilities"
+    ],
+    "indirectDependency": "The inspected advanced-game service includes only plays with a non-null PPA, then counts stored success flags. Thus the success-rate sample depends on provider PPA availability even though our model never uses the numeric PPA value.",
+    "status": "Transparent provider-aggregate benchmark, not independently rebuilt all-plays success rate and not proof of exact equivalence to a new original raw-play contract.",
+    "action": "Retain the current frozen/public benchmark with its existing limitations. Exclude its provider aggregate from the new original-count candidate initially. A rebuilt raw-play success-rate feature requires a separate versioned population/formula audit."
+  },
+  "inputClasses": {
+    "recordedFactsAllowed": [
+      "game and team IDs",
+      "completed scores",
+      "kickoff and location",
+      "season-specific FBS/FCS membership",
+      "yards",
+      "attempts",
+      "completions",
+      "conversion counts",
+      "turnover counts",
+      "penalty counts and yards",
+      "raw player event attribution where available"
+    ],
+    "recomputeFromCounts": [
+      "yards per play",
+      "passing/rushing yards per recorded attempt",
+      "completion fraction",
+      "third/fourth-down conversion fractions",
+      "turnover/takeaway exposure rates",
+      "penalty exposure rates",
+      "unit opponent adjustment",
+      "our future-game probabilities"
+    ],
+    "excludeFromNewCandidate": [
+      "provider PPA/EPA values",
+      "provider explosiveness defined using PPA",
+      "WEPA and CORE",
+      "provider Elo/SRS/SP/FPI ratings",
+      "provider pregame/in-game/postgame win probabilities",
+      "CPOE/completion probabilities without a fully approved upstream model",
+      "polls",
+      "recruiting stars or subjective talent/portal ratings",
+      "betting odds and spread-derived fields"
+    ],
+    "keepForIdentityOnly": [
+      "team names",
+      "conference labels",
+      "player names",
+      "jersey/position/roster fields after dated identity validation"
+    ]
+  },
+  "acceptanceRuleForProviderDerivedFields": [
+    "Known input columns and exact deterministic formula, with no hidden model or excluded input.",
+    "Same declared included-play/opportunity population, numerator, denominator, event attribution and zero/missing policy.",
+    "Independent reconstruction on representative and adversarial records, with a declared numeric tolerance for rounding.",
+    "Versioned source lineage, coverage and actual capture timing appropriate to the intended forecast cutoff.",
+    "If any condition is unverified, use raw facts to rebuild the feature or leave the feature unavailable; do not substitute a convenient provider score."
+  ],
+  "rawCountMetricContracts": [
+    {
+      "name": "offensivePlays",
+      "formula": "recorded passing attempts + recorded rushing attempts",
+      "rule": "College sack bookkeeping is already represented in these totals. Do not add sacks as extra plays or subtract sack yards a second time."
+    },
+    {
+      "name": "yardsPerPlay",
+      "formula": "recorded total offense yards / offensivePlays",
+      "rule": "Require positive denominator and total yards = recorded passing yards + recorded rushing yards. Negative net yards are valid."
+    },
+    {
+      "name": "passingYardsPerAttempt",
+      "formula": "recorded passing yards / recorded pass attempts",
+      "rule": "This is a recorded-attempt rate, not a separately reconstructed dropback/sack-adjusted statistic."
+    },
+    {
+      "name": "rushingYardsPerAttempt",
+      "formula": "recorded rushing yards / recorded rush attempts",
+      "rule": "Retains the source's college sack/kneel treatment. Cannot label as designed-rush efficiency without play-level classification."
+    },
+    {
+      "name": "completionFraction",
+      "formula": "recorded completions / recorded passing attempts",
+      "rule": "Require 0 <= completions <= attempts; zero attempts means unavailable, not a zero completion fraction."
+    },
+    {
+      "name": "thirdDownConversion",
+      "formula": "recorded third-down conversions / recorded third-down opportunities",
+      "rule": "A zero opportunity count means unavailable. Do not average unweighted game percentages to claim a season opportunity-weighted rate."
+    },
+    {
+      "name": "fourthDownConversion",
+      "formula": "recorded fourth-down conversions / recorded fourth-down opportunities",
+      "rule": "Same opportunity and missing rules as third down; sparse samples require shrinkage rather than invented conversions."
+    },
+    {
+      "name": "firstDownExposure",
+      "formula": "recorded first downs / offensivePlays",
+      "rule": "A box-score production rate, not a reconstruction of down-and-distance success rate."
+    },
+    {
+      "name": "turnoverExposure",
+      "formula": "recorded turnovers / offensivePlays",
+      "rule": "Verify turnovers = interceptions thrown + fumbles lost when all are recorded. Takeaways mirror the opponent's turnovers. Correlated scoring/turnover features need controlled fitting and ablation, not hand-added duplicate point bonuses."
+    },
+    {
+      "name": "penaltyExposure",
+      "formula": "recorded total team penalty yards / offensivePlays",
+      "rule": "An explicitly named exposure proxy: team penalty totals can span offense, defense and special teams. It is not a pure offensive penalty rate or measured penalty cost in expected points."
+    },
+    {
+      "name": "defensiveAllowedRates",
+      "formula": "the paired opponent's recorded offensive counts over that opponent's opportunity denominator",
+      "rule": "Mirror the same game identity and paired sides. Do not invent independent defensive values or reverse signs twice."
+    }
+  ],
+  "playLevelRebuildContract": {
+    "success": "If adopted, define success from recorded down, distance and gain using explicitly versioned thresholds and offensive scoring exceptions. Match 50/70/100 only if that is the chosen rule, not because it was supplied. A generic scoring flag alone cannot identify an offensive touchdown: defensive scores and failed attempts need explicit handling.",
+    "population": "Declare scrimmage, sack, penalty/no-play, kneel, spike, overtime and missing-down/distance treatment. Do not condition eligibility on non-null PPA or a provider's garbage-time/win-probability flag.",
+    "explosiveRate": "A new raw-gain threshold feature would be explosive eligible plays divided by eligible plays, with passing/rushing thresholds fixed before evaluation. It must not be named or treated as identical to CFBD's PPA-based explosiveness.",
+    "cannotRebuildFromBoxes": [
+      "down-by-down success rate",
+      "explosive-play frequency",
+      "drive starting field position",
+      "points per scoring opportunity",
+      "regulation-only efficiency",
+      "separate sack/dropback efficiency",
+      "special-teams opportunity value"
+    ]
+  },
+  "playerDataBoundary": {
+    "availableFamilies": [
+      "recorded game/season box statistics",
+      "play-level attribution",
+      "rosters",
+      "transfers",
+      "usage and returning production"
+    ],
+    "coverageCaution": "Official historical ranges differ by family: box scores generally2004+, attributed player play data2012+, usage2013+, and enriched passing/rushing2025+. A listed year does not guarantee every player/game/field.",
+    "leakageCaution": "Final-season aggregates, updated rosters and later portal records cannot be treated as known before an earlier kickoff. Do not assume dated injury, lineup or snap-count histories exist.",
+    "attributionCaution": "Player rows overlap across passer/receiver roles and may omit team-only or unattributed plays. Player sums must not be added to team production as additional independent evidence.",
+    "returningProductionCaution": "The provider returning-production endpoint includes PPA-based fields. An original returning-production feature should instead use dated prior raw player production linked to dated current roster facts."
+  },
+  "requiredModelResearchControls": [
+    "Retain facts, deterministic transformations and fitted model outputs as separate versioned layers.",
+    "Record paired FBS/FCS coverage against all eligible outcome games and expose missingness; missing is not zero.",
+    "Use only prior completed-week evidence for each forecast; older-only fitting and later evaluation do not turn already inspected seasons into untouched tests.",
+    "Use learned, regularized coefficients and fixed group ablations to test incremental information, rather than assigning a bonus to every correlated column.",
+    "Current2026 raw boxes lack recovered complete timing in the published-snapshot context; use them only for a dated illustration, never an invented 2026 pregame replay."
+  ],
+  "operations": {
+    "authenticatedCfbdCalls": 0,
+    "newPaidServices": 0,
+    "existingProductionFilesEdited": 0,
+    "frozenBlendChanged": false,
+    "rawResponsesPublished": false
+  },
+  "implementationReview": {
+    "phase": "Code and protocol reviewed before new later-year result inspection",
+    "filesSha256": {
+      "research/predictive-v2-protocol.json": "2b1b1003bb53d13dcaf72a36ab70ff2afe11f728b2846c97b1d398918da5f948",
+      "research/predictive_v2_experiment.py": "4e4770da83932fab46586bf8c646bae6e3eac1c86c33710838b95a85edb08344",
+      "research/predictive_v2_model.py": "e835a398788ec48361d4697fb729e9c1ce870c3a279d9ee1ef0d63c22c92577c",
+      "research/predictive_v2_ingest.py": "27d8538418c0b32f3b6c3a1252a394fc297a85e32e47c957b29371a080fc15d0"
+    },
+    "independentNewSafeguardTestsPassed": 32,
+    "result": "No pre-results methodology blocker identified",
+    "checked": [
+      "Exact parent source hash and completed-week+24h eligibility match the baseline",
+      "Target-game statistic availability cannot select prediction outcomes",
+      "Raw per-side counts and unavailable opportunity rates remain separate",
+      "Unit effects are fit only on supplied earlier observations with explicit sparse counts",
+      "Training-only RMS scaling and2014-2017 weights;2018-2019 selection;2014-2019 refit",
+      "All declared families compare the same established FBS-FBS target games",
+      "Native outcome-only baseline coverage is reported separately",
+      "Later-year reports are explicitly repeated retrospective evidence, not an untouched test"
+    ],
+    "interpretationCautions": [
+      "Strength control is newly calibrated on its raw score difference plus venue; its accuracy is not directly the earlier raw-percentile ordering accuracy",
+      "The bounded nine-count model does not include audited play, drive, player or complete special-teams features",
+      "Linear unit predictions are feature estimates and may lie outside a rate range; only the downstream logistic output is a probability",
+      "Home metric differences include learned context and the logistic layer also includes venue; this is correlated learned input handled by regularization, not independent proof of multiple home effects"
+    ]
+  },
+  "finalImplementationReview": {
+    "status": "PASS for publishing research evidence on a feature branch; no live-model promotion",
+    "resultPath": "research/results/predictive-v2/ab24aeeb21fa",
+    "fingerprint": "ab24aeeb21fae5b2953aeffeaf15135a858cb7e70d65bc0e7b6fdc488184ddfa",
+    "protocolSha256": "2b1b1003bb53d13dcaf72a36ab70ff2afe11f728b2846c97b1d398918da5f948",
+    "finalImplementationSha256": {
+      "predictive_v2_experiment.py": "0c0ee45102cbeeda2955cc88e1339b5379867afe294aebda09a14808b0670d9c",
+      "predictive_v2_ingest.py": "27d8538418c0b32f3b6c3a1252a394fc297a85e32e47c957b29371a080fc15d0",
+      "predictive_v2_model.py": "e835a398788ec48361d4697fb729e9c1ce870c3a279d9ee1ef0d63c22c92577c",
+      "composite_outcome_replay.py": "1befc44c3166bfa260d20bb06df58e83f132016648a77f7324830e9fbd32b74b",
+      "compare_merit.py": "7756400de628989ec35439260346be1a8a710ca430b3995d67e55de12562990a",
+      "division_experiment.py": "cb7dcd2ed9009210172d899c61ddb2fdaa903bffd87ccdc36527dabfa0ac15ea",
+      "replay_weekly.py": "286db8fc077464f9a6df0b81b3430b44ada4bc89863705427cdefb2cc94f4058"
+    },
+    "independentSafeguardTestsPassed": 33,
+    "reportingOnlyChangeVerified": {
+      "selectionGridUnchanged": true,
+      "allSelectedFitsUnchanged": true,
+      "allReportedMetricsUnchanged": true,
+      "gamePredictionCsvByteIdentical": true
+    },
+    "portableModel": "model.json exactly matches the older-selected strength+efficiency logistic fit and declared unit configuration. predict_matchup is a pure helper requiring caller-verified pregame unit/Strength states, not an independently timestamped collector.",
+    "supportReporting": "Separate offense/allowance counts now accompany union measured-game support; this reports existing fitted evidence rather than changing observations or weights.",
+    "honestConclusion": "The selected candidate gives only a tiny pooled retrospective improvement, regresses in2025, and its three paired week-block ranges span zero. Superiority is explicitly false in the artifact. Later-performing broader families remain diagnostics rather than a replacement selected after the fact.",
+    "scopePreserved": "No provider success/PPA/ratings/probabilities in the new feature pipeline; nine reconstructed count metrics. No assertion of complete player/play/drive/special-teams coverage.",
+    "productionProtection": {
+      "files": 34,
+      "changed": []
+    }
+  }
+}

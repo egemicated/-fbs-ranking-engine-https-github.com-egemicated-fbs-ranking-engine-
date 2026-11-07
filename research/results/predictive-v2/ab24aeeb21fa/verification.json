@@ -1,0 +1,26 @@
+{
+  "finalFingerprint": "ab24aeeb21fae5b2953aeffeaf15135a858cb7e70d65bc0e7b6fdc488184ddfa",
+  "protocolSha256": "2b1b1003bb53d13dcaf72a36ab70ff2afe11f728b2846c97b1d398918da5f948",
+  "resultsSha256": "7d49413af3941a9e21186a06a81eaeb0778bf1f7956367656ff1bddbc784cf89",
+  "newSafeguardTestsPassed": 33,
+  "laterUniqueGames": 1723,
+  "reportingOnlyAmendmentPreservedEveryFitAndMetric": true,
+  "rawDataIncludedInReport": false,
+  "realArtifactPredictionAgreement": 0.0,
+  "realArtifactFixture": {
+    "year": 2025,
+    "block": "2025:regular:9",
+    "gameId": "401757285",
+    "scope": "Retrospective reproduction, not a new future forecast"
+  },
+  "independentRealUnitFitsChecked": 18,
+  "maxIndependentUnitCoefficientError": 1.8e-13,
+  "independentMetricsRecomputed": 100,
+  "protected": {
+    "files": 34,
+    "changed": []
+  },
+  "cfbdCalls": 0,
+  "networkDataPulls": 0,
+  "liveChanges": false
+}

@@ -1,0 +1,72 @@
+{
+  "id": "original-counts-predictive-v2-research-v1",
+  "status": "Declared before fitting new models or inspecting their ranking orders. Local research only; existing three models and frozen prospective blend remain unchanged.",
+  "objective": "Assess whether independently reconstructed recorded-stat features improve future FBS-FBS win probabilities over the existing Predictive Strength baseline.",
+  "originalityPolicy": {
+    "recordedFacts": "Use verified scores, participants, venue, dates, subdivisions and recorded team box-score counts. Reuse stable identities and standard statistical definitions; originality means our documented computations and fitted model, not inventing a new definition for every familiar statistic.",
+    "derivedAllowed": "A deterministic rate may be reconstructed from audited recorded numerators and denominators. Retaining a provider-derived value requires a matching declared definition, population and timing audit; agreement of current rankings alone is insufficient.",
+    "excluded": ["human polls", "recruiting stars", "betting lines or betting-derived probabilities", "provider team/player ratings", "CFBD PPA/EPA values", "provider win probabilities", "CFBD PPA-based explosiveness", "provider successRate in this new candidate"],
+    "existingPerformance": "The current Performance model uses provider success rates over PPA-eligible plays, not PPA numerical values. That source-population dependency is disclosed and is not silently relabeled as an independently rebuilt all-play statistic.",
+    "missing": "Missing raw records and zero-opportunity rates stay unavailable. Unit parameters shrink toward declared neutral priors with explicit observed counts; no fictitious raw games are inserted.",
+    "unavailable": "Raw plays are required before reconstructing play success/explosiveness, drive measures, overtime/garbage-time filters. Player attribution and special teams require separately audited fields. Do not fabricate these from aggregate boxes."
+  },
+  "data": {
+    "source": "Existing checksum-pinned ESPN recorded team box counts distributed by SportsDataverse, linked by exact game/team IDs to repaired CFBD outcome histories. These are not represented as CFBD-derived model statistics.",
+    "trainingYears": [2014, 2015, 2016, 2017],
+    "selectionYears": [2018, 2019],
+    "repeatedEvaluationYears": [2023, 2024, 2025],
+    "excludedYears": {"2020": "Disrupted season and prior source caveats", "2021-2022": "Raw box files not in this already authorized cache; do not fetch to fill the gap during this experiment", "2026": "Current illustration is not a trustworthy timestamped weekly raw-stat replay and cannot select the model"},
+    "coverage": "Preserve every completed parent target game, even without target-game statistics. Fit unit features only from paired verified FBS/FCS source games. Report every missing field/game and counts by team/year/subdivision; retain native baseline coverage separately.",
+    "time": "Before earliest kickoff of each complete parent competition week; only earlier processed weeks with kickoff+24hours<=cutoff. No target-week result or statistic enters the input graph. Corrected retrospective sources do not prove contemporaneous availability."
+  },
+  "features": {
+    "efficiency": ["ypp", "passingYpp", "rushingYpp", "completionRate"],
+    "sustain": ["firstDownRate", "thirdDownRate", "fourthDownRate"],
+    "mistakes": ["turnoverRate", "penaltyYardsPerPlay"],
+    "definitions": {
+      "ypp": "Recorded totalYards / (recorded passing attempts + recorded rushing attempts)",
+      "passingYpp": "Recorded netPassingYards / recorded pass attempts; not claimed as true dropback efficiency without separate sack-denominator verification",
+      "rushingYpp": "Recorded rushingYards / recorded rushingAttempts; includes the source's college sack-accounting convention",
+      "completionRate": "Recorded completions / passing attempts",
+      "firstDownRate": "Recorded firstDowns / (passing attempts + rushing attempts)",
+      "thirdDownRate": "Recorded successful third downs / recorded third-down attempts",
+      "fourthDownRate": "Recorded successful fourth downs / recorded fourth-down attempts; zero attempts is unavailable",
+      "turnoverRate": "Recorded turnovers lost / (passing attempts + rushing attempts); do not add interceptions and fumbles a second time",
+      "penaltyYardsPerPlay": "Recorded total penalty yards / (passing attempts + rushing attempts); includes all team penalties, not claimed as offense-only attribution"
+    },
+    "unitModel": "Separate regularized offense and defensive allowance effects for each metric: value=intercept+offenseEffect+allowanceEffect+H*offenseVenue+D*(offenseFbs-defenseFbs). Individual opponents retained; no conference or team-name term. Defense observations are opponent offensive counts.",
+    "context": {"contextPriorStrength": 0.01, "interceptPrior": 0, "homePrior": 0, "divisionPrior": 0},
+    "unitRidgeGrid": [1, 4, 16],
+    "prior": "No previous team effects in raw-unit fits. The Strength feature deliberately retains the existing model's own earlier-season strength prior.",
+    "matchup": "Each metric supplies predicted home production minus predicted away production using only preweek fitted units and fixture venue. Also retain metric observation counts. No duplicate manual statistical bonuses.",
+    "primaryEligibility": "Both teams have>=4 completed outcome games and>=4 measured basic ypp games. Other sparse metric units use their explicitly declared shrunken estimates and retain support counts. Both compared models use identical eligible targets."
+  },
+  "prediction": {
+    "families": {
+      "strength": ["strength", "venue"],
+      "raw-units": ["efficiency", "sustain", "mistakes", "venue"],
+      "strength+efficiency": ["strength", "efficiency", "venue"],
+      "strength+efficiency+sustain": ["strength", "efficiency", "sustain", "venue"],
+      "strength+all-counts": ["strength", "efficiency", "sustain", "mistakes", "venue"]
+    },
+    "mapping": "Ridge-penalized logistic regression, no intercept; venue is0neutral/1home. Scale difference features by training-only RMS without centering, preserving neutral matchup orientation symmetry. Zero-scale features get scale1. No arbitrary percentage blend of statistics.",
+    "logisticPenaltyGrid": [0.1, 1, 10],
+    "selection": "Fit scaling/weights on2014-2017, select unit ridge and logistic penalty by pooled2018-2019 log loss. Tie within1e-10 prefers stronger logistic penalty then stronger unit ridge; families break ties by fewer input features then declared order. Select a best broader candidate among non-strength families separately from the Strength control. Never use2023-2025 for selection.",
+    "refit": "After older-only selection, refit selected family weights/scales on2014-2019. This remains strictly earlier than evaluation seasons. No further grid expansion or evaluation-driven coefficient changes."
+  },
+  "evaluation": {
+    "target": "Confirmed completed FBS-FBS parent games; target eligibility is independent of whether its future box score downloaded.",
+    "primary": "Compare selected broader candidate and calibrated Strength on identical established target games. Report win accuracy, Brier, log loss, probability bias, yearly metrics and regular/postseason/venue groups.",
+    "nativeBaseline": "Report Strength on all parent games with both teams>=4 prior outcome games as a separate coverage diagnostic; do not compare unmatched samples as an accuracy advantage.",
+    "uncertainty": "1000 paired complete season-type-week-block resamples within year, seed1729, for candidate-minus-baseline Brier/logloss/accuracy. Shared teams connect weeks; intervals are sensitivity summaries, not calibrated prospective significance.",
+    "diagnostics": "Report all fixed family results as diagnostics, selected older configurations, learned coefficients, missingness and consequential game disagreements. No ranking-order-based tuning.",
+    "limits": "Source seasons, outcomes and some prior statistics were already inspected. These are repeated retrospective results even with new features, not an untouched test. A new model needs a separately versioned future trial before a public replacement."
+  },
+  "operations": {
+    "cfbdCalls": 0,
+    "networkDataPulls": 0,
+    "storage": "Use existing private cached raw sources; save only derived reports and source hashes for review. No raw/API data or credentials published.",
+    "production": "Hash existing src/frontend/published/configuration and both frozen blend capture/evaluation bindings before/after. No edits to live rankings, schedules, frozen protocols or observations.",
+    "promotion": "Research only. A failed or inferior candidate remains reported; do not replace the current model just because more fields were used."
+  }
+}

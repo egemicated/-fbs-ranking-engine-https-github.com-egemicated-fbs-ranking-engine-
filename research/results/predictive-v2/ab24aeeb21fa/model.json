@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "id": "original-counts-predictive-v2-research-v1",
+  "status": "research-only",
+  "family": "strength+efficiency",
+  "experimentFingerprint": "ab24aeeb21fae5b2953aeffeaf15135a858cb7e70d65bc0e7b6fdc488184ddfa",
+  "protocolSha256": "2b1b1003bb53d13dcaf72a36ab70ff2afe11f728b2846c97b1d398918da5f948",
+  "implementationSha256": {
+    "predictive_v2_experiment.py": "0c0ee45102cbeeda2955cc88e1339b5379867afe294aebda09a14808b0670d9c",
+    "predictive_v2_ingest.py": "27d8538418c0b32f3b6c3a1252a394fc297a85e32e47c957b29371a080fc15d0",
+    "predictive_v2_model.py": "e835a398788ec48361d4697fb729e9c1ce870c3a279d9ee1ef0d63c22c92577c",
+    "composite_outcome_replay.py": "1befc44c3166bfa260d20bb06df58e83f132016648a77f7324830e9fbd32b74b",
+    "compare_merit.py": "7756400de628989ec35439260346be1a8a710ca430b3995d67e55de12562990a",
+    "division_experiment.py": "cb7dcd2ed9009210172d899c61ddb2fdaa903bffd87ccdc36527dabfa0ac15ea",
+    "replay_weekly.py": "286db8fc077464f9a6df0b81b3430b44ada4bc89863705427cdefb2cc94f4058"
+  },
+  "source": {
+    "2014": {
+      "sourceSha256": "bbc5fd2a00a846f955d841fac7b07373a79b2095cd9290e07d5c521cd60490e1",
+      "parentSha256": "f6c41ef2dd5b751407efa196c2c6a76aaef7e226ab4766678120e7eb8783f193",
+      "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee"
+    },
+    "2015": {
+      "sourceSha256": "7ca01274ad12399f99f0a2443f93d837b1098154fe14219b7167abe78e1c9eb8",
+      "parentSha256": "ec50d753edeb723aa0b2a2bc2c7b5f4e9d81ba152f950b8cd54819f51b9875be",
+      "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee"
+    },
+    "2016": {
+      "sourceSha256": "28a14e829dd607e97c13042d7fa3d1e03622e14ea321fa73c2511583e0e6382a",
+      "parentSha256": "3846e2ea6963eda4baec894c901f7cd12a80893e525e006d2d7e4df4f1f1200a",
+      "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee"
+    },
+    "2017": {
+      "sourceSha256": "b08efecdb672aef5302349477bb98159c5971da3786e0d42ea004c770cc98b22",
+      "parentSha256": "b2610ad25d7ebd931de5dd05f4e14df8f8bf2b0052a2549c0d65a4530b8af3f4",
+      "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee"
+    },
+    "2018": {
+      "sourceSha256": "74b6ff13c4c1e09043699d4c2711739d53793c5eb3f0ebfe9fb15a1e2db2961e",
+      "parentSha256": "089672a2e3509990c36a75e30910ebe4abf2e37091a89551166aaf287f41fdb3",
+      "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee"
+    },
+    "2019": {
+      "sourceSha256": "6076dbb7d9188071d909315fcbd3a5adf46d771162284bbc29bed439d7eca3e2",
+      "parentSha256": "8966102ad775cf682a905f70d7b6a50fa204019135587a6fe287871a7994fd53",
+      "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee"
+    },
+    "2023": {
+      "sourceSha256": "41637076d7bd57c0943c2a8d75d39ae3093e808681514dfa69c87b3c0d91b799",
+      "parentSha256": "5e7e5975fcde9caf5b1e12f5a39449005fac05a7b41a9399b6ed86621f2dd397",
+      "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee"
+    },
+    "2024": {
+      "sourceSha256": "02baf937b43da8f1a9f0e25cefaa243bad572389b47090a92a44dfa2c1bff324",
+      "parentSha256": "84a3f1132e3805d71c9ba02ba285b9e66806646804c570f1dfd6e6568bddae98",
+      "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee"
+    },
+    "2025": {
+      "sourceSha256": "4ecc44939c4a90760fced98b8802a6d2483556516fe47410c41ccb79f8ed10b8",
+      "parentSha256": "2b652655b8bdb89d92a939a0bc4c34b0e3036526edef3c442e36b0df129907ff",
+      "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee"
+    }
+  },
+  "unitConfiguration": {
+    "contextPriorStrength": 0.01,
+    "interceptPrior": 0,
+    "homePrior": 0,
+    "divisionPrior": 0,
+    "ridge": 1
+  },
+  "logistic": {
+    "columns": [
+      "strength",
+      "ypp",
+      "passingYpp",
+      "rushingYpp",
+      "completionRate",
+      "venue"
+    ],
+    "scale": [
+      8.742077740025263,
+      1.40557460434436,
+      2.2901371401864536,
+      1.5901343462915,
+      0.10455358946252533,
+      0.9523794912246422
+    ],
+    "coefficients": [
+      1.025827657563595,
+      0.22353993832534877,
+      0.09451067626172772,
+      0.11424797991593298,
+      0.030672018551520918,
+      0.24518684039538577
+    ],
+    "penalty": 10,
+    "originalUnitCoefficients": [
+      0.11734368968910937,
+      0.15903811696257883,
+      0.041268566237056464,
+      0.07184800465594703,
+      0.2933616981415502,
+      0.2574465773933307
+    ],
+    "trainingGames": 3259,
+    "trainingYears": [
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019
+    ],
+    "diagnostics": {
+      "iterations": 6,
+      "maxGradient": 1.1723955140041653e-13
+    }
+  },
+  "recordedMetricDefinitions": {
+    "ypp": "Recorded totalYards / (recorded passing attempts + recorded rushing attempts)",
+    "passingYpp": "Recorded netPassingYards / recorded pass attempts; not claimed as true dropback efficiency without separate sack-denominator verification",
+    "rushingYpp": "Recorded rushingYards / recorded rushingAttempts; includes the source's college sack-accounting convention",
+    "completionRate": "Recorded completions / passing attempts",
+    "firstDownRate": "Recorded firstDowns / (passing attempts + rushing attempts)",
+    "thirdDownRate": "Recorded successful third downs / recorded third-down attempts",
+    "fourthDownRate": "Recorded successful fourth downs / recorded fourth-down attempts; zero attempts is unavailable",
+    "turnoverRate": "Recorded turnovers lost / (passing attempts + rushing attempts); do not add interceptions and fumbles a second time",
+    "penaltyYardsPerPlay": "Recorded total penalty yards / (passing attempts + rushing attempts); includes all team penalties, not claimed as offense-only attribution"
+  },
+  "trainedThroughSeason": 2019,
+  "currentOwnStrengthConfiguration": {
+    "ridge": 3,
+    "retention": 0.75,
+    "homeAdvantage": 2.5,
+    "marginCap": 28,
+    "probabilityScale": 14
+  },
+  "scope": "Recorded-box-count candidate; no player, raw-play, drive or complete special-teams model yet. No provider success/PPA/ratings/probabilities.",
+  "timing": "Only caller-verified pregame states may feed predict_matchup; no future trial/public promotion is active for this candidate.",
+  "validation": {
+    "retrospective": true,
+    "years": [
+      2023,
+      2024,
+      2025
+    ],
+    "candidate": {
+      "games": 1723,
+      "accuracy": 0.7034242600116076,
+      "brier": 0.18798801477541538,
+      "logLoss": 0.5524955487812073,
+      "probabilityBias": -0.0026661875752952615
+    },
+    "strengthControl": {
+      "games": 1723,
+      "accuracy": 0.7028438769587928,
+      "brier": 0.18873826923623802,
+      "logLoss": 0.5547189728722015,
+      "probabilityBias": -0.004250111209085575
+    },
+    "superiorityEstablished": false
+  }
+}

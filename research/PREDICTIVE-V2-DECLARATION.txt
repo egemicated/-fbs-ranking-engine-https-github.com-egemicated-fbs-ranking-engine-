@@ -1,0 +1,32 @@
+ORIGINAL COUNT-BASED PREDICTIVE RESEARCH DECLARATION
+
+Protocol predictive-v2-protocol.json SHA256:
+2b1b1003bb53d13dcaf72a36ab70ff2afe11f728b2846c97b1d398918da5f948
+
+The protocol was written before fitting or viewing new later-year model results.
+It fixes raw metric contracts, fitting2014-2017, selection2018-2019,
+refitting2014-2019 and repeated retrospective evaluation2023-2025.
+No current2026 ranking selected the model. Familiar evaluation data is not
+described as an untouched or prospective trial.
+
+After the first result, a reporting-only change expanded cached metric-support
+metadata from union observed-game counts to separate offense/allowance counts.
+A pure explained-prediction helper and portable research model artifact were
+also added. The observation values, source/eligibility, candidate families,
+selection grid, numerical fits, scoring and uncertainty method did not change.
+Final metric values are checked against the first result before publication.
+
+The selected broad candidate and control use calibrated venue-aware probability
+picks. Their accuracy must not be directly compared to the previous blend
+experiment's neutral higher-rank-winner percentage as if both were the same test.
+
+This is the first bounded recorded-box-count candidate. It is not presented as
+an all-CFBD, all-player, all-play or complete special-teams system. Additional
+inputs require underlying recorded evidence, a declared population and a
+separate chronological test. Standard statistical methods and football metric
+definitions are reusable; independent implementation does not imply invention
+of probability theory, ridge regression or familiar arithmetic ratios.
+
+No raw source responses, normalized arrays, keys or credentials are published.
+The current SOR, Strength, Performance and frozen future-blend experiment remain
+unchanged. No source API calls, new services or paid resources were used.

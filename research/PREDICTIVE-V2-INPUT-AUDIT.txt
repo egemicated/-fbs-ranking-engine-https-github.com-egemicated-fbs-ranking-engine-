@@ -1,0 +1,107 @@
+PREDICTIVE V2: ORIGINAL INPUT AUDIT
+
+Decision
+Build the first research challenger from verified recorded counts and our own
+feature arithmetic and fitted opponent/prediction model. Standard measures such
+as yards per play need reproducible implementation, not reinvention of their
+names. A provider metric is acceptable only when its formula, inputs, population,
+timing and numerical reconstruction meet our declared contract. A similar Top25
+is not evidence of matching methods.
+
+What the existing Performance model actually uses
+Our code consumes provider offensive/defensive success fractions and play
+counts, checks reciprocal pairs and reconstructs integer successes. It does not
+use numeric PPA values, betting lines, polls or provider team ratings. Our code
+does the individual-opponent and venue/subdivision adjustment.
+
+There is nevertheless an indirect provider dependency: the inspected advanced
+game query keeps only plays with a non-null PPA and then aggregates stored
+success flags. Thus current Performance is a provider-aggregate benchmark, not
+our independently reconstructed success rate on every raw scrimmage play.
+Turning off garbage-time filtering does not remove that eligibility condition.
+Preserve this frozen benchmark and its limitations; exclude that aggregate from
+the new original-count candidate until a separate raw-play rebuild is audited.
+
+Provider model boundaries
+CFBD documents PPA, WEPA, CORE, Elo, SRS and win probabilities as model outputs;
+its exact production artifacts are not fully public. CFBD's explosiveness also
+uses PPA. The new candidate should not import these, CPOE/completion models,
+polls, subjective recruiting/portal ratings or spread-derived probabilities.
+Our own original raw-gain explosive rate would be a different named measure.
+
+Reliable first inputs
+The existing cached boxes contain recorded passing/rushing yards and attempts,
+completions, first downs, conversion made/opportunity pairs, turnovers, penalties
+and possession time. These are SportsDataverse's ESPN raw box-score release,
+not CFBD advanced outputs; preserve that provenance and exact manifest hashes.
+Compute our rates from counts. Require paired IDs and mirrored opponents, keep
+unknown/missing fields unavailable, and check component totals. College sacks
+already affect the source rushing totals; do not subtract them twice or invent
+dropbacks without sack counts. Team-wide penalty yards per offensive play are
+an exposure proxy, not measured offensive-only penalty cost.
+
+What these boxes cannot supply
+They do not reconstruct individual-play success, explosive frequency, drive
+starting position, scoring opportunities, regulation-only statistics or complete
+special-teams value. Those require additional verified recorded opportunities.
+Possession seconds divided by plays is not automatically an exact tempo measure.
+
+Player information
+Raw player production can be useful, but attribution and timing are essential.
+Passing and receiving credit overlap, and team-only/unattributed plays mean
+player totals need not sum to a team total. Final-season player numbers, updated
+rosters and later transfer facts cannot predict an earlier game. The returning
+production endpoint includes PPA fields; rebuild any original version from dated
+raw production and roster identity facts. Do not assume complete historic
+injury, lineup or snap-count coverage.
+
+Play-level rebuild, when data supports it
+Choose the play population before evaluation, including sacks, no-plays,
+penalties, kneels, spikes and overtime. Recompute successful plays from recorded
+down/distance/gain and explicitly handled offensive scores. A scoring flag alone
+can describe a defensive touchdown and cannot make every scoring play an
+offensive success. Never filter our raw sample by provider PPA availability or
+provider model-derived garbage-time/win-probability fields.
+
+Evidence
+Official public implementation inspected at CFBD/cfb-api-v2 commit
+e983aff8fa3e5dddf2e58d78a6717938a4c3d28f, dated2026-10-27:
+https://github.com/CFBD/cfb-api-v2/blob/e983aff8fa3e5dddf2e58d78a6717938a4c3d28f/src/app/stats/service.ts
+Relevant pinned-file lines:1863 PPA eligibility;1878 stored success;
+1933 play count;1968-1969 success fraction;1973 provider explosiveness.
+This is public source inspection, not runtime/database attestation.
+https://api.collegefootballdata.com/metrics-and-definitions
+https://api.collegefootballdata.com/methodology-overview
+https://api.collegefootballdata.com/data-availability
+https://api.collegefootballdata.com/api/players
+Local raw source manifest:research/results/performance/source-manifest.json
+Detailed machine-readable contracts:research/predictive-v2-input-audit.json
+
+Operations
+No authenticated CFBD calls, paid services, existing production-file edits,
+raw-source publication or changes to the frozen future-blend experiment.
+
+Pre-results implementation review
+Reviewed the new protocol, raw-count ingest, separate-unit model and chronological
+experiment before inspecting any new later-year results. All32 independent
+safeguard tests pass. Source/cutoff alignment, target-data exclusion, older-only
+scaling/selection/refit, metric-specific missingness and common evaluation games
+match the declaration. No pre-results methodology blocker was identified.
+The Strength control here uses a newly fitted raw-strength-plus-venue probability
+mapping; do not directly compare its accuracy with the earlier percentile-rank
+ordering statistic. This remains a bounded nine-count research candidate.
+Protocol SHA256:2b1b1003bb53d13dcaf72a36ab70ff2afe11f728b2846c97b1d398918da5f948
+
+Final research publication review
+PASS for the final research artifact atresearch/results/predictive-v2/ab24aeeb21fa.
+Independently reran33 tests and checked the final code pins and unchanged
+protocol. The first and final selection grids, every fitted model and every
+reported metric agree exactly; game-prediction CSV bytes are identical. The
+separate unit-support reporting and explained prediction helper change no fits.
+The portable model exactly matches the older-selected strength+efficiency fit.
+Its pure prediction helper assumes caller-verified pregame states; it is not
+a live collector. The candidate shows only a small pooled retrospective gain,
+regresses in2025 and has sensitivity ranges spanning zero. The artifact
+correctly declines to claim superiority. Broader later-performing families
+remain diagnostics and cannot be chosen from these later results. Research
+branch publication is appropriate; no live replacement follows.
