@@ -1,0 +1,1650 @@
+{
+  "protocol": {
+    "id": "original-counts-predictive-v2-research-v1",
+    "status": "Declared before fitting new models or inspecting their ranking orders. Local research only; existing three models and frozen prospective blend remain unchanged.",
+    "objective": "Assess whether independently reconstructed recorded-stat features improve future FBS-FBS win probabilities over the existing Predictive Strength baseline.",
+    "originalityPolicy": {
+      "recordedFacts": "Use verified scores, participants, venue, dates, subdivisions and recorded team box-score counts. Reuse stable identities and standard statistical definitions; originality means our documented computations and fitted model, not inventing a new definition for every familiar statistic.",
+      "derivedAllowed": "A deterministic rate may be reconstructed from audited recorded numerators and denominators. Retaining a provider-derived value requires a matching declared definition, population and timing audit; agreement of current rankings alone is insufficient.",
+      "excluded": [
+        "human polls",
+        "recruiting stars",
+        "betting lines or betting-derived probabilities",
+        "provider team/player ratings",
+        "CFBD PPA/EPA values",
+        "provider win probabilities",
+        "CFBD PPA-based explosiveness",
+        "provider successRate in this new candidate"
+      ],
+      "existingPerformance": "The current Performance model uses provider success rates over PPA-eligible plays, not PPA numerical values. That source-population dependency is disclosed and is not silently relabeled as an independently rebuilt all-play statistic.",
+      "missing": "Missing raw records and zero-opportunity rates stay unavailable. Unit parameters shrink toward declared neutral priors with explicit observed counts; no fictitious raw games are inserted.",
+      "unavailable": "Raw plays are required before reconstructing play success/explosiveness, drive measures, overtime/garbage-time filters. Player attribution and special teams require separately audited fields. Do not fabricate these from aggregate boxes."
+    },
+    "data": {
+      "source": "Existing checksum-pinned ESPN recorded team box counts distributed by SportsDataverse, linked by exact game/team IDs to repaired CFBD outcome histories. These are not represented as CFBD-derived model statistics.",
+      "trainingYears": [
+        2014,
+        2015,
+        2016,
+        2017
+      ],
+      "selectionYears": [
+        2018,
+        2019
+      ],
+      "repeatedEvaluationYears": [
+        2023,
+        2024,
+        2025
+      ],
+      "excludedYears": {
+        "2020": "Disrupted season and prior source caveats",
+        "2021-2022": "Raw box files not in this already authorized cache; do not fetch to fill the gap during this experiment",
+        "2026": "Current illustration is not a trustworthy timestamped weekly raw-stat replay and cannot select the model"
+      },
+      "coverage": "Preserve every completed parent target game, even without target-game statistics. Fit unit features only from paired verified FBS/FCS source games. Report every missing field/game and counts by team/year/subdivision; retain native baseline coverage separately.",
+      "time": "Before earliest kickoff of each complete parent competition week; only earlier processed weeks with kickoff+24hours<=cutoff. No target-week result or statistic enters the input graph. Corrected retrospective sources do not prove contemporaneous availability."
+    },
+    "features": {
+      "efficiency": [
+        "ypp",
+        "passingYpp",
+        "rushingYpp",
+        "completionRate"
+      ],
+      "sustain": [
+        "firstDownRate",
+        "thirdDownRate",
+        "fourthDownRate"
+      ],
+      "mistakes": [
+        "turnoverRate",
+        "penaltyYardsPerPlay"
+      ],
+      "definitions": {
+        "ypp": "Recorded totalYards / (recorded passing attempts + recorded rushing attempts)",
+        "passingYpp": "Recorded netPassingYards / recorded pass attempts; not claimed as true dropback efficiency without separate sack-denominator verification",
+        "rushingYpp": "Recorded rushingYards / recorded rushingAttempts; includes the source's college sack-accounting convention",
+        "completionRate": "Recorded completions / passing attempts",
+        "firstDownRate": "Recorded firstDowns / (passing attempts + rushing attempts)",
+        "thirdDownRate": "Recorded successful third downs / recorded third-down attempts",
+        "fourthDownRate": "Recorded successful fourth downs / recorded fourth-down attempts; zero attempts is unavailable",
+        "turnoverRate": "Recorded turnovers lost / (passing attempts + rushing attempts); do not add interceptions and fumbles a second time",
+        "penaltyYardsPerPlay": "Recorded total penalty yards / (passing attempts + rushing attempts); includes all team penalties, not claimed as offense-only attribution"
+      },
+      "unitModel": "Separate regularized offense and defensive allowance effects for each metric: value=intercept+offenseEffect+allowanceEffect+H*offenseVenue+D*(offenseFbs-defenseFbs). Individual opponents retained; no conference or team-name term. Defense observations are opponent offensive counts.",
+      "context": {
+        "contextPriorStrength": 0.01,
+        "interceptPrior": 0,
+        "homePrior": 0,
+        "divisionPrior": 0
+      },
+      "unitRidgeGrid": [
+        1,
+        4,
+        16
+      ],
+      "prior": "No previous team effects in raw-unit fits. The Strength feature deliberately retains the existing model's own earlier-season strength prior.",
+      "matchup": "Each metric supplies predicted home production minus predicted away production using only preweek fitted units and fixture venue. Also retain metric observation counts. No duplicate manual statistical bonuses.",
+      "primaryEligibility": "Both teams have>=4 completed outcome games and>=4 measured basic ypp games. Other sparse metric units use their explicitly declared shrunken estimates and retain support counts. Both compared models use identical eligible targets."
+    },
+    "prediction": {
+      "families": {
+        "strength": [
+          "strength",
+          "venue"
+        ],
+        "raw-units": [
+          "efficiency",
+          "sustain",
+          "mistakes",
+          "venue"
+        ],
+        "strength+efficiency": [
+          "strength",
+          "efficiency",
+          "venue"
+        ],
+        "strength+efficiency+sustain": [
+          "strength",
+          "efficiency",
+          "sustain",
+          "venue"
+        ],
+        "strength+all-counts": [
+          "strength",
+          "efficiency",
+          "sustain",
+          "mistakes",
+          "venue"
+        ]
+      },
+      "mapping": "Ridge-penalized logistic regression, no intercept; venue is0neutral/1home. Scale difference features by training-only RMS without centering, preserving neutral matchup orientation symmetry. Zero-scale features get scale1. No arbitrary percentage blend of statistics.",
+      "logisticPenaltyGrid": [
+        0.1,
+        1,
+        10
+      ],
+      "selection": "Fit scaling/weights on2014-2017, select unit ridge and logistic penalty by pooled2018-2019 log loss. Tie within1e-10 prefers stronger logistic penalty then stronger unit ridge; families break ties by fewer input features then declared order. Select a best broader candidate among non-strength families separately from the Strength control. Never use2023-2025 for selection.",
+      "refit": "After older-only selection, refit selected family weights/scales on2014-2019. This remains strictly earlier than evaluation seasons. No further grid expansion or evaluation-driven coefficient changes."
+    },
+    "evaluation": {
+      "target": "Confirmed completed FBS-FBS parent games; target eligibility is independent of whether its future box score downloaded.",
+      "primary": "Compare selected broader candidate and calibrated Strength on identical established target games. Report win accuracy, Brier, log loss, probability bias, yearly metrics and regular/postseason/venue groups.",
+      "nativeBaseline": "Report Strength on all parent games with both teams>=4 prior outcome games as a separate coverage diagnostic; do not compare unmatched samples as an accuracy advantage.",
+      "uncertainty": "1000 paired complete season-type-week-block resamples within year, seed1729, for candidate-minus-baseline Brier/logloss/accuracy. Shared teams connect weeks; intervals are sensitivity summaries, not calibrated prospective significance.",
+      "diagnostics": "Report all fixed family results as diagnostics, selected older configurations, learned coefficients, missingness and consequential game disagreements. No ranking-order-based tuning.",
+      "limits": "Source seasons, outcomes and some prior statistics were already inspected. These are repeated retrospective results even with new features, not an untouched test. A new model needs a separately versioned future trial before a public replacement."
+    },
+    "operations": {
+      "cfbdCalls": 0,
+      "networkDataPulls": 0,
+      "storage": "Use existing private cached raw sources; save only derived reports and source hashes for review. No raw/API data or credentials published.",
+      "production": "Hash existing src/frontend/published/configuration and both frozen blend capture/evaluation bindings before/after. No edits to live rankings, schedules, frozen protocols or observations.",
+      "promotion": "Research only. A failed or inferior candidate remains reported; do not replace the current model just because more fields were used."
+    }
+  },
+  "fingerprint": "ab24aeeb21fae5b2953aeffeaf15135a858cb7e70d65bc0e7b6fdc488184ddfa",
+  "protocolSha256": "2b1b1003bb53d13dcaf72a36ab70ff2afe11f728b2846c97b1d398918da5f948",
+  "implementationSha256": {
+    "predictive_v2_experiment.py": "0c0ee45102cbeeda2955cc88e1339b5379867afe294aebda09a14808b0670d9c",
+    "predictive_v2_ingest.py": "27d8538418c0b32f3b6c3a1252a394fc297a85e32e47c957b29371a080fc15d0",
+    "predictive_v2_model.py": "e835a398788ec48361d4697fb729e9c1ce870c3a279d9ee1ef0d63c22c92577c",
+    "composite_outcome_replay.py": "1befc44c3166bfa260d20bb06df58e83f132016648a77f7324830e9fbd32b74b",
+    "compare_merit.py": "7756400de628989ec35439260346be1a8a710ca430b3995d67e55de12562990a",
+    "division_experiment.py": "cb7dcd2ed9009210172d899c61ddb2fdaa903bffd87ccdc36527dabfa0ac15ea",
+    "replay_weekly.py": "286db8fc077464f9a6df0b81b3430b44ada4bc89863705427cdefb2cc94f4058"
+  },
+  "source": {
+    "2014": {
+      "sourceSha256": "bbc5fd2a00a846f955d841fac7b07373a79b2095cd9290e07d5c521cd60490e1",
+      "parentSha256": "f6c41ef2dd5b751407efa196c2c6a76aaef7e226ab4766678120e7eb8783f193",
+      "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee"
+    },
+    "2015": {
+      "sourceSha256": "7ca01274ad12399f99f0a2443f93d837b1098154fe14219b7167abe78e1c9eb8",
+      "parentSha256": "ec50d753edeb723aa0b2a2bc2c7b5f4e9d81ba152f950b8cd54819f51b9875be",
+      "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee"
+    },
+    "2016": {
+      "sourceSha256": "28a14e829dd607e97c13042d7fa3d1e03622e14ea321fa73c2511583e0e6382a",
+      "parentSha256": "3846e2ea6963eda4baec894c901f7cd12a80893e525e006d2d7e4df4f1f1200a",
+      "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee"
+    },
+    "2017": {
+      "sourceSha256": "b08efecdb672aef5302349477bb98159c5971da3786e0d42ea004c770cc98b22",
+      "parentSha256": "b2610ad25d7ebd931de5dd05f4e14df8f8bf2b0052a2549c0d65a4530b8af3f4",
+      "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee"
+    },
+    "2018": {
+      "sourceSha256": "74b6ff13c4c1e09043699d4c2711739d53793c5eb3f0ebfe9fb15a1e2db2961e",
+      "parentSha256": "089672a2e3509990c36a75e30910ebe4abf2e37091a89551166aaf287f41fdb3",
+      "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee"
+    },
+    "2019": {
+      "sourceSha256": "6076dbb7d9188071d909315fcbd3a5adf46d771162284bbc29bed439d7eca3e2",
+      "parentSha256": "8966102ad775cf682a905f70d7b6a50fa204019135587a6fe287871a7994fd53",
+      "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee"
+    },
+    "2023": {
+      "sourceSha256": "41637076d7bd57c0943c2a8d75d39ae3093e808681514dfa69c87b3c0d91b799",
+      "parentSha256": "5e7e5975fcde9caf5b1e12f5a39449005fac05a7b41a9399b6ed86621f2dd397",
+      "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee"
+    },
+    "2024": {
+      "sourceSha256": "02baf937b43da8f1a9f0e25cefaa243bad572389b47090a92a44dfa2c1bff324",
+      "parentSha256": "84a3f1132e3805d71c9ba02ba285b9e66806646804c570f1dfd6e6568bddae98",
+      "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee"
+    },
+    "2025": {
+      "sourceSha256": "4ecc44939c4a90760fced98b8802a6d2483556516fe47410c41ccb79f8ed10b8",
+      "parentSha256": "2b652655b8bdb89d92a939a0bc4c34b0e3036526edef3c442e36b0df129907ff",
+      "sourceManifestSha256": "3163541c5292e3951131a1927db3e38c239e9a20c507c941ab831b54edbedaee"
+    }
+  },
+  "baseline": {
+    "2014": {
+      "research\\datasets\\fcs-coverage-v1\\seasons\\2014.json": "f6c41ef2dd5b751407efa196c2c6a76aaef7e226ab4766678120e7eb8783f193",
+      "data\\seasons\\2014.json": "526f81ee2c9872f5e48fd93e054d8bd1bef1dff82e5ccc7bfd0eb3cfcb0e4e60",
+      "data\\snapshots\\2013.json": "9cb272ee78240a7fba77dfa5efb8c2cfc1eb9ffd886921af04c994433f802ab0",
+      "data\\model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+      "data\\publication-model.json": "177ef4d5248bc56f133944edd80bf6db76a304f5662b5e9c741672ddaa331bc9",
+      "research\\composite_outcome_replay.py": "1befc44c3166bfa260d20bb06df58e83f132016648a77f7324830e9fbd32b74b",
+      "research\\compare_merit.py": "7756400de628989ec35439260346be1a8a710ca430b3995d67e55de12562990a",
+      "research\\division_experiment.py": "cb7dcd2ed9009210172d899c61ddb2fdaa903bffd87ccdc36527dabfa0ac15ea",
+      "src\\engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+      "research\\lib\\division_candidate.mjs": "dcf3e3e7b9c5029b1c46c3e52a0f150f4855c53a24bec57ab184016b070442a5"
+    },
+    "2015": {
+      "research\\datasets\\fcs-coverage-v1\\seasons\\2015.json": "ec50d753edeb723aa0b2a2bc2c7b5f4e9d81ba152f950b8cd54819f51b9875be",
+      "data\\seasons\\2015.json": "f757271e4b22c089e91d7ce7738b220a3aeeec2e722b600fc8cda375347d3045",
+      "data\\snapshots\\2014.json": "adcbc1c3d3a9239034549aada1f86184fe127c9de2f020f1de2a7aa1686ac1ba",
+      "data\\model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+      "data\\publication-model.json": "177ef4d5248bc56f133944edd80bf6db76a304f5662b5e9c741672ddaa331bc9",
+      "research\\composite_outcome_replay.py": "1befc44c3166bfa260d20bb06df58e83f132016648a77f7324830e9fbd32b74b",
+      "research\\compare_merit.py": "7756400de628989ec35439260346be1a8a710ca430b3995d67e55de12562990a",
+      "research\\division_experiment.py": "cb7dcd2ed9009210172d899c61ddb2fdaa903bffd87ccdc36527dabfa0ac15ea",
+      "src\\engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+      "research\\lib\\division_candidate.mjs": "dcf3e3e7b9c5029b1c46c3e52a0f150f4855c53a24bec57ab184016b070442a5"
+    },
+    "2016": {
+      "research\\datasets\\fcs-coverage-v1\\seasons\\2016.json": "3846e2ea6963eda4baec894c901f7cd12a80893e525e006d2d7e4df4f1f1200a",
+      "data\\seasons\\2016.json": "fc2b316f685d8e3b6403b90abc2215216f36b55647bd0eb629a2439f2a5e7d28",
+      "data\\snapshots\\2015.json": "d3e82aeceec851c62573f2a69acfd3b3c00b6ecd3a635b66c25c8d3c8ab1f41a",
+      "data\\model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+      "data\\publication-model.json": "177ef4d5248bc56f133944edd80bf6db76a304f5662b5e9c741672ddaa331bc9",
+      "research\\composite_outcome_replay.py": "1befc44c3166bfa260d20bb06df58e83f132016648a77f7324830e9fbd32b74b",
+      "research\\compare_merit.py": "7756400de628989ec35439260346be1a8a710ca430b3995d67e55de12562990a",
+      "research\\division_experiment.py": "cb7dcd2ed9009210172d899c61ddb2fdaa903bffd87ccdc36527dabfa0ac15ea",
+      "src\\engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+      "research\\lib\\division_candidate.mjs": "dcf3e3e7b9c5029b1c46c3e52a0f150f4855c53a24bec57ab184016b070442a5"
+    },
+    "2017": {
+      "research\\datasets\\fcs-coverage-v1\\seasons\\2017.json": "b2610ad25d7ebd931de5dd05f4e14df8f8bf2b0052a2549c0d65a4530b8af3f4",
+      "data\\seasons\\2017.json": "0fbce674b39930a32bf8e8dbb72cf15d6a88a257d3114eb7be114ba01a19cf8b",
+      "data\\snapshots\\2016.json": "fc55316d9b9decdf3fc186566e60cdcc5a85295a10df580f3757087e8b8981aa",
+      "data\\model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+      "data\\publication-model.json": "177ef4d5248bc56f133944edd80bf6db76a304f5662b5e9c741672ddaa331bc9",
+      "research\\composite_outcome_replay.py": "1befc44c3166bfa260d20bb06df58e83f132016648a77f7324830e9fbd32b74b",
+      "research\\compare_merit.py": "7756400de628989ec35439260346be1a8a710ca430b3995d67e55de12562990a",
+      "research\\division_experiment.py": "cb7dcd2ed9009210172d899c61ddb2fdaa903bffd87ccdc36527dabfa0ac15ea",
+      "src\\engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+      "research\\lib\\division_candidate.mjs": "dcf3e3e7b9c5029b1c46c3e52a0f150f4855c53a24bec57ab184016b070442a5"
+    },
+    "2018": {
+      "research\\datasets\\fcs-coverage-v1\\seasons\\2018.json": "089672a2e3509990c36a75e30910ebe4abf2e37091a89551166aaf287f41fdb3",
+      "data\\seasons\\2018.json": "9c9da1d5839b5ee8ff3508ac0cb2261d55225349b34491a4f25878a5bfae9cb4",
+      "data\\snapshots\\2017.json": "7ce4583318eec13c63967284841c90ab3f47f6077aa204f4705797baf435ef5b",
+      "data\\model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+      "data\\publication-model.json": "177ef4d5248bc56f133944edd80bf6db76a304f5662b5e9c741672ddaa331bc9",
+      "research\\composite_outcome_replay.py": "1befc44c3166bfa260d20bb06df58e83f132016648a77f7324830e9fbd32b74b",
+      "research\\compare_merit.py": "7756400de628989ec35439260346be1a8a710ca430b3995d67e55de12562990a",
+      "research\\division_experiment.py": "cb7dcd2ed9009210172d899c61ddb2fdaa903bffd87ccdc36527dabfa0ac15ea",
+      "src\\engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+      "research\\lib\\division_candidate.mjs": "dcf3e3e7b9c5029b1c46c3e52a0f150f4855c53a24bec57ab184016b070442a5"
+    },
+    "2019": {
+      "research\\datasets\\fcs-coverage-v1\\seasons\\2019.json": "8966102ad775cf682a905f70d7b6a50fa204019135587a6fe287871a7994fd53",
+      "data\\seasons\\2019.json": "4dc4de9a8d68be4c782c4f1965e7d522cfaebc90d80aa10c832a7067634757ef",
+      "data\\snapshots\\2018.json": "bfbdfcbfa5ce9798c3a9dc1cb95aebd4c9aed6a4642dce53ffdb8fd086470268",
+      "data\\model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+      "data\\publication-model.json": "177ef4d5248bc56f133944edd80bf6db76a304f5662b5e9c741672ddaa331bc9",
+      "research\\composite_outcome_replay.py": "1befc44c3166bfa260d20bb06df58e83f132016648a77f7324830e9fbd32b74b",
+      "research\\compare_merit.py": "7756400de628989ec35439260346be1a8a710ca430b3995d67e55de12562990a",
+      "research\\division_experiment.py": "cb7dcd2ed9009210172d899c61ddb2fdaa903bffd87ccdc36527dabfa0ac15ea",
+      "src\\engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+      "research\\lib\\division_candidate.mjs": "dcf3e3e7b9c5029b1c46c3e52a0f150f4855c53a24bec57ab184016b070442a5"
+    },
+    "2023": {
+      "research\\datasets\\fcs-coverage-v1\\seasons\\2023.json": "5e7e5975fcde9caf5b1e12f5a39449005fac05a7b41a9399b6ed86621f2dd397",
+      "data\\seasons\\2023.json": "b5011bcdd7df9750d92c8827316f1a8300a3b4c623adc6f1c2acb92bd6d6c241",
+      "data\\snapshots\\2022.json": "17793fab663cce0122ef82fbfabbce1645a4ad7b6d0b35756f82562f5815be2a",
+      "data\\model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+      "data\\publication-model.json": "177ef4d5248bc56f133944edd80bf6db76a304f5662b5e9c741672ddaa331bc9",
+      "research\\composite_outcome_replay.py": "1befc44c3166bfa260d20bb06df58e83f132016648a77f7324830e9fbd32b74b",
+      "research\\compare_merit.py": "7756400de628989ec35439260346be1a8a710ca430b3995d67e55de12562990a",
+      "research\\division_experiment.py": "cb7dcd2ed9009210172d899c61ddb2fdaa903bffd87ccdc36527dabfa0ac15ea",
+      "src\\engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+      "research\\lib\\division_candidate.mjs": "dcf3e3e7b9c5029b1c46c3e52a0f150f4855c53a24bec57ab184016b070442a5"
+    },
+    "2024": {
+      "research\\datasets\\fcs-coverage-v1\\seasons\\2024.json": "84a3f1132e3805d71c9ba02ba285b9e66806646804c570f1dfd6e6568bddae98",
+      "data\\seasons\\2024.json": "2c4834a1ce6c5ae94c3f496e9a61d9b60cb5a841f603a561c90e7298433ae798",
+      "data\\snapshots\\2023.json": "ce002ebe5504cbbee664da6947ea3f72200d6912b4b74d03d763ecf9098db53c",
+      "data\\model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+      "data\\publication-model.json": "177ef4d5248bc56f133944edd80bf6db76a304f5662b5e9c741672ddaa331bc9",
+      "research\\composite_outcome_replay.py": "1befc44c3166bfa260d20bb06df58e83f132016648a77f7324830e9fbd32b74b",
+      "research\\compare_merit.py": "7756400de628989ec35439260346be1a8a710ca430b3995d67e55de12562990a",
+      "research\\division_experiment.py": "cb7dcd2ed9009210172d899c61ddb2fdaa903bffd87ccdc36527dabfa0ac15ea",
+      "src\\engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+      "research\\lib\\division_candidate.mjs": "dcf3e3e7b9c5029b1c46c3e52a0f150f4855c53a24bec57ab184016b070442a5"
+    },
+    "2025": {
+      "research\\datasets\\fcs-coverage-v1\\seasons\\2025.json": "2b652655b8bdb89d92a939a0bc4c34b0e3036526edef3c442e36b0df129907ff",
+      "data\\seasons\\2025.json": "d41572b4895deb8c2f3663cdab9910e2147b868b44dc34d2bcbe3d7709b30caa",
+      "data\\snapshots\\2024.json": "94729d25462d3abadeca51373ff8a7d3a6104190b8fe8762479aafa93b658464",
+      "data\\model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+      "data\\publication-model.json": "177ef4d5248bc56f133944edd80bf6db76a304f5662b5e9c741672ddaa331bc9",
+      "research\\composite_outcome_replay.py": "1befc44c3166bfa260d20bb06df58e83f132016648a77f7324830e9fbd32b74b",
+      "research\\compare_merit.py": "7756400de628989ec35439260346be1a8a710ca430b3995d67e55de12562990a",
+      "research\\division_experiment.py": "cb7dcd2ed9009210172d899c61ddb2fdaa903bffd87ccdc36527dabfa0ac15ea",
+      "src\\engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+      "research\\lib\\division_candidate.mjs": "dcf3e3e7b9c5029b1c46c3e52a0f150f4855c53a24bec57ab184016b070442a5"
+    }
+  },
+  "selectionGrid": [
+    {
+      "family": "strength",
+      "ridge": 1,
+      "penalty": 0.1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7264409881061299,
+        "brier": 0.1770950565411993,
+        "logLoss": 0.5250027335244248,
+        "probabilityBias": -0.0267617032296681
+      }
+    },
+    {
+      "family": "strength",
+      "ridge": 1,
+      "penalty": 1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7264409881061299,
+        "brier": 0.17708959949888056,
+        "logLoss": 0.5250233082680675,
+        "probabilityBias": -0.02686418381196213
+      }
+    },
+    {
+      "family": "strength",
+      "ridge": 1,
+      "penalty": 10,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7264409881061299,
+        "brier": 0.1770842597717325,
+        "logLoss": 0.5253769964447603,
+        "probabilityBias": -0.027848046845462875
+      }
+    },
+    {
+      "family": "raw-units",
+      "ridge": 1,
+      "penalty": 0.1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7264409881061299,
+        "brier": 0.17995211015226809,
+        "logLoss": 0.5348379027117958,
+        "probabilityBias": -0.012755989962346547
+      }
+    },
+    {
+      "family": "raw-units",
+      "ridge": 1,
+      "penalty": 1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7264409881061299,
+        "brier": 0.17992437197364716,
+        "logLoss": 0.534772902305697,
+        "probabilityBias": -0.012774313889750864
+      }
+    },
+    {
+      "family": "raw-units",
+      "ridge": 1,
+      "penalty": 10,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.727355901189387,
+        "brier": 0.17969631071022454,
+        "logLoss": 0.5342516134020445,
+        "probabilityBias": -0.012958935148334511
+      }
+    },
+    {
+      "family": "raw-units",
+      "ridge": 4,
+      "penalty": 0.1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7218664226898445,
+        "brier": 0.182702754992825,
+        "logLoss": 0.5406233971772173,
+        "probabilityBias": -0.00807189749672525
+      }
+    },
+    {
+      "family": "raw-units",
+      "ridge": 4,
+      "penalty": 1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7218664226898445,
+        "brier": 0.18266867820507562,
+        "logLoss": 0.5405469983976418,
+        "probabilityBias": -0.00801589070133824
+      }
+    },
+    {
+      "family": "raw-units",
+      "ridge": 4,
+      "penalty": 10,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7227813357731016,
+        "brier": 0.18239237988103302,
+        "logLoss": 0.5399430588644478,
+        "probabilityBias": -0.007492576321359184
+      }
+    },
+    {
+      "family": "raw-units",
+      "ridge": 16,
+      "penalty": 0.1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7136322049405307,
+        "brier": 0.18871100493066642,
+        "logLoss": 0.5541596150941287,
+        "probabilityBias": 0.010605080551194163
+      }
+    },
+    {
+      "family": "raw-units",
+      "ridge": 16,
+      "penalty": 1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7154620311070449,
+        "brier": 0.18868294018057813,
+        "logLoss": 0.5541020467073592,
+        "probabilityBias": 0.010826262976114647
+      }
+    },
+    {
+      "family": "raw-units",
+      "ridge": 16,
+      "penalty": 10,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.717291857273559,
+        "brier": 0.18853290151534557,
+        "logLoss": 0.5538447645710523,
+        "probabilityBias": 0.012908289833841437
+      }
+    },
+    {
+      "family": "strength+efficiency",
+      "ridge": 1,
+      "penalty": 0.1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7264409881061299,
+        "brier": 0.1754877798953733,
+        "logLoss": 0.5220277924716484,
+        "probabilityBias": -0.02403862267812867
+      }
+    },
+    {
+      "family": "strength+efficiency",
+      "ridge": 1,
+      "penalty": 1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7264409881061299,
+        "brier": 0.17543548188128189,
+        "logLoss": 0.5219400998736974,
+        "probabilityBias": -0.024062448704213802
+      }
+    },
+    {
+      "family": "strength+efficiency",
+      "ridge": 1,
+      "penalty": 10,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.727355901189387,
+        "brier": 0.1750681371049243,
+        "logLoss": 0.5214097298810437,
+        "probabilityBias": -0.024306092185751815
+      }
+    },
+    {
+      "family": "strength+efficiency",
+      "ridge": 4,
+      "penalty": 0.1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7264409881061299,
+        "brier": 0.17588034829034552,
+        "logLoss": 0.5227272605811051,
+        "probabilityBias": -0.022730708460122605
+      }
+    },
+    {
+      "family": "strength+efficiency",
+      "ridge": 4,
+      "penalty": 1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.727355901189387,
+        "brier": 0.1758326083507767,
+        "logLoss": 0.5226463187888771,
+        "probabilityBias": -0.022715700830426216
+      }
+    },
+    {
+      "family": "strength+efficiency",
+      "ridge": 4,
+      "penalty": 10,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7291857273559011,
+        "brier": 0.1755103332124193,
+        "logLoss": 0.5221858667426068,
+        "probabilityBias": -0.02256890112178319
+      }
+    },
+    {
+      "family": "strength+efficiency",
+      "ridge": 16,
+      "penalty": 0.1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7264409881061299,
+        "brier": 0.17629853654381725,
+        "logLoss": 0.5234092692720971,
+        "probabilityBias": -0.01833925651000774
+      }
+    },
+    {
+      "family": "strength+efficiency",
+      "ridge": 16,
+      "penalty": 1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.727355901189387,
+        "brier": 0.17625249832827675,
+        "logLoss": 0.523328509759474,
+        "probabilityBias": -0.018226189984000423
+      }
+    },
+    {
+      "family": "strength+efficiency",
+      "ridge": 16,
+      "penalty": 10,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7264409881061299,
+        "brier": 0.1759719794733728,
+        "logLoss": 0.5229347691663727,
+        "probabilityBias": -0.017112954802071055
+      }
+    },
+    {
+      "family": "strength+efficiency+sustain",
+      "ridge": 1,
+      "penalty": 0.1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7291857273559011,
+        "brier": 0.17565582285489914,
+        "logLoss": 0.5226077927910386,
+        "probabilityBias": -0.0241843971962053
+      }
+    },
+    {
+      "family": "strength+efficiency+sustain",
+      "ridge": 1,
+      "penalty": 1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.727355901189387,
+        "brier": 0.17560018247746265,
+        "logLoss": 0.522503170123077,
+        "probabilityBias": -0.024173444220123873
+      }
+    },
+    {
+      "family": "strength+efficiency+sustain",
+      "ridge": 1,
+      "penalty": 10,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.727355901189387,
+        "brier": 0.1751843768986406,
+        "logLoss": 0.5217728994533285,
+        "probabilityBias": -0.024094365425425066
+      }
+    },
+    {
+      "family": "strength+efficiency+sustain",
+      "ridge": 4,
+      "penalty": 0.1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7337602927721867,
+        "brier": 0.17642724256359904,
+        "logLoss": 0.5242690800483084,
+        "probabilityBias": -0.02375036514871004
+      }
+    },
+    {
+      "family": "strength+efficiency+sustain",
+      "ridge": 4,
+      "penalty": 1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7337602927721867,
+        "brier": 0.17637570032827346,
+        "logLoss": 0.5241660605384156,
+        "probabilityBias": -0.02368924850790981
+      }
+    },
+    {
+      "family": "strength+efficiency+sustain",
+      "ridge": 4,
+      "penalty": 10,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7319304666056725,
+        "brier": 0.17599671918747334,
+        "logLoss": 0.5234558328387028,
+        "probabilityBias": -0.023110636183632547
+      }
+    },
+    {
+      "family": "strength+efficiency+sustain",
+      "ridge": 16,
+      "penalty": 0.1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7264409881061299,
+        "brier": 0.17708938467391333,
+        "logLoss": 0.5255414957311143,
+        "probabilityBias": -0.021395682715763444
+      }
+    },
+    {
+      "family": "strength+efficiency+sustain",
+      "ridge": 16,
+      "penalty": 1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7255260750228728,
+        "brier": 0.17703626829884314,
+        "logLoss": 0.525427732225138,
+        "probabilityBias": -0.021202085068688217
+      }
+    },
+    {
+      "family": "strength+efficiency+sustain",
+      "ridge": 16,
+      "penalty": 10,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7282708142726441,
+        "brier": 0.17666229864709002,
+        "logLoss": 0.524682414987668,
+        "probabilityBias": -0.01938611237142063
+      }
+    },
+    {
+      "family": "strength+all-counts",
+      "ridge": 1,
+      "penalty": 0.1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.727355901189387,
+        "brier": 0.1758303485347502,
+        "logLoss": 0.5230873509737171,
+        "probabilityBias": -0.024042527614714593
+      }
+    },
+    {
+      "family": "strength+all-counts",
+      "ridge": 1,
+      "penalty": 1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7264409881061299,
+        "brier": 0.17578943045609274,
+        "logLoss": 0.5230103249251682,
+        "probabilityBias": -0.02399000916972818
+      }
+    },
+    {
+      "family": "strength+all-counts",
+      "ridge": 1,
+      "penalty": 10,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7255260750228728,
+        "brier": 0.1755016653051093,
+        "logLoss": 0.5225215898726682,
+        "probabilityBias": -0.023577035656220158
+      }
+    },
+    {
+      "family": "strength+all-counts",
+      "ridge": 4,
+      "penalty": 0.1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7301006404391582,
+        "brier": 0.17677452570099,
+        "logLoss": 0.525085669736823,
+        "probabilityBias": -0.023376304716076244
+      }
+    },
+    {
+      "family": "strength+all-counts",
+      "ridge": 4,
+      "penalty": 1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7301006404391582,
+        "brier": 0.17673769632728023,
+        "logLoss": 0.525007871170989,
+        "probabilityBias": -0.023266069310828395
+      }
+    },
+    {
+      "family": "strength+all-counts",
+      "ridge": 4,
+      "penalty": 10,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7264409881061299,
+        "brier": 0.17648230563800493,
+        "logLoss": 0.5245151884627532,
+        "probabilityBias": -0.022289993572809762
+      }
+    },
+    {
+      "family": "strength+all-counts",
+      "ridge": 16,
+      "penalty": 0.1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7246111619396157,
+        "brier": 0.17748396398746855,
+        "logLoss": 0.5264291399553046,
+        "probabilityBias": -0.020670449927027868
+      }
+    },
+    {
+      "family": "strength+all-counts",
+      "ridge": 16,
+      "penalty": 1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7255260750228728,
+        "brier": 0.17744045453542107,
+        "logLoss": 0.5263283268081466,
+        "probabilityBias": -0.020406714516384775
+      }
+    },
+    {
+      "family": "strength+all-counts",
+      "ridge": 16,
+      "penalty": 10,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7291857273559011,
+        "brier": 0.17715542048949304,
+        "logLoss": 0.5257241414241207,
+        "probabilityBias": -0.018051291576218185
+      }
+    }
+  ],
+  "selectedByFamily": {
+    "strength": {
+      "family": "strength",
+      "ridge": 1,
+      "penalty": 0.1,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7264409881061299,
+        "brier": 0.1770950565411993,
+        "logLoss": 0.5250027335244248,
+        "probabilityBias": -0.0267617032296681
+      }
+    },
+    "raw-units": {
+      "family": "raw-units",
+      "ridge": 1,
+      "penalty": 10,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.727355901189387,
+        "brier": 0.17969631071022454,
+        "logLoss": 0.5342516134020445,
+        "probabilityBias": -0.012958935148334511
+      }
+    },
+    "strength+efficiency": {
+      "family": "strength+efficiency",
+      "ridge": 1,
+      "penalty": 10,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.727355901189387,
+        "brier": 0.1750681371049243,
+        "logLoss": 0.5214097298810437,
+        "probabilityBias": -0.024306092185751815
+      }
+    },
+    "strength+efficiency+sustain": {
+      "family": "strength+efficiency+sustain",
+      "ridge": 1,
+      "penalty": 10,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.727355901189387,
+        "brier": 0.1751843768986406,
+        "logLoss": 0.5217728994533285,
+        "probabilityBias": -0.024094365425425066
+      }
+    },
+    "strength+all-counts": {
+      "family": "strength+all-counts",
+      "ridge": 1,
+      "penalty": 10,
+      "validation": {
+        "games": 1093,
+        "accuracy": 0.7255260750228728,
+        "brier": 0.1755016653051093,
+        "logLoss": 0.5225215898726682,
+        "probabilityBias": -0.023577035656220158
+      }
+    }
+  },
+  "selectedBroaderCandidate": {
+    "family": "strength+efficiency",
+    "ridge": 1,
+    "penalty": 10,
+    "validation": {
+      "games": 1093,
+      "accuracy": 0.727355901189387,
+      "brier": 0.1750681371049243,
+      "logLoss": 0.5214097298810437,
+      "probabilityBias": -0.024306092185751815
+    }
+  },
+  "fittedModels": {
+    "strength": {
+      "columns": [
+        "strength",
+        "venue"
+      ],
+      "scale": [
+        8.742077740025263,
+        0.9523794912246422
+      ],
+      "coefficients": [
+        1.3881309904036563,
+        0.3194082827034854
+      ],
+      "penalty": 0.1,
+      "originalUnitCoefficients": [
+        0.15878730797006674,
+        0.3353792113821833
+      ],
+      "trainingGames": 3259,
+      "trainingYears": [
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019
+      ],
+      "diagnostics": {
+        "iterations": 6,
+        "maxGradient": 6.088879400678593e-14
+      }
+    },
+    "raw-units": {
+      "columns": [
+        "ypp",
+        "passingYpp",
+        "rushingYpp",
+        "completionRate",
+        "firstDownRate",
+        "thirdDownRate",
+        "fourthDownRate",
+        "turnoverRate",
+        "penaltyYardsPerPlay",
+        "venue"
+      ],
+      "scale": [
+        1.40557460434436,
+        2.2901371401864536,
+        1.5901343462915,
+        0.10455358946252533,
+        0.054605652528176465,
+        0.1170364426352522,
+        0.30807804930569965,
+        0.013707981221532788,
+        0.28215224494893026,
+        0.9523794912246422
+      ],
+      "coefficients": [
+        0.38519877204666547,
+        0.1690947012042687,
+        0.21076124892033757,
+        0.022239055914520453,
+        0.4387928084262558,
+        0.13839542494016702,
+        0.11885107155983823,
+        -0.2296878306166642,
+        0.01704426465828701,
+        0.04755038783152017
+      ],
+      "penalty": 10,
+      "originalUnitCoefficients": [
+        0.2740507482534832,
+        0.07383605908880274,
+        0.13254304544259007,
+        0.21270485335648373,
+        8.035666421161054,
+        1.1824985604824025,
+        0.3857823425839233,
+        -16.755773655121857,
+        0.06040804198234196,
+        0.04992798382331423
+      ],
+      "trainingGames": 3259,
+      "trainingYears": [
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019
+      ],
+      "diagnostics": {
+        "iterations": 6,
+        "maxGradient": 1.015576511775862e-13
+      }
+    },
+    "strength+efficiency": {
+      "columns": [
+        "strength",
+        "ypp",
+        "passingYpp",
+        "rushingYpp",
+        "completionRate",
+        "venue"
+      ],
+      "scale": [
+        8.742077740025263,
+        1.40557460434436,
+        2.2901371401864536,
+        1.5901343462915,
+        0.10455358946252533,
+        0.9523794912246422
+      ],
+      "coefficients": [
+        1.025827657563595,
+        0.22353993832534877,
+        0.09451067626172772,
+        0.11424797991593298,
+        0.030672018551520918,
+        0.24518684039538577
+      ],
+      "penalty": 10,
+      "originalUnitCoefficients": [
+        0.11734368968910937,
+        0.15903811696257883,
+        0.041268566237056464,
+        0.07184800465594703,
+        0.2933616981415502,
+        0.2574465773933307
+      ],
+      "trainingGames": 3259,
+      "trainingYears": [
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019
+      ],
+      "diagnostics": {
+        "iterations": 6,
+        "maxGradient": 1.1723955140041653e-13
+      }
+    },
+    "strength+efficiency+sustain": {
+      "columns": [
+        "strength",
+        "ypp",
+        "passingYpp",
+        "rushingYpp",
+        "completionRate",
+        "firstDownRate",
+        "thirdDownRate",
+        "fourthDownRate",
+        "venue"
+      ],
+      "scale": [
+        8.742077740025263,
+        1.40557460434436,
+        2.2901371401864536,
+        1.5901343462915,
+        0.10455358946252533,
+        0.054605652528176465,
+        0.1170364426352522,
+        0.30807804930569965,
+        0.9523794912246422
+      ],
+      "coefficients": [
+        0.9392502088899722,
+        0.1378750248607939,
+        0.09826082246560797,
+        0.09467043889250405,
+        -0.017085371810648977,
+        0.23154000070359415,
+        0.011580535830248035,
+        0.03142800067317891,
+        0.2116927905268211
+      ],
+      "penalty": 10,
+      "originalUnitCoefficients": [
+        0.10744015745703699,
+        0.09809157367716291,
+        0.042906086601262654,
+        0.05953612605959602,
+        -0.16341258007954676,
+        4.240220379824593,
+        0.09894811880380834,
+        0.10201311240449182,
+        0.22227777107485838
+      ],
+      "trainingGames": 3259,
+      "trainingYears": [
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019
+      ],
+      "diagnostics": {
+        "iterations": 6,
+        "maxGradient": 9.725553695716371e-14
+      }
+    },
+    "strength+all-counts": {
+      "columns": [
+        "strength",
+        "ypp",
+        "passingYpp",
+        "rushingYpp",
+        "completionRate",
+        "firstDownRate",
+        "thirdDownRate",
+        "fourthDownRate",
+        "turnoverRate",
+        "penaltyYardsPerPlay",
+        "venue"
+      ],
+      "scale": [
+        8.742077740025263,
+        1.40557460434436,
+        2.2901371401864536,
+        1.5901343462915,
+        0.10455358946252533,
+        0.054605652528176465,
+        0.1170364426352522,
+        0.30807804930569965,
+        0.013707981221532788,
+        0.28215224494893026,
+        0.9523794912246422
+      ],
+      "coefficients": [
+        0.9139185808576318,
+        0.1311644078801601,
+        0.09638970391796653,
+        0.08319020546386652,
+        -0.02479404428060084,
+        0.25998307993402403,
+        0.016912730204109955,
+        0.031999897778084006,
+        -0.035761459291573774,
+        0.028894077129157664,
+        0.20747464469826282
+      ],
+      "penalty": 10,
+      "originalUnitCoefficients": [
+        0.10454249070255818,
+        0.09331728637864985,
+        0.04208905319535531,
+        0.05231646348491378,
+        -0.2371419710031826,
+        4.761101971995903,
+        0.14450823882966965,
+        0.10386945077781622,
+        -2.6088056814229446,
+        0.10240597991480632,
+        0.21784871115974588
+      ],
+      "trainingGames": 3259,
+      "trainingYears": [
+        2014,
+        2015,
+        2016,
+        2017,
+        2018,
+        2019
+      ],
+      "diagnostics": {
+        "iterations": 6,
+        "maxGradient": 4.618527782440651e-14
+      }
+    }
+  },
+  "evaluation": {
+    "strength": {
+      "pooled": {
+        "games": 1723,
+        "accuracy": 0.7028438769587928,
+        "brier": 0.18873826923623802,
+        "logLoss": 0.5547189728722015,
+        "probabilityBias": -0.004250111209085575
+      },
+      "byYear": {
+        "2023": {
+          "games": 565,
+          "accuracy": 0.7115044247787611,
+          "brier": 0.18825873828856737,
+          "logLoss": 0.5544500580100509,
+          "probabilityBias": 0.007070957366048858
+        },
+        "2024": {
+          "games": 576,
+          "accuracy": 0.6822916666666666,
+          "brier": 0.19634545432838285,
+          "logLoss": 0.5722040811983642,
+          "probabilityBias": -0.0080750514905752
+        },
+        "2025": {
+          "games": 582,
+          "accuracy": 0.7147766323024055,
+          "brier": 0.18167503276262706,
+          "logLoss": 0.5376751833554412,
+          "probabilityBias": -0.011454987743128408
+        }
+      },
+      "groups": {
+        "regular": {
+          "games": 1589,
+          "accuracy": 0.7142857142857143,
+          "brier": 0.18410899457771743,
+          "logLoss": 0.544157567083922,
+          "probabilityBias": -0.0008234676283397515
+        },
+        "postseason": {
+          "games": 134,
+          "accuracy": 0.5671641791044776,
+          "brier": 0.24363317544809757,
+          "logLoss": 0.6799583295705309,
+          "probabilityBias": -0.04488396680464617
+        },
+        "neutral": {
+          "games": 176,
+          "accuracy": 0.5852272727272727,
+          "brier": 0.23519281259430427,
+          "logLoss": 0.660972699209286,
+          "probabilityBias": -0.027718181350628642
+        },
+        "homeVenue": {
+          "games": 1547,
+          "accuracy": 0.7162249515190692,
+          "brier": 0.1834532016014483,
+          "logLoss": 0.5426306368441945,
+          "probabilityBias": -0.0015801820914956724
+        }
+      }
+    },
+    "raw-units": {
+      "pooled": {
+        "games": 1723,
+        "accuracy": 0.698200812536274,
+        "brier": 0.19301816632042712,
+        "logLoss": 0.5649081617563751,
+        "probabilityBias": 0.0016423657708501984
+      },
+      "byYear": {
+        "2023": {
+          "games": 565,
+          "accuracy": 0.6884955752212389,
+          "brier": 0.19771825176655825,
+          "logLoss": 0.5764178917272877,
+          "probabilityBias": 0.008686114103964393
+        },
+        "2024": {
+          "games": 576,
+          "accuracy": 0.7013888888888888,
+          "brier": 0.1910774486907775,
+          "logLoss": 0.5605249008733723,
+          "probabilityBias": -0.010713305569479923
+        },
+        "2025": {
+          "games": 582,
+          "accuracy": 0.7044673539518901,
+          "brier": 0.1903760788249186,
+          "logLoss": 0.5580726992736327,
+          "probabilityBias": 0.0070326559492361555
+        }
+      },
+      "groups": {
+        "regular": {
+          "games": 1589,
+          "accuracy": 0.7092511013215859,
+          "brier": 0.18845951967827823,
+          "logLoss": 0.5545584624697631,
+          "probabilityBias": 0.005626189434678758
+        },
+        "postseason": {
+          "games": 134,
+          "accuracy": 0.5671641791044776,
+          "brier": 0.24707555075605825,
+          "logLoss": 0.6876370585207513,
+          "probabilityBias": -0.045598647675594434
+        },
+        "neutral": {
+          "games": 176,
+          "accuracy": 0.5909090909090909,
+          "brier": 0.2370581242443947,
+          "logLoss": 0.6689107977408705,
+          "probabilityBias": -0.0268779349821554
+        },
+        "homeVenue": {
+          "games": 1547,
+          "accuracy": 0.7104072398190046,
+          "brier": 0.18800780265228337,
+          "logLoss": 0.5530759290910415,
+          "probabilityBias": 0.004887080012950383
+        }
+      }
+    },
+    "strength+efficiency": {
+      "pooled": {
+        "games": 1723,
+        "accuracy": 0.7034242600116076,
+        "brier": 0.18798801477541538,
+        "logLoss": 0.5524955487812073,
+        "probabilityBias": -0.0026661875752952615
+      },
+      "byYear": {
+        "2023": {
+          "games": 565,
+          "accuracy": 0.7150442477876107,
+          "brier": 0.1874488814936822,
+          "logLoss": 0.5526308253206095,
+          "probabilityBias": 0.00518582013423285
+        },
+        "2024": {
+          "games": 576,
+          "accuracy": 0.6892361111111112,
+          "brier": 0.19250048574684295,
+          "logLoss": 0.5635014819521698,
+          "probabilityBias": -0.00788008452418154
+        },
+        "2025": {
+          "games": 582,
+          "accuracy": 0.7061855670103093,
+          "brier": 0.18404544952565066,
+          "logLoss": 0.5414717536759894,
+          "probabilityBias": -0.005128695673791635
+        }
+      },
+      "groups": {
+        "regular": {
+          "games": 1589,
+          "accuracy": 0.7130270610446822,
+          "brier": 0.18301765211035304,
+          "logLoss": 0.5411021679463746,
+          "probabilityBias": 0.0009436902492752758
+        },
+        "postseason": {
+          "games": 134,
+          "accuracy": 0.5895522388059702,
+          "brier": 0.24692761384096795,
+          "logLoss": 0.6876006394270961,
+          "probabilityBias": -0.04547287312188171
+        },
+        "neutral": {
+          "games": 176,
+          "accuracy": 0.5909090909090909,
+          "brier": 0.23662017422673384,
+          "logLoss": 0.666271651540074,
+          "probabilityBias": -0.02701387454002859
+        },
+        "homeVenue": {
+          "games": 1547,
+          "accuracy": 0.7162249515190692,
+          "brier": 0.18245520284042374,
+          "logLoss": 0.5395514026366949,
+          "probabilityBias": 0.00010381430304544028
+        }
+      }
+    },
+    "strength+efficiency+sustain": {
+      "pooled": {
+        "games": 1723,
+        "accuracy": 0.7092280905397562,
+        "brier": 0.18709160911524547,
+        "logLoss": 0.5502745513037491,
+        "probabilityBias": -0.0036066271869382768
+      },
+      "byYear": {
+        "2023": {
+          "games": 565,
+          "accuracy": 0.7150442477876107,
+          "brier": 0.18777468011091025,
+          "logLoss": 0.5529057838594672,
+          "probabilityBias": 0.005238274210689388
+        },
+        "2024": {
+          "games": 576,
+          "accuracy": 0.6996527777777778,
+          "brier": 0.1909035775784413,
+          "logLoss": 0.559367221520607,
+          "probabilityBias": -0.009660337182804624
+        },
+        "2025": {
+          "games": 582,
+          "accuracy": 0.7130584192439863,
+          "brier": 0.18265582054591314,
+          "logLoss": 0.538721244707717,
+          "probabilityBias": -0.006201871743709096
+        }
+      },
+      "groups": {
+        "regular": {
+          "games": 1589,
+          "accuracy": 0.7199496538703587,
+          "brier": 0.18220876446817408,
+          "logLoss": 0.5390750319317195,
+          "probabilityBias": -0.00015099654509394665
+        },
+        "postseason": {
+          "games": 134,
+          "accuracy": 0.582089552238806,
+          "brier": 0.2449934012361147,
+          "logLoss": 0.683080792215356,
+          "probabilityBias": -0.044584217410002805
+        },
+        "neutral": {
+          "games": 176,
+          "accuracy": 0.6022727272727273,
+          "brier": 0.23442848566451238,
+          "logLoss": 0.6609435696895354,
+          "probabilityBias": -0.028160992942695404
+        },
+        "homeVenue": {
+          "games": 1547,
+          "accuracy": 0.7213962508080155,
+          "brier": 0.18170615968236184,
+          "logLoss": 0.5376838937498395,
+          "probabilityBias": -0.000813111755126219
+        }
+      }
+    },
+    "strength+all-counts": {
+      "pooled": {
+        "games": 1723,
+        "accuracy": 0.7069065583284968,
+        "brier": 0.187245288293315,
+        "logLoss": 0.5505330287588278,
+        "probabilityBias": -0.003274367355206308
+      },
+      "byYear": {
+        "2023": {
+          "games": 565,
+          "accuracy": 0.7097345132743362,
+          "brier": 0.18836505147574054,
+          "logLoss": 0.5540569383950478,
+          "probabilityBias": 0.0057800421024650364
+        },
+        "2024": {
+          "games": 576,
+          "accuracy": 0.7013888888888888,
+          "brier": 0.1909602140639566,
+          "logLoss": 0.559463531253231,
+          "probabilityBias": -0.009263634987230263
+        },
+        "2025": {
+          "games": 582,
+          "accuracy": 0.7096219931271478,
+          "brier": 0.1824816054033493,
+          "logLoss": 0.5382736157326417,
+          "probabilityBias": -0.006136778330358387
+        }
+      },
+      "groups": {
+        "regular": {
+          "games": 1589,
+          "accuracy": 0.7174323473882945,
+          "brier": 0.18235690836786203,
+          "logLoss": 0.5393487955129207,
+          "probabilityBias": 0.0002173844976723743
+        },
+        "postseason": {
+          "games": 134,
+          "accuracy": 0.582089552238806,
+          "brier": 0.24521271890185753,
+          "logLoss": 0.6831580035927558,
+          "probabilityBias": -0.04468029044643185
+        },
+        "neutral": {
+          "games": 176,
+          "accuracy": 0.6022727272727273,
+          "brier": 0.23470020459387994,
+          "logLoss": 0.6613774201201303,
+          "probabilityBias": -0.02772253810457245
+        },
+        "homeVenue": {
+          "games": 1547,
+          "accuracy": 0.7188106011635423,
+          "brier": 0.1818464096450283,
+          "logLoss": 0.5379224192697593,
+          "probabilityBias": -0.0004929335789371129
+        }
+      }
+    }
+  },
+  "nativeStrengthCoverage": {
+    "games": 1731,
+    "accuracy": 0.7030618139803582,
+    "brier": 0.18869084766255384,
+    "logLoss": 0.5545878875987713,
+    "probabilityBias": -0.004465384785253809
+  },
+  "pairedWeekBlockSensitivity": {
+    "accuracy": {
+      "candidateMinusBaseline": 0.0005803830528148578,
+      "weekBlockSensitivity95": [
+        -0.009113184677436208,
+        0.009332337421391222
+      ]
+    },
+    "brier": {
+      "candidateMinusBaseline": -0.0007502544608226379,
+      "weekBlockSensitivity95": [
+        -0.0027320214057150937,
+        0.0014908789844124614
+      ]
+    },
+    "logLoss": {
+      "candidateMinusBaseline": -0.0022234240909942905,
+      "weekBlockSensitivity95": [
+        -0.006811914731468293,
+        0.0027734863854460934
+      ]
+    }
+  },
+  "productionProtection": {
+    "files": 34,
+    "changed": []
+  },
+  "cfbdCalls": 0,
+  "networkDataPulls": 0,
+  "liveChanges": false,
+  "coverage": {
+    "2014": {
+      "pairedFbsBoxGames": 867,
+      "expectedFbsGames": 868,
+      "featurePairedFbsGames": {
+        "ypp": 866,
+        "passingYpp": 866,
+        "rushingYpp": 866,
+        "completionRate": 867,
+        "firstDownRate": 867,
+        "thirdDownRate": 867,
+        "fourthDownRate": 495,
+        "turnoverRate": 867,
+        "penaltyYardsPerPlay": 867
+      },
+      "commonPrimaryTargets": 534,
+      "nativeBaselineTargets": 537,
+      "maxUnitNormalResidual": 1.6370904631912708e-11
+    },
+    "2015": {
+      "pairedFbsBoxGames": 870,
+      "expectedFbsGames": 870,
+      "featurePairedFbsGames": {
+        "ypp": 870,
+        "passingYpp": 870,
+        "rushingYpp": 870,
+        "completionRate": 870,
+        "firstDownRate": 870,
+        "thirdDownRate": 869,
+        "fourthDownRate": 516,
+        "turnoverRate": 870,
+        "penaltyYardsPerPlay": 870
+      },
+      "commonPrimaryTargets": 547,
+      "nativeBaselineTargets": 547,
+      "maxUnitNormalResidual": 1.0913936421275139e-11
+    },
+    "2016": {
+      "pairedFbsBoxGames": 873,
+      "expectedFbsGames": 873,
+      "featurePairedFbsGames": {
+        "ypp": 855,
+        "passingYpp": 855,
+        "rushingYpp": 855,
+        "completionRate": 872,
+        "firstDownRate": 872,
+        "thirdDownRate": 872,
+        "fourthDownRate": 499,
+        "turnoverRate": 872,
+        "penaltyYardsPerPlay": 872
+      },
+      "commonPrimaryTargets": 538,
+      "nativeBaselineTargets": 542,
+      "maxUnitNormalResidual": 1.4551915228366852e-11
+    },
+    "2017": {
+      "pairedFbsBoxGames": 874,
+      "expectedFbsGames": 874,
+      "featurePairedFbsGames": {
+        "ypp": 867,
+        "passingYpp": 867,
+        "rushingYpp": 867,
+        "completionRate": 873,
+        "firstDownRate": 874,
+        "thirdDownRate": 874,
+        "fourthDownRate": 503,
+        "turnoverRate": 874,
+        "penaltyYardsPerPlay": 874
+      },
+      "commonPrimaryTargets": 547,
+      "nativeBaselineTargets": 547,
+      "maxUnitNormalResidual": 1.2732925824820995e-11
+    },
+    "2018": {
+      "pairedFbsBoxGames": 884,
+      "expectedFbsGames": 884,
+      "featurePairedFbsGames": {
+        "ypp": 875,
+        "passingYpp": 875,
+        "rushingYpp": 875,
+        "completionRate": 884,
+        "firstDownRate": 884,
+        "thirdDownRate": 884,
+        "fourthDownRate": 543,
+        "turnoverRate": 884,
+        "penaltyYardsPerPlay": 884
+      },
+      "commonPrimaryTargets": 544,
+      "nativeBaselineTargets": 545,
+      "maxUnitNormalResidual": 1.0913936421275139e-11
+    },
+    "2019": {
+      "pairedFbsBoxGames": 888,
+      "expectedFbsGames": 888,
+      "featurePairedFbsGames": {
+        "ypp": 882,
+        "passingYpp": 882,
+        "rushingYpp": 882,
+        "completionRate": 888,
+        "firstDownRate": 888,
+        "thirdDownRate": 888,
+        "fourthDownRate": 553,
+        "turnoverRate": 888,
+        "penaltyYardsPerPlay": 888
+      },
+      "commonPrimaryTargets": 549,
+      "nativeBaselineTargets": 553,
+      "maxUnitNormalResidual": 2.1827872842550278e-11
+    },
+    "2023": {
+      "pairedFbsBoxGames": 908,
+      "expectedFbsGames": 910,
+      "featurePairedFbsGames": {
+        "ypp": 895,
+        "passingYpp": 895,
+        "rushingYpp": 895,
+        "completionRate": 908,
+        "firstDownRate": 908,
+        "thirdDownRate": 908,
+        "fourthDownRate": 613,
+        "turnoverRate": 908,
+        "penaltyYardsPerPlay": 908
+      },
+      "commonPrimaryTargets": 565,
+      "nativeBaselineTargets": 573,
+      "maxUnitNormalResidual": 2.3646862246096134e-11
+    },
+    "2024": {
+      "pairedFbsBoxGames": 918,
+      "expectedFbsGames": 919,
+      "featurePairedFbsGames": {
+        "ypp": 914,
+        "passingYpp": 914,
+        "rushingYpp": 914,
+        "completionRate": 918,
+        "firstDownRate": 918,
+        "thirdDownRate": 918,
+        "fourthDownRate": 617,
+        "turnoverRate": 918,
+        "penaltyYardsPerPlay": 918
+      },
+      "commonPrimaryTargets": 576,
+      "nativeBaselineTargets": 576,
+      "maxUnitNormalResidual": 2.546585164964199e-11
+    },
+    "2025": {
+      "pairedFbsBoxGames": 934,
+      "expectedFbsGames": 934,
+      "featurePairedFbsGames": {
+        "ypp": 933,
+        "passingYpp": 933,
+        "rushingYpp": 933,
+        "completionRate": 933,
+        "firstDownRate": 933,
+        "thirdDownRate": 934,
+        "fourthDownRate": 658,
+        "turnoverRate": 933,
+        "penaltyYardsPerPlay": 933
+      },
+      "commonPrimaryTargets": 582,
+      "nativeBaselineTargets": 582,
+      "maxUnitNormalResidual": 2.000888343900442e-11
+    }
+  },
+  "archive": {
+    "scope": "Compact public derived summary; verbose per-team/per-game coverage and raw sources remain local",
+    "fullDerivedResultsSha256": "7d49413af3941a9e21186a06a81eaeb0778bf1f7956367656ff1bddbc784cf89"
+  }
+}

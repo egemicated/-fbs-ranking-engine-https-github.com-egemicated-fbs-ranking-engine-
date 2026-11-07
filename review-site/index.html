@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Review FBS Intelligence's experimental predictor, current saved team scores and historical test results.">
+  <title>Predictive v2 Review · FBS Intelligence</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#review-main">Skip to the review</a>
+  <header class="masthead">
+    <div class="wrap masthead-inner">
+      <a class="brand" href="#current" aria-label="FBS Intelligence research home"><span class="brand-mark" aria-hidden="true">F</span><span>FBS <strong>INTELLIGENCE</strong><small>RESEARCH LAB</small></span></a>
+      <a class="main-link" href="https://fbs-ranking-engine.onrender.com/#rankings">Main rankings <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div>
+        <div class="eyebrow"><span class="status-dot" aria-hidden="true"></span> EXPERIMENTAL PREDICTOR V2</div>
+        <h1>FOLLOW THE<br><em>NUMBERS.</em></h1>
+        <p class="hero-copy">A closer look at our predictor built from recorded game counts. Explore every team's score, inspect its inputs, and see how the model performed in historical tests.</p>
+      </div>
+      <aside class="review-note" aria-label="Review status">
+        <span class="pill">RESEARCH PREVIEW</span>
+        <h2>Open for a look.</h2>
+        <p>This is a separate review copy. The three rankings on the main site continue to operate as before.</p>
+        <dl><div><dt>Current data cutoff</dt><dd id="hero-cutoff">Loading…</dd></div><div><dt>Model training</dt><dd>2014–2019 games</dd></div><div><dt>Evidence so far</dt><dd>No established improvement</dd></div></dl>
+      </aside>
+    </div>
+  </section>
+  <div class="wrap">
+    <nav class="review-nav" aria-label="Review sections" role="tablist">
+      <button id="tab-current" type="button" data-view="current" role="tab" aria-controls="panel-current" aria-selected="true" class="active">Current experimental ranking</button>
+      <button id="tab-history" type="button" data-view="history" role="tab" aria-controls="panel-history" aria-selected="false">Historical tests</button>
+      <button id="tab-method" type="button" data-view="method" role="tab" aria-controls="panel-method" aria-selected="false">How it works</button>
+    </nav>
+    <main id="review-main">
+      <div id="loading" class="loading" role="status">Loading the saved research snapshot…</div>
+      <div id="load-error" class="error-box" role="alert" hidden>We couldn't load this review snapshot. Please refresh the page.</div>
+      <section id="panel-current" role="tabpanel" aria-labelledby="tab-current" hidden>
+        <div class="section-heading"><div><div class="section-label">SAVED SNAPSHOT · <span id="current-season">2026</span></div><h2>Every team, with its evidence.</h2><p id="current-cutoff" class="muted"></p></div><span id="team-total" class="count-chip"></span></div>
+        <div class="notice"><strong>A score to inspect, not a promoted ranking.</strong><p>This neutral model score is a centered index, not a win probability. It combines our existing Strength estimate with four of our own opponent-adjusted efficiency measures. Current SOR, Strength and Performance ranks are shown alongside it for context.</p></div>
+        <div class="coverage-strip" aria-label="Partial statistical coverage"><div><span>FBS games · paired boxes</span><strong id="coverage-fbs">Loading…</strong></div><div><span>FBS games · valid basic efficiency</span><strong id="coverage-basic">Loading…</strong></div><div><span>FCS-only context · paired boxes</span><strong id="coverage-fcs">Loading…</strong></div><p id="coverage-source"></p></div>
+        <div class="table-panel">
+          <div class="toolbar">
+            <label class="field search-field"><span>Search a team</span><input id="team-search" type="search" autocomplete="off" placeholder="LSU, Utah, Ohio State…"></label>
+            <label class="field"><span>Conference</span><select id="conference-filter"><option value="">All conferences</option></select></label>
+            <p id="result-count" class="result-count" aria-live="polite"></p>
+          </div>
+          <div class="table-scroll"><table class="ranking-table"><caption class="sr-only">Experimental current team scores, with the three existing model ranks for comparison. Select a team to inspect its evidence.</caption><thead><tr><th scope="col">Preview<br>rank</th><th scope="col">Team</th><th scope="col">Record</th><th scope="col" class="num">Neutral<br>model score</th><th scope="col" class="num">SOR<br>rank</th><th scope="col" class="num">Strength<br>rank</th><th scope="col" class="num">Performance<br>rank</th></tr></thead><tbody id="ranking-body"></tbody></table></div>
+          <p id="current-coverage" class="table-foot"></p>
+        </div>
+        <details class="method-details"><summary>Snapshot coverage and limitations</summary><ul id="current-limitations"></ul></details>
+      </section>
+      <section id="panel-history" role="tabpanel" aria-labelledby="tab-history" hidden>
+        <div class="section-heading"><div><div class="section-label">HISTORICAL REPLAY · 2023–2025</div><h2>Did the extra information help?</h2><p class="muted">The selected candidate and the Strength control were compared on the same eligible games.</p></div></div>
+        <div id="history-metrics" class="metrics-grid"></div>
+        <div class="notice"><strong>The result is inconclusive.</strong><p>The candidate made one additional correct pick in the historical comparison. Its probability errors improved slightly overall, but the uncertainty ranges include no improvement, and its 2025 performance regressed. This does not establish a better predictor.</p></div>
+        <div class="table-panel"><div class="panel-heading"><h3>Season by season</h3><span class="muted">Probability picks include game location</span></div><div class="table-scroll"><table><caption class="sr-only">Selected candidate compared with calibrated Strength by season</caption><thead><tr><th scope="col">Season</th><th scope="col" class="num">Games</th><th scope="col" class="num">Strength<br>accuracy</th><th scope="col" class="num">Candidate<br>accuracy</th><th scope="col" class="num">Strength<br>probability error</th><th scope="col" class="num">Candidate<br>probability error</th></tr></thead><tbody id="history-years"></tbody></table></div><p class="table-foot">Probability error is the Brier score; lower is better. Accuracy here uses calibrated, venue-aware probability picks and differs from the earlier neutral ranking-order comparison.</p></div>
+        <div class="history-grid"><section class="text-panel"><div class="section-label">THE SELECTION RULE</div><h3>Choose before evaluating.</h3><p>Weights were fitted on 2014–2017, configurations were selected using 2018–2019, and the selected models were refitted on 2014–2019. The later 2023–2025 results did not choose the candidate.</p><p>The older selection chose Strength plus efficiency. A larger feature set's favorable later results are diagnostics, not permission to declare it the winner.</p></section><section class="text-panel"><div class="section-label">WHAT THIS CAN TELL US</div><h3>Promising needs proof.</h3><p>These seasons and outcomes had already been studied. Historical replays are useful evidence, but they are not an untouched future trial.</p><p>Games share teams and weeks. Uncertainty checks respect weekly blocks, and the candidate remains a research model.</p></section></div>
+        <details class="method-details"><summary>Compare all fixed research candidates</summary><div class="table-scroll"><table><caption class="sr-only">Diagnostic historical results for every declared research family</caption><thead><tr><th scope="col">Candidate</th><th scope="col" class="num">Accuracy</th><th scope="col" class="num">Brier error</th><th scope="col" class="num">Log loss</th></tr></thead><tbody id="history-families"></tbody></table></div><p class="muted">The highlighted candidate was selected on older validation games. These later figures are not a model-selection contest.</p></details>
+      </section>
+      <section id="panel-method" role="tabpanel" aria-labelledby="tab-method" hidden>
+        <div class="section-heading"><div><div class="section-label">RECORDED FACTS → OUR CALCULATIONS</div><h2>An inspectable chain of evidence.</h2><p class="muted">Standard football definitions, our own adjustments and fitted weights.</p></div></div>
+        <div class="steps"><section><span>01</span><h3>Record the facts</h3><p>Scores, opponents, locations and recorded box-score counts, linked by exact game and team identities.</p></section><section><span>02</span><h3>Rebuild the rates</h3><p>Calculate efficiency, conversions, turnovers and penalty-yard measures from their recorded counts and opportunities.</p></section><section><span>03</span><h3>Account for opponents</h3><p>Estimate separate offensive and defensive allowance effects, with venue and FBS/FCS context. Sparse units retain visible evidence counts.</p></section><section><span>04</span><h3>Learn the weights</h3><p>Older games teach the predictor which inputs help. Later tests assess those frozen choices; current team names never set their weights.</p></section></div>
+        <div class="history-grid"><section class="text-panel"><div class="section-label">THE FIRST VERSION</div><h3>Nine reconstructed measures.</h3><ul class="clean-list"><li>Yards per recorded offensive play</li><li>Net passing yards per recorded pass attempt</li><li>Rushing yards per recorded rush attempt</li><li>Completion rate</li><li>First downs per recorded play</li><li>Third- and fourth-down conversion rates</li><li>Turnovers and penalty yards per recorded play</li></ul><p>Older validation selected the four efficiency measures alongside our existing Strength estimate. More available columns do not automatically earn a predictive weight.</p></section><section class="text-panel"><div class="section-label">THE INPUT BOUNDARY</div><h3>Provider conclusions stay out.</h3><p>This candidate excludes provider PPA/EPA, success-rate aggregates, PPA-based explosiveness, team/player ratings, win probabilities, polls, recruiting stars and betting inputs.</p><p>Missing raw information remains unavailable. An unobserved unit may receive an explicitly shrunken estimate; that does not create a fictional zero-valued game.</p><p>Player, raw-play, drive and complete special-teams features still require audited inputs.</p></section></div>
+        <section class="text-panel source-panel"><div><div class="section-label">DATA AND REPRODUCTION</div><h3>Keep the source visible.</h3><p>Recorded box-score counts come from retained ESPN data distributed by SportsDataverse. CFBD histories supply canonical game identities, results, subdivisions and timing. The current illustration uses the saved primary publication's completed game set.</p><p>Our existing Performance view remains a separate benchmark using provider success-rate aggregates and our own adjustment. It is not relabeled as an independently rebuilt all-play measure.</p></div><a class="outline-link" href="https://github.com/egemicated/-fbs-ranking-engine-https-github.com-egemicated-fbs-ranking-engine-/tree/codex/original-predictive-v2" target="_blank" rel="noopener">Inspect the research <span aria-hidden="true">↗</span></a></section>
+      </section>
+    </main>
+    <footer><span>FBS INTELLIGENCE <strong>RESEARCH LAB</strong></span><p>Read-only saved data · No CFBD calls when browsing · Existing rankings stay separate</p></footer>
+  </div>
+  <dialog id="team-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-bar"><span class="section-label">TEAM EVIDENCE</span><button id="dialog-close" type="button" aria-label="Close team details">Close <span aria-hidden="true">×</span></button></div>
+    <div id="dialog-content"></div>
+  </dialog>
+</body>
+</html>
