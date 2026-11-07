@@ -2,6 +2,7 @@ import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { readPerformance } from '../src/performance-publication.js';
 import { publishDivisionSnapshot, readPublicationPolicy } from '../src/publication.js';
+import { matchupValidation, snapshotCoverage } from '../src/site-validation.js';
 
 const root = resolve(import.meta.dirname, '..');
 const frontend = join(root, 'frontend');
@@ -25,6 +26,8 @@ const snapshot = publishDivisionSnapshot(input, policy, {
 const performance = await readPerformance(published, snapshot);
 const { ratings, ...publicSnapshot } = snapshot;
 publicSnapshot.rankingMethod = { ...snapshot.rankingMethod, publicationStatus: 'official' };
+publicSnapshot.coverageValidation = snapshotCoverage(snapshot);
+publicSnapshot.matchupValidation = matchupValidation(snapshot);
 delete publicSnapshot.performanceEndpoint;
 if (performance) publicSnapshot.performanceEndpoint = '/data/performance.json';
 

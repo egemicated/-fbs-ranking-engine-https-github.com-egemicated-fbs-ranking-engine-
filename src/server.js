@@ -5,6 +5,7 @@ import { VERSION } from './engine.js';
 import { UPDATE_SCHEDULE } from './weekly.js';
 import publicationPolicy from '../data/publication-model.json' with { type: 'json' };
 import { readPerformance } from './performance-publication.js';
+import { matchupValidation, snapshotCoverage } from './site-validation.js';
 
 const directory = resolve(process.env.DATA_DIR || 'data', 'snapshots');
 // Read-only API. No login to view public sports ratings; no write/admin routes.
@@ -54,6 +55,8 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
       const { ratings, ...publicSnapshot } = snapshot;
       if (snapshot.rankingMethod?.id === publicationPolicy.id) {
         publicSnapshot.rankingMethod = { ...snapshot.rankingMethod, publicationStatus: 'official' };
+        publicSnapshot.coverageValidation = snapshotCoverage(snapshot);
+        publicSnapshot.matchupValidation = matchupValidation(snapshot);
       }
       if (await readPerformance(snapshotDirectory, snapshot)) publicSnapshot.performanceEndpoint = '/performance';
       return send(200, publicSnapshot);

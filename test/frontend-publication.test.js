@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import { readFile } from 'node:fs/promises';
 import { rankSeason } from '../src/engine.js';
+import { matchupValidation } from '../src/site-validation.js';
+import matchupEvidence from '../data/matchup-validation.json' with { type: 'json' };
 
 function fixture(sor = true) {
   const teams = ['a', 'b', 'c'].map((id, i) => ({ id, name: ['Alpha', 'Beta', 'Gamma'][i],
@@ -90,4 +92,26 @@ test('methodology explains active SOR and historical snapshots retain their Coll
   assert.match(method, /historical snapshot uses the Colley matrix method/);
   assert.doesNotMatch(method, /primary national and conference ranking uses <strong>division-aware/);
   assert.match(old.go('#team/a'), new RegExp(`<b>#${historical.rankings.find(r => r.id === 'a').rank}</b> Colley achievement`));
+});
+
+test('validated matchup odds preserve the strength edge and show a range only for established teams', async () => {
+  const snapshot = fixture();
+  snapshot.config = { ...matchupEvidence.strengthConfig };
+  snapshot.matchupValidation = matchupValidation(snapshot);
+  assert.ok(snapshot.matchupValidation);
+  assert.equal(matchupValidation({ ...snapshot, config: { ...snapshot.config, ridge: 4 } }), null);
+  assert.equal(matchupValidation({ ...snapshot, season: 2025 }), null);
+
+  const page = await browser(snapshot);
+  page.ui.state.venue = 'home';
+  const { a, b, edge, probability } = page.ui.compareResult();
+  assert.equal(edge, a.strength - b.strength + snapshot.config.homeAdvantage);
+  assert.equal(probability, 1 / (1 + Math.exp(-edge / matchupEvidence.winProbability.scale)));
+  assert.match(page.go('#compare'), /Historically calibrated odds/);
+  assert.doesNotMatch(page.html(), /Historical final-margin range for/);
+  a.games = b.games = 4;
+  assert.match(page.go('#compare'), /Historical final-margin range for/);
+  const methodology = page.go('#methodology');
+  assert.match(methodology, /WHAT WE CHECKED/);
+  assert.match(methodology, /Confidence intervals for team ranks remain unvalidated/);
 });
