@@ -3,7 +3,7 @@ const main = document.querySelector('#main');
 // Static builds set this root. The web service keeps its existing JSON routes.
 const dataRoot = document.querySelector('meta[name="publication-data-root"]')?.content;
 const state = { snapshot: null, byId: new Map(), performance: null, performanceById: new Map(), model: 'achievement', search: '', conference: '', all: false, teamTab: 'overview', compareA: '254', compareB: '2390', venue: 'neutral' };
-const weeklyPicks = { request: null, status: 'loading', selectedWeek: '', weeks: new Map(), teams: new Map() };
+const weeklyPicks = { request: null, status: 'loading', scoring: null, scoringError: false, selectedWeek: '', weeks: new Map(), teams: new Map() };
 const picksDate = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', weekday: 'short', month: 'short', day: 'numeric' });
 const picksTimestamp = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', dateStyle: 'medium', timeStyle: 'short' });
 const paths = {
@@ -306,6 +306,7 @@ async function loadWeeklyPicks() {
       weeklyPicks.status = 'missing';
     } else {
       Object.assign(weeklyPicks, picksPublication(await response.json()), { status: 'ready' });
+      if (weeklyPicks.weeks.size) void loadPredictability();
     }
   } catch (error) {
     weeklyPicks.status = 'error';
@@ -314,6 +315,20 @@ async function loadWeeklyPicks() {
   if (route()[0] === 'compare' && route()[1] === 'weekly') {
     renderWeeklyPicks();
     document.querySelector('#announce').textContent = weeklyPicks.status === 'ready' ? 'Weekly picks loaded' : 'Weekly picks unavailable';
+  }
+}
+async function loadPredictability() {
+  try {
+    const { weeklyPicksScore } = await import('./weekly-picks-score.js?v=predictability-score');
+    if (typeof weeklyPicksScore !== 'function') throw new Error('Missing Weekly Picks scoring function');
+    weeklyPicks.scoring = weeklyPicksScore;
+  } catch (error) {
+    weeklyPicks.scoringError = true;
+    console.error(error);
+  }
+  if (route()[0] === 'compare' && route()[1] === 'weekly') {
+    const score = document.querySelector('#predictability-content');
+    if (score) score.innerHTML = predictabilityContent();
   }
 }
 function validWeeklyPick(game, pick, capturedAt) {
@@ -326,9 +341,11 @@ function validWeeklyPick(game, pick, capturedAt) {
 function weeklyPicksGame(game) {
   const away = weeklyPicks.teams.get(game.away);
   const home = weeklyPicks.teams.get(game.home);
-  const scheduled = game.status === 'scheduled' && picksTime(game.startDate) >= picksTime(weeklyPicks.data.asOf);
+  const kickoff = picksTime(game.startDate);
+  const cutoff = picksTime(weeklyPicks.data.asOf);
+  const scheduled = game.status === 'scheduled' && kickoff >= cutoff;
   const live = validWeeklyPick(game, game.pick, game.pick?.capturedAt);
-  const replay = !live && !scheduled && validWeeklyPick(game, game.replay, game.replay?.asOf);
+  const replay = !live && !scheduled && kickoff <= cutoff && validWeeklyPick(game, game.replay, game.replay?.asOf);
   const estimate = !live && scheduled && validWeeklyPick(game, game.estimate, game.estimate?.asOf);
   const pick = live ? game.pick : replay ? game.replay : estimate ? game.estimate : null;
   const capture = live ? pick.capturedAt : pick?.asOf;
@@ -339,7 +356,7 @@ function weeklyPicksGame(game) {
     (scheduled ? 'No pick saved yet' : 'No saved pregame pick');
   const winner = game.status === 'final' && game.homePoints !== game.awayPoints ?
     (game.homePoints > game.awayPoints ? 'home' : 'away') : null;
-  const grade = live && winner && pick.favored !== 'even' ? (winner === pick.favored ? 'Correct' : 'Missed') : '';
+  const grade = live && winner && kickoff <= cutoff && pick.favored !== 'even' ? (winner === pick.favored ? 'Correct' : 'Missed') : '';
   const result = game.status === 'final' ?
     (winner ? `${esc(winner === 'home' ? home.name : away.name)} won ${Math.max(game.homePoints, game.awayPoints)}–${Math.min(game.homePoints, game.awayPoints)}` :
       `Tied ${game.awayPoints}–${game.homePoints}`) :
@@ -353,13 +370,66 @@ function weeklyPicksGame(game) {
       <div><dt>${game.status === 'final' ? 'Final' : 'Status'}</dt><dd>${result}${grade ? ` <span class="weekly-grade ${grade.toLowerCase()}">${grade}</span>` : ''}</dd></div>
     </dl></li>` };
 }
+function scoreAccuracy(value) {
+  return Number.isFinite(value) ? `${number(value * 100, 1)}%` : '—';
+}
+function scoreChange(value) {
+  const points = number(Math.abs(value) * 100, 1);
+  const sign = points === '0.0' ? '' : value > 0 ? '+' : '−';
+  return `${sign}${points} pp`;
+}
+function predictabilityMetric(label, value, detail) {
+  return `<div><dt>${esc(label)}</dt><dd><strong>${esc(value)}</strong><small>${esc(detail)}</small></dd></div>`;
+}
+function predictabilitySample(score) {
+  return score.decisivePicks ? `${score.correctPicks} of ${score.decisivePicks} right` : 'No decided picks with a favorite';
+}
+function predictabilityCoverage(score, label) {
+  const pending = score.pendingPicks ? ` ${score.pendingPicks} awaiting final scores.` : '';
+  return `${score.completedPicks} of ${score.availablePicks} ${label} have a final winner.${pending}`;
+}
+function replayPredictability({ week, previousWeek, comparison }) {
+  if (!week?.availablePicks) return '';
+  const comparable = previousWeek?.availablePicks && week.completedPicks === week.availablePicks &&
+    previousWeek.completedPicks === previousWeek.availablePicks && Number.isFinite(comparison?.accuracyDifference);
+  return `<div class="predictability-replay"><h4>Historical replay</h4>
+    <p><strong>${scoreAccuracy(week.accuracy)}</strong> · ${predictabilitySample(week)}${Number.isFinite(week.brier) ? ` · Brier ${number(week.brier, 3)}` : ''}</p>
+    <p class="compact-note">${predictabilityCoverage(week, 'replay forecasts')} Replay scores are separate from the saved-pick record.</p>
+    ${comparable ? `<p class="compact-note">${scoreChange(comparison.accuracyDifference)} vs ${esc(weekLabel(previousWeek))} replay · ${predictabilitySample(previousWeek)} that week.</p>` :
+      (previousWeek?.availablePicks && (week.pendingPicks || previousWeek.pendingPicks) ? '<p class="compact-note">Replay week comparison is waiting for final scores.</p>' : '')}
+  </div>`;
+}
+function predictabilityContent() {
+  if (!weeklyPicks.scoring) {
+    return `<p class="compact-note" role="status">${weeklyPicks.scoringError ? 'The scorecard could not load. Game results are available below.' : 'Loading the saved-pick scores…'}</p>`;
+  }
+  const { week, previousWeek, season, comparison, replay } = weeklyPicks.scoring(weeklyPicks.data, weeklyPicks.selectedWeek);
+  if (!week) return '<p class="compact-note">Scores are unavailable for this week.</p>';
+  const delta = comparison?.accuracyDifference;
+  const changeDetail = Number.isFinite(delta) ? `vs ${weekLabel(previousWeek)} · ${predictabilitySample(previousWeek)} that week${week.pendingPicks || previousWeek.pendingPicks ? ' · provisional' : ''}` :
+    previousWeek ? `vs ${weekLabel(previousWeek)} · needs a decided pick in both weeks` : 'No previous week on the schedule';
+  const seasonRecord = season.decisivePicks ? `${season.correctPicks}–${season.decisivePicks - season.correctPicks}` : '—';
+  const seasonDetail = season.decisivePicks ? `${predictabilitySample(season)} · ${scoreAccuracy(season.accuracy)} accuracy` : 'No decided saved picks this season';
+  return `<dl class="predictability-grid">
+    ${predictabilityMetric(`${weekLabel(week)} accuracy`, scoreAccuracy(week.accuracy), week.availablePicks ? predictabilitySample(week) : 'No saved picks this week')}
+    ${predictabilityMetric('Change from previous week', Number.isFinite(delta) ? scoreChange(delta) : '—', changeDetail)}
+    ${predictabilityMetric('Season record', seasonRecord, seasonDetail)}
+  </dl>
+  ${week.availablePicks ? `<p class="compact-note">${predictabilityCoverage(week, 'saved picks')}</p>` : ''}
+  <p class="compact-note">Accuracy counts saved pregame picks that named a favorite and have a final winner.</p>
+  ${Number.isFinite(season.brier) ? `<p class="compact-note"><strong>Brier score</strong>${Number.isFinite(week.brier) ? ` · Week ${number(week.brier, 3)}` : ''} · Season ${number(season.brier, 3)}</p>` : ''}
+  ${replay ? replayPredictability(replay) : ''}
+  ${Number.isFinite(season.brier) || Number.isFinite(replay?.week?.brier) ? '<p class="compact-note">Lower Brier scores are better. Confident misses cost more.</p>' : ''}`;
+}
 function weeklyResults() {
   const games = weeklyPicks.weeks.get(weeklyPicks.selectedWeek);
   const rows = games.map(weeklyPicksGame);
   const correct = rows.filter(row => row.grade === 'Correct').length;
   const missed = rows.filter(row => row.grade === 'Missed').length;
   const record = correct + missed ? `${correct} correct · ${missed} missed` : 'No saved picks graded this week';
-  return `<p class="weekly-record">${games.length} ${games.length === 1 ? 'game' : 'games'} · ${record}</p>
+  return `<section class="predictability" aria-labelledby="predictability-title">
+    <h3 id="predictability-title">Predictability score</h3><div id="predictability-content">${predictabilityContent()}</div>
+    </section><p class="weekly-record">${games.length} ${games.length === 1 ? 'game' : 'games'} · ${record}</p>
     <ul class="weekly-list" aria-label="Games for ${esc(weekLabel(games[0]))}">${rows.map(row => row.html).join('')}</ul>`;
 }
 function renderWeeklyPicks() {
