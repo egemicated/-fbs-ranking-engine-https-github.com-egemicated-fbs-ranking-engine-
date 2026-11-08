@@ -98,7 +98,7 @@ function strengthRank(t) { return ordered('strength').findIndex(x => x.id === t.
 function sosRank(t) { return [...state.snapshot.rankings].sort((a,b) => (b.achievementScheduleStrength ?? -1) - (a.achievementScheduleStrength ?? -1)).findIndex(x => x.id === t.id) + 1; }
 function teamLink(t, label = t.name) { return `<a href="#team/${encodeURIComponent(t.id)}">${esc(label)}</a>`; }
 function displayRank(t, model = state.model) { return model === 'achievement' ? rank(nationalRank(t)) : model === 'performance' ? rank(performanceRow(t)?.rank) : rank(strengthRank(t)); }
-function brand() { return `<a class="brand" href="#home" aria-label="${BRAND} home"><span class="brand-mark" aria-hidden="true"></span><span class="brand-name">FBS<small>INTELLIGENCE</small></span></a>`; }
+function brand() { return `<a class="brand" href="#home" aria-label="${BRAND} home"><img class="brand-logo" src="/assets/fbs-intelligence-logo.jpg" width="1280" height="426" alt="${BRAND}" fetchpriority="high"></a>`; }
 function renderHeader() {
   const page = route()[0];
   const navs = [['home','home','Home'],['rankings','trophy','Rankings'],['teams','teams','Teams'],['compare','compare','Matchup lab'],['polls','layers','Compare rankings'],['methodology','layers','Methodology']];
