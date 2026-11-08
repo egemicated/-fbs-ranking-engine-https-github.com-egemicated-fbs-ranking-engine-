@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "season": 2026,
-  "asOf": "2026-11-08T15:51:33.734Z",
+  "asOf": "2026-11-08T19:16:56.230Z",
   "source": {
     "provider": "cfbd",
-    "scheduleAsOf": "2026-11-08T15:51:31.892Z",
-    "rankingAsOf": "2026-11-08T15:51:32.834Z",
+    "scheduleAsOf": "2026-11-08T19:16:54.378Z",
+    "rankingAsOf": "2026-11-08T19:16:55.258Z",
     "snapshotHash": "1cba520c894e2a14c4b9356025b40fd93295f84e0630b27ec5e9583797ccfd61",
     "modelVersion": "0.2.0",
     "probabilityScale": 6.147406563247917,

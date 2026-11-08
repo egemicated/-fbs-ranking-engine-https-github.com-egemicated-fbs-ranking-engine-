@@ -4,16 +4,285 @@
   "protocolSha256": "667669f3315fabd1eb9c0ee28642f05e6f8d475971f68410cf320a982fd4b5eb",
   "frozenAt": "2026-11-06T22:49:59.146Z",
   "season": 2026,
-  "asOf": "2026-11-08T15:51:32.834Z",
-  "generatedAt": "2026-11-08T15:51:51.404Z",
-  "resultSourceHash": "a665ba80308b26c7e300d04ddf4e5b6a9f252c695b77d3d87cf4d05408aa6b53",
+  "asOf": "2026-11-08T19:16:55.258Z",
+  "generatedAt": "2026-11-08T19:17:28.993Z",
+  "resultSourceHash": "4a65059230cad7d1f9eaec19ee075ab66aa12a5f20a4c8556fe25863ef746cc8",
   "selectionRule": "First valid immutable captured-before-kickoff forecast per season/game; choose before reading eventual outcomes or rescheduling exclusions.",
-  "observationsRead": 1,
+  "observationsRead": 2,
   "ignoredOtherSeasonObservations": 0,
   "ignoredAfterResultCutoffObservations": 1,
-  "eligibleForecasts": 0,
+  "eligibleForecasts": 67,
   "duplicateCheckpoints": 0,
-  "pending": [],
+  "pending": [
+    {
+      "gameId": "401856857",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401856858",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401856859",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401856860",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401856861",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401856862",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401856863",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401856864",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401856882",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401856883",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401856884",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401856885",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401856886",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401856887",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401856888",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401856889",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401858293",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401858294",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401858295",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401858296",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401858297",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401858298",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401858299",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401858300",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401858301",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401858518",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401858519",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401858520",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401858521",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401858522",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401858523",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401858524",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401858525",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401858526",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401860914",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401860915",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401860916",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401860917",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401861967",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401862824",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401862825",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401862826",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401862827",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401862828",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401862829",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401864536",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401864537",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401864538",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401864539",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401864540",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401866458",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401866459",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401866460",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401866461",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401866462",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401866463",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401869928",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401869937",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401869952",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401869969",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401870752",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401870769",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401870796",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401871060",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401871061",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401871099",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401871100",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    }
+  ],
   "excluded": [],
   "trackingCoverage": {
     "rule": "All currently sourced confirmed-completed FBS-FBS games with corrected kickoff from protocol freeze through result asOf; no claim of complete contemporaneous schedule availability.",
@@ -54,27 +323,12 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401856743",
-        "kickoff": "2026-11-07T17:00:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401858512",
-        "kickoff": "2026-11-07T17:00:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401858285",
-        "kickoff": "2026-11-07T17:00:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
         "gameId": "401858292",
         "kickoff": "2026-11-07T17:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401862822",
+        "gameId": "401856743",
         "kickoff": "2026-11-07T17:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -85,6 +339,21 @@
       },
       {
         "gameId": "401858289",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858285",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401862822",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858512",
         "kickoff": "2026-11-07T17:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -104,12 +373,12 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401869945",
+        "gameId": "401856854",
         "kickoff": "2026-11-07T18:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401856854",
+        "gameId": "401869945",
         "kickoff": "2026-11-07T18:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -134,22 +403,7 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401856740",
-        "kickoff": "2026-11-07T20:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401871076",
-        "kickoff": "2026-11-07T20:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
         "gameId": "401858516",
-        "kickoff": "2026-11-07T20:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401856851",
         "kickoff": "2026-11-07T20:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -159,7 +413,22 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401862820",
+        "gameId": "401856740",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401869951",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856851",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401871076",
         "kickoff": "2026-11-07T20:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -169,7 +438,7 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401869951",
+        "gameId": "401862820",
         "kickoff": "2026-11-07T20:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -189,12 +458,12 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401871074",
+        "gameId": "401871098",
         "kickoff": "2026-11-07T21:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401871098",
+        "gameId": "401871074",
         "kickoff": "2026-11-07T21:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -229,7 +498,12 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401858287",
+        "gameId": "401858291",
+        "kickoff": "2026-11-08T00:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856741",
         "kickoff": "2026-11-08T00:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -244,22 +518,17 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401862823",
-        "kickoff": "2026-11-08T00:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401856741",
-        "kickoff": "2026-11-08T00:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
         "gameId": "401858511",
         "kickoff": "2026-11-08T00:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401858291",
+        "gameId": "401862823",
+        "kickoff": "2026-11-08T00:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858287",
         "kickoff": "2026-11-08T00:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -274,17 +543,17 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401860913",
-        "kickoff": "2026-11-08T02:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
         "gameId": "401864532",
         "kickoff": "2026-11-08T02:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
         "gameId": "401856856",
+        "kickoff": "2026-11-08T02:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401860913",
         "kickoff": "2026-11-08T02:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -338,5 +607,5 @@
   },
   "evaluated": [],
   "interpretation": "Only immutable forecasts actually captured before kickoff count. No scored games means evidence is pending. This is future-game ordering/probability evidence, not proof of the correct earned-achievement order. Local capture timestamps and public repository history are retained; this is not an external trusted timestamp service.",
-  "reportSha256": "f1062508949bc9f8135cdd7a3a105239345b0e3fbb433ca0ba01b1e8a4a7418f"
+  "reportSha256": "c4076ea54da91c760e9dc6ba250e0f7a207052c85e89a7455f4571608858d3e5"
 }

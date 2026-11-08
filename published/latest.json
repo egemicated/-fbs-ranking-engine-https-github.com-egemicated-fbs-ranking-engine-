@@ -16,8 +16,8 @@
       "https://api.collegefootballdata.com/games?year=2026&seasonType=both",
       "https://api.collegefootballdata.com/teams/fbs?year=2026"
     ],
-    "fetchedAt": "2026-11-08T15:51:31.892Z",
-    "sha256": "a665ba80308b26c7e300d04ddf4e5b6a9f252c695b77d3d87cf4d05408aa6b53",
+    "fetchedAt": "2026-11-08T19:16:54.378Z",
+    "sha256": "4a65059230cad7d1f9eaec19ee075ab66aa12a5f20a4c8556fe25863ef746cc8",
     "audit": {
       "incompleteFinals": [
         "401907219",
@@ -119906,7 +119906,7 @@
       "displayConferenceRank": 7
     }
   ],
-  "asOf": "2026-11-08T15:51:32.834Z",
+  "asOf": "2026-11-08T19:16:55.258Z",
   "update": {
     "schedule": {
       "day": "Sunday",
@@ -119914,7 +119914,7 @@
       "timeZone": "America/Denver",
       "cron": "0 8 * * 0"
     },
-    "lastSuccessfulUpdate": "2026-11-08T15:51:32.834Z",
+    "lastSuccessfulUpdate": "2026-11-08T19:16:55.258Z",
     "provider": "CollegeFootballData",
     "apiCallsThisUpdate": 2,
     "policy": "Confirmed completed games available from CFBD at the weekly retrieval time"
@@ -119941,6 +119941,6 @@
     "frozenCandidate": "research/frozen-division-comparison-v2.json",
     "promotedAt": "2026-11-06T13:14:17Z"
   },
-  "modelPublishedAt": "2026-11-08T15:51:32.867Z",
+  "modelPublishedAt": "2026-11-08T19:16:55.299Z",
   "publicationHash": "7f16a93d77c5cd85a164718615c089b95edc5c392542205eeb111953fd26d34b"
 }

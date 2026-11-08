@@ -1,9 +1,9 @@
 {
   "season": 2026,
-  "asOf": "2026-11-08T15:51:32.834Z",
+  "asOf": "2026-11-08T19:16:55.258Z",
   "baseSnapshotHash": "1cba520c894e2a14c4b9356025b40fd93295f84e0630b27ec5e9583797ccfd61",
-  "generatedAt": "2026-11-08T15:51:48.951Z",
-  "modelPublishedAt": "2026-11-08T15:51:48.951Z",
+  "generatedAt": "2026-11-08T19:17:26.624Z",
+  "modelPublishedAt": "2026-11-08T19:17:26.624Z",
   "status": "experimental",
   "method": {
     "id": "experimental-performance-recent-prior-v1",
@@ -84,11 +84,11 @@
   },
   "source": {
     "endpoint": "https://api.collegefootballdata.com/stats/game/advanced?year=2026&seasonType=both&excludeGarbageTime=false",
-    "fetchedAt": "2026-11-08T15:51:48.855Z",
+    "fetchedAt": "2026-11-08T19:17:26.515Z",
     "loadedAt": null,
     "sha256": "2cd101d08dde8df65f977684080bfaf73bd6c8e882ad322a660c705bba78443d",
     "requestCount": 1,
-    "remainingCalls": 975
+    "remainingCalls": 971
   },
   "reference": {
     "measuredFbsMean": 0.11208594727307364,
@@ -16710,5 +16710,5 @@
       }
     }
   ],
-  "publicationHash": "b104ab3d8880de954daa8d56cea0ca4671cbf3a3de5f0fed0fc6c3c07bb3de9b"
+  "publicationHash": "f5e6fedf78f23a47d02236bc61edfc08dd74d23c85b51c8249376c5b97bda4c8"
 }
