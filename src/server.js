@@ -18,7 +18,7 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     ['/weekly-picks-score.js', ['weekly-picks-score.js', 'text/javascript; charset=utf-8']],
     ['/assets/stadium.png', ['assets/stadium.png', 'image/png']],
     ['/assets/stadium.webp', ['assets/stadium.webp', 'image/webp']],
-    ['/assets/fbs-intelligence-logo.jpg', ['assets/fbs-intelligence-logo.jpg', 'image/jpeg']],
+    ['/assets/fbs-intelligence-logo.svg', ['assets/fbs-intelligence-logo.svg', 'image/svg+xml']],
     ['/assets/fbs-intelligence-icon.png', ['assets/fbs-intelligence-icon.png', 'image/png']],
     ['/fonts/BarlowCondensed-Bold.ttf', ['fonts/BarlowCondensed-Bold.ttf', 'font/ttf']],
     ['/fonts/BarlowCondensed-SemiBold.ttf', ['fonts/BarlowCondensed-SemiBold.ttf', 'font/ttf']]
