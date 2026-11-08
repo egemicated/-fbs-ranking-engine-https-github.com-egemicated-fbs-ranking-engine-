@@ -1,8 +1,16 @@
 const outlet = document.querySelector('#content');
 const nav = document.querySelector('.views');
-const filters = { team: '', game: '', week: '', limit: 40 };
+const viewStatus = document.querySelector('#view-status');
+const filters = { team: '', game: '', week: '', limit: 40, trialGame: '', trialLimit: 40 };
+const trial = {};
+const trialModelKeys = ['baseline', 'challenger'];
+const trialDate = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeZone: 'UTC' });
+const trialTimestamp = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'UTC' });
 let preview;
 let teamById;
+let replayRequest;
+let replayError;
+let trialRequest;
 
 function escape(value) {
   return String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
@@ -151,7 +159,7 @@ function historyTestPanel(tests) {
   ];
   return `<section class="panel"><h2>History and weighting tests</h2>
     <p>We fitted the odds on 2014–2019, chose settings on 2021–2022, and tested on the same ${tests.games.toLocaleString()} games from 2023–2025.</p>
-    <p>The combined challenger uses stronger carryover between historical seasons and a 42-point margin scale. It is a candidate for a preseason trial. The archived forecasts in the Lab still use the original baseline.</p>
+    <p>The combined challenger uses stronger carryover between historical seasons and a 42-point margin scale. The <a href="#trial">2027 preseason trial</a> will compare it with the original baseline used in the archived forecasts.</p>
     ${preseasonScores(tests.combined, 'Combined preseason models')}
     ${groups.map(([label, rows, note]) => `<details class="test-detail"><summary>${escape(label)}</summary><p>${escape(note)}</p>${preseasonScores(rows, label)}</details>`).join('')}
   </section>`;
@@ -174,14 +182,206 @@ function renderTesting() {
     <p>Using each school’s prior leading passer as a team feature moved Brier from ${decimal(validation.passer.baselineBrier, 5)} to ${decimal(validation.passer.challengerBrier, 5)} on ${validation.passer.games.toLocaleString()} games. That test only used past passing production. It made no assumption about the upcoming starter.</p></section>`;
 }
 
+async function readTrialData(path, optional = false) {
+  const response = await fetch(`data/${path}.json`);
+  if (optional && [404, 410].includes(response.status)) return undefined;
+  if (!response.ok) throw new Error(`${path} returned HTTP ${response.status}`);
+  const body = await response.text();
+  // A static host can return the preview document itself for missing paths.
+  if (optional && /^\s*<!doctype html>/i.test(body) &&
+    body.includes('<title>Preseason Lab · FBS Intelligence</title>') &&
+    body.includes('href="#trial"')) return undefined;
+  return JSON.parse(body);
+}
+
+function validateTrialProtocol(protocol) {
+  if (protocol?.schemaVersion !== 1 || protocol.trialId !== 'preseason-2027' || protocol.season !== 2027 ||
+    !trialModelKeys.every(key => {
+      const model = protocol.models?.[key];
+      return model && typeof model.label === 'string' && Number.isInteger(model.firstSeason) &&
+        [model.retention, model.marginCap, model.probabilityScale].every(Number.isFinite);
+    }) || !['ridge', 'homeAdvantage', 'targetRetention', 'modelProbabilityScale']
+    .every(key => Number.isFinite(protocol.common?.[key]))) throw new Error('Invalid trial protocol');
+}
+
+function isTrialTimestamp(value) {
+  return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value) &&
+    isTrialDate(value.slice(0, 10)) && Number.isFinite(Date.parse(value));
+}
+
+function isTrialDate(value) {
+  return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(Date.parse(value)) &&
+    new Date(value).toISOString().slice(0, 10) === value;
+}
+
+function isTrialId(value) {
+  return (typeof value === 'string' && value.trim() !== '') || Number.isSafeInteger(value);
+}
+
+function isProbability(value) {
+  return Number.isFinite(value) && value >= 0 && value <= 1;
+}
+
+function validateTrialForecast(forecast) {
+  if (!isTrialTimestamp(forecast?.capturedAt) || !isTrialTimestamp(forecast.openingKickoff) ||
+    Date.parse(forecast.capturedAt) >= Date.parse(forecast.openingKickoff) ||
+    !/^[a-f\d]{64}$/i.test(forecast.integritySha256) || !forecast.teams?.length || !forecast.games?.length ||
+    !Array.isArray(forecast.teams) || !Array.isArray(forecast.games) ||
+    !forecast.teams.every(team => isTrialId(team?.id) && typeof team.name === 'string' && team.name.trim())) {
+    throw new Error('Invalid frozen trial forecast');
+  }
+  const teamNames = new Map(forecast.teams.map(team => [String(team.id), team.name]));
+  const gameIds = new Set(forecast.games.map(game => String(game?.id)));
+  if (teamNames.size !== forecast.teams.length || gameIds.size !== forecast.games.length ||
+    !forecast.games.every(game => isTrialId(game?.id) && isTrialId(game.home) && isTrialId(game.away) &&
+      String(game.home) !== String(game.away) && teamNames.has(String(game.home)) && teamNames.has(String(game.away)) &&
+      typeof game.neutral === 'boolean' && (isTrialTimestamp(game.startDate) || isTrialDate(game.startDate)) &&
+      isProbability(game.baselineProbability) && isProbability(game.challengerProbability))) {
+    throw new Error('Invalid frozen trial fixtures');
+  }
+  return teamNames;
+}
+
+function validateTrialScorecard(scorecard, forecast) {
+  const coverage = scorecard?.coverage;
+  if (!isTrialTimestamp(scorecard?.scoredAt) || scorecard.forecastIntegritySha256 !== forecast.integritySha256 ||
+    !['frozen', 'scored', 'unresolved', 'changed', 'added'].every(key => Number.isSafeInteger(coverage?.[key]) && coverage[key] >= 0) ||
+    coverage.frozen !== forecast.games.length || coverage.scored + coverage.unresolved + coverage.changed !== coverage.frozen ||
+    !trialModelKeys.every(key => {
+      const scores = scorecard.metrics?.[key];
+      return ['brier', 'logLoss', 'accuracy', 'winTotalMae'].every(metric => {
+        const value = scores?.[metric];
+        if (value === null) return coverage.scored === 0 || metric === 'winTotalMae';
+        return Number.isFinite(value) && value >= 0 && (['brier', 'accuracy'].includes(metric) ? value <= 1 : true);
+      });
+    })) throw new Error('Invalid or mismatched trial scorecard');
+}
+
+async function loadTrial() {
+  let stage = 'protocol';
+  try {
+    const protocol = await readTrialData('trial-2027');
+    validateTrialProtocol(protocol);
+    trial.protocol = protocol;
+    stage = 'frozen forecast';
+    const forecast = await readTrialData('trial-2027-forecast', true);
+    if (forecast !== undefined) {
+      trial.teamNames = validateTrialForecast(forecast);
+      trial.forecast = forecast;
+      stage = 'scorecard';
+      const scorecard = await readTrialData('trial-2027-scorecard', true);
+      if (scorecard !== undefined) {
+        validateTrialScorecard(scorecard, forecast);
+        trial.scorecard = scorecard;
+      }
+    }
+  } catch (error) {
+    trial.failed = stage;
+    console.error(error);
+  }
+  trial.ready = true;
+  if (currentView() === 'trial') renderTrial();
+}
+
+function trialProtocol({ models, common, evaluation }) {
+  const rows = [
+    ['First input season', model => model.firstSeason],
+    ['Historical carryover', model => percent(model.retention)],
+    ['Score-margin scale', model => `${model.marginCap} points`],
+  ];
+  return `<section class="panel trial-comparison"><h2>Locked model settings</h2>
+    ${table(['Setting', models.baseline.label, models.challenger.label], rows.map(([label, value]) =>
+    `<tr><th scope="row">${label}</th>${trialModelKeys.map(key => `<td>${escape(value(models[key]))}</td>`).join('')}</tr>`).join(''), 'Frozen model settings')}
+    <p>The baseline looks back four seasons. The challenger starts in 2004 and retains more of each rating as it moves through the historical seasons. Its wider margin scale gives larger wins more influence before that influence tapers.</p>
+    <p>Both models carry ${Math.round(common.targetRetention * 100)}% of the last historical rating into 2027 and use a ${common.homeAdvantage}-point home-field adjustment.</p>
+    <p>${escape(evaluation?.eligibleGames ?? 'The trial covers eligible FBS regular-season games.')}</p>
+    <p>Brier and log loss are the primary scores. Both measure how well the probabilities match the results, and lower is better.</p>
+    ${evaluation?.decision ? `<p>${escape(evaluation.decision)}</p>` : ''}</section>`;
+}
+
+function trialGameRows() {
+  const query = filters.trialGame.trim().toLowerCase();
+  const team = id => trial.teamNames.get(String(id));
+  const matching = trial.forecast.games.filter(game => `${team(game.away)} ${team(game.home)}`.toLowerCase().includes(query));
+  if (!matching.length) return '<p class="empty">No frozen fixtures match your search.</p>';
+  const rows = matching.slice(0, filters.trialLimit).map(game => {
+    const date = game.startDate.slice(0, 10);
+    return `<tr><th scope="row">${escape(team(game.away))} ${game.neutral ? 'vs' : 'at'} ${escape(team(game.home))}
+      <small><time datetime="${escape(date)}">${trialDate.format(Date.parse(date))}</time>${game.startTimeTbd || game.startDate === date ? ' · Time TBD' : ''}</small></th>
+      <td>${percent(game.baselineProbability)}</td><td>${percent(game.challengerProbability)}</td></tr>`;
+  }).join('');
+  return `<p class="note">Showing ${Math.min(filters.trialLimit, matching.length).toLocaleString()} of ${matching.length.toLocaleString()} games</p>
+    ${table(['Matchup', 'Baseline', 'Challenger'], rows, 'Frozen home team win probabilities')}
+    ${matching.length > filters.trialLimit ? '<button class="more" id="more-trial-games">Show more games</button>' : ''}`;
+}
+
+function trialForecast({ capturedAt, openingKickoff, games }) {
+  return `<section class="panel trial-comparison"><h2>Frozen forecasts</h2>
+    <p>Captured <time datetime="${escape(capturedAt)}">${trialTimestamp.format(Date.parse(capturedAt))} UTC</time> before the verified opening kickoff on <time datetime="${escape(openingKickoff)}">${trialTimestamp.format(Date.parse(openingKickoff))} UTC</time>.</p>
+    <p>Both models cover the same ${games.length.toLocaleString()} frozen fixtures. Each column shows the win probability for the second team listed. Dates come from the frozen schedule.</p>
+    <div class="controls"><label>Search frozen fixtures<input id="trial-game-filter" type="search" placeholder="Team name" value="${escape(filters.trialGame)}"></label></div>
+    <div id="trial-game-results" tabindex="-1">${trialGameRows()}</div></section>`;
+}
+
+function trialScores({ coverage, metrics, scoredAt }) {
+  const rows = [
+    ['Brier', 'brier', value => decimal(value, 5)],
+    ['Log loss', 'logLoss', value => decimal(value, 5)],
+    ['Winner accuracy', 'accuracy', percent],
+    ['Win total error', 'winTotalMae', value => decimal(value, 2)],
+  ];
+  return `<section class="panel trial-comparison"><h2>Paired scorecard</h2>
+    <p>${coverage.scored.toLocaleString()} of ${coverage.frozen.toLocaleString()} frozen fixtures scored as of <time datetime="${escape(scoredAt)}">${trialTimestamp.format(Date.parse(scoredAt))} UTC</time>.</p>
+    <p>${coverage.unresolved.toLocaleString()} unresolved · ${coverage.changed.toLocaleString()} changed · ${coverage.added.toLocaleString()} added after capture</p>
+    ${Number.isSafeInteger(coverage.kickoffChanges) && Number.isSafeInteger(coverage.scoredWithKickoffChanges) ?
+    `<p>${coverage.kickoffChanges.toLocaleString()} kickoff updates, including times that were TBD. Of those, ${coverage.scoredWithKickoffChanges.toLocaleString()} still qualified for scoring.</p>` : ''}
+    ${coverage.scored ? table(['Metric', 'Baseline', 'Challenger'], rows.map(([label, metric, format]) =>
+    `<tr><th scope="row">${label}</th>${trialModelKeys.map(key => `<td>${format(metrics[key][metric])}</td>`).join('')}</tr>`).join(''), 'Paired trial scores') :
+    '<p>Scores will appear after eligible frozen fixtures have final results.</p>'}
+    <p>Both models use the same scored games. Win total error is measured in wins per team on those games. Higher winner accuracy and lower Brier, log loss, and win total error are better.</p></section>`;
+}
+
+function renderTrial() {
+  if (!trial.ready) {
+    outlet.innerHTML = '<section class="panel" aria-busy="true"><h2>2027 preseason trial</h2><p role="status">Loading the trial…</p></section>';
+    trialRequest ??= loadTrial();
+    return;
+  }
+  const status = trial.failed ? `The trial ${trial.failed} could not load. Refresh this page to try again.` :
+    !trial.forecast ? 'Awaiting the completed 2026 archive and verified 2027 schedule. Both forecasts must be published before the first FBS kickoff.' :
+    !trial.scorecard ? 'Forecasts frozen. The paired scorecard is pending final results.' : 'Forecasts frozen. The paired scorecard is available.';
+  viewStatus.textContent = status;
+  outlet.innerHTML = `<section class="panel"><div class="tag">Prospective comparison</div><h2>2027 preseason trial</h2>
+    <p>Two models will use the same 2027 regular-season schedule and be scored side by side as results become available.</p>
+    <p><strong>${escape(status)}</strong></p></section>
+    ${trial.protocol ? trialProtocol(trial.protocol) : ''}
+    ${trial.forecast ? trialForecast(trial.forecast) : ''}
+    ${trial.scorecard ? trialScores(trial.scorecard) : ''}`;
+}
+
+function currentView() {
+  return location.hash.slice(1).split('/')[0];
+}
+
 function render() {
-  if (!preview) return;
-  const [view, id] = location.hash.slice(1).split('/');
-  const active = view === 'team' || !['games', 'quarterbacks', 'testing'].includes(view) ? 'rankings' : view;
+  const view = currentView();
+  const active = ['games', 'quarterbacks', 'testing', 'trial'].includes(view) ? view : 'rankings';
   for (const link of nav.querySelectorAll('a')) {
     if (link.hash === `#${active}`) link.setAttribute('aria-current', 'page');
     else link.removeAttribute('aria-current');
   }
+  if (active === 'trial') return renderTrial();
+  viewStatus.textContent = '';
+  if (replayError) {
+    outlet.innerHTML = '<section class="panel"><h2>The replay could not load.</h2><p>Refresh this page to try again.</p></section>';
+    return;
+  }
+  if (!preview) {
+    outlet.innerHTML = '<p role="status">Loading the replay…</p>';
+    replayRequest ??= loadReplay();
+    return;
+  }
+  const id = location.hash.slice(1).split('/')[1];
   if (view === 'team' && id) renderTeam(decodeURIComponent(id));
   else if (active === 'games') renderGames();
   else if (active === 'quarterbacks') renderQuarterbacks();
@@ -199,6 +399,11 @@ outlet.addEventListener('input', event => {
     filters.limit = 40;
     document.querySelector('#game-results').innerHTML = filteredGames();
   }
+  if (event.target.id === 'trial-game-filter') {
+    filters.trialGame = event.target.value;
+    filters.trialLimit = 40;
+    document.querySelector('#trial-game-results').innerHTML = trialGameRows();
+  }
 });
 outlet.addEventListener('change', event => {
   if (event.target.id !== 'week-filter') return;
@@ -207,21 +412,37 @@ outlet.addEventListener('change', event => {
   document.querySelector('#game-results').innerHTML = filteredGames();
 });
 outlet.addEventListener('click', event => {
+  if (event.target.id === 'more-trial-games') {
+    filters.trialLimit += 40;
+    const results = document.querySelector('#trial-game-results');
+    results.innerHTML = trialGameRows();
+    (document.querySelector('#more-trial-games') ?? results).focus();
+    return;
+  }
   if (event.target.id !== 'more-games') return;
   filters.limit += 40;
   document.querySelector('#game-results').innerHTML = filteredGames();
   document.querySelector('#more-games')?.focus();
 });
 window.addEventListener('hashchange', () => { render(); window.scrollTo(0, 0); });
+document.querySelector('.skip').addEventListener('click', event => {
+  event.preventDefault();
+  document.querySelector('#main').focus();
+});
 
-try {
-  const response = await fetch('data/replay.json');
-  if (!response.ok) throw new Error(`Preview data returned ${response.status}`);
-  preview = await response.json();
-  if (!preview.teams?.length || !preview.games?.length) throw new Error('Preview data is incomplete');
-  teamById = new Map(preview.teams.map(team => [team.id, team]));
-  render();
-} catch (error) {
-  outlet.innerHTML = '<section class="panel"><h2>The replay could not load.</h2><p>Refresh this page to try again.</p></section>';
-  console.error(error);
+async function loadReplay() {
+  try {
+    const response = await fetch('data/replay.json');
+    if (!response.ok) throw new Error(`Preview data returned ${response.status}`);
+    const replay = await response.json();
+    if (!replay.teams?.length || !replay.games?.length) throw new Error('Preview data is incomplete');
+    teamById = new Map(replay.teams.map(team => [team.id, team]));
+    preview = replay;
+  } catch (error) {
+    replayError = error;
+    console.error(error);
+  }
+  if (currentView() !== 'trial') render();
 }
+
+render();

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "trialId": "preseason-2027",
+  "season": 2027,
+  "models": {
+    "baseline": {
+      "label": "Four-year baseline",
+      "firstSeason": 2023,
+      "retention": 0.75,
+      "marginCap": 28,
+      "probabilityScale": 7.3361087302133114
+    },
+    "challenger": {
+      "label": "All-history challenger",
+      "firstSeason": 2004,
+      "retention": 1,
+      "marginCap": 42,
+      "probabilityScale": 8.721490252326657
+    }
+  },
+  "common": {
+    "ridge": 3,
+    "homeAdvantage": 2.5,
+    "targetRetention": 0.75,
+    "modelProbabilityScale": 14
+  },
+  "engineSha256": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+  "evaluation": {
+    "primary": ["brier", "logLoss"],
+    "secondary": ["accuracy", "winTotalMae"],
+    "eligibleGames": "Scheduled FBS vs. FBS regular-season games with known opponents, venue designation, and scheduled dates at capture. Later kickoff times may be TBD. Excludes conference championship games, bowls, and playoffs.",
+    "decision": "Review after the regular season. The challenger must improve both primary scores on the same games, show gains across conferences and teams, and hold up when individual weeks and conferences are removed. If the evidence is mixed, keep the four-year baseline and continue the trial."
+  }
+}
