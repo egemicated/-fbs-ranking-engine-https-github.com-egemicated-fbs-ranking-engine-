@@ -3,6 +3,9 @@ const main = document.querySelector('#main');
 // Static builds set this root. The web service keeps its existing JSON routes.
 const dataRoot = document.querySelector('meta[name="publication-data-root"]')?.content;
 const state = { snapshot: null, byId: new Map(), performance: null, performanceById: new Map(), model: 'achievement', search: '', conference: '', all: false, teamTab: 'overview', compareA: '254', compareB: '2390', venue: 'neutral' };
+const weeklyPicks = { request: null, status: 'loading', selectedWeek: '', weeks: new Map(), teams: new Map() };
+const picksDate = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', weekday: 'short', month: 'short', day: 'numeric' });
+const picksTimestamp = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', dateStyle: 'medium', timeStyle: 'short' });
 const paths = {
   home:'M3 10 12 3l9 7M5 9v12h5v-7h4v7h5V9',
   trophy:'M8 3h8v5a4 4 0 0 1-8 0V3ZM8 5H4v2a4 4 0 0 0 4 4m8-6h4v2a4 4 0 0 1-4 4m-4 1v6m-4 3h8m-7-3h6',
@@ -250,13 +253,144 @@ function matchupMarginRange(a, b, edge) {
   const signed = points => points < 0 ? `−${Math.abs(points)}` : points > 0 ? `+${points}` : '0';
   return `<p style="margin-top:12px">Historical final-margin range for ${esc(a.name)}<br><strong>${signed(low)} to ${signed(high)} pts</strong></p>`;
 }
+function matchupNav(active) {
+  return `<nav class="matchup-views" aria-label="Matchup Lab views">
+    <a href="#compare"${active === 'compare' ? ' aria-current="page"' : ''}>Compare teams</a>
+    <a href="#compare/weekly"${active === 'weekly' ? ' aria-current="page"' : ''}>Weekly picks</a>
+  </nav>`;
+}
+function picksTime(value) {
+  return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value) ? Date.parse(value) : NaN;
+}
+function weekKey(game) { return `${game.seasonType}:${game.week}`; }
+function weekLabel(game) { return game.seasonType === 'postseason' ? `Postseason · Week ${game.week}` : `Week ${game.week}`; }
+function picksPublication(data) {
+  if (data?.schemaVersion !== 1 || data.season !== state.snapshot.season || !Number.isFinite(picksTime(data.asOf)) ||
+    !Array.isArray(data.teams) || !Array.isArray(data.games)) throw new Error('Invalid weekly picks publication');
+  const teams = new Map();
+  for (const team of data.teams) {
+    if (typeof team?.id !== 'string' || !team.id || typeof team.name !== 'string' || !team.name.trim() || teams.has(team.id))
+      throw new Error('Invalid weekly picks team');
+    teams.set(team.id, team);
+  }
+  const ids = new Set();
+  for (const game of data.games) {
+    if (typeof game?.id !== 'string' || !game.id || ids.has(game.id) || game.home === game.away ||
+      !teams.has(game.home) || !teams.has(game.away) || !Number.isFinite(picksTime(game.startDate)) ||
+      !Number.isInteger(game.week) || !['regular', 'postseason'].includes(game.seasonType) ||
+      !['scheduled', 'final', 'pending'].includes(game.status) || typeof game.neutral !== 'boolean' ||
+      (game.status === 'final' && ![game.homePoints, game.awayPoints].every(points => Number.isInteger(points) && points >= 0)))
+      throw new Error('Invalid weekly picks game');
+    ids.add(game.id);
+  }
+  const games = [...data.games].sort((a, b) => picksTime(a.startDate) - picksTime(b.startDate) || a.id.localeCompare(b.id));
+  const weeks = new Map();
+  for (const game of games) {
+    const key = weekKey(game);
+    if (!weeks.has(key)) weeks.set(key, []);
+    weeks.get(key).push(game);
+  }
+  const next = games.find(game => game.status === 'scheduled' && picksTime(game.startDate) >= picksTime(data.asOf));
+  const latest = games.findLast(game => game.status !== 'scheduled');
+  return { data, teams, weeks, selectedWeek: games.length ? weekKey(next ?? latest ?? games[0]) : '' };
+}
+async function loadWeeklyPicks() {
+  try {
+    const response = await fetch(publicationPath('weekly-picks'), { headers: { Accept: 'application/json' } });
+    if (response.status === 404 || response.status === 410) weeklyPicks.status = 'missing';
+    else if (!response.ok) throw new Error(`Weekly picks returned ${response.status}`);
+    else if (response.headers?.get('content-type')?.includes('text/html')) {
+      const html = await response.text();
+      if (!html.includes('<title>FBS Intelligence · FBS Top 25</title>') || !html.includes('name="publication-data-root"'))
+        throw new Error('Weekly picks returned unexpected HTML');
+      weeklyPicks.status = 'missing';
+    } else {
+      Object.assign(weeklyPicks, picksPublication(await response.json()), { status: 'ready' });
+    }
+  } catch (error) {
+    weeklyPicks.status = 'error';
+    console.error(error);
+  }
+  if (route()[0] === 'compare' && route()[1] === 'weekly') {
+    renderWeeklyPicks();
+    document.querySelector('#announce').textContent = weeklyPicks.status === 'ready' ? 'Weekly picks loaded' : 'Weekly picks unavailable';
+  }
+}
+function validWeeklyPick(game, pick, capturedAt) {
+  const p = pick?.homeWinProbability;
+  const capture = picksTime(capturedAt);
+  return Number.isFinite(p) && p >= 0 && p <= 1 && pick.favored === (p === .5 ? 'even' : p > .5 ? 'home' : 'away') &&
+    Number.isFinite(capture) && capture < picksTime(game.startDate) && capture <= picksTime(weeklyPicks.data.asOf) &&
+    [game.home, game.away].every(id => weeklyPicks.teams.get(id).division === 'fbs');
+}
+function weeklyPicksGame(game) {
+  const away = weeklyPicks.teams.get(game.away);
+  const home = weeklyPicks.teams.get(game.home);
+  const scheduled = game.status === 'scheduled' && picksTime(game.startDate) >= picksTime(weeklyPicks.data.asOf);
+  const live = validWeeklyPick(game, game.pick, game.pick?.capturedAt);
+  const replay = !live && !scheduled && validWeeklyPick(game, game.replay, game.replay?.asOf);
+  const estimate = !live && scheduled && validWeeklyPick(game, game.estimate, game.estimate?.asOf);
+  const pick = live ? game.pick : replay ? game.replay : estimate ? game.estimate : null;
+  const capture = live ? pick.capturedAt : pick?.asOf;
+  const pickLabel = live ? 'Saved pregame pick' : replay ? 'Historical replay' : estimate ? 'Preview odds · From saved ratings' : 'Model pick';
+  const favored = pick?.favored === 'home' ? home : away;
+  const pickText = pick ? (pick.favored === 'even' ? 'Even · 50.0% each' :
+    `${esc(favored.name)} · ${number(Math.max(pick.homeWinProbability, 1 - pick.homeWinProbability) * 100, 1)}%`) :
+    (scheduled ? 'No pick saved yet' : 'No saved pregame pick');
+  const winner = game.status === 'final' && game.homePoints !== game.awayPoints ?
+    (game.homePoints > game.awayPoints ? 'home' : 'away') : null;
+  const grade = live && winner && pick.favored !== 'even' ? (winner === pick.favored ? 'Correct' : 'Missed') : '';
+  const result = game.status === 'final' ?
+    (winner ? `${esc(winner === 'home' ? home.name : away.name)} won ${Math.max(game.homePoints, game.awayPoints)}–${Math.min(game.homePoints, game.awayPoints)}` :
+      `Tied ${game.awayPoints}–${game.homePoints}`) :
+    (scheduled ? 'Scheduled' : 'Final score pending');
+  const team = entry => state.byId.has(entry.id) ? `<a href="#team/${encodeURIComponent(entry.id)}">${esc(entry.name)}</a>` : esc(entry.name);
+  return { grade, html: `<li class="weekly-game">
+    <div><h3>${team(away)} ${game.neutral ? 'vs' : 'at'} ${team(home)}</h3>
+    <p class="compact-note"><time datetime="${esc(game.startDate)}">${picksDate.format(picksTime(game.startDate))}</time>${game.neutral ? ' · Neutral site' : ''}</p></div>
+    <dl class="weekly-game-details">
+      <div><dt>${pickLabel}</dt><dd>${pickText}${capture ? `<small><time datetime="${esc(capture)}">${picksTimestamp.format(picksTime(capture))} MT</time></small>` : ''}</dd></div>
+      <div><dt>${game.status === 'final' ? 'Final' : 'Status'}</dt><dd>${result}${grade ? ` <span class="weekly-grade ${grade.toLowerCase()}">${grade}</span>` : ''}</dd></div>
+    </dl></li>` };
+}
+function weeklyResults() {
+  const games = weeklyPicks.weeks.get(weeklyPicks.selectedWeek);
+  const rows = games.map(weeklyPicksGame);
+  const correct = rows.filter(row => row.grade === 'Correct').length;
+  const missed = rows.filter(row => row.grade === 'Missed').length;
+  const record = correct + missed ? `${correct} correct · ${missed} missed` : 'No saved picks graded this week';
+  return `<p class="weekly-record">${games.length} ${games.length === 1 ? 'game' : 'games'} · ${record}</p>
+    <ul class="weekly-list" aria-label="Games for ${esc(weekLabel(games[0]))}">${rows.map(row => row.html).join('')}</ul>`;
+}
+function renderWeeklyPicks() {
+  const { status, data, weeks, selectedWeek } = weeklyPicks;
+  let body;
+  if (status === 'ready') {
+    const cutoff = Number.isFinite(picksTime(data.source?.scheduleAsOf)) ? data.source.scheduleAsOf : data.asOf;
+    const provider = data.source?.provider === 'cfbd' ? 'CollegeFootballData' : data.source?.provider === 'sportsdataverse' ? 'sportsdataverse' : '';
+    body = `<p class="compact-note">Schedule and results${provider ? ` from ${provider}` : ''} as of <time datetime="${esc(cutoff)}">${picksTimestamp.format(picksTime(cutoff))} MT</time>.${data.source?.extraScoreProvider === 'ESPN' ? ' Some final scores are from ESPN.' : ''}</p>
+      <p class="compact-note">Predictive Strength picks cover FBS vs. FBS games. The weekly update saves picks up to seven days ahead. The record grades picks saved before kickoff. Historical replays and preview odds are separate.</p>
+      ${weeks.size ? `<div class="weekly-controls"><label for="weekly-week">Select week</label><select id="weekly-week">${[...weeks].map(([key, games]) =>
+        `<option value="${esc(key)}"${key === selectedWeek ? ' selected' : ''}>${esc(weekLabel(games[0]))}</option>`).join('')}</select></div>
+        <div id="weekly-results">${weeklyResults()}</div>` : '<p class="compact-note">No games in the saved schedule.</p>'}`;
+  } else {
+    body = `<p class="compact-note" role="status">${status === 'loading' ? 'Loading the saved schedule and picks…' :
+      status === 'missing' ? 'Weekly picks will appear when the first schedule is published.' :
+        'The saved weekly picks could not load. Refresh to try again.'}</p>`;
+  }
+  main.innerHTML = `${banner('Matchup lab · Predictive Strength', 'WEEKLY PICKS', 'See the model’s win chances for scheduled games and how its saved picks did once the scores were final.')}
+    <div class="wrap page-content">${matchupNav('weekly')}<section class="panel weekly-picks" aria-labelledby="weekly-picks-title">
+    <div class="panel-body"><h2 id="weekly-picks-title">${state.snapshot.season} schedule and picks</h2>${body}</div></section></div>`;
+  if (status === 'loading') weeklyPicks.request ??= loadWeeklyPicks();
+}
 function renderCompare() {
+  if (route()[0] === 'compare' && route()[1] === 'weekly') return renderWeeklyPicks();
   const {a,b,edge,probability}=compareResult();
   const matchup = state.snapshot.matchupValidation;
   const explanation = matchup
     ? 'Win probabilities were calibrated on past results. The historical margin range describes how far final scores varied from this estimate in a later test. Negative margins favor Team B.'
     : 'These probabilities have not been calibrated. The margin is fitted from bounded historical score differences and should not be treated as a betting spread.';
-  main.innerHTML=`${banner('Matchup lab · Experimental strength model','CHANGE THE MATCHUP. FOLLOW THE NUMBERS.','Compare two teams using our own historical and opponent-adjusted strength ratings.')}<div class="wrap page-content"><div class="segmented compare-venue" aria-label="Game location">${[['neutral','Neutral field'],['home','Team A at home'],['away','Team B at home']].map(([v,label])=>`<button data-action="venue" data-value="${v}" class="${state.venue===v?'active':''}" aria-pressed="${state.venue===v}">${label}</button>`).join('')}</div><div class="compare-layout">${[a,b].map((t,i)=>`<section class="panel compare-picker"><div class="section-label">TEAM ${i?'B':'A'}</div>${logo(t,'large')}<h2>${esc(t.name)}</h2><p>${record(t)} · ${rank(nationalRank(t))} ${achievementName()}</p><label><span class="sr-only">Team ${i?'B':'A'}</span><select id="compare-${i?'b':'a'}">${compareOptions(t.id)}</select></label><p style="margin-top:14px">Strength <strong>${number(t.strength,2)} pts</strong> · ${rank(strengthRank(t))}</p></section>`).join('')}<section class="panel prediction-card"><div class="eyebrow">${matchup ? 'Historically calibrated odds' : 'Experimental model estimate'}</div><h2>${esc(edge>=0?a.name:b.name)} edge</h2><div class="prediction-number">${number(Math.abs(edge),1)}<span style="font-size:27px"> pts</span></div><p>Bounded-model margin estimate</p><div class="probability-track"><span style="width:${probability*100}%"></span></div><p>${esc(a.name)} ${number(probability*100,1)}% &nbsp; · &nbsp; ${esc(b.name)} ${number((1-probability)*100,1)}%</p>${matchupMarginRange(a,b,edge)}</section></div><div class="notice"><strong>Reading the matchup.</strong> ${explanation} <a class="text-link" href="#methodology">See what we checked</a></div></div>`;
+  main.innerHTML=`${banner('Matchup lab · Experimental strength model','CHANGE THE MATCHUP. FOLLOW THE NUMBERS.','Compare two teams using our own historical and opponent-adjusted strength ratings.')}<div class="wrap page-content">${matchupNav('compare')}<div class="segmented compare-venue" aria-label="Game location">${[['neutral','Neutral field'],['home','Team A at home'],['away','Team B at home']].map(([v,label])=>`<button data-action="venue" data-value="${v}" class="${state.venue===v?'active':''}" aria-pressed="${state.venue===v}">${label}</button>`).join('')}</div><div class="compare-layout">${[a,b].map((t,i)=>`<section class="panel compare-picker"><div class="section-label">TEAM ${i?'B':'A'}</div>${logo(t,'large')}<h2>${esc(t.name)}</h2><p>${record(t)} · ${rank(nationalRank(t))} ${achievementName()}</p><label><span class="sr-only">Team ${i?'B':'A'}</span><select id="compare-${i?'b':'a'}">${compareOptions(t.id)}</select></label><p style="margin-top:14px">Strength <strong>${number(t.strength,2)} pts</strong> · ${rank(strengthRank(t))}</p></section>`).join('')}<section class="panel prediction-card"><div class="eyebrow">${matchup ? 'Historically calibrated odds' : 'Experimental model estimate'}</div><h2>${esc(edge>=0?a.name:b.name)} edge</h2><div class="prediction-number">${number(Math.abs(edge),1)}<span style="font-size:27px"> pts</span></div><p>Bounded-model margin estimate</p><div class="probability-track"><span style="width:${probability*100}%"></span></div><p>${esc(a.name)} ${number(probability*100,1)}% &nbsp; · &nbsp; ${esc(b.name)} ${number((1-probability)*100,1)}%</p>${matchupMarginRange(a,b,edge)}</section></div><div class="notice"><strong>Reading the matchup.</strong> ${explanation} <a class="text-link" href="#methodology">See what we checked</a></div></div>`;
 }
 function render() {
   if(!state.snapshot)return;
@@ -267,7 +401,7 @@ function render() {
     state.all = id === 'all' || scope === 'all';
   }
   if(page==='home')renderHome();else if(page==='rankings')renderRankings();else if(page==='teams')renderTeams();else if(page==='team')renderTeam(id);else if(page==='methodology')renderMethodology();else if(page==='compare')renderCompare();else renderHome();
-  const team=state.byId.get(id);document.title=`${page==='team'&&team?team.name:({home:'FBS Top 25',rankings:'National rankings',teams:'Team directory',compare:'Matchup lab',methodology:'Methodology'}[page]||'Home')} · ${BRAND}`;
+  const team=state.byId.get(id);document.title=`${page==='team'&&team?team.name:({home:'FBS Top 25',rankings:'National rankings',teams:'Team directory',compare:id==='weekly'?'Weekly picks':'Matchup lab',methodology:'Methodology'}[page]||'Home')} · ${BRAND}`;
   document.querySelector('#announce').textContent=document.title;
 }
 document.addEventListener('error',e=>{if(e.target instanceof HTMLImageElement && e.target.closest('.logo'))e.target.closest('.logo').classList.add('failed');},true);
@@ -282,6 +416,11 @@ document.addEventListener('change',e=>{
   if(e.target.id==='conference-filter'){state.conference=e.target.value;route()[0]==='teams'?renderTeams():renderRankings();}
   if(e.target.id==='compare-a'){state.compareA=e.target.value;renderCompare();}
   if(e.target.id==='compare-b'){state.compareB=e.target.value;renderCompare();}
+  if (e.target.id === 'weekly-week' && weeklyPicks.weeks.has(e.target.value)) {
+    weeklyPicks.selectedWeek = e.target.value;
+    document.querySelector('#weekly-results').innerHTML = weeklyResults();
+    document.querySelector('#announce').textContent = `${weekLabel(weeklyPicks.weeks.get(weeklyPicks.selectedWeek)[0])} games shown`;
+  }
 });
 document.addEventListener('click',e=>{
   if(e.target.closest('.skip-link')){e.preventDefault();main.focus();main.scrollIntoView();return;}

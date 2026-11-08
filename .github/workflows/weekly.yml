@@ -29,6 +29,10 @@ jobs:
         env:
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
         run: node scripts/refresh-weekly.js
+      - name: Save weekly picks and confirmed results
+        if: steps.primary-publish.outcome == 'success'
+        continue-on-error: true
+        run: node scripts/publish-weekly-picks.js --season "data/seasons/${RANKING_SEASON}.json" --snapshot published/latest.json --output published/weekly-picks.json
       - name: Record frozen achievement comparison
         continue-on-error: true
         run: node scripts/record-research-comparison.js
@@ -97,6 +101,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add published/latest.json
           git add published/performance-latest.json
+          if test -f published/weekly-picks.json; then git add published/weekly-picks.json; fi
           git add research/observations/
           git add research/division-observations/
           git add research/blend-observations/

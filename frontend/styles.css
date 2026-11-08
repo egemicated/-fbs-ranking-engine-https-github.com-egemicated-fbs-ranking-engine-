@@ -23,7 +23,29 @@
 .companion-views p{margin-top:3px}
 .stack>.notice{margin-top:0}
 .stack>.notice p{margin-top:8px}
+.matchup-views{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.matchup-views a{display:inline-block;padding:9px 13px;border-radius:7px;color:var(--ink);font-size:12px;font-weight:700}
+.matchup-views a[aria-current="page"]{background:#174f9c;color:white}
+.weekly-picks h2{margin-bottom:8px}
+.weekly-picks .compact-note+.compact-note{margin-top:5px}
+.weekly-controls{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-top:15px}
+.weekly-controls label,.weekly-record{font-size:12px;font-weight:700}
+.weekly-controls select{min-width:0;max-width:100%}
+.weekly-record{margin-block:13px 7px;color:var(--muted)}
+.weekly-list{padding:0;margin:0;list-style:none}
+.weekly-game{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:13px;border-top:1px solid var(--line);padding-block:13px}
+.weekly-game h3{font-size:24px;overflow-wrap:anywhere}
+.weekly-game h3 a:hover{text-decoration:underline}
+.weekly-game-details{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.weekly-game-details dt{margin-bottom:4px;color:var(--muted);font-size:11px;font-weight:700}
+.weekly-game-details dd{margin:0;font-size:13px;font-weight:700;line-height:1.45;overflow-wrap:anywhere}
+.weekly-game-details small{display:block;margin-top:3px;color:var(--muted);font-size:10px;font-weight:400}
+.weekly-grade{display:inline-block;padding:2px 6px;margin-top:3px;border-radius:4px;font-size:11px}
+.weekly-grade.correct{color:#175b41;background:#e5f4e9}
+.weekly-grade.missed{color:#8a3524;background:#fcece8}
 @media (max-width: 700px) {
+  .weekly-game{grid-template-columns:minmax(0,1fr);gap:8px}
+  .weekly-game h3{font-size:22px}
   .two-column .toolbar-group {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;

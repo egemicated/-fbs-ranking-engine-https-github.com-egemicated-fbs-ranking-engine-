@@ -48,6 +48,13 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
         return performance ? send(200, performance) : send(503, { error: 'Experimental Performance is unavailable for this snapshot' });
       } catch { return send(503, { error: 'Experimental Performance is unavailable for this snapshot' }); }
     }
+    if (path === '/weekly-picks') {
+      try {
+        return send(200, JSON.parse(await readFile(new URL('../published/weekly-picks.json', import.meta.url), 'utf8')));
+      } catch (error) {
+        return send(error.code === 'ENOENT' ? 404 : 503, { error: 'Weekly picks are unavailable' });
+      }
+    }
     const match = /^\/rankings(?:\/(\d{4}))?$/.exec(path);
     if (!match) return send(404, { error: 'Not found' });
     try {

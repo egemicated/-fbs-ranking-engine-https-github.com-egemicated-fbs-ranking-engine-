@@ -34,9 +34,14 @@ if (performance) publicSnapshot.performanceEndpoint = '/data/performance.json';
 await cp(frontend, output, { recursive: true, filter: source => source !== legacyHero });
 await mkdir(data, { recursive: true });
 const performanceFile = join(data, 'performance.json');
+const picksFile = join(data, 'weekly-picks.json');
 await Promise.all([
   writeFile(join(output, 'index.html'), html.replace(marker, '<meta name="publication-data-root" content="/data">')),
   writeFile(join(data, 'rankings.json'), JSON.stringify(publicSnapshot)),
   performance ? writeFile(performanceFile, JSON.stringify(performance)) : rm(performanceFile, { force: true }),
+  cp(join(published, 'weekly-picks.json'), picksFile).catch(error => {
+    if (error.code !== 'ENOENT') throw error;
+    return rm(picksFile, { force: true });
+  }),
 ]);
 console.log(`Ready: ${snapshot.season} static rankings for ${snapshot.fbsTeams} FBS teams${performance ? ' with experimental Performance' : ''}`);
