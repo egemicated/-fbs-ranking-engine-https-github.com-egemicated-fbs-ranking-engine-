@@ -338,6 +338,9 @@ function validWeeklyPick(game, pick, capturedAt) {
     Number.isFinite(capture) && capture < picksTime(game.startDate) && capture <= picksTime(weeklyPicks.data.asOf) &&
     [game.home, game.away].every(id => weeklyPicks.teams.get(id).division === 'fbs');
 }
+function weeklyPreviewEstimate(game, scheduled = game.status === 'scheduled' && picksTime(game.startDate) >= picksTime(weeklyPicks.data.asOf)) {
+  return scheduled && validWeeklyPick(game, game.estimate, game.estimate?.asOf);
+}
 function weeklyPicksGame(game) {
   const away = weeklyPicks.teams.get(game.away);
   const home = weeklyPicks.teams.get(game.home);
@@ -346,7 +349,7 @@ function weeklyPicksGame(game) {
   const scheduled = game.status === 'scheduled' && kickoff >= cutoff;
   const live = validWeeklyPick(game, game.pick, game.pick?.capturedAt);
   const replay = !live && !scheduled && kickoff <= cutoff && validWeeklyPick(game, game.replay, game.replay?.asOf);
-  const estimate = !live && scheduled && validWeeklyPick(game, game.estimate, game.estimate?.asOf);
+  const estimate = !live && weeklyPreviewEstimate(game, scheduled);
   const pick = live ? game.pick : replay ? game.replay : estimate ? game.estimate : null;
   const capture = live ? pick.capturedAt : pick?.asOf;
   const pickLabel = live ? 'Saved pregame pick' : replay ? 'Historical replay' : estimate ? 'Preview odds · From saved ratings' : 'Model pick';
@@ -385,19 +388,43 @@ function predictabilitySample(score) {
   return score.decisivePicks ? `${score.correctPicks} of ${score.decisivePicks} right` : 'No decided picks with a favorite';
 }
 function predictabilityCoverage(score, label) {
+  if (score.availablePicks && score.pendingPicks === score.availablePicks) {
+    return `${score.pendingPicks} ${label} awaiting final scores.`;
+  }
   const pending = score.pendingPicks ? ` ${score.pendingPicks} awaiting final scores.` : '';
   return `${score.completedPicks} of ${score.availablePicks} ${label} have a final winner.${pending}`;
 }
+function completeReplayChange({ week, previousWeek, comparison }) {
+  return week?.availablePicks && previousWeek?.availablePicks && week.completedPicks === week.availablePicks &&
+    previousWeek.completedPicks === previousWeek.availablePicks ? comparison?.accuracyDifference : null;
+}
 function replayPredictability({ week, previousWeek, comparison }) {
   if (!week?.availablePicks) return '';
-  const comparable = previousWeek?.availablePicks && week.completedPicks === week.availablePicks &&
-    previousWeek.completedPicks === previousWeek.availablePicks && Number.isFinite(comparison?.accuracyDifference);
+  const delta = completeReplayChange({ week, previousWeek, comparison });
   return `<div class="predictability-replay"><h4>Historical replay</h4>
     <p><strong>${scoreAccuracy(week.accuracy)}</strong> · ${predictabilitySample(week)}${Number.isFinite(week.brier) ? ` · Brier ${number(week.brier, 3)}` : ''}</p>
     <p class="compact-note">${predictabilityCoverage(week, 'replay forecasts')} Replay scores are separate from the saved-pick record.</p>
-    ${comparable ? `<p class="compact-note">${scoreChange(comparison.accuracyDifference)} vs ${esc(weekLabel(previousWeek))} replay · ${predictabilitySample(previousWeek)} that week.</p>` :
+    ${Number.isFinite(delta) ? `<p class="compact-note">${scoreChange(delta)} vs ${esc(weekLabel(previousWeek))} replay · ${predictabilitySample(previousWeek)} that week.</p>` :
       (previousWeek?.availablePicks && (week.pendingPicks || previousWeek.pendingPicks) ? '<p class="compact-note">Replay week comparison is waiting for final scores.</p>' : '')}
   </div>`;
+}
+function savedSeasonRecord(season) {
+  return season.decisivePicks ? `${season.correctPicks}–${season.decisivePicks - season.correctPicks}` : '—';
+}
+function historicalPredictability(replay, season) {
+  const { week, previousWeek } = replay;
+  const delta = completeReplayChange(replay);
+  const prior = previousWeek?.availablePicks ? `vs ${weekLabel(previousWeek)} replay` : '';
+  const changeDetail = Number.isFinite(delta) ? `${prior} · ${predictabilitySample(previousWeek)}` :
+    prior ? `${prior} · needs complete results and a winner pick in both weeks` : 'No replay forecasts for the previous week';
+  return `<p class="predictability-mode">Historical replay</p>
+    <dl class="predictability-grid">
+      ${predictabilityMetric(`${weekLabel(week)} replay accuracy`, scoreAccuracy(week.accuracy), predictabilitySample(week))}
+      ${predictabilityMetric('Change from previous replay week', Number.isFinite(delta) ? scoreChange(delta) : '—', changeDetail)}
+      ${predictabilityMetric('Replay Brier score', number(week.brier, 3), 'Lower is better. Confident misses cost more.')}
+    </dl>
+    <p class="compact-note">${predictabilityCoverage(week, 'replay forecasts')} Replay forecasts are reconstructed using results available before each week.</p>
+    <p class="compact-note"><strong>Saved-pick season record</strong> · ${season.decisivePicks ? savedSeasonRecord(season) : 'Awaiting decided saved picks'}</p>`;
 }
 function predictabilityContent() {
   if (!weeklyPicks.scoring) {
@@ -405,15 +432,18 @@ function predictabilityContent() {
   }
   const { week, previousWeek, season, comparison, replay } = weeklyPicks.scoring(weeklyPicks.data, weeklyPicks.selectedWeek);
   if (!week) return '<p class="compact-note">Scores are unavailable for this week.</p>';
+  if (!week.availablePicks && replay?.week?.availablePicks) return historicalPredictability(replay, season);
+  const previews = week.availablePicks ? 0 : weeklyPicks.weeks.get(weeklyPicks.selectedWeek).filter(game => weeklyPreviewEstimate(game)).length;
+  const weekDetail = week.availablePicks ? (week.pendingPicks === week.availablePicks ? 'Awaiting final scores' : predictabilitySample(week)) :
+    previews ? `${previews} preview forecasts available` : 'No saved picks this week';
   const delta = comparison?.accuracyDifference;
   const changeDetail = Number.isFinite(delta) ? `vs ${weekLabel(previousWeek)} · ${predictabilitySample(previousWeek)} that week${week.pendingPicks || previousWeek.pendingPicks ? ' · provisional' : ''}` :
     previousWeek ? `vs ${weekLabel(previousWeek)} · needs a decided pick in both weeks` : 'No previous week on the schedule';
-  const seasonRecord = season.decisivePicks ? `${season.correctPicks}–${season.decisivePicks - season.correctPicks}` : '—';
   const seasonDetail = season.decisivePicks ? `${predictabilitySample(season)} · ${scoreAccuracy(season.accuracy)} accuracy` : 'No decided saved picks this season';
-  return `<dl class="predictability-grid">
-    ${predictabilityMetric(`${weekLabel(week)} accuracy`, scoreAccuracy(week.accuracy), week.availablePicks ? predictabilitySample(week) : 'No saved picks this week')}
+  return `<p class="predictability-mode">Saved pregame picks</p><dl class="predictability-grid">
+    ${predictabilityMetric(`${weekLabel(week)} accuracy`, scoreAccuracy(week.accuracy), weekDetail)}
     ${predictabilityMetric('Change from previous week', Number.isFinite(delta) ? scoreChange(delta) : '—', changeDetail)}
-    ${predictabilityMetric('Season record', seasonRecord, seasonDetail)}
+    ${predictabilityMetric('Season record', savedSeasonRecord(season), seasonDetail)}
   </dl>
   ${week.availablePicks ? `<p class="compact-note">${predictabilityCoverage(week, 'saved picks')}</p>` : ''}
   <p class="compact-note">Accuracy counts saved pregame picks that named a favorite and have a final winner.</p>
