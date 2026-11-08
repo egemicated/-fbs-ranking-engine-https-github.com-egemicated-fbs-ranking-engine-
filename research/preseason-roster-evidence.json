@@ -1,0 +1,2191 @@
+{
+  "schemaVersion": 1,
+  "targetSeasons": [
+    2023,
+    2024,
+    2025
+  ],
+  "samplePolicy": "All explicitly listed QB candidates in the complete official ACC media-day announcements for 2023–2025. Clemson, Miami and Michigan form a fixed nine-team-season seed. Michigan is supplemented by dated school publications. No case was chosen from test outcomes.",
+  "cutoffs": {
+    "2023": "2023-08-26T06:00:00Z",
+    "2024": "2024-08-24T06:00:00Z",
+    "2025": "2025-08-23T06:00:00Z"
+  },
+  "timingRule": "A date-only claim is conservatively available 36 hours after 00:00 UTC on its evidence date. Exact cutoffs are 00:00 Mountain time before the first national FBS regular-season kickoff.",
+  "evidence": [
+    {
+      "season": 2023,
+      "teamId": "103",
+      "team": "Boston College",
+      "athleteId": "4683501",
+      "name": "Emmett Morehead",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-07-19T12:00:00Z",
+      "publishedOn": "2023-07-18",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2023/7/17/attendees-announced-for-2023-acc-football-kickoff.aspx",
+          "publishedOn": "2023-07-18",
+          "sha256": "31e59f55c3eec06076abc2e2b5a8ef28488cb74de7b298f2f013e2a14ac01192",
+          "retrievedAt": "2026-11-08T04:09:41.754414+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2023-07-18"
+        }
+      ],
+      "priorAttempts": 208,
+      "priorObservedPrograms": [
+        {
+          "season": 2021,
+          "teamId": "103",
+          "attempts": 16
+        },
+        {
+          "season": 2022,
+          "teamId": "103",
+          "attempts": 192
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2023.csv.gz",
+        "sha256": "65f13b6d36806f2d2eae89860e6fe1269e167aa5cb8201c0d0c0bdca3a4e89fa",
+        "createdAt": "2026-10-02T13:13:23Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2023,
+      "teamId": "228",
+      "team": "Clemson",
+      "athleteId": "4685413",
+      "name": "Cade Klubnik",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-07-19T12:00:00Z",
+      "publishedOn": "2023-07-18",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2023/7/17/attendees-announced-for-2023-acc-football-kickoff.aspx",
+          "publishedOn": "2023-07-18",
+          "sha256": "31e59f55c3eec06076abc2e2b5a8ef28488cb74de7b298f2f013e2a14ac01192",
+          "retrievedAt": "2026-11-08T04:09:41.754414+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2023-07-18"
+        }
+      ],
+      "priorAttempts": 100,
+      "priorObservedPrograms": [
+        {
+          "season": 2022,
+          "teamId": "228",
+          "attempts": 100
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2023.csv.gz",
+        "sha256": "65f13b6d36806f2d2eae89860e6fe1269e167aa5cb8201c0d0c0bdca3a4e89fa",
+        "createdAt": "2026-10-02T13:13:23Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2023,
+      "teamId": "150",
+      "team": "Duke",
+      "athleteId": "4683423",
+      "name": "Riley Leonard",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-07-19T12:00:00Z",
+      "publishedOn": "2023-07-18",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2023/7/17/attendees-announced-for-2023-acc-football-kickoff.aspx",
+          "publishedOn": "2023-07-18",
+          "sha256": "31e59f55c3eec06076abc2e2b5a8ef28488cb74de7b298f2f013e2a14ac01192",
+          "retrievedAt": "2026-11-08T04:09:41.754414+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2023-07-18"
+        }
+      ],
+      "priorAttempts": 454,
+      "priorObservedPrograms": [
+        {
+          "season": 2021,
+          "teamId": "150",
+          "attempts": 62
+        },
+        {
+          "season": 2022,
+          "teamId": "150",
+          "attempts": 392
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2023.csv.gz",
+        "sha256": "65f13b6d36806f2d2eae89860e6fe1269e167aa5cb8201c0d0c0bdca3a4e89fa",
+        "createdAt": "2026-10-02T13:13:23Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2023,
+      "teamId": "52",
+      "team": "Florida State",
+      "athleteId": "4360799",
+      "name": "Jordan Travis",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-07-19T12:00:00Z",
+      "publishedOn": "2023-07-18",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2023/7/17/attendees-announced-for-2023-acc-football-kickoff.aspx",
+          "publishedOn": "2023-07-18",
+          "sha256": "31e59f55c3eec06076abc2e2b5a8ef28488cb74de7b298f2f013e2a14ac01192",
+          "retrievedAt": "2026-11-08T04:09:41.754414+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2023-07-18"
+        }
+      ],
+      "priorAttempts": 689,
+      "priorObservedPrograms": [
+        {
+          "season": 2019,
+          "teamId": "52",
+          "attempts": 11
+        },
+        {
+          "season": 2020,
+          "teamId": "52",
+          "attempts": 131
+        },
+        {
+          "season": 2021,
+          "teamId": "52",
+          "attempts": 194
+        },
+        {
+          "season": 2022,
+          "teamId": "52",
+          "attempts": 353
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2023.csv.gz",
+        "sha256": "65f13b6d36806f2d2eae89860e6fe1269e167aa5cb8201c0d0c0bdca3a4e89fa",
+        "createdAt": "2026-10-02T13:13:23Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2023,
+      "teamId": "2390",
+      "team": "Miami",
+      "athleteId": "4685186",
+      "name": "Tyler Van Dyke",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-07-19T12:00:00Z",
+      "publishedOn": "2023-07-18",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2023/7/17/attendees-announced-for-2023-acc-football-kickoff.aspx",
+          "publishedOn": "2023-07-18",
+          "sha256": "31e59f55c3eec06076abc2e2b5a8ef28488cb74de7b298f2f013e2a14ac01192",
+          "retrievedAt": "2026-11-08T04:09:41.754414+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2023-07-18"
+        }
+      ],
+      "priorAttempts": 579,
+      "priorObservedPrograms": [
+        {
+          "season": 2020,
+          "teamId": "2390",
+          "attempts": 2
+        },
+        {
+          "season": 2021,
+          "teamId": "2390",
+          "attempts": 324
+        },
+        {
+          "season": 2022,
+          "teamId": "2390",
+          "attempts": 253
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2023.csv.gz",
+        "sha256": "65f13b6d36806f2d2eae89860e6fe1269e167aa5cb8201c0d0c0bdca3a4e89fa",
+        "createdAt": "2026-10-02T13:13:23Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2023,
+      "teamId": "153",
+      "team": "North Carolina",
+      "athleteId": "4431452",
+      "name": "Drake Maye",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-07-19T12:00:00Z",
+      "publishedOn": "2023-07-18",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2023/7/17/attendees-announced-for-2023-acc-football-kickoff.aspx",
+          "publishedOn": "2023-07-18",
+          "sha256": "31e59f55c3eec06076abc2e2b5a8ef28488cb74de7b298f2f013e2a14ac01192",
+          "retrievedAt": "2026-11-08T04:09:41.754414+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2023-07-18"
+        }
+      ],
+      "priorAttempts": 527,
+      "priorObservedPrograms": [
+        {
+          "season": 2021,
+          "teamId": "153",
+          "attempts": 10
+        },
+        {
+          "season": 2022,
+          "teamId": "153",
+          "attempts": 517
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2023.csv.gz",
+        "sha256": "65f13b6d36806f2d2eae89860e6fe1269e167aa5cb8201c0d0c0bdca3a4e89fa",
+        "createdAt": "2026-10-02T13:13:23Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2023,
+      "teamId": "152",
+      "team": "NC State",
+      "athleteId": "4370775",
+      "name": "Brennan Armstrong",
+      "position": "QB",
+      "cohort": "other-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-07-19T12:00:00Z",
+      "publishedOn": "2023-07-18",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2023/7/17/attendees-announced-for-2023-acc-football-kickoff.aspx",
+          "publishedOn": "2023-07-18",
+          "sha256": "31e59f55c3eec06076abc2e2b5a8ef28488cb74de7b298f2f013e2a14ac01192",
+          "retrievedAt": "2026-11-08T04:09:41.754414+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2023-07-18"
+        }
+      ],
+      "priorAttempts": 1127,
+      "priorObservedPrograms": [
+        {
+          "season": 2019,
+          "teamId": "258",
+          "attempts": 20
+        },
+        {
+          "season": 2020,
+          "teamId": "258",
+          "attempts": 268
+        },
+        {
+          "season": 2021,
+          "teamId": "258",
+          "attempts": 501
+        },
+        {
+          "season": 2022,
+          "teamId": "258",
+          "attempts": 338
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2023.csv.gz",
+        "sha256": "65f13b6d36806f2d2eae89860e6fe1269e167aa5cb8201c0d0c0bdca3a4e89fa",
+        "createdAt": "2026-10-02T13:13:23Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2023,
+      "teamId": "221",
+      "team": "Pittsburgh",
+      "athleteId": "4372768",
+      "name": "Phil Jurkovec",
+      "position": "QB",
+      "cohort": "other-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-07-19T12:00:00Z",
+      "publishedOn": "2023-07-18",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2023/7/17/attendees-announced-for-2023-acc-football-kickoff.aspx",
+          "publishedOn": "2023-07-18",
+          "sha256": "31e59f55c3eec06076abc2e2b5a8ef28488cb74de7b298f2f013e2a14ac01192",
+          "retrievedAt": "2026-11-08T04:09:41.754414+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2023-07-18"
+        }
+      ],
+      "priorAttempts": 695,
+      "priorObservedPrograms": [
+        {
+          "season": 2019,
+          "teamId": "87",
+          "attempts": 16
+        },
+        {
+          "season": 2020,
+          "teamId": "103",
+          "attempts": 336
+        },
+        {
+          "season": 2021,
+          "teamId": "103",
+          "attempts": 96
+        },
+        {
+          "season": 2022,
+          "teamId": "103",
+          "attempts": 247
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2023.csv.gz",
+        "sha256": "65f13b6d36806f2d2eae89860e6fe1269e167aa5cb8201c0d0c0bdca3a4e89fa",
+        "createdAt": "2026-10-02T13:13:23Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2023,
+      "teamId": "183",
+      "team": "Syracuse",
+      "athleteId": "4426966",
+      "name": "Garrett Shrader",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-07-19T12:00:00Z",
+      "publishedOn": "2023-07-18",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2023/7/17/attendees-announced-for-2023-acc-football-kickoff.aspx",
+          "publishedOn": "2023-07-18",
+          "sha256": "31e59f55c3eec06076abc2e2b5a8ef28488cb74de7b298f2f013e2a14ac01192",
+          "retrievedAt": "2026-11-08T04:09:41.754414+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2023-07-18"
+        }
+      ],
+      "priorAttempts": 704,
+      "priorObservedPrograms": [
+        {
+          "season": 2019,
+          "teamId": "344",
+          "attempts": 153
+        },
+        {
+          "season": 2021,
+          "teamId": "183",
+          "attempts": 234
+        },
+        {
+          "season": 2022,
+          "teamId": "183",
+          "attempts": 317
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2023.csv.gz",
+        "sha256": "65f13b6d36806f2d2eae89860e6fe1269e167aa5cb8201c0d0c0bdca3a4e89fa",
+        "createdAt": "2026-10-02T13:13:23Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2023,
+      "teamId": "258",
+      "team": "Virginia",
+      "athleteId": "4775264",
+      "name": "Tony Muskett",
+      "position": "QB",
+      "cohort": "other-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-07-19T12:00:00Z",
+      "publishedOn": "2023-07-18",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2023/7/17/attendees-announced-for-2023-acc-football-kickoff.aspx",
+          "publishedOn": "2023-07-18",
+          "sha256": "31e59f55c3eec06076abc2e2b5a8ef28488cb74de7b298f2f013e2a14ac01192",
+          "retrievedAt": "2026-11-08T04:09:41.754414+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2023-07-18"
+        }
+      ],
+      "priorAttempts": 39,
+      "priorObservedPrograms": [
+        {
+          "season": 2021,
+          "teamId": "2405",
+          "attempts": 39
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2023.csv.gz",
+        "sha256": "65f13b6d36806f2d2eae89860e6fe1269e167aa5cb8201c0d0c0bdca3a4e89fa",
+        "createdAt": "2026-10-02T13:13:23Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2023,
+      "teamId": "154",
+      "team": "Wake Forest",
+      "athleteId": "4433829",
+      "name": "Mitch Griffis",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-07-19T12:00:00Z",
+      "publishedOn": "2023-07-18",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2023/7/17/attendees-announced-for-2023-acc-football-kickoff.aspx",
+          "publishedOn": "2023-07-18",
+          "sha256": "31e59f55c3eec06076abc2e2b5a8ef28488cb74de7b298f2f013e2a14ac01192",
+          "retrievedAt": "2026-11-08T04:09:41.754414+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2023-07-18"
+        }
+      ],
+      "priorAttempts": 56,
+      "priorObservedPrograms": [
+        {
+          "season": 2020,
+          "teamId": "154",
+          "attempts": 13
+        },
+        {
+          "season": 2021,
+          "teamId": "154",
+          "attempts": 2
+        },
+        {
+          "season": 2022,
+          "teamId": "154",
+          "attempts": 41
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2023.csv.gz",
+        "sha256": "65f13b6d36806f2d2eae89860e6fe1269e167aa5cb8201c0d0c0bdca3a4e89fa",
+        "createdAt": "2026-10-02T13:13:23Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2023,
+      "teamId": "130",
+      "team": "Michigan",
+      "athleteId": "4433970",
+      "name": "J.J. McCarthy",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "school-dated-qb-roster",
+      "knownBy": "2023-08-23T12:00:00Z",
+      "publishedOn": "2023-08-22",
+      "sources": [
+        {
+          "url": "https://mgoblue.com/news/2023/7/31/2023-michigan-football-preseason-honors",
+          "publishedOn": "2023-07-31",
+          "sha256": "256dbce6ef1ada3b9d94d9838a6d1d29861c7d1e2afb8350791a56c6fdf4aed5",
+          "retrievedAt": "2026-11-08T04:11:38.936876+00:00",
+          "claim": "School preseason article explicitly identifies McCarthy as its junior QB in the August 22 update.",
+          "evidenceDate": "2023-08-22"
+        }
+      ],
+      "priorAttempts": 381,
+      "priorObservedPrograms": [
+        {
+          "season": 2021,
+          "teamId": "130",
+          "attempts": 59
+        },
+        {
+          "season": 2022,
+          "teamId": "130",
+          "attempts": 322
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2023.csv.gz",
+        "sha256": "65f13b6d36806f2d2eae89860e6fe1269e167aa5cb8201c0d0c0bdca3a4e89fa",
+        "createdAt": "2026-10-02T13:13:23Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "25",
+      "team": "California",
+      "athleteId": "4837248",
+      "name": "Fernando Mendoza",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "publishedOn": "2024-07-15",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ],
+      "priorAttempts": 243,
+      "priorObservedPrograms": [
+        {
+          "season": 2023,
+          "teamId": "25",
+          "attempts": 243
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "25",
+      "team": "California",
+      "athleteId": "4570554",
+      "name": "Chandler Rogers",
+      "position": "QB",
+      "cohort": "other-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "publishedOn": "2024-07-15",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ],
+      "priorAttempts": 743,
+      "priorObservedPrograms": [
+        {
+          "season": 2021,
+          "teamId": "2433",
+          "attempts": 3
+        },
+        {
+          "season": 2022,
+          "teamId": "2433",
+          "attempts": 319
+        },
+        {
+          "season": 2023,
+          "teamId": "249",
+          "attempts": 421
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "228",
+      "team": "Clemson",
+      "athleteId": "4685413",
+      "name": "Cade Klubnik",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "publishedOn": "2024-07-15",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ],
+      "priorAttempts": 554,
+      "priorObservedPrograms": [
+        {
+          "season": 2022,
+          "teamId": "228",
+          "attempts": 100
+        },
+        {
+          "season": 2023,
+          "teamId": "228",
+          "attempts": 454
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "150",
+      "team": "Duke",
+      "athleteId": "4915837",
+      "name": "Grayson Loftis",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "publishedOn": "2024-07-15",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ],
+      "priorAttempts": 163,
+      "priorObservedPrograms": [
+        {
+          "season": 2023,
+          "teamId": "150",
+          "attempts": 163
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "150",
+      "team": "Duke",
+      "athleteId": "4685497",
+      "name": "Maalik Murphy",
+      "position": "QB",
+      "cohort": "other-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "publishedOn": "2024-07-15",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ],
+      "priorAttempts": 71,
+      "priorObservedPrograms": [
+        {
+          "season": 2023,
+          "teamId": "251",
+          "attempts": 71
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "59",
+      "team": "Georgia Tech",
+      "athleteId": "4428993",
+      "name": "Haynes King",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "publishedOn": "2024-07-15",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ],
+      "priorAttempts": 593,
+      "priorObservedPrograms": [
+        {
+          "season": 2020,
+          "teamId": "245",
+          "attempts": 4
+        },
+        {
+          "season": 2021,
+          "teamId": "245",
+          "attempts": 35
+        },
+        {
+          "season": 2022,
+          "teamId": "245",
+          "attempts": 187
+        },
+        {
+          "season": 2023,
+          "teamId": "59",
+          "attempts": 367
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "97",
+      "team": "Louisville",
+      "athleteId": "4360689",
+      "name": "Tyler Shough",
+      "position": "QB",
+      "cohort": "other-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "publishedOn": "2024-07-15",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ],
+      "priorAttempts": 547,
+      "priorObservedPrograms": [
+        {
+          "season": 2020,
+          "teamId": "2483",
+          "attempts": 167
+        },
+        {
+          "season": 2021,
+          "teamId": "2641",
+          "attempts": 92
+        },
+        {
+          "season": 2022,
+          "teamId": "2641",
+          "attempts": 177
+        },
+        {
+          "season": 2023,
+          "teamId": "2641",
+          "attempts": 111
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "2390",
+      "team": "Miami",
+      "athleteId": "4688380",
+      "name": "Cam Ward",
+      "position": "QB",
+      "cohort": "other-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "publishedOn": "2024-07-15",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ],
+      "priorAttempts": 1029,
+      "priorObservedPrograms": [
+        {
+          "season": 2021,
+          "teamId": "2916",
+          "attempts": 47
+        },
+        {
+          "season": 2022,
+          "teamId": "265",
+          "attempts": 497
+        },
+        {
+          "season": 2023,
+          "teamId": "265",
+          "attempts": 485
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "153",
+      "team": "North Carolina",
+      "athleteId": "4801306",
+      "name": "Conner Harrell",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "publishedOn": "2024-07-15",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ],
+      "priorAttempts": 33,
+      "priorObservedPrograms": [
+        {
+          "season": 2023,
+          "teamId": "153",
+          "attempts": 33
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "153",
+      "team": "North Carolina",
+      "athleteId": "4685740",
+      "name": "Max Johnson",
+      "position": "QB",
+      "cohort": "other-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "publishedOn": "2024-07-15",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ],
+      "priorAttempts": 784,
+      "priorObservedPrograms": [
+        {
+          "season": 2020,
+          "teamId": "99",
+          "attempts": 150
+        },
+        {
+          "season": 2021,
+          "teamId": "99",
+          "attempts": 373
+        },
+        {
+          "season": 2022,
+          "teamId": "245",
+          "attempts": 71
+        },
+        {
+          "season": 2023,
+          "teamId": "245",
+          "attempts": 190
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "152",
+      "team": "NC State",
+      "athleteId": "4427936",
+      "name": "Grayson McCall",
+      "position": "QB",
+      "cohort": "other-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "publishedOn": "2024-07-15",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ],
+      "priorAttempts": 1012,
+      "priorObservedPrograms": [
+        {
+          "season": 2020,
+          "teamId": "324",
+          "attempts": 250
+        },
+        {
+          "season": 2021,
+          "teamId": "324",
+          "attempts": 241
+        },
+        {
+          "season": 2022,
+          "teamId": "324",
+          "attempts": 297
+        },
+        {
+          "season": 2023,
+          "teamId": "324",
+          "attempts": 224
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "221",
+      "team": "Pittsburgh",
+      "athleteId": "4683182",
+      "name": "Nate Yarnell",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "publishedOn": "2024-07-15",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ],
+      "priorAttempts": 76,
+      "priorObservedPrograms": [
+        {
+          "season": 2022,
+          "teamId": "221",
+          "attempts": 14
+        },
+        {
+          "season": 2023,
+          "teamId": "221",
+          "attempts": 62
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "2567",
+      "team": "SMU",
+      "athleteId": "5084084",
+      "name": "Kevin Jennings",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "publishedOn": "2024-07-15",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ],
+      "priorAttempts": 127,
+      "priorObservedPrograms": [
+        {
+          "season": 2022,
+          "teamId": "2567",
+          "attempts": 22
+        },
+        {
+          "season": 2023,
+          "teamId": "2567",
+          "attempts": 105
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "2567",
+      "team": "SMU",
+      "athleteId": "4432767",
+      "name": "Preston Stone",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "publishedOn": "2024-07-15",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ],
+      "priorAttempts": 399,
+      "priorObservedPrograms": [
+        {
+          "season": 2021,
+          "teamId": "2567",
+          "attempts": 7
+        },
+        {
+          "season": 2022,
+          "teamId": "2567",
+          "attempts": 48
+        },
+        {
+          "season": 2023,
+          "teamId": "2567",
+          "attempts": 344
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "24",
+      "team": "Stanford",
+      "athleteId": "4838679",
+      "name": "Ashton Daniels",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "publishedOn": "2024-07-15",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ],
+      "priorAttempts": 331,
+      "priorObservedPrograms": [
+        {
+          "season": 2022,
+          "teamId": "24",
+          "attempts": 6
+        },
+        {
+          "season": 2023,
+          "teamId": "24",
+          "attempts": 325
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "183",
+      "team": "Syracuse",
+      "athleteId": "4433971",
+      "name": "Kyle McCord",
+      "position": "QB",
+      "cohort": "other-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "publishedOn": "2024-07-15",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ],
+      "priorAttempts": 406,
+      "priorObservedPrograms": [
+        {
+          "season": 2021,
+          "teamId": "194",
+          "attempts": 38
+        },
+        {
+          "season": 2022,
+          "teamId": "194",
+          "attempts": 20
+        },
+        {
+          "season": 2023,
+          "teamId": "194",
+          "attempts": 348
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "258",
+      "team": "Virginia",
+      "athleteId": "4775264",
+      "name": "Tony Muskett",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "publishedOn": "2024-07-15",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ],
+      "priorAttempts": 186,
+      "priorObservedPrograms": [
+        {
+          "season": 2021,
+          "teamId": "2405",
+          "attempts": 39
+        },
+        {
+          "season": 2023,
+          "teamId": "258",
+          "attempts": 147
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "259",
+      "team": "Virginia Tech",
+      "athleteId": "4678010",
+      "name": "Kyron Drones",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "publishedOn": "2024-07-15",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ],
+      "priorAttempts": 308,
+      "priorObservedPrograms": [
+        {
+          "season": 2022,
+          "teamId": "239",
+          "attempts": 23
+        },
+        {
+          "season": 2023,
+          "teamId": "259",
+          "attempts": 285
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "130",
+      "team": "Michigan",
+      "athleteId": "4685495",
+      "name": "Alex Orji",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "school-dated-qb-roster",
+      "knownBy": "2024-08-22T12:00:00Z",
+      "publishedOn": "2024-08-21",
+      "sources": [
+        {
+          "url": "https://mgoblue.com/news/2024/7/1/football-2024-michigan-football-preseason-honors",
+          "publishedOn": "2024-07-01",
+          "sha256": "aa20d18198e0c95ae4f2be4da066ba0e95fe6365b11cdf35d56996f62ffbb3cb",
+          "retrievedAt": "2026-11-08T04:11:39.321270+00:00",
+          "claim": "School preseason article identifies the named player as a Michigan QB in the dated entry.",
+          "evidenceDate": "2024-08-21"
+        }
+      ],
+      "priorAttempts": 1,
+      "priorObservedPrograms": [
+        {
+          "season": 2022,
+          "teamId": "130",
+          "attempts": 1
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2024,
+      "teamId": "130",
+      "team": "Michigan",
+      "athleteId": "4878681",
+      "name": "Davis Warren",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "school-dated-qb-roster",
+      "knownBy": "2024-08-02T12:00:00Z",
+      "publishedOn": "2024-08-01",
+      "sources": [
+        {
+          "url": "https://mgoblue.com/news/2024/7/1/football-2024-michigan-football-preseason-honors",
+          "publishedOn": "2024-07-01",
+          "sha256": "aa20d18198e0c95ae4f2be4da066ba0e95fe6365b11cdf35d56996f62ffbb3cb",
+          "retrievedAt": "2026-11-08T04:11:39.321270+00:00",
+          "claim": "School preseason article identifies the named player as a Michigan QB in the dated entry.",
+          "evidenceDate": "2024-08-01"
+        }
+      ],
+      "priorAttempts": 14,
+      "priorObservedPrograms": [
+        {
+          "season": 2022,
+          "teamId": "130",
+          "attempts": 9
+        },
+        {
+          "season": 2023,
+          "teamId": "130",
+          "attempts": 5
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2024.csv.gz",
+        "sha256": "ee3f18de4f3f9e585273ebbd39ac3b0ed020e2e7921b71cff1a061417d3bc083",
+        "createdAt": "2026-10-02T07:41:00Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2025,
+      "teamId": "25",
+      "team": "California",
+      "athleteId": "4695709",
+      "name": "Devin Brown",
+      "position": "QB",
+      "cohort": "other-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-15T12:00:00Z",
+      "publishedOn": "2025-07-14",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2025/7/10/football-all-eyes-on-charlotte-acc-announces-2025-kickoff-attendees.aspx",
+          "publishedOn": "2025-07-10",
+          "sha256": "2afba7bb32e0985c09131418ab30c8026e92d9667d3bc44ba48e1a41e8b85618",
+          "retrievedAt": "2026-11-08T04:09:41.946582+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2025-07-14"
+        }
+      ],
+      "priorAttempts": 48,
+      "priorObservedPrograms": [
+        {
+          "season": 2023,
+          "teamId": "194",
+          "attempts": 28
+        },
+        {
+          "season": 2024,
+          "teamId": "194",
+          "attempts": 20
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2025.csv.gz",
+        "sha256": "f5d0641f8a67a5aa0d331b3c2bd3f98aef5800d6e446cf86261e3bbf44793948",
+        "createdAt": "2026-10-09T11:17:29Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2025,
+      "teamId": "25",
+      "team": "California",
+      "athleteId": "5164313",
+      "name": "Jaron-Keawe Sagapolutele",
+      "position": "QB",
+      "cohort": "unresolved-prior-opportunities",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-15T12:00:00Z",
+      "publishedOn": "2025-07-14",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2025/7/10/football-all-eyes-on-charlotte-acc-announces-2025-kickoff-attendees.aspx",
+          "publishedOn": "2025-07-10",
+          "sha256": "2afba7bb32e0985c09131418ab30c8026e92d9667d3bc44ba48e1a41e8b85618",
+          "retrievedAt": "2026-11-08T04:09:41.946582+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2025-07-14"
+        }
+      ],
+      "priorAttempts": null,
+      "priorObservedPrograms": [],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2025.csv.gz",
+        "sha256": "f5d0641f8a67a5aa0d331b3c2bd3f98aef5800d6e446cf86261e3bbf44793948",
+        "createdAt": "2026-10-09T11:17:29Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2025,
+      "teamId": "2390",
+      "team": "Miami",
+      "athleteId": "4430841",
+      "name": "Carson Beck",
+      "position": "QB",
+      "cohort": "other-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-15T12:00:00Z",
+      "publishedOn": "2025-07-14",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2025/7/10/football-all-eyes-on-charlotte-acc-announces-2025-kickoff-attendees.aspx",
+          "publishedOn": "2025-07-10",
+          "sha256": "2afba7bb32e0985c09131418ab30c8026e92d9667d3bc44ba48e1a41e8b85618",
+          "retrievedAt": "2026-11-08T04:09:41.946582+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2025-07-14"
+        },
+        {
+          "url": "https://miamihurricanes.com/news/2025/01/14/fb-feature-corey-hetherman-carson-beck-help-canes-shift-focus-to-2025-season",
+          "publishedOn": "2025-01-14",
+          "sha256": "e2ff70d7abec0b008e55e343d9d27768cd708fb7538badbb44904b4dd3e36926",
+          "retrievedAt": "2026-11-08T04:11:40.168114+00:00",
+          "claim": "School confirms Beck arrived at Miami after playing for Georgia."
+        }
+      ],
+      "priorAttempts": 923,
+      "priorObservedPrograms": [
+        {
+          "season": 2021,
+          "teamId": "61",
+          "attempts": 23
+        },
+        {
+          "season": 2022,
+          "teamId": "61",
+          "attempts": 35
+        },
+        {
+          "season": 2023,
+          "teamId": "61",
+          "attempts": 417
+        },
+        {
+          "season": 2024,
+          "teamId": "61",
+          "attempts": 448
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2025.csv.gz",
+        "sha256": "f5d0641f8a67a5aa0d331b3c2bd3f98aef5800d6e446cf86261e3bbf44793948",
+        "createdAt": "2026-10-09T11:17:29Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2025,
+      "teamId": "2567",
+      "team": "SMU",
+      "athleteId": "5084084",
+      "name": "Kevin Jennings",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-15T12:00:00Z",
+      "publishedOn": "2025-07-14",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2025/7/10/football-all-eyes-on-charlotte-acc-announces-2025-kickoff-attendees.aspx",
+          "publishedOn": "2025-07-10",
+          "sha256": "2afba7bb32e0985c09131418ab30c8026e92d9667d3bc44ba48e1a41e8b85618",
+          "retrievedAt": "2026-11-08T04:09:41.946582+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2025-07-14"
+        }
+      ],
+      "priorAttempts": 507,
+      "priorObservedPrograms": [
+        {
+          "season": 2022,
+          "teamId": "2567",
+          "attempts": 22
+        },
+        {
+          "season": 2023,
+          "teamId": "2567",
+          "attempts": 105
+        },
+        {
+          "season": 2024,
+          "teamId": "2567",
+          "attempts": 380
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2025.csv.gz",
+        "sha256": "f5d0641f8a67a5aa0d331b3c2bd3f98aef5800d6e446cf86261e3bbf44793948",
+        "createdAt": "2026-10-09T11:17:29Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2025,
+      "teamId": "258",
+      "team": "Virginia",
+      "athleteId": "4692530",
+      "name": "Chandler Morris",
+      "position": "QB",
+      "cohort": "other-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-15T12:00:00Z",
+      "publishedOn": "2025-07-14",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2025/7/10/football-all-eyes-on-charlotte-acc-announces-2025-kickoff-attendees.aspx",
+          "publishedOn": "2025-07-10",
+          "sha256": "2afba7bb32e0985c09131418ab30c8026e92d9667d3bc44ba48e1a41e8b85618",
+          "retrievedAt": "2026-11-08T04:09:41.946582+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2025-07-14"
+        }
+      ],
+      "priorAttempts": 817,
+      "priorObservedPrograms": [
+        {
+          "season": 2021,
+          "teamId": "2628",
+          "attempts": 75
+        },
+        {
+          "season": 2022,
+          "teamId": "2628",
+          "attempts": 27
+        },
+        {
+          "season": 2023,
+          "teamId": "2628",
+          "attempts": 203
+        },
+        {
+          "season": 2024,
+          "teamId": "249",
+          "attempts": 512
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2025.csv.gz",
+        "sha256": "f5d0641f8a67a5aa0d331b3c2bd3f98aef5800d6e446cf86261e3bbf44793948",
+        "createdAt": "2026-10-09T11:17:29Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2025,
+      "teamId": "52",
+      "team": "Florida State",
+      "athleteId": "4773919",
+      "name": "Tommy Castellanos",
+      "position": "QB",
+      "cohort": "other-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-15T12:00:00Z",
+      "publishedOn": "2025-07-14",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2025/7/10/football-all-eyes-on-charlotte-acc-announces-2025-kickoff-attendees.aspx",
+          "publishedOn": "2025-07-10",
+          "sha256": "2afba7bb32e0985c09131418ab30c8026e92d9667d3bc44ba48e1a41e8b85618",
+          "retrievedAt": "2026-11-08T04:09:41.946582+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2025-07-14"
+        }
+      ],
+      "priorAttempts": 507,
+      "priorObservedPrograms": [
+        {
+          "season": 2022,
+          "teamId": "2116",
+          "attempts": 16
+        },
+        {
+          "season": 2023,
+          "teamId": "103",
+          "attempts": 330
+        },
+        {
+          "season": 2024,
+          "teamId": "103",
+          "attempts": 161
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2025.csv.gz",
+        "sha256": "f5d0641f8a67a5aa0d331b3c2bd3f98aef5800d6e446cf86261e3bbf44793948",
+        "createdAt": "2026-10-09T11:17:29Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2025,
+      "teamId": "59",
+      "team": "Georgia Tech",
+      "athleteId": "4428993",
+      "name": "Haynes King",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-15T12:00:00Z",
+      "publishedOn": "2025-07-14",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2025/7/10/football-all-eyes-on-charlotte-acc-announces-2025-kickoff-attendees.aspx",
+          "publishedOn": "2025-07-10",
+          "sha256": "2afba7bb32e0985c09131418ab30c8026e92d9667d3bc44ba48e1a41e8b85618",
+          "retrievedAt": "2026-11-08T04:09:41.946582+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2025-07-14"
+        }
+      ],
+      "priorAttempts": 858,
+      "priorObservedPrograms": [
+        {
+          "season": 2021,
+          "teamId": "245",
+          "attempts": 35
+        },
+        {
+          "season": 2022,
+          "teamId": "245",
+          "attempts": 187
+        },
+        {
+          "season": 2023,
+          "teamId": "59",
+          "attempts": 367
+        },
+        {
+          "season": 2024,
+          "teamId": "59",
+          "attempts": 269
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2025.csv.gz",
+        "sha256": "f5d0641f8a67a5aa0d331b3c2bd3f98aef5800d6e446cf86261e3bbf44793948",
+        "createdAt": "2026-10-09T11:17:29Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2025,
+      "teamId": "97",
+      "team": "Louisville",
+      "athleteId": "4431580",
+      "name": "Miller Moss",
+      "position": "QB",
+      "cohort": "other-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-15T12:00:00Z",
+      "publishedOn": "2025-07-14",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2025/7/10/football-all-eyes-on-charlotte-acc-announces-2025-kickoff-attendees.aspx",
+          "publishedOn": "2025-07-10",
+          "sha256": "2afba7bb32e0985c09131418ab30c8026e92d9667d3bc44ba48e1a41e8b85618",
+          "retrievedAt": "2026-11-08T04:09:41.946582+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2025-07-14"
+        }
+      ],
+      "priorAttempts": 454,
+      "priorObservedPrograms": [
+        {
+          "season": 2021,
+          "teamId": "30",
+          "attempts": 13
+        },
+        {
+          "season": 2022,
+          "teamId": "30",
+          "attempts": 14
+        },
+        {
+          "season": 2023,
+          "teamId": "30",
+          "attempts": 65
+        },
+        {
+          "season": 2024,
+          "teamId": "30",
+          "attempts": 362
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2025.csv.gz",
+        "sha256": "f5d0641f8a67a5aa0d331b3c2bd3f98aef5800d6e446cf86261e3bbf44793948",
+        "createdAt": "2026-10-09T11:17:29Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2025,
+      "teamId": "183",
+      "team": "Syracuse",
+      "athleteId": "4870645",
+      "name": "Rickie Collins",
+      "position": "QB",
+      "cohort": "other-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-15T12:00:00Z",
+      "publishedOn": "2025-07-14",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2025/7/10/football-all-eyes-on-charlotte-acc-announces-2025-kickoff-attendees.aspx",
+          "publishedOn": "2025-07-10",
+          "sha256": "2afba7bb32e0985c09131418ab30c8026e92d9667d3bc44ba48e1a41e8b85618",
+          "retrievedAt": "2026-11-08T04:09:41.946582+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2025-07-14"
+        }
+      ],
+      "priorAttempts": 7,
+      "priorObservedPrograms": [
+        {
+          "season": 2023,
+          "teamId": "99",
+          "attempts": 2
+        },
+        {
+          "season": 2024,
+          "teamId": "99",
+          "attempts": 5
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2025.csv.gz",
+        "sha256": "f5d0641f8a67a5aa0d331b3c2bd3f98aef5800d6e446cf86261e3bbf44793948",
+        "createdAt": "2026-10-09T11:17:29Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2025,
+      "teamId": "228",
+      "team": "Clemson",
+      "athleteId": "4685413",
+      "name": "Cade Klubnik",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-15T12:00:00Z",
+      "publishedOn": "2025-07-14",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2025/7/10/football-all-eyes-on-charlotte-acc-announces-2025-kickoff-attendees.aspx",
+          "publishedOn": "2025-07-10",
+          "sha256": "2afba7bb32e0985c09131418ab30c8026e92d9667d3bc44ba48e1a41e8b85618",
+          "retrievedAt": "2026-11-08T04:09:41.946582+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2025-07-14"
+        },
+        {
+          "url": "https://clemsontigers.com/news/2025/02/13/2025-spring-guide-meet-the-2025-tigers",
+          "publishedOn": "2025-02-13",
+          "sha256": "55fcaf50e17a4a14221a792f6454a6d8ea49733574a904ba9daaf1bf93a9b770",
+          "retrievedAt": "2026-11-08T04:11:38.864578+00:00",
+          "claim": "School spring guide describes Klubnik as returning at quarterback after his 2024 Clemson season."
+        }
+      ],
+      "priorAttempts": 1040,
+      "priorObservedPrograms": [
+        {
+          "season": 2022,
+          "teamId": "228",
+          "attempts": 100
+        },
+        {
+          "season": 2023,
+          "teamId": "228",
+          "attempts": 454
+        },
+        {
+          "season": 2024,
+          "teamId": "228",
+          "attempts": 486
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2025.csv.gz",
+        "sha256": "f5d0641f8a67a5aa0d331b3c2bd3f98aef5800d6e446cf86261e3bbf44793948",
+        "createdAt": "2026-10-09T11:17:29Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2025,
+      "teamId": "150",
+      "team": "Duke",
+      "athleteId": "5121169",
+      "name": "Darian Mensah",
+      "position": "QB",
+      "cohort": "other-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-15T12:00:00Z",
+      "publishedOn": "2025-07-14",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2025/7/10/football-all-eyes-on-charlotte-acc-announces-2025-kickoff-attendees.aspx",
+          "publishedOn": "2025-07-10",
+          "sha256": "2afba7bb32e0985c09131418ab30c8026e92d9667d3bc44ba48e1a41e8b85618",
+          "retrievedAt": "2026-11-08T04:09:41.946582+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2025-07-14"
+        }
+      ],
+      "priorAttempts": 287,
+      "priorObservedPrograms": [
+        {
+          "season": 2024,
+          "teamId": "2655",
+          "attempts": 287
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2025.csv.gz",
+        "sha256": "f5d0641f8a67a5aa0d331b3c2bd3f98aef5800d6e446cf86261e3bbf44793948",
+        "createdAt": "2026-10-09T11:17:29Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2025,
+      "teamId": "153",
+      "team": "North Carolina",
+      "athleteId": "4920227",
+      "name": "Gio Lopez",
+      "position": "QB",
+      "cohort": "other-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-15T12:00:00Z",
+      "publishedOn": "2025-07-14",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2025/7/10/football-all-eyes-on-charlotte-acc-announces-2025-kickoff-attendees.aspx",
+          "publishedOn": "2025-07-10",
+          "sha256": "2afba7bb32e0985c09131418ab30c8026e92d9667d3bc44ba48e1a41e8b85618",
+          "retrievedAt": "2026-11-08T04:09:41.946582+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2025-07-14"
+        }
+      ],
+      "priorAttempts": 373,
+      "priorObservedPrograms": [
+        {
+          "season": 2023,
+          "teamId": "6",
+          "attempts": 61
+        },
+        {
+          "season": 2024,
+          "teamId": "6",
+          "attempts": 312
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2025.csv.gz",
+        "sha256": "f5d0641f8a67a5aa0d331b3c2bd3f98aef5800d6e446cf86261e3bbf44793948",
+        "createdAt": "2026-10-09T11:17:29Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2025,
+      "teamId": "152",
+      "team": "NC State",
+      "athleteId": "5079301",
+      "name": "CJ Bailey",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-15T12:00:00Z",
+      "publishedOn": "2025-07-14",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2025/7/10/football-all-eyes-on-charlotte-acc-announces-2025-kickoff-attendees.aspx",
+          "publishedOn": "2025-07-10",
+          "sha256": "2afba7bb32e0985c09131418ab30c8026e92d9667d3bc44ba48e1a41e8b85618",
+          "retrievedAt": "2026-11-08T04:09:41.946582+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2025-07-14"
+        }
+      ],
+      "priorAttempts": 302,
+      "priorObservedPrograms": [
+        {
+          "season": 2024,
+          "teamId": "152",
+          "attempts": 302
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2025.csv.gz",
+        "sha256": "f5d0641f8a67a5aa0d331b3c2bd3f98aef5800d6e446cf86261e3bbf44793948",
+        "createdAt": "2026-10-09T11:17:29Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2025,
+      "teamId": "259",
+      "team": "Virginia Tech",
+      "athleteId": "4678010",
+      "name": "Kyron Drones",
+      "position": "QB",
+      "cohort": "same-program-experience",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-15T12:00:00Z",
+      "publishedOn": "2025-07-14",
+      "sources": [
+        {
+          "url": "https://theacc.com/news/2025/7/10/football-all-eyes-on-charlotte-acc-announces-2025-kickoff-attendees.aspx",
+          "publishedOn": "2025-07-10",
+          "sha256": "2afba7bb32e0985c09131418ab30c8026e92d9667d3bc44ba48e1a41e8b85618",
+          "retrievedAt": "2026-11-08T04:09:41.946582+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2025-07-14"
+        }
+      ],
+      "priorAttempts": 532,
+      "priorObservedPrograms": [
+        {
+          "season": 2022,
+          "teamId": "239",
+          "attempts": 23
+        },
+        {
+          "season": 2023,
+          "teamId": "259",
+          "attempts": 285
+        },
+        {
+          "season": 2024,
+          "teamId": "259",
+          "attempts": 224
+        }
+      ],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2025.csv.gz",
+        "sha256": "f5d0641f8a67a5aa0d331b3c2bd3f98aef5800d6e446cf86261e3bbf44793948",
+        "createdAt": "2026-10-09T11:17:29Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    },
+    {
+      "season": 2025,
+      "teamId": "130",
+      "team": "Michigan",
+      "athleteId": "5141741",
+      "name": "Bryce Underwood",
+      "position": "QB",
+      "cohort": "first-year-no-college-attempts",
+      "roleEvidence": "school-dated-qb-roster",
+      "knownBy": "2025-04-20T12:00:00Z",
+      "publishedOn": "2025-04-19",
+      "sources": [
+        {
+          "url": "https://mgoblue.com/news/2024/12/6/michigan-signs-22-student-athletes-to-2025-football-recruiting-class",
+          "publishedOn": "2024-12-06",
+          "sha256": "a145760767f61c8a5be7acb028788321d4b3da592cd5ec0992db6c127b696ee8",
+          "retrievedAt": "2026-11-08T04:12:59.154503+00:00",
+          "claim": "Michigan lists Underwood as a high-school quarterback in its 2025 class and as an early enrollee."
+        },
+        {
+          "url": "https://mgoblue.com/news/2025/4/19/football-maize-vs-blue-spring-game-big-plays-log",
+          "publishedOn": "2025-04-19",
+          "sha256": "862fde97982786583b72656973e59d56d55052bfc5dc85b443bcf0f3fc806808",
+          "retrievedAt": "2026-11-08T04:12:58.850777+00:00",
+          "claim": "Michigan names Underwood as a QB participating in its spring scrimmage."
+        }
+      ],
+      "priorAttempts": 0,
+      "priorObservedPrograms": [],
+      "identitySource": {
+        "url": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_2025.csv.gz",
+        "sha256": "f5d0641f8a67a5aa0d331b3c2bd3f98aef5800d6e446cf86261e3bbf44793948",
+        "createdAt": "2026-10-09T11:17:29Z",
+        "method": "Exact season and team ID plus a unique normalized published name from the later roster asset. Identity only."
+      }
+    }
+  ],
+  "unresolved": [
+    {
+      "season": 2023,
+      "teamId": "59",
+      "team": "Georgia Tech",
+      "reason": "Conference listed no quarterback for this program."
+    },
+    {
+      "season": 2023,
+      "teamId": "97",
+      "team": "Louisville",
+      "reason": "Conference listed no quarterback for this program."
+    },
+    {
+      "season": 2023,
+      "teamId": "259",
+      "team": "Virginia Tech",
+      "reason": "Conference listed no quarterback for this program."
+    },
+    {
+      "season": 2024,
+      "teamId": "52",
+      "team": "Florida State",
+      "reason": "Conference listed no quarterback for this program."
+    },
+    {
+      "season": 2024,
+      "teamId": "154",
+      "team": "Wake Forest",
+      "reason": "Conference listed no quarterback for this program."
+    },
+    {
+      "season": 2024,
+      "teamId": "103",
+      "team": "Boston College",
+      "name": "Thomas Castellanos",
+      "knownBy": "2024-07-16T12:00:00Z",
+      "reason": "No unique stable athlete identity under exact team and normalized name.",
+      "source": [
+        {
+          "url": "https://theacc.com/news/2024/7/15/acc-attendees-announced-for-2024-acc-football-kickoff.aspx",
+          "publishedOn": "2024-07-15",
+          "sha256": "3037595c5fc306fca4cc31ef73406dac1b552542c7f74910bde7cb622b18edca",
+          "retrievedAt": "2026-11-08T04:09:41.786457+00:00",
+          "claim": "Official conference announcement of team and QB position for scheduled media-day attendees.",
+          "evidenceDate": "2024-07-15"
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "103",
+      "team": "Boston College",
+      "reason": "Conference listed no quarterback for this program."
+    },
+    {
+      "season": 2025,
+      "teamId": "221",
+      "team": "Pittsburgh",
+      "reason": "Conference listed no quarterback for this program."
+    },
+    {
+      "season": 2025,
+      "teamId": "24",
+      "team": "Stanford",
+      "reason": "Conference listed no quarterback for this program."
+    },
+    {
+      "season": 2025,
+      "teamId": "154",
+      "team": "Wake Forest",
+      "reason": "Conference listed no quarterback for this program."
+    }
+  ],
+  "coverage": {
+    "2023": {
+      "fbsPrograms": 133,
+      "accAnnouncedPrograms": 14,
+      "accAnnouncedQbs": 11,
+      "extractedCandidates": 12,
+      "verifiedIdentityCandidates": 12,
+      "programsWithNamedQb": 12,
+      "cohorts": {
+        "same-program-experience": 9,
+        "other-program-experience": 3
+      },
+      "earliestRegularFbsKickoff": "2023-08-26T18:30:00.000Z",
+      "contextSha256": "5e7e5975fcde9caf5b1e12f5a39449005fac05a7b41a9399b6ed86621f2dd397"
+    },
+    "2024": {
+      "fbsPrograms": 134,
+      "accAnnouncedPrograms": 17,
+      "accAnnouncedQbs": 19,
+      "extractedCandidates": 21,
+      "verifiedIdentityCandidates": 20,
+      "programsWithNamedQb": 15,
+      "cohorts": {
+        "same-program-experience": 13,
+        "other-program-experience": 7
+      },
+      "earliestRegularFbsKickoff": "2024-08-24T16:00:00.000Z",
+      "contextSha256": "84a3f1132e3805d71c9ba02ba285b9e66806646804c570f1dfd6e6568bddae98"
+    },
+    "2025": {
+      "fbsPrograms": 136,
+      "accAnnouncedPrograms": 17,
+      "accAnnouncedQbs": 14,
+      "extractedCandidates": 15,
+      "verifiedIdentityCandidates": 15,
+      "programsWithNamedQb": 14,
+      "cohorts": {
+        "other-program-experience": 8,
+        "unresolved-prior-opportunities": 1,
+        "same-program-experience": 5,
+        "first-year-no-college-attempts": 1
+      },
+      "earliestRegularFbsKickoff": "2025-08-23T16:00:00.000Z",
+      "contextSha256": "2b652655b8bdb89d92a939a0bc4c34b0e3036526edef3c442e36b0df129907ff"
+    }
+  },
+  "passingSeasonSha256": "5bf38d772d24032330a808ab7d7963353fc051d82859a049a26075e114d08438",
+  "limitations": [
+    "These are named preseason QB candidates. The sources establish no complete QB room or verified opening starter for this dataset.",
+    "Conference selections favor established players and programs that brought a QB. Unsupported schools and missing prior opportunity data remain unresolved.",
+    "Later ESPN roster assets identify players by stable ID. No later roster counts, positions, starts or appearances determine candidate inclusion or roles.",
+    "Prior player boxes are retrospective observed counts from completed earlier seasons. Absence of a passing row is not a zero unless a dated first-year case is independently verified.",
+    "Coaching facts and any published awards, ratings, ranks or polls are excluded from the data."
+  ],
+  "cfbdCalls": 0
+}

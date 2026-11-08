@@ -1,0 +1,549 @@
+{
+  "schemaVersion": 1,
+  "scope": "SEC dated football media-day quarterback delegates. Complete published delegate lists, partial roster evidence.",
+  "cutoffs": {
+    "2023": "2023-08-26T18:30:00.000Z",
+    "2024": "2024-08-24T16:00:00.000Z",
+    "2025": "2025-08-23T16:00:00.000Z"
+  },
+  "sources": [
+    {
+      "season": 2023,
+      "url": "https://www.secsports.com/news/2023/07/secmd23-student-athlete-attendees-announced",
+      "publishedOn": "2023-07-12",
+      "schoolsOnList": 14,
+      "sourceSha256": "e4c3ecefd3b6a90cfb006010c1a276acd87faf0ccfff3a0159c0d3e76cf51091"
+    },
+    {
+      "season": 2024,
+      "url": "https://www.secsports.com/news/2024/07/attendees-announced-for-2024-sec-football-media-days",
+      "publishedOn": "2024-07-08",
+      "schoolsOnList": 16,
+      "sourceSha256": "e356250edb0d957e4f24840b90351b527060bdb17ea84b2b0605369172a95500"
+    },
+    {
+      "season": 2025,
+      "url": "https://www.secsports.com/news/2025/07/official-attendee-list-announced-for-2025-sec-football-media-days",
+      "publishedOn": "2025-07-08",
+      "schoolsOnList": 16,
+      "sourceSha256": "4e3ed44495da21524041416e56317e25f1f65e6cab5602c3a394a2700ba104fe"
+    }
+  ],
+  "evidence": [
+    {
+      "season": 2023,
+      "teamId": "8",
+      "team": "Arkansas",
+      "athleteId": "4567149",
+      "name": "KJ Jefferson",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-07-12T23:59:59Z",
+      "publishedOn": "2023-07-12",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2023/07/secmd23-student-athlete-attendees-announced",
+          "publishedOn": "2023-07-12",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2023,
+      "teamId": "99",
+      "team": "LSU",
+      "athleteId": "4426348",
+      "name": "Jayden Daniels",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-07-12T23:59:59Z",
+      "publishedOn": "2023-07-12",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2023/07/secmd23-student-athlete-attendees-announced",
+          "publishedOn": "2023-07-12",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2023,
+      "teamId": "344",
+      "team": "Mississippi State",
+      "athleteId": "102597",
+      "name": "Will Rogers",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-07-12T23:59:59Z",
+      "publishedOn": "2023-07-12",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2023/07/secmd23-student-athlete-attendees-announced",
+          "publishedOn": "2023-07-12",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2023,
+      "teamId": "2579",
+      "team": "South Carolina",
+      "athleteId": "4426339",
+      "name": "Spencer Rattler",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-07-12T23:59:59Z",
+      "publishedOn": "2023-07-12",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2023/07/secmd23-student-athlete-attendees-announced",
+          "publishedOn": "2023-07-12",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2023,
+      "teamId": "2633",
+      "team": "Tennessee",
+      "athleteId": "4360698",
+      "name": "Joe Milton III",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-07-12T23:59:59Z",
+      "publishedOn": "2023-07-12",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2023/07/secmd23-student-athlete-attendees-announced",
+          "publishedOn": "2023-07-12",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "333",
+      "team": "Alabama",
+      "athleteId": "4432734",
+      "name": "Jalen Milroe",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-08T23:59:59Z",
+      "publishedOn": "2024-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2024/07/attendees-announced-for-2024-sec-football-media-days",
+          "publishedOn": "2024-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "8",
+      "team": "Arkansas",
+      "athleteId": "4431325",
+      "name": "Taylen Green",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-08T23:59:59Z",
+      "publishedOn": "2024-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2024/07/attendees-announced-for-2024-sec-football-media-days",
+          "publishedOn": "2024-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "2",
+      "team": "Auburn",
+      "athleteId": "4430590",
+      "name": "Payton Thorne",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-08T23:59:59Z",
+      "publishedOn": "2024-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2024/07/attendees-announced-for-2024-sec-football-media-days",
+          "publishedOn": "2024-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "57",
+      "team": "Florida",
+      "athleteId": "4426335",
+      "name": "Graham Mertz",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-08T23:59:59Z",
+      "publishedOn": "2024-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2024/07/attendees-announced-for-2024-sec-football-media-days",
+          "publishedOn": "2024-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "61",
+      "team": "Georgia",
+      "athleteId": "4430841",
+      "name": "Carson Beck",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-08T23:59:59Z",
+      "publishedOn": "2024-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2024/07/attendees-announced-for-2024-sec-football-media-days",
+          "publishedOn": "2024-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "99",
+      "team": "LSU",
+      "athleteId": "4567747",
+      "name": "Garrett Nussmeier",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-08T23:59:59Z",
+      "publishedOn": "2024-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2024/07/attendees-announced-for-2024-sec-football-media-days",
+          "publishedOn": "2024-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "145",
+      "team": "Ole Miss",
+      "athleteId": "4689114",
+      "name": "Jaxson Dart",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-08T23:59:59Z",
+      "publishedOn": "2024-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2024/07/attendees-announced-for-2024-sec-football-media-days",
+          "publishedOn": "2024-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "344",
+      "team": "Mississippi State",
+      "athleteId": "4565315",
+      "name": "Blake Shapen",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-08T23:59:59Z",
+      "publishedOn": "2024-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2024/07/attendees-announced-for-2024-sec-football-media-days",
+          "publishedOn": "2024-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "142",
+      "team": "Missouri",
+      "athleteId": "4429435",
+      "name": "Brady Cook",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-08T23:59:59Z",
+      "publishedOn": "2024-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2024/07/attendees-announced-for-2024-sec-football-media-days",
+          "publishedOn": "2024-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "201",
+      "team": "Oklahoma",
+      "athleteId": "4870607",
+      "name": "Jackson Arnold",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-08T23:59:59Z",
+      "publishedOn": "2024-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2024/07/attendees-announced-for-2024-sec-football-media-days",
+          "publishedOn": "2024-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "251",
+      "team": "Texas",
+      "athleteId": "4889929",
+      "name": "Quinn Ewers",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-08T23:59:59Z",
+      "publishedOn": "2024-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2024/07/attendees-announced-for-2024-sec-football-media-days",
+          "publishedOn": "2024-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "8",
+      "team": "Arkansas",
+      "athleteId": "4431325",
+      "name": "Taylen Green",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-08T23:59:59Z",
+      "publishedOn": "2025-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2025/07/official-attendee-list-announced-for-2025-sec-football-media-days",
+          "publishedOn": "2025-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "2",
+      "team": "Auburn",
+      "athleteId": "4870607",
+      "name": "Jackson Arnold",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-08T23:59:59Z",
+      "publishedOn": "2025-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2025/07/official-attendee-list-announced-for-2025-sec-football-media-days",
+          "publishedOn": "2025-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "57",
+      "team": "Florida",
+      "athleteId": "5079555",
+      "name": "DJ Lagway",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-08T23:59:59Z",
+      "publishedOn": "2025-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2025/07/official-attendee-list-announced-for-2025-sec-football-media-days",
+          "publishedOn": "2025-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "61",
+      "team": "Georgia",
+      "athleteId": "4685578",
+      "name": "Gunner Stockton",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-08T23:59:59Z",
+      "publishedOn": "2025-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2025/07/official-attendee-list-announced-for-2025-sec-football-media-days",
+          "publishedOn": "2025-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "99",
+      "team": "LSU",
+      "athleteId": "4567747",
+      "name": "Garrett Nussmeier",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-08T23:59:59Z",
+      "publishedOn": "2025-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2025/07/official-attendee-list-announced-for-2025-sec-football-media-days",
+          "publishedOn": "2025-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "145",
+      "team": "Ole Miss",
+      "athleteId": "5141684",
+      "name": "Austin Simmons",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-08T23:59:59Z",
+      "publishedOn": "2025-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2025/07/official-attendee-list-announced-for-2025-sec-football-media-days",
+          "publishedOn": "2025-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "344",
+      "team": "Mississippi State",
+      "athleteId": "4565315",
+      "name": "Blake Shapen",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-08T23:59:59Z",
+      "publishedOn": "2025-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2025/07/official-attendee-list-announced-for-2025-sec-football-media-days",
+          "publishedOn": "2025-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "201",
+      "team": "Oklahoma",
+      "athleteId": "4915980",
+      "name": "John Mateer",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-08T23:59:59Z",
+      "publishedOn": "2025-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2025/07/official-attendee-list-announced-for-2025-sec-football-media-days",
+          "publishedOn": "2025-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "2579",
+      "team": "South Carolina",
+      "athleteId": "4875127",
+      "name": "LaNorris Sellers",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-08T23:59:59Z",
+      "publishedOn": "2025-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2025/07/official-attendee-list-announced-for-2025-sec-football-media-days",
+          "publishedOn": "2025-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "251",
+      "team": "Texas",
+      "athleteId": "4870906",
+      "name": "Arch Manning",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-08T23:59:59Z",
+      "publishedOn": "2025-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2025/07/official-attendee-list-announced-for-2025-sec-football-media-days",
+          "publishedOn": "2025-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "238",
+      "team": "Vanderbilt",
+      "athleteId": "5084180",
+      "name": "Diego Pavia",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-07-08T23:59:59Z",
+      "publishedOn": "2025-07-08",
+      "sources": [
+        {
+          "url": "https://www.secsports.com/news/2025/07/official-attendee-list-announced-for-2025-sec-football-media-days",
+          "publishedOn": "2025-07-08",
+          "claim": "Conference listed this player as a quarterback delegate for this school."
+        }
+      ]
+    }
+  ],
+  "unresolved": [],
+  "identityPolicy": "Unique normalized name to an athlete ID in the preceding four seasons. Unresolved identities remain explicit."
+}

@@ -6,11 +6,13 @@ import { calculateDivisionSor } from './lib/division_candidate.mjs';
 
 const root = new URL('../', import.meta.url);
 const read = async path => JSON.parse(await readFile(new URL(path, root)));
-const [baseline, quarterback, units, passerChallenger, policy] = await Promise.all([
+const [baseline, quarterback, units, passerChallenger, datedQuarterback, coaching, policy] = await Promise.all([
   read('research/cache/preseason-team-baseline/result.json'),
   read('research/cache/preseason-player/quarterback-replay.json'),
   read('research/results/preseason-units/results.json'),
   read('research/cache/preseason-player/team-passing-challenger.json'),
+  read('research/cache/preseason-player/roster-qb-challenger.json'),
+  read('research/results/preseason-coaching/results.json'),
   readPublicationPolicy(),
 ]);
 const sample = baseline.previews[2025];
@@ -72,6 +74,31 @@ const modelRows = Object.entries(holdout).map(([id, result]) => ({
   id, label: names[id], accuracy: result.accuracy, brier: result.brier, logLoss: result.logLoss,
   winError: result.expectedWinsMAE,
 }));
+const mediaDay = datedQuarterback.results.mediaDay;
+const coachTest = coaching.test.pooled;
+const datedTests = {
+  quarterback: {
+    fitGames: mediaDay.trainingGames,
+    coveredGames: mediaDay.evaluation.supportedGames,
+    totalGames: mediaDay.evaluation.games,
+    baseline: mediaDay.evaluation.conditional.baseline,
+    challenger: mediaDay.evaluation.conditional.challenger,
+    baselineWithFallback: mediaDay.evaluation.fullScheduleWithFallback.baseline,
+    challengerWithFallback: mediaDay.evaluation.fullScheduleWithFallback.challenger,
+    coverage: mediaDay.coverage,
+    starterGames: datedQuarterback.results.starter.evaluation.supportedGames,
+    roomGames: datedQuarterback.results.room.evaluation.supportedGames,
+  },
+  coaching: {
+    fitGames: coaching.fit.trainingGames,
+    games: coachTest.games,
+    contrastGames: coaching.test.withContrast.games,
+    baseline: coachTest.strength,
+    challenger: coachTest.continuity,
+    schools: coaching.test.contrastByChangedSchool,
+    limitation: coaching.limitation,
+  },
+};
 const result = {
   season: sample.season,
   window: `${sample.windowYears[0]}–${sample.windowYears.at(-1)}`,
@@ -86,6 +113,7 @@ const result = {
   })),
   validation: {
     models: modelRows,
+    datedTests,
     scope: 'Each model scored the same 2,264 archived FBS–FBS games from 2023–2025, including some conference title games. Team strength was frozen before any games in the target season.',
     calibration: 'The preseason odds mapping was fitted on 2014–2019 games. The team model uses our own scores, opponent network, and venue adjustment.',
     units: {
@@ -113,7 +141,7 @@ const result = {
     }),
   },
   limits: 'This is a retrospective replay on recorded fixtures. Final archive schedules can include later changes, and the archive misses some results. Win totals cover the scored FBS–FBS cohort. A dated prospective forecast starts with the next preseason.',
-  featureStatus: 'The preview uses the four-season team baseline. Quarterback evidence is shown separately until dated roster coverage supports a fair team forecast test. Coaching data is pending a dated coverage check.',
+  featureStatus: 'The preview uses the four-season team baseline. The dated quarterback and coach tests below cover selected cohorts. Verified complete QB rooms are still needed for a full roster test.',
 };
 assert.equal(result.games.length, 753);
 assert.equal(result.teams.length, 136);

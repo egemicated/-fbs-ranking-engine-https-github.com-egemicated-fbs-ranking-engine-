@@ -110,6 +110,30 @@ function renderQuarterbacks() {
       <p><a href="${escape(row.source)}">School announcement · ${escape(row.knownOn)}</a></p></article>`).join('')}</section>`;
 }
 
+function pairedScores(baseline, challenger, feature) {
+  if (!baseline || !challenger) return '<p>The dated sample is too small to fit and score this feature.</p>';
+  const row = (label, scores) => `<tr><td>${escape(label)}</td><td>${decimal(scores.brier, 5)}</td><td>${decimal(scores.logLoss, 5)}</td></tr>`;
+  return table(['Model', 'Brier', 'Log loss'], row('Four-year Strength', baseline) + row(feature, challenger), `${feature} comparison`);
+}
+
+function datedTestPanels(tests) {
+  const qb = tests.quarterback;
+  const coach = tests.coaching;
+  const fullBrier = qb.challengerWithFallback && qb.baselineWithFallback
+    ? ` On the full schedule with those fallbacks, Brier was ${decimal(qb.baselineWithFallback.brier, 5)} for Strength and ${decimal(qb.challengerWithFallback.brier, 5)} for the challenger.` : '';
+  return `<section class="panel"><h2>Dated quarterback test</h2>
+    <p>The 2024–2025 test had verified media-day quarterback evidence for both teams in ${qb.coveredGames.toLocaleString()} of ${qb.totalGames.toLocaleString()} games. Each selected team named exactly one quarterback with earlier college passing data. An announcement shows affiliation at the time. Starting jobs and full QB rooms require separate evidence.</p>
+    <p>We fitted the added feature using ${qb.fitGames.toLocaleString()} earlier games and compared both models on the same covered fixtures.</p>
+    ${pairedScores(qb.baseline, qb.challenger, 'Strength + named QB')}
+    <p>For the other fixtures, the challenger uses the team baseline.${fullBrier} Confirmed starter coverage supported ${qb.starterGames} paired games and complete QB-room coverage supported ${qb.roomGames}.</p>
+    <p><a href="https://github.com/egemicated/-fbs-ranking-engine-https-github.com-egemicated-fbs-ranking-engine-/blob/codex/preseason-lab-preview/research/PRESEASON-LAB.md">Data and test protocol</a></p>
+    </section><section class="panel"><h2>Head-coach continuity test</h2>
+    <p>On ${coach.games.toLocaleString()} SEC games in 2024–2025, we tested the effect of having the same publicly announced head coach as the previous preseason. Only ${coach.contrastGames} games had different continuity between the two teams. The archive cohort includes conference title games tagged as regular season.</p>
+    ${pairedScores(coach.baseline, coach.challenger, 'Strength + coach continuity')}
+    <p>The gain came from seven Mississippi State games. The adjustment worsened both scores for Alabama and Texas A&amp;M. The 2025 forecasts were identical because every team had the same announced head coach as the prior preseason.</p>
+    </section>`;
+}
+
 function renderTesting() {
   const { validation } = preview;
   const metrics = table(['Model', 'Wins picked', 'Brier', 'Log loss', 'Win total error'], validation.models.map(row => `<tr>
@@ -118,6 +142,7 @@ function renderTesting() {
   outlet.innerHTML = `<section class="panel"><h2>How the replay was scored</h2>
     <p>${escape(validation.scope)}</p><p>${escape(validation.calibration)}</p>${metrics}
     <p>Brier and log loss score the odds against what happened. Lower is better. Win total error is in games per team.</p></section>
+    ${validation.datedTests ? datedTestPanels(validation.datedTests) : ''}
     <section class="panel"><h2>What this preview covers</h2><p>${escape(preview.limits)}</p>
     <p>${escape(preview.featureStatus)}</p></section>
     <section class="panel"><h2>Offense and defense test</h2>

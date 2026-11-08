@@ -1,0 +1,232 @@
+{
+  "status": "retrospective research only",
+  "scope": "Decided regular-tagged matchups between two then-SEC schools. Includes some conference title games.",
+  "evidence": "Public preseason coaching names from dated media-day announcements. Texas and Oklahoma 2023 names come from their schools before joining the SEC. Season-open labels remain frozen through the schedule, so later changes do not enter.",
+  "limitation": "The source records announced preseason identity. Changes after announcements and interim or temporary game assignments are outside the input. The test measures continuity, and is confined to one conference.",
+  "protocol": {
+    "trainYears": [
+      2022,
+      2023
+    ],
+    "testYears": [
+      2024,
+      2025
+    ],
+    "penalty": 1,
+    "baselineTrainingYears": [
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019
+    ],
+    "baselineScale": 7.3361087302133114,
+    "feature": "1 for the same announced head coach as the prior preseason, 0 for a change. Add beta times the home-minus-away difference to frozen Strength log odds."
+  },
+  "coverage": {
+    "2022": {
+      "openingCutoff": "2022-08-27T16:00:00.000Z",
+      "secTeams": 14,
+      "knownTeamPairs": 14,
+      "targetGames": 57,
+      "matchedGames": 57,
+      "gamesWithContrast": 15,
+      "changedSchools": [
+        "Florida",
+        "LSU"
+      ]
+    },
+    "2023": {
+      "openingCutoff": "2023-08-26T18:30:00.000Z",
+      "secTeams": 14,
+      "knownTeamPairs": 14,
+      "targetGames": 57,
+      "matchedGames": 57,
+      "gamesWithContrast": 14,
+      "changedSchools": [
+        "Auburn",
+        "Mississippi State"
+      ]
+    },
+    "2024": {
+      "openingCutoff": "2024-08-24T16:00:00.000Z",
+      "secTeams": 16,
+      "knownTeamPairs": 16,
+      "targetGames": 65,
+      "matchedGames": 65,
+      "gamesWithContrast": 22,
+      "changedSchools": [
+        "Alabama",
+        "Mississippi State",
+        "Texas A&M"
+      ]
+    },
+    "2025": {
+      "openingCutoff": "2025-08-23T16:00:00.000Z",
+      "secTeams": 16,
+      "knownTeamPairs": 16,
+      "targetGames": 65,
+      "matchedGames": 65,
+      "gamesWithContrast": 0,
+      "changedSchools": []
+    }
+  },
+  "fit": {
+    "trainingGames": 114,
+    "gamesWithContrast": 29,
+    "continuityLogOdds": 0.30488780281507566
+  },
+  "test": {
+    "pooled": {
+      "games": 130,
+      "strength": {
+        "brier": 0.199711902990952,
+        "logLoss": 0.5838563461541757,
+        "accuracy": 0.6846153846153846
+      },
+      "continuity": {
+        "brier": 0.19911534341445272,
+        "logLoss": 0.5813136287141355,
+        "accuracy": 0.7076923076923077
+      },
+      "deltas": {
+        "brier": -0.0005965595764992893,
+        "logLoss": -0.0025427174400401986,
+        "accuracy": 0.023076923076923106
+      }
+    },
+    "withContrast": {
+      "games": 22,
+      "strength": {
+        "brier": 0.1958263192905539,
+        "logLoss": 0.5784786515078114,
+        "accuracy": 0.5909090909090909
+      },
+      "continuity": {
+        "brier": 0.1923011945203312,
+        "logLoss": 0.5634535029984827,
+        "accuracy": 0.7272727272727273
+      },
+      "deltas": {
+        "brier": -0.0035251247702227095,
+        "logLoss": -0.015025148509328679,
+        "accuracy": 0.13636363636363635
+      }
+    },
+    "contrastByChangedSchool": {
+      "Alabama": {
+        "games": 8,
+        "strength": {
+          "brier": 0.246643173876348,
+          "logLoss": 0.7116204998832506,
+          "accuracy": 0.625
+        },
+        "continuity": {
+          "brier": 0.2517302268099542,
+          "logLoss": 0.7121741006219222,
+          "accuracy": 0.625
+        },
+        "deltas": {
+          "brier": 0.005087052933606229,
+          "logLoss": 0.0005536007386716113,
+          "accuracy": 0
+        }
+      },
+      "Mississippi State": {
+        "games": 7,
+        "strength": {
+          "brier": 0.1075761221480503,
+          "logLoss": 0.361386651380104,
+          "accuracy": 0.7142857142857143
+        },
+        "continuity": {
+          "brier": 0.07602688441003512,
+          "logLoss": 0.2837177388265485,
+          "accuracy": 1
+        },
+        "deltas": {
+          "brier": -0.031549237738015184,
+          "logLoss": -0.07766891255355551,
+          "accuracy": 0.2857142857142857
+        }
+      },
+      "Texas A&M": {
+        "games": 7,
+        "strength": {
+          "brier": 0.22600011119215,
+          "logLoss": 0.6434085392064455,
+          "accuracy": 0.42857142857142855
+        },
+        "continuity": {
+          "brier": 0.240656610585344,
+          "logLoss": 0.6732228698864864,
+          "accuracy": 0.5714285714285714
+        },
+        "deltas": {
+          "brier": 0.014656499393193995,
+          "logLoss": 0.029814330680040912,
+          "accuracy": 0.14285714285714285
+        }
+      }
+    },
+    "byYear": {
+      "2024": {
+        "games": 65,
+        "strength": {
+          "brier": 0.2067501645343966,
+          "logLoss": 0.5989869551007266,
+          "accuracy": 0.6615384615384615
+        },
+        "continuity": {
+          "brier": 0.20555704538139802,
+          "logLoss": 0.5939015202206464,
+          "accuracy": 0.7076923076923077
+        },
+        "deltas": {
+          "brier": -0.0011931191529985785,
+          "logLoss": -0.005085434880080286,
+          "accuracy": 0.04615384615384621
+        }
+      },
+      "2025": {
+        "games": 65,
+        "strength": {
+          "brier": 0.19267364144750734,
+          "logLoss": 0.5687257372076246,
+          "accuracy": 0.7076923076923077
+        },
+        "continuity": {
+          "brier": 0.19267364144750734,
+          "logLoss": 0.5687257372076246,
+          "accuracy": 0.7076923076923077
+        },
+        "deltas": {
+          "brier": 0,
+          "logLoss": 0,
+          "accuracy": 0
+        }
+      }
+    }
+  },
+  "nationalSourceAudit": {
+    "cfbd": {
+      "source": "https://api.collegefootballdata.com/api/coaches#tag/coaches/GET/coaches/tenures",
+      "finding": "The tenures endpoint requires team or coachId. Its nullable hire and effective dates and interim status are useful leads for a future dated audit. The endpoint returns revised history rather than an as-of archive, so announcements must corroborate ambiguous rows."
+    },
+    "sportsdataverse": {
+      "source": "https://raw.githubusercontent.com/sportsdataverse/cfbfastR-cfb-data/main/python/cfb_data_build/matchup_side.py",
+      "finding": "head_coaches selects from all target-season coaches by longest earlier majority-games run and then target-season games coached. Target-season records can introduce later appointments or game counts."
+    },
+    "espn": {
+      "source": "https://github.com/sportsdataverse/cfbfastR/issues/125",
+      "finding": "The team-coaches endpoint was found to return the current coach even when asked for an earlier season."
+    }
+  },
+  "sourceHashes": {
+    "evidence": "1b91f0e0c813211d0947f62cf5cd2ecaa775438f6c1e66d5171d939c8770dddf",
+    "baseline": "31d01fa0ce4a2f63f2d3ec309207fb39b458abe1dbd50a1afd2d2effbe5432c1",
+    "code": "85528d0ce3a64e7547b0120be2d7abff067186dc18c30333505e910a8286e370"
+  },
+  "cfbdCalls": 0
+}

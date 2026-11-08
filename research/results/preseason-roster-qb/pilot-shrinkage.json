@@ -1,0 +1,512 @@
+{
+  "trainYears": [
+    2023
+  ],
+  "testYears": [
+    2024,
+    2025
+  ],
+  "minimum": {
+    "trainingGames": 30,
+    "trainingTeams": 8,
+    "reportingGamesPerTestYear": 20
+  },
+  "baselineScale": 7.3361087302133114,
+  "shrinkage": 400,
+  "shrinkageEvidence": {
+    "sourceSha256": "779c374907355ef303b58e13a25529e0de662116d3e8a59eac6e8f92cfa3faee",
+    "playerCalibrationYears": [
+      2022,
+      2023
+    ]
+  },
+  "baselineSha256": "31d01fa0ce4a2f63f2d3ec309207fb39b458abe1dbd50a1afd2d2effbe5432c1",
+  "passingSha256": "5bf38d772d24032330a808ab7d7963353fc051d82859a049a26075e114d08438",
+  "evidenceDocuments": [
+    {
+      "path": "research/preseason-roster-evidence.json",
+      "sha256": "52e61d94b095ff4975f77011099dc9dcb4af30824dc257ba98661e7f2e7472ef"
+    },
+    {
+      "path": "research/preseason-big12-qb-evidence.json",
+      "sha256": "8a94eb045e12438fd0558664296edfb5f71cae7ec7c918d0df983a2e5773a8f2"
+    },
+    {
+      "path": "research/preseason-sec-qb-evidence.json",
+      "sha256": "ea043cbc3738fca4db31ec5a7f11e51108bfcbf21c223bfc346afabf4cfc1cc7"
+    }
+  ],
+  "scope": "Recorded archive regular-tagged FBS–FBS games. Features use dated preseason evidence and four earlier seasons of FBS passing production.",
+  "policy": "One verified media-day participant or one explicitly confirmed starter. Room estimates require a documented complete room and average members with earlier recorded attempts. Each unsupported matchup keeps the baseline probability.",
+  "limitation": "Media-day selection and source coverage can favor particular teams and players. Compare results both among supported fixtures and across the full paired schedule.",
+  "results": {
+    "mediaDay": {
+      "roleEvidence": "conference-media-day-attendee",
+      "fitted": true,
+      "addedLogOddsPerYardPerAttempt": 0.8784781502387294,
+      "trainingGames": 64,
+      "trainingTeams": 24,
+      "coverage": [
+        {
+          "season": 2023,
+          "cutoff": "2023-08-26T18:30:00.000Z",
+          "fbsTeams": 133,
+          "supportedTeams": 24,
+          "unsupported": {
+            "missing-dated-role-evidence": 108,
+            "no-recorded-prior-fbs-attempts": 1
+          },
+          "recordsOutsideCutoffOrUndated": 0
+        },
+        {
+          "season": 2024,
+          "cutoff": "2024-08-24T16:00:00.000Z",
+          "fbsTeams": 134,
+          "supportedTeams": 32,
+          "unsupported": {
+            "missing-dated-role-evidence": 98,
+            "multiple-named-candidates": 4
+          },
+          "recordsOutsideCutoffOrUndated": 0
+        },
+        {
+          "season": 2025,
+          "cutoff": "2025-08-23T16:00:00.000Z",
+          "fbsTeams": 136,
+          "supportedTeams": 33,
+          "unsupported": {
+            "missing-dated-role-evidence": 101,
+            "multiple-named-candidates": 2
+          },
+          "recordsOutsideCutoffOrUndated": 0
+        }
+      ],
+      "evaluation": {
+        "games": 1514,
+        "supportedGames": 201,
+        "supportedTeamsInGames": 42,
+        "meetsReportingMinimum": true,
+        "conditional": {
+          "baseline": {
+            "games": 201,
+            "brier": 0.23684404043926036,
+            "logLoss": 0.6627391167400417
+          },
+          "challenger": {
+            "games": 201,
+            "brier": 0.2535945561770036,
+            "logLoss": 0.7044019630751233
+          },
+          "delta": {
+            "brier": 0.01675051573774325,
+            "logLoss": 0.04166284633508155
+          }
+        },
+        "fullScheduleWithFallback": {
+          "baseline": {
+            "games": 1514,
+            "brier": 0.21232789141718503,
+            "logLoss": 0.6113803953156385
+          },
+          "challenger": {
+            "games": 1514,
+            "brier": 0.21455170493322628,
+            "logLoss": 0.6169115922200981
+          },
+          "delta": {
+            "brier": 0.0022238135160412564,
+            "logLoss": 0.005531196904459579
+          }
+        }
+      },
+      "byYear": {
+        "2023": {
+          "split": "fit",
+          "games": 750,
+          "supportedGames": 64,
+          "supportedTeamsInGames": 24,
+          "meetsReportingMinimum": true,
+          "conditional": {
+            "baseline": {
+              "games": 64,
+              "brier": 0.22981124599983943,
+              "logLoss": 0.6482632780637616
+            },
+            "challenger": {
+              "games": 64,
+              "brier": 0.2159566054873665,
+              "logLoss": 0.6210917066375905
+            },
+            "delta": {
+              "brier": -0.013854640512472927,
+              "logLoss": -0.027171571426171104
+            }
+          },
+          "fullScheduleWithFallback": {
+            "baseline": {
+              "games": 750,
+              "brier": 0.19926540373166138,
+              "logLoss": 0.5827691121117369
+            },
+            "challenger": {
+              "games": 750,
+              "brier": 0.19808314107459699,
+              "logLoss": 0.5804504713500375
+            },
+            "delta": {
+              "brier": -0.0011822626570643924,
+              "logLoss": -0.0023186407616994087
+            }
+          }
+        },
+        "2024": {
+          "split": "evaluation",
+          "games": 752,
+          "supportedGames": 97,
+          "supportedTeamsInGames": 32,
+          "meetsReportingMinimum": true,
+          "conditional": {
+            "baseline": {
+              "games": 97,
+              "brier": 0.2215445054329823,
+              "logLoss": 0.6287251229121851
+            },
+            "challenger": {
+              "games": 97,
+              "brier": 0.23990491649159595,
+              "logLoss": 0.6755203727678268
+            },
+            "delta": {
+              "brier": 0.018360411058613663,
+              "logLoss": 0.04679524985564176
+            }
+          },
+          "fullScheduleWithFallback": {
+            "baseline": {
+              "games": 752,
+              "brier": 0.21845571893961405,
+              "logLoss": 0.6239266306279798
+            },
+            "challenger": {
+              "games": 752,
+              "brier": 0.2208240166426532,
+              "logLoss": 0.6299627200375506
+            },
+            "delta": {
+              "brier": 0.002368297703039146,
+              "logLoss": 0.006036089409570788
+            }
+          }
+        },
+        "2025": {
+          "split": "evaluation",
+          "games": 762,
+          "supportedGames": 104,
+          "supportedTeamsInGames": 33,
+          "meetsReportingMinimum": true,
+          "conditional": {
+            "baseline": {
+              "games": 104,
+              "brier": 0.25111379905088527,
+              "logLoss": 0.6944637071371764
+            },
+            "challenger": {
+              "games": 104,
+              "brier": 0.2663627778066625,
+              "logLoss": 0.7313396001886596
+            },
+            "delta": {
+              "brier": 0.015248978755777243,
+              "logLoss": 0.0368758930514832
+            }
+          },
+          "fullScheduleWithFallback": {
+            "baseline": {
+              "games": 762,
+              "brier": 0.20628048157877732,
+              "logLoss": 0.5989988087606798
+            },
+            "challenger": {
+              "games": 762,
+              "brier": 0.20836170702576015,
+              "logLoss": 0.6040317390459217
+            },
+            "delta": {
+              "brier": 0.0020812254469828317,
+              "logLoss": 0.005032930285241877
+            }
+          }
+        }
+      }
+    },
+    "starter": {
+      "roleEvidence": "school-confirmed-starter",
+      "fitted": false,
+      "addedLogOddsPerYardPerAttempt": null,
+      "trainingGames": 0,
+      "trainingTeams": 0,
+      "coverage": [
+        {
+          "season": 2023,
+          "cutoff": "2023-08-26T18:30:00.000Z",
+          "fbsTeams": 133,
+          "supportedTeams": 0,
+          "unsupported": {
+            "missing-dated-role-evidence": 133
+          },
+          "recordsOutsideCutoffOrUndated": 0
+        },
+        {
+          "season": 2024,
+          "cutoff": "2024-08-24T16:00:00.000Z",
+          "fbsTeams": 134,
+          "supportedTeams": 0,
+          "unsupported": {
+            "missing-dated-role-evidence": 134
+          },
+          "recordsOutsideCutoffOrUndated": 0
+        },
+        {
+          "season": 2025,
+          "cutoff": "2025-08-23T16:00:00.000Z",
+          "fbsTeams": 136,
+          "supportedTeams": 0,
+          "unsupported": {
+            "missing-dated-role-evidence": 136
+          },
+          "recordsOutsideCutoffOrUndated": 0
+        }
+      ],
+      "evaluation": {
+        "games": 1514,
+        "supportedGames": 0,
+        "supportedTeamsInGames": 0,
+        "meetsReportingMinimum": false,
+        "conditional": {
+          "baseline": null,
+          "challenger": null,
+          "delta": null
+        },
+        "fullScheduleWithFallback": {
+          "baseline": {
+            "games": 1514,
+            "brier": 0.21232789141718503,
+            "logLoss": 0.6113803953156385
+          },
+          "challenger": null,
+          "delta": null
+        }
+      },
+      "byYear": {
+        "2023": {
+          "split": "fit",
+          "games": 750,
+          "supportedGames": 0,
+          "supportedTeamsInGames": 0,
+          "meetsReportingMinimum": false,
+          "conditional": {
+            "baseline": null,
+            "challenger": null,
+            "delta": null
+          },
+          "fullScheduleWithFallback": {
+            "baseline": {
+              "games": 750,
+              "brier": 0.19926540373166138,
+              "logLoss": 0.5827691121117369
+            },
+            "challenger": null,
+            "delta": null
+          }
+        },
+        "2024": {
+          "split": "evaluation",
+          "games": 752,
+          "supportedGames": 0,
+          "supportedTeamsInGames": 0,
+          "meetsReportingMinimum": false,
+          "conditional": {
+            "baseline": null,
+            "challenger": null,
+            "delta": null
+          },
+          "fullScheduleWithFallback": {
+            "baseline": {
+              "games": 752,
+              "brier": 0.21845571893961405,
+              "logLoss": 0.6239266306279798
+            },
+            "challenger": null,
+            "delta": null
+          }
+        },
+        "2025": {
+          "split": "evaluation",
+          "games": 762,
+          "supportedGames": 0,
+          "supportedTeamsInGames": 0,
+          "meetsReportingMinimum": false,
+          "conditional": {
+            "baseline": null,
+            "challenger": null,
+            "delta": null
+          },
+          "fullScheduleWithFallback": {
+            "baseline": {
+              "games": 762,
+              "brier": 0.20628048157877732,
+              "logLoss": 0.5989988087606798
+            },
+            "challenger": null,
+            "delta": null
+          }
+        }
+      }
+    },
+    "room": {
+      "roleEvidence": "school-dated-qb-roster",
+      "fitted": false,
+      "addedLogOddsPerYardPerAttempt": null,
+      "trainingGames": 0,
+      "trainingTeams": 0,
+      "coverage": [
+        {
+          "season": 2023,
+          "cutoff": "2023-08-26T18:30:00.000Z",
+          "fbsTeams": 133,
+          "supportedTeams": 0,
+          "unsupported": {
+            "missing-dated-role-evidence": 132,
+            "room-completeness-unverified": 1
+          },
+          "recordsOutsideCutoffOrUndated": 0
+        },
+        {
+          "season": 2024,
+          "cutoff": "2024-08-24T16:00:00.000Z",
+          "fbsTeams": 134,
+          "supportedTeams": 0,
+          "unsupported": {
+            "missing-dated-role-evidence": 133,
+            "room-completeness-unverified": 1
+          },
+          "recordsOutsideCutoffOrUndated": 0
+        },
+        {
+          "season": 2025,
+          "cutoff": "2025-08-23T16:00:00.000Z",
+          "fbsTeams": 136,
+          "supportedTeams": 0,
+          "unsupported": {
+            "missing-dated-role-evidence": 135,
+            "room-completeness-unverified": 1
+          },
+          "recordsOutsideCutoffOrUndated": 0
+        }
+      ],
+      "evaluation": {
+        "games": 1514,
+        "supportedGames": 0,
+        "supportedTeamsInGames": 0,
+        "meetsReportingMinimum": false,
+        "conditional": {
+          "baseline": null,
+          "challenger": null,
+          "delta": null
+        },
+        "fullScheduleWithFallback": {
+          "baseline": {
+            "games": 1514,
+            "brier": 0.21232789141718503,
+            "logLoss": 0.6113803953156385
+          },
+          "challenger": null,
+          "delta": null
+        }
+      },
+      "byYear": {
+        "2023": {
+          "split": "fit",
+          "games": 750,
+          "supportedGames": 0,
+          "supportedTeamsInGames": 0,
+          "meetsReportingMinimum": false,
+          "conditional": {
+            "baseline": null,
+            "challenger": null,
+            "delta": null
+          },
+          "fullScheduleWithFallback": {
+            "baseline": {
+              "games": 750,
+              "brier": 0.19926540373166138,
+              "logLoss": 0.5827691121117369
+            },
+            "challenger": null,
+            "delta": null
+          }
+        },
+        "2024": {
+          "split": "evaluation",
+          "games": 752,
+          "supportedGames": 0,
+          "supportedTeamsInGames": 0,
+          "meetsReportingMinimum": false,
+          "conditional": {
+            "baseline": null,
+            "challenger": null,
+            "delta": null
+          },
+          "fullScheduleWithFallback": {
+            "baseline": {
+              "games": 752,
+              "brier": 0.21845571893961405,
+              "logLoss": 0.6239266306279798
+            },
+            "challenger": null,
+            "delta": null
+          }
+        },
+        "2025": {
+          "split": "evaluation",
+          "games": 762,
+          "supportedGames": 0,
+          "supportedTeamsInGames": 0,
+          "meetsReportingMinimum": false,
+          "conditional": {
+            "baseline": null,
+            "challenger": null,
+            "delta": null
+          },
+          "fullScheduleWithFallback": {
+            "baseline": {
+              "games": 762,
+              "brier": 0.20628048157877732,
+              "logLoss": 0.5989988087606798
+            },
+            "challenger": null,
+            "delta": null
+          }
+        }
+      }
+    }
+  },
+  "temporalChecks": [
+    {
+      "role": "mediaDay",
+      "season": 2023,
+      "passed": true
+    },
+    {
+      "role": "mediaDay",
+      "season": 2024,
+      "passed": true
+    },
+    {
+      "role": "mediaDay",
+      "season": 2025,
+      "passed": true
+    }
+  ],
+  "cfbdCalls": 0
+}

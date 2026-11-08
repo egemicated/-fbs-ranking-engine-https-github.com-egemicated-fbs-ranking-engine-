@@ -1,0 +1,82 @@
+{
+  "2021": {
+    "published": "2021-04-28",
+    "source": "https://vucommodores.com/news/2021/04/28/sec-media-days-set",
+    "coaches": {
+      "Alabama": "Nick Saban", "Arkansas": "Sam Pittman", "Auburn": "Bryan Harsin",
+      "Florida": "Dan Mullen", "Georgia": "Kirby Smart", "Kentucky": "Mark Stoops",
+      "LSU": "Ed Orgeron", "Mississippi State": "Mike Leach", "Missouri": "Eli Drinkwitz",
+      "Ole Miss": "Lane Kiffin", "South Carolina": "Shane Beamer", "Tennessee": "Josh Heupel",
+      "Texas A&M": "Jimbo Fisher", "Vanderbilt": "Clark Lea"
+    }
+  },
+  "2022": {
+    "published": "2022-02-25",
+    "source": "https://floridagators.com/news/2022/2/24/sec-announces-schedule-for-2022-sec-football-media-days",
+    "coaches": {
+      "Alabama": "Nick Saban", "Arkansas": "Sam Pittman", "Auburn": "Bryan Harsin",
+      "Florida": "Billy Napier", "Georgia": "Kirby Smart", "Kentucky": "Mark Stoops",
+      "LSU": "Brian Kelly", "Mississippi State": "Mike Leach", "Missouri": "Eliah Drinkwitz",
+      "Ole Miss": "Lane Kiffin", "South Carolina": "Shane Beamer", "Tennessee": "Josh Heupel",
+      "Texas A&M": "Jimbo Fisher", "Vanderbilt": "Clark Lea"
+    }
+  },
+  "2023": {
+    "published": "2023-02-16",
+    "source": "https://www.secsports.com/news/2023/02/sec-announces-schedule-for-2023-football-media-days",
+    "coaches": {
+      "Alabama": "Nick Saban", "Arkansas": "Sam Pittman", "Auburn": "Hugh Freeze",
+      "Florida": "Billy Napier", "Georgia": "Kirby Smart", "Kentucky": "Mark Stoops",
+      "LSU": "Brian Kelly", "Mississippi State": "Zach Arnett", "Missouri": "Eliah Drinkwitz",
+      "Ole Miss": "Lane Kiffin", "South Carolina": "Shane Beamer", "Tennessee": "Josh Heupel",
+      "Texas A&M": "Jimbo Fisher", "Vanderbilt": "Clark Lea"
+    },
+    "additionalCoaches": {
+      "Oklahoma": {
+        "coach": "Brent Venables", "published": "2023-07-13",
+        "source": "https://soonersports.com/news/2023/7/13/football-sooners-preview-2023-at-big-12-media-days"
+      },
+      "Texas": {
+        "coach": "Steve Sarkisian", "published": "2023-08-01",
+        "source": "https://texaslonghorns.com/news/2023/8/1/football-video-steve-sarkisian-press-conference"
+      }
+    }
+  },
+  "2024": {
+    "published": "2024-02-29",
+    "source": "https://www.secsports.com/news/2024/02/sec-announces-appearance-schedule-for-2024-football-media-days",
+    "coaches": {
+      "Alabama": "Kalen DeBoer", "Arkansas": "Sam Pittman", "Auburn": "Hugh Freeze",
+      "Florida": "Billy Napier", "Georgia": "Kirby Smart", "Kentucky": "Mark Stoops",
+      "LSU": "Brian Kelly", "Mississippi State": "Jeff Lebby", "Missouri": "Eliah Drinkwitz",
+      "Oklahoma": "Brent Venables", "Ole Miss": "Lane Kiffin", "South Carolina": "Shane Beamer",
+      "Tennessee": "Josh Heupel", "Texas": "Steve Sarkisian", "Texas A&M": "Mike Elko", "Vanderbilt": "Clark Lea"
+    }
+  },
+  "2025": {
+    "published": "2025-04-15",
+    "source": "https://www.secsports.com/news/2025/04/sec-announces-appearance-schedule-for-2025-football-media-days",
+    "mirror": "https://lsusports.net/news/2025/04/15/kelly-and-the-tigers-to-open-2025-sec-media-days-in-july",
+    "coaches": {
+      "Alabama": "Kalen DeBoer", "Arkansas": "Sam Pittman", "Auburn": "Hugh Freeze",
+      "Florida": "Billy Napier", "Georgia": "Kirby Smart", "Kentucky": "Mark Stoops",
+      "LSU": "Brian Kelly", "Mississippi State": "Jeff Lebby", "Missouri": "Eliah Drinkwitz",
+      "Oklahoma": "Brent Venables", "Ole Miss": "Lane Kiffin", "South Carolina": "Shane Beamer",
+      "Tennessee": "Josh Heupel", "Texas": "Steve Sarkisian", "Texas A&M": "Mike Elko", "Vanderbilt": "Clark Lea"
+    }
+  },
+  "nationalSourceAudit": {
+    "cfbd": {
+      "source": "https://api.collegefootballdata.com/api/coaches#tag/coaches/GET/coaches/tenures",
+      "finding": "The tenures endpoint requires team or coachId. Its nullable hire and effective dates and interim status are useful leads for a future dated audit. The endpoint returns revised history rather than an as-of archive, so announcements must corroborate ambiguous rows."
+    },
+    "sportsdataverse": {
+      "source": "https://raw.githubusercontent.com/sportsdataverse/cfbfastR-cfb-data/main/python/cfb_data_build/matchup_side.py",
+      "finding": "head_coaches selects from all target-season coaches by longest earlier majority-games run and then target-season games coached. Target-season records can introduce later appointments or game counts."
+    },
+    "espn": {
+      "source": "https://github.com/sportsdataverse/cfbfastR/issues/125",
+      "finding": "The team-coaches endpoint was found to return the current coach even when asked for an earlier season."
+    }
+  }
+}

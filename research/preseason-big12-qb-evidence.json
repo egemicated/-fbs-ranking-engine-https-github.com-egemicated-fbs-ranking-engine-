@@ -1,0 +1,648 @@
+{
+  "schemaVersion": 1,
+  "scope": "Big 12 dated football media-day quarterback delegates. Complete published delegate lists, partial roster evidence.",
+  "cutoffs": {
+    "2023": "2023-08-26T18:30:00.000Z",
+    "2024": "2024-08-24T16:00:00.000Z",
+    "2025": "2025-08-23T16:00:00.000Z"
+  },
+  "sources": [
+    {
+      "season": 2023,
+      "url": "https://big12sports.com/news/2023/6/28/attendees-revealed-for-2023-big-12-football-media-days-presented-by-old-trapper.aspx",
+      "publishedOn": "2023-06-28",
+      "schoolsOnList": 14
+    },
+    {
+      "season": 2024,
+      "url": "https://big12sports.com/news/2024/6/29/totinos-joins-2024-big-12-football-media-day-as-presenting-sponsor-participating-big-12-student-athletes-announced.aspx",
+      "publishedOn": "2024-07-01",
+      "schoolsOnList": 16
+    },
+    {
+      "season": 2025,
+      "url": "https://big12sports.com/news/2025/6/30/big-12-announces-attendees-for-football-media-days.aspx",
+      "publishedOn": "2025-06-30",
+      "schoolsOnList": 16
+    }
+  ],
+  "evidence": [
+    {
+      "season": 2023,
+      "teamId": "239",
+      "team": "Baylor",
+      "athleteId": "4565315",
+      "name": "Blake Shapen",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-06-28T23:59:59Z",
+      "publishedOn": "2023-06-28",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2023/6/28/attendees-revealed-for-2023-big-12-football-media-days-presented-by-old-trapper.aspx",
+          "publishedOn": "2023-06-28",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2023,
+      "teamId": "252",
+      "team": "BYU",
+      "athleteId": "4428512",
+      "name": "Kedon Slovis",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-06-28T23:59:59Z",
+      "publishedOn": "2023-06-28",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2023/6/28/attendees-revealed-for-2023-big-12-football-media-days-presented-by-old-trapper.aspx",
+          "publishedOn": "2023-06-28",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2023,
+      "teamId": "2116",
+      "team": "UCF",
+      "athleteId": "4426494",
+      "name": "John Rhys Plumlee",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-06-28T23:59:59Z",
+      "publishedOn": "2023-06-28",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2023/6/28/attendees-revealed-for-2023-big-12-football-media-days-presented-by-old-trapper.aspx",
+          "publishedOn": "2023-06-28",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2023,
+      "teamId": "2132",
+      "team": "Cincinnati",
+      "athleteId": "4360230",
+      "name": "Emory Jones",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-06-28T23:59:59Z",
+      "publishedOn": "2023-06-28",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2023/6/28/attendees-revealed-for-2023-big-12-football-media-days-presented-by-old-trapper.aspx",
+          "publishedOn": "2023-06-28",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2023,
+      "teamId": "2305",
+      "team": "Kansas",
+      "athleteId": "4596472",
+      "name": "Jalon Daniels",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-06-28T23:59:59Z",
+      "publishedOn": "2023-06-28",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2023/6/28/attendees-revealed-for-2023-big-12-football-media-days-presented-by-old-trapper.aspx",
+          "publishedOn": "2023-06-28",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2023,
+      "teamId": "2306",
+      "team": "Kansas State",
+      "athleteId": "4429955",
+      "name": "Will Howard",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-06-28T23:59:59Z",
+      "publishedOn": "2023-06-28",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2023/6/28/attendees-revealed-for-2023-big-12-football-media-days-presented-by-old-trapper.aspx",
+          "publishedOn": "2023-06-28",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2023,
+      "teamId": "201",
+      "team": "Oklahoma",
+      "athleteId": "4427238",
+      "name": "Dillon Gabriel",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-06-28T23:59:59Z",
+      "publishedOn": "2023-06-28",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2023/6/28/attendees-revealed-for-2023-big-12-football-media-days-presented-by-old-trapper.aspx",
+          "publishedOn": "2023-06-28",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2023,
+      "teamId": "251",
+      "team": "Texas",
+      "athleteId": "4889929",
+      "name": "Quinn Ewers",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-06-28T23:59:59Z",
+      "publishedOn": "2023-06-28",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2023/6/28/attendees-revealed-for-2023-big-12-football-media-days-presented-by-old-trapper.aspx",
+          "publishedOn": "2023-06-28",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2023,
+      "teamId": "2641",
+      "team": "Texas Tech",
+      "athleteId": "4360689",
+      "name": "Tyler Shough",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2023-06-28T23:59:59Z",
+      "publishedOn": "2023-06-28",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2023/6/28/attendees-revealed-for-2023-big-12-football-media-days-presented-by-old-trapper.aspx",
+          "publishedOn": "2023-06-28",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "12",
+      "team": "Arizona",
+      "athleteId": "4801717",
+      "name": "Noah Fifita",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-01T23:59:59Z",
+      "publishedOn": "2024-07-01",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2024/6/29/totinos-joins-2024-big-12-football-media-day-as-presenting-sponsor-participating-big-12-student-athletes-announced.aspx",
+          "publishedOn": "2024-07-01",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "2116",
+      "team": "UCF",
+      "athleteId": "4567149",
+      "name": "KJ Jefferson",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-01T23:59:59Z",
+      "publishedOn": "2024-07-01",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2024/6/29/totinos-joins-2024-big-12-football-media-day-as-presenting-sponsor-participating-big-12-student-athletes-announced.aspx",
+          "publishedOn": "2024-07-01",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "38",
+      "team": "Colorado",
+      "athleteId": "4432762",
+      "name": "Shedeur Sanders",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-01T23:59:59Z",
+      "publishedOn": "2024-07-01",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2024/6/29/totinos-joins-2024-big-12-football-media-day-as-presenting-sponsor-participating-big-12-student-athletes-announced.aspx",
+          "publishedOn": "2024-07-01",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "248",
+      "team": "Houston",
+      "athleteId": "4690977",
+      "name": "Donovan Smith",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-01T23:59:59Z",
+      "publishedOn": "2024-07-01",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2024/6/29/totinos-joins-2024-big-12-football-media-day-as-presenting-sponsor-participating-big-12-student-athletes-announced.aspx",
+          "publishedOn": "2024-07-01",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "2305",
+      "team": "Kansas",
+      "athleteId": "4596472",
+      "name": "Jalon Daniels",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-01T23:59:59Z",
+      "publishedOn": "2024-07-01",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2024/6/29/totinos-joins-2024-big-12-football-media-day-as-presenting-sponsor-participating-big-12-student-athletes-announced.aspx",
+          "publishedOn": "2024-07-01",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "2306",
+      "team": "Kansas State",
+      "athleteId": "4870857",
+      "name": "Avery Johnson",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-01T23:59:59Z",
+      "publishedOn": "2024-07-01",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2024/6/29/totinos-joins-2024-big-12-football-media-day-as-presenting-sponsor-participating-big-12-student-athletes-announced.aspx",
+          "publishedOn": "2024-07-01",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "197",
+      "team": "Oklahoma State",
+      "athleteId": "4362159",
+      "name": "Alan Bowman",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-01T23:59:59Z",
+      "publishedOn": "2024-07-01",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2024/6/29/totinos-joins-2024-big-12-football-media-day-as-presenting-sponsor-participating-big-12-student-athletes-announced.aspx",
+          "publishedOn": "2024-07-01",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "2628",
+      "team": "TCU",
+      "athleteId": "4685401",
+      "name": "Josh Hoover",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-01T23:59:59Z",
+      "publishedOn": "2024-07-01",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2024/6/29/totinos-joins-2024-big-12-football-media-day-as-presenting-sponsor-participating-big-12-student-athletes-announced.aspx",
+          "publishedOn": "2024-07-01",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "2641",
+      "team": "Texas Tech",
+      "athleteId": "4431465",
+      "name": "Behren Morton",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-01T23:59:59Z",
+      "publishedOn": "2024-07-01",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2024/6/29/totinos-joins-2024-big-12-football-media-day-as-presenting-sponsor-participating-big-12-student-athletes-announced.aspx",
+          "publishedOn": "2024-07-01",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "254",
+      "team": "Utah",
+      "athleteId": "4362075",
+      "name": "Cameron Rising",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-01T23:59:59Z",
+      "publishedOn": "2024-07-01",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2024/6/29/totinos-joins-2024-big-12-football-media-day-as-presenting-sponsor-participating-big-12-student-athletes-announced.aspx",
+          "publishedOn": "2024-07-01",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2024,
+      "teamId": "277",
+      "team": "West Virginia",
+      "athleteId": "4429847",
+      "name": "Garrett Greene",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2024-07-01T23:59:59Z",
+      "publishedOn": "2024-07-01",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2024/6/29/totinos-joins-2024-big-12-football-media-day-as-presenting-sponsor-participating-big-12-student-athletes-announced.aspx",
+          "publishedOn": "2024-07-01",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "9",
+      "team": "Arizona State",
+      "athleteId": "5078810",
+      "name": "Sam Leavitt",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-06-30T23:59:59Z",
+      "publishedOn": "2025-06-30",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2025/6/30/big-12-announces-attendees-for-football-media-days.aspx",
+          "publishedOn": "2025-06-30",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "239",
+      "team": "Baylor",
+      "athleteId": "4432759",
+      "name": "Sawyer Robertson",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-06-30T23:59:59Z",
+      "publishedOn": "2025-06-30",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2025/6/30/big-12-announces-attendees-for-football-media-days.aspx",
+          "publishedOn": "2025-06-30",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "2132",
+      "team": "Cincinnati",
+      "athleteId": "4899046",
+      "name": "Brendan Sorsby",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-06-30T23:59:59Z",
+      "publishedOn": "2025-06-30",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2025/6/30/big-12-announces-attendees-for-football-media-days.aspx",
+          "publishedOn": "2025-06-30",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "66",
+      "team": "Iowa State",
+      "athleteId": "4801299",
+      "name": "Rocco Becht",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-06-30T23:59:59Z",
+      "publishedOn": "2025-06-30",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2025/6/30/big-12-announces-attendees-for-football-media-days.aspx",
+          "publishedOn": "2025-06-30",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "2306",
+      "team": "Kansas State",
+      "athleteId": "4870857",
+      "name": "Avery Johnson",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-06-30T23:59:59Z",
+      "publishedOn": "2025-06-30",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2025/6/30/big-12-announces-attendees-for-football-media-days.aspx",
+          "publishedOn": "2025-06-30",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "2641",
+      "team": "Texas Tech",
+      "athleteId": "4431465",
+      "name": "Behren Morton",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-06-30T23:59:59Z",
+      "publishedOn": "2025-06-30",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2025/6/30/big-12-announces-attendees-for-football-media-days.aspx",
+          "publishedOn": "2025-06-30",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "12",
+      "team": "Arizona",
+      "athleteId": "4801717",
+      "name": "Noah Fifita",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-06-30T23:59:59Z",
+      "publishedOn": "2025-06-30",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2025/6/30/big-12-announces-attendees-for-football-media-days.aspx",
+          "publishedOn": "2025-06-30",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "38",
+      "team": "Colorado",
+      "athleteId": null,
+      "name": "Julian Lewis",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-06-30T23:59:59Z",
+      "publishedOn": "2025-06-30",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2025/6/30/big-12-announces-attendees-for-football-media-days.aspx",
+          "publishedOn": "2025-06-30",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "38",
+      "team": "Colorado",
+      "athleteId": "4432803",
+      "name": "Kaidon Salter",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-06-30T23:59:59Z",
+      "publishedOn": "2025-06-30",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2025/6/30/big-12-announces-attendees-for-football-media-days.aspx",
+          "publishedOn": "2025-06-30",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "2305",
+      "team": "Kansas",
+      "athleteId": "4596472",
+      "name": "Jalon Daniels",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-06-30T23:59:59Z",
+      "publishedOn": "2025-06-30",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2025/6/30/big-12-announces-attendees-for-football-media-days.aspx",
+          "publishedOn": "2025-06-30",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "2628",
+      "team": "TCU",
+      "athleteId": "4685401",
+      "name": "Josh Hoover",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-06-30T23:59:59Z",
+      "publishedOn": "2025-06-30",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2025/6/30/big-12-announces-attendees-for-football-media-days.aspx",
+          "publishedOn": "2025-06-30",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    },
+    {
+      "season": 2025,
+      "teamId": "254",
+      "team": "Utah",
+      "athleteId": "5105849",
+      "name": "Devon Dampier",
+      "position": "QB",
+      "cohort": "media-days",
+      "roleEvidence": "conference-media-day-attendee",
+      "knownBy": "2025-06-30T23:59:59Z",
+      "publishedOn": "2025-06-30",
+      "sources": [
+        {
+          "url": "https://big12sports.com/news/2025/6/30/big-12-announces-attendees-for-football-media-days.aspx",
+          "publishedOn": "2025-06-30",
+          "claim": "Conference listed the player as a quarterback delegate for this school."
+        }
+      ]
+    }
+  ],
+  "unresolved": [
+    {
+      "season": 2025,
+      "teamId": "38",
+      "name": "Julian Lewis",
+      "reason": "No unique athlete ID in prior passing records"
+    }
+  ],
+  "identityPolicy": "Unique normalized name to a stable athlete ID in the preceding four seasons. No target-season participation or results used. Ambiguous or absent identities remain unresolved."
+}
