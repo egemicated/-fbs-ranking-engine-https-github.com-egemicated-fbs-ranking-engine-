@@ -512,17 +512,17 @@ function editionPicker(weeks, activeWeek) {
     `<option value="${week}"${week === activeWeek ? ' selected' : ''}>${editionLabel(week)}</option>`).join('')}</select></label>`;
 }
 function editionRankMap(edition) {
-  return new Map(edition?.rows.map((row, index) => [row.team, { ...row, rank: row.rank ?? index + 1 }]));
+  return new Map(edition?.rows.map((row, index) => [row.team, { rank: index + 1, ...row }]));
 }
 function editionTeamLink(name, teams) {
   const team = teams.get(name);
   return team ? teamLink(team) : esc(name);
 }
-function editionRankCell(edition, row) {
-  if (row) return `<td class="num">${row.rank}</td>`;
-  return edition
-    ? '<td class="num"><abbr title="Outside this Top 25">NR</abbr></td>'
-    : '<td class="num" aria-label="Edition unavailable">—</td>';
+function pollRankCell(column, position, teams) {
+  const ranked = column.filter(row => row.rank === position);
+  return `<td>${ranked.map(row =>
+    `<div class="poll-ranked-team">${editionTeamLink(row.team, teams)}<small>${esc(row.record)}</small></div>`
+  ).join('') || '—'}</td>`;
 }
 function renderPollComparison(data, sourceKey, requestedWeek) {
   const key = Object.hasOwn(pollSources, sourceKey) ? sourceKey : 'ap';
@@ -549,11 +549,9 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
   const sorLabel = replay ? 'SOR replay' : 'SOR';
   const forge = weekForge?.gamesThrough === gamesThrough ? weekForge : undefined;
   const teams = new Map(state.snapshot.rankings.map(team => [team.name, team]));
-  const columns = [sor, forge, poll].map(editionRankMap);
-  const names = [...new Set(columns.flatMap(column => [...column.values()]
-    .filter(row => row.rank <= 25).map(row => row.team)))];
-  const shared = (left, right) => [...left.values()].filter(row =>
-    row.rank <= 25 && (right.get(row.team)?.rank ?? Infinity) <= 25).length;
+  const columns = [sor, forge, poll].map(edition => [...editionRankMap(edition).values()]
+    .filter(row => Number.isInteger(row.rank) && row.rank >= 1 && row.rank <= 25));
+  const shared = (left, right) => left.filter(row => right.some(other => other.team === row.team)).length;
   const editionLink = poll
     ? `<a class="text-link" href="${esc(poll.url)}">Read the ${source.name} edition ${icon('external')}</a>`
     : `<a class="text-link" href="${source.url}">Open ${source.name} ${icon('external')}</a>`;
@@ -566,9 +564,9 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
     !sor ? 'No matching official SOR snapshot' : '',
     !poll ? `${source.name} edition unavailable for this week` : ''
   ].filter(Boolean);
-  const rows = names.map(name => {
-    const [sorRow, forgeRow, pollRow] = columns.map(column => column.get(name));
-    return `<tr><td>${editionTeamLink(name, teams)}<small>${esc((sorRow ?? forgeRow ?? pollRow).record)}</small></td>${editionRankCell(sor, sorRow)}${editionRankCell(forge, forgeRow)}${editionRankCell(poll, pollRow)}</tr>`;
+  const rows = Array.from({ length: 25 }, (_, index) => {
+    const position = index + 1;
+    return `<tr><th scope="row">${position}</th>${columns.map(column => pollRankCell(column, position, teams)).join('')}</tr>`;
   }).join('');
   return `<div class="wrap page-content"><section class="panel edition-panel"><div class="panel-body">
     ${tabs}<div class="edition-controls">${editionPicker(weeks, week)}${editionLink}</div>
@@ -577,10 +575,10 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
     ${summary.length ? `<p class="edition-notice">${summary.join(' · ')}.</p>` : ''}
     ${!poll && latestSource ? `<a class="text-link" href="#polls/${key}/${latestSource.week}">View the ${editionDate(latestSource.released)} edition ${icon('arrow')}</a>` : ''}
     ${!sor && latestSor && latestSor.week !== week ? `<a class="text-link" href="#polls/${key}/${latestSor.week}">Compare SOR and Forge after Week ${latestSor.week} ${icon('arrow')}</a>` : ''}
-    </div><div class="table-scroll"><table class="edition-table">
+    </div><div class="table-scroll"><table class="edition-table poll-rank-table">
     <caption class="sr-only">Ranking comparison for ${editionLabel(week)}</caption>
-    <thead><tr><th scope="col">Team</th><th scope="col">${sorLabel}</th><th scope="col">Forge</th><th scope="col">${source.short}</th></tr></thead><tbody>${rows}</tbody></table></div>
-    <div class="panel-body"><p class="compact-note">Includes teams in any displayed Top 25. SOR shows full national ranks. NR means outside a ballot’s Top 25. A dash means the edition is unavailable. Team links open current profiles.</p><nav class="edition-links" aria-label="FBS Intelligence rankings"><a class="text-link" href="#rankings">Official SOR ${icon('arrow')}</a><a class="text-link" href="#forge-top-25/${week}">Forge’s full ballot ${icon('arrow')}</a></nav></div>
+    <thead><tr><th scope="col">Rank</th><th scope="col">${sorLabel}</th><th scope="col">Forge</th><th scope="col">${source.short}</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <div class="panel-body"><p class="compact-note">Tied teams share a cell. A dash marks a skipped rank or an unavailable edition. Team links open current profiles.</p><nav class="edition-links" aria-label="FBS Intelligence rankings"><a class="text-link" href="#rankings">Official SOR ${icon('arrow')}</a><a class="text-link" href="#forge-top-25/${week}">Forge’s full ballot ${icon('arrow')}</a></nav></div>
     </section></div>`;
 }
 function renderForgeBallot(data, requestedWeek) {

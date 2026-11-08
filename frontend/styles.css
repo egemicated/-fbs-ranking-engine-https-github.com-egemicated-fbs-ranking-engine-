@@ -42,9 +42,16 @@ ul.edition-notice{padding-inline-start:20px}
 .edition-table td a{font-weight:700}
 .edition-table .num{white-space:nowrap}
 .edition-table td:first-child:not(.num){overflow-wrap:anywhere}
+.poll-rank-table{table-layout:fixed}
+.poll-rank-table th:first-child{width:62px}
+.poll-rank-table th[scope="row"]{background:inherit;color:var(--ink);font-size:12px;letter-spacing:normal;font-variant-numeric:tabular-nums}
+.poll-rank-table th[scope="row"],.poll-rank-table td{vertical-align:top}
+.poll-ranked-team{overflow-wrap:anywhere}
+.poll-ranked-team+.poll-ranked-team{margin-top:8px}
 @media (max-width: 700px) {
   .edition-table th,.edition-table td{padding-inline:7px}
   .edition-table th{white-space:normal;letter-spacing:.6px}
+  .poll-rank-table th:first-child{width:43px}
 }
 .weekly-picks h2{margin-bottom:8px}
 .weekly-picks .compact-note+.compact-note{margin-top:5px}
