@@ -1,0 +1,27 @@
+name: Week 9 SOR replay
+on:
+  push:
+    branches: [week-9-sor-replay]
+    paths: ['.github/workflows/week-9-sor-replay.yml']
+permissions:
+  contents: write
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verify the archived game dates and calculate the replay
+        env:
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+        run: node scripts/replay-week-9-sor.js
+      - name: Save derived ranks to the replay branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- frontend/ranking-editions.json
+          git commit -m 'Record verified Week 9 SOR replay'
+          git push origin HEAD:week-9-sor-replay
