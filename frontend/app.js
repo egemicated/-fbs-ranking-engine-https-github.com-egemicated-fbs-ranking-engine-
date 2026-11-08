@@ -528,8 +528,10 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
   const key = Object.hasOwn(pollSources, sourceKey) ? sourceKey : 'ap';
   const source = pollSources[key];
   const sourceEditions = data.polls[key];
+  const replays = data.sorReplays ?? [];
   const weeks = [...new Set([
     ...data.sor.map(edition => edition.week),
+    ...replays.map(edition => edition.week),
     ...Object.values(data.polls).flatMap(editions => editions.map(edition => edition.week))
   ])].sort((a, b) => b - a);
   const parsedWeek = Number(requestedWeek);
@@ -537,10 +539,14 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
   const week = weeks.includes(parsedWeek) ? parsedWeek : latestSource?.week ?? weeks[0];
   const poll = sourceEditions.find(edition => edition.week === week);
   const weekSor = data.sor.find(edition => edition.week === week);
+  const weekReplay = replays.find(edition => edition.week === week);
   const latestSor = data.sor.at(-1);
   const weekForge = data.forge.find(edition => edition.week === week);
-  const gamesThrough = (poll ?? weekSor ?? weekForge).gamesThrough;
-  const sor = weekSor?.gamesThrough === gamesThrough ? weekSor : undefined;
+  const gamesThrough = (poll ?? weekSor ?? weekReplay ?? weekForge).gamesThrough;
+  const official = weekSor?.gamesThrough === gamesThrough ? weekSor : undefined;
+  const replay = !official && weekReplay?.gamesThrough === gamesThrough ? weekReplay : undefined;
+  const sor = official ?? replay;
+  const sorLabel = replay ? 'SOR replay' : 'SOR';
   const forge = weekForge?.gamesThrough === gamesThrough ? weekForge : undefined;
   const teams = new Map(state.snapshot.rankings.map(team => [team.name, team]));
   const columns = [sor, forge, poll].map(editionRankMap);
@@ -554,7 +560,7 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
   const tabs = `<nav class="matchup-views edition-tabs" aria-label="Poll source">${Object.entries(pollSources)
     .map(([id, item]) => `<a href="#polls/${id}/${week}"${id === key ? ' aria-current="page"' : ''}>${item.name}</a>`).join('')}</nav>`;
   const summary = [
-    poll && sor ? `${shared(columns[0], columns[2])} of 25 shared by SOR and ${source.short}` : '',
+    poll && sor ? `${shared(columns[0], columns[2])} of 25 shared by ${sorLabel} and ${source.short}` : '',
     poll && forge ? `${shared(columns[1], columns[2])} of 25 shared by Forge and ${source.short}` : '',
     sor && forge && !poll ? `${shared(columns[0], columns[1])} of 25 shared by SOR and Forge` : '',
     !sor ? 'No matching official SOR snapshot' : '',
@@ -566,13 +572,14 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
   }).join('');
   return `<div class="wrap page-content"><section class="panel edition-panel"><div class="panel-body">
     ${tabs}<div class="edition-controls">${editionPicker(weeks, week)}${editionLink}</div>
-    <h2>${editionLabel(week)}</h2><p>Games through ${editionDate(gamesThrough)}.${poll ? ` ${source.name} released ${editionDate(poll.released)}.` : ''}${sor ? ` SOR published ${editionDate(sor.released)}.` : ''}${forge ? ` Forge ballot reconstructed ${editionDate(forge.released)}.` : ''}</p>
+    <h2>${editionLabel(week)}</h2><p>Games through ${editionDate(gamesThrough)}.${poll ? ` ${source.name} released ${editionDate(poll.released)}.` : ''}${official ? ` SOR published ${editionDate(official.released)}.` : ''}${forge ? ` Forge ballot reconstructed ${editionDate(forge.released)}.` : ''}</p>
+    ${replay ? `<p class="compact-note edition-context">SOR replay calculated ${editionDate(replay.released)} using the official formula and ${replay.networkGames.toLocaleString()} confirmed games through this cutoff. That includes ${replay.fbsGames.toLocaleString()} games involving FBS teams.</p>` : ''}
     ${summary.length ? `<p class="edition-notice">${summary.join(' · ')}.</p>` : ''}
     ${!poll && latestSource ? `<a class="text-link" href="#polls/${key}/${latestSource.week}">View the ${editionDate(latestSource.released)} edition ${icon('arrow')}</a>` : ''}
     ${!sor && latestSor && latestSor.week !== week ? `<a class="text-link" href="#polls/${key}/${latestSor.week}">Compare SOR and Forge after Week ${latestSor.week} ${icon('arrow')}</a>` : ''}
     </div><div class="table-scroll"><table class="edition-table">
     <caption class="sr-only">Ranking comparison for ${editionLabel(week)}</caption>
-    <thead><tr><th scope="col">Team</th><th scope="col">SOR</th><th scope="col">Forge</th><th scope="col">${source.short}</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <thead><tr><th scope="col">Team</th><th scope="col">${sorLabel}</th><th scope="col">Forge</th><th scope="col">${source.short}</th></tr></thead><tbody>${rows}</tbody></table></div>
     <div class="panel-body"><p class="compact-note">Includes teams in any displayed Top 25. SOR shows full national ranks. NR means outside a ballot’s Top 25. A dash means the edition is unavailable. Team links open current profiles.</p><nav class="edition-links" aria-label="FBS Intelligence rankings"><a class="text-link" href="#rankings">Official SOR ${icon('arrow')}</a><a class="text-link" href="#forge-top-25/${week}">Forge’s full ballot ${icon('arrow')}</a></nav></div>
     </section></div>`;
 }
