@@ -14,6 +14,7 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     ['/', ['index.html', 'text/html; charset=utf-8']],
     ['/styles.css', ['styles.css', 'text/css; charset=utf-8']],
     ['/app.js', ['app.js', 'text/javascript; charset=utf-8']],
+    ['/ranking-editions.json', ['ranking-editions.json', 'application/json; charset=utf-8']],
     ['/weekly-picks-score.js', ['weekly-picks-score.js', 'text/javascript; charset=utf-8']],
     ['/assets/stadium.png', ['assets/stadium.png', 'image/png']],
     ['/assets/stadium.webp', ['assets/stadium.webp', 'image/webp']],

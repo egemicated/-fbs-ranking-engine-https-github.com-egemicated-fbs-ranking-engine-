@@ -4,6 +4,13 @@ const main = document.querySelector('#main');
 const dataRoot = document.querySelector('meta[name="publication-data-root"]')?.content;
 const state = { snapshot: null, byId: new Map(), performance: null, performanceById: new Map(), model: 'achievement', search: '', conference: '', all: false, teamTab: 'overview', compareA: '254', compareB: '2390', venue: 'neutral' };
 const weeklyPicks = { request: null, status: 'loading', scoring: null, scoringError: false, selectedWeek: '', weeks: new Map(), teams: new Map() };
+const rankingEditions = { data: null, request: null, failed: false };
+const pollSources = {
+  ap: { name: 'AP Top 25', short: 'AP', url: 'https://apnews.com/hub/ap-top-25-college-football-poll' },
+  coaches: { name: 'Coaches Poll', short: 'Coaches', url: 'https://www.afca.com/polls/' },
+  cfp: { name: 'CFP Rankings', short: 'CFP', url: 'https://collegefootballplayoff.com/rankings' }
+};
+const editionDates = new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' });
 const picksDate = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', weekday: 'short', month: 'short', day: 'numeric' });
 const picksTimestamp = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', dateStyle: 'medium', timeStyle: 'short' });
 const paths = {
@@ -94,7 +101,7 @@ function displayRank(t, model = state.model) { return model === 'achievement' ? 
 function brand() { return `<a class="brand" href="#home" aria-label="${BRAND} home"><span class="brand-mark" aria-hidden="true"></span><span class="brand-name">FBS<small>INTELLIGENCE</small></span></a>`; }
 function renderHeader() {
   const page = route()[0];
-  const navs = [['home','home','Home'],['rankings','trophy','Rankings'],['teams','teams','Teams'],['compare','compare','Matchup lab'],['methodology','layers','Methodology']];
+  const navs = [['home','home','Home'],['rankings','trophy','Rankings'],['teams','teams','Teams'],['compare','compare','Matchup lab'],['polls','layers','Compare rankings'],['methodology','layers','Methodology']];
   document.querySelector('#header').innerHTML = `<div class="masthead"><div class="wrap masthead-inner">${brand()}<span class="brand-divider"></span><div class="masthead-tag">THE INDEPENDENT COLLEGE FOOTBALL RANKING ENGINE<strong>DATA &nbsp; › &nbsp; OPPONENTS &nbsp; › &nbsp; EVIDENCE</strong></div><div class="header-right"><div class="engine-badge">${icon('check')}<div><strong>Published rankings</strong><small>CFBD snapshot · ${snapshotDate()}</small></div></div><div class="season-badge">${state.snapshot.season}<small>SEASON SNAPSHOT</small></div></div></div></div><nav class="nav" aria-label="Main navigation"><div class="wrap nav-inner">${navs.map(([id,ic,text])=>`<a href="#${id}" class="${page===id || (page==='team' && id==='teams') ? 'active':''}" ${page===id?'aria-current="page"':''}>${icon(ic)}${text}</a>`).join('')}<span class="nav-spacer"></span><span class="nav-note">${icon('clock')}Sundays · 8 AM Mountain</span></div></nav>`;
   document.querySelector('#footer').innerHTML = `<div class="footer"><div class="wrap footer-inner"><div><div class="footer-brand">${BRAND.toUpperCase()}</div><p>Independent FBS rankings calculated from game data. No human polls or manual ranking overrides.</p></div><div class="footer-links"><a href="#methodology">${icon('layers')}Model methodology</a><a href="${esc(publicationPath('rankings'))}" target="_blank" rel="noopener">${icon('database')}Published data</a><span>Ranking engine · v${esc(state.snapshot.modelVersion)}</span></div></div></div>`;
 }
@@ -133,9 +140,11 @@ function performanceMethodology() {
 }
 function pipeline() { return `<section class="pipeline" aria-label="How the engine works"><div class="pipeline-title"><h2>HOW IT<br>COMES TOGETHER.</h2><p>TRANSPARENT BY DESIGN</p></div>${[['Acquire the data','Completed games and season-specific FBS membership.'],['Validate the results','Incomplete scores stay out. Every source is recorded.'],['Solve the network','Every opponent’s results connect to the bigger picture.'],['Explain the rank','A reproducible score, with evidence you can inspect.']].map(([title,desc],i)=>`<div class="pipeline-step"><span class="step-num">0${i+1}</span><div><h3>${title}</h3><p>${desc}</p></div></div>`).join('')}</section>`; }
 function companionPanel() {
-  const views = [['strength', 'Predictive Strength', 'Estimates team strength from score margins, opponents, venue, and our own historical ratings.']];
-  if (hasPerformance()) views.push(['performance', 'Performance · Experimental', 'Measures how consistently teams succeeded on covered scrimmage plays, adjusted for opponents and venue.']);
-  return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('layers')}<h2>Companion views</h2></div></div><div class="panel-body companion-views">${views.map(([model,label,description])=>`<div><a class="text-link" href="${rankingHash(model)}">${label} ${icon('arrow')}</a><p>${description}</p></div>`).join('')}<p class="compact-note">These views run separately from the national ranking.</p></div></section>`;
+  const views = [[rankingHash('strength'), 'Predictive Strength', 'Estimates team strength from score margins, opponents, venue, and our own historical ratings.']];
+  if (hasPerformance()) views.push([rankingHash('performance'), 'Performance · Experimental', 'Measures how consistently teams succeeded on covered scrimmage plays, adjusted for opponents and venue.']);
+  views.push(['#polls', 'Compare Rankings', 'Compare our rankings with dated AP, Coaches, and CFP editions.'],
+    ['#forge-top-25', 'Forge’s Top 25', 'An AI-authored editorial ballot grounded in game results.']);
+  return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('layers')}<h2>Companion views</h2></div></div><div class="panel-body companion-views">${views.map(([url,label,description])=>`<div><a class="text-link" href="${url}">${label} ${icon('arrow')}</a><p>${description}</p></div>`).join('')}<p class="compact-note">These views run separately from the national ranking.</p></div></section>`;
 }
 function renderHome() {
   const top = topTwentyFive(state.snapshot.rankings, 'achievement');
@@ -172,7 +181,7 @@ function renderRankings() {
   };
   const [kicker,title,description] = views[state.model];
   const context = official ? coveragePanel() : state.model === 'performance' ? performanceNotice() : `<section class="panel"><div class="panel-body"><div class="section-label">Predictive Strength</div><h2 style="margin:10px 0">HOW WOULD THEY MATCH UP?</h2><p>Predictive Strength powers the matchup lab. ${state.snapshot.matchupValidation ? 'Win probabilities are calibrated on historical results.' : 'Its game probabilities are uncalibrated estimates.'}</p></div><a class="method-link" href="#compare">Open matchup lab ${icon('arrow')}</a></section>`;
-  main.innerHTML = `${banner(`${kicker} · ${state.snapshot.season}`,title,description)}<div class="wrap page-content">${rankingViews()}<div class="two-column"><div>${filterControls(true)}<section class="panel" id="ranking-results">${rankingsContent()}</section></div><aside class="stack">${context}${schedulePanel()}</aside></div></div>`;
+  main.innerHTML = `${banner(`${kicker} · ${state.snapshot.season}`,title,description)}<div class="wrap page-content">${rankingViews()}<nav class="edition-links" aria-label="Other ranking views"><a class="text-link" href="#polls">Compare rankings ${icon('arrow')}</a><a class="text-link" href="#forge-top-25">Forge’s Top 25 ${icon('arrow')}</a></nav><div class="two-column"><div>${filterControls(true)}<section class="panel" id="ranking-results">${rankingsContent()}</section></div><aside class="stack">${context}${schedulePanel()}</aside></div></div>`;
 }
 function teamsContent() { const teams=filtered(state.snapshot.rankings); return `${teams.length?`<div class="team-grid">${teams.map(t=>`<a class="panel team-card" href="#team/${t.id}"><span class="team-card-rank">${rank(nationalRank(t))}</span>${logo(t)}<div><h3>${esc(t.name)}</h3><p>${esc(t.conference)}</p><small>${record(t)} · ${number(achievementScore(t))} ${usesSor(t)?'SOR':'Colley'}</small></div></a>`).join('')}</div>`:'<div class="panel empty">No teams match these filters.</div>'}<p class="results-count">${teams.length} of ${state.snapshot.fbsTeams} FBS teams</p>`; }
 function renderTeams() { main.innerHTML = `${banner('The team directory','EVERY TEAM HAS A STORY.','Choose a team to inspect its results, opponent strength, and the exact calculation behind its rank.')}<div class="wrap page-content">${filterControls()}<div id="team-results">${teamsContent()}</div></div>`; }
@@ -492,6 +501,130 @@ function renderCompare() {
     : 'These probabilities have not been calibrated. The margin is fitted from bounded historical score differences and should not be treated as a betting spread.';
   main.innerHTML=`${banner('Matchup lab · Experimental strength model','CHANGE THE MATCHUP. FOLLOW THE NUMBERS.','Compare two teams using our own historical and opponent-adjusted strength ratings.')}<div class="wrap page-content">${matchupNav('compare')}<div class="segmented compare-venue" aria-label="Game location">${[['neutral','Neutral field'],['home','Team A at home'],['away','Team B at home']].map(([v,label])=>`<button data-action="venue" data-value="${v}" class="${state.venue===v?'active':''}" aria-pressed="${state.venue===v}">${label}</button>`).join('')}</div><div class="compare-layout">${[a,b].map((t,i)=>`<section class="panel compare-picker"><div class="section-label">TEAM ${i?'B':'A'}</div>${logo(t,'large')}<h2>${esc(t.name)}</h2><p>${record(t)} · ${rank(nationalRank(t))} ${achievementName()}</p><label><span class="sr-only">Team ${i?'B':'A'}</span><select id="compare-${i?'b':'a'}">${compareOptions(t.id)}</select></label><p style="margin-top:14px">Strength <strong>${number(t.strength,2)} pts</strong> · ${rank(strengthRank(t))}</p></section>`).join('')}<section class="panel prediction-card"><div class="eyebrow">${matchup ? 'Historically calibrated odds' : 'Experimental model estimate'}</div><h2>${esc(edge>=0?a.name:b.name)} edge</h2><div class="prediction-number">${number(Math.abs(edge),1)}<span style="font-size:27px"> pts</span></div><p>Bounded-model margin estimate</p><div class="probability-track"><span style="width:${probability*100}%"></span></div><p>${esc(a.name)} ${number(probability*100,1)}% &nbsp; · &nbsp; ${esc(b.name)} ${number((1-probability)*100,1)}%</p>${matchupMarginRange(a,b,edge)}</section></div><div class="notice"><strong>Reading the matchup.</strong> ${explanation} <a class="text-link" href="#methodology">See what we checked</a></div></div>`;
 }
+function editionDate(date) {
+  return editionDates.format(new Date(date));
+}
+function editionLabel(week) {
+  return week === -1 ? 'Preseason' : `After Week ${week}`;
+}
+function editionPicker(weeks, activeWeek) {
+  return `<label class="edition-picker">Game week <select id="edition-week">${weeks.map(week =>
+    `<option value="${week}"${week === activeWeek ? ' selected' : ''}>${editionLabel(week)}</option>`).join('')}</select></label>`;
+}
+function editionRankMap(edition) {
+  return new Map(edition?.rows.map((row, index) => [row.team, { ...row, rank: row.rank ?? index + 1 }]));
+}
+function editionTeamLink(name, teams) {
+  const team = teams.get(name);
+  return team ? teamLink(team) : esc(name);
+}
+function editionRankCell(edition, row) {
+  if (row) return `<td class="num">${row.rank}</td>`;
+  return edition
+    ? '<td class="num"><abbr title="Outside this Top 25">NR</abbr></td>'
+    : '<td class="num" aria-label="Edition unavailable">—</td>';
+}
+function renderPollComparison(data, sourceKey, requestedWeek) {
+  const key = Object.hasOwn(pollSources, sourceKey) ? sourceKey : 'ap';
+  const source = pollSources[key];
+  const sourceEditions = data.polls[key];
+  const weeks = [...new Set([
+    ...data.sor.map(edition => edition.week),
+    ...Object.values(data.polls).flatMap(editions => editions.map(edition => edition.week))
+  ])].sort((a, b) => b - a);
+  const parsedWeek = Number(requestedWeek);
+  const latestSource = sourceEditions.at(-1);
+  const week = weeks.includes(parsedWeek) ? parsedWeek : latestSource?.week ?? weeks[0];
+  const poll = sourceEditions.find(edition => edition.week === week);
+  const weekSor = data.sor.find(edition => edition.week === week);
+  const latestSor = data.sor.at(-1);
+  const weekForge = data.forge.find(edition => edition.week === week);
+  const gamesThrough = (poll ?? weekSor ?? weekForge).gamesThrough;
+  const sor = weekSor?.gamesThrough === gamesThrough ? weekSor : undefined;
+  const forge = weekForge?.gamesThrough === gamesThrough ? weekForge : undefined;
+  const teams = new Map(state.snapshot.rankings.map(team => [team.name, team]));
+  const columns = [sor, forge, poll].map(editionRankMap);
+  const names = [...new Set(columns.flatMap(column => [...column.values()]
+    .filter(row => row.rank <= 25).map(row => row.team)))];
+  const shared = (left, right) => [...left.values()].filter(row =>
+    row.rank <= 25 && (right.get(row.team)?.rank ?? Infinity) <= 25).length;
+  const editionLink = poll
+    ? `<a class="text-link" href="${esc(poll.url)}">Read the ${source.name} edition ${icon('external')}</a>`
+    : `<a class="text-link" href="${source.url}">Open ${source.name} ${icon('external')}</a>`;
+  const tabs = `<nav class="matchup-views edition-tabs" aria-label="Poll source">${Object.entries(pollSources)
+    .map(([id, item]) => `<a href="#polls/${id}/${week}"${id === key ? ' aria-current="page"' : ''}>${item.name}</a>`).join('')}</nav>`;
+  const summary = [
+    poll && sor ? `${shared(columns[0], columns[2])} of 25 shared by SOR and ${source.short}` : '',
+    poll && forge ? `${shared(columns[1], columns[2])} of 25 shared by Forge and ${source.short}` : '',
+    sor && forge && !poll ? `${shared(columns[0], columns[1])} of 25 shared by SOR and Forge` : '',
+    !sor ? 'No matching official SOR snapshot' : '',
+    !poll ? `${source.name} edition unavailable for this week` : ''
+  ].filter(Boolean);
+  const rows = names.map(name => {
+    const [sorRow, forgeRow, pollRow] = columns.map(column => column.get(name));
+    return `<tr><td>${editionTeamLink(name, teams)}<small>${esc((sorRow ?? forgeRow ?? pollRow).record)}</small></td>${editionRankCell(sor, sorRow)}${editionRankCell(forge, forgeRow)}${editionRankCell(poll, pollRow)}</tr>`;
+  }).join('');
+  return `<div class="wrap page-content"><section class="panel edition-panel"><div class="panel-body">
+    ${tabs}<div class="edition-controls">${editionPicker(weeks, week)}${editionLink}</div>
+    <h2>${editionLabel(week)}</h2><p>Games through ${editionDate(gamesThrough)}.${poll ? ` ${source.name} released ${editionDate(poll.released)}.` : ''}${sor ? ` SOR published ${editionDate(sor.released)}.` : ''}${forge ? ` Forge ballot reconstructed ${editionDate(forge.released)}.` : ''}</p>
+    ${summary.length ? `<p class="edition-notice">${summary.join(' · ')}.</p>` : ''}
+    ${!poll && latestSource ? `<a class="text-link" href="#polls/${key}/${latestSource.week}">View the ${editionDate(latestSource.released)} edition ${icon('arrow')}</a>` : ''}
+    ${!sor && latestSor && latestSor.week !== week ? `<a class="text-link" href="#polls/${key}/${latestSor.week}">Compare SOR and Forge after Week ${latestSor.week} ${icon('arrow')}</a>` : ''}
+    </div><div class="table-scroll"><table class="edition-table">
+    <caption class="sr-only">Ranking comparison for ${editionLabel(week)}</caption>
+    <thead><tr><th scope="col">Team</th><th scope="col">SOR</th><th scope="col">Forge</th><th scope="col">${source.short}</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <div class="panel-body"><p class="compact-note">Includes teams in any displayed Top 25. SOR shows full national ranks. NR means outside a ballot’s Top 25. A dash means the edition is unavailable. Team links open current profiles.</p><nav class="edition-links" aria-label="FBS Intelligence rankings"><a class="text-link" href="#rankings">Official SOR ${icon('arrow')}</a><a class="text-link" href="#forge-top-25/${week}">Forge’s full ballot ${icon('arrow')}</a></nav></div>
+    </section></div>`;
+}
+function renderForgeBallot(data, requestedWeek) {
+  const edition = data.forge.find(item => item.week === Number(requestedWeek)) ?? data.forge.at(-1);
+  const previous = editionRankMap(data.forge.find(item => item.week === edition.week - 1));
+  const teams = new Map(state.snapshot.rankings.map(team => [team.name, team]));
+  const rows = edition.rows.map((row, index) => {
+    const position = index + 1;
+    const prior = previous.get(row.team);
+    const change = prior ? prior.rank - position : 0;
+    const movement = !prior ? 'In' : change > 0 ? `↑${change}` : change < 0 ? `↓${-change}` : '—';
+    const detail = !prior ? 'Entered the Top 25' : change ? `${change > 0 ? 'Up' : 'Down'} ${Math.abs(change)}` : 'Same rank';
+    return `<tr><td class="num">${position}</td><td>${editionTeamLink(row.team, teams)}${row.game ? `<small>${esc(row.game)}</small>` : ''}</td><td class="num">${esc(row.record)}</td>${edition.week >= 0 ? `<td class="num" aria-label="${detail}">${movement}</td>` : ''}</tr>`;
+  }).join('');
+  const hasPollComparison = data.sor.some(item => item.week === edition.week)
+    || Object.values(data.polls).some(items => items.some(item => item.week === edition.week));
+  return `<div class="wrap page-content"><section class="panel edition-panel"><div class="panel-body">
+    <div class="edition-controls">${editionPicker(data.forge.map(item => item.week).reverse(), edition.week)}<a class="text-link" href="#polls${hasPollComparison ? `/ap/${edition.week}` : ''}">Compare rankings ${icon('arrow')}</a></div>
+    <h2>${editionLabel(edition.week)}</h2><p>${edition.week < 0 ? 'Preseason context as of' : 'Games through'} ${editionDate(edition.gamesThrough)}. Retrospective ballot reconstructed ${editionDate(edition.released)}.</p>
+    ${edition.week === -1 ? '<p class="compact-note edition-context">Forge used 2025 results, roster and coaching context, and preseason AP and Coaches polls as background.</p>' : ''}
+    ${edition.notes?.length ? `<ul class="edition-notice">${edition.notes.map(note => `<li>${esc(note)}</li>`).join('')}</ul>` : ''}
+    </div><div class="table-scroll"><table class="edition-table">
+    <caption class="sr-only">Forge’s Top 25 for ${editionLabel(edition.week)}</caption><thead><tr><th scope="col">Rank</th><th scope="col">Team</th><th scope="col">${edition.week === -1 ? '2025 record' : 'Record'}</th>${edition.week >= 0 ? '<th scope="col">Move</th>' : ''}</tr></thead>
+    <tbody>${rows}</tbody></table></div></section></div>`;
+}
+async function loadRankingEditions() {
+  try {
+    const response = await fetch('/ranking-editions.json');
+    if (!response.ok) throw Error(`Ranking archive returned ${response.status}`);
+    rankingEditions.data = await response.json();
+  } catch (error) {
+    rankingEditions.failed = true;
+    console.error(error);
+  } finally {
+    rankingEditions.request = null;
+    if (['polls', 'forge-top-25'].includes(route()[0])) render();
+  }
+}
+function renderRankingEditions(page, id, scope) {
+  const comparing = page === 'polls';
+  const heading = comparing
+    ? banner('Dated poll comparisons', 'Compare Rankings', 'Compare the official Strength of Record and Forge’s AI-authored ballot with AP, Coaches, and CFP editions covering the same games.')
+    : banner('AI-authored editorial ballot', 'Forge’s Top 25', 'Forge uses game results, opponent quality, scoring margins, and venue to make each week’s ranking calls.');
+  const { data, failed } = rankingEditions;
+  if (data) {
+    main.innerHTML = heading + (comparing ? renderPollComparison(data, id, scope) : renderForgeBallot(data, id));
+    return;
+  }
+  main.innerHTML = heading + `<div class="wrap page-content"><p role="status">${failed ? 'The ranking archive is unavailable.' : 'Loading ranking editions…'}</p>${failed ? '<button class="button light small" data-action="retry-editions">Try again</button>' : ''}</div>`;
+  if (!failed) rankingEditions.request ??= loadRankingEditions();
+}
 function render() {
   if(!state.snapshot)return;
   renderHeader();
@@ -500,8 +633,8 @@ function render() {
     state.model = id === 'strength' || (id === 'performance' && hasPerformance()) ? id : 'achievement';
     state.all = id === 'all' || scope === 'all';
   }
-  if(page==='home')renderHome();else if(page==='rankings')renderRankings();else if(page==='teams')renderTeams();else if(page==='team')renderTeam(id);else if(page==='methodology')renderMethodology();else if(page==='compare')renderCompare();else renderHome();
-  const team=state.byId.get(id);document.title=`${page==='team'&&team?team.name:({home:'FBS Top 25',rankings:'National rankings',teams:'Team directory',compare:id==='weekly'?'Weekly picks':'Matchup lab',methodology:'Methodology'}[page]||'Home')} · ${BRAND}`;
+  if(page==='home')renderHome();else if(page==='rankings')renderRankings();else if(page==='teams')renderTeams();else if(page==='team')renderTeam(id);else if(page==='methodology')renderMethodology();else if(page==='compare')renderCompare();else if (page === 'polls' || page === 'forge-top-25') renderRankingEditions(page,id,scope);else renderHome();
+  const team=state.byId.get(id);document.title=`${page==='team'&&team?team.name:({home:'FBS Top 25',rankings:'National rankings',teams:'Team directory',compare:id==='weekly'?'Weekly picks':'Matchup lab',methodology:'Methodology',polls:'Compare Rankings','forge-top-25':'Forge’s Top 25'}[page]||'Home')} · ${BRAND}`;
   document.querySelector('#announce').textContent=document.title;
 }
 document.addEventListener('error',e=>{if(e.target instanceof HTMLImageElement && e.target.closest('.logo'))e.target.closest('.logo').classList.add('failed');},true);
@@ -513,6 +646,11 @@ document.addEventListener('input',e=>{
   }
 });
 document.addEventListener('change',e=>{
+  if (e.target.id === 'edition-week') {
+    const [page, id] = route();
+    const key = Object.hasOwn(pollSources, id) ? id : 'ap';
+    location.hash = page === 'polls' ? `polls/${key}/${e.target.value}` : `forge-top-25/${e.target.value}`;
+  }
   if(e.target.id==='conference-filter'){state.conference=e.target.value;route()[0]==='teams'?renderTeams():renderRankings();}
   if(e.target.id==='compare-a'){state.compareA=e.target.value;renderCompare();}
   if(e.target.id==='compare-b'){state.compareB=e.target.value;renderCompare();}
@@ -526,6 +664,10 @@ document.addEventListener('click',e=>{
   if(e.target.closest('.skip-link')){e.preventDefault();main.focus();main.scrollIntoView();return;}
   const button=e.target.closest('[data-action]');if(!button)return;
   const {action,value}=button.dataset;
+  if (action === 'retry-editions') {
+    rankingEditions.failed = false;
+    render();
+  }
   if (action === 'model' && (['achievement', 'strength'].includes(value) || (value === 'performance' && hasPerformance()))) {
     location.hash = rankingHash(value, state.all);
     render();

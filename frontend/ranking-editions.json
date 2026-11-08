@@ -1,0 +1,2631 @@
+{
+  "season": 2026,
+  "forge": [
+    {
+      "week": -1,
+      "gamesThrough": "2026-08-28",
+      "released": "2026-11-08",
+      "rows": [
+        {
+          "team": "Indiana",
+          "record": "16–0"
+        },
+        {
+          "team": "Oregon",
+          "record": "13–2"
+        },
+        {
+          "team": "Ohio State",
+          "record": "12–2"
+        },
+        {
+          "team": "Georgia",
+          "record": "12–2"
+        },
+        {
+          "team": "Miami",
+          "record": "13–3"
+        },
+        {
+          "team": "Notre Dame",
+          "record": "10–2"
+        },
+        {
+          "team": "Texas",
+          "record": "10–3"
+        },
+        {
+          "team": "Ole Miss",
+          "record": "13–2"
+        },
+        {
+          "team": "Texas A&M",
+          "record": "11–2"
+        },
+        {
+          "team": "Texas Tech",
+          "record": "12–2"
+        },
+        {
+          "team": "BYU",
+          "record": "12–2"
+        },
+        {
+          "team": "Oklahoma",
+          "record": "10–3"
+        },
+        {
+          "team": "Alabama",
+          "record": "11–4"
+        },
+        {
+          "team": "Utah",
+          "record": "11–2"
+        },
+        {
+          "team": "USC",
+          "record": "9–4"
+        },
+        {
+          "team": "Michigan",
+          "record": "9–4"
+        },
+        {
+          "team": "Iowa",
+          "record": "9–4"
+        },
+        {
+          "team": "Virginia",
+          "record": "11–3"
+        },
+        {
+          "team": "SMU",
+          "record": "9–4"
+        },
+        {
+          "team": "Washington",
+          "record": "9–4"
+        },
+        {
+          "team": "Louisville",
+          "record": "9–4"
+        },
+        {
+          "team": "Illinois",
+          "record": "9–4"
+        },
+        {
+          "team": "Vanderbilt",
+          "record": "10–3"
+        },
+        {
+          "team": "Houston",
+          "record": "10–3"
+        },
+        {
+          "team": "Arizona",
+          "record": "9–4"
+        }
+      ],
+      "notes": [
+        "Indiana opens at No. 1 after a 16–0 season. The preseason records are from 2025."
+      ]
+    },
+    {
+      "week": 0,
+      "gamesThrough": "2026-08-29",
+      "released": "2026-11-08",
+      "rows": [
+        {
+          "team": "Indiana",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Oregon",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Ohio State",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Georgia",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Miami",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Notre Dame",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Texas",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Ole Miss",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Texas A&M",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Texas Tech",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "BYU",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Oklahoma",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Alabama",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Utah",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "USC",
+          "record": "1–0",
+          "game": "W 42–26 vs San José State"
+        },
+        {
+          "team": "Virginia",
+          "record": "1–0",
+          "game": "W 34–8 vs NC State"
+        },
+        {
+          "team": "Michigan",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Iowa",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "SMU",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Washington",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Louisville",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Illinois",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Vanderbilt",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Houston",
+          "record": "0–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Arizona",
+          "record": "0–0",
+          "game": "Idle"
+        }
+      ],
+      "notes": [
+        "Eight FBS-involving games opened the season on August 29. Indiana was idle and held No. 1."
+      ]
+    },
+    {
+      "week": 1,
+      "gamesThrough": "2026-09-07",
+      "released": "2026-11-08",
+      "rows": [
+        {
+          "team": "Indiana",
+          "record": "1–0",
+          "game": "W 52–16 vs North Texas"
+        },
+        {
+          "team": "Notre Dame",
+          "record": "1–0",
+          "game": "W 41–13 vs Wisconsin (neutral)"
+        },
+        {
+          "team": "Miami",
+          "record": "1–0",
+          "game": "W 45–6 at Stanford"
+        },
+        {
+          "team": "Oregon",
+          "record": "1–0",
+          "game": "W 34–27 vs Boise State"
+        },
+        {
+          "team": "Ohio State",
+          "record": "1–0",
+          "game": "W 56–3 vs Ball State"
+        },
+        {
+          "team": "Texas",
+          "record": "1–0",
+          "game": "W 59–7 vs Texas State"
+        },
+        {
+          "team": "Georgia",
+          "record": "1–0",
+          "game": "W 63–3 vs Tennessee State (FCS)"
+        },
+        {
+          "team": "Ole Miss",
+          "record": "1–0",
+          "game": "W 41–38 vs Louisville (neutral)"
+        },
+        {
+          "team": "LSU",
+          "record": "1–0",
+          "game": "W 51–10 vs Clemson"
+        },
+        {
+          "team": "Alabama",
+          "record": "1–0",
+          "game": "W 48–10 vs East Carolina"
+        },
+        {
+          "team": "Texas A&M",
+          "record": "1–0",
+          "game": "W 50–0 vs Missouri State"
+        },
+        {
+          "team": "USC",
+          "record": "2–0",
+          "game": "W 39–0 vs Fresno State"
+        },
+        {
+          "team": "Utah",
+          "record": "1–0",
+          "game": "W 66–14 vs Idaho (FCS)"
+        },
+        {
+          "team": "BYU",
+          "record": "1–0",
+          "game": "W 63–7 vs Utah Tech (FCS)"
+        },
+        {
+          "team": "Texas Tech",
+          "record": "1–0",
+          "game": "W 33–10 vs Abilene Christian (FCS)"
+        },
+        {
+          "team": "Duke",
+          "record": "1–0",
+          "game": "W 17–3 vs Tulane"
+        },
+        {
+          "team": "Virginia",
+          "record": "1–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Oklahoma",
+          "record": "1–0",
+          "game": "W 51–0 vs UTEP"
+        },
+        {
+          "team": "Tennessee",
+          "record": "1–0",
+          "game": "W 56–9 vs Furman (FCS)"
+        },
+        {
+          "team": "Memphis",
+          "record": "2–0",
+          "game": "W 42–24 vs Arkansas State"
+        },
+        {
+          "team": "Iowa",
+          "record": "1–0",
+          "game": "W 40–0 vs Northern Illinois"
+        },
+        {
+          "team": "Pittsburgh",
+          "record": "1–0",
+          "game": "W 59–14 vs Miami (OH)"
+        },
+        {
+          "team": "James Madison",
+          "record": "1–0",
+          "game": "W 20–13 vs Liberty"
+        },
+        {
+          "team": "SMU",
+          "record": "1–0",
+          "game": "W 27–24 at Florida State"
+        },
+        {
+          "team": "UCLA",
+          "record": "1–0",
+          "game": "W 45–24 at California"
+        }
+      ],
+      "notes": [
+        "Indiana stayed No. 1 after beating North Texas 52–16. Notre Dame rose to No. 2 after a 41–13 neutral-site win over Wisconsin."
+      ]
+    },
+    {
+      "week": 2,
+      "gamesThrough": "2026-09-12",
+      "released": "2026-11-08",
+      "rows": [
+        {
+          "team": "Texas",
+          "record": "2–0",
+          "game": "W 24–23 vs Ohio State"
+        },
+        {
+          "team": "Indiana",
+          "record": "2–0",
+          "game": "W 55–0 vs Howard (FCS)"
+        },
+        {
+          "team": "Notre Dame",
+          "record": "2–0",
+          "game": "W 52–0 vs Rice"
+        },
+        {
+          "team": "Miami",
+          "record": "2–0",
+          "game": "W 77–7 vs Florida A&M (FCS)"
+        },
+        {
+          "team": "Alabama",
+          "record": "2–0",
+          "game": "W 45–17 at Kentucky"
+        },
+        {
+          "team": "Georgia",
+          "record": "2–0",
+          "game": "W 70–20 vs Western Kentucky"
+        },
+        {
+          "team": "Ole Miss",
+          "record": "2–0",
+          "game": "W 41–9 vs Charlotte"
+        },
+        {
+          "team": "LSU",
+          "record": "2–0",
+          "game": "W 45–14 vs Louisiana Tech"
+        },
+        {
+          "team": "Ohio State",
+          "record": "1–1",
+          "game": "L 23–24 at Texas"
+        },
+        {
+          "team": "Texas A&M",
+          "record": "2–0",
+          "game": "W 48–20 vs Arizona State"
+        },
+        {
+          "team": "USC",
+          "record": "3–0",
+          "game": "W 49–30 vs Louisiana"
+        },
+        {
+          "team": "BYU",
+          "record": "2–0",
+          "game": "W 28–17 vs Arizona"
+        },
+        {
+          "team": "Utah",
+          "record": "2–0",
+          "game": "W 43–10 vs Arkansas"
+        },
+        {
+          "team": "Duke",
+          "record": "2–0",
+          "game": "W 31–27 at Illinois"
+        },
+        {
+          "team": "Tennessee",
+          "record": "2–0",
+          "game": "W 45–24 at Georgia Tech"
+        },
+        {
+          "team": "Michigan",
+          "record": "2–0",
+          "game": "W 17–10 vs Oklahoma"
+        },
+        {
+          "team": "Texas Tech",
+          "record": "2–0",
+          "game": "W 35–24 at Oregon State"
+        },
+        {
+          "team": "SMU",
+          "record": "2–0",
+          "game": "W 56–10 vs UC Davis (FCS)"
+        },
+        {
+          "team": "Iowa",
+          "record": "2–0",
+          "game": "W 16–13 vs Iowa State"
+        },
+        {
+          "team": "UCLA",
+          "record": "2–0",
+          "game": "W 28–10 vs San Diego State"
+        },
+        {
+          "team": "Pittsburgh",
+          "record": "2–0",
+          "game": "W 12–7 vs UCF"
+        },
+        {
+          "team": "Oregon",
+          "record": "1–1",
+          "game": "L 31–39 at Oklahoma State"
+        },
+        {
+          "team": "Boise State",
+          "record": "1–1",
+          "game": "W 38–20 vs Memphis"
+        },
+        {
+          "team": "Mississippi State",
+          "record": "2–0",
+          "game": "W 38–13 at Minnesota"
+        },
+        {
+          "team": "Virginia",
+          "record": "2–0",
+          "game": "W 59–3 vs Norfolk State (FCS)"
+        }
+      ],
+      "notes": [
+        "Texas took No. 1 after beating Ohio State 24–23 at home. Alabama climbed to No. 5 with a 45–17 win at Kentucky."
+      ]
+    },
+    {
+      "week": 3,
+      "gamesThrough": "2026-09-19",
+      "released": "2026-11-08",
+      "rows": [
+        {
+          "team": "Texas",
+          "record": "3–0",
+          "game": "W 30–6 vs UTSA"
+        },
+        {
+          "team": "Indiana",
+          "record": "3–0",
+          "game": "W 38–0 vs Western Kentucky"
+        },
+        {
+          "team": "Ole Miss",
+          "record": "3–0",
+          "game": "W 32–24 vs LSU"
+        },
+        {
+          "team": "Miami",
+          "record": "3–0",
+          "game": "W 33–20 at Wake Forest"
+        },
+        {
+          "team": "Notre Dame",
+          "record": "3–0",
+          "game": "W 27–10 vs Michigan State"
+        },
+        {
+          "team": "Georgia",
+          "record": "3–0",
+          "game": "W 45–17 at Arkansas"
+        },
+        {
+          "team": "Alabama",
+          "record": "3–0",
+          "game": "W 50–36 vs Florida State"
+        },
+        {
+          "team": "Ohio State",
+          "record": "2–1",
+          "game": "W 59–3 vs Kent State"
+        },
+        {
+          "team": "LSU",
+          "record": "2–1",
+          "game": "L 24–32 at Ole Miss"
+        },
+        {
+          "team": "USC",
+          "record": "4–0",
+          "game": "W 42–35 at Rutgers"
+        },
+        {
+          "team": "BYU",
+          "record": "3–0",
+          "game": "W 41–23 at Colorado State"
+        },
+        {
+          "team": "Texas Tech",
+          "record": "3–0",
+          "game": "W 28–26 vs Houston"
+        },
+        {
+          "team": "Utah",
+          "record": "3–0",
+          "game": "W 33–0 vs Utah State"
+        },
+        {
+          "team": "Duke",
+          "record": "3–0",
+          "game": "W 35–7 vs Stanford"
+        },
+        {
+          "team": "Mississippi State",
+          "record": "3–0",
+          "game": "W 41–34 at South Carolina"
+        },
+        {
+          "team": "Tennessee",
+          "record": "3–0",
+          "game": "W 42–9 vs Kennesaw State"
+        },
+        {
+          "team": "UCLA",
+          "record": "3–0",
+          "game": "W 52–38 vs Purdue"
+        },
+        {
+          "team": "Iowa",
+          "record": "3–0",
+          "game": "W 55–0 vs Northern Iowa (FCS)"
+        },
+        {
+          "team": "Michigan",
+          "record": "3–0",
+          "game": "W 52–17 vs UTEP"
+        },
+        {
+          "team": "Louisville",
+          "record": "2–1",
+          "game": "W 41–31 vs SMU"
+        },
+        {
+          "team": "Oregon",
+          "record": "2–1",
+          "game": "W 84–0 vs Portland State (FCS)"
+        },
+        {
+          "team": "Pittsburgh",
+          "record": "3–0",
+          "game": "W 27–13 vs Syracuse"
+        },
+        {
+          "team": "Kentucky",
+          "record": "2–1",
+          "game": "W 31–21 at Texas A&M"
+        },
+        {
+          "team": "Florida",
+          "record": "3–0",
+          "game": "W 44–39 at Auburn"
+        },
+        {
+          "team": "Texas A&M",
+          "record": "2–1",
+          "game": "L 21–31 vs Kentucky"
+        }
+      ],
+      "notes": [
+        "Ole Miss reached No. 3 after beating LSU 32–24. Miami won 33–20 at Wake Forest and moved to No. 4."
+      ]
+    },
+    {
+      "week": 4,
+      "gamesThrough": "2026-09-26",
+      "released": "2026-11-08",
+      "rows": [
+        {
+          "team": "Texas",
+          "record": "4–0",
+          "game": "W 20–17 at Tennessee"
+        },
+        {
+          "team": "Indiana",
+          "record": "4–0",
+          "game": "W 29–23 vs Northwestern"
+        },
+        {
+          "team": "Georgia",
+          "record": "4–0",
+          "game": "W 41–13 vs Oklahoma"
+        },
+        {
+          "team": "Miami",
+          "record": "4–0",
+          "game": "W 52–3 vs Central Michigan"
+        },
+        {
+          "team": "Notre Dame",
+          "record": "4–0",
+          "game": "W 49–10 at Purdue"
+        },
+        {
+          "team": "Alabama",
+          "record": "4–0",
+          "game": "W 49–18 vs South Carolina"
+        },
+        {
+          "team": "Florida",
+          "record": "4–0",
+          "game": "W 52–28 vs Ole Miss"
+        },
+        {
+          "team": "Ohio State",
+          "record": "3–1",
+          "game": "W 42–19 vs Illinois"
+        },
+        {
+          "team": "Iowa",
+          "record": "4–0",
+          "game": "W 20–19 at Michigan"
+        },
+        {
+          "team": "Texas Tech",
+          "record": "4–0",
+          "game": "W 49–14 vs Sam Houston"
+        },
+        {
+          "team": "Utah",
+          "record": "4–0",
+          "game": "W 31–17 at Iowa State"
+        },
+        {
+          "team": "Ole Miss",
+          "record": "3–1",
+          "game": "L 28–52 at Florida"
+        },
+        {
+          "team": "LSU",
+          "record": "3–1",
+          "game": "W 35–6 vs Texas A&M"
+        },
+        {
+          "team": "BYU",
+          "record": "3–0",
+          "game": "Idle"
+        },
+        {
+          "team": "UCLA",
+          "record": "4–0",
+          "game": "W 54–3 at Maryland"
+        },
+        {
+          "team": "Duke",
+          "record": "4–0",
+          "game": "W 62–7 vs William & Mary (FCS)"
+        },
+        {
+          "team": "Mississippi State",
+          "record": "4–0",
+          "game": "W 31–24 vs Missouri"
+        },
+        {
+          "team": "Oregon",
+          "record": "3–1",
+          "game": "W 41–27 at USC"
+        },
+        {
+          "team": "USC",
+          "record": "4–1",
+          "game": "L 27–41 vs Oregon"
+        },
+        {
+          "team": "Pittsburgh",
+          "record": "4–0",
+          "game": "W 59–0 vs Bucknell (FCS)"
+        },
+        {
+          "team": "Michigan",
+          "record": "3–1",
+          "game": "L 19–20 vs Iowa"
+        },
+        {
+          "team": "Tennessee",
+          "record": "3–1",
+          "game": "L 17–20 vs Texas"
+        },
+        {
+          "team": "Nebraska",
+          "record": "4–0",
+          "game": "W 31–13 at Michigan State"
+        },
+        {
+          "team": "Wisconsin",
+          "record": "3–1",
+          "game": "W 24–20 at Penn State"
+        },
+        {
+          "team": "Wake Forest",
+          "record": "3–1",
+          "game": "W 30–27 at Louisville"
+        }
+      ],
+      "notes": [
+        "Texas stayed No. 1 with a 20–17 win at Tennessee. Georgia rose to No. 3 after beating Oklahoma 41–13."
+      ]
+    },
+    {
+      "week": 5,
+      "gamesThrough": "2026-10-03",
+      "released": "2026-11-08",
+      "rows": [
+        {
+          "team": "Texas",
+          "record": "4–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Indiana",
+          "record": "5–0",
+          "game": "W 47–15 at Rutgers"
+        },
+        {
+          "team": "Georgia",
+          "record": "5–0",
+          "game": "W 38–14 vs Vanderbilt"
+        },
+        {
+          "team": "Miami",
+          "record": "5–0",
+          "game": "W 41–13 at Clemson"
+        },
+        {
+          "team": "Alabama",
+          "record": "5–0",
+          "game": "W 56–23 at Mississippi State"
+        },
+        {
+          "team": "Notre Dame",
+          "record": "5–0",
+          "game": "W 37–26 at North Carolina"
+        },
+        {
+          "team": "Ohio State",
+          "record": "4–1",
+          "game": "W 31–14 at Iowa"
+        },
+        {
+          "team": "Utah",
+          "record": "4–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Texas Tech",
+          "record": "5–0",
+          "game": "W 29–7 at Colorado"
+        },
+        {
+          "team": "BYU",
+          "record": "4–0",
+          "game": "W 17–10 at TCU"
+        },
+        {
+          "team": "LSU",
+          "record": "4–1",
+          "game": "W 63–14 vs McNeese (FCS)"
+        },
+        {
+          "team": "Ole Miss",
+          "record": "3–1",
+          "game": "Idle"
+        },
+        {
+          "team": "Iowa",
+          "record": "4–1",
+          "game": "L 14–31 vs Ohio State"
+        },
+        {
+          "team": "Oregon",
+          "record": "3–1",
+          "game": "Idle"
+        },
+        {
+          "team": "UCLA",
+          "record": "4–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Pittsburgh",
+          "record": "5–0",
+          "game": "W 35–33 at Virginia Tech"
+        },
+        {
+          "team": "Duke",
+          "record": "4–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Missouri",
+          "record": "4–1",
+          "game": "W 45–17 vs Florida"
+        },
+        {
+          "team": "Florida",
+          "record": "4–1",
+          "game": "L 17–45 at Missouri"
+        },
+        {
+          "team": "USC",
+          "record": "5–1",
+          "game": "W 25–21 vs Washington"
+        },
+        {
+          "team": "Tennessee",
+          "record": "4–1",
+          "game": "W 24–14 vs Auburn"
+        },
+        {
+          "team": "Mississippi State",
+          "record": "4–1",
+          "game": "L 23–56 vs Alabama"
+        },
+        {
+          "team": "Wake Forest",
+          "record": "4–1",
+          "game": "W 57–3 vs Stanford"
+        },
+        {
+          "team": "Nebraska",
+          "record": "5–0",
+          "game": "W 48–23 vs Maryland"
+        },
+        {
+          "team": "Boise State",
+          "record": "4–1",
+          "game": "W 37–18 vs Utah State"
+        }
+      ],
+      "notes": [
+        "Texas held No. 1 on a bye. Miami won 41–13 at Clemson and stayed in the top four."
+      ]
+    },
+    {
+      "week": 6,
+      "gamesThrough": "2026-10-10",
+      "released": "2026-11-08",
+      "rows": [
+        {
+          "team": "Georgia",
+          "record": "6–0",
+          "game": "W 20–17 at Alabama"
+        },
+        {
+          "team": "Miami",
+          "record": "5–0",
+          "game": "Idle"
+        },
+        {
+          "team": "Notre Dame",
+          "record": "6–0",
+          "game": "W 58–7 vs Stanford"
+        },
+        {
+          "team": "UCLA",
+          "record": "5–0",
+          "game": "W 17–15 at Oregon"
+        },
+        {
+          "team": "Indiana",
+          "record": "6–0",
+          "game": "W 20–17 at Nebraska"
+        },
+        {
+          "team": "Utah",
+          "record": "5–0",
+          "game": "W 41–24 vs Kansas"
+        },
+        {
+          "team": "Texas Tech",
+          "record": "5–0",
+          "game": "Idle"
+        },
+        {
+          "team": "BYU",
+          "record": "5–0",
+          "game": "W 24–10 vs Iowa State"
+        },
+        {
+          "team": "Texas",
+          "record": "4–1",
+          "game": "L 24–27 vs Oklahoma (neutral)"
+        },
+        {
+          "team": "Ohio State",
+          "record": "5–1",
+          "game": "W 45–16 vs Maryland"
+        },
+        {
+          "team": "Alabama",
+          "record": "5–1",
+          "game": "L 17–20 vs Georgia"
+        },
+        {
+          "team": "Tennessee",
+          "record": "5–1",
+          "game": "W 24–17 at Arkansas"
+        },
+        {
+          "team": "Iowa",
+          "record": "5–1",
+          "game": "W 41–24 at Washington"
+        },
+        {
+          "team": "Arizona",
+          "record": "5–1",
+          "game": "W 52–31 at West Virginia"
+        },
+        {
+          "team": "Houston",
+          "record": "5–1",
+          "game": "W 35–16 at Kansas State"
+        },
+        {
+          "team": "Kentucky",
+          "record": "5–1",
+          "game": "W 35–34 vs LSU"
+        },
+        {
+          "team": "Missouri",
+          "record": "5–1",
+          "game": "W 27–6 vs Texas A&M"
+        },
+        {
+          "team": "Ole Miss",
+          "record": "4–1",
+          "game": "W 52–17 at Vanderbilt"
+        },
+        {
+          "team": "Wake Forest",
+          "record": "5–1",
+          "game": "W 38–14 at NC State"
+        },
+        {
+          "team": "Oregon",
+          "record": "3–2",
+          "game": "L 15–17 vs UCLA"
+        },
+        {
+          "team": "USC",
+          "record": "6–1",
+          "game": "W 31–23 at Penn State"
+        },
+        {
+          "team": "LSU",
+          "record": "4–2",
+          "game": "L 34–35 at Kentucky"
+        },
+        {
+          "team": "Boise State",
+          "record": "5–1",
+          "game": "W 38–31 at Fresno State"
+        },
+        {
+          "team": "Oklahoma State",
+          "record": "4–1",
+          "game": "W 42–28 vs UCF"
+        },
+        {
+          "team": "Nebraska",
+          "record": "5–1",
+          "game": "L 17–20 vs Indiana"
+        }
+      ],
+      "notes": [
+        "Georgia took No. 1 with a 20–17 win at Alabama. UCLA rose to No. 4 after winning 17–15 at Oregon."
+      ]
+    },
+    {
+      "week": 7,
+      "gamesThrough": "2026-10-17",
+      "released": "2026-11-08",
+      "rows": [
+        {
+          "team": "Miami",
+          "record": "6–0",
+          "game": "W 43–35 vs Florida State"
+        },
+        {
+          "team": "BYU",
+          "record": "6–0",
+          "game": "W 28–24 vs Notre Dame"
+        },
+        {
+          "team": "Ohio State",
+          "record": "6–1",
+          "game": "W 19–15 at Indiana"
+        },
+        {
+          "team": "UCLA",
+          "record": "6–0",
+          "game": "W 17–7 vs Wisconsin"
+        },
+        {
+          "team": "Utah",
+          "record": "6–0",
+          "game": "W 27–24 at Colorado"
+        },
+        {
+          "team": "Texas Tech",
+          "record": "6–0",
+          "game": "W 53–25 vs Arizona State"
+        },
+        {
+          "team": "Georgia",
+          "record": "6–1",
+          "game": "L 24–27 vs Auburn"
+        },
+        {
+          "team": "Notre Dame",
+          "record": "6–1",
+          "game": "L 24–28 at BYU"
+        },
+        {
+          "team": "Indiana",
+          "record": "6–1",
+          "game": "L 15–19 vs Ohio State"
+        },
+        {
+          "team": "Tennessee",
+          "record": "6–1",
+          "game": "W 26–10 vs Alabama"
+        },
+        {
+          "team": "Kentucky",
+          "record": "6–1",
+          "game": "W 21–13 at Oklahoma"
+        },
+        {
+          "team": "Iowa",
+          "record": "5–1",
+          "game": "Idle"
+        },
+        {
+          "team": "Ole Miss",
+          "record": "5–1",
+          "game": "W 31–3 vs Missouri"
+        },
+        {
+          "team": "Houston",
+          "record": "6–1",
+          "game": "W 35–32 vs Oklahoma State"
+        },
+        {
+          "team": "Arizona",
+          "record": "5–1",
+          "game": "Idle"
+        },
+        {
+          "team": "Alabama",
+          "record": "5–2",
+          "game": "L 10–26 at Tennessee"
+        },
+        {
+          "team": "LSU",
+          "record": "5–2",
+          "game": "W 31–0 vs Mississippi State"
+        },
+        {
+          "team": "Wake Forest",
+          "record": "6–1",
+          "game": "W 41–7 at California"
+        },
+        {
+          "team": "Oregon",
+          "record": "4–2",
+          "game": "W 17–14 vs Nebraska"
+        },
+        {
+          "team": "USC",
+          "record": "6–1",
+          "game": "Idle"
+        },
+        {
+          "team": "Florida",
+          "record": "5–2",
+          "game": "W 27–24 at Texas"
+        },
+        {
+          "team": "Texas",
+          "record": "4–2",
+          "game": "L 24–27 vs Florida"
+        },
+        {
+          "team": "Auburn",
+          "record": "4–2",
+          "game": "W 27–24 at Georgia"
+        },
+        {
+          "team": "Missouri",
+          "record": "5–2",
+          "game": "L 3–31 at Ole Miss"
+        },
+        {
+          "team": "James Madison",
+          "record": "7–0",
+          "game": "W 49–22 vs Georgia State"
+        }
+      ],
+      "notes": [
+        "Miami moved to No. 1 as Auburn won 27–24 at Georgia. BYU beat Notre Dame 28–24 at home and climbed to No. 2."
+      ]
+    },
+    {
+      "week": 8,
+      "gamesThrough": "2026-10-24",
+      "released": "2026-11-08",
+      "rows": [
+        {
+          "team": "Miami",
+          "record": "7–0",
+          "game": "W 52–23 vs Pittsburgh"
+        },
+        {
+          "team": "UCLA",
+          "record": "7–0",
+          "game": "W 28–10 vs Michigan State"
+        },
+        {
+          "team": "Ohio State",
+          "record": "6–1",
+          "game": "Idle"
+        },
+        {
+          "team": "Utah",
+          "record": "7–0",
+          "game": "W 21–13 vs Houston"
+        },
+        {
+          "team": "Georgia",
+          "record": "6–1",
+          "game": "Idle"
+        },
+        {
+          "team": "Notre Dame",
+          "record": "6–1",
+          "game": "Idle"
+        },
+        {
+          "team": "Indiana",
+          "record": "7–1",
+          "game": "W 13–6 at Michigan"
+        },
+        {
+          "team": "Kentucky",
+          "record": "7–1",
+          "game": "W 34–17 vs Vanderbilt"
+        },
+        {
+          "team": "BYU",
+          "record": "6–1",
+          "game": "L 31–39 at UCF"
+        },
+        {
+          "team": "Texas Tech",
+          "record": "6–1",
+          "game": "L 24–37 at Cincinnati"
+        },
+        {
+          "team": "Arizona",
+          "record": "6–1",
+          "game": "W 39–3 vs Iowa State"
+        },
+        {
+          "team": "LSU",
+          "record": "6–2",
+          "game": "W 38–17 at Auburn"
+        },
+        {
+          "team": "Texas",
+          "record": "5–2",
+          "game": "W 34–27 vs Ole Miss"
+        },
+        {
+          "team": "Tennessee",
+          "record": "6–2",
+          "game": "L 24–27 at South Carolina"
+        },
+        {
+          "team": "Alabama",
+          "record": "6–2",
+          "game": "W 31–20 vs Texas A&M"
+        },
+        {
+          "team": "Ole Miss",
+          "record": "5–2",
+          "game": "L 27–34 at Texas"
+        },
+        {
+          "team": "Houston",
+          "record": "6–2",
+          "game": "L 13–21 at Utah"
+        },
+        {
+          "team": "Wake Forest",
+          "record": "6–1",
+          "game": "Idle"
+        },
+        {
+          "team": "Wisconsin",
+          "record": "5–2",
+          "game": "W 24–7 vs USC"
+        },
+        {
+          "team": "Iowa",
+          "record": "5–2",
+          "game": "L 10–13 at Minnesota"
+        },
+        {
+          "team": "Missouri",
+          "record": "5–2",
+          "game": "Idle"
+        },
+        {
+          "team": "Florida",
+          "record": "5–2",
+          "game": "Idle"
+        },
+        {
+          "team": "USC",
+          "record": "6–2",
+          "game": "L 7–24 at Wisconsin"
+        },
+        {
+          "team": "Boise State",
+          "record": "6–1",
+          "game": "W 31–10 at Washington State"
+        },
+        {
+          "team": "SMU",
+          "record": "6–1",
+          "game": "W 59–20 vs California"
+        }
+      ],
+      "notes": [
+        "Miami stayed No. 1 after beating Pittsburgh 52–23. Utah rose to No. 4 after a 21–13 home win over Houston."
+      ]
+    },
+    {
+      "week": 9,
+      "gamesThrough": "2026-10-31",
+      "released": "2026-11-08",
+      "rows": [
+        {
+          "team": "Miami",
+          "record": "8–0",
+          "game": "W 38–35 at North Carolina"
+        },
+        {
+          "team": "Utah",
+          "record": "8–0",
+          "game": "W 49–25 at Cincinnati"
+        },
+        {
+          "team": "UCLA",
+          "record": "8–0",
+          "game": "W 27–0 vs Nevada"
+        },
+        {
+          "team": "Georgia",
+          "record": "7–1",
+          "game": "W 27–8 vs Florida (neutral)"
+        },
+        {
+          "team": "Notre Dame",
+          "record": "7–1",
+          "game": "W 35–13 vs Navy (neutral)"
+        },
+        {
+          "team": "Indiana",
+          "record": "8–1",
+          "game": "W 23–16 vs Minnesota"
+        },
+        {
+          "team": "BYU",
+          "record": "7–1",
+          "game": "W 27–20 vs Arizona State"
+        },
+        {
+          "team": "Texas Tech",
+          "record": "7–1",
+          "game": "W 34–26 vs Arizona"
+        },
+        {
+          "team": "Texas",
+          "record": "6–2",
+          "game": "W 31–3 vs Mississippi State"
+        },
+        {
+          "team": "Kentucky",
+          "record": "7–1",
+          "game": "Idle"
+        },
+        {
+          "team": "USC",
+          "record": "7–2",
+          "game": "W 30–18 vs Ohio State"
+        },
+        {
+          "team": "Ohio State",
+          "record": "6–2",
+          "game": "L 18–30 at USC"
+        },
+        {
+          "team": "Ole Miss",
+          "record": "6–2",
+          "game": "W 45–15 vs Auburn"
+        },
+        {
+          "team": "Tennessee",
+          "record": "6–2",
+          "game": "Idle"
+        },
+        {
+          "team": "Alabama",
+          "record": "6–2",
+          "game": "Idle"
+        },
+        {
+          "team": "Iowa",
+          "record": "6–2",
+          "game": "W 30–0 vs Wisconsin"
+        },
+        {
+          "team": "Boise State",
+          "record": "7–1",
+          "game": "W 46–45 vs Texas State"
+        },
+        {
+          "team": "Wake Forest",
+          "record": "7–1",
+          "game": "W 51–7 vs Virginia"
+        },
+        {
+          "team": "Houston",
+          "record": "6–2",
+          "game": "Idle"
+        },
+        {
+          "team": "Arizona",
+          "record": "6–2",
+          "game": "L 26–34 at Texas Tech"
+        },
+        {
+          "team": "Missouri",
+          "record": "6–2",
+          "game": "W 34–10 at Arkansas"
+        },
+        {
+          "team": "LSU",
+          "record": "6–2",
+          "game": "Idle"
+        },
+        {
+          "team": "Oregon",
+          "record": "5–3",
+          "game": "W 34–26 vs Northwestern"
+        },
+        {
+          "team": "UTSA",
+          "record": "7–1",
+          "game": "Idle"
+        },
+        {
+          "team": "New Mexico",
+          "record": "7–1",
+          "game": "W 21–16 at San José State"
+        }
+      ],
+      "notes": [
+        "Miami held No. 1 after a 38–35 win at North Carolina. Utah reached No. 2 with a 49–25 road win at Cincinnati."
+      ]
+    },
+    {
+      "week": 10,
+      "gamesThrough": "2026-11-07",
+      "released": "2026-11-08",
+      "rows": [
+        {
+          "team": "Utah",
+          "record": "9–0",
+          "game": "W 28–20 vs BYU"
+        },
+        {
+          "team": "UCLA",
+          "record": "9–0",
+          "game": "W 34–20 at Minnesota"
+        },
+        {
+          "team": "Georgia",
+          "record": "8–1",
+          "game": "W 42–7 at Ole Miss"
+        },
+        {
+          "team": "Notre Dame",
+          "record": "8–1",
+          "game": "W 31–24 vs Miami"
+        },
+        {
+          "team": "Miami",
+          "record": "8–1",
+          "game": "L 24–31 at Notre Dame"
+        },
+        {
+          "team": "Indiana",
+          "record": "8–1",
+          "game": "Idle"
+        },
+        {
+          "team": "Texas",
+          "record": "7–2",
+          "game": "W 34–20 at Missouri"
+        },
+        {
+          "team": "Texas Tech",
+          "record": "8–1",
+          "game": "W 53–48 vs West Virginia"
+        },
+        {
+          "team": "Tennessee",
+          "record": "7–2",
+          "game": "W 34–6 vs Kentucky"
+        },
+        {
+          "team": "Alabama",
+          "record": "7–2",
+          "game": "W 31–13 at LSU"
+        },
+        {
+          "team": "BYU",
+          "record": "7–2",
+          "game": "L 20–28 at Utah"
+        },
+        {
+          "team": "Boise State",
+          "record": "8–1",
+          "game": "W 64–38 at Colorado State"
+        },
+        {
+          "team": "Oregon",
+          "record": "6–3",
+          "game": "W 41–28 at Ohio State"
+        },
+        {
+          "team": "USC",
+          "record": "7–2",
+          "game": "Idle"
+        },
+        {
+          "team": "Ohio State",
+          "record": "6–3",
+          "game": "L 28–41 vs Oregon"
+        },
+        {
+          "team": "Iowa",
+          "record": "7–2",
+          "game": "W 24–10 at Northwestern"
+        },
+        {
+          "team": "Wake Forest",
+          "record": "8–1",
+          "game": "W 77–0 vs Merrimack (FCS)"
+        },
+        {
+          "team": "Kentucky",
+          "record": "7–2",
+          "game": "L 6–34 at Tennessee"
+        },
+        {
+          "team": "Houston",
+          "record": "7–2",
+          "game": "W 31–24 vs Cincinnati"
+        },
+        {
+          "team": "Arizona",
+          "record": "7–2",
+          "game": "W 29–28 vs TCU"
+        },
+        {
+          "team": "Ole Miss",
+          "record": "6–3",
+          "game": "L 7–42 vs Georgia"
+        },
+        {
+          "team": "LSU",
+          "record": "6–3",
+          "game": "L 13–31 vs Alabama"
+        },
+        {
+          "team": "Duke",
+          "record": "7–2",
+          "game": "W 41–3 at NC State"
+        },
+        {
+          "team": "South Carolina",
+          "record": "6–3",
+          "game": "W 17–9 vs Texas A&M"
+        },
+        {
+          "team": "New Mexico",
+          "record": "8–1",
+          "game": "W 31–3 at Nevada"
+        }
+      ],
+      "notes": [
+        "Utah took No. 1 with a 28–20 home win over BYU. Georgia won 42–7 at Ole Miss, and Notre Dame beat Miami 31–24."
+      ]
+    }
+  ],
+  "sor": [
+    {
+      "week": 10,
+      "gamesThrough": "2026-11-07",
+      "released": "2026-11-08",
+      "rows": [
+        {
+          "team": "Utah",
+          "record": "9–0",
+          "rank": 1
+        },
+        {
+          "team": "UCLA",
+          "record": "9–0",
+          "rank": 2
+        },
+        {
+          "team": "Miami",
+          "record": "8–1",
+          "rank": 3
+        },
+        {
+          "team": "Georgia",
+          "record": "8–1",
+          "rank": 4
+        },
+        {
+          "team": "Notre Dame",
+          "record": "8–1",
+          "rank": 5
+        },
+        {
+          "team": "Alabama",
+          "record": "7–2",
+          "rank": 6
+        },
+        {
+          "team": "Texas",
+          "record": "7–2",
+          "rank": 7
+        },
+        {
+          "team": "Boise State",
+          "record": "8–1",
+          "rank": 8
+        },
+        {
+          "team": "Texas Tech",
+          "record": "8–1",
+          "rank": 9
+        },
+        {
+          "team": "Kentucky",
+          "record": "7–2",
+          "rank": 10
+        },
+        {
+          "team": "Indiana",
+          "record": "8–1",
+          "rank": 11
+        },
+        {
+          "team": "BYU",
+          "record": "7–2",
+          "rank": 12
+        },
+        {
+          "team": "Houston",
+          "record": "7–2",
+          "rank": 13
+        },
+        {
+          "team": "Wake Forest",
+          "record": "8–1",
+          "rank": 14
+        },
+        {
+          "team": "Tennessee",
+          "record": "7–2",
+          "rank": 15
+        },
+        {
+          "team": "Oregon",
+          "record": "6–3",
+          "rank": 16
+        },
+        {
+          "team": "Ole Miss",
+          "record": "6–3",
+          "rank": 17
+        },
+        {
+          "team": "USC",
+          "record": "7–2",
+          "rank": 18
+        },
+        {
+          "team": "Iowa",
+          "record": "7–2",
+          "rank": 19
+        },
+        {
+          "team": "Ohio State",
+          "record": "6–3",
+          "rank": 20
+        },
+        {
+          "team": "Arizona",
+          "record": "7–2",
+          "rank": 21
+        },
+        {
+          "team": "LSU",
+          "record": "6–3",
+          "rank": 22
+        },
+        {
+          "team": "New Mexico",
+          "record": "8–1",
+          "rank": 23
+        },
+        {
+          "team": "South Carolina",
+          "record": "6–3",
+          "rank": 24
+        },
+        {
+          "team": "UTSA",
+          "record": "7–2",
+          "rank": 25
+        },
+        {
+          "team": "Oklahoma",
+          "record": "5–4",
+          "rank": 26
+        },
+        {
+          "team": "Wisconsin",
+          "record": "6–3",
+          "rank": 27
+        },
+        {
+          "team": "Louisiana Tech",
+          "record": "7–2",
+          "rank": 28
+        },
+        {
+          "team": "North Texas",
+          "record": "7–2",
+          "rank": 29
+        },
+        {
+          "team": "North Dakota State",
+          "record": "7–2",
+          "rank": 30
+        },
+        {
+          "team": "Florida",
+          "record": "5–4",
+          "rank": 31
+        },
+        {
+          "team": "Oklahoma State",
+          "record": "6–3",
+          "rank": 32
+        },
+        {
+          "team": "Liberty",
+          "record": "8–1",
+          "rank": 33
+        },
+        {
+          "team": "James Madison",
+          "record": "8–2",
+          "rank": 34
+        },
+        {
+          "team": "Duke",
+          "record": "7–2",
+          "rank": 35
+        },
+        {
+          "team": "Memphis",
+          "record": "7–2",
+          "rank": 36
+        },
+        {
+          "team": "Missouri",
+          "record": "6–3",
+          "rank": 37
+        },
+        {
+          "team": "Clemson",
+          "record": "6–3",
+          "rank": 38
+        },
+        {
+          "team": "Auburn",
+          "record": "5–4",
+          "rank": 39
+        },
+        {
+          "team": "SMU",
+          "record": "7–2",
+          "rank": 40
+        },
+        {
+          "team": "Air Force",
+          "record": "7–2",
+          "rank": 41
+        },
+        {
+          "team": "Northwestern",
+          "record": "6–3",
+          "rank": 42
+        },
+        {
+          "team": "Louisville",
+          "record": "6–3",
+          "rank": 43
+        },
+        {
+          "team": "Illinois",
+          "record": "6–3",
+          "rank": 44
+        },
+        {
+          "team": "Jacksonville State",
+          "record": "7–2",
+          "rank": 45
+        },
+        {
+          "team": "Baylor",
+          "record": "6–3",
+          "rank": 46
+        },
+        {
+          "team": "North Carolina",
+          "record": "5–4",
+          "rank": 47
+        },
+        {
+          "team": "Western Michigan",
+          "record": "6–3",
+          "rank": 48
+        },
+        {
+          "team": "Cincinnati",
+          "record": "5–4",
+          "rank": 49
+        },
+        {
+          "team": "Ohio",
+          "record": "7–2",
+          "rank": 50
+        },
+        {
+          "team": "Toledo",
+          "record": "7–2",
+          "rank": 51
+        },
+        {
+          "team": "Pittsburgh",
+          "record": "6–3",
+          "rank": 52
+        },
+        {
+          "team": "Texas State",
+          "record": "5–4",
+          "rank": 53
+        },
+        {
+          "team": "Mississippi State",
+          "record": "4–5",
+          "rank": 54
+        },
+        {
+          "team": "Penn State",
+          "record": "5–4",
+          "rank": 55
+        },
+        {
+          "team": "Florida Atlantic",
+          "record": "6–3",
+          "rank": 56
+        },
+        {
+          "team": "UCF",
+          "record": "5–4",
+          "rank": 57
+        },
+        {
+          "team": "Virginia Tech",
+          "record": "6–3",
+          "rank": 58
+        },
+        {
+          "team": "Wyoming",
+          "record": "6–3",
+          "rank": 59
+        },
+        {
+          "team": "Minnesota",
+          "record": "5–4",
+          "rank": 60
+        },
+        {
+          "team": "West Virginia",
+          "record": "5–4",
+          "rank": 61
+        },
+        {
+          "team": "Michigan",
+          "record": "5–4",
+          "rank": 62
+        },
+        {
+          "team": "Iowa State",
+          "record": "4–5",
+          "rank": 63
+        },
+        {
+          "team": "Louisiana",
+          "record": "6–3",
+          "rank": 64
+        },
+        {
+          "team": "Buffalo",
+          "record": "6–3",
+          "rank": 65
+        },
+        {
+          "team": "South Florida",
+          "record": "6–3",
+          "rank": 66
+        },
+        {
+          "team": "Nebraska",
+          "record": "5–4",
+          "rank": 67
+        },
+        {
+          "team": "Army",
+          "record": "5–4",
+          "rank": 68
+        },
+        {
+          "team": "Georgia Southern",
+          "record": "5–4",
+          "rank": 69
+        },
+        {
+          "team": "Washington",
+          "record": "5–4",
+          "rank": 70
+        },
+        {
+          "team": "Texas A&M",
+          "record": "4–5",
+          "rank": 71
+        },
+        {
+          "team": "Fresno State",
+          "record": "5–4",
+          "rank": 72
+        },
+        {
+          "team": "Arizona State",
+          "record": "5–4",
+          "rank": 73
+        },
+        {
+          "team": "UNLV",
+          "record": "5–4",
+          "rank": 74
+        },
+        {
+          "team": "Oregon State",
+          "record": "5–4",
+          "rank": 75
+        },
+        {
+          "team": "Vanderbilt",
+          "record": "4–5",
+          "rank": 76
+        },
+        {
+          "team": "Michigan State",
+          "record": "3–6",
+          "rank": 77
+        },
+        {
+          "team": "Stanford",
+          "record": "4–5",
+          "rank": 78
+        },
+        {
+          "team": "Florida State",
+          "record": "4–5",
+          "rank": 79
+        },
+        {
+          "team": "UAB",
+          "record": "5–4",
+          "rank": 80
+        },
+        {
+          "team": "TCU",
+          "record": "4–5",
+          "rank": 81
+        },
+        {
+          "team": "East Carolina",
+          "record": "5–4",
+          "rank": 82
+        },
+        {
+          "team": "Tulsa",
+          "record": "5–4",
+          "rank": 83
+        },
+        {
+          "team": "Marshall",
+          "record": "5–4",
+          "rank": 84
+        },
+        {
+          "team": "Miami (OH)",
+          "record": "5–4",
+          "rank": 85
+        },
+        {
+          "team": "Syracuse",
+          "record": "4–5",
+          "rank": 86
+        },
+        {
+          "team": "Arkansas",
+          "record": "3–6",
+          "rank": 87
+        },
+        {
+          "team": "San Diego State",
+          "record": "4–5",
+          "rank": 88
+        },
+        {
+          "team": "Virginia",
+          "record": "4–5",
+          "rank": 89
+        },
+        {
+          "team": "NC State",
+          "record": "4–5",
+          "rank": 90
+        },
+        {
+          "team": "Utah State",
+          "record": "4–5",
+          "rank": 91
+        },
+        {
+          "team": "Tulane",
+          "record": "4–5",
+          "rank": 92
+        },
+        {
+          "team": "South Alabama",
+          "record": "4–5",
+          "rank": 93
+        },
+        {
+          "team": "Colorado",
+          "record": "3–6",
+          "rank": 94
+        },
+        {
+          "team": "App State",
+          "record": "5–4",
+          "rank": 95
+        },
+        {
+          "team": "Boston College",
+          "record": "4–5",
+          "rank": 96
+        },
+        {
+          "team": "Central Michigan",
+          "record": "4–5",
+          "rank": 97
+        },
+        {
+          "team": "California",
+          "record": "3–6",
+          "rank": 98
+        },
+        {
+          "team": "Georgia State",
+          "record": "5–4",
+          "rank": 99
+        },
+        {
+          "team": "Middle Tennessee",
+          "record": "5–4",
+          "rank": 100
+        },
+        {
+          "team": "Florida International",
+          "record": "4–5",
+          "rank": 101
+        },
+        {
+          "team": "Kansas State",
+          "record": "4–5",
+          "rank": 102
+        },
+        {
+          "team": "Purdue",
+          "record": "3–6",
+          "rank": 103
+        },
+        {
+          "team": "Colorado State",
+          "record": "3–6",
+          "rank": 104
+        },
+        {
+          "team": "San José State",
+          "record": "5–5",
+          "rank": 105
+        },
+        {
+          "team": "Navy",
+          "record": "3–6",
+          "rank": 106
+        },
+        {
+          "team": "Troy",
+          "record": "4–5",
+          "rank": 107
+        },
+        {
+          "team": "Kansas",
+          "record": "3–6",
+          "rank": 108
+        },
+        {
+          "team": "Maryland",
+          "record": "3–6",
+          "rank": 109
+        },
+        {
+          "team": "Massachusetts",
+          "record": "5–4",
+          "rank": 110
+        },
+        {
+          "team": "UConn",
+          "record": "4–5",
+          "rank": 111
+        },
+        {
+          "team": "Arkansas State",
+          "record": "4–5",
+          "rank": 112
+        },
+        {
+          "team": "Nevada",
+          "record": "3–6",
+          "rank": 113
+        },
+        {
+          "team": "Delaware",
+          "record": "4–5",
+          "rank": 114
+        },
+        {
+          "team": "Eastern Michigan",
+          "record": "4–6",
+          "rank": 115
+        },
+        {
+          "team": "Ball State",
+          "record": "3–6",
+          "rank": 116
+        },
+        {
+          "team": "Hawai'i",
+          "record": "3–6",
+          "rank": 117
+        },
+        {
+          "team": "Kent State",
+          "record": "3–6",
+          "rank": 118
+        },
+        {
+          "team": "Old Dominion",
+          "record": "3–7",
+          "rank": 119
+        },
+        {
+          "team": "Kennesaw State",
+          "record": "3–6",
+          "rank": 120
+        },
+        {
+          "team": "Coastal Carolina",
+          "record": "3–6",
+          "rank": 121
+        },
+        {
+          "team": "Southern Miss",
+          "record": "3–6",
+          "rank": 122
+        },
+        {
+          "team": "Georgia Tech",
+          "record": "2–7",
+          "rank": 123
+        },
+        {
+          "team": "Rutgers",
+          "record": "2–7",
+          "rank": 124
+        },
+        {
+          "team": "New Mexico State",
+          "record": "3–6",
+          "rank": 125
+        },
+        {
+          "team": "Bowling Green",
+          "record": "2–7",
+          "rank": 126
+        },
+        {
+          "team": "Western Kentucky",
+          "record": "3–6",
+          "rank": 127
+        },
+        {
+          "team": "Missouri State",
+          "record": "3–6",
+          "rank": 128
+        },
+        {
+          "team": "UL Monroe",
+          "record": "2–7",
+          "rank": 129
+        },
+        {
+          "team": "Temple",
+          "record": "2–7",
+          "rank": 130
+        },
+        {
+          "team": "Rice",
+          "record": "1–8",
+          "rank": 131
+        },
+        {
+          "team": "Washington State",
+          "record": "1–8",
+          "rank": 132
+        },
+        {
+          "team": "Sacramento State",
+          "record": "2–8",
+          "rank": 133
+        },
+        {
+          "team": "Akron",
+          "record": "1–8",
+          "rank": 134
+        },
+        {
+          "team": "Charlotte",
+          "record": "1–8",
+          "rank": 135
+        },
+        {
+          "team": "UTEP",
+          "record": "1–8",
+          "rank": 136
+        },
+        {
+          "team": "Sam Houston",
+          "record": "1–8",
+          "rank": 137
+        },
+        {
+          "team": "Northern Illinois",
+          "record": "0–9",
+          "rank": 138
+        }
+      ]
+    }
+  ],
+  "polls": {
+    "ap": [
+      {
+        "week": 9,
+        "gamesThrough": "2026-10-31",
+        "released": "2026-11-01",
+        "url": "https://apnews.com/live/top-25-college-football-poll-11-1-2026",
+        "rows": [
+          {
+            "team": "Miami",
+            "record": "8–0"
+          },
+          {
+            "team": "Georgia",
+            "record": "7–1"
+          },
+          {
+            "team": "Utah",
+            "record": "8–0"
+          },
+          {
+            "team": "Notre Dame",
+            "record": "7–1"
+          },
+          {
+            "team": "UCLA",
+            "record": "8–0"
+          },
+          {
+            "team": "Indiana",
+            "record": "8–1"
+          },
+          {
+            "team": "BYU",
+            "record": "7–1"
+          },
+          {
+            "team": "Kentucky",
+            "record": "7–1"
+          },
+          {
+            "team": "Alabama",
+            "record": "6–2"
+          },
+          {
+            "team": "Texas",
+            "record": "6–2"
+          },
+          {
+            "team": "Ohio State",
+            "record": "6–2"
+          },
+          {
+            "team": "Ole Miss",
+            "record": "6–2"
+          },
+          {
+            "team": "Texas Tech",
+            "record": "7–1"
+          },
+          {
+            "team": "Wake Forest",
+            "record": "7–1"
+          },
+          {
+            "team": "LSU",
+            "record": "6–2"
+          },
+          {
+            "team": "Tennessee",
+            "record": "6–2"
+          },
+          {
+            "team": "Houston",
+            "record": "6–2"
+          },
+          {
+            "team": "USC",
+            "record": "7–2"
+          },
+          {
+            "team": "Missouri",
+            "record": "6–2"
+          },
+          {
+            "team": "Boise State",
+            "record": "7–1"
+          },
+          {
+            "team": "Iowa",
+            "record": "6–2"
+          },
+          {
+            "team": "New Mexico",
+            "record": "7–1"
+          },
+          {
+            "team": "South Carolina",
+            "record": "5–3"
+          },
+          {
+            "team": "Arizona",
+            "record": "6–2"
+          },
+          {
+            "team": "Florida",
+            "record": "5–3"
+          }
+        ]
+      }
+    ],
+    "coaches": [
+      {
+        "week": 9,
+        "gamesThrough": "2026-10-31",
+        "released": "2026-11-01",
+        "url": "https://www.afca.com/usc-gets-signature-win/",
+        "rows": [
+          {
+            "team": "Miami",
+            "record": "8–0"
+          },
+          {
+            "team": "Georgia",
+            "record": "7–1"
+          },
+          {
+            "team": "Indiana",
+            "record": "8–1"
+          },
+          {
+            "team": "Utah",
+            "record": "8–0"
+          },
+          {
+            "team": "UCLA",
+            "record": "8–0"
+          },
+          {
+            "team": "Notre Dame",
+            "record": "7–1"
+          },
+          {
+            "team": "Kentucky",
+            "record": "7–1"
+          },
+          {
+            "team": "BYU",
+            "record": "7–1"
+          },
+          {
+            "team": "Alabama",
+            "record": "6–2"
+          },
+          {
+            "team": "Ohio State",
+            "record": "6–2"
+          },
+          {
+            "team": "Texas",
+            "record": "6–2"
+          },
+          {
+            "team": "Ole Miss",
+            "record": "6–2"
+          },
+          {
+            "team": "Texas Tech",
+            "record": "7–1"
+          },
+          {
+            "team": "Wake Forest",
+            "record": "7–1"
+          },
+          {
+            "team": "LSU",
+            "record": "6–2"
+          },
+          {
+            "team": "Tennessee",
+            "record": "6–2"
+          },
+          {
+            "team": "USC",
+            "record": "7–2"
+          },
+          {
+            "team": "Houston",
+            "record": "6–2"
+          },
+          {
+            "team": "Missouri",
+            "record": "6–2"
+          },
+          {
+            "team": "Iowa",
+            "record": "6–2"
+          },
+          {
+            "team": "Boise State",
+            "record": "7–1"
+          },
+          {
+            "team": "Arizona",
+            "record": "6–2"
+          },
+          {
+            "team": "Northwestern",
+            "record": "6–2"
+          },
+          {
+            "team": "SMU",
+            "record": "6–2"
+          },
+          {
+            "team": "New Mexico",
+            "record": "7–1"
+          }
+        ]
+      }
+    ],
+    "cfp": [
+      {
+        "week": 9,
+        "gamesThrough": "2026-10-31",
+        "released": "2026-11-03",
+        "url": "https://collegefootballplayoff.com/news/2026/11/3/rankings",
+        "rows": [
+          {
+            "team": "Miami",
+            "record": "8–0"
+          },
+          {
+            "team": "Georgia",
+            "record": "7–1"
+          },
+          {
+            "team": "Utah",
+            "record": "8–0"
+          },
+          {
+            "team": "Indiana",
+            "record": "8–1"
+          },
+          {
+            "team": "Alabama",
+            "record": "6–2"
+          },
+          {
+            "team": "Kentucky",
+            "record": "7–1"
+          },
+          {
+            "team": "Texas",
+            "record": "6–2"
+          },
+          {
+            "team": "UCLA",
+            "record": "8–0"
+          },
+          {
+            "team": "BYU",
+            "record": "7–1"
+          },
+          {
+            "team": "Ole Miss",
+            "record": "6–2"
+          },
+          {
+            "team": "Notre Dame",
+            "record": "7–1"
+          },
+          {
+            "team": "Ohio State",
+            "record": "6–2"
+          },
+          {
+            "team": "Tennessee",
+            "record": "6–2"
+          },
+          {
+            "team": "LSU",
+            "record": "6–2"
+          },
+          {
+            "team": "Texas Tech",
+            "record": "7–1"
+          },
+          {
+            "team": "Wake Forest",
+            "record": "7–1"
+          },
+          {
+            "team": "Houston",
+            "record": "6–2"
+          },
+          {
+            "team": "Missouri",
+            "record": "6–2"
+          },
+          {
+            "team": "Iowa",
+            "record": "6–2"
+          },
+          {
+            "team": "USC",
+            "record": "7–2"
+          },
+          {
+            "team": "South Carolina",
+            "record": "5–3"
+          },
+          {
+            "team": "Arizona",
+            "record": "6–2"
+          },
+          {
+            "team": "Oregon",
+            "record": "5–3"
+          },
+          {
+            "team": "Florida",
+            "record": "5–3"
+          },
+          {
+            "team": "Boise State",
+            "record": "7–1"
+          }
+        ]
+      }
+    ]
+  }
+}
