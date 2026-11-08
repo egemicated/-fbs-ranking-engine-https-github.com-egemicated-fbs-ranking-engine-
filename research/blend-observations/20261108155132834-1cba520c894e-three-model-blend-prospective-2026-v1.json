@@ -1,0 +1,6296 @@
+{
+  "schemaVersion": 1,
+  "protocolId": "three-model-blend-prospective-2026-v1",
+  "protocolSha256": "667669f3315fabd1eb9c0ee28642f05e6f8d475971f68410cf320a982fd4b5eb",
+  "frozenAt": "2026-11-06T22:49:59.146Z",
+  "season": 2026,
+  "asOf": "2026-11-08T15:51:32.834Z",
+  "sourceFetchedAt": "2026-11-08T15:51:31.892Z",
+  "performanceGeneratedAt": "2026-11-08T15:51:48.951Z",
+  "performanceSourceFetchedAt": "2026-11-08T15:51:48.855Z",
+  "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+  "sourceHash": "a665ba80308b26c7e300d04ddf4e5b6a9f252c695b77d3d87cf4d05408aa6b53",
+  "snapshotHash": "1cba520c894e2a14c4b9356025b40fd93295f84e0630b27ec5e9583797ccfd61",
+  "publicationHash": "7f16a93d77c5cd85a164718615c089b95edc5c392542205eeb111953fd26d34b",
+  "performancePublicationHash": "b104ab3d8880de954daa8d56cea0ca4671cbf3a3de5f0fed0fc6c3c07bb3de9b",
+  "normalizedInputSha256": "1e11819fbc6ec6145c16f7a935812e90911fdf42a5ac8e2ac92fcbf13cb495af",
+  "snapshotInputSha256": "d73e6304202f910374b6bb5fe4c44050481c4cf6263daab6798882babfd98554",
+  "performanceInputSha256": "3672bc4618caa3c556cedc51240641a411e1a31b198bc3aaba2f39762632733c",
+  "implementationSha256": {
+    "scripts/record-blend-comparison.js": "df74e3e308ecb352d7c97a356f7b1619bddd39bf838b9094ea5cf43fc644d67e",
+    "src/engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+    "src/publication.js": "6ee52b8ceef086930f6d6e9462e8508b61925c20ea63da41d484650b59488421",
+    "src/performance-publication.js": "37f28801089f9b9c156b8184f6b5685a593789e5e0dea91b3b3e1c9731e8016a",
+    "research/lib/division_candidate.mjs": "dcf3e3e7b9c5029b1c46c3e52a0f150f4855c53a24bec57ab184016b070442a5",
+    "data/model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+    "data/publication-model.json": "177ef4d5248bc56f133944edd80bf6db76a304f5662b5e9c741672ddaa331bc9",
+    "data/performance-model.json": "f768d939f97ee5cad5bbcafb90f38df4188afc3f588ab3f59fb15efba1afea35",
+    "scripts/publish-performance.py": "676f6e5c59a1b05dc2ac366f7cae41c7d53136595a2293af6f9d3a863b318887",
+    "research/advanced_performance_ingest.py": "0c8a8534f1c90f08cd23b22a1159b479e8cecfdbe2df7bb369c35ca7fe99b0b7",
+    "research/advanced_performance_model.py": "9efc9ca486b0ec5961e336bc04468bf90299b187aeb1adf86c41452e1ddd9a9c",
+    "research/adaptive_performance_model.py": "c3b298c70de75a76860eac3c4c515d945511003c1186060516f51d0701dcb156"
+  },
+  "commonFbsTeams": 138,
+  "rows": [
+    {
+      "id": "103",
+      "team": "Boston College",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 96,
+        "strength": 94,
+        "performance": 82
+      },
+      "indices": {
+        "sor": 30.656934306569344,
+        "strength": 32.11678832116788,
+        "performance": 40.87591240875913,
+        "triple": 34.54987834549879,
+        "sor+strength": 31.386861313868614,
+        "sor+performance": 35.76642335766424,
+        "strength+performance": 36.496350364963504
+      }
+    },
+    {
+      "id": "113",
+      "team": "Massachusetts",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 110,
+        "strength": 123,
+        "performance": 101
+      },
+      "indices": {
+        "sor": 20.437956204379564,
+        "strength": 10.94890510948905,
+        "performance": 27.00729927007299,
+        "triple": 19.464720194647203,
+        "sor+strength": 15.693430656934307,
+        "sor+performance": 23.722627737226276,
+        "strength+performance": 18.97810218978102
+      }
+    },
+    {
+      "id": "12",
+      "team": "Arizona",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 21,
+        "strength": 18,
+        "performance": 28
+      },
+      "indices": {
+        "sor": 85.4014598540146,
+        "strength": 87.5912408759124,
+        "performance": 80.2919708029197,
+        "triple": 84.42822384428224,
+        "sor+strength": 86.4963503649635,
+        "sor+performance": 82.84671532846716,
+        "strength+performance": 83.94160583941606
+      }
+    },
+    {
+      "id": "120",
+      "team": "Maryland",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 109,
+        "strength": 92,
+        "performance": 84
+      },
+      "indices": {
+        "sor": 21.16788321167883,
+        "strength": 33.57664233576642,
+        "performance": 39.416058394160586,
+        "triple": 31.38686131386861,
+        "sor+strength": 27.372262773722625,
+        "sor+performance": 30.291970802919707,
+        "strength+performance": 36.496350364963504
+      }
+    },
+    {
+      "id": "127",
+      "team": "Michigan State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 77,
+        "strength": 73,
+        "performance": 47
+      },
+      "indices": {
+        "sor": 44.52554744525548,
+        "strength": 47.44525547445255,
+        "performance": 66.42335766423358,
+        "triple": 52.798053527980535,
+        "sor+strength": 45.98540145985402,
+        "sor+performance": 55.47445255474453,
+        "strength+performance": 56.934306569343065
+      }
+    },
+    {
+      "id": "130",
+      "team": "Michigan",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 62,
+        "strength": 51,
+        "performance": 30
+      },
+      "indices": {
+        "sor": 55.47445255474452,
+        "strength": 63.503649635036496,
+        "performance": 78.83211678832117,
+        "triple": 65.9367396593674,
+        "sor+strength": 59.48905109489051,
+        "sor+performance": 67.15328467153284,
+        "strength+performance": 71.16788321167883
+      }
+    },
+    {
+      "id": "135",
+      "team": "Minnesota",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 60,
+        "strength": 66,
+        "performance": 68
+      },
+      "indices": {
+        "sor": 56.934306569343065,
+        "strength": 52.55474452554745,
+        "performance": 51.09489051094891,
+        "triple": 53.5279805352798,
+        "sor+strength": 54.74452554744526,
+        "sor+performance": 54.01459854014598,
+        "strength+performance": 51.82481751824818
+      }
+    },
+    {
+      "id": "142",
+      "team": "Missouri",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 37,
+        "strength": 23,
+        "performance": 43
+      },
+      "indices": {
+        "sor": 73.72262773722628,
+        "strength": 83.94160583941606,
+        "performance": 69.34306569343066,
+        "triple": 75.66909975669101,
+        "sor+strength": 78.83211678832117,
+        "sor+performance": 71.53284671532847,
+        "strength+performance": 76.64233576642336
+      }
+    },
+    {
+      "id": "145",
+      "team": "Ole Miss",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 17,
+        "strength": 12,
+        "performance": 13
+      },
+      "indices": {
+        "sor": 88.32116788321167,
+        "strength": 91.97080291970804,
+        "performance": 91.24087591240875,
+        "triple": 90.51094890510949,
+        "sor+strength": 90.14598540145985,
+        "sor+performance": 89.7810218978102,
+        "strength+performance": 91.60583941605839
+      }
+    },
+    {
+      "id": "150",
+      "team": "Duke",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 35,
+        "strength": 29,
+        "performance": 71
+      },
+      "indices": {
+        "sor": 75.18248175182482,
+        "strength": 79.56204379562044,
+        "performance": 48.90510948905109,
+        "triple": 67.88321167883213,
+        "sor+strength": 77.37226277372264,
+        "sor+performance": 62.04379562043796,
+        "strength+performance": 64.23357664233576
+      }
+    },
+    {
+      "id": "151",
+      "team": "East Carolina",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 82,
+        "strength": 75,
+        "performance": 88
+      },
+      "indices": {
+        "sor": 40.87591240875913,
+        "strength": 45.98540145985402,
+        "performance": 36.496350364963504,
+        "triple": 41.119221411192214,
+        "sor+strength": 43.43065693430657,
+        "sor+performance": 38.68613138686132,
+        "strength+performance": 41.24087591240876
+      }
+    },
+    {
+      "id": "152",
+      "team": "NC State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 90,
+        "strength": 85,
+        "performance": 74
+      },
+      "indices": {
+        "sor": 35.03649635036496,
+        "strength": 38.68613138686131,
+        "performance": 46.715328467153284,
+        "triple": 40.14598540145985,
+        "sor+strength": 36.86131386861314,
+        "sor+performance": 40.87591240875912,
+        "strength+performance": 42.7007299270073
+      }
+    },
+    {
+      "id": "153",
+      "team": "North Carolina",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 47,
+        "strength": 45,
+        "performance": 45
+      },
+      "indices": {
+        "sor": 66.42335766423358,
+        "strength": 67.88321167883211,
+        "performance": 67.88321167883211,
+        "triple": 67.39659367396594,
+        "sor+strength": 67.15328467153284,
+        "sor+performance": 67.15328467153284,
+        "strength+performance": 67.88321167883211
+      }
+    },
+    {
+      "id": "154",
+      "team": "Wake Forest",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 14,
+        "strength": 20,
+        "performance": 18
+      },
+      "indices": {
+        "sor": 90.51094890510949,
+        "strength": 86.13138686131387,
+        "performance": 87.5912408759124,
+        "triple": 88.07785888077858,
+        "sor+strength": 88.32116788321167,
+        "sor+performance": 89.05109489051094,
+        "strength+performance": 86.86131386861314
+      }
+    },
+    {
+      "id": "158",
+      "team": "Nebraska",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 67,
+        "strength": 25,
+        "performance": 17
+      },
+      "indices": {
+        "sor": 51.824817518248175,
+        "strength": 82.48175182481752,
+        "performance": 88.32116788321167,
+        "triple": 74.20924574209245,
+        "sor+strength": 67.15328467153284,
+        "sor+performance": 70.07299270072993,
+        "strength+performance": 85.4014598540146
+      }
+    },
+    {
+      "id": "16",
+      "team": "Sacramento State",
+      "games": 10,
+      "measuredGames": 10,
+      "componentRanks": {
+        "sor": 133,
+        "strength": 135,
+        "performance": 120
+      },
+      "indices": {
+        "sor": 3.6496350364963503,
+        "strength": 2.18978102189781,
+        "performance": 13.138686131386862,
+        "triple": 6.326034063260341,
+        "sor+strength": 2.9197080291970803,
+        "sor+performance": 8.394160583941606,
+        "strength+performance": 7.664233576642336
+      }
+    },
+    {
+      "id": "164",
+      "team": "Rutgers",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 124,
+        "strength": 105,
+        "performance": 98
+      },
+      "indices": {
+        "sor": 10.218978102189782,
+        "strength": 24.087591240875913,
+        "performance": 29.197080291970803,
+        "triple": 21.16788321167883,
+        "sor+strength": 17.153284671532848,
+        "sor+performance": 19.708029197080293,
+        "strength+performance": 26.642335766423358
+      }
+    },
+    {
+      "id": "166",
+      "team": "New Mexico State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 125,
+        "strength": 130,
+        "performance": 108
+      },
+      "indices": {
+        "sor": 9.489051094890511,
+        "strength": 5.839416058394161,
+        "performance": 21.8978102189781,
+        "triple": 12.40875912408759,
+        "sor+strength": 7.664233576642336,
+        "sor+performance": 15.693430656934307,
+        "strength+performance": 13.86861313868613
+      }
+    },
+    {
+      "id": "167",
+      "team": "New Mexico",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 23,
+        "strength": 36,
+        "performance": 42
+      },
+      "indices": {
+        "sor": 83.94160583941606,
+        "strength": 74.45255474452554,
+        "performance": 70.07299270072993,
+        "triple": 76.15571776155717,
+        "sor+strength": 79.19708029197079,
+        "sor+performance": 77.00729927007299,
+        "strength+performance": 72.26277372262774
+      }
+    },
+    {
+      "id": "183",
+      "team": "Syracuse",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 86,
+        "strength": 82,
+        "performance": 66
+      },
+      "indices": {
+        "sor": 37.956204379562045,
+        "strength": 40.87591240875913,
+        "performance": 52.55474452554745,
+        "triple": 43.79562043795621,
+        "sor+strength": 39.416058394160586,
+        "sor+performance": 45.25547445255475,
+        "strength+performance": 46.715328467153284
+      }
+    },
+    {
+      "id": "189",
+      "team": "Bowling Green",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 126,
+        "strength": 125,
+        "performance": 124
+      },
+      "indices": {
+        "sor": 8.75912408759124,
+        "strength": 9.489051094890511,
+        "performance": 10.218978102189782,
+        "triple": 9.489051094890511,
+        "sor+strength": 9.124087591240876,
+        "sor+performance": 9.489051094890511,
+        "strength+performance": 9.854014598540147
+      }
+    },
+    {
+      "id": "193",
+      "team": "Miami (OH)",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 85,
+        "strength": 93,
+        "performance": 107
+      },
+      "indices": {
+        "sor": 38.68613138686131,
+        "strength": 32.846715328467155,
+        "performance": 22.62773722627737,
+        "triple": 31.386861313868618,
+        "sor+strength": 35.76642335766424,
+        "sor+performance": 30.65693430656934,
+        "strength+performance": 27.737226277372265
+      }
+    },
+    {
+      "id": "194",
+      "team": "Ohio State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 20,
+        "strength": 6,
+        "performance": 2
+      },
+      "indices": {
+        "sor": 86.13138686131387,
+        "strength": 96.35036496350365,
+        "performance": 99.27007299270073,
+        "triple": 93.91727493917274,
+        "sor+strength": 91.24087591240877,
+        "sor+performance": 92.7007299270073,
+        "strength+performance": 97.8102189781022
+      }
+    },
+    {
+      "id": "195",
+      "team": "Ohio",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 50,
+        "strength": 83,
+        "performance": 79
+      },
+      "indices": {
+        "sor": 64.23357664233576,
+        "strength": 40.14598540145985,
+        "performance": 43.065693430656935,
+        "triple": 49.148418491484186,
+        "sor+strength": 52.18978102189781,
+        "sor+performance": 53.64963503649635,
+        "strength+performance": 41.605839416058394
+      }
+    },
+    {
+      "id": "197",
+      "team": "Oklahoma State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 32,
+        "strength": 35,
+        "performance": 11
+      },
+      "indices": {
+        "sor": 77.37226277372262,
+        "strength": 75.18248175182482,
+        "performance": 92.7007299270073,
+        "triple": 81.75182481751825,
+        "sor+strength": 76.27737226277372,
+        "sor+performance": 85.03649635036496,
+        "strength+performance": 83.94160583941607
+      }
+    },
+    {
+      "id": "2",
+      "team": "Auburn",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 39,
+        "strength": 52,
+        "performance": 55
+      },
+      "indices": {
+        "sor": 72.26277372262774,
+        "strength": 62.77372262773723,
+        "performance": 60.583941605839414,
+        "triple": 65.20681265206814,
+        "sor+strength": 67.51824817518249,
+        "sor+performance": 66.42335766423358,
+        "strength+performance": 61.67883211678832
+      }
+    },
+    {
+      "id": "2005",
+      "team": "Air Force",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 41,
+        "strength": 80,
+        "performance": 50
+      },
+      "indices": {
+        "sor": 70.8029197080292,
+        "strength": 42.33576642335766,
+        "performance": 64.23357664233576,
+        "triple": 59.12408759124088,
+        "sor+strength": 56.56934306569343,
+        "sor+performance": 67.51824817518248,
+        "strength+performance": 53.284671532846716
+      }
+    },
+    {
+      "id": "2006",
+      "team": "Akron",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 134,
+        "strength": 133,
+        "performance": 106
+      },
+      "indices": {
+        "sor": 2.9197080291970803,
+        "strength": 3.6496350364963503,
+        "performance": 23.357664233576642,
+        "triple": 9.975669099756692,
+        "sor+strength": 3.2846715328467155,
+        "sor+performance": 13.138686131386862,
+        "strength+performance": 13.503649635036496
+      }
+    },
+    {
+      "id": "201",
+      "team": "Oklahoma",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 26,
+        "strength": 37,
+        "performance": 19
+      },
+      "indices": {
+        "sor": 81.75182481751825,
+        "strength": 73.72262773722628,
+        "performance": 86.86131386861314,
+        "triple": 80.77858880778588,
+        "sor+strength": 77.73722627737226,
+        "sor+performance": 84.30656934306569,
+        "strength+performance": 80.2919708029197
+      }
+    },
+    {
+      "id": "202",
+      "team": "Tulsa",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 83,
+        "strength": 76,
+        "performance": 72
+      },
+      "indices": {
+        "sor": 40.14598540145985,
+        "strength": 45.25547445255474,
+        "performance": 48.175182481751825,
+        "triple": 44.52554744525548,
+        "sor+strength": 42.7007299270073,
+        "sor+performance": 44.160583941605836,
+        "strength+performance": 46.715328467153284
+      }
+    },
+    {
+      "id": "2026",
+      "team": "App State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 95,
+        "strength": 111,
+        "performance": 97
+      },
+      "indices": {
+        "sor": 31.386861313868614,
+        "strength": 19.708029197080293,
+        "performance": 29.927007299270073,
+        "triple": 27.00729927007299,
+        "sor+strength": 25.547445255474454,
+        "sor+performance": 30.656934306569344,
+        "strength+performance": 24.817518248175183
+      }
+    },
+    {
+      "id": "2032",
+      "team": "Arkansas State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 112,
+        "strength": 109,
+        "performance": 89
+      },
+      "indices": {
+        "sor": 18.978102189781023,
+        "strength": 21.16788321167883,
+        "performance": 35.76642335766423,
+        "triple": 25.30413625304136,
+        "sor+strength": 20.072992700729927,
+        "sor+performance": 27.372262773722625,
+        "strength+performance": 28.467153284671532
+      }
+    },
+    {
+      "id": "204",
+      "team": "Oregon State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 75,
+        "strength": 58,
+        "performance": 58
+      },
+      "indices": {
+        "sor": 45.98540145985402,
+        "strength": 58.394160583941606,
+        "performance": 58.394160583941606,
+        "triple": 54.25790754257908,
+        "sor+strength": 52.189781021897815,
+        "sor+performance": 52.189781021897815,
+        "strength+performance": 58.394160583941606
+      }
+    },
+    {
+      "id": "2050",
+      "team": "Ball State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 116,
+        "strength": 129,
+        "performance": 112
+      },
+      "indices": {
+        "sor": 16.05839416058394,
+        "strength": 6.569343065693431,
+        "performance": 18.978102189781023,
+        "triple": 13.86861313868613,
+        "sor+strength": 11.313868613138686,
+        "sor+performance": 17.51824817518248,
+        "strength+performance": 12.773722627737227
+      }
+    },
+    {
+      "id": "2084",
+      "team": "Buffalo",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 65,
+        "strength": 112,
+        "performance": 131
+      },
+      "indices": {
+        "sor": 53.284671532846716,
+        "strength": 18.978102189781023,
+        "performance": 5.109489051094891,
+        "triple": 25.790754257907547,
+        "sor+strength": 36.13138686131387,
+        "sor+performance": 29.197080291970803,
+        "strength+performance": 12.043795620437956
+      }
+    },
+    {
+      "id": "21",
+      "team": "San Diego State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 88,
+        "strength": 98,
+        "performance": 135
+      },
+      "indices": {
+        "sor": 36.496350364963504,
+        "strength": 29.197080291970803,
+        "performance": 2.18978102189781,
+        "triple": 22.627737226277375,
+        "sor+strength": 32.846715328467155,
+        "sor+performance": 19.343065693430656,
+        "strength+performance": 15.693430656934307
+      }
+    },
+    {
+      "id": "2116",
+      "team": "UCF",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 57,
+        "strength": 65,
+        "performance": 59
+      },
+      "indices": {
+        "sor": 59.12408759124087,
+        "strength": 53.284671532846716,
+        "performance": 57.66423357664234,
+        "triple": 56.69099756690998,
+        "sor+strength": 56.2043795620438,
+        "sor+performance": 58.394160583941606,
+        "strength+performance": 55.47445255474453
+      }
+    },
+    {
+      "id": "2117",
+      "team": "Central Michigan",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 97,
+        "strength": 99,
+        "performance": 125
+      },
+      "indices": {
+        "sor": 29.927007299270073,
+        "strength": 28.467153284671532,
+        "performance": 9.489051094890511,
+        "triple": 22.62773722627737,
+        "sor+strength": 29.197080291970803,
+        "sor+performance": 19.708029197080293,
+        "strength+performance": 18.978102189781023
+      }
+    },
+    {
+      "id": "213",
+      "team": "Penn State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 55,
+        "strength": 33,
+        "performance": 54
+      },
+      "indices": {
+        "sor": 60.583941605839414,
+        "strength": 76.64233576642336,
+        "performance": 61.31386861313869,
+        "triple": 66.18004866180048,
+        "sor+strength": 68.61313868613138,
+        "sor+performance": 60.94890510948905,
+        "strength+performance": 68.97810218978103
+      }
+    },
+    {
+      "id": "2132",
+      "team": "Cincinnati",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 49,
+        "strength": 55,
+        "performance": 63
+      },
+      "indices": {
+        "sor": 64.96350364963503,
+        "strength": 60.583941605839414,
+        "performance": 54.74452554744526,
+        "triple": 60.09732360097323,
+        "sor+strength": 62.77372262773722,
+        "sor+performance": 59.85401459854015,
+        "strength+performance": 57.66423357664233
+      }
+    },
+    {
+      "id": "218",
+      "team": "Temple",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 130,
+        "strength": 108,
+        "performance": 121
+      },
+      "indices": {
+        "sor": 5.839416058394161,
+        "strength": 21.8978102189781,
+        "performance": 12.408759124087592,
+        "triple": 13.38199513381995,
+        "sor+strength": 13.86861313868613,
+        "sor+performance": 9.124087591240876,
+        "strength+performance": 17.153284671532845
+      }
+    },
+    {
+      "id": "2199",
+      "team": "Eastern Michigan",
+      "games": 10,
+      "measuredGames": 10,
+      "componentRanks": {
+        "sor": 115,
+        "strength": 127,
+        "performance": 127
+      },
+      "indices": {
+        "sor": 16.78832116788321,
+        "strength": 8.02919708029197,
+        "performance": 8.02919708029197,
+        "triple": 10.948905109489052,
+        "sor+strength": 12.408759124087592,
+        "sor+performance": 12.408759124087592,
+        "strength+performance": 8.02919708029197
+      }
+    },
+    {
+      "id": "221",
+      "team": "Pittsburgh",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 52,
+        "strength": 47,
+        "performance": 27
+      },
+      "indices": {
+        "sor": 62.77372262773723,
+        "strength": 66.42335766423358,
+        "performance": 81.02189781021897,
+        "triple": 70.07299270072993,
+        "sor+strength": 64.5985401459854,
+        "sor+performance": 71.8978102189781,
+        "strength+performance": 73.72262773722628
+      }
+    },
+    {
+      "id": "2226",
+      "team": "Florida Atlantic",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 56,
+        "strength": 89,
+        "performance": 77
+      },
+      "indices": {
+        "sor": 59.85401459854015,
+        "strength": 35.76642335766423,
+        "performance": 44.52554744525548,
+        "triple": 46.715328467153284,
+        "sor+strength": 47.810218978102185,
+        "sor+performance": 52.189781021897815,
+        "strength+performance": 40.14598540145985
+      }
+    },
+    {
+      "id": "2229",
+      "team": "Florida International",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 101,
+        "strength": 103,
+        "performance": 110
+      },
+      "indices": {
+        "sor": 27.00729927007299,
+        "strength": 25.547445255474454,
+        "performance": 20.437956204379564,
+        "triple": 24.330900243309003,
+        "sor+strength": 26.277372262773724,
+        "sor+performance": 23.722627737226276,
+        "strength+performance": 22.99270072992701
+      }
+    },
+    {
+      "id": "2247",
+      "team": "Georgia State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 99,
+        "strength": 91,
+        "performance": 73
+      },
+      "indices": {
+        "sor": 28.467153284671532,
+        "strength": 34.306569343065696,
+        "performance": 47.44525547445255,
+        "triple": 36.73965936739659,
+        "sor+strength": 31.386861313868614,
+        "sor+performance": 37.95620437956204,
+        "strength+performance": 40.87591240875912
+      }
+    },
+    {
+      "id": "228",
+      "team": "Clemson",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 38,
+        "strength": 48,
+        "performance": 81
+      },
+      "indices": {
+        "sor": 72.99270072992701,
+        "strength": 65.69343065693431,
+        "performance": 41.605839416058394,
+        "triple": 60.09732360097323,
+        "sor+strength": 69.34306569343066,
+        "sor+performance": 57.2992700729927,
+        "strength+performance": 53.64963503649635
+      }
+    },
+    {
+      "id": "2294",
+      "team": "Iowa",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 19,
+        "strength": 13,
+        "performance": 15
+      },
+      "indices": {
+        "sor": 86.86131386861314,
+        "strength": 91.24087591240875,
+        "performance": 89.78102189781022,
+        "triple": 89.29440389294403,
+        "sor+strength": 89.05109489051094,
+        "sor+performance": 88.32116788321167,
+        "strength+performance": 90.51094890510949
+      }
+    },
+    {
+      "id": "23",
+      "team": "San José State",
+      "games": 10,
+      "measuredGames": 10,
+      "componentRanks": {
+        "sor": 105,
+        "strength": 114,
+        "performance": 134
+      },
+      "indices": {
+        "sor": 24.087591240875913,
+        "strength": 17.51824817518248,
+        "performance": 2.9197080291970803,
+        "triple": 14.841849148418492,
+        "sor+strength": 20.802919708029197,
+        "sor+performance": 13.503649635036496,
+        "strength+performance": 10.21897810218978
+      }
+    },
+    {
+      "id": "2305",
+      "team": "Kansas",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 108,
+        "strength": 72,
+        "performance": 36
+      },
+      "indices": {
+        "sor": 21.8978102189781,
+        "strength": 48.175182481751825,
+        "performance": 74.45255474452554,
+        "triple": 48.175182481751825,
+        "sor+strength": 35.03649635036496,
+        "sor+performance": 48.17518248175182,
+        "strength+performance": 61.31386861313868
+      }
+    },
+    {
+      "id": "2306",
+      "team": "Kansas State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 102,
+        "strength": 77,
+        "performance": 34
+      },
+      "indices": {
+        "sor": 26.277372262773724,
+        "strength": 44.52554744525548,
+        "performance": 75.91240875912409,
+        "triple": 48.90510948905111,
+        "sor+strength": 35.401459854014604,
+        "sor+performance": 51.09489051094891,
+        "strength+performance": 60.21897810218978
+      }
+    },
+    {
+      "id": "2309",
+      "team": "Kent State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 118,
+        "strength": 131,
+        "performance": 136
+      },
+      "indices": {
+        "sor": 14.598540145985401,
+        "strength": 5.109489051094891,
+        "performance": 1.4598540145985401,
+        "triple": 7.055961070559611,
+        "sor+strength": 9.854014598540147,
+        "sor+performance": 8.02919708029197,
+        "strength+performance": 3.2846715328467155
+      }
+    },
+    {
+      "id": "2335",
+      "team": "Liberty",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 33,
+        "strength": 43,
+        "performance": 22
+      },
+      "indices": {
+        "sor": 76.64233576642336,
+        "strength": 69.34306569343066,
+        "performance": 84.67153284671532,
+        "triple": 76.88564476885644,
+        "sor+strength": 72.99270072992701,
+        "sor+performance": 80.65693430656934,
+        "strength+performance": 77.00729927007299
+      }
+    },
+    {
+      "id": "2348",
+      "team": "Louisiana Tech",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 28,
+        "strength": 57,
+        "performance": 70
+      },
+      "indices": {
+        "sor": 80.2919708029197,
+        "strength": 59.12408759124087,
+        "performance": 49.63503649635037,
+        "triple": 63.01703163017032,
+        "sor+strength": 69.7080291970803,
+        "sor+performance": 64.96350364963504,
+        "strength+performance": 54.379562043795616
+      }
+    },
+    {
+      "id": "235",
+      "team": "Memphis",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 36,
+        "strength": 50,
+        "performance": 39
+      },
+      "indices": {
+        "sor": 74.45255474452554,
+        "strength": 64.23357664233576,
+        "performance": 72.26277372262774,
+        "triple": 70.316301703163,
+        "sor+strength": 69.34306569343065,
+        "sor+performance": 73.35766423357664,
+        "strength+performance": 68.24817518248176
+      }
+    },
+    {
+      "id": "238",
+      "team": "Vanderbilt",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 76,
+        "strength": 68,
+        "performance": 80
+      },
+      "indices": {
+        "sor": 45.25547445255474,
+        "strength": 51.09489051094891,
+        "performance": 42.33576642335766,
+        "triple": 46.228710462287104,
+        "sor+strength": 48.175182481751825,
+        "sor+performance": 43.7956204379562,
+        "strength+performance": 46.715328467153284
+      }
+    },
+    {
+      "id": "239",
+      "team": "Baylor",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 46,
+        "strength": 28,
+        "performance": 44
+      },
+      "indices": {
+        "sor": 67.15328467153284,
+        "strength": 80.2919708029197,
+        "performance": 68.61313868613139,
+        "triple": 72.01946472019465,
+        "sor+strength": 73.72262773722628,
+        "sor+performance": 67.88321167883211,
+        "strength+performance": 74.45255474452554
+      }
+    },
+    {
+      "id": "2390",
+      "team": "Miami",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 3,
+        "strength": 4,
+        "performance": 12
+      },
+      "indices": {
+        "sor": 98.54014598540147,
+        "strength": 97.81021897810218,
+        "performance": 91.97080291970804,
+        "triple": 96.10705596107056,
+        "sor+strength": 98.17518248175182,
+        "sor+performance": 95.25547445255475,
+        "strength+performance": 94.8905109489051
+      }
+    },
+    {
+      "id": "2393",
+      "team": "Middle Tennessee",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 100,
+        "strength": 126,
+        "performance": 130
+      },
+      "indices": {
+        "sor": 27.73722627737226,
+        "strength": 8.75912408759124,
+        "performance": 5.839416058394161,
+        "triple": 14.111922141119223,
+        "sor+strength": 18.248175182481752,
+        "sor+performance": 16.78832116788321,
+        "strength+performance": 7.299270072992701
+      }
+    },
+    {
+      "id": "24",
+      "team": "Stanford",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 78,
+        "strength": 106,
+        "performance": 126
+      },
+      "indices": {
+        "sor": 43.7956204379562,
+        "strength": 23.357664233576642,
+        "performance": 8.75912408759124,
+        "triple": 25.304136253041364,
+        "sor+strength": 33.57664233576642,
+        "sor+performance": 26.27737226277372,
+        "strength+performance": 16.05839416058394
+      }
+    },
+    {
+      "id": "242",
+      "team": "Rice",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 131,
+        "strength": 122,
+        "performance": 99
+      },
+      "indices": {
+        "sor": 5.109489051094891,
+        "strength": 11.678832116788321,
+        "performance": 28.467153284671532,
+        "triple": 15.085158150851582,
+        "sor+strength": 8.394160583941606,
+        "sor+performance": 16.78832116788321,
+        "strength+performance": 20.072992700729927
+      }
+    },
+    {
+      "id": "2426",
+      "team": "Navy",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 106,
+        "strength": 84,
+        "performance": 41
+      },
+      "indices": {
+        "sor": 23.357664233576642,
+        "strength": 39.416058394160586,
+        "performance": 70.8029197080292,
+        "triple": 44.52554744525548,
+        "sor+strength": 31.386861313868614,
+        "sor+performance": 47.08029197080292,
+        "strength+performance": 55.10948905109489
+      }
+    },
+    {
+      "id": "2429",
+      "team": "Charlotte",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 135,
+        "strength": 134,
+        "performance": 138
+      },
+      "indices": {
+        "sor": 2.18978102189781,
+        "strength": 2.9197080291970803,
+        "performance": 0,
+        "triple": 1.70316301703163,
+        "sor+strength": 2.554744525547445,
+        "sor+performance": 1.094890510948905,
+        "strength+performance": 1.4598540145985401
+      }
+    },
+    {
+      "id": "2433",
+      "team": "UL Monroe",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 129,
+        "strength": 136,
+        "performance": 117
+      },
+      "indices": {
+        "sor": 6.569343065693431,
+        "strength": 1.4598540145985401,
+        "performance": 15.328467153284672,
+        "triple": 7.785888077858881,
+        "sor+strength": 4.014598540145986,
+        "sor+performance": 10.94890510948905,
+        "strength+performance": 8.394160583941606
+      }
+    },
+    {
+      "id": "2439",
+      "team": "UNLV",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 74,
+        "strength": 88,
+        "performance": 105
+      },
+      "indices": {
+        "sor": 46.715328467153284,
+        "strength": 36.496350364963504,
+        "performance": 24.087591240875913,
+        "triple": 35.76642335766423,
+        "sor+strength": 41.605839416058394,
+        "sor+performance": 35.4014598540146,
+        "strength+performance": 30.291970802919707
+      }
+    },
+    {
+      "id": "2440",
+      "team": "Nevada",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 113,
+        "strength": 100,
+        "performance": 100
+      },
+      "indices": {
+        "sor": 18.248175182481752,
+        "strength": 27.73722627737226,
+        "performance": 27.73722627737226,
+        "triple": 24.574209245742093,
+        "sor+strength": 22.99270072992701,
+        "sor+performance": 22.99270072992701,
+        "strength+performance": 27.73722627737226
+      }
+    },
+    {
+      "id": "2449",
+      "team": "North Dakota State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 30,
+        "strength": 32,
+        "performance": 83
+      },
+      "indices": {
+        "sor": 78.83211678832117,
+        "strength": 77.37226277372262,
+        "performance": 40.14598540145985,
+        "triple": 65.45012165450122,
+        "sor+strength": 78.1021897810219,
+        "sor+performance": 59.48905109489051,
+        "strength+performance": 58.75912408759124
+      }
+    },
+    {
+      "id": "245",
+      "team": "Texas A&M",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 71,
+        "strength": 34,
+        "performance": 32
+      },
+      "indices": {
+        "sor": 48.90510948905109,
+        "strength": 75.91240875912409,
+        "performance": 77.37226277372262,
+        "triple": 67.39659367396594,
+        "sor+strength": 62.408759124087595,
+        "sor+performance": 63.13868613138686,
+        "strength+performance": 76.64233576642336
+      }
+    },
+    {
+      "id": "2459",
+      "team": "Northern Illinois",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 138,
+        "strength": 137,
+        "performance": 128
+      },
+      "indices": {
+        "sor": 0,
+        "strength": 0.7299270072992701,
+        "performance": 7.299270072992701,
+        "triple": 2.67639902676399,
+        "sor+strength": 0.36496350364963503,
+        "sor+performance": 3.6496350364963503,
+        "strength+performance": 4.014598540145985
+      }
+    },
+    {
+      "id": "248",
+      "team": "Houston",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 13,
+        "strength": 21,
+        "performance": 10
+      },
+      "indices": {
+        "sor": 91.24087591240875,
+        "strength": 85.4014598540146,
+        "performance": 93.43065693430657,
+        "triple": 90.0243309002433,
+        "sor+strength": 88.32116788321167,
+        "sor+performance": 92.33576642335765,
+        "strength+performance": 89.41605839416059
+      }
+    },
+    {
+      "id": "2483",
+      "team": "Oregon",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 16,
+        "strength": 11,
+        "performance": 16
+      },
+      "indices": {
+        "sor": 89.05109489051095,
+        "strength": 92.7007299270073,
+        "performance": 89.05109489051095,
+        "triple": 90.26763990267641,
+        "sor+strength": 90.87591240875912,
+        "sor+performance": 89.05109489051095,
+        "strength+performance": 90.87591240875912
+      }
+    },
+    {
+      "id": "249",
+      "team": "North Texas",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 29,
+        "strength": 39,
+        "performance": 46
+      },
+      "indices": {
+        "sor": 79.56204379562044,
+        "strength": 72.26277372262774,
+        "performance": 67.15328467153284,
+        "triple": 72.99270072992701,
+        "sor+strength": 75.91240875912409,
+        "sor+performance": 73.35766423357664,
+        "strength+performance": 69.7080291970803
+      }
+    },
+    {
+      "id": "25",
+      "team": "California",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 98,
+        "strength": 115,
+        "performance": 93
+      },
+      "indices": {
+        "sor": 29.197080291970803,
+        "strength": 16.78832116788321,
+        "performance": 32.846715328467155,
+        "triple": 26.277372262773724,
+        "sor+strength": 22.99270072992701,
+        "sor+performance": 31.02189781021898,
+        "strength+performance": 24.817518248175183
+      }
+    },
+    {
+      "id": "2509",
+      "team": "Purdue",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 103,
+        "strength": 81,
+        "performance": 85
+      },
+      "indices": {
+        "sor": 25.547445255474454,
+        "strength": 41.605839416058394,
+        "performance": 38.68613138686131,
+        "triple": 35.27980535279806,
+        "sor+strength": 33.57664233576642,
+        "sor+performance": 32.11678832116788,
+        "strength+performance": 40.14598540145985
+      }
+    },
+    {
+      "id": "251",
+      "team": "Texas",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 7,
+        "strength": 7,
+        "performance": 7
+      },
+      "indices": {
+        "sor": 95.62043795620438,
+        "strength": 95.62043795620438,
+        "performance": 95.62043795620438,
+        "triple": 95.62043795620438,
+        "sor+strength": 95.62043795620438,
+        "sor+performance": 95.62043795620438,
+        "strength+performance": 95.62043795620438
+      }
+    },
+    {
+      "id": "252",
+      "team": "BYU",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 12,
+        "strength": 17,
+        "performance": 25
+      },
+      "indices": {
+        "sor": 91.97080291970804,
+        "strength": 88.32116788321167,
+        "performance": 82.48175182481752,
+        "triple": 87.59124087591242,
+        "sor+strength": 90.14598540145985,
+        "sor+performance": 87.22627737226279,
+        "strength+performance": 85.4014598540146
+      }
+    },
+    {
+      "id": "2534",
+      "team": "Sam Houston",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 137,
+        "strength": 132,
+        "performance": 122
+      },
+      "indices": {
+        "sor": 0.7299270072992701,
+        "strength": 4.37956204379562,
+        "performance": 11.678832116788321,
+        "triple": 5.59610705596107,
+        "sor+strength": 2.554744525547445,
+        "sor+performance": 6.204379562043796,
+        "strength+performance": 8.02919708029197
+      }
+    },
+    {
+      "id": "254",
+      "team": "Utah",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 1,
+        "strength": 5,
+        "performance": 5
+      },
+      "indices": {
+        "sor": 100,
+        "strength": 97.08029197080292,
+        "performance": 97.08029197080292,
+        "triple": 98.05352798053529,
+        "sor+strength": 98.54014598540147,
+        "sor+performance": 98.54014598540147,
+        "strength+performance": 97.08029197080292
+      }
+    },
+    {
+      "id": "256",
+      "team": "James Madison",
+      "games": 10,
+      "measuredGames": 10,
+      "componentRanks": {
+        "sor": 34,
+        "strength": 31,
+        "performance": 53
+      },
+      "indices": {
+        "sor": 75.91240875912409,
+        "strength": 78.10218978102189,
+        "performance": 62.043795620437955,
+        "triple": 72.01946472019465,
+        "sor+strength": 77.00729927007299,
+        "sor+performance": 68.97810218978103,
+        "strength+performance": 70.07299270072993
+      }
+    },
+    {
+      "id": "2567",
+      "team": "SMU",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 40,
+        "strength": 30,
+        "performance": 31
+      },
+      "indices": {
+        "sor": 71.53284671532846,
+        "strength": 78.83211678832117,
+        "performance": 78.10218978102189,
+        "triple": 76.15571776155717,
+        "sor+strength": 75.18248175182481,
+        "sor+performance": 74.81751824817518,
+        "strength+performance": 78.46715328467153
+      }
+    },
+    {
+      "id": "2572",
+      "team": "Southern Miss",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 122,
+        "strength": 128,
+        "performance": 118
+      },
+      "indices": {
+        "sor": 11.678832116788321,
+        "strength": 7.299270072992701,
+        "performance": 14.598540145985401,
+        "triple": 11.19221411192214,
+        "sor+strength": 9.489051094890511,
+        "sor+performance": 13.138686131386862,
+        "strength+performance": 10.94890510948905
+      }
+    },
+    {
+      "id": "2579",
+      "team": "South Carolina",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 24,
+        "strength": 27,
+        "performance": 35
+      },
+      "indices": {
+        "sor": 83.21167883211679,
+        "strength": 81.02189781021897,
+        "performance": 75.18248175182482,
+        "triple": 79.80535279805353,
+        "sor+strength": 82.11678832116789,
+        "sor+performance": 79.1970802919708,
+        "strength+performance": 78.1021897810219
+      }
+    },
+    {
+      "id": "258",
+      "team": "Virginia",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 89,
+        "strength": 61,
+        "performance": 67
+      },
+      "indices": {
+        "sor": 35.76642335766423,
+        "strength": 56.2043795620438,
+        "performance": 51.824817518248175,
+        "triple": 47.93187347931874,
+        "sor+strength": 45.98540145985402,
+        "sor+performance": 43.7956204379562,
+        "strength+performance": 54.01459854014598
+      }
+    },
+    {
+      "id": "259",
+      "team": "Virginia Tech",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 58,
+        "strength": 71,
+        "performance": 56
+      },
+      "indices": {
+        "sor": 58.394160583941606,
+        "strength": 48.90510948905109,
+        "performance": 59.85401459854015,
+        "triple": 55.71776155717762,
+        "sor+strength": 53.64963503649635,
+        "sor+performance": 59.12408759124088,
+        "strength+performance": 54.379562043795616
+      }
+    },
+    {
+      "id": "26",
+      "team": "UCLA",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 2,
+        "strength": 16,
+        "performance": 9
+      },
+      "indices": {
+        "sor": 99.27007299270073,
+        "strength": 89.05109489051095,
+        "performance": 94.16058394160584,
+        "triple": 94.16058394160582,
+        "sor+strength": 94.16058394160584,
+        "sor+performance": 96.71532846715328,
+        "strength+performance": 91.60583941605839
+      }
+    },
+    {
+      "id": "2623",
+      "team": "Missouri State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 128,
+        "strength": 121,
+        "performance": 133
+      },
+      "indices": {
+        "sor": 7.299270072992701,
+        "strength": 12.408759124087592,
+        "performance": 3.6496350364963503,
+        "triple": 7.785888077858881,
+        "sor+strength": 9.854014598540147,
+        "sor+performance": 5.474452554744525,
+        "strength+performance": 8.02919708029197
+      }
+    },
+    {
+      "id": "2628",
+      "team": "TCU",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 81,
+        "strength": 44,
+        "performance": 33
+      },
+      "indices": {
+        "sor": 41.605839416058394,
+        "strength": 68.61313868613139,
+        "performance": 76.64233576642336,
+        "triple": 62.28710462287105,
+        "sor+strength": 55.1094890510949,
+        "sor+performance": 59.12408759124088,
+        "strength+performance": 72.62773722627738
+      }
+    },
+    {
+      "id": "2633",
+      "team": "Tennessee",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 15,
+        "strength": 9,
+        "performance": 24
+      },
+      "indices": {
+        "sor": 89.78102189781022,
+        "strength": 94.16058394160584,
+        "performance": 83.21167883211679,
+        "triple": 89.05109489051095,
+        "sor+strength": 91.97080291970804,
+        "sor+performance": 86.4963503649635,
+        "strength+performance": 88.68613138686132
+      }
+    },
+    {
+      "id": "2636",
+      "team": "UTSA",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 25,
+        "strength": 59,
+        "performance": 65
+      },
+      "indices": {
+        "sor": 82.48175182481752,
+        "strength": 57.66423357664234,
+        "performance": 53.284671532846716,
+        "triple": 64.47688564476886,
+        "sor+strength": 70.07299270072993,
+        "sor+performance": 67.88321167883211,
+        "strength+performance": 55.47445255474453
+      }
+    },
+    {
+      "id": "2638",
+      "team": "UTEP",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 136,
+        "strength": 138,
+        "performance": 137
+      },
+      "indices": {
+        "sor": 1.4598540145985401,
+        "strength": 0,
+        "performance": 0.7299270072992701,
+        "triple": 0.7299270072992701,
+        "sor+strength": 0.7299270072992701,
+        "sor+performance": 1.094890510948905,
+        "strength+performance": 0.36496350364963503
+      }
+    },
+    {
+      "id": "264",
+      "team": "Washington",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 70,
+        "strength": 46,
+        "performance": 61
+      },
+      "indices": {
+        "sor": 49.63503649635037,
+        "strength": 67.15328467153284,
+        "performance": 56.2043795620438,
+        "triple": 57.66423357664234,
+        "sor+strength": 58.394160583941606,
+        "sor+performance": 52.91970802919708,
+        "strength+performance": 61.67883211678832
+      }
+    },
+    {
+      "id": "2641",
+      "team": "Texas Tech",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 9,
+        "strength": 14,
+        "performance": 26
+      },
+      "indices": {
+        "sor": 94.16058394160584,
+        "strength": 90.51094890510949,
+        "performance": 81.75182481751825,
+        "triple": 88.80778588807785,
+        "sor+strength": 92.33576642335765,
+        "sor+performance": 87.95620437956205,
+        "strength+performance": 86.13138686131387
+      }
+    },
+    {
+      "id": "2649",
+      "team": "Toledo",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 51,
+        "strength": 63,
+        "performance": 64
+      },
+      "indices": {
+        "sor": 63.503649635036496,
+        "strength": 54.74452554744526,
+        "performance": 54.01459854014598,
+        "triple": 57.420924574209245,
+        "sor+strength": 59.12408759124088,
+        "sor+performance": 58.75912408759124,
+        "strength+performance": 54.379562043795616
+      }
+    },
+    {
+      "id": "265",
+      "team": "Washington State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 132,
+        "strength": 101,
+        "performance": 103
+      },
+      "indices": {
+        "sor": 4.37956204379562,
+        "strength": 27.00729927007299,
+        "performance": 25.547445255474454,
+        "triple": 18.978102189781023,
+        "sor+strength": 15.693430656934305,
+        "sor+performance": 14.963503649635037,
+        "strength+performance": 26.277372262773724
+      }
+    },
+    {
+      "id": "2653",
+      "team": "Troy",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 107,
+        "strength": 113,
+        "performance": 114
+      },
+      "indices": {
+        "sor": 22.62773722627737,
+        "strength": 18.248175182481752,
+        "performance": 17.51824817518248,
+        "triple": 19.4647201946472,
+        "sor+strength": 20.43795620437956,
+        "sor+performance": 20.072992700729927,
+        "strength+performance": 17.88321167883212
+      }
+    },
+    {
+      "id": "2655",
+      "team": "Tulane",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 92,
+        "strength": 104,
+        "performance": 132
+      },
+      "indices": {
+        "sor": 33.57664233576642,
+        "strength": 24.817518248175183,
+        "performance": 4.37956204379562,
+        "triple": 20.924574209245744,
+        "sor+strength": 29.197080291970803,
+        "sor+performance": 18.978102189781023,
+        "strength+performance": 14.598540145985401
+      }
+    },
+    {
+      "id": "2711",
+      "team": "Western Michigan",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 48,
+        "strength": 62,
+        "performance": 102
+      },
+      "indices": {
+        "sor": 65.69343065693431,
+        "strength": 55.47445255474452,
+        "performance": 26.277372262773724,
+        "triple": 49.148418491484186,
+        "sor+strength": 60.583941605839414,
+        "sor+performance": 45.98540145985402,
+        "strength+performance": 40.87591240875912
+      }
+    },
+    {
+      "id": "275",
+      "team": "Wisconsin",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 27,
+        "strength": 38,
+        "performance": 57
+      },
+      "indices": {
+        "sor": 81.02189781021897,
+        "strength": 72.99270072992701,
+        "performance": 59.12408759124087,
+        "triple": 71.04622871046229,
+        "sor+strength": 77.00729927007299,
+        "sor+performance": 70.07299270072993,
+        "strength+performance": 66.05839416058394
+      }
+    },
+    {
+      "id": "2751",
+      "team": "Wyoming",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 59,
+        "strength": 102,
+        "performance": 96
+      },
+      "indices": {
+        "sor": 57.66423357664234,
+        "strength": 26.277372262773724,
+        "performance": 30.656934306569344,
+        "triple": 38.19951338199514,
+        "sor+strength": 41.970802919708035,
+        "sor+performance": 44.16058394160584,
+        "strength+performance": 28.467153284671532
+      }
+    },
+    {
+      "id": "276",
+      "team": "Marshall",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 84,
+        "strength": 118,
+        "performance": 109
+      },
+      "indices": {
+        "sor": 39.416058394160586,
+        "strength": 14.598540145985401,
+        "performance": 21.16788321167883,
+        "triple": 25.060827250608273,
+        "sor+strength": 27.007299270072995,
+        "sor+performance": 30.291970802919707,
+        "strength+performance": 17.883211678832115
+      }
+    },
+    {
+      "id": "277",
+      "team": "West Virginia",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 61,
+        "strength": 64,
+        "performance": 87
+      },
+      "indices": {
+        "sor": 56.2043795620438,
+        "strength": 54.01459854014598,
+        "performance": 37.22627737226277,
+        "triple": 49.148418491484186,
+        "sor+strength": 55.10948905109489,
+        "sor+performance": 46.715328467153284,
+        "strength+performance": 45.62043795620438
+      }
+    },
+    {
+      "id": "278",
+      "team": "Fresno State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 72,
+        "strength": 60,
+        "performance": 111
+      },
+      "indices": {
+        "sor": 48.175182481751825,
+        "strength": 56.934306569343065,
+        "performance": 19.708029197080293,
+        "triple": 41.605839416058394,
+        "sor+strength": 52.55474452554745,
+        "sor+performance": 33.941605839416056,
+        "strength+performance": 38.32116788321168
+      }
+    },
+    {
+      "id": "290",
+      "team": "Georgia Southern",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 69,
+        "strength": 69,
+        "performance": 62
+      },
+      "indices": {
+        "sor": 50.36496350364963,
+        "strength": 50.36496350364963,
+        "performance": 55.47445255474452,
+        "triple": 52.06812652068126,
+        "sor+strength": 50.36496350364963,
+        "sor+performance": 52.91970802919708,
+        "strength+performance": 52.91970802919708
+      }
+    },
+    {
+      "id": "295",
+      "team": "Old Dominion",
+      "games": 10,
+      "measuredGames": 10,
+      "componentRanks": {
+        "sor": 119,
+        "strength": 116,
+        "performance": 115
+      },
+      "indices": {
+        "sor": 13.86861313868613,
+        "strength": 16.05839416058394,
+        "performance": 16.78832116788321,
+        "triple": 15.571776155717762,
+        "sor+strength": 14.963503649635037,
+        "sor+performance": 15.32846715328467,
+        "strength+performance": 16.423357664233578
+      }
+    },
+    {
+      "id": "30",
+      "team": "USC",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 18,
+        "strength": 22,
+        "performance": 21
+      },
+      "indices": {
+        "sor": 87.5912408759124,
+        "strength": 84.67153284671532,
+        "performance": 85.4014598540146,
+        "triple": 85.88807785888078,
+        "sor+strength": 86.13138686131387,
+        "sor+performance": 86.4963503649635,
+        "strength+performance": 85.03649635036496
+      }
+    },
+    {
+      "id": "309",
+      "team": "Louisiana",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 64,
+        "strength": 79,
+        "performance": 76
+      },
+      "indices": {
+        "sor": 54.01459854014598,
+        "strength": 43.065693430656935,
+        "performance": 45.25547445255474,
+        "triple": 47.44525547445255,
+        "sor+strength": 48.54014598540146,
+        "sor+performance": 49.63503649635037,
+        "strength+performance": 44.160583941605836
+      }
+    },
+    {
+      "id": "324",
+      "team": "Coastal Carolina",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 121,
+        "strength": 110,
+        "performance": 119
+      },
+      "indices": {
+        "sor": 12.408759124087592,
+        "strength": 20.437956204379564,
+        "performance": 13.86861313868613,
+        "triple": 15.571776155717762,
+        "sor+strength": 16.423357664233578,
+        "sor+performance": 13.138686131386862,
+        "strength+performance": 17.153284671532848
+      }
+    },
+    {
+      "id": "326",
+      "team": "Texas State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 53,
+        "strength": 42,
+        "performance": 38
+      },
+      "indices": {
+        "sor": 62.043795620437955,
+        "strength": 70.07299270072993,
+        "performance": 72.99270072992701,
+        "triple": 68.3698296836983,
+        "sor+strength": 66.05839416058394,
+        "sor+performance": 67.51824817518248,
+        "strength+performance": 71.53284671532847
+      }
+    },
+    {
+      "id": "328",
+      "team": "Utah State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 91,
+        "strength": 87,
+        "performance": 90
+      },
+      "indices": {
+        "sor": 34.306569343065696,
+        "strength": 37.22627737226277,
+        "performance": 35.03649635036496,
+        "triple": 35.523114355231144,
+        "sor+strength": 35.76642335766424,
+        "sor+performance": 34.67153284671533,
+        "strength+performance": 36.13138686131387
+      }
+    },
+    {
+      "id": "333",
+      "team": "Alabama",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 6,
+        "strength": 1,
+        "performance": 4
+      },
+      "indices": {
+        "sor": 96.35036496350365,
+        "strength": 100,
+        "performance": 97.81021897810218,
+        "triple": 98.05352798053526,
+        "sor+strength": 98.17518248175182,
+        "sor+performance": 97.08029197080292,
+        "strength+performance": 98.90510948905109
+      }
+    },
+    {
+      "id": "338",
+      "team": "Kennesaw State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 120,
+        "strength": 107,
+        "performance": 95
+      },
+      "indices": {
+        "sor": 13.138686131386862,
+        "strength": 22.62773722627737,
+        "performance": 31.386861313868614,
+        "triple": 22.38442822384428,
+        "sor+strength": 17.88321167883212,
+        "sor+performance": 22.26277372262774,
+        "strength+performance": 27.00729927007299
+      }
+    },
+    {
+      "id": "344",
+      "team": "Mississippi State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 54,
+        "strength": 56,
+        "performance": 37
+      },
+      "indices": {
+        "sor": 61.31386861313869,
+        "strength": 59.85401459854015,
+        "performance": 73.72262773722628,
+        "triple": 64.96350364963503,
+        "sor+strength": 60.583941605839414,
+        "sor+performance": 67.51824817518248,
+        "strength+performance": 66.78832116788321
+      }
+    },
+    {
+      "id": "349",
+      "team": "Army",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 68,
+        "strength": 67,
+        "performance": 75
+      },
+      "indices": {
+        "sor": 51.09489051094891,
+        "strength": 51.824817518248175,
+        "performance": 45.98540145985402,
+        "triple": 49.63503649635036,
+        "sor+strength": 51.45985401459854,
+        "sor+performance": 48.540145985401466,
+        "strength+performance": 48.9051094890511
+      }
+    },
+    {
+      "id": "356",
+      "team": "Illinois",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 44,
+        "strength": 41,
+        "performance": 51
+      },
+      "indices": {
+        "sor": 68.61313868613139,
+        "strength": 70.8029197080292,
+        "performance": 63.503649635036496,
+        "triple": 67.63990267639902,
+        "sor+strength": 69.7080291970803,
+        "sor+performance": 66.05839416058394,
+        "strength+performance": 67.15328467153284
+      }
+    },
+    {
+      "id": "36",
+      "team": "Colorado State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 104,
+        "strength": 119,
+        "performance": 123
+      },
+      "indices": {
+        "sor": 24.817518248175183,
+        "strength": 13.86861313868613,
+        "performance": 10.94890510948905,
+        "triple": 16.54501216545012,
+        "sor+strength": 19.343065693430656,
+        "sor+performance": 17.88321167883212,
+        "strength+performance": 12.408759124087592
+      }
+    },
+    {
+      "id": "38",
+      "team": "Colorado",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 94,
+        "strength": 90,
+        "performance": 49
+      },
+      "indices": {
+        "sor": 32.11678832116788,
+        "strength": 35.03649635036496,
+        "performance": 64.96350364963503,
+        "triple": 44.03892944038929,
+        "sor+strength": 33.57664233576642,
+        "sor+performance": 48.54014598540145,
+        "strength+performance": 50
+      }
+    },
+    {
+      "id": "41",
+      "team": "UConn",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 111,
+        "strength": 86,
+        "performance": 91
+      },
+      "indices": {
+        "sor": 19.708029197080293,
+        "strength": 37.956204379562045,
+        "performance": 34.306569343065696,
+        "triple": 30.656934306569344,
+        "sor+strength": 28.83211678832117,
+        "sor+performance": 27.007299270072995,
+        "strength+performance": 36.13138686131387
+      }
+    },
+    {
+      "id": "48",
+      "team": "Delaware",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 114,
+        "strength": 96,
+        "performance": 104
+      },
+      "indices": {
+        "sor": 17.51824817518248,
+        "strength": 30.656934306569344,
+        "performance": 24.817518248175183,
+        "triple": 24.330900243309003,
+        "sor+strength": 24.087591240875913,
+        "sor+performance": 21.167883211678834,
+        "strength+performance": 27.737226277372265
+      }
+    },
+    {
+      "id": "5",
+      "team": "UAB",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 80,
+        "strength": 117,
+        "performance": 94
+      },
+      "indices": {
+        "sor": 42.33576642335766,
+        "strength": 15.328467153284672,
+        "performance": 32.11678832116788,
+        "triple": 29.92700729927007,
+        "sor+strength": 28.832116788321166,
+        "sor+performance": 37.22627737226277,
+        "strength+performance": 23.722627737226276
+      }
+    },
+    {
+      "id": "52",
+      "team": "Florida State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 79,
+        "strength": 49,
+        "performance": 48
+      },
+      "indices": {
+        "sor": 43.065693430656935,
+        "strength": 64.96350364963503,
+        "performance": 65.69343065693431,
+        "triple": 57.907542579075425,
+        "sor+strength": 54.01459854014598,
+        "sor+performance": 54.37956204379562,
+        "strength+performance": 65.32846715328466
+      }
+    },
+    {
+      "id": "55",
+      "team": "Jacksonville State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 45,
+        "strength": 78,
+        "performance": 69
+      },
+      "indices": {
+        "sor": 67.88321167883211,
+        "strength": 43.7956204379562,
+        "performance": 50.36496350364963,
+        "triple": 54.01459854014598,
+        "sor+strength": 55.83941605839416,
+        "sor+performance": 59.12408759124087,
+        "strength+performance": 47.08029197080292
+      }
+    },
+    {
+      "id": "57",
+      "team": "Florida",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 31,
+        "strength": 40,
+        "performance": 40
+      },
+      "indices": {
+        "sor": 78.10218978102189,
+        "strength": 71.53284671532846,
+        "performance": 71.53284671532846,
+        "triple": 73.72262773722628,
+        "sor+strength": 74.81751824817518,
+        "sor+performance": 74.81751824817518,
+        "strength+performance": 71.53284671532846
+      }
+    },
+    {
+      "id": "58",
+      "team": "South Florida",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 66,
+        "strength": 54,
+        "performance": 86
+      },
+      "indices": {
+        "sor": 52.55474452554745,
+        "strength": 61.31386861313869,
+        "performance": 37.956204379562045,
+        "triple": 50.60827250608273,
+        "sor+strength": 56.934306569343065,
+        "sor+performance": 45.25547445255475,
+        "strength+performance": 49.63503649635037
+      }
+    },
+    {
+      "id": "59",
+      "team": "Georgia Tech",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 123,
+        "strength": 97,
+        "performance": 92
+      },
+      "indices": {
+        "sor": 10.94890510948905,
+        "strength": 29.927007299270073,
+        "performance": 33.57664233576642,
+        "triple": 24.81751824817518,
+        "sor+strength": 20.43795620437956,
+        "sor+performance": 22.262773722627735,
+        "strength+performance": 31.751824817518248
+      }
+    },
+    {
+      "id": "6",
+      "team": "South Alabama",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 93,
+        "strength": 95,
+        "performance": 129
+      },
+      "indices": {
+        "sor": 32.846715328467155,
+        "strength": 31.386861313868614,
+        "performance": 6.569343065693431,
+        "triple": 23.600973236009736,
+        "sor+strength": 32.11678832116789,
+        "sor+performance": 19.708029197080293,
+        "strength+performance": 18.978102189781023
+      }
+    },
+    {
+      "id": "61",
+      "team": "Georgia",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 4,
+        "strength": 3,
+        "performance": 3
+      },
+      "indices": {
+        "sor": 97.81021897810218,
+        "strength": 98.54014598540147,
+        "performance": 98.54014598540147,
+        "triple": 98.29683698296837,
+        "sor+strength": 98.17518248175182,
+        "sor+performance": 98.17518248175182,
+        "strength+performance": 98.54014598540147
+      }
+    },
+    {
+      "id": "62",
+      "team": "Hawai'i",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 117,
+        "strength": 120,
+        "performance": 116
+      },
+      "indices": {
+        "sor": 15.328467153284672,
+        "strength": 13.138686131386862,
+        "performance": 16.05839416058394,
+        "triple": 14.84184914841849,
+        "sor+strength": 14.233576642335766,
+        "sor+performance": 15.693430656934307,
+        "strength+performance": 14.598540145985401
+      }
+    },
+    {
+      "id": "66",
+      "team": "Iowa State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 63,
+        "strength": 53,
+        "performance": 78
+      },
+      "indices": {
+        "sor": 54.74452554744526,
+        "strength": 62.043795620437955,
+        "performance": 43.7956204379562,
+        "triple": 53.5279805352798,
+        "sor+strength": 58.394160583941606,
+        "sor+performance": 49.27007299270073,
+        "strength+performance": 52.91970802919708
+      }
+    },
+    {
+      "id": "68",
+      "team": "Boise State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 8,
+        "strength": 15,
+        "performance": 20
+      },
+      "indices": {
+        "sor": 94.8905109489051,
+        "strength": 89.78102189781022,
+        "performance": 86.13138686131387,
+        "triple": 90.26763990267641,
+        "sor+strength": 92.33576642335765,
+        "sor+performance": 90.51094890510949,
+        "strength+performance": 87.95620437956205
+      }
+    },
+    {
+      "id": "77",
+      "team": "Northwestern",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 42,
+        "strength": 24,
+        "performance": 29
+      },
+      "indices": {
+        "sor": 70.07299270072993,
+        "strength": 83.21167883211679,
+        "performance": 79.56204379562044,
+        "triple": 77.61557177615572,
+        "sor+strength": 76.64233576642336,
+        "sor+performance": 74.81751824817519,
+        "strength+performance": 81.38686131386862
+      }
+    },
+    {
+      "id": "8",
+      "team": "Arkansas",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 87,
+        "strength": 74,
+        "performance": 60
+      },
+      "indices": {
+        "sor": 37.22627737226277,
+        "strength": 46.715328467153284,
+        "performance": 56.934306569343065,
+        "triple": 46.95863746958637,
+        "sor+strength": 41.97080291970803,
+        "sor+performance": 47.08029197080292,
+        "strength+performance": 51.824817518248175
+      }
+    },
+    {
+      "id": "84",
+      "team": "Indiana",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 11,
+        "strength": 10,
+        "performance": 8
+      },
+      "indices": {
+        "sor": 92.7007299270073,
+        "strength": 93.43065693430657,
+        "performance": 94.8905109489051,
+        "triple": 93.67396593673966,
+        "sor+strength": 93.06569343065694,
+        "sor+performance": 93.7956204379562,
+        "strength+performance": 94.16058394160584
+      }
+    },
+    {
+      "id": "87",
+      "team": "Notre Dame",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 5,
+        "strength": 2,
+        "performance": 6
+      },
+      "indices": {
+        "sor": 97.08029197080292,
+        "strength": 99.27007299270073,
+        "performance": 96.35036496350365,
+        "triple": 97.56690997566909,
+        "sor+strength": 98.17518248175182,
+        "sor+performance": 96.71532846715328,
+        "strength+performance": 97.8102189781022
+      }
+    },
+    {
+      "id": "9",
+      "team": "Arizona State",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 73,
+        "strength": 70,
+        "performance": 52
+      },
+      "indices": {
+        "sor": 47.44525547445255,
+        "strength": 49.63503649635037,
+        "performance": 62.77372262773723,
+        "triple": 53.284671532846716,
+        "sor+strength": 48.54014598540146,
+        "sor+performance": 55.10948905109489,
+        "strength+performance": 56.2043795620438
+      }
+    },
+    {
+      "id": "96",
+      "team": "Kentucky",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 10,
+        "strength": 26,
+        "performance": 23
+      },
+      "indices": {
+        "sor": 93.43065693430657,
+        "strength": 81.75182481751825,
+        "performance": 83.94160583941606,
+        "triple": 86.37469586374696,
+        "sor+strength": 87.5912408759124,
+        "sor+performance": 88.68613138686132,
+        "strength+performance": 82.84671532846716
+      }
+    },
+    {
+      "id": "97",
+      "team": "Louisville",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 43,
+        "strength": 19,
+        "performance": 14
+      },
+      "indices": {
+        "sor": 69.34306569343066,
+        "strength": 86.86131386861314,
+        "performance": 90.51094890510949,
+        "triple": 82.23844282238444,
+        "sor+strength": 78.1021897810219,
+        "sor+performance": 79.92700729927007,
+        "strength+performance": 88.68613138686132
+      }
+    },
+    {
+      "id": "98",
+      "team": "Western Kentucky",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 127,
+        "strength": 124,
+        "performance": 113
+      },
+      "indices": {
+        "sor": 8.02919708029197,
+        "strength": 10.218978102189782,
+        "performance": 18.248175182481752,
+        "triple": 12.165450121654501,
+        "sor+strength": 9.124087591240876,
+        "sor+performance": 13.138686131386862,
+        "strength+performance": 14.233576642335766
+      }
+    },
+    {
+      "id": "99",
+      "team": "LSU",
+      "games": 9,
+      "measuredGames": 9,
+      "componentRanks": {
+        "sor": 22,
+        "strength": 8,
+        "performance": 1
+      },
+      "indices": {
+        "sor": 84.67153284671532,
+        "strength": 94.8905109489051,
+        "performance": 100,
+        "triple": 93.18734793187348,
+        "sor+strength": 89.7810218978102,
+        "sor+performance": 92.33576642335765,
+        "strength+performance": 97.44525547445255
+      }
+    }
+  ],
+  "forecasts": [
+    {
+      "season": 2026,
+      "gameId": "401856857",
+      "home": "2116",
+      "away": "9",
+      "kickoff": "2026-11-14T05:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 11.678832116788321,
+          "homeWinProbability": 0.6773122146989167,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 3.649635036496349,
+          "homeWinProbability": 0.6376987549153597,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": -5.10948905109489,
+          "homeWinProbability": 0.5563984592115843,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": 3.4063260340632624,
+          "homeWinProbability": 0.6374214846138775,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 7.664233576642339,
+          "homeWinProbability": 0.6679045152357375,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 3.2846715328467155,
+          "homeWinProbability": 0.6332525843597644,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": -0.729927007299267,
+          "homeWinProbability": 0.5973212543761091,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401856858",
+      "home": "252",
+      "away": "239",
+      "kickoff": "2026-11-14T05:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 24.81751824817519,
+          "homeWinProbability": 0.7522213919181222,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 8.029197080291965,
+          "homeWinProbability": 0.6752914841788056,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 13.868613138686129,
+          "homeWinProbability": 0.7054355192553757,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 15.571776155717771,
+          "homeWinProbability": 0.7405987808334958,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 16.423357664233578,
+          "homeWinProbability": 0.7330349999903281,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 19.343065693430674,
+          "homeWinProbability": 0.7597523112160274,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 10.948905109489061,
+          "homeWinProbability": 0.704863767162962,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401856859",
+      "home": "66",
+      "away": "2132",
+      "kickoff": "2026-11-14T05:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -10.218978102189773,
+          "homeWinProbability": 0.531549820148065,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": 1.459854014598541,
+          "homeWinProbability": 0.618214532381492,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": -10.948905109489054,
+          "homeWinProbability": 0.5068883255118097,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -6.569343065693431,
+          "homeWinProbability": 0.5415484233564541,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -4.379562043795616,
+          "homeWinProbability": 0.5672431549364273,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -10.583941605839414,
+          "homeWinProbability": 0.505896511952057,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -4.7445255474452495,
+          "homeWinProbability": 0.5573970045070545,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401856860",
+      "home": "38",
+      "away": "248",
+      "kickoff": "2026-11-14T03:15:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -59.12408759124087,
+          "homeWinProbability": 0.22316590926205446,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -50.36496350364964,
+          "homeWinProbability": 0.18360111174665755,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -28.46715328467154,
+          "homeWinProbability": 0.3613628892831339,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -45.98540145985401,
+          "homeWinProbability": 0.1971068829489396,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -54.74452554744525,
+          "homeWinProbability": 0.17951029055391926,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -43.7956204379562,
+          "homeWinProbability": 0.2265450604167446,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -39.416058394160586,
+          "homeWinProbability": 0.2344652757555373,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401856861",
+      "home": "277",
+      "away": "2305",
+      "kickoff": "2026-11-14T05:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 34.306569343065696,
+          "homeWinProbability": 0.7985135300490005,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 5.839416058394157,
+          "homeWinProbability": 0.6567407256704427,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": -37.22627737226277,
+          "homeWinProbability": 0.295679360809883,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": 0.9732360097323607,
+          "homeWinProbability": 0.6147235356883161,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 20.072992700729927,
+          "homeWinProbability": 0.7576440891800179,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": -1.459854014598534,
+          "homeWinProbability": 0.5908326950886129,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -15.693430656934304,
+          "homeWinProbability": 0.44623832610637587,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401856862",
+      "home": "2628",
+      "away": "2306",
+      "kickoff": "2026-11-14T05:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 15.32846715328467,
+          "homeWinProbability": 0.6992986687678067,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 24.087591240875916,
+          "homeWinProbability": 0.7931328417755996,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 0.729927007299267,
+          "homeWinProbability": 0.6048131505361319,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 13.381995133819942,
+          "homeWinProbability": 0.7234825130096066,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 19.708029197080293,
+          "homeWinProbability": 0.7552540288641059,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 8.029197080291972,
+          "homeWinProbability": 0.673703415302652,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 12.408759124087595,
+          "homeWinProbability": 0.717095355168569,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401856863",
+      "home": "197",
+      "away": "2641",
+      "kickoff": "2026-11-14T05:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -16.78832116788321,
+          "homeWinProbability": 0.48546489539680615,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -15.328467153284663,
+          "homeWinProbability": 0.46069995737786174,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": 10.948905109489047,
+          "homeWinProbability": 0.6843457887133034,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": -7.05596107055959,
+          "homeWinProbability": 0.5367292432455703,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -16.05839416058393,
+          "homeWinProbability": 0.4639313730095855,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -2.9197080291970963,
+          "homeWinProbability": 0.5774703067198177,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -2.189781021897801,
+          "homeWinProbability": 0.5829230764792349,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401856864",
+      "home": "12",
+      "away": "254",
+      "kickoff": "2026-11-14T05:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -14.598540145985396,
+          "homeWinProbability": 0.5008377961481842,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -9.489051094890513,
+          "homeWinProbability": 0.5162218806184979,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -16.78832116788321,
+          "homeWinProbability": 0.45724271622919055,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -13.62530413625305,
+          "homeWinProbability": 0.471366333723322,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -12.043795620437962,
+          "homeWinProbability": 0.49954449969064924,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -15.69343065693431,
+          "homeWinProbability": 0.45786194750692344,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -13.138686131386862,
+          "homeWinProbability": 0.4721036956160876,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401856882",
+      "home": "8",
+      "away": "2579",
+      "kickoff": "2026-11-15T00:45:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -45.98540145985402,
+          "homeWinProbability": 0.2935377812273761,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -34.30656934306569,
+          "homeWinProbability": 0.29308657312075603,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -18.24817518248176,
+          "homeWinProbability": 0.4449247310065149,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -32.84671532846716,
+          "homeWinProbability": 0.29301388291474717,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -40.14598540145986,
+          "homeWinProbability": 0.2687946091241448,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -32.11678832116789,
+          "homeWinProbability": 0.3126343972599946,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -26.27737226277373,
+          "homeWinProbability": 0.34355670300241387,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401856883",
+      "home": "61",
+      "away": "142",
+      "kickoff": "2026-11-14T05:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 24.08759124087591,
+          "homeWinProbability": 0.7483802871979455,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 14.59854014598541,
+          "homeWinProbability": 0.7275953382611987,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 29.197080291970806,
+          "homeWinProbability": 0.8015006721800622,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 22.62773722627736,
+          "homeWinProbability": 0.7908937242114099,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 19.343065693430646,
+          "homeWinProbability": 0.7528480871784468,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 26.642335766423344,
+          "homeWinProbability": 0.8063365480522305,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 21.89781021897811,
+          "homeWinProbability": 0.7886910289110382,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401856884",
+      "home": "96",
+      "away": "57",
+      "kickoff": "2026-11-14T05:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 15.328467153284677,
+          "homeWinProbability": 0.6992986687678067,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 10.218978102189794,
+          "homeWinProbability": 0.6933078808081939,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 12.408759124087595,
+          "homeWinProbability": 0.6949929290538154,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 12.652068126520689,
+          "homeWinProbability": 0.717624505517136,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 12.773722627737229,
+          "homeWinProbability": 0.706893788772692,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 13.868613138686143,
+          "homeWinProbability": 0.7201143870391692,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 11.313868613138695,
+          "homeWinProbability": 0.707950392845761,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401856885",
+      "home": "99",
+      "away": "251",
+      "kickoff": "2026-11-14T05:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -10.948905109489061,
+          "homeWinProbability": 0.5264414368648705,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -0.7299270072992812,
+          "homeWinProbability": 0.5983424555573608,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": 4.379562043795616,
+          "homeWinProbability": 0.6341211371452742,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": -2.433090024330909,
+          "homeWinProbability": 0.5821100573536142,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -5.839416058394178,
+          "homeWinProbability": 0.5544630158144612,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -3.2846715328467297,
+          "homeWinProbability": 0.5741111043281313,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": 1.8248175182481674,
+          "homeWinProbability": 0.6221058230806393,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401856886",
+      "home": "344",
+      "away": "2",
+      "kickoff": "2026-11-14T17:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -10.948905109489054,
+          "homeWinProbability": 0.5264414368648705,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -2.919708029197082,
+          "homeWinProbability": 0.5781418503210385,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": 13.138686131386862,
+          "homeWinProbability": 0.7002402303389318,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": -0.24330900243310793,
+          "homeWinProbability": 0.6031774352104292,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -6.934306569343079,
+          "homeWinProbability": 0.5448294673676775,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": 1.0948905109489004,
+          "homeWinProbability": 0.6138865288065406,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 5.10948905109489,
+          "homeWinProbability": 0.6530429137155277,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401856887",
+      "home": "201",
+      "away": "145",
+      "kickoff": "2026-11-14T05:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -6.569343065693417,
+          "homeWinProbability": 0.556971628986776,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -18.24817518248176,
+          "homeWinProbability": 0.4332157606267969,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -4.379562043795616,
+          "homeWinProbability": 0.5625292599068912,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -9.732360097323607,
+          "homeWinProbability": 0.5101250248456454,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -12.408759124087595,
+          "homeWinProbability": 0.496301304572037,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -5.474452554744516,
+          "homeWinProbability": 0.5538224663003659,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -11.31386861313868,
+          "homeWinProbability": 0.49067934992171586,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401856888",
+      "home": "245",
+      "away": "2633",
+      "kickoff": "2026-11-14T05:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -40.87591240875913,
+          "homeWinProbability": 0.3241543964677584,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -18.248175182481745,
+          "homeWinProbability": 0.43321576062679706,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -5.839416058394164,
+          "homeWinProbability": 0.550250433042499,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -21.654501216545015,
+          "homeWinProbability": 0.39300708215900726,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -29.56204379562044,
+          "homeWinProbability": 0.348752240741612,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -23.357664233576642,
+          "homeWinProbability": 0.38751660723808357,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -12.043795620437962,
+          "homeWinProbability": 0.4832431183247173,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401856889",
+      "home": "238",
+      "away": "333",
+      "kickoff": "2026-11-14T17:45:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -51.09489051094891,
+          "homeWinProbability": 0.2646804309947996,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -48.90510948905109,
+          "homeWinProbability": 0.19208347733466155,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -55.47445255474452,
+          "homeWinProbability": 0.18394541449588053,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -51.82481751824816,
+          "homeWinProbability": 0.16284313377001852,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -49.99999999999999,
+          "homeWinProbability": 0.20570379740853106,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -53.284671532846716,
+          "homeWinProbability": 0.17001823597941362,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -52.1897810218978,
+          "homeWinProbability": 0.15392179497105238,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401858293",
+      "home": "221",
+      "away": "52",
+      "kickoff": "2026-11-14T00:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 19.708029197080293,
+          "homeWinProbability": 0.7245164197912779,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 1.4598540145985481,
+          "homeWinProbability": 0.6182145323814922,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 15.328467153284663,
+          "homeWinProbability": 0.7156668537985722,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 12.165450121654501,
+          "homeWinProbability": 0.7136776291997927,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 10.583941605839414,
+          "homeWinProbability": 0.6905105160873705,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 17.51824817518247,
+          "homeWinProbability": 0.7469777033714345,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 8.394160583941613,
+          "homeWinProbability": 0.6827389146383058,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401858294",
+      "home": "87",
+      "away": "103",
+      "kickoff": "2026-11-14T20:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 66.42335766423358,
+          "homeWinProbability": 0.9071352057166281,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 67.15328467153284,
+          "homeWinProbability": 0.9518632290018371,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 55.47445255474452,
+          "homeWinProbability": 0.908146702602829,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 63.0170316301703,
+          "homeWinProbability": 0.9497966285385138,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 66.7883211678832,
+          "homeWinProbability": 0.9426950999288003,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 60.94890510948905,
+          "homeWinProbability": 0.9381471491315851,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 61.313868613138695,
+          "homeWinProbability": 0.9490396189262027,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401858295",
+      "home": "258",
+      "away": "25",
+      "kickoff": "2026-11-14T20:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 6.5693430656934275,
+          "homeWinProbability": 0.6451822242793837,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 39.416058394160586,
+          "homeWinProbability": 0.8730064698980476,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 18.97810218978102,
+          "homeWinProbability": 0.7402839659374015,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 21.654501216545015,
+          "homeWinProbability": 0.7844059678796174,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 22.99270072992701,
+          "homeWinProbability": 0.776188423536975,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 12.773722627737222,
+          "homeWinProbability": 0.7117237210450494,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 29.1970802919708,
+          "homeWinProbability": 0.8340643436269062,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401858296",
+      "home": "2390",
+      "away": "150",
+      "kickoff": "2026-11-14T17:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 23.357664233576642,
+          "homeWinProbability": 0.7444998622930272,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 18.248175182481745,
+          "homeWinProbability": 0.7542628563928511,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 43.06569343065694,
+          "homeWinProbability": 0.8662651607219517,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 28.22384428223843,
+          "homeWinProbability": 0.8254001849683296,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 20.80291970802918,
+          "homeWinProbability": 0.7623763993293167,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 33.21167883211679,
+          "homeWinProbability": 0.8420992093271121,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 30.65693430656934,
+          "homeWinProbability": 0.8421405555294263,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401858297",
+      "home": "228",
+      "away": "59",
+      "kickoff": "2026-11-14T17:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 62.04379562043796,
+          "homeWinProbability": 0.8962402993627824,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 35.76642335766424,
+          "homeWinProbability": 0.8567782122215727,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 8.029197080291972,
+          "homeWinProbability": 0.6624685791600957,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 35.27980535279805,
+          "homeWinProbability": 0.8623099568733227,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 48.9051094890511,
+          "homeWinProbability": 0.897032373755419,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 35.03649635036496,
+          "homeWinProbability": 0.8510290860158657,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 21.8978102189781,
+          "homeWinProbability": 0.7886910289110382,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401858298",
+      "home": "153",
+      "away": "97",
+      "kickoff": "2026-11-14T05:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -2.919708029197082,
+          "homeWinProbability": 0.5820984742194566,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -18.978102189781026,
+          "homeWinProbability": 0.4264017575660532,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -22.627737226277375,
+          "homeWinProbability": 0.4084320998498539,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -14.841849148418504,
+          "homeWinProbability": 0.45930287754958093,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -10.948905109489061,
+          "homeWinProbability": 0.5092732234883203,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -12.773722627737229,
+          "homeWinProbability": 0.4852717503371222,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -20.802919708029208,
+          "homeWinProbability": 0.3955023010156499,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401858299",
+      "home": "259",
+      "away": "24",
+      "kickoff": "2026-11-14T05:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 14.598540145985403,
+          "homeWinProbability": 0.6949698310794483,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 25.54744525547445,
+          "homeWinProbability": 0.8021081432796761,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 51.09489051094891,
+          "homeWinProbability": 0.8949151729265228,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 30.413625304136254,
+          "homeWinProbability": 0.8376237029869033,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 20.072992700729927,
+          "homeWinProbability": 0.7576440891800179,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 32.846715328467155,
+          "homeWinProbability": 0.8402619013247011,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 38.32116788321167,
+          "homeWinProbability": 0.8794022649067176,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401858300",
+      "home": "152",
+      "away": "183",
+      "kickoff": "2026-11-14T17:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -2.919708029197082,
+          "homeWinProbability": 0.5820984742194566,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -2.189781021897815,
+          "homeWinProbability": 0.5849080420565094,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -5.839416058394164,
+          "homeWinProbability": 0.550250433042499,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -3.649635036496356,
+          "homeWinProbability": 0.5702698289343846,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -2.5547445255474486,
+          "homeWinProbability": 0.583091487012409,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -4.37956204379563,
+          "homeWinProbability": 0.5639935654040878,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -4.0145985401459825,
+          "homeWinProbability": 0.5647273086680032,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401858301",
+      "home": "2567",
+      "away": "154",
+      "kickoff": "2026-11-14T17:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -18.978102189781026,
+          "homeWinProbability": 0.4701194489638803,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -7.299270072992698,
+          "homeWinProbability": 0.5370130631393507,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -9.489051094890513,
+          "homeWinProbability": 0.5193168245251448,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -11.922141119221408,
+          "homeWinProbability": 0.4883083563343314,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -13.138686131386862,
+          "homeWinProbability": 0.4898161207788273,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -14.233576642335763,
+          "homeWinProbability": 0.4715454016513703,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -8.394160583941613,
+          "homeWinProbability": 0.5204326030955102,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401858518",
+      "home": "84",
+      "away": "30",
+      "kickoff": "2026-11-14T20:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 5.109489051094897,
+          "homeWinProbability": 0.6357403105035777,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 8.759124087591246,
+          "homeWinProbability": 0.681358281435289,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 9.489051094890499,
+          "homeWinProbability": 0.6735015846469238,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 7.7858880778588855,
+          "homeWinProbability": 0.6767227917826248,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 6.9343065693430646,
+          "homeWinProbability": 0.6621246051026625,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 7.299270072992698,
+          "homeWinProbability": 0.6676282668654682,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 9.12408759124088,
+          "homeWinProbability": 0.6891510112974332,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401858519",
+      "home": "2294",
+      "away": "2509",
+      "kickoff": "2026-11-15T00:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 61.31386861313868,
+          "homeWinProbability": 0.8943181340035052,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 49.63503649635036,
+          "homeWinProbability": 0.9102808371870342,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 51.09489051094891,
+          "homeWinProbability": 0.8949151729265228,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 54.014598540145975,
+          "homeWinProbability": 0.9296512755068976,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 55.474452554744516,
+          "homeWinProbability": 0.9166893472662992,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 56.20437956204379,
+          "homeWinProbability": 0.9269233089710209,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 50.36496350364963,
+          "homeWinProbability": 0.922579095273459,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401858520",
+      "home": "120",
+      "away": "275",
+      "kickoff": "2026-11-14T17:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -59.85401459854015,
+          "homeWinProbability": 0.2196316916898842,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -39.416058394160586,
+          "homeWinProbability": 0.25443988843276144,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -19.708029197080286,
+          "homeWinProbability": 0.43267405089972666,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -39.65936739659368,
+          "homeWinProbability": 0.24006355346115632,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -49.63503649635037,
+          "homeWinProbability": 0.20783155447914503,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -39.78102189781022,
+          "homeWinProbability": 0.2541420063572859,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -29.56204379562044,
+          "homeWinProbability": 0.3140117963229865,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401858521",
+      "home": "127",
+      "away": "264",
+      "kickoff": "2026-11-14T21:15:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -5.10948905109489,
+          "homeWinProbability": 0.5670648738334644,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -19.708029197080293,
+          "homeWinProbability": 0.41961558352823314,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": 10.21897810218978,
+          "homeWinProbability": 0.6789478213388295,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": -4.866180048661803,
+          "homeWinProbability": 0.558348653317717,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -12.408759124087588,
+          "homeWinProbability": 0.496301304572037,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": 2.5547445255474486,
+          "homeWinProbability": 0.6268414567267254,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": -4.744525547445257,
+          "homeWinProbability": 0.5573970045070544,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401858522",
+      "home": "194",
+      "away": "77",
+      "kickoff": "2026-11-14T17:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 16.058394160583944,
+          "homeWinProbability": 0.7035922750593506,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 13.138686131386862,
+          "homeWinProbability": 0.7164352742406966,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 19.708029197080293,
+          "homeWinProbability": 0.745037933153822,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 16.301703163017024,
+          "homeWinProbability": 0.7461487723800503,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 14.59854014598541,
+          "homeWinProbability": 0.7201509791490129,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 17.88321167883211,
+          "homeWinProbability": 0.7495681827126242,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 16.423357664233578,
+          "homeWinProbability": 0.7490985612828639,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401858523",
+      "home": "2483",
+      "away": "130",
+      "kickoff": "2026-11-14T20:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 33.57664233576643,
+          "homeWinProbability": 0.7951946668919503,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 29.197080291970806,
+          "homeWinProbability": 0.8232530919823552,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 10.21897810218978,
+          "homeWinProbability": 0.6789478213388295,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 24.330900243309003,
+          "homeWinProbability": 0.8018990537397253,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 31.386861313868607,
+          "homeWinProbability": 0.8237510577417162,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 21.89781021897811,
+          "homeWinProbability": 0.7768827636786195,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 19.708029197080293,
+          "homeWinProbability": 0.7734255998189168,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401858524",
+      "home": "213",
+      "away": "135",
+      "kickoff": "2026-11-15T00:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 3.649635036496349,
+          "homeWinProbability": 0.6261927144813625,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 24.08759124087591,
+          "homeWinProbability": 0.7931328417755995,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 10.21897810218978,
+          "homeWinProbability": 0.6789478213388295,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 12.652068126520682,
+          "homeWinProbability": 0.7176245055171359,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 13.868613138686122,
+          "homeWinProbability": 0.7148922263698905,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 6.9343065693430646,
+          "homeWinProbability": 0.6645694922888167,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 17.153284671532845,
+          "homeWinProbability": 0.7546514429090967,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401858525",
+      "home": "164",
+      "away": "158",
+      "kickoff": "2026-11-14T17:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -41.605839416058394,
+          "homeWinProbability": 0.31967899913174047,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -58.39416058394161,
+          "homeWinProbability": 0.14209637804197411,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -59.124087591240865,
+          "homeWinProbability": 0.1660036823195928,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -53.04136253041362,
+          "homeWinProbability": 0.1563404020828164,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -50,
+          "homeWinProbability": 0.20570379740853104,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -50.36496350364963,
+          "homeWinProbability": 0.18611185021965893,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -58.759124087591246,
+          "homeWinProbability": 0.1221679433546833,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401858526",
+      "home": "26",
+      "away": "356",
+      "kickoff": "2026-11-14T02:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 30.65693430656934,
+          "homeWinProbability": 0.781514893767245,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 18.24817518248176,
+          "homeWinProbability": 0.7542628563928512,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 30.65693430656934,
+          "homeWinProbability": 0.8092973241708067,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 26.520681265206804,
+          "homeWinProbability": 0.8153998902442104,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 24.452554744525543,
+          "homeWinProbability": 0.7850737949108831,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 30.65693430656934,
+          "homeWinProbability": 0.8288729823698714,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 24.452554744525543,
+          "homeWinProbability": 0.8055316829538893,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401860914",
+      "home": "68",
+      "away": "204",
+      "kickoff": "2026-11-14T23:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 48.905109489051085,
+          "homeWinProbability": 0.856569266458271,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 31.386861313868614,
+          "homeWinProbability": 0.8350650046631005,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 27.737226277372265,
+          "homeWinProbability": 0.7934666103757578,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 36.009732360097324,
+          "homeWinProbability": 0.8657280106025965,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 40.14598540145984,
+          "homeWinProbability": 0.8645169212340269,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 38.32116788321167,
+          "homeWinProbability": 0.8660494156116184,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 29.562043795620447,
+          "homeWinProbability": 0.8361139184586528,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401860915",
+      "home": "21",
+      "away": "328",
+      "kickoff": "2026-11-15T02:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 2.189781021897808,
+          "homeWinProbability": 0.6165458090120952,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": -8.029197080291969,
+          "homeWinProbability": 0.530093372401678,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -32.846715328467155,
+          "homeWinProbability": 0.32767801802178065,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -12.895377128953768,
+          "homeWinProbability": 0.4786214072338719,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -2.919708029197082,
+          "homeWinProbability": 0.5799344341527171,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -15.328467153284674,
+          "homeWinProbability": 0.4612776695187171,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -20.437956204379564,
+          "homeWinProbability": 0.39906597495857526,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401860916",
+      "home": "326",
+      "away": "278",
+      "kickoff": "2026-11-14T21:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 13.868613138686129,
+          "homeWinProbability": 0.6906062475152779,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 13.138686131386862,
+          "homeWinProbability": 0.7164352742406966,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 53.284671532846716,
+          "homeWinProbability": 0.901729182957408,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 26.763990267639905,
+          "homeWinProbability": 0.8168551776081453,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 13.503649635036496,
+          "homeWinProbability": 0.7122406872902118,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 33.57664233576642,
+          "homeWinProbability": 0.8439193100626805,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 33.211678832116796,
+          "homeWinProbability": 0.8555018931258435,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401860917",
+      "home": "265",
+      "away": "36",
+      "kickoff": "2026-11-15T03:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -20.437956204379564,
+          "homeWinProbability": 0.4599186563684251,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": 13.13868613138686,
+          "homeWinProbability": 0.7164352742406966,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 14.598540145985403,
+          "homeWinProbability": 0.710577982054414,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 2.4330900243309017,
+          "homeWinProbability": 0.628409276183412,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": -3.649635036496351,
+          "homeWinProbability": 0.5736009118573321,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -2.919708029197082,
+          "homeWinProbability": 0.5774703067198178,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": 13.868613138686133,
+          "homeWinProbability": 0.7290149060433205,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401861967",
+      "home": "41",
+      "away": "256",
+      "kickoff": "2026-11-14T17:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 10,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": -56.2043795620438,
+          "homeWinProbability": 0.23770546160264547,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -40.145985401459846,
+          "homeWinProbability": 0.24920148593080907,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -27.737226277372258,
+          "homeWinProbability": 0.36712318795616633,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -41.36253041362531,
+          "homeWinProbability": 0.22789841782594966,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -48.17518248175182,
+          "homeWinProbability": 0.21650450842744737,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -41.970802919708035,
+          "homeWinProbability": 0.23882009242206392,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -33.941605839416056,
+          "homeWinProbability": 0.2768733519012592,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401862824",
+      "home": "58",
+      "away": "235",
+      "kickoff": "2026-11-13T01:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -21.897810218978094,
+          "homeWinProbability": 0.449751335069138,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -2.919708029197075,
+          "homeWinProbability": 0.5781418503210385,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -34.306569343065696,
+          "homeWinProbability": 0.3168130646835817,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -19.70802919708028,
+          "homeWinProbability": 0.4116601533321165,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -12.408759124087581,
+          "homeWinProbability": 0.496301304572037,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -28.10218978102189,
+          "homeWinProbability": 0.34602675007653644,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -18.613138686131393,
+          "homeWinProbability": 0.41703813518749006,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401862825",
+      "home": "2429",
+      "away": "151",
+      "kickoff": "2026-11-14T18:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -38.68613138686132,
+          "homeWinProbability": 0.3377724629784802,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -43.065693430656935,
+          "homeWinProbability": 0.2289775938997623,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -36.496350364963504,
+          "homeWinProbability": 0.30088592616396737,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -39.416058394160586,
+          "homeWinProbability": 0.24183722074089103,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -40.87591240875912,
+          "homeWinProbability": 0.26372574899713164,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -37.59124087591241,
+          "homeWinProbability": 0.2700981136554864,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -39.78102189781022,
+          "homeWinProbability": 0.23180449615234272,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401862826",
+      "home": "202",
+      "away": "2226",
+      "kickoff": "2026-11-14T20:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -19.708029197080293,
+          "homeWinProbability": 0.4650153943942047,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": 9.489051094890513,
+          "homeWinProbability": 0.6873642051589713,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 3.649635036496349,
+          "homeWinProbability": 0.628330746013938,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": -2.189781021897808,
+          "homeWinProbability": 0.5844672432417519,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -5.109489051094883,
+          "homeWinProbability": 0.5608631757645715,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -8.02919708029198,
+          "homeWinProbability": 0.5299284783700886,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": 6.569343065693431,
+          "homeWinProbability": 0.6664057266189773,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401862827",
+      "home": "2636",
+      "away": "249",
+      "kickoff": "2026-11-15T02:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 2.919708029197082,
+          "homeWinProbability": 0.6213812651603,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": -14.598540145985403,
+          "homeWinProbability": 0.46761523097446217,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -13.868613138686129,
+          "homeWinProbability": 0.48202115141856533,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -8.515815085158152,
+          "homeWinProbability": 0.5222340611168123,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -5.839416058394164,
+          "homeWinProbability": 0.5544630158144613,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -5.474452554744531,
+          "homeWinProbability": 0.5538224663003658,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -14.233576642335763,
+          "homeWinProbability": 0.4609919827680707,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401862828",
+      "home": "242",
+      "away": "2655",
+      "kickoff": "2026-11-14T19:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -28.467153284671532,
+          "homeWinProbability": 0.40463254453939157,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -13.138686131386862,
+          "homeWinProbability": 0.48148051963167116,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": 24.087591240875913,
+          "homeWinProbability": 0.7723401697105802,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": -5.839416058394162,
+          "homeWinProbability": 0.5487623657551655,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -20.802919708029197,
+          "homeWinProbability": 0.42233989886991946,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -2.1897810218978115,
+          "homeWinProbability": 0.5841669673869077,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": 5.474452554744525,
+          "homeWinProbability": 0.6564073149446054,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401862829",
+      "home": "218",
+      "away": "5",
+      "kickoff": "2026-11-14T18:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -36.496350364963504,
+          "homeWinProbability": 0.3516649512738556,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": 6.569343065693429,
+          "homeWinProbability": 0.6629811442493808,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": -19.70802919708029,
+          "homeWinProbability": 0.43267405089972666,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -16.545012165450117,
+          "homeWinProbability": 0.4424969416308232,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -14.963503649635035,
+          "homeWinProbability": 0.47362290999682516,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -28.102189781021895,
+          "homeWinProbability": 0.34602675007653644,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -6.569343065693431,
+          "homeWinProbability": 0.5389683738446908,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401864536",
+      "home": "2459",
+      "away": "2440",
+      "kickoff": "2026-11-14T20:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -18.248175182481752,
+          "homeWinProbability": 0.47522976095093344,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -27.00729927007299,
+          "homeWinProbability": 0.3537957380775836,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -20.43795620437956,
+          "homeWinProbability": 0.4265784873043027,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -21.8978102189781,
+          "homeWinProbability": 0.390696049366099,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -22.627737226277375,
+          "homeWinProbability": 0.4065996041801414,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -19.34306569343066,
+          "homeWinProbability": 0.4239737691286499,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -23.722627737226276,
+          "homeWinProbability": 0.3674192923023879,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401864537",
+      "home": "62",
+      "away": "2449",
+      "kickoff": "2026-11-15T04:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -63.5036496350365,
+          "homeWinProbability": 0.20256697070938784,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -64.23357664233576,
+          "homeWinProbability": 0.11707540108120162,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -24.087591240875913,
+          "homeWinProbability": 0.39646852992128456,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -50.60827250608273,
+          "homeWinProbability": 0.16956197601699025,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -63.86861313868614,
+          "homeWinProbability": 0.1365794863290379,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -43.7956204379562,
+          "homeWinProbability": 0.2265450604167446,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -44.160583941605836,
+          "homeWinProbability": 0.20153239717771962,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401864538",
+      "home": "2005",
+      "away": "23",
+      "kickoff": "2026-11-15T00:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 10,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 46.715328467153284,
+          "homeWinProbability": 0.8488455346243865,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 24.81751824817518,
+          "homeWinProbability": 0.797657630827904,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 61.31386861313868,
+          "homeWinProbability": 0.9234530823020431,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 44.28223844282239,
+          "homeWinProbability": 0.8996580145136011,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 35.76642335766424,
+          "homeWinProbability": 0.8452272387027199,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 54.01459854014598,
+          "homeWinProbability": 0.921133192313611,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 43.065693430656935,
+          "homeWinProbability": 0.8984627113767836,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401864539",
+      "home": "167",
+      "away": "2439",
+      "kickoff": "2026-11-15T00:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 37.22627737226277,
+          "homeWinProbability": 0.8113858527306707,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 37.95620437956204,
+          "homeWinProbability": 0.8667123966329326,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 45.98540145985402,
+          "homeWinProbability": 0.8773782173720899,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 40.38929440389294,
+          "homeWinProbability": 0.8847564551429876,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 37.5912408759124,
+          "homeWinProbability": 0.853524088522683,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 41.605839416058394,
+          "homeWinProbability": 0.8797692445199478,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 41.970802919708035,
+          "homeWinProbability": 0.8943164583560311,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401864540",
+      "home": "2638",
+      "away": "2751",
+      "kickoff": "2026-11-15T03:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -56.2043795620438,
+          "homeWinProbability": 0.23770546160264547,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -26.277372262773724,
+          "homeWinProbability": 0.36017803951409944,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -29.927007299270073,
+          "homeWinProbability": 0.3499624122325084,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -37.46958637469587,
+          "homeWinProbability": 0.2563455050720816,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -41.24087591240877,
+          "homeWinProbability": 0.26121444667062027,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -43.065693430656935,
+          "homeWinProbability": 0.23140089763757649,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -28.1021897810219,
+          "homeWinProbability": 0.3269750701410686,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401866458",
+      "home": "2006",
+      "away": "2711",
+      "kickoff": "2026-11-11T00:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -62.77372262773723,
+          "homeWinProbability": 0.20589904251907254,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -51.824817518248175,
+          "homeWinProbability": 0.17541199824477877,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -2.919708029197082,
+          "homeWinProbability": 0.5747319435259415,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -39.17274939172749,
+          "homeWinProbability": 0.24361979144223136,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -57.2992700729927,
+          "homeWinProbability": 0.1665219572561273,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -32.846715328467155,
+          "homeWinProbability": 0.3067542522475199,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -27.372262773722625,
+          "homeWinProbability": 0.33355880631759166,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401866459",
+      "home": "189",
+      "away": "2309",
+      "kickoff": "2026-11-11T00:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -5.839416058394161,
+          "homeWinProbability": 0.5620246688284416,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": 4.37956204379562,
+          "homeWinProbability": 0.644097751432884,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 8.759124087591243,
+          "homeWinProbability": 0.6680081356340017,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 2.4330900243309,
+          "homeWinProbability": 0.628409276183412,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": -0.7299270072992705,
+          "homeWinProbability": 0.5987699570599512,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": 1.459854014598541,
+          "homeWinProbability": 0.6171412193686092,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 6.569343065693431,
+          "homeWinProbability": 0.6664057266189773,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401866460",
+      "home": "193",
+      "away": "195",
+      "kickoff": "2026-11-11T01:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -25.54744525547445,
+          "homeWinProbability": 0.42453382348959207,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -7.299270072992698,
+          "homeWinProbability": 0.5370130631393507,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -20.437956204379564,
+          "homeWinProbability": 0.4265784873043027,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -17.76155717761557,
+          "homeWinProbability": 0.4305705426188291,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -16.42335766423357,
+          "homeWinProbability": 0.4607065419756218,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -22.99270072992701,
+          "homeWinProbability": 0.3907858209464562,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -13.868613138686129,
+          "homeWinProbability": 0.46469213125201286,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401866461",
+      "home": "2050",
+      "away": "2084",
+      "kickoff": "2026-11-12T00:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -37.22627737226277,
+          "homeWinProbability": 0.34700474740943466,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -12.408759124087592,
+          "homeWinProbability": 0.48842521853205284,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": 13.868613138686133,
+          "homeWinProbability": 0.7054355192553757,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": -11.922141119221417,
+          "homeWinProbability": 0.4883083563343314,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -24.817518248175183,
+          "homeWinProbability": 0.38796395399530104,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -11.678832116788321,
+          "homeWinProbability": 0.49558225177269855,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": 0.7299270072992705,
+          "homeWinProbability": 0.6115536052910926,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401866462",
+      "home": "2117",
+      "away": "16",
+      "kickoff": "2026-11-12T00:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 10,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 26.277372262773724,
+          "homeWinProbability": 0.7597848598118885,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 26.27737226277372,
+          "homeWinProbability": 0.806484515178646,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": -3.649635036496351,
+          "homeWinProbability": 0.5686410190396258,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": 16.30170316301703,
+          "homeWinProbability": 0.7461487723800503,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 26.277372262773724,
+          "homeWinProbability": 0.7958162886733204,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 11.313868613138688,
+          "homeWinProbability": 0.700306754423312,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 11.313868613138688,
+          "homeWinProbability": 0.707950392845761,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401866463",
+      "home": "2649",
+      "away": "113",
+      "kickoff": "2026-11-12T00:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 43.065693430656935,
+          "homeWinProbability": 0.8352169357948677,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 43.7956204379562,
+          "homeWinProbability": 0.8903804764782911,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 27.00729927007299,
+          "homeWinProbability": 0.7893603371638624,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 37.95620437956204,
+          "homeWinProbability": 0.8744933722212498,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 43.43065693430657,
+          "homeWinProbability": 0.8776198747995068,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 35.03649635036496,
+          "homeWinProbability": 0.8510290860158657,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 35.4014598540146,
+          "homeWinProbability": 0.866194132455591,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401869928",
+      "home": "276",
+      "away": "2026",
+      "kickoff": "2026-11-14T23:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 8.029197080291972,
+          "homeWinProbability": 0.6545123988752203,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": -5.109489051094892,
+          "homeWinProbability": 0.5576763341289009,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -8.759124087591243,
+          "homeWinProbability": 0.5255230814700853,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -1.9464720194647178,
+          "homeWinProbability": 0.5868205705362937,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": 1.459854014598541,
+          "homeWinProbability": 0.6173182152884734,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": -0.36496350364963703,
+          "homeWinProbability": 0.6007682920211252,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -6.934306569343068,
+          "homeWinProbability": 0.5352681815126283,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401869937",
+      "home": "324",
+      "away": "2032",
+      "kickoff": "2026-11-14T18:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -6.569343065693431,
+          "homeWinProbability": 0.5569716289867759,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -0.729927007299267,
+          "homeWinProbability": 0.5983424555573609,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -21.8978102189781,
+          "homeWinProbability": 0.41445577904845227,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -9.732360097323598,
+          "homeWinProbability": 0.5101250248456454,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -3.649635036496349,
+          "homeWinProbability": 0.5736009118573321,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -14.233576642335763,
+          "homeWinProbability": 0.4715454016513703,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -11.313868613138684,
+          "homeWinProbability": 0.49067934992171575,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401869952",
+      "home": "2247",
+      "away": "290",
+      "kickoff": "2026-11-14T20:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -21.8978102189781,
+          "homeWinProbability": 0.449751335069138,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -16.058394160583937,
+          "homeWinProbability": 0.453799779161791,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -8.029197080291972,
+          "homeWinProbability": 0.5317214631661953,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -15.32846715328467,
+          "homeWinProbability": 0.45449002185493553,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -18.97810218978102,
+          "homeWinProbability": 0.438239521943822,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -14.963503649635044,
+          "homeWinProbability": 0.4646970314490536,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -12.043795620437962,
+          "homeWinProbability": 0.4832431183247173,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401869969",
+      "home": "2433",
+      "away": "309",
+      "kickoff": "2026-11-13T02:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -47.44525547445255,
+          "homeWinProbability": 0.28510692622347583,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -41.605839416058394,
+          "homeWinProbability": 0.2389427816810156,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -29.927007299270073,
+          "homeWinProbability": 0.3499624122325084,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -39.65936739659367,
+          "homeWinProbability": 0.24006355346115638,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -44.52554744525547,
+          "homeWinProbability": 0.2393177724562763,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -38.68613138686132,
+          "homeWinProbability": 0.2620417439963193,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -35.76642335766423,
+          "homeWinProbability": 0.2622245166386909,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401870752",
+      "home": "98",
+      "away": "55",
+      "kickoff": "2026-11-14T20:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -59.85401459854014,
+          "homeWinProbability": 0.21963169168988428,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -33.57664233576642,
+          "homeWinProbability": 0.298880242412683,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -32.11678832116788,
+          "homeWinProbability": 0.33318149582916506,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -41.84914841849148,
+          "homeWinProbability": 0.22450355605347067,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -46.715328467153284,
+          "homeWinProbability": 0.22543639265014578,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -45.98540145985401,
+          "homeWinProbability": 0.21241310274304903,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -32.846715328467155,
+          "homeWinProbability": 0.2859010816395212,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401870769",
+      "home": "2534",
+      "away": "338",
+      "kickoff": "2026-11-14T19:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -12.408759124087592,
+          "homeWinProbability": 0.5162091131136811,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -18.248175182481752,
+          "homeWinProbability": 0.43321576062679695,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -19.708029197080293,
+          "homeWinProbability": 0.4326740508997266,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -16.78832116788321,
+          "homeWinProbability": 0.4401058957754267,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -15.328467153284674,
+          "homeWinProbability": 0.4703898252242783,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -16.058394160583944,
+          "homeWinProbability": 0.45445018209100546,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -18.97810218978102,
+          "homeWinProbability": 0.4134243828551185,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401870796",
+      "home": "2623",
+      "away": "166",
+      "kickoff": "2026-11-14T20:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -2.1897810218978107,
+          "homeWinProbability": 0.5870773938937195,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": 6.569343065693431,
+          "homeWinProbability": 0.6629811442493808,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": -18.248175182481752,
+          "homeWinProbability": 0.4449247310065149,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -4.622871046228709,
+          "homeWinProbability": 0.5607387300839275,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": 2.1897810218978107,
+          "homeWinProbability": 0.6234286866521365,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": -10.218978102189782,
+          "homeWinProbability": 0.509333917021761,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -5.839416058394161,
+          "homeWinProbability": 0.546355489292472,
+          "pick": "away"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401871060",
+      "home": "48",
+      "away": "2229",
+      "kickoff": "2026-11-14T20:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -9.48905109489051,
+          "homeWinProbability": 0.5366515991643594,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": 5.10948905109489,
+          "homeWinProbability": 0.6504456799811507,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 4.3795620437956195,
+          "homeWinProbability": 0.6341211371452743,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 0,
+          "homeWinProbability": 0.6054963223222631,
+          "pick": "tie"
+        },
+        "sor+strength": {
+          "indexDifference": -2.1897810218978115,
+          "homeWinProbability": 0.5862417410060162,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -2.5547445255474415,
+          "homeWinProbability": 0.580822358794334,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": 4.744525547445257,
+          "homeWinProbability": 0.6496631514800599,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401871061",
+      "home": "2335",
+      "away": "2393",
+      "kickoff": "2026-11-14T20:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 48.9051094890511,
+          "homeWinProbability": 0.856569266458271,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 60.58394160583942,
+          "homeWinProbability": 0.9390110857644908,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 78.83211678832116,
+          "homeWinProbability": 0.9563626976035996,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 62.773722627737214,
+          "homeWinProbability": 0.949332183260154,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 54.74452554744526,
+          "homeWinProbability": 0.9146863004503459,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 63.86861313868613,
+          "homeWinProbability": 0.9442319930560535,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 69.7080291970803,
+          "homeWinProbability": 0.9632688653625783,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401871099",
+      "home": "2348",
+      "away": "2572",
+      "kickoff": "2026-11-14T22:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 68.61313868613138,
+          "homeWinProbability": 0.9121885564028428,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 51.824817518248175,
+          "homeWinProbability": 0.9168640558191854,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 35.03649635036496,
+          "homeWinProbability": 0.8312767556410197,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 51.82481751824818,
+          "homeWinProbability": 0.9237246459733819,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 60.21897810218978,
+          "homeWinProbability": 0.9286968504100359,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 51.82481751824818,
+          "homeWinProbability": 0.914926411134787,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 43.43065693430657,
+          "homeWinProbability": 0.8998124079602471,
+          "pick": "home"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "gameId": "401871100",
+      "home": "6",
+      "away": "2653",
+      "kickoff": "2026-11-15T00:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 10.218978102189784,
+          "homeWinProbability": 0.6682857100036149,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 13.138686131386862,
+          "homeWinProbability": 0.7164352742406966,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": -10.94890510948905,
+          "homeWinProbability": 0.5068883255118098,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": 4.1362530413625365,
+          "homeWinProbability": 0.6441182105229671,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 11.678832116788328,
+          "homeWinProbability": 0.6987655131678412,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": -0.3649635036496335,
+          "homeWinProbability": 0.6007682920211252,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": 1.094890510948904,
+          "homeWinProbability": 0.6150831896125072,
+          "pick": "home"
+        }
+      }
+    }
+  ],
+  "forecastSelection": {
+    "forecastHorizonDays": 7,
+    "horizonEnd": "2026-11-15T15:51:51.331Z",
+    "unfinishedFutureSourceGames": 310,
+    "eligibleFbsFbsGames": 67,
+    "primaryEligibleGames": 67,
+    "excludedSubdivision": 243,
+    "excludedUnmeasured": 0,
+    "rule": "Unfinished source FBS-FBS fixtures strictly after actual capture and within seven days; both teams measured in the common population. Available source schedule only; no claim of complete schedule coverage."
+  },
+  "interpretation": "Experimental prospective comparison, with no public ranking replacement. Captured time is local write evidence, not a claim of earlier public registration. Fixed model indices are not win probabilities; separately frozen older-only mappings supply probability forecasts. Repeated captures are checkpoints, not independent games.",
+  "resultSha256": "908aa5872547b2913b361ac79d1d1bb4fbf39a76a2e4b9f0b2dc50b6894b4bdd",
+  "recordedAt": "2026-11-08T15:51:51.331Z",
+  "runtime": "v24.22.2"
+}

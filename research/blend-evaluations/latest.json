@@ -1,0 +1,342 @@
+{
+  "schemaVersion": 1,
+  "protocolId": "three-model-blend-prospective-2026-v1",
+  "protocolSha256": "667669f3315fabd1eb9c0ee28642f05e6f8d475971f68410cf320a982fd4b5eb",
+  "frozenAt": "2026-11-06T22:49:59.146Z",
+  "season": 2026,
+  "asOf": "2026-11-08T15:51:32.834Z",
+  "generatedAt": "2026-11-08T15:51:51.404Z",
+  "resultSourceHash": "a665ba80308b26c7e300d04ddf4e5b6a9f252c695b77d3d87cf4d05408aa6b53",
+  "selectionRule": "First valid immutable captured-before-kickoff forecast per season/game; choose before reading eventual outcomes or rescheduling exclusions.",
+  "observationsRead": 1,
+  "ignoredOtherSeasonObservations": 0,
+  "ignoredAfterResultCutoffObservations": 1,
+  "eligibleForecasts": 0,
+  "duplicateCheckpoints": 0,
+  "pending": [],
+  "excluded": [],
+  "trackingCoverage": {
+    "rule": "All currently sourced confirmed-completed FBS-FBS games with corrected kickoff from protocol freeze through result asOf; no claim of complete contemporaneous schedule availability.",
+    "completedFbsFbsGamesSinceFreeze": 55,
+    "scored": 0,
+    "selectedButExcluded": 0,
+    "selectedButPending": 0,
+    "noSavedForecastCount": 55,
+    "noSavedForecast": [
+      {
+        "gameId": "401858288",
+        "kickoff": "2026-11-07T00:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401862818",
+        "kickoff": "2026-11-07T00:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858510",
+        "kickoff": "2026-11-07T01:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401864533",
+        "kickoff": "2026-11-07T02:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856855",
+        "kickoff": "2026-11-07T03:15:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856853",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856743",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858512",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858285",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858292",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401862822",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856849",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858289",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858515",
+        "kickoff": "2026-11-07T17:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858286",
+        "kickoff": "2026-11-07T17:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856738",
+        "kickoff": "2026-11-07T17:45:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401869945",
+        "kickoff": "2026-11-07T18:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856854",
+        "kickoff": "2026-11-07T18:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401869927",
+        "kickoff": "2026-11-07T19:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856744",
+        "kickoff": "2026-11-07T20:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401871073",
+        "kickoff": "2026-11-07T20:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401869936",
+        "kickoff": "2026-11-07T20:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856740",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401871076",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858516",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856851",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858514",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401862820",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401862819",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401869951",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856850",
+        "kickoff": "2026-11-07T20:45:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401862821",
+        "kickoff": "2026-11-07T21:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401864534",
+        "kickoff": "2026-11-07T21:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401871074",
+        "kickoff": "2026-11-07T21:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401871098",
+        "kickoff": "2026-11-07T21:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858517",
+        "kickoff": "2026-11-07T21:15:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856742",
+        "kickoff": "2026-11-07T21:15:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401869968",
+        "kickoff": "2026-11-07T22:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401860911",
+        "kickoff": "2026-11-07T23:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856745",
+        "kickoff": "2026-11-07T23:15:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401871075",
+        "kickoff": "2026-11-08T00:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858287",
+        "kickoff": "2026-11-08T00:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856852",
+        "kickoff": "2026-11-08T00:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858513",
+        "kickoff": "2026-11-08T00:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401862823",
+        "kickoff": "2026-11-08T00:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856741",
+        "kickoff": "2026-11-08T00:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858511",
+        "kickoff": "2026-11-08T00:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858291",
+        "kickoff": "2026-11-08T00:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856739",
+        "kickoff": "2026-11-08T00:45:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401870795",
+        "kickoff": "2026-11-08T01:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401860913",
+        "kickoff": "2026-11-08T02:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401864532",
+        "kickoff": "2026-11-08T02:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856856",
+        "kickoff": "2026-11-08T02:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401864535",
+        "kickoff": "2026-11-08T03:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401860912",
+        "kickoff": "2026-11-08T03:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      }
+    ]
+  },
+  "scores": {
+    "primary": {
+      "games": 0,
+      "models": {}
+    },
+    "allEligible": {
+      "games": 0,
+      "models": {}
+    },
+    "groups": {
+      "regular": {
+        "games": 0,
+        "models": {}
+      },
+      "postseason": {
+        "games": 0,
+        "models": {}
+      },
+      "neutral": {
+        "games": 0,
+        "models": {}
+      },
+      "homeVenue": {
+        "games": 0,
+        "models": {}
+      },
+      "componentTop25": {
+        "games": 0,
+        "models": {}
+      },
+      "componentsDisagree": {
+        "games": 0,
+        "models": {}
+      }
+    }
+  },
+  "evaluated": [],
+  "interpretation": "Only immutable forecasts actually captured before kickoff count. No scored games means evidence is pending. This is future-game ordering/probability evidence, not proof of the correct earned-achievement order. Local capture timestamps and public repository history are retained; this is not an external trusted timestamp service.",
+  "reportSha256": "f1062508949bc9f8135cdd7a3a105239345b0e3fbb433ca0ba01b1e8a4a7418f"
+}

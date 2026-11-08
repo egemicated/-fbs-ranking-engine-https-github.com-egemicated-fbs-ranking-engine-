@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-11-08T15:51:32.834Z",
+  "season": 2026,
+  "resultSourceHash": "a665ba80308b26c7e300d04ddf4e5b6a9f252c695b77d3d87cf4d05408aa6b53",
+  "selectionRule": "First eligible immutable seven-day-window forecast per model/game; no selection by eventual outcome",
+  "observationsRead": 1,
+  "eligibleForecasts": 0,
+  "pending": 0,
+  "excluded": [],
+  "scoresByModel": {},
+  "evaluated": [],
+  "interpretation": "Prospective probability evidence only after checksummed forecastCapturedAt precedes actual kickoff. No games evaluated means evidence is pending, not success. No achievement-order superiority claim."
+}
