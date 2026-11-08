@@ -2405,6 +2405,114 @@
             "record": "5–3"
           }
         ]
+      },
+      {
+        "week": 10,
+        "gamesThrough": "2026-11-07",
+        "released": "2026-11-08",
+        "url": "https://apnews.com/live/top-25-college-football-poll-11-8-2026",
+        "rows": [
+          {
+            "team": "Georgia",
+            "record": "8–1"
+          },
+          {
+            "team": "Utah",
+            "record": "9–0"
+          },
+          {
+            "team": "Notre Dame",
+            "record": "8–1"
+          },
+          {
+            "team": "UCLA",
+            "record": "9–0"
+          },
+          {
+            "team": "Miami",
+            "record": "8–1"
+          },
+          {
+            "team": "Indiana",
+            "record": "8–1"
+          },
+          {
+            "team": "Alabama",
+            "record": "7–2"
+          },
+          {
+            "team": "Texas",
+            "record": "7–2"
+          },
+          {
+            "team": "Tennessee",
+            "record": "7–2"
+          },
+          {
+            "team": "Texas Tech",
+            "record": "8–1"
+          },
+          {
+            "team": "Wake Forest",
+            "record": "8–1"
+          },
+          {
+            "team": "BYU",
+            "record": "7–2"
+          },
+          {
+            "team": "Kentucky",
+            "record": "7–2"
+          },
+          {
+            "team": "Houston",
+            "record": "7–2"
+          },
+          {
+            "team": "USC",
+            "record": "7–2"
+          },
+          {
+            "team": "Iowa",
+            "record": "7–2"
+          },
+          {
+            "team": "Boise State",
+            "record": "8–1"
+          },
+          {
+            "team": "Oregon",
+            "record": "6–3"
+          },
+          {
+            "team": "Ole Miss",
+            "record": "6–3"
+          },
+          {
+            "team": "South Carolina",
+            "record": "6–3"
+          },
+          {
+            "team": "Ohio State",
+            "record": "6–3"
+          },
+          {
+            "team": "Arizona",
+            "record": "7–2"
+          },
+          {
+            "team": "New Mexico",
+            "record": "8–1"
+          },
+          {
+            "team": "LSU",
+            "record": "6–3"
+          },
+          {
+            "team": "SMU",
+            "record": "7–2"
+          }
+        ]
       }
     ],
     "coaches": [
@@ -2513,6 +2621,114 @@
           {
             "team": "New Mexico",
             "record": "7–1"
+          }
+        ]
+      },
+      {
+        "week": 10,
+        "gamesThrough": "2026-11-07",
+        "released": "2026-11-08",
+        "url": "https://sportsdata.usatoday.com/football/ncaaf/coaches-poll/2026/2026-11-08",
+        "rows": [
+          {
+            "team": "Georgia",
+            "record": "8–1"
+          },
+          {
+            "team": "Utah",
+            "record": "9–0"
+          },
+          {
+            "team": "Notre Dame",
+            "record": "8–1"
+          },
+          {
+            "team": "UCLA",
+            "record": "9–0"
+          },
+          {
+            "team": "Indiana",
+            "record": "8–1"
+          },
+          {
+            "team": "Miami",
+            "record": "8–1"
+          },
+          {
+            "team": "Alabama",
+            "record": "7–2"
+          },
+          {
+            "team": "Texas",
+            "record": "7–2"
+          },
+          {
+            "team": "Tennessee",
+            "record": "7–2"
+          },
+          {
+            "team": "Texas Tech",
+            "record": "8–1"
+          },
+          {
+            "team": "Wake Forest",
+            "record": "8–1"
+          },
+          {
+            "team": "BYU",
+            "record": "7–2"
+          },
+          {
+            "team": "Kentucky",
+            "record": "7–2"
+          },
+          {
+            "team": "USC",
+            "record": "7–2"
+          },
+          {
+            "team": "Iowa",
+            "record": "7–2"
+          },
+          {
+            "team": "Houston",
+            "record": "7–2"
+          },
+          {
+            "team": "Ole Miss",
+            "record": "6–3"
+          },
+          {
+            "team": "Boise State",
+            "record": "8–1"
+          },
+          {
+            "team": "Oregon",
+            "record": "6–3"
+          },
+          {
+            "team": "Ohio State",
+            "record": "6–3"
+          },
+          {
+            "team": "Arizona",
+            "record": "7–2"
+          },
+          {
+            "team": "LSU",
+            "record": "6–3"
+          },
+          {
+            "team": "SMU",
+            "record": "7–2"
+          },
+          {
+            "team": "South Carolina",
+            "record": "6–3"
+          },
+          {
+            "team": "New Mexico",
+            "record": "8–1"
           }
         ]
       }
