@@ -1,0 +1,440 @@
+{
+  "status": "research-only-retrospective",
+  "method": "preseason-team-ypp-units-v1",
+  "trainYears": [
+    2018,
+    2019
+  ],
+  "evaluationYears": [
+    2023,
+    2024,
+    2025
+  ],
+  "priorSeasons": 4,
+  "scope": "Decided regular-tagged FBS\u2013FBS matchups, including some conference title games.",
+  "availability": "Reconstructed from corrected archives. Actual preseason capture and provider availability timestamps are unavailable.",
+  "teamFeaturePolicy": "Use prior FBS seasons with at least four measured games. Center each unit on supported FBS teams that year and decay its contribution over the four-year window. Missing evidence adds no adjustment, and both teams need prior support for a unit forecast.",
+  "trainingMatchups": 1467,
+  "commonTrainingMatchups": 1457,
+  "openingCutoffs": {
+    "2018": "2018-08-25T21:30:00.000Z",
+    "2019": "2019-08-24T23:00:00.000Z",
+    "2023": "2023-08-26T18:30:00.000Z",
+    "2024": "2024-08-24T16:00:00.000Z",
+    "2025": "2025-08-23T16:00:00.000Z"
+  },
+  "numpyVersion": "2.3.5",
+  "priorSeasonRetention": 0.75,
+  "minimumFbsTeamGamesPerPriorSeason": 4,
+  "outcomeStrengthConfig": {
+    "ridge": 3,
+    "retention": 0.75,
+    "homeAdvantage": 2.5,
+    "marginCap": 28,
+    "probabilityScale": 14
+  },
+  "unitFitConfig": {
+    "ridge": 2,
+    "contextPriorStrength": 0.01,
+    "interceptPrior": 0,
+    "homePrior": 0,
+    "divisionPrior": 0
+  },
+  "priorCoverage": {
+    "2018": {
+      "window": [
+        2014,
+        2015,
+        2016,
+        2017
+      ],
+      "available": [
+        2014,
+        2015,
+        2016,
+        2017
+      ]
+    },
+    "2019": {
+      "window": [
+        2015,
+        2016,
+        2017,
+        2018
+      ],
+      "available": [
+        2015,
+        2016,
+        2017,
+        2018
+      ]
+    },
+    "2023": {
+      "window": [
+        2019,
+        2020,
+        2021,
+        2022
+      ],
+      "available": [
+        2019
+      ]
+    },
+    "2024": {
+      "window": [
+        2020,
+        2021,
+        2022,
+        2023
+      ],
+      "available": [
+        2023
+      ]
+    },
+    "2025": {
+      "window": [
+        2021,
+        2022,
+        2023,
+        2024
+      ],
+      "available": [
+        2023,
+        2024
+      ]
+    }
+  },
+  "sourceCoverage": {
+    "2014": {
+      "sha256": "fb140c3685f454322fda46056572d2c4eac09798b3db906deb2cfea2d7f13e43",
+      "source": "research/datasets/performance-box-v1/seasons/2014.json",
+      "games": 866,
+      "supportedFbsTeams": 128,
+      "context": {
+        "intercept": 5.562489876328351,
+        "homeEffect": 0.11968869837858065,
+        "divisionEffect": 1.0698629303090261
+      },
+      "latestObservedGameStart": "2015-01-13T01:30:00+00:00",
+      "normalEquationResidual": 3.637978807091713e-12
+    },
+    "2015": {
+      "sha256": "2d4da1b6e2d7cc2995e9beda0fbb12a8cc32852eff6ee7602ab61f976fa3f8b5",
+      "source": "research/datasets/performance-box-v1/seasons/2015.json",
+      "games": 870,
+      "supportedFbsTeams": 128,
+      "context": {
+        "intercept": 5.642791587797445,
+        "homeEffect": 0.1109552028130224,
+        "divisionEffect": 1.3459146546382141
+      },
+      "latestObservedGameStart": "2016-01-12T01:30:00+00:00",
+      "normalEquationResidual": 7.275957614183426e-12
+    },
+    "2016": {
+      "sha256": "e5eeb8dc0b8397d6dcc34714ecda1006cd9dd4c0a2db55a08dc64e6e351e5d3e",
+      "source": "research/datasets/performance-box-v1/seasons/2016.json",
+      "games": 855,
+      "supportedFbsTeams": 128,
+      "context": {
+        "intercept": 5.673734287780883,
+        "homeEffect": 0.11779822216661213,
+        "divisionEffect": 1.2630392318120398
+      },
+      "latestObservedGameStart": "2017-01-10T01:00:00+00:00",
+      "normalEquationResidual": 3.637978807091713e-12
+    },
+    "2017": {
+      "sha256": "4b87152e047c343cc7dcbde3f048648c12c95a8efd40e0e3b10725fc99e95e82",
+      "source": "research/datasets/performance-box-v1/seasons/2017.json",
+      "games": 867,
+      "supportedFbsTeams": 130,
+      "context": {
+        "intercept": 5.624799735821229,
+        "homeEffect": 0.16390265222038466,
+        "divisionEffect": 1.1889936895956166
+      },
+      "latestObservedGameStart": "2018-01-09T01:00:00+00:00",
+      "normalEquationResidual": 3.637978807091713e-12
+    },
+    "2018": {
+      "sha256": "56c2d210bdadc085a6091ecc4c4b5d3ba96dbde772d05e7300f1017a8cde3b33",
+      "source": "research/datasets/performance-box-v1/seasons/2018.json",
+      "games": 875,
+      "supportedFbsTeams": 130,
+      "context": {
+        "intercept": 5.688340269311255,
+        "homeEffect": 0.15655868604653664,
+        "divisionEffect": 1.0643755596451971
+      },
+      "latestObservedGameStart": "2019-01-08T01:00:00+00:00",
+      "normalEquationResidual": 7.275957614183426e-12
+    },
+    "2019": {
+      "sha256": "c4a48f3f6065749075f9521d71997ff38f279e960105f592ce46546114c71e7c",
+      "source": "research/datasets/performance-box-v1/seasons/2019.json",
+      "games": 882,
+      "supportedFbsTeams": 130,
+      "context": {
+        "intercept": 5.6924617716724955,
+        "homeEffect": 0.1460740079073344,
+        "divisionEffect": 1.3397672292741998
+      },
+      "latestObservedGameStart": "2020-01-14T01:00:00+00:00",
+      "normalEquationResidual": 7.275957614183426e-12
+    },
+    "2020": null,
+    "2021": null,
+    "2022": null,
+    "2023": {
+      "sha256": "c625093392b82c7d291cfd81fb0fd5383031d8a174930af602823e9f8b271a92",
+      "source": "research/datasets/performance-box-v1/seasons/2023.json",
+      "games": 896,
+      "supportedFbsTeams": 133,
+      "context": {
+        "intercept": 5.671458164794968,
+        "homeEffect": 0.13488314258515616,
+        "divisionEffect": 1.2849973982501017
+      },
+      "latestObservedGameStart": "2024-01-09T00:30:00+00:00",
+      "normalEquationResidual": 7.275957614183426e-12
+    },
+    "2024": {
+      "sha256": "252c138b1eca761cc963d1e45177f2abe643f2ec53587ccf969a38f0a6197041",
+      "source": "research/datasets/performance-box-v1/seasons/2024.json",
+      "games": 960,
+      "supportedFbsTeams": 134,
+      "context": {
+        "intercept": 5.688351686972605,
+        "homeEffect": 0.1448622375998816,
+        "divisionEffect": 1.4477635587107438
+      },
+      "latestObservedGameStart": "2025-01-21T00:30:00+00:00",
+      "normalEquationResidual": 1.2732925824820995e-11
+    }
+  },
+  "fitted": {
+    "strength": {
+      "columns": [
+        "strength",
+        "venue"
+      ],
+      "scale": [
+        7.534969654756832,
+        0.9851331395688265
+      ],
+      "coefficients": [
+        1.1001173420951296,
+        0.3745952351316655
+      ],
+      "penalty": 1,
+      "originalUnitCoefficients": [
+        0.1460015623819566,
+        0.38024833404307
+      ],
+      "trainingGames": 1457,
+      "trainingYears": [
+        2018,
+        2019
+      ],
+      "diagnostics": {
+        "iterations": 6,
+        "maxGradient": 1.6209256159527285e-14
+      }
+    },
+    "units": {
+      "columns": [
+        "strength",
+        "venue",
+        "offense",
+        "defense"
+      ],
+      "scale": [
+        7.534969654756832,
+        0.9851331395688265,
+        0.6692005635591839,
+        0.6501478244001488
+      ],
+      "coefficients": [
+        0.7081821891061238,
+        0.37271838914578287,
+        0.14061781825494035,
+        0.45017558333306457
+      ],
+      "penalty": 1,
+      "originalUnitCoefficients": [
+        0.09398607048922193,
+        0.37834316416247493,
+        0.2101280631131808,
+        0.6924203487851608
+      ],
+      "trainingGames": 1457,
+      "trainingYears": [
+        2018,
+        2019
+      ],
+      "diagnostics": {
+        "iterations": 6,
+        "maxGradient": 1.3378187446733136e-14
+      }
+    }
+  },
+  "pooled": {
+    "coveredGames": 2199,
+    "fallbackGames": 65,
+    "strength": {
+      "games": 2264,
+      "accuracy": 0.6638692579505301,
+      "brier": 0.2082875828828796,
+      "logLoss": 0.6025848567589221,
+      "probabilityBias": 0.009379731936410033
+    },
+    "unitsWithFallback": {
+      "games": 2264,
+      "brier": 0.20860452323745024,
+      "logLoss": 0.6035036472548708,
+      "accuracy": 0.6665194346289752,
+      "probabilityBias": 0.010264261488228251
+    },
+    "deltas": {
+      "brier": 0.0003169403545706384,
+      "logLoss": 0.0009187904959486737,
+      "accuracy": 0.0026501766784451375
+    },
+    "coveredStrength": {
+      "games": 2199,
+      "accuracy": 0.6612096407457936,
+      "brier": 0.20887888990010003,
+      "logLoss": 0.6038671351859156,
+      "probabilityBias": 0.009460461512746942
+    },
+    "coveredUnits": {
+      "games": 2199,
+      "accuracy": 0.6639381537062301,
+      "brier": 0.2092051986598763,
+      "logLoss": 0.6048130841094389,
+      "probabilityBias": 0.010371136776647093
+    }
+  },
+  "byYear": {
+    "2023": {
+      "coveredGames": 718,
+      "fallbackGames": 32,
+      "strength": {
+        "games": 750,
+        "accuracy": 0.6986666666666667,
+        "brier": 0.19898814047092955,
+        "logLoss": 0.5818614602209633,
+        "probabilityBias": 0.013766475239735865
+      },
+      "unitsWithFallback": {
+        "games": 750,
+        "brier": 0.20198122189449308,
+        "logLoss": 0.5899095204830204,
+        "accuracy": 0.696,
+        "probabilityBias": 0.015584682462506938
+      },
+      "deltas": {
+        "brier": 0.002993081423563526,
+        "logLoss": 0.008048060262057066,
+        "accuracy": -0.002666666666666706
+      },
+      "coveredStrength": {
+        "games": 718,
+        "accuracy": 0.6949860724233984,
+        "brier": 0.19965181276020785,
+        "logLoss": 0.5832074575468551,
+        "probabilityBias": 0.011863970440339426
+      },
+      "coveredUnits": {
+        "games": 718,
+        "accuracy": 0.692200557103064,
+        "brier": 0.2027782905703369,
+        "logLoss": 0.5916142057314552,
+        "probabilityBias": 0.013763211968303638
+      }
+    },
+    "2024": {
+      "coveredGames": 741,
+      "fallbackGames": 11,
+      "strength": {
+        "games": 752,
+        "accuracy": 0.6210106382978723,
+        "brier": 0.21952174619994635,
+        "logLoss": 0.6265737778815941,
+        "probabilityBias": 0.008690880221865618
+      },
+      "unitsWithFallback": {
+        "games": 752,
+        "brier": 0.21751761174905904,
+        "logLoss": 0.6216609864528059,
+        "accuracy": 0.6343085106382979,
+        "probabilityBias": 0.00986841041025286
+      },
+      "deltas": {
+        "brier": -0.0020041344508873182,
+        "logLoss": -0.004912791428788199,
+        "accuracy": 0.013297872340425565
+      },
+      "coveredStrength": {
+        "games": 741,
+        "accuracy": 0.6180836707152496,
+        "brier": 0.22021935009616997,
+        "logLoss": 0.62805428597002,
+        "probabilityBias": 0.010793431000954944
+      },
+      "coveredUnits": {
+        "games": 741,
+        "accuracy": 0.631578947368421,
+        "brier": 0.21818546466153127,
+        "logLoss": 0.6230685651138137,
+        "probabilityBias": 0.01198844139456791
+      }
+    },
+    "2025": {
+      "coveredGames": 740,
+      "fallbackGames": 22,
+      "strength": {
+        "games": 762,
+        "accuracy": 0.6719160104986877,
+        "brier": 0.20635384403055468,
+        "logLoss": 0.5993077947106543,
+        "probabilityBias": 0.005741882870587243
+      },
+      "unitsWithFallback": {
+        "games": 762,
+        "brier": 0.2063274017761485,
+        "logLoss": 0.5989646393835333,
+        "accuracy": 0.6692913385826772,
+        "probabilityBias": 0.005418282852963791
+      },
+      "deltas": {
+        "brier": -2.64422544061782e-05,
+        "logLoss": -0.00034315532712103636,
+        "accuracy": -0.002624671916010457
+      },
+      "coveredStrength": {
+        "games": 740,
+        "accuracy": 0.6716216216216216,
+        "brier": 0.20647586338814714,
+        "logLoss": 0.5996927700694616,
+        "probabilityBias": 0.0057936374576475665
+      },
+      "coveredUnits": {
+        "games": 740,
+        "accuracy": 0.668918918918919,
+        "brier": 0.20644863501266403,
+        "logLoss": 0.59933941282721,
+        "probabilityBias": 0.005460416898959633
+      }
+    }
+  },
+  "matchupInputSha256": "aa1550e15f0a227f9e4f9f7704fdce015e5a8425edc846e183fe46f1eb464d00",
+  "implementationSha256": {
+    "research/preseason_team_units.py": "75ebb5b43b2f60e334056708be7c2cf7bd5dc91bef30ba6844027a51817529a0",
+    "research/preseason-team-baseline.mjs": "022449805031c051f6f1f0cc79a8ab3050c796cb98bcae51f5b3982fa618cab2",
+    "research/predictive_v2_model.py": "e835a398788ec48361d4697fb729e9c1ce870c3a279d9ee1ef0d63c22c92577c",
+    "research/predictive_v2_experiment.py": "0c0ee45102cbeeda2955cc88e1339b5379867afe294aebda09a14808b0670d9c",
+    "src/engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1"
+  }
+}
