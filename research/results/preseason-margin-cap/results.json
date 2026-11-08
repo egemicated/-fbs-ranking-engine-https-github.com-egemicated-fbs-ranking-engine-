@@ -1,0 +1,269 @@
+{
+  "status": "retrospective research only",
+  "scope": "Decided archive regular-tagged FBS–FBS games, including some conference title games.",
+  "configuration": {
+    "current": {
+      "ridge": 3,
+      "retention": 0.75,
+      "homeAdvantage": 2.5,
+      "marginCap": 28,
+      "probabilityScale": 14
+    },
+    "caps": [
+      14,
+      28,
+      42
+    ],
+    "formula": "cap * tanh(margin / cap)",
+    "penalty": 0.01,
+    "calibrationYears": [
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019
+    ],
+    "selectionYears": [
+      2021,
+      2022
+    ],
+    "comparisonYears": [
+      2023,
+      2024,
+      2025
+    ],
+    "priorSeasons": 4,
+    "choice": "Lowest 2021–2022 log loss, then Brier, then closest to the current cap."
+  },
+  "limitation": "Retrospective comparison on familiar later years. The shared existing Strength settings were selected partly on 2019–2022, so the cap-selection split is conditional on those settings.",
+  "selectedCap": 42,
+  "selectedComparisonDelta": {
+    "brier": -0.0008548994287657374,
+    "logLoss": -0.0021235735799404187,
+    "accuracy": 0.0013250883392226243,
+    "expectedWinsMAE": -0.0018198668381679273
+  },
+  "adjustedMarginExamples": {
+    "14": {
+      "7": 6.469640201640137,
+      "14": 10.662318183380709,
+      "28": 13.496386121061438,
+      "42": 13.930766551614227,
+      "56": 13.990610196346939
+    },
+    "28": {
+      "7": 6.857722547303855,
+      "14": 12.939280403280273,
+      "28": 21.324636366761418,
+      "42": 25.34415110205626,
+      "56": 26.992772242122875
+    },
+    "42": {
+      "7": 6.9358973428344335,
+      "14": 13.503534976328643,
+      "28": 24.476883704612227,
+      "42": 31.986954550142123,
+      "56": 36.54258979319222
+    }
+  },
+  "results": [
+    {
+      "cap": 14,
+      "scale": 5.354757280169256,
+      "calibrationGames": 4367,
+      "selection": {
+        "games": 1466,
+        "brier": 0.21381183116333174,
+        "logLoss": 0.6147679667794802,
+        "accuracy": 0.6582537517053206,
+        "expectedWinsMAE": 1.76766176961257
+      },
+      "comparison": {
+        "games": 2264,
+        "brier": 0.211213443815834,
+        "logLoss": 0.6094193787456283,
+        "accuracy": 0.6603356890459364,
+        "expectedWinsMAE": 1.8577929095838654
+      },
+      "byYear": {
+        "2021": {
+          "games": 732,
+          "brier": 0.20850079226922555,
+          "logLoss": 0.6026753358487439,
+          "accuracy": 0.6721311475409836,
+          "expectedWinsMAE": 1.7790725625747144
+        },
+        "2022": {
+          "games": 734,
+          "brier": 0.21910839856181408,
+          "logLoss": 0.6268276477621758,
+          "accuracy": 0.6444141689373297,
+          "expectedWinsMAE": 1.756338081940212
+        },
+        "2023": {
+          "games": 750,
+          "brier": 0.20299449402836414,
+          "logLoss": 0.5915126087038501,
+          "accuracy": 0.6893333333333334,
+          "expectedWinsMAE": 1.7653631593892836
+        },
+        "2024": {
+          "games": 752,
+          "brier": 0.220803349143089,
+          "logLoss": 0.6292966892434314,
+          "accuracy": 0.6276595744680851,
+          "expectedWinsMAE": 1.8830474142847045
+        },
+        "2025": {
+          "games": 762,
+          "brier": 0.20983890777188013,
+          "logLoss": 0.6074276990041385,
+          "accuracy": 0.6640419947506562,
+          "expectedWinsMAE": 1.9233006533042105
+        }
+      }
+    },
+    {
+      "cap": 28,
+      "scale": 7.3361087302133114,
+      "calibrationGames": 4367,
+      "selection": {
+        "games": 1466,
+        "brier": 0.21099328992977304,
+        "logLoss": 0.6080195770474021,
+        "accuracy": 0.6534788540245566,
+        "expectedWinsMAE": 1.75480252518064
+      },
+      "comparison": {
+        "games": 2264,
+        "brier": 0.20800065388885333,
+        "logLoss": 0.601902275879718,
+        "accuracy": 0.6643109540636042,
+        "expectedWinsMAE": 1.8518747559257864
+      },
+      "byYear": {
+        "2021": {
+          "games": 732,
+          "brier": 0.20516272363696514,
+          "logLoss": 0.5947292336897358,
+          "accuracy": 0.6721311475409836,
+          "expectedWinsMAE": 1.761594271338787
+        },
+        "2022": {
+          "games": 734,
+          "brier": 0.2168079691209652,
+          "logLoss": 0.6212737069354273,
+          "accuracy": 0.6348773841961853,
+          "expectedWinsMAE": 1.7480626244130137
+        },
+        "2023": {
+          "games": 750,
+          "brier": 0.19926540373166138,
+          "logLoss": 0.5827691121117369,
+          "accuracy": 0.7,
+          "expectedWinsMAE": 1.76950098954336
+        },
+        "2024": {
+          "games": 752,
+          "brier": 0.21845571893961405,
+          "logLoss": 0.6239266306279798,
+          "accuracy": 0.6210106382978723,
+          "expectedWinsMAE": 1.8745914649464082
+        },
+        "2025": {
+          "games": 762,
+          "brier": 0.20628048157877732,
+          "logLoss": 0.5989988087606798,
+          "accuracy": 0.6719160104986877,
+          "expectedWinsMAE": 1.9100488141618124
+        }
+      }
+    },
+    {
+      "cap": 42,
+      "scale": 8.394712854278023,
+      "calibrationGames": 4367,
+      "selection": {
+        "games": 1466,
+        "brier": 0.2100705096974571,
+        "logLoss": 0.6058525246455585,
+        "accuracy": 0.6596180081855388,
+        "expectedWinsMAE": 1.7470533419769485
+      },
+      "comparison": {
+        "games": 2264,
+        "brier": 0.2071457544600876,
+        "logLoss": 0.5997787022997776,
+        "accuracy": 0.6656360424028268,
+        "expectedWinsMAE": 1.8500548890876185
+      },
+      "byYear": {
+        "2021": {
+          "games": 732,
+          "brier": 0.20413998537033484,
+          "logLoss": 0.5922553384381769,
+          "accuracy": 0.680327868852459,
+          "expectedWinsMAE": 1.7527680405557973
+        },
+        "2022": {
+          "games": 734,
+          "brier": 0.21598487455774762,
+          "logLoss": 0.6194126612992423,
+          "accuracy": 0.6389645776566758,
+          "expectedWinsMAE": 1.7413822670513712
+        },
+        "2023": {
+          "games": 750,
+          "brier": 0.19873523759807907,
+          "logLoss": 0.5813856574653646,
+          "accuracy": 0.6906666666666667,
+          "expectedWinsMAE": 1.7740778817794545
+        },
+        "2024": {
+          "games": 752,
+          "brier": 0.21775770956458496,
+          "logLoss": 0.622232519154172,
+          "accuracy": 0.6236702127659575,
+          "expectedWinsMAE": 1.8736728714048447
+        },
+        "2025": {
+          "games": 762,
+          "brier": 0.2049511316358417,
+          "logLoss": 0.5957229455429593,
+          "accuracy": 0.6824146981627297,
+          "expectedWinsMAE": 1.9010852739514272
+        }
+      }
+    }
+  ],
+  "sourceHashes": {
+    "data/model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+    "data/seasons/2004.json": "701a957c2d4b557662614066418bb38af34477dc4b88d1ba44c42b761952c5c0",
+    "data/seasons/2005.json": "7a676bba9118cf508a2f1c6ed0b4e9b4ead9197689599dfff3d1acc7016f2307",
+    "data/seasons/2006.json": "df283b38e38c989a94526886f91e64a232f7aa7672be661d84f2a97a5d176ba4",
+    "data/seasons/2007.json": "9bea0618cc7d62d3693bf3c1275135a54fe7948bc092b909d7f59c16df5551de",
+    "data/seasons/2008.json": "61b8499d14745ea3dffb304c99266c8313cfd3eb9da1c8c5ccac94fcb4009ee3",
+    "data/seasons/2009.json": "77bd4d85d5576dc4c21529c84a82233da2a918a8d9667af09650380527031c33",
+    "data/seasons/2010.json": "cb9ed4776523f2126f33bf9e546632d713231d223bb4e397e72e3117fadd854c",
+    "data/seasons/2011.json": "f3248a712ccbd35a5164218c6022967a80a437f1b2571f9a4096af03b85efdf8",
+    "data/seasons/2012.json": "5a79d2131d917800f64f76f08745ce2785e89a9a72130bb2b632644b7815e8b3",
+    "data/seasons/2013.json": "4dd9a309eb721a77184a76d471f9c55eaa88b91d9d93b1917f00b03c2f2e08df",
+    "data/seasons/2014.json": "526f81ee2c9872f5e48fd93e054d8bd1bef1dff82e5ccc7bfd0eb3cfcb0e4e60",
+    "data/seasons/2015.json": "f757271e4b22c089e91d7ce7738b220a3aeeec2e722b600fc8cda375347d3045",
+    "data/seasons/2016.json": "fc2b316f685d8e3b6403b90abc2215216f36b55647bd0eb629a2439f2a5e7d28",
+    "data/seasons/2017.json": "0fbce674b39930a32bf8e8dbb72cf15d6a88a257d3114eb7be114ba01a19cf8b",
+    "data/seasons/2018.json": "9c9da1d5839b5ee8ff3508ac0cb2261d55225349b34491a4f25878a5bfae9cb4",
+    "data/seasons/2019.json": "4dc4de9a8d68be4c782c4f1965e7d522cfaebc90d80aa10c832a7067634757ef",
+    "data/seasons/2020.json": "8045e8d5ed305754db95596463fcebb1d6e6d78b7ee184b4f13b3326b6565b72",
+    "data/seasons/2021.json": "0c010a3a5cf1ce302516fad11cc5d2f90b55081a9ce5be66a4453c93c27af269",
+    "data/seasons/2022.json": "6059d7b8e0bd4ef593388e16912b3d821e6f71a0de2ffd3c58536d94e5b3d1e4",
+    "data/seasons/2023.json": "b5011bcdd7df9750d92c8827316f1a8300a3b4c623adc6f1c2acb92bd6d6c241",
+    "data/seasons/2024.json": "2c4834a1ce6c5ae94c3f496e9a61d9b60cb5a841f603a561c90e7298433ae798",
+    "data/seasons/2025.json": "d41572b4895deb8c2f3663cdab9910e2147b868b44dc34d2bcbe3d7709b30caa",
+    "research/preseason-margin-cap.mjs": "d9cd3be0b288391736cfef00aaa6252183cfb83568e749978274b3fb33e08539",
+    "research/preseason-team-baseline.mjs": "022449805031c051f6f1f0cc79a8ab3050c796cb98bcae51f5b3982fa618cab2",
+    "src/engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1"
+  },
+  "cfbdCalls": 0
+}

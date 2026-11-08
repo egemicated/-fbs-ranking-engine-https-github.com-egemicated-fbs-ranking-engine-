@@ -1,0 +1,659 @@
+{
+  "fitYears": [
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019
+  ],
+  "selectYears": [
+    2021,
+    2022
+  ],
+  "testYears": [
+    2023,
+    2024,
+    2025
+  ],
+  "baselineId": "four-years",
+  "selectedWindow": "all-earlier",
+  "selectedRetention": "retention-1",
+  "combined": [
+    {
+      "id": "combined-four",
+      "window": 4,
+      "historicalRetention": 1,
+      "marginCap": 42,
+      "scale": 8.704387492121967,
+      "selection": {
+        "games": 1466,
+        "logLoss": 0.6000772110236493,
+        "brier": 0.20774517053126662,
+        "accuracy": 0.6623465211459755,
+        "winError": 1.7369825325734871
+      },
+      "evaluation": {
+        "games": 2264,
+        "logLoss": 0.5983880355639691,
+        "brier": 0.20663927704863355,
+        "accuracy": 0.6651943462897526,
+        "winError": 1.8495255242786588
+      },
+      "byYear": {
+        "2023": {
+          "games": 750,
+          "logLoss": 0.5799806454118537,
+          "brier": 0.19819124866349663,
+          "accuracy": 0.6906666666666667,
+          "winError": 1.7696556376672958
+        },
+        "2024": {
+          "games": 752,
+          "logLoss": 0.6211866147636922,
+          "brier": 0.2173704906638236,
+          "accuracy": 0.6303191489361702,
+          "winError": 1.8759100747158202
+        },
+        "2025": {
+          "games": 762,
+          "logLoss": 0.5940061603092376,
+          "brier": 0.20436388157649382,
+          "accuracy": 0.6745406824146981,
+          "winError": 1.9016370328134453
+        }
+      }
+    },
+    {
+      "id": "combined-longer",
+      "window": null,
+      "historicalRetention": 1,
+      "marginCap": 42,
+      "scale": 8.721490252326657,
+      "selection": {
+        "games": 1466,
+        "logLoss": 0.5970103913296784,
+        "brier": 0.20652752521023282,
+        "accuracy": 0.660300136425648,
+        "winError": 1.7339394731665057
+      },
+      "evaluation": {
+        "games": 2264,
+        "logLoss": 0.5966894789468193,
+        "brier": 0.206053340583762,
+        "accuracy": 0.6656360424028268,
+        "winError": 1.8463838548573948
+      },
+      "byYear": {
+        "2023": {
+          "games": 750,
+          "logLoss": 0.5767494977505127,
+          "brier": 0.19701065431060455,
+          "accuracy": 0.6906666666666667,
+          "winError": 1.7635839139240395
+        },
+        "2024": {
+          "games": 752,
+          "logLoss": 0.6196280814766865,
+          "brier": 0.21686991403659817,
+          "accuracy": 0.6329787234042553,
+          "winError": 1.8738372758601596
+        },
+        "2025": {
+          "games": 762,
+          "logLoss": 0.5936778736906109,
+          "brier": 0.20427899867869131,
+          "accuracy": 0.6732283464566929,
+          "winError": 1.9003076322821386
+        }
+      }
+    }
+  ],
+  "scope": "Retrospective archive regular-tagged FBS–FBS fixtures, including some conference title games. Each candidate forecasts from earlier seasons only.",
+  "protocol": "Fit a separate odds scale per candidate on 2014–2019; choose by log loss in 2021–2022. Historical retention changes how much carries between input seasons. Every candidate keeps the same .75 shrinkage into the target preseason and the same nominal venue edge.",
+  "results": [
+    {
+      "id": "window-1",
+      "window": 1,
+      "historicalRetention": 0.75,
+      "scale": 6.878125301590994,
+      "selection": {
+        "games": 1466,
+        "logLoss": 0.6240502314532981,
+        "brier": 0.2177349257181242,
+        "accuracy": 0.6323328785811733,
+        "winError": 1.801052181892079
+      },
+      "evaluation": {
+        "games": 2264,
+        "logLoss": 0.6066625705677464,
+        "brier": 0.20983151110810427,
+        "accuracy": 0.6598939929328622,
+        "winError": 1.8620123390960326
+      },
+      "byYear": {
+        "2023": {
+          "games": 750,
+          "logLoss": 0.5870194584433798,
+          "brier": 0.20090870703202085,
+          "accuracy": 0.6853333333333333,
+          "winError": 1.782754274792117
+        },
+        "2024": {
+          "games": 752,
+          "logLoss": 0.6275425265115488,
+          "brier": 0.21982788284593682,
+          "accuracy": 0.6303191489361702,
+          "winError": 1.8828663735504576
+        },
+        "2025": {
+          "games": 762,
+          "logLoss": 0.6053904015697652,
+          "brier": 0.20874861282754287,
+          "accuracy": 0.6640419947506562,
+          "winError": 1.918974706269032
+        }
+      }
+    },
+    {
+      "id": "window-2",
+      "window": 2,
+      "historicalRetention": 0.75,
+      "scale": 7.308768997082943,
+      "selection": {
+        "games": 1466,
+        "logLoss": 0.6137778771167661,
+        "brier": 0.21332704376764097,
+        "accuracy": 0.6527967257844475,
+        "winError": 1.767645801448507
+      },
+      "evaluation": {
+        "games": 2264,
+        "logLoss": 0.6035129720767097,
+        "brier": 0.2086513175303256,
+        "accuracy": 0.661660777385159,
+        "winError": 1.8552612947563867
+      },
+      "byYear": {
+        "2023": {
+          "games": 750,
+          "logLoss": 0.5843991246457493,
+          "brier": 0.19996552192568548,
+          "accuracy": 0.6946666666666667,
+          "winError": 1.7756603287252708
+        },
+        "2024": {
+          "games": 752,
+          "logLoss": 0.6250773739803421,
+          "brier": 0.21886610221483335,
+          "accuracy": 0.6196808510638298,
+          "winError": 1.8739090356117554
+        },
+        "2025": {
+          "games": 762,
+          "logLoss": 0.6010444095329954,
+          "brier": 0.20711959656015555,
+          "accuracy": 0.6706036745406824,
+          "winError": 1.9147328477528542
+        }
+      }
+    },
+    {
+      "id": "four-years",
+      "window": 4,
+      "historicalRetention": 0.75,
+      "scale": 7.3361087302133114,
+      "selection": {
+        "games": 1466,
+        "logLoss": 0.6080195770474021,
+        "brier": 0.21099328992977306,
+        "accuracy": 0.6534788540245566,
+        "winError": 1.75480252518064
+      },
+      "evaluation": {
+        "games": 2264,
+        "logLoss": 0.601902275879718,
+        "brier": 0.20800065388885333,
+        "accuracy": 0.6643109540636042,
+        "winError": 1.8518747559257864
+      },
+      "byYear": {
+        "2023": {
+          "games": 750,
+          "logLoss": 0.5827691121117369,
+          "brier": 0.19926540373166135,
+          "accuracy": 0.7,
+          "winError": 1.76950098954336
+        },
+        "2024": {
+          "games": 752,
+          "logLoss": 0.6239266306279798,
+          "brier": 0.21845571893961405,
+          "accuracy": 0.6210106382978723,
+          "winError": 1.8745914649464082
+        },
+        "2025": {
+          "games": 762,
+          "logLoss": 0.5989988087606799,
+          "brier": 0.20628048157877732,
+          "accuracy": 0.6719160104986877,
+          "winError": 1.9100488141618124
+        }
+      }
+    },
+    {
+      "id": "window-6",
+      "window": 6,
+      "historicalRetention": 0.75,
+      "scale": 7.335036413824008,
+      "selection": {
+        "games": 1466,
+        "logLoss": 0.6072512823657182,
+        "brier": 0.21067029916442306,
+        "accuracy": 0.655525238744884,
+        "winError": 1.7537427570052688
+      },
+      "evaluation": {
+        "games": 2264,
+        "logLoss": 0.601500924425605,
+        "brier": 0.20784605455446475,
+        "accuracy": 0.6647526501766784,
+        "winError": 1.8508437155215447
+      },
+      "byYear": {
+        "2023": {
+          "games": 750,
+          "logLoss": 0.5820691764310605,
+          "brier": 0.19898984844309087,
+          "accuracy": 0.7,
+          "winError": 1.7677902632134388
+        },
+        "2024": {
+          "games": 752,
+          "logLoss": 0.6235393719379738,
+          "brier": 0.21831506115521154,
+          "accuracy": 0.6210106382978723,
+          "winError": 1.8738499558129762
+        },
+        "2025": {
+          "games": 762,
+          "logLoss": 0.5988774315996346,
+          "brier": 0.20623117479038158,
+          "accuracy": 0.6732283464566929,
+          "winError": 1.9093971931533573
+        }
+      }
+    },
+    {
+      "id": "window-8",
+      "window": 8,
+      "historicalRetention": 0.75,
+      "scale": 7.334579586306991,
+      "selection": {
+        "games": 1466,
+        "logLoss": 0.6070466803660254,
+        "brier": 0.21058373730460964,
+        "accuracy": 0.6568894952251023,
+        "winError": 1.753569931650534
+      },
+      "evaluation": {
+        "games": 2264,
+        "logLoss": 0.6014155445299005,
+        "brier": 0.2078133214577068,
+        "accuracy": 0.6643109540636042,
+        "winError": 1.8506429780611025
+      },
+      "byYear": {
+        "2023": {
+          "games": 750,
+          "logLoss": 0.5819224173348535,
+          "brier": 0.1989334973483535,
+          "accuracy": 0.7,
+          "winError": 1.7675866744736295
+        },
+        "2024": {
+          "games": 752,
+          "logLoss": 0.6234712180732758,
+          "brier": 0.21829039468037148,
+          "accuracy": 0.6196808510638298,
+          "winError": 1.8738135076489222
+        },
+        "2025": {
+          "games": 762,
+          "logLoss": 0.5988354643352437,
+          "brier": 0.20621372699388954,
+          "accuracy": 0.6732283464566929,
+          "winError": 1.9090373707990935
+        }
+      }
+    },
+    {
+      "id": "window-10",
+      "window": 10,
+      "historicalRetention": 0.75,
+      "scale": 7.334766090811564,
+      "selection": {
+        "games": 1466,
+        "logLoss": 0.607020525901935,
+        "brier": 0.21057265138930378,
+        "accuracy": 0.6568894952251023,
+        "winError": 1.7535386291488722
+      },
+      "evaluation": {
+        "games": 2264,
+        "logLoss": 0.6013950856899384,
+        "brier": 0.20780560190211972,
+        "accuracy": 0.6643109540636042,
+        "winError": 1.8505888489658722
+      },
+      "byYear": {
+        "2023": {
+          "games": 750,
+          "logLoss": 0.5818864738470773,
+          "brier": 0.1989199865061568,
+          "accuracy": 0.7,
+          "winError": 1.7675432375828628
+        },
+        "2024": {
+          "games": 752,
+          "logLoss": 0.6234542720103504,
+          "brier": 0.2182845602818231,
+          "accuracy": 0.6196808510638298,
+          "winError": 1.8738275757174585
+        },
+        "2025": {
+          "games": 762,
+          "logLoss": 0.5988267796127673,
+          "brier": 0.20620984710610543,
+          "accuracy": 0.6732283464566929,
+          "winError": 1.9089055910925405
+        }
+      }
+    },
+    {
+      "id": "all-earlier",
+      "window": null,
+      "historicalRetention": 0.75,
+      "scale": 7.334777347229652,
+      "selection": {
+        "games": 1466,
+        "logLoss": 0.6070010952963953,
+        "brier": 0.2105643846527896,
+        "accuracy": 0.6568894952251023,
+        "winError": 1.7535291843969047
+      },
+      "evaluation": {
+        "games": 2264,
+        "logLoss": 0.6013898896097819,
+        "brier": 0.20780358417152675,
+        "accuracy": 0.6643109540636042,
+        "winError": 1.8505668607872707
+      },
+      "byYear": {
+        "2023": {
+          "games": 750,
+          "logLoss": 0.5818777802813093,
+          "brier": 0.198916701398036,
+          "accuracy": 0.7,
+          "winError": 1.7675339240908916
+        },
+        "2024": {
+          "games": 752,
+          "logLoss": 0.6234511469688085,
+          "brier": 0.21828353933240596,
+          "accuracy": 0.6196808510638298,
+          "winError": 1.873835033006499
+        },
+        "2025": {
+          "games": 762,
+          "logLoss": 0.5988229820800817,
+          "brier": 0.20620809309428004,
+          "accuracy": 0.6732283464566929,
+          "winError": 1.9088421953699302
+        }
+      }
+    },
+    {
+      "id": "retention-0",
+      "window": 4,
+      "historicalRetention": 0,
+      "scale": 6.878125301590994,
+      "selection": {
+        "games": 1466,
+        "logLoss": 0.6240502314532981,
+        "brier": 0.2177349257181242,
+        "accuracy": 0.6323328785811733,
+        "winError": 1.801052181892079
+      },
+      "evaluation": {
+        "games": 2264,
+        "logLoss": 0.6066625705677464,
+        "brier": 0.20983151110810427,
+        "accuracy": 0.6598939929328622,
+        "winError": 1.8620123390960326
+      },
+      "byYear": {
+        "2023": {
+          "games": 750,
+          "logLoss": 0.5870194584433798,
+          "brier": 0.20090870703202085,
+          "accuracy": 0.6853333333333333,
+          "winError": 1.782754274792117
+        },
+        "2024": {
+          "games": 752,
+          "logLoss": 0.6275425265115488,
+          "brier": 0.21982788284593682,
+          "accuracy": 0.6303191489361702,
+          "winError": 1.8828663735504576
+        },
+        "2025": {
+          "games": 762,
+          "logLoss": 0.6053904015697652,
+          "brier": 0.20874861282754287,
+          "accuracy": 0.6640419947506562,
+          "winError": 1.918974706269032
+        }
+      }
+    },
+    {
+      "id": "retention-0.25",
+      "window": 4,
+      "historicalRetention": 0.25,
+      "scale": 6.994799535843725,
+      "selection": {
+        "games": 1466,
+        "logLoss": 0.6191822284184137,
+        "brier": 0.21565260048144244,
+        "accuracy": 0.6418826739427013,
+        "winError": 1.7855914266734965
+      },
+      "evaluation": {
+        "games": 2264,
+        "logLoss": 0.6050650163952924,
+        "brier": 0.2092095201398248,
+        "accuracy": 0.6612190812720848,
+        "winError": 1.8571965725012278
+      },
+      "byYear": {
+        "2023": {
+          "games": 750,
+          "logLoss": 0.5855482131657799,
+          "brier": 0.2003390627514901,
+          "accuracy": 0.6893333333333334,
+          "winError": 1.778060057171004
+        },
+        "2024": {
+          "games": 752,
+          "logLoss": 0.6263419291045798,
+          "brier": 0.21936398652828906,
+          "accuracy": 0.625,
+          "winError": 1.8782872368763024
+        },
+        "2025": {
+          "games": 762,
+          "logLoss": 0.6032767802597935,
+          "brier": 0.2079190796111201,
+          "accuracy": 0.6692913385826772,
+          "winError": 1.913806921859015
+        }
+      }
+    },
+    {
+      "id": "retention-0.5",
+      "window": 4,
+      "historicalRetention": 0.5,
+      "scale": 7.144100946717308,
+      "selection": {
+        "games": 1466,
+        "logLoss": 0.6137811769969623,
+        "brier": 0.21337635708542932,
+        "accuracy": 0.6493860845839018,
+        "winError": 1.7696455092920054
+      },
+      "evaluation": {
+        "games": 2264,
+        "logLoss": 0.6034814989621206,
+        "brier": 0.20860108976052558,
+        "accuracy": 0.6612190812720848,
+        "winError": 1.8535180189974552
+      },
+      "byYear": {
+        "2023": {
+          "games": 750,
+          "logLoss": 0.5841804384635936,
+          "brier": 0.1998123024979471,
+          "accuracy": 0.6933333333333334,
+          "winError": 1.7738559648319934
+        },
+        "2024": {
+          "games": 752,
+          "logLoss": 0.6251275237913473,
+          "brier": 0.2189042543857402,
+          "accuracy": 0.625,
+          "winError": 1.8745047103864099
+        },
+        "2025": {
+          "games": 762,
+          "logLoss": 0.6011166494900957,
+          "brier": 0.20708351843345563,
+          "accuracy": 0.6653543307086615,
+          "winError": 1.9107447583936774
+        }
+      }
+    },
+    {
+      "id": "retention-0.9",
+      "window": 4,
+      "historicalRetention": 0.9,
+      "scale": 7.478104126631455,
+      "selection": {
+        "games": 1466,
+        "logLoss": 0.6045533765222738,
+        "brier": 0.20958865280564615,
+        "accuracy": 0.6596180081855388,
+        "winError": 1.7478591283417675
+      },
+      "evaluation": {
+        "games": 2264,
+        "logLoss": 0.6009768819701174,
+        "brier": 0.20765235445632407,
+        "accuracy": 0.6625441696113075,
+        "winError": 1.8512254427305757
+      },
+      "byYear": {
+        "2023": {
+          "games": 750,
+          "logLoss": 0.5818872253184282,
+          "brier": 0.19892099636481958,
+          "accuracy": 0.6946666666666667,
+          "winError": 1.767285034329028
+        },
+        "2024": {
+          "games": 752,
+          "logLoss": 0.6232199640573862,
+          "brier": 0.21819320447245136,
+          "accuracy": 0.6183510638297872,
+          "winError": 1.875484220193422
+        },
+        "2025": {
+          "games": 762,
+          "logLoss": 0.597814735984739,
+          "brier": 0.20584369219451504,
+          "accuracy": 0.6745406824146981,
+          "winError": 1.9094121937407544
+        }
+      }
+    },
+    {
+      "id": "retention-1",
+      "window": 4,
+      "historicalRetention": 1,
+      "scale": 7.586526768819696,
+      "selection": {
+        "games": 1466,
+        "logLoss": 0.6023138378664238,
+        "brier": 0.20869622262821858,
+        "accuracy": 0.6616643929058663,
+        "winError": 1.743974322782867
+      },
+      "evaluation": {
+        "games": 2264,
+        "logLoss": 0.6003825670394327,
+        "brier": 0.20743086537749578,
+        "accuracy": 0.6598939929328622,
+        "winError": 1.8509676180334633
+      },
+      "byYear": {
+        "2023": {
+          "games": 750,
+          "logLoss": 0.5812946072105353,
+          "brier": 0.19868862276182558,
+          "accuracy": 0.692,
+          "winError": 1.7658599245862772
+        },
+        "2024": {
+          "games": 752,
+          "logLoss": 0.6227558593185005,
+          "brier": 0.21802094810258904,
+          "accuracy": 0.6170212765957447,
+          "winError": 1.8761787655583788
+        },
+        "2025": {
+          "games": 762,
+          "logLoss": 0.5970902495562459,
+          "brier": 0.20558432961960013,
+          "accuracy": 0.6706036745406824,
+          "winError": 1.9093575405344703
+        }
+      }
+    }
+  ],
+  "sourceHashes": {
+    "data/model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+    "data/seasons/2004.json": "701a957c2d4b557662614066418bb38af34477dc4b88d1ba44c42b761952c5c0",
+    "data/seasons/2007.json": "9bea0618cc7d62d3693bf3c1275135a54fe7948bc092b909d7f59c16df5551de",
+    "data/seasons/2005.json": "7a676bba9118cf508a2f1c6ed0b4e9b4ead9197689599dfff3d1acc7016f2307",
+    "data/seasons/2006.json": "df283b38e38c989a94526886f91e64a232f7aa7672be661d84f2a97a5d176ba4",
+    "data/seasons/2008.json": "61b8499d14745ea3dffb304c99266c8313cfd3eb9da1c8c5ccac94fcb4009ee3",
+    "data/seasons/2009.json": "77bd4d85d5576dc4c21529c84a82233da2a918a8d9667af09650380527031c33",
+    "data/seasons/2010.json": "cb9ed4776523f2126f33bf9e546632d713231d223bb4e397e72e3117fadd854c",
+    "data/seasons/2011.json": "f3248a712ccbd35a5164218c6022967a80a437f1b2571f9a4096af03b85efdf8",
+    "data/seasons/2012.json": "5a79d2131d917800f64f76f08745ce2785e89a9a72130bb2b632644b7815e8b3",
+    "data/seasons/2014.json": "526f81ee2c9872f5e48fd93e054d8bd1bef1dff82e5ccc7bfd0eb3cfcb0e4e60",
+    "data/seasons/2013.json": "4dd9a309eb721a77184a76d471f9c55eaa88b91d9d93b1917f00b03c2f2e08df",
+    "data/seasons/2015.json": "f757271e4b22c089e91d7ce7738b220a3aeeec2e722b600fc8cda375347d3045",
+    "data/seasons/2017.json": "0fbce674b39930a32bf8e8dbb72cf15d6a88a257d3114eb7be114ba01a19cf8b",
+    "data/seasons/2020.json": "8045e8d5ed305754db95596463fcebb1d6e6d78b7ee184b4f13b3326b6565b72",
+    "data/seasons/2016.json": "fc2b316f685d8e3b6403b90abc2215216f36b55647bd0eb629a2439f2a5e7d28",
+    "data/seasons/2018.json": "9c9da1d5839b5ee8ff3508ac0cb2261d55225349b34491a4f25878a5bfae9cb4",
+    "data/seasons/2019.json": "4dc4de9a8d68be4c782c4f1965e7d522cfaebc90d80aa10c832a7067634757ef",
+    "data/seasons/2021.json": "0c010a3a5cf1ce302516fad11cc5d2f90b55081a9ce5be66a4453c93c27af269",
+    "data/seasons/2022.json": "6059d7b8e0bd4ef593388e16912b3d821e6f71a0de2ffd3c58536d94e5b3d1e4",
+    "data/seasons/2025.json": "d41572b4895deb8c2f3663cdab9910e2147b868b44dc34d2bcbe3d7709b30caa",
+    "data/seasons/2023.json": "b5011bcdd7df9750d92c8827316f1a8300a3b4c623adc6f1c2acb92bd6d6c241",
+    "data/seasons/2024.json": "2c4834a1ce6c5ae94c3f496e9a61d9b60cb5a841f603a561c90e7298433ae798",
+    "research/results/preseason-margin-cap/results.json": "38e1ab428cafb134737c23c81ed28ffeced128f64a4c2d319b8a90feab8ae5d8"
+  },
+  "cfbdCalls": 0
+}

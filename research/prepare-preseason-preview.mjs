@@ -6,13 +6,18 @@ import { calculateDivisionSor } from './lib/division_candidate.mjs';
 
 const root = new URL('../', import.meta.url);
 const read = async path => JSON.parse(await readFile(new URL(path, root)));
-const [baseline, quarterback, units, passerChallenger, datedQuarterback, coaching, policy] = await Promise.all([
+const [baseline, quarterback, units, passerChallenger, datedQuarterback, coaching, windowTests, marginTests,
+  venueTests, archiveTests, policy] = await Promise.all([
   read('research/cache/preseason-team-baseline/result.json'),
   read('research/cache/preseason-player/quarterback-replay.json'),
   read('research/results/preseason-units/results.json'),
   read('research/cache/preseason-player/team-passing-challenger.json'),
   read('research/cache/preseason-player/roster-qb-challenger.json'),
   read('research/results/preseason-coaching/results.json'),
+  read('research/results/preseason-window/results.json'),
+  read('research/results/preseason-margin-cap/results.json'),
+  read('research/cache/preseason-team-baseline/venue-challenger.json'),
+  read('research/results/preseason-archive-robustness/results.json'),
   readPublicationPolicy(),
 ]);
 const sample = baseline.previews[2025];
@@ -99,6 +104,25 @@ const datedTests = {
     limitation: coaching.limitation,
   },
 };
+const scoreRow = (label, { brier, logLoss, accuracy }) => ({ label, brier, logLoss, accuracy });
+const fourYear = windowTests.results.find(row => row.id === windowTests.baselineId);
+const venue = venueTests.evaluation.all;
+const historyTests = {
+  games: fourYear.evaluation.games,
+  windows: windowTests.results.filter(row => !row.id.startsWith('retention-')).map(row =>
+    scoreRow(row.window ? `${row.window} ${row.window === 1 ? 'season' : 'seasons'}` : 'All earlier seasons', row.evaluation)),
+  carryover: [fourYear, ...windowTests.results.filter(row => row.id.startsWith('retention-'))]
+    .sort((a, b) => a.historicalRetention - b.historicalRetention)
+    .map(row => scoreRow(`${Math.round(row.historicalRetention * 100)}% carryover`, row.evaluation)),
+  margins: marginTests.results.map(row => scoreRow(`${row.cap}-point margin scale`, row.comparison)),
+  venues: [scoreRow('Fixed +2.5 points', venue.fixedEdgeTemperature), scoreRow('Fitted home edge', venue.learnedVenue),
+    scoreRow('Separate venue slopes', venue.venueSpecificSlope)],
+  archive: [scoreRow('Original archive', archiveTests.pooled.original), scoreRow('Repaired archive', archiveTests.pooled.repaired)],
+  repairedComparison: [scoreRow('Four-year baseline', archiveTests.combinedChallenger.repairedArchive.pooled.baseline),
+    scoreRow('Longer history + revised weighting', archiveTests.combinedChallenger.repairedArchive.pooled.combined)],
+  combined: [scoreRow('Current four-year baseline', fourYear.evaluation), ...windowTests.combined.map(row =>
+    scoreRow(row.window === 4 ? 'Four years + revised weighting' : 'Longer history + revised weighting', row.evaluation))],
+};
 const result = {
   season: sample.season,
   window: `${sample.windowYears[0]}–${sample.windowYears.at(-1)}`,
@@ -114,6 +138,7 @@ const result = {
   validation: {
     models: modelRows,
     datedTests,
+    historyTests,
     scope: 'Each model scored the same 2,264 archived FBS–FBS games from 2023–2025, including some conference title games. Team strength was frozen before any games in the target season.',
     calibration: 'The preseason odds mapping was fitted on 2014–2019 games. The team model uses our own scores, opponent network, and venue adjustment.',
     units: {

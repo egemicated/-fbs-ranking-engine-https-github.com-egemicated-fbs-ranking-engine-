@@ -1,0 +1,1105 @@
+{
+  "experiment": "preseason-archive-robustness-v1",
+  "calibrationYears": [
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019
+  ],
+  "holdoutYears": [
+    2023,
+    2024,
+    2025
+  ],
+  "config": {
+    "ridge": 3,
+    "retention": 0.75,
+    "homeAdvantage": 2.5,
+    "marginCap": 28,
+    "probabilityScale": 14
+  },
+  "protocol": {
+    "scope": "Archive regular-tagged FBS–FBS fixtures, including some conference title games.",
+    "history": "Start from neutral in t−4, use completed records in t−4 through t−1, then carry the usual decayed Strength into an empty target graph.",
+    "calibration": "Separate penalized logistic scales fit on identical matched 2014–2019 games. Fixed-scale comparison uses the stored original mapping for both archives.",
+    "match": "Exact season/game ID, participants, orientation, week, kickoff, venue and outcome points.",
+    "repairs": "Historical coverage release plus FCS supplement where available.",
+    "delta": "Repaired minus original. Lower log loss, Brier and wins MAE are better. Higher accuracy is better."
+  },
+  "fixtureCoverage": {
+    "calibration": {
+      "originalGames": 4367,
+      "repairedGames": 4367,
+      "matchedGames": 4367,
+      "originalOnly": [],
+      "repairedOnly": [],
+      "disagreements": [],
+      "fixtureSha256": "09107f124269b8f7e367d456832112f8a618b81c77d888e26490188c61525c67"
+    },
+    "holdout": {
+      "originalGames": 2264,
+      "repairedGames": 2264,
+      "matchedGames": 2264,
+      "originalOnly": [],
+      "repairedOnly": [],
+      "disagreements": [],
+      "fixtureSha256": "21f08058a6eef247db0be89a4f7d8edfd31b36d42026fde99b0be23432f2b31d"
+    }
+  },
+  "originalReproduction": {
+    "passed": true,
+    "scale": 7.3361087302133114,
+    "holdout": {
+      "games": 2264,
+      "logLoss": 0.601902275879718,
+      "brier": 0.20800065388885333,
+      "accuracy": 0.6643109540636042,
+      "teamSeasons": 403,
+      "expectedWinsMAE": 1.8518747559257864
+    }
+  },
+  "models": {
+    "originalScale": 7.3361087302133114,
+    "repairedScale": 7.286249520296892
+  },
+  "pooled": {
+    "original": {
+      "games": 2264,
+      "logLoss": 0.601902275879718,
+      "brier": 0.20800065388885333,
+      "accuracy": 0.6643109540636042,
+      "teamSeasons": 403,
+      "expectedWinsMAE": 1.8518747559257864
+    },
+    "repaired": {
+      "games": 2264,
+      "logLoss": 0.6015035473015387,
+      "brier": 0.2078795981045361,
+      "accuracy": 0.6612190812720848,
+      "teamSeasons": 403,
+      "expectedWinsMAE": 1.8499672203546929
+    },
+    "delta": {
+      "logLoss": -0.0003987285781793526,
+      "brier": -0.00012105578431723107,
+      "accuracy": -0.0030918727915193456,
+      "expectedWinsMAE": -0.001907535571093577
+    },
+    "changedPicks": 13,
+    "probabilityShift": {
+      "meanAbsolute": 0.005100442439684623,
+      "maximumAbsolute": 0.05796951100834913
+    }
+  },
+  "byYear": {
+    "2023": {
+      "original": {
+        "games": 750,
+        "logLoss": 0.5827691121117369,
+        "brier": 0.19926540373166138,
+        "accuracy": 0.7,
+        "teamSeasons": 133,
+        "expectedWinsMAE": 1.76950098954336
+      },
+      "repaired": {
+        "games": 750,
+        "logLoss": 0.5814226613382197,
+        "brier": 0.1988534462168105,
+        "accuracy": 0.6906666666666667,
+        "teamSeasons": 133,
+        "expectedWinsMAE": 1.7661465951334747
+      },
+      "delta": {
+        "logLoss": -0.0013464507735171383,
+        "brier": -0.00041195751485087473,
+        "accuracy": -0.009333333333333305,
+        "expectedWinsMAE": -0.003354394409885275
+      },
+      "changedPicks": 13,
+      "probabilityShift": {
+        "meanAbsolute": 0.01224366781998498,
+        "maximumAbsolute": 0.05796951100834913
+      }
+    },
+    "2024": {
+      "original": {
+        "games": 752,
+        "logLoss": 0.6239266306279798,
+        "brier": 0.21845571893961405,
+        "accuracy": 0.6210106382978723,
+        "teamSeasons": 134,
+        "expectedWinsMAE": 1.8745914649464082
+      },
+      "repaired": {
+        "games": 752,
+        "logLoss": 0.6241215522842318,
+        "brier": 0.21852473818442186,
+        "accuracy": 0.6210106382978723,
+        "teamSeasons": 134,
+        "expectedWinsMAE": 1.8723786086908096
+      },
+      "delta": {
+        "logLoss": 0.00019492165625201174,
+        "brier": 0.0000690192448078164,
+        "accuracy": 0,
+        "expectedWinsMAE": -0.0022128562555985276
+      },
+      "changedPicks": 0,
+      "probabilityShift": {
+        "meanAbsolute": 0.002144008115655483,
+        "maximumAbsolute": 0.01069238732146649
+      }
+    },
+    "2025": {
+      "original": {
+        "games": 762,
+        "logLoss": 0.5989988087606798,
+        "brier": 0.20628048157877732,
+        "accuracy": 0.6719160104986877,
+        "teamSeasons": 136,
+        "expectedWinsMAE": 1.9100488141618124
+      },
+      "repaired": {
+        "games": 762,
+        "logLoss": 0.5989470180699165,
+        "brier": 0.2062581657892083,
+        "accuracy": 0.6719160104986877,
+        "teamSeasons": 136,
+        "expectedWinsMAE": 1.909857052100151
+      },
+      "delta": {
+        "logLoss": -0.000051790690763331426,
+        "brier": -0.000022315789569016253,
+        "accuracy": 0,
+        "expectedWinsMAE": -0.00019176206166138243
+      },
+      "changedPicks": 0,
+      "probabilityShift": {
+        "meanAbsolute": 0.0009873447709767844,
+        "maximumAbsolute": 0.002287542857443925
+      }
+    }
+  },
+  "fixedOriginalScale": {
+    "original": {
+      "games": 2264,
+      "logLoss": 0.601902275879718,
+      "brier": 0.20800065388885333,
+      "accuracy": 0.6643109540636042,
+      "teamSeasons": 403,
+      "expectedWinsMAE": 1.8518747559257864
+    },
+    "repaired": {
+      "games": 2264,
+      "logLoss": 0.601480029039231,
+      "brier": 0.2078658070826993,
+      "accuracy": 0.6612190812720848,
+      "teamSeasons": 403,
+      "expectedWinsMAE": 1.8498799283598806
+    },
+    "delta": {
+      "logLoss": -0.0004222468404869728,
+      "brier": -0.00013484680615402644,
+      "accuracy": -0.0030918727915193456,
+      "expectedWinsMAE": -0.0019948275659058545
+    },
+    "changedPicks": 13,
+    "probabilityShift": {
+      "meanAbsolute": 0.004744743441502751,
+      "maximumAbsolute": 0.05738841652271165
+    }
+  },
+  "pairedWeekSensitivity": {
+    "draws": 2000,
+    "seed": 20261107,
+    "blocksByYear": {
+      "2023": 15,
+      "2024": 16,
+      "2025": 16
+    },
+    "paired95Ranges": {
+      "logLoss": [
+        -0.0012045800659114488,
+        0.0005308645407478237
+      ],
+      "brier": [
+        -0.00047568640191486143,
+        0.00028551557780935225
+      ],
+      "accuracy": [
+        -0.007299436722994367,
+        0.0009116709971958515
+      ]
+    },
+    "interpretation": "Paired season-stratified week-block resampling with fitted scales held fixed. Teams recur across weeks. These ranges describe sensitivity and do not establish prospective significance."
+  },
+  "nativeInputCoverage": [
+    {
+      "year": 2004,
+      "original": {
+        "teams": 166,
+        "fbsTeams": 118,
+        "completed": 693,
+        "completedFbsInvolving": 693,
+        "completedFcsOnly": 0,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 166,
+        "fbsTeams": 118,
+        "completed": 714,
+        "completedFbsInvolving": 714,
+        "completedFcsOnly": 0,
+        "completedPostseason": 28
+      },
+      "added": 28,
+      "removed": 7,
+      "edited": []
+    },
+    {
+      "year": 2005,
+      "original": {
+        "teams": 166,
+        "fbsTeams": 119,
+        "completed": 690,
+        "completedFbsInvolving": 690,
+        "completedFcsOnly": 0,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 166,
+        "fbsTeams": 119,
+        "completed": 718,
+        "completedFbsInvolving": 718,
+        "completedFcsOnly": 0,
+        "completedPostseason": 28
+      },
+      "added": 28,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2006,
+      "original": {
+        "teams": 179,
+        "fbsTeams": 119,
+        "completed": 760,
+        "completedFbsInvolving": 760,
+        "completedFcsOnly": 0,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 179,
+        "fbsTeams": 119,
+        "completed": 792,
+        "completedFbsInvolving": 792,
+        "completedFcsOnly": 0,
+        "completedPostseason": 32
+      },
+      "added": 32,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2007,
+      "original": {
+        "teams": 186,
+        "fbsTeams": 120,
+        "completed": 766,
+        "completedFbsInvolving": 766,
+        "completedFcsOnly": 0,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 186,
+        "fbsTeams": 120,
+        "completed": 798,
+        "completedFbsInvolving": 798,
+        "completedFcsOnly": 0,
+        "completedPostseason": 32
+      },
+      "added": 32,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2008,
+      "original": {
+        "teams": 189,
+        "fbsTeams": 120,
+        "completed": 770,
+        "completedFbsInvolving": 770,
+        "completedFcsOnly": 0,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 189,
+        "fbsTeams": 120,
+        "completed": 804,
+        "completedFbsInvolving": 804,
+        "completedFcsOnly": 0,
+        "completedPostseason": 34
+      },
+      "added": 34,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2009,
+      "original": {
+        "teams": 195,
+        "fbsTeams": 120,
+        "completed": 774,
+        "completedFbsInvolving": 774,
+        "completedFcsOnly": 0,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 195,
+        "fbsTeams": 120,
+        "completed": 808,
+        "completedFbsInvolving": 808,
+        "completedFcsOnly": 0,
+        "completedPostseason": 34
+      },
+      "added": 34,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2010,
+      "original": {
+        "teams": 195,
+        "fbsTeams": 120,
+        "completed": 773,
+        "completedFbsInvolving": 773,
+        "completedFcsOnly": 0,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 195,
+        "fbsTeams": 120,
+        "completed": 808,
+        "completedFbsInvolving": 808,
+        "completedFcsOnly": 0,
+        "completedPostseason": 35
+      },
+      "added": 35,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2011,
+      "original": {
+        "teams": 197,
+        "fbsTeams": 120,
+        "completed": 777,
+        "completedFbsInvolving": 777,
+        "completedFcsOnly": 0,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 197,
+        "fbsTeams": 120,
+        "completed": 812,
+        "completedFbsInvolving": 812,
+        "completedFcsOnly": 0,
+        "completedPostseason": 35
+      },
+      "added": 35,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2012,
+      "original": {
+        "teams": 205,
+        "fbsTeams": 124,
+        "completed": 805,
+        "completedFbsInvolving": 805,
+        "completedFcsOnly": 0,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 205,
+        "fbsTeams": 124,
+        "completed": 840,
+        "completedFbsInvolving": 840,
+        "completedFcsOnly": 0,
+        "completedPostseason": 35
+      },
+      "added": 35,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2013,
+      "original": {
+        "teams": 207,
+        "fbsTeams": 125,
+        "completed": 813,
+        "completedFbsInvolving": 813,
+        "completedFcsOnly": 0,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 207,
+        "fbsTeams": 125,
+        "completed": 848,
+        "completedFbsInvolving": 848,
+        "completedFcsOnly": 0,
+        "completedPostseason": 35
+      },
+      "added": 35,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2014,
+      "original": {
+        "teams": 318,
+        "fbsTeams": 128,
+        "completed": 1542,
+        "completedFbsInvolving": 829,
+        "completedFcsOnly": 636,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 318,
+        "fbsTeams": 128,
+        "completed": 1585,
+        "completedFbsInvolving": 868,
+        "completedFcsOnly": 640,
+        "completedPostseason": 42
+      },
+      "added": 43,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2015,
+      "original": {
+        "teams": 300,
+        "fbsTeams": 128,
+        "completed": 1491,
+        "completedFbsInvolving": 829,
+        "completedFcsOnly": 607,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 300,
+        "fbsTeams": 128,
+        "completed": 1536,
+        "completedFbsInvolving": 870,
+        "completedFcsOnly": 611,
+        "completedPostseason": 45
+      },
+      "added": 45,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2016,
+      "original": {
+        "teams": 302,
+        "fbsTeams": 128,
+        "completed": 1502,
+        "completedFbsInvolving": 832,
+        "completedFcsOnly": 616,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 302,
+        "fbsTeams": 128,
+        "completed": 1547,
+        "completedFbsInvolving": 873,
+        "completedFcsOnly": 620,
+        "completedPostseason": 45
+      },
+      "added": 45,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2017,
+      "original": {
+        "teams": 296,
+        "fbsTeams": 130,
+        "completed": 1505,
+        "completedFbsInvolving": 834,
+        "completedFcsOnly": 625,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 296,
+        "fbsTeams": 130,
+        "completed": 1549,
+        "completedFbsInvolving": 874,
+        "completedFcsOnly": 629,
+        "completedPostseason": 44
+      },
+      "added": 44,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2018,
+      "original": {
+        "teams": 305,
+        "fbsTeams": 130,
+        "completed": 1511,
+        "completedFbsInvolving": 845,
+        "completedFcsOnly": 607,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 305,
+        "fbsTeams": 130,
+        "completed": 1554,
+        "completedFbsInvolving": 884,
+        "completedFcsOnly": 611,
+        "completedPostseason": 43
+      },
+      "added": 43,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2019,
+      "original": {
+        "teams": 310,
+        "fbsTeams": 130,
+        "completed": 1577,
+        "completedFbsInvolving": 848,
+        "completedFcsOnly": 662,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 310,
+        "fbsTeams": 130,
+        "completed": 1621,
+        "completedFbsInvolving": 888,
+        "completedFcsOnly": 666,
+        "completedPostseason": 44
+      },
+      "added": 44,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2020,
+      "original": {
+        "teams": 149,
+        "fbsTeams": 127,
+        "completed": 563,
+        "completedFbsInvolving": 542,
+        "completedFcsOnly": 15,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 149,
+        "fbsTeams": 127,
+        "completed": 589,
+        "completedFbsInvolving": 568,
+        "completedFcsOnly": 15,
+        "completedPostseason": 26
+      },
+      "added": 26,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2021,
+      "original": {
+        "teams": 450,
+        "fbsTeams": 130,
+        "completed": 2408,
+        "completedFbsInvolving": 849,
+        "completedFcsOnly": 629,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 450,
+        "fbsTeams": 130,
+        "completed": 2452,
+        "completedFbsInvolving": 887,
+        "completedFcsOnly": 635,
+        "completedPostseason": 44
+      },
+      "added": 44,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2022,
+      "original": {
+        "teams": 697,
+        "fbsTeams": 131,
+        "completed": 3657,
+        "completedFbsInvolving": 854,
+        "completedFcsOnly": 641,
+        "completedPostseason": 0
+      },
+      "repaired": {
+        "teams": 697,
+        "fbsTeams": 131,
+        "completed": 3703,
+        "completedFbsInvolving": 896,
+        "completedFcsOnly": 645,
+        "completedPostseason": 46
+      },
+      "added": 46,
+      "removed": 0,
+      "edited": [
+        {
+          "gameId": "401507650",
+          "fields": [
+            "homePoints",
+            "awayPoints"
+          ]
+        },
+        {
+          "gameId": "401507670",
+          "fields": [
+            "awayPoints"
+          ]
+        },
+        {
+          "gameId": "401507651",
+          "fields": [
+            "homePoints"
+          ]
+        }
+      ]
+    },
+    {
+      "year": 2023,
+      "original": {
+        "teams": 704,
+        "fbsTeams": 133,
+        "completed": 3724,
+        "completedFbsInvolving": 910,
+        "completedFcsOnly": 635,
+        "completedPostseason": 139
+      },
+      "repaired": {
+        "teams": 704,
+        "fbsTeams": 133,
+        "completed": 3724,
+        "completedFbsInvolving": 910,
+        "completedFcsOnly": 635,
+        "completedPostseason": 139
+      },
+      "added": 0,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2024,
+      "original": {
+        "teams": 709,
+        "fbsTeams": 134,
+        "completed": 3799,
+        "completedFbsInvolving": 919,
+        "completedFcsOnly": 692,
+        "completedPostseason": 54
+      },
+      "repaired": {
+        "teams": 709,
+        "fbsTeams": 134,
+        "completed": 3799,
+        "completedFbsInvolving": 919,
+        "completedFcsOnly": 692,
+        "completedPostseason": 54
+      },
+      "added": 0,
+      "removed": 0,
+      "edited": []
+    },
+    {
+      "year": 2025,
+      "original": {
+        "teams": 699,
+        "fbsTeams": 136,
+        "completed": 3829,
+        "completedFbsInvolving": 934,
+        "completedFcsOnly": 691,
+        "completedPostseason": 86
+      },
+      "repaired": {
+        "teams": 699,
+        "fbsTeams": 136,
+        "completed": 3828,
+        "completedFbsInvolving": 934,
+        "completedFcsOnly": 691,
+        "completedPostseason": 86
+      },
+      "added": 0,
+      "removed": 1,
+      "edited": []
+    }
+  ],
+  "combinedChallenger": {
+    "rule": {
+      "historyStartYear": 2004,
+      "historicalRetention": 1,
+      "marginCap": 42,
+      "targetRetention": 0.75,
+      "homeAdvantage": 2.5
+    },
+    "protocol": "Hold the earlier-selected combined rule fixed, refit only the probability scale on the common 2014–2019 fixtures, and compare against four years on the same archive and holdout fixtures. This is a repeated retrospective sensitivity check.",
+    "originalReproduction": true,
+    "originalArchive": {
+      "baselineScale": 7.3361087302133114,
+      "candidateScale": 8.721490252326657,
+      "pooled": {
+        "baseline": {
+          "games": 2264,
+          "logLoss": 0.601902275879718,
+          "brier": 0.20800065388885333,
+          "accuracy": 0.6643109540636042,
+          "teamSeasons": 403,
+          "expectedWinsMAE": 1.8518747559257864
+        },
+        "combined": {
+          "games": 2264,
+          "logLoss": 0.5966894789468193,
+          "brier": 0.206053340583762,
+          "accuracy": 0.6656360424028268,
+          "teamSeasons": 403,
+          "expectedWinsMAE": 1.8463838548573948
+        },
+        "delta": {
+          "logLoss": -0.005212796932898667,
+          "brier": -0.0019473133050913194,
+          "accuracy": 0.0013250883392226243,
+          "expectedWinsMAE": -0.005490901068391674
+        },
+        "changedPicks": 75,
+        "probabilityShift": {
+          "meanAbsolute": 0.020185915144407367,
+          "maximumAbsolute": 0.14747266140999493
+        }
+      },
+      "byYear": {
+        "2023": {
+          "baseline": {
+            "games": 750,
+            "logLoss": 0.5827691121117369,
+            "brier": 0.19926540373166138,
+            "accuracy": 0.7,
+            "teamSeasons": 133,
+            "expectedWinsMAE": 1.76950098954336
+          },
+          "combined": {
+            "games": 750,
+            "logLoss": 0.5767494977505127,
+            "brier": 0.19701065431060455,
+            "accuracy": 0.6906666666666667,
+            "teamSeasons": 133,
+            "expectedWinsMAE": 1.7635839139240395
+          },
+          "delta": {
+            "logLoss": -0.006019614361224224,
+            "brier": -0.0022547494210568286,
+            "accuracy": -0.009333333333333305,
+            "expectedWinsMAE": -0.005917075619320533
+          },
+          "changedPicks": 25,
+          "probabilityShift": {
+            "meanAbsolute": 0.021948670123494652,
+            "maximumAbsolute": 0.14747266140999493
+          }
+        },
+        "2024": {
+          "baseline": {
+            "games": 752,
+            "logLoss": 0.6239266306279798,
+            "brier": 0.21845571893961405,
+            "accuracy": 0.6210106382978723,
+            "teamSeasons": 134,
+            "expectedWinsMAE": 1.8745914649464082
+          },
+          "combined": {
+            "games": 752,
+            "logLoss": 0.6196280814766865,
+            "brier": 0.2168699140365982,
+            "accuracy": 0.6329787234042553,
+            "teamSeasons": 134,
+            "expectedWinsMAE": 1.87383727586016
+          },
+          "delta": {
+            "logLoss": -0.004298549151293352,
+            "brier": -0.0015858049030158528,
+            "accuracy": 0.01196808510638303,
+            "expectedWinsMAE": -0.000754189086248136
+          },
+          "changedPicks": 23,
+          "probabilityShift": {
+            "meanAbsolute": 0.01898956578090837,
+            "maximumAbsolute": 0.1220339919667024
+          }
+        },
+        "2025": {
+          "baseline": {
+            "games": 762,
+            "logLoss": 0.5989988087606798,
+            "brier": 0.20628048157877732,
+            "accuracy": 0.6719160104986877,
+            "teamSeasons": 136,
+            "expectedWinsMAE": 1.9100488141618124
+          },
+          "combined": {
+            "games": 762,
+            "logLoss": 0.5936778736906109,
+            "brier": 0.20427899867869131,
+            "accuracy": 0.6732283464566929,
+            "teamSeasons": 136,
+            "expectedWinsMAE": 1.9003076322821386
+          },
+          "delta": {
+            "logLoss": -0.005320935070068922,
+            "brier": -0.0020014829000860046,
+            "accuracy": 0.001312335958005284,
+            "expectedWinsMAE": -0.009741181879673766
+          },
+          "changedPicks": 27,
+          "probabilityShift": {
+            "meanAbsolute": 0.019631569326868985,
+            "maximumAbsolute": 0.13941516655565422
+          }
+        }
+      },
+      "pairedWeekSensitivity": {
+        "draws": 2000,
+        "seed": 20261107,
+        "blocksByYear": {
+          "2023": 15,
+          "2024": 16,
+          "2025": 16
+        },
+        "paired95Ranges": {
+          "logLoss": [
+            -0.008092628619566585,
+            -0.002475835851629671
+          ],
+          "brier": [
+            -0.003141013416119668,
+            -0.0007800543189191283
+          ],
+          "accuracy": [
+            -0.005518710714516237,
+            0.008041443170910727
+          ]
+        },
+        "interpretation": "Paired season-stratified week-block resampling with fitted scales held fixed. Teams recur across weeks. These ranges describe sensitivity and do not establish prospective significance."
+      }
+    },
+    "repairedArchive": {
+      "baselineScale": 7.286249520296892,
+      "candidateScale": 8.661318469986293,
+      "pooled": {
+        "baseline": {
+          "games": 2264,
+          "logLoss": 0.6015035473015387,
+          "brier": 0.2078795981045361,
+          "accuracy": 0.6612190812720848,
+          "teamSeasons": 403,
+          "expectedWinsMAE": 1.8499672203546929
+        },
+        "combined": {
+          "games": 2264,
+          "logLoss": 0.5962810872030071,
+          "brier": 0.20590032857434387,
+          "accuracy": 0.6629858657243817,
+          "teamSeasons": 403,
+          "expectedWinsMAE": 1.844662142768943
+        },
+        "delta": {
+          "logLoss": -0.005222460098531556,
+          "brier": -0.001979269530192229,
+          "accuracy": 0.0017667844522968323,
+          "expectedWinsMAE": -0.00530507758574994
+        },
+        "changedPicks": 72,
+        "probabilityShift": {
+          "meanAbsolute": 0.020014274320699302,
+          "maximumAbsolute": 0.1463387601167203
+        }
+      },
+      "byYear": {
+        "2023": {
+          "baseline": {
+            "games": 750,
+            "logLoss": 0.5814226613382197,
+            "brier": 0.1988534462168105,
+            "accuracy": 0.6906666666666667,
+            "teamSeasons": 133,
+            "expectedWinsMAE": 1.7661465951334747
+          },
+          "combined": {
+            "games": 750,
+            "logLoss": 0.5752953734867298,
+            "brier": 0.19647930870157984,
+            "accuracy": 0.688,
+            "teamSeasons": 133,
+            "expectedWinsMAE": 1.7613196242950133
+          },
+          "delta": {
+            "logLoss": -0.006127287851489971,
+            "brier": -0.002374137515230662,
+            "accuracy": -0.002666666666666706,
+            "expectedWinsMAE": -0.004826970838461397
+          },
+          "changedPicks": 26,
+          "probabilityShift": {
+            "meanAbsolute": 0.021634857494517698,
+            "maximumAbsolute": 0.1463387601167203
+          }
+        },
+        "2024": {
+          "baseline": {
+            "games": 752,
+            "logLoss": 0.6241215522842318,
+            "brier": 0.21852473818442186,
+            "accuracy": 0.6210106382978723,
+            "teamSeasons": 134,
+            "expectedWinsMAE": 1.8723786086908096
+          },
+          "combined": {
+            "games": 752,
+            "logLoss": 0.6199278669448377,
+            "brier": 0.21697498829156092,
+            "accuracy": 0.6303191489361702,
+            "teamSeasons": 134,
+            "expectedWinsMAE": 1.8712804152077307
+          },
+          "delta": {
+            "logLoss": -0.0041936853393941265,
+            "brier": -0.001549749892860941,
+            "accuracy": 0.009308510638297962,
+            "expectedWinsMAE": -0.0010981934830789353
+          },
+          "changedPicks": 21,
+          "probabilityShift": {
+            "meanAbsolute": 0.01880339030709602,
+            "maximumAbsolute": 0.12368123215339782
+          }
+        },
+        "2025": {
+          "baseline": {
+            "games": 762,
+            "logLoss": 0.5989470180699165,
+            "brier": 0.2062581657892083,
+            "accuracy": 0.6719160104986877,
+            "teamSeasons": 136,
+            "expectedWinsMAE": 1.909857052100151
+          },
+          "combined": {
+            "games": 762,
+            "logLoss": 0.593599862690345,
+            "brier": 0.20424366295390614,
+            "accuracy": 0.6706036745406824,
+            "teamSeasons": 136,
+            "expectedWinsMAE": 1.899939396079492
+          },
+          "delta": {
+            "logLoss": -0.005347155379571422,
+            "brier": -0.002014502835302162,
+            "accuracy": -0.001312335958005284,
+            "expectedWinsMAE": -0.009917656020659082
+          },
+          "changedPicks": 25,
+          "probabilityShift": {
+            "meanAbsolute": 0.019614205289027162,
+            "maximumAbsolute": 0.13939981580510452
+          }
+        }
+      },
+      "pairedWeekSensitivity": {
+        "draws": 2000,
+        "seed": 20261107,
+        "blocksByYear": {
+          "2023": 15,
+          "2024": 16,
+          "2025": 16
+        },
+        "paired95Ranges": {
+          "logLoss": [
+            -0.008019560976882792,
+            -0.0025928392246707534
+          ],
+          "brier": [
+            -0.003132750603127422,
+            -0.0008489248395568958
+          ],
+          "accuracy": [
+            -0.005894490880133921,
+            0.009292811124543079
+          ]
+        },
+        "interpretation": "Paired season-stratified week-block resampling with fitted scales held fixed. Teams recur across weeks. These ranges describe sensitivity and do not establish prospective significance."
+      }
+    }
+  },
+  "limits": [
+    "Retrospective fixture archives include some regular-tagged conference title games.",
+    "Original and repaired seasons share upstream data. Repairs do not certify archive completeness or point-in-time availability.",
+    "Only three previously inspected holdout seasons are compared. Descriptive resampling holds fitted scales fixed."
+  ],
+  "sourceHashes": {
+    "data/model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+    "data/seasons/2004.json": "701a957c2d4b557662614066418bb38af34477dc4b88d1ba44c42b761952c5c0",
+    "data/seasons/2005.json": "7a676bba9118cf508a2f1c6ed0b4e9b4ead9197689599dfff3d1acc7016f2307",
+    "data/seasons/2006.json": "df283b38e38c989a94526886f91e64a232f7aa7672be661d84f2a97a5d176ba4",
+    "data/seasons/2007.json": "9bea0618cc7d62d3693bf3c1275135a54fe7948bc092b909d7f59c16df5551de",
+    "data/seasons/2008.json": "61b8499d14745ea3dffb304c99266c8313cfd3eb9da1c8c5ccac94fcb4009ee3",
+    "data/seasons/2009.json": "77bd4d85d5576dc4c21529c84a82233da2a918a8d9667af09650380527031c33",
+    "data/seasons/2010.json": "cb9ed4776523f2126f33bf9e546632d713231d223bb4e397e72e3117fadd854c",
+    "data/seasons/2011.json": "f3248a712ccbd35a5164218c6022967a80a437f1b2571f9a4096af03b85efdf8",
+    "data/seasons/2012.json": "5a79d2131d917800f64f76f08745ce2785e89a9a72130bb2b632644b7815e8b3",
+    "data/seasons/2013.json": "4dd9a309eb721a77184a76d471f9c55eaa88b91d9d93b1917f00b03c2f2e08df",
+    "data/seasons/2014.json": "526f81ee2c9872f5e48fd93e054d8bd1bef1dff82e5ccc7bfd0eb3cfcb0e4e60",
+    "data/seasons/2015.json": "f757271e4b22c089e91d7ce7738b220a3aeeec2e722b600fc8cda375347d3045",
+    "data/seasons/2016.json": "fc2b316f685d8e3b6403b90abc2215216f36b55647bd0eb629a2439f2a5e7d28",
+    "data/seasons/2017.json": "0fbce674b39930a32bf8e8dbb72cf15d6a88a257d3114eb7be114ba01a19cf8b",
+    "data/seasons/2018.json": "9c9da1d5839b5ee8ff3508ac0cb2261d55225349b34491a4f25878a5bfae9cb4",
+    "data/seasons/2019.json": "4dc4de9a8d68be4c782c4f1965e7d522cfaebc90d80aa10c832a7067634757ef",
+    "data/seasons/2020.json": "8045e8d5ed305754db95596463fcebb1d6e6d78b7ee184b4f13b3326b6565b72",
+    "data/seasons/2021.json": "0c010a3a5cf1ce302516fad11cc5d2f90b55081a9ce5be66a4453c93c27af269",
+    "data/seasons/2022.json": "6059d7b8e0bd4ef593388e16912b3d821e6f71a0de2ffd3c58536d94e5b3d1e4",
+    "data/seasons/2023.json": "b5011bcdd7df9750d92c8827316f1a8300a3b4c623adc6f1c2acb92bd6d6c241",
+    "data/seasons/2024.json": "2c4834a1ce6c5ae94c3f496e9a61d9b60cb5a841f603a561c90e7298433ae798",
+    "data/seasons/2025.json": "d41572b4895deb8c2f3663cdab9910e2147b868b44dc34d2bcbe3d7709b30caa",
+    "research/cache/preseason-team-baseline/result.json": "31d01fa0ce4a2f63f2d3ec309207fb39b458abe1dbd50a1afd2d2effbe5432c1",
+    "research/datasets/fcs-coverage-v1/seasons/2014.json": "f6c41ef2dd5b751407efa196c2c6a76aaef7e226ab4766678120e7eb8783f193",
+    "research/datasets/fcs-coverage-v1/seasons/2015.json": "ec50d753edeb723aa0b2a2bc2c7b5f4e9d81ba152f950b8cd54819f51b9875be",
+    "research/datasets/fcs-coverage-v1/seasons/2016.json": "3846e2ea6963eda4baec894c901f7cd12a80893e525e006d2d7e4df4f1f1200a",
+    "research/datasets/fcs-coverage-v1/seasons/2017.json": "b2610ad25d7ebd931de5dd05f4e14df8f8bf2b0052a2549c0d65a4530b8af3f4",
+    "research/datasets/fcs-coverage-v1/seasons/2018.json": "089672a2e3509990c36a75e30910ebe4abf2e37091a89551166aaf287f41fdb3",
+    "research/datasets/fcs-coverage-v1/seasons/2019.json": "8966102ad775cf682a905f70d7b6a50fa204019135587a6fe287871a7994fd53",
+    "research/datasets/fcs-coverage-v1/seasons/2020.json": "ba7cf1c74247ee1d0543162c055c0329139b9a1a591261136c81e0f36fd98f2d",
+    "research/datasets/fcs-coverage-v1/seasons/2021.json": "0984695be1618d188d80d9d62de550ebda1d8afe542fde20075a8f54e45e0bd6",
+    "research/datasets/fcs-coverage-v1/seasons/2022.json": "58935e17f016e04abc58f5aa3d7e3ad91822430459828108bb98ba872e7db694",
+    "research/datasets/fcs-coverage-v1/seasons/2023.json": "5e7e5975fcde9caf5b1e12f5a39449005fac05a7b41a9399b6ed86621f2dd397",
+    "research/datasets/fcs-coverage-v1/seasons/2024.json": "84a3f1132e3805d71c9ba02ba285b9e66806646804c570f1dfd6e6568bddae98",
+    "research/datasets/fcs-coverage-v1/seasons/2025.json": "2b652655b8bdb89d92a939a0bc4c34b0e3036526edef3c442e36b0df129907ff",
+    "research/datasets/historical-coverage-v1/seasons/2004.json": "9e5de2602f76cbf19b9839011bfb313befe2be9c247afbf439f7db0260991665",
+    "research/datasets/historical-coverage-v1/seasons/2005.json": "5b7057a151bf0a328cef80cb920f250d8189d93bc991de3aa5620aee6bc6ede8",
+    "research/datasets/historical-coverage-v1/seasons/2006.json": "2ebcdc8c4c1c1b12ac3de91f591745d41ff5a8ca1503ca58873e6567741e2fcf",
+    "research/datasets/historical-coverage-v1/seasons/2007.json": "81bda0a44c539c6410965a562bef23561c58d200cafd61b540a86ef9921ceea9",
+    "research/datasets/historical-coverage-v1/seasons/2008.json": "0a57477e5cfb4347e15ef70d6b6bc6cbbdee331e6848834545657bdf6db90842",
+    "research/datasets/historical-coverage-v1/seasons/2009.json": "1270b21f0237b2616251baaae393567b62de327ac265859c923da31c532faa1e",
+    "research/datasets/historical-coverage-v1/seasons/2010.json": "eccd21776c8d32e04d1557b71cd0be7a39bdebb58453e4836f06628101038a7d",
+    "research/datasets/historical-coverage-v1/seasons/2011.json": "092a8d205b93c9649d5e674e852209d6d0a975507869182d54cb4295090dc837",
+    "research/datasets/historical-coverage-v1/seasons/2012.json": "d519b8fc5a9a3e179c596ccc5f7fccf5390e085df28a9a9a7e91b683424d526e",
+    "research/datasets/historical-coverage-v1/seasons/2013.json": "a2610f56acf554cdf7e40f2942127bf1c4d6c5121c7051fe5ba497875cc12c7d",
+    "research/preseason-archive-robustness.mjs": "658d3094216cc9c361ca64a357427d0f84369798e9e85a91bafbd1cc3209ed9d",
+    "research/preseason-team-baseline.mjs": "022449805031c051f6f1f0cc79a8ab3050c796cb98bcae51f5b3982fa618cab2",
+    "research/results/preseason-window/results.json": "1fd04d36c48a52be021264dafc908ef779110ca4264b349224466191d2606a43",
+    "src/engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1"
+  },
+  "cfbdCalls": 0
+}

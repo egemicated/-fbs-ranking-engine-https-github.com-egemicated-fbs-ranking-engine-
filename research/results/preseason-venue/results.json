@@ -1,0 +1,312 @@
+{
+  "modelVersion": "0.2.0",
+  "config": {
+    "ridge": 3,
+    "retention": 0.75,
+    "homeAdvantage": 2.5,
+    "marginCap": 28,
+    "probabilityScale": 14
+  },
+  "trainingYears": [
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019
+  ],
+  "selectionYears": [
+    2021,
+    2022
+  ],
+  "evaluationYears": [
+    2023,
+    2024,
+    2025
+  ],
+  "penalty": 0.01,
+  "selectedFamily": "fixedEdgeTemperature",
+  "protocol": "Fit each probability link using earlier games only. Select the family by pooled 2021–2022 log loss. Score all fixed families on the identical 2023–2025 cohort.",
+  "scope": "Corrected archive regular-tagged FBS–FBS games, including some title games. The four-year team Strength fit is fixed. Venue comes from the realized historical schedule.",
+  "interpretation": "Equivalent home edge is a probability calibration term on the model rating scale. Neutral and home strata differ in fixture composition.",
+  "models": {
+    "fixedEdgeTemperature": {
+      "family": "fixedEdgeTemperature",
+      "trainingGames": 4367,
+      "coefficients": [
+        1.9083686617595867
+      ],
+      "maxGradient": 2.8699265186560297e-14,
+      "neutralLogOddsPerPoint": 0.1363120472685419,
+      "homeLogOddsPerPoint": 0.1363120472685419,
+      "homeLogOdds": 0.3407801181713548,
+      "equivalentHomeEdgePoints": 2.5,
+      "equalStrengthHomeWinProbability": 0.5843800105113232
+    },
+    "learnedVenue": {
+      "family": "learnedVenue",
+      "trainingGames": 4367,
+      "coefficients": [
+        1.9372195698827719,
+        0.30317244231608054
+      ],
+      "maxGradient": 4.785061236134425e-14,
+      "neutralLogOddsPerPoint": 0.138372826420198,
+      "homeLogOddsPerPoint": 0.138372826420198,
+      "homeLogOdds": 0.30317244231608054,
+      "equivalentHomeEdgePoints": 2.190982508338986,
+      "equalStrengthHomeWinProbability": 0.5752178629446003
+    },
+    "venueSpecificSlope": {
+      "family": "venueSpecificSlope",
+      "trainingGames": 4367,
+      "coefficients": [
+        2.657178167681139,
+        0.30284531575445844,
+        -0.7386419458461442
+      ],
+      "maxGradient": 4.18554080283684e-14,
+      "neutralLogOddsPerPoint": 0.18979844054865277,
+      "homeLogOddsPerPoint": 0.13703830155964247,
+      "homeLogOdds": 0.30284531575445844,
+      "equivalentHomeEdgePoints": 2.2099319117922125,
+      "equalStrengthHomeWinProbability": 0.5751379301308492
+    }
+  },
+  "selection": {
+    "fixedEdgeTemperature": {
+      "games": 1466,
+      "brier": 0.21099328992977304,
+      "logLoss": 0.6080195770474021,
+      "accuracy": 0.6534788540245566,
+      "meanProbability": 0.5855551805147805,
+      "observedHomeWinRate": 0.5804911323328786,
+      "meanProbabilityError": 0.0050640481819019595
+    },
+    "learnedVenue": {
+      "games": 1466,
+      "brier": 0.21114885125625502,
+      "logLoss": 0.6083707239884607,
+      "accuracy": 0.655525238744884,
+      "meanProbability": 0.5781180637150782,
+      "observedHomeWinRate": 0.5804911323328786,
+      "meanProbabilityError": -0.002373068617800349
+    },
+    "venueSpecificSlope": {
+      "games": 1466,
+      "brier": 0.21128023248482974,
+      "logLoss": 0.6086407798700405,
+      "accuracy": 0.654843110504775,
+      "meanProbability": 0.5778829226030485,
+      "observedHomeWinRate": 0.5804911323328786,
+      "meanProbabilityError": -0.0026082097298300326
+    }
+  },
+  "evaluation": {
+    "all": {
+      "fixedEdgeTemperature": {
+        "games": 2264,
+        "brier": 0.20800065388885333,
+        "logLoss": 0.601902275879718,
+        "accuracy": 0.6643109540636042,
+        "meanProbability": 0.5890860405716928,
+        "observedHomeWinRate": 0.5870141342756183,
+        "meanProbabilityError": 0.002071906296074406
+      },
+      "learnedVenue": {
+        "games": 2264,
+        "brier": 0.20804552957392347,
+        "logLoss": 0.6020257864002743,
+        "accuracy": 0.6625441696113075,
+        "meanProbability": 0.5815466205488001,
+        "observedHomeWinRate": 0.5870141342756183,
+        "meanProbabilityError": -0.005467513726818243
+      },
+      "venueSpecificSlope": {
+        "games": 2264,
+        "brier": 0.2083486818120008,
+        "logLoss": 0.6026617356028211,
+        "accuracy": 0.6629858657243817,
+        "meanProbability": 0.581207366886801,
+        "observedHomeWinRate": 0.5870141342756183,
+        "meanProbabilityError": -0.005806767388817355
+      }
+    },
+    "home": {
+      "fixedEdgeTemperature": {
+        "games": 2184,
+        "brier": 0.20714710526239577,
+        "logLoss": 0.6001470336342987,
+        "accuracy": 0.668040293040293,
+        "meanProbability": 0.5934485536683524,
+        "observedHomeWinRate": 0.5915750915750916,
+        "meanProbabilityError": 0.0018734620932607429
+      },
+      "learnedVenue": {
+        "games": 2184,
+        "brier": 0.20718443489662638,
+        "logLoss": 0.6002595009878006,
+        "accuracy": 0.6662087912087912,
+        "meanProbability": 0.585646580344267,
+        "observedHomeWinRate": 0.5915750915750916,
+        "meanProbabilityError": -0.005928511230824545
+      },
+      "venueSpecificSlope": {
+        "games": 2184,
+        "brier": 0.20717070258280093,
+        "logLoss": 0.6002342764532497,
+        "accuracy": 0.6666666666666666,
+        "meanProbability": 0.5856003004369171,
+        "observedHomeWinRate": 0.5915750915750916,
+        "meanProbabilityError": -0.0059747911381744555
+      }
+    },
+    "neutral": {
+      "fixedEdgeTemperature": {
+        "games": 80,
+        "brier": 0.23130253139114615,
+        "logLoss": 0.6498203891796555,
+        "accuracy": 0.5625,
+        "meanProbability": 0.4699894330328728,
+        "observedHomeWinRate": 0.4625,
+        "meanProbabilityError": 0.007489433032872838
+      },
+      "learnedVenue": {
+        "games": 80,
+        "brier": 0.2315534142641341,
+        "logLoss": 0.6502453781608033,
+        "accuracy": 0.5625,
+        "meanProbability": 0.4696177181325492,
+        "observedHomeWinRate": 0.4625,
+        "meanProbabilityError": 0.0071177181325492
+      },
+      "venueSpecificSlope": {
+        "games": 80,
+        "brier": 0.24050751476915413,
+        "logLoss": 0.6689313703861338,
+        "accuracy": 0.5625,
+        "meanProbability": 0.46128028096861656,
+        "observedHomeWinRate": 0.4625,
+        "meanProbabilityError": -0.0012197190313834483
+      }
+    },
+    "byYear": {
+      "2023": {
+        "fixedEdgeTemperature": {
+          "games": 750,
+          "brier": 0.19926540373166138,
+          "logLoss": 0.582769112111737,
+          "accuracy": 0.7,
+          "meanProbability": 0.5877271615874504,
+          "observedHomeWinRate": 0.5813333333333334,
+          "meanProbabilityError": 0.006393828254117049
+        },
+        "learnedVenue": {
+          "games": 750,
+          "brier": 0.19906383571237432,
+          "logLoss": 0.5822989945902984,
+          "accuracy": 0.6893333333333334,
+          "meanProbability": 0.5800511602612375,
+          "observedHomeWinRate": 0.5813333333333334,
+          "meanProbabilityError": -0.0012821730720958538
+        },
+        "venueSpecificSlope": {
+          "games": 750,
+          "brier": 0.19915473837721046,
+          "logLoss": 0.5822138166738235,
+          "accuracy": 0.6906666666666667,
+          "meanProbability": 0.5797617276704868,
+          "observedHomeWinRate": 0.5813333333333334,
+          "meanProbabilityError": -0.0015716056628464988
+        }
+      },
+      "2024": {
+        "fixedEdgeTemperature": {
+          "games": 752,
+          "brier": 0.21845571893961402,
+          "logLoss": 0.6239266306279798,
+          "accuracy": 0.6210106382978723,
+          "meanProbability": 0.5893876085559205,
+          "observedHomeWinRate": 0.5877659574468085,
+          "meanProbabilityError": 0.001621651109112064
+        },
+        "learnedVenue": {
+          "games": 752,
+          "brier": 0.21865139730913893,
+          "logLoss": 0.6245088867293879,
+          "accuracy": 0.625,
+          "meanProbability": 0.5820136250630443,
+          "observedHomeWinRate": 0.5877659574468085,
+          "meanProbabilityError": -0.005752332383764194
+        },
+        "venueSpecificSlope": {
+          "games": 752,
+          "brier": 0.2192239578193998,
+          "logLoss": 0.6258941951994876,
+          "accuracy": 0.625,
+          "meanProbability": 0.5816552301642203,
+          "observedHomeWinRate": 0.5877659574468085,
+          "meanProbabilityError": -0.006110727282588265
+        }
+      },
+      "2025": {
+        "fixedEdgeTemperature": {
+          "games": 762,
+          "brier": 0.20628048157877732,
+          "logLoss": 0.5989988087606799,
+          "accuracy": 0.6719160104986877,
+          "meanProbability": 0.5901259094877528,
+          "observedHomeWinRate": 0.5918635170603674,
+          "meanProbabilityError": -0.00173760757261467
+        },
+        "learnedVenue": {
+          "games": 762,
+          "brier": 0.2064190963183864,
+          "logLoss": 0.5992538735524848,
+          "accuracy": 0.6732283464566929,
+          "meanProbability": 0.5825576544345743,
+          "observedHomeWinRate": 0.5918635170603674,
+          "meanProbabilityError": -0.009305862625793165
+        },
+        "venueSpecificSlope": {
+          "games": 762,
+          "brier": 0.2066652828861844,
+          "logLoss": 0.5998600683850456,
+          "accuracy": 0.6732283464566929,
+          "meanProbability": 0.5821882543246143,
+          "observedHomeWinRate": 0.5918635170603674,
+          "meanProbabilityError": -0.009675262735753169
+        }
+      }
+    }
+  },
+  "sourceHashes": {
+    "data/model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+    "data/seasons/2004.json": "701a957c2d4b557662614066418bb38af34477dc4b88d1ba44c42b761952c5c0",
+    "data/seasons/2005.json": "7a676bba9118cf508a2f1c6ed0b4e9b4ead9197689599dfff3d1acc7016f2307",
+    "data/seasons/2006.json": "df283b38e38c989a94526886f91e64a232f7aa7672be661d84f2a97a5d176ba4",
+    "data/seasons/2007.json": "9bea0618cc7d62d3693bf3c1275135a54fe7948bc092b909d7f59c16df5551de",
+    "data/seasons/2008.json": "61b8499d14745ea3dffb304c99266c8313cfd3eb9da1c8c5ccac94fcb4009ee3",
+    "data/seasons/2009.json": "77bd4d85d5576dc4c21529c84a82233da2a918a8d9667af09650380527031c33",
+    "data/seasons/2010.json": "cb9ed4776523f2126f33bf9e546632d713231d223bb4e397e72e3117fadd854c",
+    "data/seasons/2011.json": "f3248a712ccbd35a5164218c6022967a80a437f1b2571f9a4096af03b85efdf8",
+    "data/seasons/2012.json": "5a79d2131d917800f64f76f08745ce2785e89a9a72130bb2b632644b7815e8b3",
+    "data/seasons/2013.json": "4dd9a309eb721a77184a76d471f9c55eaa88b91d9d93b1917f00b03c2f2e08df",
+    "data/seasons/2014.json": "526f81ee2c9872f5e48fd93e054d8bd1bef1dff82e5ccc7bfd0eb3cfcb0e4e60",
+    "data/seasons/2015.json": "f757271e4b22c089e91d7ce7738b220a3aeeec2e722b600fc8cda375347d3045",
+    "data/seasons/2016.json": "fc2b316f685d8e3b6403b90abc2215216f36b55647bd0eb629a2439f2a5e7d28",
+    "data/seasons/2017.json": "0fbce674b39930a32bf8e8dbb72cf15d6a88a257d3114eb7be114ba01a19cf8b",
+    "data/seasons/2018.json": "9c9da1d5839b5ee8ff3508ac0cb2261d55225349b34491a4f25878a5bfae9cb4",
+    "data/seasons/2019.json": "4dc4de9a8d68be4c782c4f1965e7d522cfaebc90d80aa10c832a7067634757ef",
+    "data/seasons/2020.json": "8045e8d5ed305754db95596463fcebb1d6e6d78b7ee184b4f13b3326b6565b72",
+    "data/seasons/2021.json": "0c010a3a5cf1ce302516fad11cc5d2f90b55081a9ce5be66a4453c93c27af269",
+    "data/seasons/2022.json": "6059d7b8e0bd4ef593388e16912b3d821e6f71a0de2ffd3c58536d94e5b3d1e4",
+    "data/seasons/2023.json": "b5011bcdd7df9750d92c8827316f1a8300a3b4c623adc6f1c2acb92bd6d6c241",
+    "data/seasons/2024.json": "2c4834a1ce6c5ae94c3f496e9a61d9b60cb5a841f603a561c90e7298433ae798",
+    "data/seasons/2025.json": "d41572b4895deb8c2f3663cdab9910e2147b868b44dc34d2bcbe3d7709b30caa",
+    "research/preseason-team-baseline.mjs": "022449805031c051f6f1f0cc79a8ab3050c796cb98bcae51f5b3982fa618cab2",
+    "research/preseason-venue-challenger.mjs": "6e2ffdf60c639a1b96491f0f35b28d17d2a1e62e25f67bfd29e4572153278bc6",
+    "src/engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1"
+  },
+  "cfbdCalls": 0
+}

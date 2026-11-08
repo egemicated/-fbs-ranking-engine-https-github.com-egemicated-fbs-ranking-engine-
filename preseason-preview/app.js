@@ -134,6 +134,29 @@ function datedTestPanels(tests) {
     </section>`;
 }
 
+function preseasonScores(rows, label) {
+  return table(['Model', 'Brier', 'Log loss', 'Winners'], rows.map(row => `<tr>
+    <td>${escape(row.label)}</td><td>${decimal(row.brier, 5)}</td><td>${decimal(row.logLoss, 5)}</td>
+    <td class="num">${percent(row.accuracy)}</td></tr>`).join(''), label);
+}
+
+function historyTestPanel(tests) {
+  const groups = [
+    ['History windows', tests.windows, 'One, two, four, six, eight, ten, and all earlier seasons with the original carryover and margin scale.'],
+    ['Carryover between seasons', tests.carryover, 'Each prior year still learns from its own games. The final transition into the forecast season uses the same 75% preseason carryover in every test.'],
+    ['Score-margin scale', tests.margins, 'The curve compresses blowouts gradually. A wider scale preserves more information from larger wins.'],
+    ['Home-field adjustment', tests.venues, 'The current fixed adjustment beat two models that learned separate venue terms.'],
+    ['Archive repair', tests.archive, 'Repairing historical coverage changed a small number of picks. The original and repaired histories were scored on the same fixtures.'],
+    ['Combined model on the repaired archive', tests.repairedComparison, 'The combined rule kept the same history, carryover, and margin settings. Only its odds scale was refitted on the earlier fixtures.'],
+  ];
+  return `<section class="panel"><h2>History and weighting tests</h2>
+    <p>We fitted the odds on 2014–2019, chose settings on 2021–2022, and tested on the same ${tests.games.toLocaleString()} games from 2023–2025.</p>
+    <p>The combined challenger uses stronger carryover between historical seasons and a 42-point margin scale. It is a candidate for a preseason trial. The archived forecasts in the Lab still use the original baseline.</p>
+    ${preseasonScores(tests.combined, 'Combined preseason models')}
+    ${groups.map(([label, rows, note]) => `<details class="test-detail"><summary>${escape(label)}</summary><p>${escape(note)}</p>${preseasonScores(rows, label)}</details>`).join('')}
+  </section>`;
+}
+
 function renderTesting() {
   const { validation } = preview;
   const metrics = table(['Model', 'Wins picked', 'Brier', 'Log loss', 'Win total error'], validation.models.map(row => `<tr>
@@ -142,6 +165,7 @@ function renderTesting() {
   outlet.innerHTML = `<section class="panel"><h2>How the replay was scored</h2>
     <p>${escape(validation.scope)}</p><p>${escape(validation.calibration)}</p>${metrics}
     <p>Brier and log loss score the odds against what happened. Lower is better. Win total error is in games per team.</p></section>
+    ${validation.historyTests ? historyTestPanel(validation.historyTests) : ''}
     ${validation.datedTests ? datedTestPanels(validation.datedTests) : ''}
     <section class="panel"><h2>What this preview covers</h2><p>${escape(preview.limits)}</p>
     <p>${escape(preview.featureStatus)}</p></section>
