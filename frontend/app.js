@@ -6,6 +6,7 @@ const state = { snapshot: null, byId: new Map(), performance: null, performanceB
 const weeklyPicks = { request: null, status: 'loading', scoring: null, scoringError: false, selectedWeek: '', weeks: new Map(), teams: new Map() };
 const rankingEditions = { data: null, request: null, failed: false };
 let bracketModule;
+let closeBracket;
 const pollSources = {
   ap: { name: 'AP Top 25', short: 'AP', url: 'https://apnews.com/hub/ap-top-25-college-football-poll' },
   coaches: { name: 'Coaches Poll', short: 'Coaches', url: 'https://www.afca.com/polls/' },
@@ -632,10 +633,15 @@ function renderRankingEditions(page, id, scope) {
   if (!failed) rankingEditions.request ??= loadRankingEditions();
 }
 function renderBracketPage() {
-  main.innerHTML = '<div class="wrap page-content"><p role="status">Loading the playoff bracket…</p></div>';
-  bracketModule ??= import('./bracket.js?v=1');
-  bracketModule.then(({ renderBracket }) => {
-    if (route()[0] === 'bracket') return renderBracket(main);
+  if (!bracketModule) {
+    main.innerHTML = '<div class="wrap page-content"><p role="status">Loading the playoff bracket…</p></div>';
+    bracketModule = import('./bracket.js?v=2');
+  }
+  bracketModule.then(({ renderBracket, unmountBracket }) => {
+    if (route()[0] !== 'bracket') return;
+    closeBracket = unmountBracket;
+    const teams = new Map(state.snapshot.rankings.map(team => [team.name, team.id]));
+    return renderBracket(main, teams);
   }).catch(error => {
     if (route()[0] === 'bracket') main.innerHTML = '<div class="wrap page-content"><p role="status">The playoff bracket could not load. Refresh to try again.</p></div>';
     console.error(error);
@@ -645,6 +651,10 @@ function render() {
   if(!state.snapshot)return;
   renderHeader();
   const [page,id,scope]=route();
+  if (page !== 'bracket' && closeBracket) {
+    closeBracket();
+    closeBracket = undefined;
+  }
   if (page === 'rankings') {
     state.model = id === 'strength' || (id === 'performance' && hasPerformance()) ? id : 'achievement';
     state.all = id === 'all' || scope === 'all';

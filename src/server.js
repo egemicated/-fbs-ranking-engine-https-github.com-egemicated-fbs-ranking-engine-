@@ -15,6 +15,7 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     ['/styles.css', ['styles.css', 'text/css; charset=utf-8']],
     ['/app.js', ['app.js', 'text/javascript; charset=utf-8']],
     ['/bracket.js', ['bracket.js', 'text/javascript; charset=utf-8']],
+    ['/bracket-board.js', ['bracket-board.js', 'text/javascript; charset=utf-8']],
     ['/bracket-auth.js', ['bracket-auth.js', 'text/javascript; charset=utf-8']],
     ['/bracket.css', ['bracket.css', 'text/css; charset=utf-8']],
     ['/bracket-config.json', ['bracket-config.json', 'application/json; charset=utf-8']],

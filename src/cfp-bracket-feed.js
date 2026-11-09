@@ -15,18 +15,25 @@ export function validateCfpBracket(bracket, season, teamNames) {
   const earlier = new Map();
   const feeders = new Set();
   const teams = new Set();
+  const seeds = new Set();
   const slots = bracket.slots.map((slot, index) => {
-    const { id, round, kickoff, home, away, homeFrom, awayFrom } = slot ?? {};
+    const { id, round, kickoff, home, away, homeFrom, awayFrom, homeSeed, awaySeed } = slot ?? {};
     const start = timestamp(kickoff);
     if (id !== ids[index] || !Number.isInteger(round) || !roundIds[round - 1]?.includes(id) ||
         !Number.isFinite(start) || start < lock || new Date(start).getUTCFullYear() > season + 1) {
       throw new Error(`Invalid CFP slot at position ${index + 1}`);
     }
-    const sides = [[home, homeFrom], [away, awayFrom]];
+    const sides = [[home, homeFrom, homeSeed], [away, awayFrom, awaySeed]];
     if (sides.filter(([, from]) => from !== null).length !== (round === 1 ? 0 : round === 2 ? 1 : 2)) {
       throw new Error(`Wrong number of feeders for ${id}`);
     }
-    for (const [team, from] of sides) {
+    for (const [team, from, seed] of sides) {
+      if (seed !== undefined) {
+        if (from !== null || !Number.isInteger(seed) || seed < 1 || seed > 12 || seeds.has(seed)) {
+          throw new Error(`Invalid or duplicate CFP seed in ${id}`);
+        }
+        seeds.add(seed);
+      }
       if (from !== null) {
         const feeder = earlier.get(from);
         if (team !== null || !feeder || feeder.round !== round - 1 || feeder.start >= start || feeders.has(from)) {
@@ -39,7 +46,8 @@ export function validateCfpBracket(bracket, season, teamNames) {
       }
     }
     earlier.set(id, { round, start });
-    return { id, round, kickoff, home, away, homeFrom, awayFrom };
+    return { id, round, kickoff, home, away, homeFrom, awayFrom,
+      ...(homeSeed !== undefined ? { homeSeed } : {}), ...(awaySeed !== undefined ? { awaySeed } : {}) };
   });
   if (Math.min(...slots.map(slot => timestamp(slot.kickoff))) !== lock) throw new Error('CFP lock must equal the first kickoff');
   return { lockAt: bracket.lockAt, slots };

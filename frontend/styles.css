@@ -124,4 +124,8 @@ ul.edition-notice{padding-inline-start:20px}
     white-space: normal;
   }
 }
+@media (min-width: 701px) and (max-width: 950px) {
+  .nav-inner { overflow-x: auto; scrollbar-width: none; }
+  .nav a { flex-shrink: 0; }
+}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}

@@ -200,7 +200,8 @@ pick, with shared ranks for ties and only nicknames and standings shown publicly
    the [official CFP bracket](https://collegefootballplayoff.com/sports/2026/8/9/bracket-place-holder).
    Commit `data/cfp-bracket-2026.json` to `main`. Use the practice bracket as
    the shape reference and include `season`, `lockAt`, and the 11 `slots`, with
-   team names matching the current FBS roster. Omit historical `results`.
+   team names matching the current FBS roster. Add `homeSeed` and `awaySeed`
+   on the sides with named entrants. Omit historical `results`.
    `lockAt` must equal the earliest kickoff. The push publishes the field.
 
 The Sunday workflow grades from its saved finals, with no additional CFBD

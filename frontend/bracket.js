@@ -1,8 +1,9 @@
 import { googleSignInEnabled, loadBracketClient } from './bracket-auth.js';
+import { mountBracketBoard, renderBracketBoard } from './bracket-board.js?v=1';
 
 const season = 2026;
-const rounds = ['First round', 'Quarterfinals', 'Semifinals', 'Championship'];
 const pointsByRound = [1, 2, 4, 8];
+let stopBoard;
 const mountainTime = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', dateStyle: 'medium', timeStyle: 'short' });
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const date = value => Number.isFinite(Date.parse(value)) ? `${mountainTime.format(new Date(value))} MT` : '';
@@ -115,28 +116,6 @@ function mountWaiting(root, { client, session, signInEnabled, current, refresh }
   });
 }
 
-function gameCard(slot, index, picks, results, winners, editable) {
-  const teams = teamsFor(slot, editable ? picks : winners);
-  const result = results[slot.id];
-  const selection = picks[slot.id];
-  const correct = selection && result?.winner === selection;
-  const kickoff = date(slot.kickoff);
-  const [actualHome, actualAway] = teamsFor(slot, winners);
-  const finalScore = result && Number.isInteger(result.homePoints) && Number.isInteger(result.awayPoints) && actualHome && actualAway
-    ? `<p class="bracket-final">Final · ${escape(actualAway)} ${result.awayPoints}–${result.homePoints} ${escape(actualHome)}</p>` : '';
-  const matchup = `<span>${escape(teams[1] || 'Winner TBD')}</span><span class="bracket-matchup-vs">vs</span><span>${escape(teams[0] || 'Winner TBD')}</span>`;
-  const pick = editable ? `<label id="bracket-label-${index}" for="bracket-pick-${index}">Your winner</label>
-    <select id="bracket-pick-${index}" aria-labelledby="bracket-label-${index} bracket-matchup-${index}" data-bracket-game="${escape(slot.id)}"${teams.some(Boolean) ? '' : ' disabled'}>
-      <option value="">${teams.some(Boolean) ? 'Choose a team' : 'Pick earlier games first'}</option>
-      ${[...new Set(teams.filter(Boolean))].reverse().map(team => `<option value="${escape(team)}"${team === selection ? ' selected' : ''}>${escape(team)}</option>`).join('')}
-    </select>` : selection ? `<p class="bracket-selection">Your pick · <strong>${escape(selection)}</strong></p>` : '';
-  return `<article class="bracket-game${slot.round === 4 ? ' bracket-title-game' : ''}">
-    ${kickoff ? `<time datetime="${escape(slot.kickoff)}">${escape(kickoff)}</time>` : ''}
-    <div id="bracket-matchup-${index}" class="bracket-matchup">${matchup}</div>${pick}${finalScore}
-    ${selection ? `<p class="bracket-grade${result ? correct ? ' bracket-correct' : ' bracket-missed' : ''}">${result ? correct ? `Correct · +${pointsByRound[slot.round - 1]}` : 'Incorrect' : 'Awaiting final'}</p>` : ''}
-  </article>`;
-}
-
 function leaderboard(rows) {
   if (!rows.length) return panel('Leaderboard', 'No entries are available yet.');
   return `<section class="panel bracket-board"><div class="panel-body"><h2>Leaderboard</h2><p>Points update when playoff finals are confirmed. Tied entries share a rank.</p></div>
@@ -145,7 +124,12 @@ function leaderboard(rows) {
     </tbody></table></section>`;
 }
 
-function mountContest(root, contest, { demo = false, client, session, entry, signInEnabled, current, refresh }) {
+export function unmountBracket() {
+  stopBoard?.();
+  stopBoard = undefined;
+}
+
+function mountContest(root, contest, { demo = false, client, session, entry, signInEnabled, current, refresh, teams }) {
   const slots = orderedSlots(contest);
   const results = contest.results ?? {};
   const winners = Object.fromEntries(Object.entries(results).map(([id, result]) => [id, result.winner]));
@@ -155,6 +139,7 @@ function mountContest(root, contest, { demo = false, client, session, entry, sig
   let nickname = entry?.nickname ?? '';
   let message = '';
   let busy = false;
+  let activeRound = 1;
   const canSave = () => [...nickname.trim()].length >= 2 && Object.keys(picks).length === slots.length;
 
   function draw(focusId) {
@@ -163,32 +148,25 @@ function mountContest(root, contest, { demo = false, client, session, entry, sig
     const open = editable();
     const actions = demo ? '<button type="button" class="button light" data-bracket-action="sample">Fill sample picks</button>'
       : accountButton(session, signInEnabled, busy);
+    unmountBracket();
     root.innerHTML = `<section class="panel bracket-summary"><div class="panel-body">
       <div class="bracket-heading"><div><div class="section-label">${demo ? 'Historical demo' : `${season} contest`}</div>
       <h2>${demo ? 'Replay the 2025 playoff' : locked() ? 'Entries are locked' : 'Pick the playoff winners'}</h2></div>${actions}</div>
-      <p>${demo ? 'Make practice picks and see how they would have scored against the actual results.'
-        : `One bracket per account. Picks lock at <time datetime="${escape(contest.lockAt)}">${escape(date(contest.lockAt))}</time>.`}</p>
+      <p>${demo ? 'Select a team to advance it and see how your picks would have scored.'
+        : `Save all 11 picks before <time datetime="${escape(contest.lockAt)}">${escape(date(contest.lockAt))}</time>. One bracket per account.`}</p>
       ${!demo && !session && !signInEnabled ? '<p class="compact-note">Sign-in is currently unavailable.</p>' : ''}
       <p class="compact-note">Correct picks earn 1, 2, 4 and 8 points by round, up to 28 points.</p>
-      ${selected ? `<p class="bracket-progress">${selected} of 11 picks${graded ? ` · ${correct} of ${graded} correct · ${points} points` : ''}</p>` : ''}
+      ${open || selected ? `<p class="bracket-progress">${selected} of 11 picks${graded ? ` · ${correct} of ${graded} correct · ${points} points` : ''}</p>` : ''}
       <p role="status" class="bracket-message">${escape(message)}</p>
       </div></section>
-      <form data-bracket-form><div class="bracket-rounds">
-      ${rounds.map((round, index) => `<section class="bracket-round" aria-label="${round}"><h3>${round} <small>${pointsByRound[index]} ${index === 0 ? 'pt' : 'pts'} each</small></h3>
-      ${slots.map((slot, slotIndex) => slot.round === index + 1 ? gameCard(slot, slotIndex, picks, results, winners, open) : '').join('')}</section>`).join('')}
-      </div>${open && !demo ? `<div class="panel bracket-save"><div class="panel-body"><label for="bracket-nickname">Leaderboard nickname</label>
+      <form data-bracket-form>${renderBracketBoard({ slots, picks, results, winners, editable: open, activeRound, teams, pointsByRound })}
+      ${open && !demo ? `<div class="panel bracket-save"><div class="panel-body"><label for="bracket-nickname">Leaderboard nickname</label>
       <input id="bracket-nickname" name="nickname" required minlength="2" maxlength="30" value="${escape(nickname)}" autocomplete="nickname">
       <button type="submit" class="button" data-bracket-save${!canSave() || busy ? ' disabled' : ''}>${busy ? 'Saving…' : 'Save bracket'}</button></div></div>` : ''}</form>`;
+    stopBoard = mountBracketBoard(root, activeRound, round => { activeRound = round; });
     if (focusId) root.querySelector(`#${focusId}`)?.focus({ preventScroll: true });
   }
 
-  root.onchange = event => {
-    const control = event.target;
-    if (!control.matches('[data-bracket-game]') || !editable() || busy) return;
-    picks = chooseBracketWinner(slots, picks, control.dataset.bracketGame, control.value);
-    message = '';
-    draw(control.id);
-  };
   root.oninput = event => {
     if (event.target.id !== 'bracket-nickname') return;
     nickname = event.target.value;
@@ -210,6 +188,14 @@ function mountContest(root, contest, { demo = false, client, session, entry, sig
     }
   };
   root.onclick = async event => {
+    const pick = event.target.closest('button[data-bracket-game][data-bracket-team]');
+    if (pick) {
+      if (!editable() || busy) return;
+      picks = chooseBracketWinner(slots, picks, pick.dataset.bracketGame, pick.dataset.bracketTeam);
+      message = '';
+      draw(pick.id);
+      return;
+    }
     const action = event.target.closest('[data-bracket-action]')?.dataset.bracketAction;
     if (action === 'sample') {
       picks = sampleBracket(slots);
@@ -230,9 +216,10 @@ function mountContest(root, contest, { demo = false, client, session, entry, sig
   draw();
 }
 
-export async function renderBracket(main) {
+export async function renderBracket(main, teams) {
   const view = bracketView();
   if (main.querySelector('[data-bracket-view]')?.dataset.bracketView === view) return;
+  unmountBracket();
   main.innerHTML = `<section class="hero page-banner"><div class="wrap"><div class="eyebrow">College Football Playoff · Fan contest</div>
     <h1>Playoff Bracket</h1><p>Pick the winners, follow the results, and see where your bracket stands.</p></div></section>
     <div class="wrap page-content bracket-page" data-bracket-view="${view}"><nav class="matchup-views bracket-tabs" aria-label="Playoff bracket">
@@ -242,12 +229,12 @@ export async function renderBracket(main) {
   const current = () => root.isConnected && location.hash.split('/')[0] === '#bracket' && bracketView() === view;
   const refresh = () => {
     root.closest('[data-bracket-view]').remove();
-    void renderBracket(main);
+    void renderBracket(main, teams);
   };
   try {
     if (view === 'demo') {
       const contest = await getJson('/bracket-demo.json');
-      if (current()) mountContest(root, contest, { demo: true, current });
+      if (current()) mountContest(root, contest, { demo: true, current, teams });
       return;
     }
     const config = await getJson('/bracket-config.json');
@@ -275,7 +262,7 @@ export async function renderBracket(main) {
       if (current()) root.innerHTML = rows ? leaderboard(rows) : panel('Leaderboard opens at kickoff', 'Enter your bracket before the first game to appear in the standings.');
     } else {
       const entry = session ? await rpc(client, 'cfp_my_entry') : null;
-      if (current()) mountContest(root, contest, { client, session, entry, signInEnabled, current, refresh });
+      if (current()) mountContest(root, contest, { client, session, entry, signInEnabled, current, refresh, teams });
     }
   } catch {
     if (!current()) return;

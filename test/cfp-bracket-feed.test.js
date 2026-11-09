@@ -31,6 +31,18 @@ test('replays all 11 official 2025 finals in bracket orientation, independent of
   assert.deepEqual(selectCfpResults(bracket, games.toReversed(), finalCutoff), official.results);
 });
 
+test('keeps official seeds on initial entrants and accepts legacy fields without seed metadata', () => {
+  assert.deepEqual(bracket.slots, official.slots);
+  const legacySlots = official.slots.map(({ homeSeed, awaySeed, ...slot }) => slot);
+  assert.deepEqual(validateCfpBracket({ ...official, slots: legacySlots }, 2025, teams).slots, legacySlots);
+
+  for (const [index, edits] of [[0, { homeSeed: 13 }], [0, { homeSeed: '5' }],
+    [0, { homeSeed: 1 }], [4, { awaySeed: 12 }]]) {
+    const slots = official.slots.map((slot, i) => i === index ? { ...slot, ...edits } : slot);
+    assert.throws(() => validateCfpBracket({ ...official, slots }, 2025, teams), /Invalid or duplicate CFP seed/);
+  }
+});
+
 test('requires verified postseason finals at the right time and rejects ambiguous matches', () => {
   const missing = [
     { ...games[0], seasonType: 'regular' },
