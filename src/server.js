@@ -5,6 +5,7 @@ import { VERSION } from './engine.js';
 import { UPDATE_SCHEDULE } from './weekly.js';
 import publicationPolicy from '../data/publication-model.json' with { type: 'json' };
 import { readPerformance } from './performance-publication.js';
+import { publicRankings, publicTeamDetails } from './site-publication.js';
 import { matchupValidation, snapshotCoverage } from './site-validation.js';
 
 const directory = resolve(process.env.DATA_DIR || 'data', 'snapshots');
@@ -65,11 +66,16 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
         return send(error.code === 'ENOENT' ? 404 : 503, { error: 'Weekly picks are unavailable' });
       }
     }
-    const match = /^\/rankings(?:\/(\d{4}))?$/.exec(path);
+    const match = /^\/rankings(?:\/(\d{4}))?(?:\/teams\/([^/]+)\.json)?$/.exec(path);
     if (!match) return send(404, { error: 'Not found' });
+    const [, year, teamId] = match;
     try {
-      const snapshot = JSON.parse(await readFile(join(snapshotDirectory, `${match[1] || 'latest'}.json`), 'utf8'));
-      const { ratings, ...publicSnapshot } = snapshot;
+      const snapshot = JSON.parse(await readFile(join(snapshotDirectory, `${year || 'latest'}.json`), 'utf8'));
+      if (teamId) {
+        const team = snapshot.rankings.find(row => encodeURIComponent(row.id) === teamId);
+        return team ? send(200, publicTeamDetails(snapshot, team)) : send(404, { error: 'Team not found' });
+      }
+      const publicSnapshot = publicRankings(snapshot, `/rankings${year ? `/${year}` : ''}/teams`);
       if (snapshot.rankingMethod?.id === publicationPolicy.id) {
         publicSnapshot.rankingMethod = { ...snapshot.rankingMethod, publicationStatus: 'official' };
         publicSnapshot.coverageValidation = snapshotCoverage(snapshot);

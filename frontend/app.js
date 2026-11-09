@@ -3,6 +3,7 @@ const main = document.querySelector('#main');
 // Static builds set this root. The web service keeps its existing JSON routes.
 const dataRoot = document.querySelector('meta[name="publication-data-root"]')?.content;
 const state = { snapshot: null, byId: new Map(), performance: null, performanceById: new Map(), model: 'achievement', search: '', conference: '', all: false, teamTab: 'overview', compareA: '254', compareB: '2390', venue: 'neutral' };
+const teamDetails = new Map();
 const weeklyPicks = { request: null, status: 'loading', scoring: null, scoringError: false, selectedWeek: '', weeks: new Map(), teams: new Map() };
 const rankingEditions = { data: null, request: null, failed: false };
 let bracketModule;
@@ -261,10 +262,36 @@ function teamCenterContent(t) {
   if(state.teamTab==='model') return teamCalculation(t);
   return `<div class="metric-grid">${[[achievementName(),rank(nationalRank(t)),'National rank'],['Schedule',`#${sosRank(t)}`,'Colley opponent average'],['Conference',rank(conferenceRank(t)),t.conference],['Record',record(t),`${t.games} completed games`]].map(([label,value,note])=>`<div class="metric"><span>${label}</span><strong>${value}</strong><small>${esc(note)}</small></div>`).join('')}</div><section class="panel"><div class="panel-body"><div class="explanation-head">${icon('network')}<h2>WHY WE RANK ${esc(t.name.toUpperCase())} ${rank(nationalRank(t))}</h2></div><p class="team-narrative">${explanation(t)}</p><div class="evidence-chips"><span class="evidence-chip">Opponent Colley average <b>${number(t.achievementScheduleStrength)}</b></span><span class="evidence-chip">${t.evidence?.connectedTeams??'—'} connected teams</span><span class="evidence-chip">${t.evidence?.provisional?'Small sample · provisional':'Current-season evidence'}</span></div>${breakdown(t)}</div></section><section class="panel" style="margin-top:17px"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<h2>RESULTS THAT SHAPE THE RESUME</h2></div><button class="text-link" style="border:0;background:none" data-action="team-tab" data-value="results">All results ${icon('arrow')}</button></div>${resultsTable({...t,contributions:[...t.contributions].sort((a,b)=>b.opponentAchievement-a.opponentAchievement).slice(0,3)})}</section>`;
 }
+async function loadTeamDetails(summary) {
+  const { id } = summary;
+  const snapshot = state.snapshot;
+  const detail = { team: null, failed: false };
+  teamDetails.set(id, detail);
+  try {
+    const url = `${snapshot.teamDetailsPath}/${encodeURIComponent(id)}.json?v=${encodeURIComponent(snapshot.publicationHash)}`;
+    const response = await fetch(url, { headers: { Accept: 'application/json' } });
+    if (!response.ok) throw Error('Team details are unavailable');
+    const payload = await response.json();
+    if (payload?.id !== id || payload.publicationHash !== snapshot.publicationHash || !Array.isArray(payload.contributions)) {
+      throw Error('Team details do not match the current rankings');
+    }
+    detail.team = { ...summary, ...payload };
+  } catch {
+    detail.failed = true;
+  }
+  const [page, currentId] = route();
+  if (state.snapshot === snapshot && page === 'team' && currentId === id) renderTeam(id);
+}
 function renderTeam(id) {
-  const t=state.byId.get(id);
-  if(!t){main.innerHTML=`<div class="wrap page-content"><section class="panel empty"><h2>Team not found</h2><p>Choose a team from the FBS directory.</p><a class="button" style="margin-top:15px" href="#teams">Explore teams</a></section></div>`;return;}
-  main.innerHTML=`<section class="hero team-banner"><div class="wrap"><a class="breadcrumb" href="#rankings">${icon('back')}Back to the rankings</a><div class="team-banner-content">${logo(t,'large')}<div><div class="eyebrow">${esc(t.conference)} · ${state.snapshot.season} season</div><h1>${esc(t.name.toUpperCase())}</h1><div class="team-meta"><span><b>${rank(nationalRank(t))}</b> ${achievementName()}</span><span>${record(t)} overall</span><span>${rank(conferenceRank(t))} in conference</span></div></div><div class="team-banner-score"><strong>${number(achievementScore(t))}</strong><span>${usesSor(t)?'SOR score':'Colley rating'}</span></div></div></div></section><div class="wrap page-content"><div class="team-layout"><aside class="panel rank-rail"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<h2>THE TOP 25</h2></div></div><div class="rail-list">${topTwentyFive(state.snapshot.rankings, 'achievement').map(o=>`<a href="#team/${o.id}" class="rail-row ${o.id===t.id?'selected':''}" ${o.id===t.id?'aria-current="page"':''}><span>${nationalRank(o)}</span>${logo(o)}<b>${esc(o.name)}</b><small>${record(o)}</small></a>`).join('')}</div><a class="method-link" href="#rankings/all">All rankings ${icon('arrow')}</a></aside><div class="team-center"><div class="tabs" aria-label="Team sections">${[['overview','Overview'],['results','Results'],['model','Model details']].map(([value,label])=>`<button data-action="team-tab" data-value="${value}" class="${state.teamTab===value?'active':''}" aria-pressed="${state.teamTab===value}">${label}</button>`).join('')}</div><div id="team-center-content">${teamCenterContent(t)}</div></div><aside class="stack team-right">${modelRanks(t)}${performanceTeamPanel(t)}${qualityPanel()}<section class="panel"><div class="panel-body"><div class="section-label">Ask a different question</div><h3 style="margin:9px 0 12px">HOW WOULD THEY MATCH UP?</h3><p class="compact-note">Use the strength model to explore a matchup on a neutral field.</p><button class="button small full-width" style="margin-top:15px" data-action="compare-team" data-value="${t.id}">${icon('compare')}Open matchup lab</button></div></section></aside></div></div>`;
+  const summary = state.byId.get(id);
+  if(!summary){main.innerHTML=`<div class="wrap page-content"><section class="panel empty"><h2>Team not found</h2><p>Choose a team from the FBS directory.</p><a class="button" style="margin-top:15px" href="#teams">Explore teams</a></section></div>`;return;}
+  const detail = state.snapshot.teamDetailsPath ? teamDetails.get(id) : null;
+  const t = detail?.team ?? summary;
+  const needsDetails = state.snapshot.teamDetailsPath && !detail?.team;
+  const content = needsDetails ? `<section class="panel empty"><p role="status">${detail?.failed ? 'The team details could not load.' : 'Loading team details…'}</p>
+    ${detail?.failed ? '<button type="button" class="button light small" data-action="retry-team-details">Try again</button>' : ''}</section>` : teamCenterContent(t);
+  main.innerHTML=`<section class="hero team-banner"><div class="wrap"><a class="breadcrumb" href="#rankings">${icon('back')}Back to the rankings</a><div class="team-banner-content">${logo(t,'large')}<div><div class="eyebrow">${esc(t.conference)} · ${state.snapshot.season} season</div><h1>${esc(t.name.toUpperCase())}</h1><div class="team-meta"><span><b>${rank(nationalRank(t))}</b> ${achievementName()}</span><span>${record(t)} overall</span><span>${rank(conferenceRank(t))} in conference</span></div></div><div class="team-banner-score"><strong>${number(achievementScore(t))}</strong><span>${usesSor(t)?'SOR score':'Colley rating'}</span></div></div></div></section><div class="wrap page-content"><div class="team-layout"><aside class="panel rank-rail"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<h2>THE TOP 25</h2></div></div><div class="rail-list">${topTwentyFive(state.snapshot.rankings, 'achievement').map(o=>`<a href="#team/${o.id}" class="rail-row ${o.id===t.id?'selected':''}" ${o.id===t.id?'aria-current="page"':''}><span>${nationalRank(o)}</span>${logo(o)}<b>${esc(o.name)}</b><small>${record(o)}</small></a>`).join('')}</div><a class="method-link" href="#rankings/all">All rankings ${icon('arrow')}</a></aside><div class="team-center"><div class="tabs" aria-label="Team sections">${[['overview','Overview'],['results','Results'],['model','Model details']].map(([value,label])=>`<button data-action="team-tab" data-value="${value}" class="${state.teamTab===value?'active':''}" aria-pressed="${state.teamTab===value}">${label}</button>`).join('')}</div><div id="team-center-content">${content}</div></div><aside class="stack team-right">${modelRanks(t)}${performanceTeamPanel(t)}${qualityPanel()}<section class="panel"><div class="panel-body"><div class="section-label">Ask a different question</div><h3 style="margin:9px 0 12px">HOW WOULD THEY MATCH UP?</h3><p class="compact-note">Use the strength model to explore a matchup on a neutral field.</p><button class="button small full-width" style="margin-top:15px" data-action="compare-team" data-value="${t.id}">${icon('compare')}Open matchup lab</button></div></section></aside></div></div>`;
+  if (needsDetails && !detail) void loadTeamDetails(summary);
 }
 function validationSummary() {
   const coverage = state.snapshot.coverageValidation;
@@ -753,6 +780,7 @@ document.addEventListener('click',e=>{
     render();
   }
   if(action==='team-tab'){state.teamTab=value;renderTeam(route()[1]);}
+  if(action==='retry-team-details'){void load();}
   if(action==='venue'){state.venue=value;renderCompare();}
   if(action==='compare-team'){state.compareA=value;if(state.compareB===value)state.compareB=state.snapshot.rankings.find(t=>t.id!==value).id;location.hash='compare';}
 });
@@ -764,6 +792,7 @@ async function load(){
     const snapshot=await response.json();
     if(!snapshot.rankings?.length)throw Error('No published rankings');
     state.snapshot=snapshot;state.byId=new Map(snapshot.rankings.map(t=>[t.id,t]));
+    teamDetails.clear();
     state.performance=null;state.performanceById=new Map();
     state.compareA=snapshot.rankings[0].id;state.compareB=snapshot.rankings[1].id;
     render();

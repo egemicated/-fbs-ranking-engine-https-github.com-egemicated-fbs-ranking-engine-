@@ -23,7 +23,7 @@ function fixture(sor = true) {
   return snapshot;
 }
 
-async function browser(snapshot) {
+async function browser(snapshot, detailResponse) {
   const nodes = new Map(), calls = [], errors = [];
   const node = id => {
     if (!nodes.has(id)) nodes.set(id, { innerHTML: '', textContent: '', addEventListener() {} });
@@ -32,13 +32,29 @@ async function browser(snapshot) {
   const context = { document: { querySelector: node, addEventListener() {}, title: '' },
     location: { hash: '#home' }, window: { addEventListener() {}, scrollTo() {} },
     HTMLImageElement: class {}, console: { error: e => errors.push(e) },
-    fetch: async path => { calls.push(path); return { ok: true, json: async () => snapshot }; } };
+    fetch: async path => {
+      calls.push(path);
+      if (path !== '/rankings' && detailResponse) return detailResponse(path);
+      return { ok: true, json: async () => snapshot };
+    } };
   const source = await readFile('frontend/app.js', 'utf8');
   vm.runInNewContext(source + '\nglobalThis.ui={state,render,renderHome,renderRankings,renderTeams,renderTeam,renderMethodology,renderCompare,rankingsContent,compareResult,ordered,sosRank,teamCenterContent};', context, { filename: 'frontend/app.js' });
   await new Promise(setImmediate);
   assert.deepEqual(errors, []);
   return { ...context, calls, html: () => node('#main').innerHTML,
     go(hash) { context.location.hash = hash; context.ui.render(); return node('#main').innerHTML; } };
+}
+
+function separatedFixture() {
+  const snapshot = { ...fixture(), publicationHash: 'test-version', teamDetailsPath: '/data/teams' };
+  const details = new Map();
+  snapshot.rankings = snapshot.rankings.map(row => {
+    const { contributions, explanation, evidence, sorTailProbability, sorExpectedWins, preseasonStrength, ...summary } = row;
+    details.set(`/data/teams/${row.id}.json?v=test-version`, { id: row.id, publicationHash: snapshot.publicationHash,
+      contributions, explanation, evidence, sorTailProbability, sorExpectedWins, preseasonStrength });
+    return summary;
+  });
+  return { snapshot, details };
 }
 
 test('home, national table and directory display published SOR ranks and scores rather than legacy Colley', async () => {
@@ -86,6 +102,44 @@ test('team calculations distinguish zero wins, no games and very small schedule 
   assert.match(page.go('#team/a'), /Any team can reach zero wins.*100\.00%.*SOR score is zero/s);
   Object.assign(team, { games: 0, losses: 0, sorExpectedWins: 0, displayRank: null, displayConferenceRank: null });
   assert.match(page.go('#team/a'), /With zero completed games.*0\.00 expected wins.*gets a rank after it plays/s);
+});
+
+test('team details load once on demand and a slow request cannot replace a different team page', async () => {
+  const { snapshot, details } = separatedFixture();
+  let releaseAlpha;
+  const alphaWait = new Promise(resolve => { releaseAlpha = resolve; });
+  const alpha = '/data/teams/a.json?v=test-version';
+  const beta = '/data/teams/b.json?v=test-version';
+  const page = await browser(snapshot, async path => {
+    if (path === alpha) await alphaWait;
+    return { ok: details.has(path), json: async () => details.get(path) };
+  });
+  assert.match(page.go('#rankings'), /2\.3456/);
+  assert.deepEqual(page.calls, ['/rankings']);
+  assert.match(page.go('#team/a'), /Loading team details/);
+  page.ui.renderTeam('a');
+  assert.deepEqual(page.calls, ['/rankings', alpha]);
+  page.go('#team/b');
+  await new Promise(setImmediate);
+  assert.match(page.html(), /WHY WE RANK BETA #2/);
+  releaseAlpha();
+  await new Promise(setImmediate);
+  assert.match(page.html(), /WHY WE RANK BETA #2/);
+  page.ui.state.teamTab = 'model';
+  assert.match(page.go('#team/a'), /about 5 times out of 1,000 tries/);
+  assert.deepEqual(page.calls, ['/rankings', alpha, beta]);
+});
+
+test('team details from another publication stay off the page and offer a retry', async () => {
+  const { snapshot, details } = separatedFixture();
+  const page = await browser(snapshot, async path => ({ ok: true, json: async () => ({
+    ...details.get(path), publicationHash: 'stale-version',
+  }) }));
+  page.go('#team/a');
+  await new Promise(setImmediate);
+  assert.match(page.html(), /The team details could not load/);
+  assert.match(page.html(), /data-action="retry-team-details"/);
+  assert.doesNotMatch(page.html(), /WHY WE RANK ALPHA/);
 });
 
 test('SOS keeps the Colley opponent average while predictive ordering and matchup calculations remain separate', async () => {
