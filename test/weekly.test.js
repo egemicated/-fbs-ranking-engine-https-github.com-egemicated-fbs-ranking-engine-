@@ -19,10 +19,12 @@ test('weekly snapshot excludes games in progress and future kickoff results', ()
   const snapshot = buildWeeklySnapshot({ ...season, games: [game, { ...game, id: '2', completed: false }, { ...game, id: '3', startDate: '2026-11-09T06:00:00Z' }] }, prior, config, new Date('2026-11-08T15:00:00Z'));
   assert.equal(snapshot.gamesUsed, 1);
 });
-test('schedule means 8 AM Mountain in both summer and winter', () => {
-  const hour = date => Number(new Intl.DateTimeFormat('en-US', { timeZone: UPDATE_SCHEDULE.timeZone, hour: 'numeric', hourCycle: 'h23' }).format(new Date(date)));
-  assert.equal(hour('2026-10-25T14:00:00Z'), 8);
-  assert.equal(hour('2026-11-08T15:00:00Z'), 8);
+test('schedule means 12:01 AM Mountain in both daylight and standard time', () => {
+  const localTime = new Intl.DateTimeFormat('en-US', { timeZone: UPDATE_SCHEDULE.timeZone, weekday: 'long',
+    hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+  assert.equal(localTime.format(new Date('2026-10-25T06:01:00Z')), 'Sunday 00:01');
+  assert.equal(localTime.format(new Date('2026-11-08T07:01:00Z')), 'Sunday 00:01');
+  assert.equal(UPDATE_SCHEDULE.cron, '1 0 * * 0');
 });
 test('each achievement explanation exactly reconciles to its calculated score', () => {
   const snapshot = buildWeeklySnapshot(season, prior, config, new Date('2026-11-08T15:00:00Z'));

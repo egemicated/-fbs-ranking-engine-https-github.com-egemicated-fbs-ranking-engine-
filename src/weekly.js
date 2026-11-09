@@ -1,6 +1,6 @@
 import { rankSeason } from './engine.js';
 
-export const UPDATE_SCHEDULE = Object.freeze({ day: 'Sunday', hour: 8, timeZone: 'America/Denver', cron: '0 8 * * 0' });
+export const UPDATE_SCHEDULE = Object.freeze({ day: 'Sunday', hour: 0, minute: 1, timeZone: 'America/Denver', cron: '1 0 * * 0' });
 
 export function buildWeeklySnapshot(season, prior, config, now = new Date()) {
   if (prior.season !== season.year - 1) throw new Error('A previous-season strength snapshot is required');

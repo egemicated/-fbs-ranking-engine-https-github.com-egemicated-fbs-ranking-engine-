@@ -1,7 +1,9 @@
 name: Weekly CFBD rankings
 on:
   schedule:
-    - cron: '0 8 * * 0'
+    - cron: '1 0 * * 0'
+      timezone: 'America/Denver'
+    - cron: '11 4 * * 0'
       timezone: 'America/Denver'
   workflow_dispatch:
   push:
@@ -20,12 +22,30 @@ jobs:
       RANKING_SEASON: '2026'
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - run: npm test
+      - name: Check whether the scheduled refresh is needed
+        id: refresh-needed
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          CRON: ${{ github.event.schedule }}
+        run: |
+          if [[ "$EVENT_NAME" != schedule ]]; then
+            needed=true
+          elif [[ "$CRON" == '11 4 * * 0' ]]; then
+            needed=$(node scripts/weekly-refresh-needed.js --catch-up)
+          else
+            needed=$(node scripts/weekly-refresh-needed.js)
+          fi
+          echo "needed=$needed" >> "$GITHUB_OUTPUT"
+      - if: steps.refresh-needed.outputs.needed == 'true'
+        run: npm test
       - name: Fetch CFBD and calculate rankings
         id: primary-publish
+        if: steps.refresh-needed.outputs.needed == 'true'
         env:
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
         run: node scripts/refresh-weekly.js
@@ -34,16 +54,20 @@ jobs:
         continue-on-error: true
         run: node scripts/publish-weekly-picks.js --season "data/seasons/${RANKING_SEASON}.json" --snapshot published/latest.json --output published/weekly-picks.json
       - name: Record frozen achievement comparison
+        if: steps.primary-publish.outcome == 'success'
         continue-on-error: true
         run: node scripts/record-research-comparison.js
       - name: Record frozen division candidate and next-week forecasts
+        if: steps.primary-publish.outcome == 'success'
         continue-on-error: true
         run: node scripts/record-division-comparison.js
       - name: Score previously saved division forecasts
+        if: steps.primary-publish.outcome == 'success'
         continue-on-error: true
         run: node research/evaluate_division_forecasts.mjs
       - name: Set up the optional Performance calculator
         id: performance-python
+        if: steps.primary-publish.outcome == 'success'
         continue-on-error: true
         uses: actions/setup-python@v5
         with:
@@ -78,7 +102,7 @@ jobs:
         continue-on-error: true
         run: node research/evaluate_blend_forecasts.mjs
       - name: Retain derived results and source checksums
-        if: always()
+        if: always() && steps.refresh-needed.outputs.needed == 'true'
         continue-on-error: true
         uses: actions/upload-artifact@v7
         with:

@@ -35,11 +35,12 @@ test('two weekly checkpoints preserve the first forecast, then score a confirmed
   const manifest=JSON.parse(await readFile(join(paths.evidenceDirectory,'manifest.json'),'utf8'));
   assert.equal(manifest.researchComparison.protocolId,'sor-colley-v1');
 });
-test('frozen evaluator pin and existing weekly fetch/schedule are preserved',async()=>{
+test('frozen evaluator pin and the shared weekly fetch are preserved',async()=>{
   const protocol=JSON.parse(await readFile('research/frozen-division-comparison-v2.json','utf8'));
   const path='research/evaluate_division_forecasts.mjs';assert.equal(protocol.evaluationImplementationSha256[path],sha(await readFile(path)));
   const workflow=await readFile('.github/workflows/weekly.yml','utf8');
-  assert.match(workflow,/cron: '0 8 \* \* 0'/);assert.match(workflow,/timezone: 'America\/Denver'/);
+  assert.match(workflow,/cron: '1 0 \* \* 0'\s+timezone: 'America\/Denver'/);
+  assert.match(workflow,/cron: '11 4 \* \* 0'\s+timezone: 'America\/Denver'/);
   assert.equal((workflow.match(/run: node scripts\/refresh-weekly.js/g)??[]).length,1);
   assert.match(workflow,/git add research\/division-observations\//);
 });

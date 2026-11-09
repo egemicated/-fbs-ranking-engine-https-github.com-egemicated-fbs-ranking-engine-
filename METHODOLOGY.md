@@ -179,8 +179,8 @@ to reproduce a result. Source corrections can change reconstructed history.
 
 ## Weekly publication and data freshness
 
-The publisher refreshes on Sunday at 08:00 America/Denver, following Mountain
-Time daylight-saving changes. The normal refresh uses two CFBD requests:
+The publisher refreshes on Sunday at 00:01 America/Denver, following Mountain
+Time daylight-saving changes. The normal primary refresh uses two CFBD requests:
 one season-wide results request and one year-specific FBS roster request.
 It counts games CFBD marks complete, with kickoff no later than retrieval.
 It does not impose the retrospective 24-hour kickoff buffer on confirmed

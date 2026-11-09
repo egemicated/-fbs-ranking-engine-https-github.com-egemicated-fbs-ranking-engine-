@@ -3,6 +3,7 @@ import { join, resolve } from 'node:path';
 import { readPerformance } from '../src/performance-publication.js';
 import { publishDivisionSnapshot, readPublicationPolicy } from '../src/publication.js';
 import { matchupValidation, snapshotCoverage } from '../src/site-validation.js';
+import { UPDATE_SCHEDULE } from '../src/weekly.js';
 
 const root = resolve(import.meta.dirname, '..');
 const frontend = join(root, 'frontend');
@@ -25,6 +26,7 @@ const snapshot = publishDivisionSnapshot(input, policy, {
 });
 const performance = await readPerformance(published, snapshot);
 const { ratings, ...publicSnapshot } = snapshot;
+if (snapshot.update) publicSnapshot.update = { ...snapshot.update, schedule: UPDATE_SCHEDULE };
 publicSnapshot.rankingMethod = { ...snapshot.rankingMethod, publicationStatus: 'official' };
 publicSnapshot.coverageValidation = snapshotCoverage(snapshot);
 publicSnapshot.matchupValidation = matchupValidation(snapshot);

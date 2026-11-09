@@ -39,7 +39,7 @@ SIL Open Font License. The unbranded stadium illustration was generated with
 the built-in image tool; its production prompt is in
 `frontend/assets/ASSET-NOTES.txt`.
 
-The current site refreshes from CFBD on Sunday at 8 AM Mountain through the
+The current site refreshes from CFBD on Sunday at 12:01 AM Mountain through the
 existing GitHub workflow. Its two successful provider requests are unchanged.
 Render promotes the committed CFBD snapshot using the pinned publication policy;
 deployment does not request newer CFBD data. The next weekly snapshot is promoted
@@ -124,10 +124,11 @@ The service serves the frontend and read-only JSON API. The free plan can sleep 
 
 ## Weekly CFBD publication
 
-`.github/workflows/weekly.yml` targets **Sunday at 08:00 America/Denver**, using
-GitHub's timezone-aware schedule (including daylight saving time). GitHub jobs
-and the subsequent Render deployment can start late; this is a target start
-time, not an exact publication-time guarantee.
+`.github/workflows/weekly.yml` targets **Sunday at 00:01 America/Denver**, using
+GitHub's timezone-aware schedule (including daylight saving time). A second
+check at 04:11 only requests CFBD data if the overnight publication is missing
+or a Saturday FBS game remains unconfirmed. GitHub scheduling and Render
+deployment can delay the actual publication.
 
 Set the repository secret `CFBD_API_KEY` once. The workflow fetches the current
 season's games and FBS roster (two API calls for the existing models),
@@ -139,7 +140,7 @@ three CFBD calls each Sunday, usually 12–15/month. Render automatically deploy
 the commit. No paid cron service, database, or additional user login is required.
 The repository is public and the workflow uses standard `ubuntu-latest` runners,
 whose compute is free outside the shared private-repository Actions allowance.
-The five-minute maximum and Sunday schedule are unchanged. The optional
+The workflow has a five-minute timeout. The optional
 Performance calculator has its own failure handling: its failure preserves the
 existing SOR/predictive publication. A stale Performance artifact is hidden
 until it matches the same primary snapshot, season and cutoff.
@@ -165,6 +166,16 @@ Render builds continue reconstructing archived historical seasons, then restore
 the committed weekly snapshot as the authoritative current-season publication.
 Restarts and source-code deploys therefore preserve that publication until the
 next successful weekly update. Historical CSV coverage limitations remain.
+
+## CFP committee poll publication
+
+`.github/workflows/cfp.yml` opens the check just before each remaining 2026
+committee announcement. It checks the official CFP rankings page about once
+per minute until the dated Top 25 appears or the check window ends. It commits
+only the comparison archive. Render deploys that update using zero CFBD calls.
+If a release runs past the window, rerun the workflow with its release date.
+Set the workflow times and publisher release dates when the next season's
+official schedule is published.
 
 ## Experimental Performance
 

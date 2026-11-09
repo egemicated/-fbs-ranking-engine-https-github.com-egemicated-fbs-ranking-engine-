@@ -1,0 +1,46 @@
+name: CFP committee rankings
+on:
+  schedule:
+    # Start a minute before each 2026 broadcast window opens.
+    - cron: '59 18 10,17 11 *'
+      timezone: 'America/Denver'
+    - cron: '29 17 24 11 *'
+      timezone: 'America/Denver'
+    - cron: '59 16 1 12 *'
+      timezone: 'America/Denver'
+    - cron: '59 9 6 12 *'
+      timezone: 'America/Denver'
+  workflow_dispatch:
+    inputs:
+      release_date:
+        description: 'CFP release date (YYYY-MM-DD). Defaults to today in Mountain Time.'
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: cfp-committee-rankings
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 225
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Wait for the official CFP Top 25
+        env:
+          CFP_RELEASE_DATE: ${{ inputs.release_date }}
+        run: node scripts/publish-cfp-poll.js
+      - name: Publish the committee edition to the comparison page
+        run: |
+          git add frontend/ranking-editions.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Publish CFP committee rankings'
+          git pull --rebase origin main
+          git push origin HEAD:main
