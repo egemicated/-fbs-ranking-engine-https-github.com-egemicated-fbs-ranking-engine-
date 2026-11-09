@@ -635,7 +635,7 @@ function renderRankingEditions(page, id, scope) {
 function renderBracketPage() {
   if (!bracketModule) {
     main.innerHTML = '<div class="wrap page-content"><p role="status">Loading the playoff bracket…</p></div>';
-    bracketModule = import('./bracket.js?v=2');
+    bracketModule = import('./bracket.js?v=3');
   }
   bracketModule.then(({ renderBracket, unmountBracket }) => {
     if (route()[0] !== 'bracket') return;

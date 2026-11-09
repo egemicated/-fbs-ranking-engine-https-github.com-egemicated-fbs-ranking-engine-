@@ -20,15 +20,19 @@ function teamLogo(team, teams) {
     : `<span class="bracket-team-logo bracket-logo-empty" aria-hidden="true">${escape(initials)}</span>`;
 }
 
-function teamName(team, seeds) {
-  const seed = seeds.get(team);
-  return `${seed ? `<small class="bracket-team-seed" aria-label="Seed ${seed}">${seed}</small>` : ''}<span>${escape(team)}</span>`;
+function fixedSeed(slot, side) {
+  const seed = slot[`${side}Seed`];
+  return Number.isInteger(seed) ? seed : undefined;
+}
+
+function teamName(team, seed) {
+  return `${seed ? `<small class="bracket-team-seed" aria-label="Seed ${seed}">${seed}</small>` : ''}<span>${escape(team ?? (seed ? 'TBD' : 'Winner TBD'))}</span>`;
 }
 
 function teamRow(slot, index, side, team, { pick, score, winner, editable, seeds, teams }) {
   const selected = !!team && pick === team;
   const classes = `bracket-team-row${selected ? ' is-selected' : ''}${winner ? ' is-winner' : ''}`;
-  const content = `${teamLogo(team, teams)}<span class="bracket-team-name">${team ? teamName(team, seeds) : 'Winner TBD'}</span>
+  const content = `${teamLogo(team, teams)}<span class="bracket-team-name">${teamName(team, fixedSeed(slot, side) ?? seeds.get(team))}</span>
     <span class="bracket-team-score">${Number.isInteger(score) ? score : ''}</span>${selected ? '<span class="bracket-team-check" aria-hidden="true">✓</span>' : ''}`;
   if (!editable || !team) return `<div class="${classes}">${content}</div>`;
   return `<button class="${classes}" type="button" id="bracket-pick-${index}-${side}" data-bracket-game="${escape(slot.id)}" data-bracket-team="${escape(team)}" aria-pressed="${selected}">${content}</button>`;
@@ -61,13 +65,19 @@ function gameCard(slot, index, context) {
     </div></article>`;
 }
 
+function byeSide(slot) {
+  if (slot?.round !== 2 || Boolean(slot.homeFrom) === Boolean(slot.awayFrom)) return null;
+  const side = slot.homeFrom ? 'away' : 'home';
+  return slot[side] || fixedSeed(slot, side) ? side : null;
+}
+
 function byeCard(quarterfinal, context) {
-  if (!quarterfinal) return '';
-  const { home, away } = quarterfinal;
-  const team = home || away;
-  if (!team) return '';
+  const side = byeSide(quarterfinal);
+  if (!side) return '';
+  const team = quarterfinal[side];
+  const seed = fixedSeed(quarterfinal, side) ?? context.seeds.get(team);
   return `<div class="bracket-bye" data-bracket-bye="${escape(quarterfinal.id)}">${teamLogo(team, context.teams)}
-    <div><strong>${teamName(team, context.seeds)}</strong><p>First-round bye</p></div><span class="bracket-bye-label" aria-hidden="true">BYE</span></div>`;
+    <div><strong>${teamName(team, seed)}</strong><p>First-round bye</p></div><span class="bracket-bye-label" aria-hidden="true">BYE</span></div>`;
 }
 
 function connections(slots, picks, results) {
@@ -75,7 +85,7 @@ function connections(slots, picks, results) {
     const to = escape(slot.id);
     const feeders = [slot.awayFrom, slot.homeFrom].filter(Boolean);
     const paths = feeders.map(from => `<path data-bracket-from="${escape(from)}" data-bracket-to="${to}"${picks[from] && picks[from] === results[from]?.winner ? ' class="is-correct"' : ''}></path>`);
-    if (slot.round === 2 && feeders.length === 1 && (slot.home || slot.away)) paths.push(`<path data-bracket-to="${to}" class="is-bye"></path>`);
+    if (byeSide(slot)) paths.push(`<path data-bracket-to="${to}" class="is-bye"></path>`);
     return paths;
   }).join('');
 }
@@ -97,12 +107,12 @@ function visualRounds(slots) {
   return grouped;
 }
 
-export function renderBracketBoard({ slots, picks, results, winners, editable, activeRound = 1, teams, pointsByRound }) {
+export function renderBracketBoard({ slots, picks, results, winners, editable, activeRound = 1, teams, pointsByRound, roundDates }) {
   const seeds = new Map();
   for (const slot of slots) {
     for (const side of ['away', 'home']) {
-      const seed = slot[`${side}Seed`];
-      if (slot[side] && Number.isInteger(seed)) seeds.set(slot[side], seed);
+      const seed = fixedSeed(slot, side);
+      if (slot[side] && seed) seeds.set(slot[side], seed);
     }
   }
   const context = { picks, results, winners, editable, seeds, teams, pointsByRound };
@@ -114,19 +124,19 @@ export function renderBracketBoard({ slots, picks, results, winners, editable, a
     const dates = games.map(({ slot }) => Date.parse(slot.kickoff)).filter(Number.isFinite).sort((a, b) => a - b);
     const first = dates.length ? dayFormat.format(dates[0]) : '';
     const last = dates.length ? dayFormat.format(dates.at(-1)) : '';
-    const date = first === last ? first : `${first}–${last}`;
+    const date = roundDates?.[index] ?? (first === last ? first : `${first}–${last}`);
     const points = pointsByRound[index];
     return { number, title, short, games, date, points };
   });
   return `<div class="bracket-tree" data-bracket-tree>
-    <div class="bracket-round-headings" aria-hidden="true">${labels.map(({ title, date, points }) => `<div><strong>${title}</strong><small>${date || 'Date TBD'} · ${points} ${points === 1 ? 'pt' : 'pts'} each</small></div>`).join('')}</div>
+    <div class="bracket-round-headings" aria-hidden="true">${labels.map(({ title, date, points }) => `<div><strong>${title}</strong><small>${escape(date || 'Date TBD')} · ${points} ${points === 1 ? 'pt' : 'pts'} each</small></div>`).join('')}</div>
     <div class="bracket-round-tabs" role="tablist" aria-label="Playoff rounds">${labels.map(({ number, title, short, points }) => `<button type="button" role="tab" aria-label="${title}" id="bracket-tab-${number}"
       aria-selected="${activeRound === number}" aria-controls="bracket-round-${number}" tabindex="${activeRound === number ? '0' : '-1'}" data-bracket-tab="${number}">${short}<small>${points} ${points === 1 ? 'pt' : 'pts'} each</small></button>`).join('')}</div>
-    <p class="bracket-swipe-hint">Swipe or select a round to follow your picks.</p>
+    <p class="bracket-swipe-hint">Swipe or select a round to ${editable || Object.keys(picks).length ? 'follow your picks' : 'view the bracket'}.</p>
     <div class="bracket-viewport" data-bracket-viewport><div class="bracket-rounds" data-bracket-rounds>
       <svg class="bracket-connectors" aria-hidden="true" focusable="false">${connections(slots, picks, results)}</svg>
       ${labels.map(({ number, title, games, date }) => `<section class="bracket-round" id="bracket-round-${number}" data-bracket-round="${number}" aria-label="${title}">
-        <p class="bracket-mobile-round-date">${date || 'Date TBD'}</p>
+        <p class="bracket-mobile-round-date">${escape(date || 'Date TBD')}</p>
         ${games.map(({ slot, slotIndex }, index) => {
           const span = number < 3 ? 2 : number === 3 ? 4 : 8;
           const quarterfinal = number === 1 ? quarterfinals.find(game => [game.homeFrom, game.awayFrom].includes(slot.id)) : null;

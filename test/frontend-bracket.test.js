@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
-import { chooseBracketWinner, scoreBracket } from '../frontend/bracket.js';
+import { chooseBracketWinner, pendingBracket, scoreBracket } from '../frontend/bracket.js';
 import { renderBracketBoard } from '../frontend/bracket-board.js';
 
 const slots = [
@@ -44,4 +44,21 @@ test('desktop lanes follow actual feeder paths when bracket slots use a differen
     const quarterfinalIds = quarterfinals.slice(index * 2, index * 2 + 2).map(slot => slot.id);
     assert.deepEqual(new Set(quarterfinalIds), new Set([semifinal.homeFrom, semifinal.awayFrom]));
   }
+});
+
+test('the pending field shows the seeded bracket and bye paths without opening picks', () => {
+  const html = renderBracketBoard({ ...pendingBracket, picks: {}, results: {}, winners: {}, editable: false, pointsByRound: [1, 2, 4, 8] });
+  const games = [...html.matchAll(/<article\b[\s\S]*?<\/article>/g)];
+  const matchups = games.map(([game]) => game).join('');
+  const seeds = [...matchups.matchAll(/aria-label="Seed (\d+)">\d+<\/small><span>TBD<\/span>/g)]
+    .map(([, seed]) => Number(seed)).sort((left, right) => left - right);
+  assert.equal(games.length, 11);
+  assert.deepEqual(seeds, Array.from({ length: 12 }, (_, index) => index + 1));
+  assert.equal((matchups.match(/<span>Winner TBD<\/span>/g) ?? []).length, 10);
+  assert.equal((matchups.match(/<time\b/g) ?? []).length, 1);
+  assert.equal((html.match(/data-bracket-bye=/g) ?? []).length, 4);
+  assert.equal((html.match(/<path\b/g) ?? []).length, 14);
+  assert.equal((html.match(/class="is-bye"/g) ?? []).length, 4);
+  assert.doesNotMatch(html, /data-bracket-game=/);
+  for (const date of pendingBracket.roundDates) assert.ok(html.includes(date));
 });

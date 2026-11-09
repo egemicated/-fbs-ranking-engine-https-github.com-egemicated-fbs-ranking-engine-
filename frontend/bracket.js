@@ -1,5 +1,5 @@
 import { googleSignInEnabled, loadBracketClient } from './bracket-auth.js';
-import { mountBracketBoard, renderBracketBoard } from './bracket-board.js?v=1';
+import { mountBracketBoard, renderBracketBoard } from './bracket-board.js?v=2';
 
 const season = 2026;
 const pointsByRound = [1, 2, 4, 8];
@@ -7,6 +7,25 @@ let stopBoard;
 const mountainTime = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', dateStyle: 'medium', timeStyle: 'short' });
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const date = value => Number.isFinite(Date.parse(value)) ? `${mountainTime.format(new Date(value))} MT` : '';
+
+// Selection Day assigns the teams and kickoff windows to these seed paths.
+// https://collegefootballplayoff.com/sports/2026/8/9/bracket-place-holder
+export const pendingBracket = {
+  roundDates: ['Dec 18–19', 'Dec 30–Jan 1', 'Jan 14–15', 'Jan 25'],
+  slots: [
+    { id: 'r1-1', round: 1, homeSeed: 5, awaySeed: 12 },
+    { id: 'r1-2', round: 1, homeSeed: 8, awaySeed: 9 },
+    { id: 'r1-3', round: 1, homeSeed: 6, awaySeed: 11 },
+    { id: 'r1-4', round: 1, homeSeed: 7, awaySeed: 10 },
+    { id: 'qf-1', round: 2, homeSeed: 4, awayFrom: 'r1-1' },
+    { id: 'qf-2', round: 2, homeSeed: 1, awayFrom: 'r1-2' },
+    { id: 'qf-3', round: 2, homeSeed: 3, awayFrom: 'r1-3' },
+    { id: 'qf-4', round: 2, homeSeed: 2, awayFrom: 'r1-4' },
+    { id: 'sf-1', round: 3, homeFrom: 'qf-2', awayFrom: 'qf-1' },
+    { id: 'sf-2', round: 3, homeFrom: 'qf-3', awayFrom: 'qf-4' },
+    { id: 'final', round: 4, homeFrom: 'sf-1', awayFrom: 'sf-2', kickoff: '2027-01-26T00:30:00Z' },
+  ].map(slot => ({ home: null, away: null, homeFrom: null, awayFrom: null, kickoff: null, ...slot })),
+};
 
 function teamsFor(slot, picks) {
   return [slot.home ?? picks[slot.homeFrom], slot.away ?? picks[slot.awayFrom]];
@@ -98,8 +117,8 @@ function accountError(action) {
   return action === 'login' ? 'Could not start Google sign-in. Please try again.' : 'Could not sign out. Please try again.';
 }
 
-function mountWaiting(root, { client, session, signInEnabled, current, refresh }) {
-  root.innerHTML = panel('Waiting for the official field', 'Entries will open when the 12-team playoff bracket is published.',
+function mountWaiting(root, { client, session, signInEnabled, current, refresh } = {}) {
+  root.innerHTML = panel('Waiting for the official field', 'The CFP announces the 12 teams on Dec. 6. Entries open when we load the official field.',
     `${session ? '<p class="compact-note">Signed in.</p>' : ''}<div class="bracket-waiting-actions">${accountButton(session, signInEnabled)}
       <a class="button light" href="#bracket/demo">Open the 2025 demo</a></div><p role="status" class="bracket-message"></p>`);
   const button = root.querySelector('[data-bracket-action]');
@@ -114,6 +133,17 @@ function mountWaiting(root, { client, session, signInEnabled, current, refresh }
       button.disabled = false;
     }
   });
+}
+
+function mountFieldPreview(root) {
+  const notice = document.createElement('div');
+  root.replaceChildren(notice);
+  mountWaiting(notice);
+  root.insertAdjacentHTML('beforeend', renderBracketBoard({
+    ...pendingBracket, picks: {}, results: {}, winners: {}, editable: false, pointsByRound,
+  }));
+  stopBoard = mountBracketBoard(root, 1);
+  return notice;
 }
 
 function leaderboard(rows) {
@@ -220,7 +250,7 @@ export async function renderBracket(main, teams) {
   const view = bracketView();
   if (main.querySelector('[data-bracket-view]')?.dataset.bracketView === view) return;
   unmountBracket();
-  main.innerHTML = `<section class="hero page-banner"><div class="wrap"><div class="eyebrow">College Football Playoff · Fan contest</div>
+  main.innerHTML = `<section class="hero page-banner"><div class="wrap"><div class="eyebrow">College Football Playoff · ${view === 'demo' ? '2025 demo' : `${season} season`}</div>
     <h1>Playoff Bracket</h1><p>Pick the winners, follow the results, and see where your bracket stands.</p></div></section>
     <div class="wrap page-content bracket-page" data-bracket-view="${view}"><nav class="matchup-views bracket-tabs" aria-label="Playoff bracket">
     ${[['entry', '#bracket', 'My bracket'], ['leaderboard', '#bracket/leaderboard', 'Leaderboard'], ['demo', '#bracket/demo', '2025 demo']].map(([tab, path, label]) => `<a href="${path}"${tab === view ? ' aria-current="page"' : ''}>${label}</a>`).join('')}
@@ -231,16 +261,18 @@ export async function renderBracket(main, teams) {
     root.closest('[data-bracket-view]').remove();
     void renderBracket(main, teams);
   };
+  let pendingNotice;
   try {
     if (view === 'demo') {
       const contest = await getJson('/bracket-demo.json');
       if (current()) mountContest(root, contest, { demo: true, current, teams });
       return;
     }
+    if (view === 'entry') pendingNotice = mountFieldPreview(root);
     const config = await getJson('/bracket-config.json');
     if (!current()) return;
     if (!config?.url || !config.publishableKey || config.enabled === false) {
-      root.innerHTML = panel('Bracket entries are coming', 'Try the 2025 demo to see how picks and scoring work.', '<a class="button light bracket-retry" href="#bracket/demo">Open the 2025 demo</a>');
+      if (!pendingNotice) root.innerHTML = panel('Bracket entries are coming', 'Try the 2025 demo to see how picks and scoring work.', '<a class="button light bracket-retry" href="#bracket/demo">Open the 2025 demo</a>');
       return;
     }
     const client = await loadBracketClient(config);
@@ -256,7 +288,7 @@ export async function renderBracket(main, teams) {
     const signInEnabled = view === 'entry' && !session && await googleSignInEnabled(config);
     if (!current()) return;
     if (!contest) {
-      mountWaiting(root, { client, session: view === 'entry' ? session : null, signInEnabled, current, refresh });
+      mountWaiting(pendingNotice ?? root, { client, session: view === 'entry' ? session : null, signInEnabled, current, refresh });
     } else if (view === 'leaderboard') {
       const rows = contest.locked || Date.now() >= Date.parse(contest.lockAt) ? await rpc(client, 'cfp_leaderboard') : null;
       if (current()) root.innerHTML = rows ? leaderboard(rows) : panel('Leaderboard opens at kickoff', 'Enter your bracket before the first game to appear in the standings.');
@@ -266,7 +298,10 @@ export async function renderBracket(main, teams) {
     }
   } catch {
     if (!current()) return;
-    root.innerHTML = panel('Bracket temporarily unavailable', 'Try again in a moment.', '<button type="button" class="button light bracket-retry">Try again</button>');
-    root.querySelector('button').addEventListener('click', refresh);
+    const notice = pendingNotice?.isConnected ? pendingNotice : root;
+    notice.innerHTML = panel('Bracket update unavailable', pendingNotice?.isConnected
+      ? 'The official field and sign-in could not load. You can still view the bracket below.' : 'Try again in a moment.',
+    '<button type="button" class="button light bracket-retry">Try again</button>');
+    notice.querySelector('button').addEventListener('click', refresh);
   }
 }
