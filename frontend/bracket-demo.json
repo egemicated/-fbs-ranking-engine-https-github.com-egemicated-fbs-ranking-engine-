@@ -1,0 +1,30 @@
+{
+  "season": 2025,
+  "lockAt": "2025-12-20T01:00:00Z",
+  "slots": [
+    { "id": "r1-1", "round": 1, "kickoff": "2025-12-21T00:30:00Z", "home": "Oregon", "away": "James Madison", "homeFrom": null, "awayFrom": null },
+    { "id": "r1-2", "round": 1, "kickoff": "2025-12-20T01:00:00Z", "home": "Oklahoma", "away": "Alabama", "homeFrom": null, "awayFrom": null },
+    { "id": "r1-3", "round": 1, "kickoff": "2025-12-20T20:30:00Z", "home": "Ole Miss", "away": "Tulane", "homeFrom": null, "awayFrom": null },
+    { "id": "r1-4", "round": 1, "kickoff": "2025-12-20T17:00:00Z", "home": "Texas A&M", "away": "Miami", "homeFrom": null, "awayFrom": null },
+    { "id": "qf-1", "round": 2, "kickoff": "2026-01-01T17:00:00Z", "home": "Texas Tech", "away": null, "homeFrom": null, "awayFrom": "r1-1" },
+    { "id": "qf-2", "round": 2, "kickoff": "2026-01-01T21:00:00Z", "home": "Indiana", "away": null, "homeFrom": null, "awayFrom": "r1-2" },
+    { "id": "qf-3", "round": 2, "kickoff": "2026-01-02T01:00:00Z", "home": "Georgia", "away": null, "homeFrom": null, "awayFrom": "r1-3" },
+    { "id": "qf-4", "round": 2, "kickoff": "2026-01-01T00:30:00Z", "home": "Ohio State", "away": null, "homeFrom": null, "awayFrom": "r1-4" },
+    { "id": "sf-1", "round": 3, "kickoff": "2026-01-10T00:30:00Z", "home": null, "away": null, "homeFrom": "qf-2", "awayFrom": "qf-1" },
+    { "id": "sf-2", "round": 3, "kickoff": "2026-01-09T00:30:00Z", "home": null, "away": null, "homeFrom": "qf-3", "awayFrom": "qf-4" },
+    { "id": "final", "round": 4, "kickoff": "2026-01-20T00:30:00Z", "home": null, "away": null, "homeFrom": "sf-1", "awayFrom": "sf-2" }
+  ],
+  "results": {
+    "r1-1": { "winner": "Oregon", "homePoints": 51, "awayPoints": 34 },
+    "r1-2": { "winner": "Alabama", "homePoints": 24, "awayPoints": 34 },
+    "r1-3": { "winner": "Ole Miss", "homePoints": 41, "awayPoints": 10 },
+    "r1-4": { "winner": "Miami", "homePoints": 3, "awayPoints": 10 },
+    "qf-1": { "winner": "Oregon", "homePoints": 0, "awayPoints": 23 },
+    "qf-2": { "winner": "Indiana", "homePoints": 38, "awayPoints": 3 },
+    "qf-3": { "winner": "Ole Miss", "homePoints": 34, "awayPoints": 39 },
+    "qf-4": { "winner": "Miami", "homePoints": 14, "awayPoints": 24 },
+    "sf-1": { "winner": "Indiana", "homePoints": 56, "awayPoints": 22 },
+    "sf-2": { "winner": "Miami", "homePoints": 27, "awayPoints": 31 },
+    "final": { "winner": "Indiana", "homePoints": 27, "awayPoints": 21 }
+  }
+}

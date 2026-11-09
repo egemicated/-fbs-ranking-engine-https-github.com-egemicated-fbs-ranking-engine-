@@ -7,6 +7,7 @@ data/seasons/
 data/snapshots/
 data/reports/
 /static-dist/
+/supabase/.temp/
 *.tmp
 evidence/weekly/
 research/cache/

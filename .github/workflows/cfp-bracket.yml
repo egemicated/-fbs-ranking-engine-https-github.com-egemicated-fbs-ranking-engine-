@@ -1,0 +1,59 @@
+name: CFP bracket contest
+on:
+  push:
+    branches: [main]
+    paths: ['data/cfp-bracket-2026.json']
+  schedule:
+    # One postseason results request after the last scheduled game each day.
+    - cron: '11 22 18 12 *'
+      timezone: 'America/Denver'
+    - cron: '41 21 19,30 12 *'
+      timezone: 'America/Denver'
+    - cron: '11 22 1 1 *'
+      timezone: 'America/Denver'
+    - cron: '41 21 14,15,25 1 *'
+      timezone: 'America/Denver'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Publish the reviewed field or refresh final scores
+        type: choice
+        options: [selection, game-night]
+        default: selection
+permissions:
+  contents: read
+concurrency:
+  group: cfp-bracket-contest
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Publish the playoff field or confirmed final scores
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REQUESTED_MODE: ${{ inputs.mode }}
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+          CFP_SUPABASE_SECRET_KEY: ${{ secrets.CFP_SUPABASE_SECRET_KEY }}
+        run: |
+          case "$EVENT_NAME" in
+            push) mode=selection ;;
+            workflow_dispatch) mode="$REQUESTED_MODE" ;;
+            schedule)
+              # Also allow the following morning if GitHub queues a game-night run late.
+              case "$(TZ=America/Denver date +%F)" in
+                2026-12-18|2026-12-19|2026-12-20|2026-12-30|2026-12-31|2027-01-01|2027-01-02|2027-01-14|2027-01-15|2027-01-16|2027-01-25|2027-01-26)
+                  mode=game-night ;;
+                *) echo 'Outside the 2026 playoff result dates'; exit 0 ;;
+              esac
+              ;;
+            *) exit 1 ;;
+          esac
+          node scripts/sync-cfp-bracket.js "--$mode"

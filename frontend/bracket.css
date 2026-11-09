@@ -1,0 +1,168 @@
+.bracket-tabs {
+  margin-bottom: 18px;
+}
+
+.bracket-page p {
+  line-height: 1.55;
+}
+
+.bracket-retry {
+  margin-top: 12px;
+}
+
+.bracket-heading,
+.bracket-waiting-actions,
+.bracket-save .panel-body {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+}
+
+.bracket-heading {
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.bracket-heading h2 {
+  margin-top: 2px;
+}
+
+.bracket-waiting-actions {
+  margin-top: 12px;
+}
+
+.bracket-progress,
+.bracket-message {
+  margin-top: 8px;
+  color: #174e9d;
+  font-weight: 700;
+}
+
+.bracket-message:empty {
+  margin: 0;
+}
+
+.bracket-rounds {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+  gap: 16px;
+  margin-block: 20px;
+}
+
+.bracket-round {
+  display: grid;
+  gap: 10px;
+}
+
+.bracket-round h3 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #082247;
+  color: white;
+  font-size: 21px;
+}
+
+.bracket-round h3 small {
+  color: #bde3ff;
+  font: 600 11px system-ui, sans-serif;
+  white-space: nowrap;
+}
+
+.bracket-game {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  overflow-wrap: anywhere;
+}
+
+.bracket-title-game {
+  background: #f3f8ff;
+  border-color: #b6d2f5;
+}
+
+.bracket-matchup {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 1px 6px;
+  font-weight: 700;
+}
+
+.bracket-matchup-vs,
+.bracket-game time,
+.bracket-final {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.bracket-game label,
+.bracket-save label {
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.bracket-game select,
+.bracket-save input {
+  min-width: 0;
+  max-width: 100%;
+  min-height: 42px;
+}
+
+.bracket-game select {
+  width: 100%;
+}
+
+.bracket-grade {
+  width: fit-content;
+  margin-top: 2px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: #eaf0f8;
+  color: #385473;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.bracket-correct {
+  background: #e4f5eb;
+  color: #14673a;
+}
+
+.bracket-missed {
+  background: #fae9ec;
+  color: #a33048;
+}
+
+.bracket-page button:disabled {
+  cursor: default;
+  opacity: .65;
+}
+
+.bracket-board tbody th {
+  color: var(--ink);
+  font-size: 12px;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 930px) {
+  .bracket-rounds { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+  .bracket-rounds { grid-template-columns: minmax(0, 1fr); }
+  .bracket-board th, .bracket-board td { padding-inline: 8px; }
+}

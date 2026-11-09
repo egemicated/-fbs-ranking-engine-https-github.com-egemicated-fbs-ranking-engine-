@@ -177,6 +177,39 @@ If a release runs past the window, rerun the workflow with its release date.
 Set the workflow times and publisher release dates when the next season's
 official schedule is published.
 
+## CFP bracket contest
+
+The site serves a [2025 practice bracket](https://fbs-intelligence.onrender.com/#bracket/demo)
+with all 11 [official results](https://collegefootballplayoff.com/sports/2026/1/27/cfp-recap-2526).
+The live contest uses a Supabase project for Google sign-in, saved entries,
+and scoring. The database accepts one complete entry per account before
+first kickoff. It grades the four rounds at 1, 2, 4, and 8 points per correct
+pick, with shared ranks for ties and only nicknames and standings shown publicly.
+
+1. Apply the migration in `supabase/migrations/`. The public project URL and
+   publishable key go in `frontend/bracket-config.json`. Set `enabled` to
+   `true` after the hosted migration and Google sign-in are ready.
+2. Enable Google as the Supabase auth provider using a Google Cloud web OAuth
+   client. Set the site URL to `https://fbs-intelligence.onrender.com` and add
+   `https://fbs-intelligence.onrender.com/?cfp=1` to the redirect allowlist.
+   Google uses the Supabase project's `/auth/v1/callback` URL.
+3. Save a Supabase secret API key in GitHub Actions as
+   `CFP_SUPABASE_SECRET_KEY`. The browser only uses the publishable key.
+4. Before Selection Day, verify the free database is active. On Selection Day,
+   verify the 12 teams, bracket paths, and kickoffs against
+   the [official CFP bracket](https://collegefootballplayoff.com/sports/2026/8/9/bracket-place-holder).
+   Commit `data/cfp-bracket-2026.json` to `main`. Use the practice bracket as
+   the shape reference and include `season`, `lockAt`, and the 11 `slots`, with
+   team names matching the current FBS roster. Omit historical `results`.
+   `lockAt` must equal the earliest kickoff. The push publishes the field.
+
+The Sunday workflow grades from its saved finals, with no additional CFBD
+request. `cfp-bracket.yml` also runs a one-request postseason check on each of
+the seven playoff game days after the last scheduled game. To retry a missed
+update, dispatch `CFP bracket contest` with `game-night`. If the field update
+failed, dispatch it with `selection`. The database retains previously verified
+finals and computes standings from the saved picks and published winners.
+
 ## Experimental Performance
 
 The third ranking is **scrimmage consistency**, a separate opponent-adjusted

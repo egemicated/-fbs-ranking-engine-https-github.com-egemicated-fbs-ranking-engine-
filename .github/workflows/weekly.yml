@@ -50,6 +50,7 @@ jobs:
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
         run: node scripts/refresh-weekly.js
       - name: Save weekly picks and confirmed results
+        id: weekly-picks
         if: steps.primary-publish.outcome == 'success'
         continue-on-error: true
         run: node scripts/publish-weekly-picks.js --season "data/seasons/${RANKING_SEASON}.json" --snapshot published/latest.json --output published/weekly-picks.json
@@ -133,3 +134,9 @@ jobs:
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Publish weekly CFBD rankings'
           git push origin HEAD:main
+      - name: Grade playoff brackets from the saved finals
+        if: steps.weekly-picks.outcome == 'success'
+        continue-on-error: true
+        env:
+          CFP_SUPABASE_SECRET_KEY: ${{ secrets.CFP_SUPABASE_SECRET_KEY }}
+        run: node scripts/sync-cfp-bracket.js
