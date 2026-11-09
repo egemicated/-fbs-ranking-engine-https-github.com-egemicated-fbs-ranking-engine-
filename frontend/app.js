@@ -195,12 +195,60 @@ function explanation(t) {
   if (!usesSor(t)) return `${evidence} The Colley network produces an achievement score of <strong>${number(t.achievement)}</strong>.`;
   return `${evidence} Its <strong>Strength of Record score is ${number(t.sor)}</strong>. The model gives an average-strength FBS reference team a <strong>${probability(t.sorTailProbability)}</strong> chance of matching at least ${t.wins} wins against this schedule. Game location and a subdivision adjustment learned from historical FBS/FCS results affect those chances. Each game is removed from the network before its difficulty is measured.`;
 }
-function breakdown(t) {
-  const x=t.explanation;
-  const sor = usesSor(t) ? `<h3>STRENGTH OF RECORD</h3><div class="equation">SOR = −log10[P(at least ${t.wins} wins)] = <b>${number(t.sor)}</b></div><p class="compact-note">Reference-team chance: ${probability(t.sorTailProbability)}. Expected wins against this schedule: ${number(t.sorExpectedWins,2)}. A higher SOR score means a harder record to match; it is not this team’s next-game win probability.</p>` : '';
-  if (!x) return `<div class="score-breakdown">${sor}<p class="compact-note">The Colley baseline breakdown is unavailable for this publication.</p></div>`;
-  const terms = [['Baseline',x.baseline,'gray'],['Record',x.record,x.record<0?'negative':''],['Opponents',x.opponents,'dark']];
-  return `<div class="score-breakdown">${sor}<h3>${usesSor(t)?'COLLEY BASELINE, EXPLAINED':'THE SCORE, EXPLAINED'}</h3>${terms.map(([label,value,cls])=>`<div class="term-row"><span>${label}</span><div class="term-track ${cls}"><span style="width:${Math.max(1,Math.min(100,Math.abs(value)*100))}%"></span></div><b>${number(value)}</b></div>`).join('')}<div class="equation">${number(x.baseline)} + ${number(x.record)} + ${number(x.opponents)} = <b>${number(t.achievement)}</b><br><code>${esc(x.formula)}</code></div><p class="compact-note" style="font-size:10px;margin-top:9px">${usesSor(t)?`These terms reconcile to the Colley baseline (${rank(t.colleyRank??t.rank)}), not the SOR score. Colley supplies the opponent network and displayed SOS; national and conference ranks use SOR.`:'These terms reconcile to the Colley score. Opponent effects are part of the jointly solved network.'}</p></div>`;
+function sorCalculationNote(t, wins) {
+  const p = t.sorTailProbability;
+  const chance = p > 0 && p < 0.0001 ? 'less than 0.01%' : probability(p);
+  const expected = number(t.sorExpectedWins, 2);
+  if (!t.games) return `With zero completed games, the model shows <strong>${expected} expected wins</strong> and a <strong>${chance}</strong> chance of reaching zero wins. The team gets a rank after it plays.`;
+  if (!Number.isFinite(p) || !Number.isFinite(t.sorExpectedWins)) return `This snapshot has limited schedule estimates. The reference-team chance is <strong>${chance}</strong> and the expected wins are <strong>${expected}</strong>.`;
+
+  const count = Math.round(p * 1000);
+  const frequency = p > 0 && p < 0.01 ? ` That’s ${count ? `about ${count} ${count === 1 ? 'time' : 'times'}` : 'less than once'} out of 1,000 tries.` : '';
+  const outcome = t.wins
+    ? `It has a <strong>${chance}</strong> chance of finishing with at least <strong>${wins}</strong>.${frequency}`
+    : `Any team can reach zero wins, so the chance is <strong>${chance}</strong> and the SOR score is zero.`;
+  return `Imagine a team with the average FBS Colley rating playing the same opponents in the same places. The model expects it to win <strong>${expected} games</strong> on average. ${outcome}`;
+}
+function breakdown(t, explain = false) {
+  const x = t.explanation;
+  const official = usesSor(t);
+  const wins = `${t.wins} ${t.wins === 1 ? 'win' : 'wins'}`;
+  const sor = official ? `<h3>STRENGTH OF RECORD</h3>
+    ${explain ? `<p class="team-narrative calculation-copy">${sorCalculationNote(t, wins)}</p>` : ''}
+    <div class="equation">SOR = −log10[P(at least ${wins})] = <b>${number(t.sor)}</b></div>
+    ${explain ? '<p class="team-narrative calculation-copy">The formula gives a higher score when the record is harder to match. A 10% chance gives a score of 1. A 1% chance gives a score of 2.</p>'
+      : `<p class="compact-note">Reference-team chance: ${probability(t.sorTailProbability)}. Expected wins against this schedule: ${number(t.sorExpectedWins,2)}. A higher SOR score means a harder record to match; it is not this team’s next-game win probability.</p>`}` : '';
+  const block = `score-breakdown${explain ? ' calculation-breakdown' : ''}`;
+  if (!x) return `<div class="${block}">${sor}<p class="compact-note">The Colley baseline breakdown is unavailable for this publication.</p></div>`;
+  const terms = [
+    ['Baseline', x.baseline, 'gray', 'The small starting amount built into the formula.'],
+    ['Record', x.record, x.record < 0 ? 'negative' : '', `This comes from the team’s ${record(t)} record. Wins raise it and losses lower it.`],
+    ['Opponents', x.opponents, 'dark', 'This comes from the ratings of the teams it played. Their own results and schedules shape those ratings.'],
+  ];
+  const colleyRank = t.colleyRank ?? t.rank;
+  const colleyNote = explain
+    ? `These three pieces add up to the team’s Colley rating${colleyRank ? `, ranked <strong>${rank(colleyRank)}</strong> nationally by Colley` : ''}. Averaging the opponents’ Colley ratings gives the schedule strength shown on the team page.${official ? ' The official national and conference rankings use Strength of Record.' : ' This season’s national and conference rankings use Colley.'}`
+    : official ? `These terms reconcile to the Colley baseline (${rank(colleyRank)}), not the SOR score. Colley supplies the opponent network and displayed SOS; national and conference ranks use SOR.`
+      : 'These terms reconcile to the Colley score. Opponent effects are part of the jointly solved network.';
+  return `<div class="${block}">${sor}<h3>${official ? 'COLLEY BASELINE, EXPLAINED' : 'THE SCORE, EXPLAINED'}</h3>
+    ${terms.map(([label, value, cls, meaning]) => `<div class="term-row"><span>${label}</span><div class="term-track ${cls}"><span style="width:${Math.max(1,Math.min(100,Math.abs(value)*100))}%"></span></div><b>${number(value)}</b></div>
+      ${explain ? `<p class="team-narrative calculation-term-note">${meaning}</p>` : ''}`).join('')}
+    <div class="equation">${number(x.baseline)} + ${number(x.record)} + ${number(x.opponents)} = <b>${number(t.achievement)}</b><br><code>${esc(x.formula)}</code></div>
+    <p class="${explain ? 'team-narrative calculation-copy' : 'compact-note'}">${colleyNote}</p></div>`;
+}
+function teamCalculation(t) {
+  const ranking = usesSor(t) ? 'Strength of Record' : 'Colley achievement';
+  return `<section class="panel"><div class="panel-body">
+    <div class="explanation-head">${icon('layers')}<h2>THE CALCULATION</h2></div>
+    ${breakdown(t, true)}
+    <div class="fact-list calculation-facts"><div class="fact-row"><div><span>Conference ${ranking} rank</span><p class="compact-note">Where the team stands among teams in its own conference.</p></div><strong>${rank(conferenceRank(t))}</strong></div></div>
+    <div class="score-breakdown"><h3>PREDICTIVE STRENGTH</h3>
+      <p class="team-narrative calculation-copy">Compare two teams’ ratings to see the model’s point margin on a neutral field. A team rated 24 would have a 4-point edge over a team rated 20.</p>
+      <div class="fact-list calculation-facts">
+        <div class="fact-row"><div><span>Current predictive strength</span><p class="compact-note">The rating updates with how much teams win or lose by, who they played, and where. The model limits how much a blowout counts.</p></div><strong>${number(t.strength, 2)} pts</strong></div>
+        <div class="fact-row"><div><span>Preseason strength prior</span><p class="compact-note">The model’s starting rating. It carries over part of last season’s rating when one is available.</p></div><strong>${number(t.preseasonStrength, 2)} pts</strong></div>
+      </div>
+    </div></div><a class="method-link" href="#methodology">Read the full methodology ${icon('arrow')}</a></section>`;
 }
 function resultsTable(t) { return `<div class="table-scroll"><table class="evidence-table"><caption class="sr-only">${esc(t.name)} completed results</caption><thead><tr><th>Result</th><th>Opponent</th><th>Record</th><th>Margin</th></tr></thead><tbody>${t.contributions.map(g=>{
   const o=state.byId.get(g.opponentId)||{id:g.opponentId,name:g.opponentName||g.opponentId};
@@ -210,7 +258,7 @@ function modelRanks(t) { return `<section class="panel"><div class="panel-head">
 function qualityPanel() { const audit=state.snapshot.source?.audit||{};const incomplete=audit.incompleteFinals?.length||0;return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('shield')}<h2>Data & coverage</h2></div></div><div class="panel-body"><div class="data-status-row"><span>${icon('check')}FBS membership</span><b>${state.snapshot.fbsTeams} teams</b></div><div class="data-status-row"><span>${icon('check')}Game records modeled</span><b>${state.snapshot.gamesUsed.toLocaleString()}</b></div><div class="data-status-row"><span>${icon('check')}Data provider</span><b>CFBD</b></div><div class="data-status-row"><span>${icon('check')}Publication</span><b>${snapshotDate()}</b></div>${incomplete?`<details class="quality-note"><summary>${incomplete} incomplete finals excluded</summary><p>CFBD marked these entries complete without valid final scores. They do not count toward the rankings: ${audit.incompleteFinals.map(esc).join(', ')}.</p></details>`:''}<p class="compact-note" style="font-size:10px;margin-top:12px">The next scheduled refresh is Sunday at 12:01 AM Mountain.</p></div></section>`; }
 function teamCenterContent(t) {
   if(state.teamTab==='results') return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('calendar')}<h2>THE COMPLETED RESULTS</h2></div><span class="tag">${t.games} GAMES</span></div>${resultsTable(t)}</section>`;
-  if(state.teamTab==='model') return `<section class="panel"><div class="panel-body"><div class="explanation-head">${icon('layers')}<h2>THE CALCULATION</h2></div><p class="team-narrative">${achievementName()} is built from this season’s results. Predictive strength runs separately using bounded score margins, location, and our own prior-season strength.</p>${breakdown(t)}<div class="fact-list" style="margin-top:22px"><div class="fact-row"><span>Current predictive strength</span><strong>${number(t.strength,2)} pts</strong></div><div class="fact-row"><span>Preseason strength prior</span><strong>${number(t.preseasonStrength,2)} pts</strong></div><div class="fact-row"><span>Conference ${achievementName()} rank</span><strong>${rank(conferenceRank(t))}</strong></div></div></div><a class="method-link" href="#methodology">Read the full methodology ${icon('arrow')}</a></section>`;
+  if(state.teamTab==='model') return teamCalculation(t);
   return `<div class="metric-grid">${[[achievementName(),rank(nationalRank(t)),'National rank'],['Schedule',`#${sosRank(t)}`,'Colley opponent average'],['Conference',rank(conferenceRank(t)),t.conference],['Record',record(t),`${t.games} completed games`]].map(([label,value,note])=>`<div class="metric"><span>${label}</span><strong>${value}</strong><small>${esc(note)}</small></div>`).join('')}</div><section class="panel"><div class="panel-body"><div class="explanation-head">${icon('network')}<h2>WHY WE RANK ${esc(t.name.toUpperCase())} ${rank(nationalRank(t))}</h2></div><p class="team-narrative">${explanation(t)}</p><div class="evidence-chips"><span class="evidence-chip">Opponent Colley average <b>${number(t.achievementScheduleStrength)}</b></span><span class="evidence-chip">${t.evidence?.connectedTeams??'—'} connected teams</span><span class="evidence-chip">${t.evidence?.provisional?'Small sample · provisional':'Current-season evidence'}</span></div>${breakdown(t)}</div></section><section class="panel" style="margin-top:17px"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<h2>RESULTS THAT SHAPE THE RESUME</h2></div><button class="text-link" style="border:0;background:none" data-action="team-tab" data-value="results">All results ${icon('arrow')}</button></div>${resultsTable({...t,contributions:[...t.contributions].sort((a,b)=>b.opponentAchievement-a.opponentAchievement).slice(0,3)})}</section>`;
 }
 function renderTeam(id) {

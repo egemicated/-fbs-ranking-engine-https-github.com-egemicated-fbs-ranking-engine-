@@ -128,4 +128,11 @@ ul.edition-notice{padding-inline-start:20px}
   .nav-inner { overflow-x: auto; scrollbar-width: none; }
   .nav a { flex-shrink: 0; }
 }
+.calculation-copy { margin: 7px 0 11px; }
+.calculation-breakdown .equation { margin: 9px 0; overflow-wrap: anywhere; }
+.calculation-breakdown .term-row { margin-bottom: 3px; }
+.calculation-breakdown .calculation-term-note { margin-bottom: 9px; }
+.calculation-facts { margin-top: 12px; }
+.calculation-facts .fact-row { align-items: flex-start; }
+.calculation-facts .fact-row > strong { flex-shrink: 0; }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}

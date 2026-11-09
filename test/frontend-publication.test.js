@@ -62,8 +62,30 @@ test('team, opponent evidence, conference and model sections distinguish SOR fro
   assert.match(html, /COLLEY BASELINE, EXPLAINED/); assert.match(html, /Colley baseline \(#2\), not the SOR score/);
   assert.match(html, /Each game is removed from the network/); assert.match(html, /Reference-team chance: 0\.45%/);
   page.ui.state.teamTab = 'model'; page.ui.renderTeam('a');
-  assert.match(page.html(), /Conference Strength of Record rank/); assert.match(page.html(), /COLLEY BASELINE, EXPLAINED/);
-  assert.match(page.html(), /Preseason strength prior/);
+  const calculation = page.html();
+  assert.match(calculation, /average FBS Colley rating playing the same opponents/);
+  assert.match(calculation, /0\.75 games.*0\.45%.*1 win.*about 5 times out of 1,000 tries/s);
+  assert.match(calculation, /SOR = −log10\[P\(at least 1 win\)\] = <b>2\.3456<\/b>/);
+  assert.match(calculation, /COLLEY BASELINE, EXPLAINED/);
+  assert.match(calculation, /The small starting amount built into the formula/);
+  assert.match(calculation, /This comes from the team’s 1–1 record/);
+  assert.match(calculation, /sum\(opponent achievement\)/);
+  assert.match(calculation, /Conference Strength of Record rank/);
+  assert.match(calculation, /model’s point margin on a neutral field/);
+  assert.match(calculation, /Preseason strength prior.*starting rating/s);
+});
+
+test('team calculations distinguish zero wins, no games and very small schedule chances', async () => {
+  const snapshot = fixture();
+  const team = snapshot.rankings.find(row => row.id === 'a');
+  const page = await browser(snapshot);
+  page.ui.state.teamTab = 'model';
+  Object.assign(team, { sor: 5, sorTailProbability: 0.00001 });
+  assert.match(page.go('#team/a'), /less than 0\.01%.*less than once out of 1,000 tries/s);
+  Object.assign(team, { wins: 0, losses: 2, sor: 0, sorTailProbability: 1 });
+  assert.match(page.go('#team/a'), /Any team can reach zero wins.*100\.00%.*SOR score is zero/s);
+  Object.assign(team, { games: 0, losses: 0, sorExpectedWins: 0, displayRank: null, displayConferenceRank: null });
+  assert.match(page.go('#team/a'), /With zero completed games.*0\.00 expected wins.*gets a rank after it plays/s);
 });
 
 test('SOS keeps the Colley opponent average while predictive ordering and matchup calculations remain separate', async () => {
@@ -92,6 +114,10 @@ test('methodology explains active SOR and historical snapshots retain their Coll
   assert.match(method, /historical snapshot uses the Colley matrix method/);
   assert.doesNotMatch(method, /primary national and conference ranking uses <strong>division-aware/);
   assert.match(old.go('#team/a'), new RegExp(`<b>#${historical.rankings.find(r => r.id === 'a').rank}</b> Colley achievement`));
+  old.ui.state.teamTab = 'model'; old.ui.renderTeam('a');
+  assert.match(old.html(), /This season’s national and conference rankings use Colley/);
+  assert.match(old.html(), /Preseason strength prior/);
+  assert.doesNotMatch(old.html(), /SOR = −log10/);
 });
 
 test('validated matchup odds preserve the strength edge and show a range only for established teams', async () => {
