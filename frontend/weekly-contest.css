@@ -7,9 +7,6 @@
 .contest-controls { margin-block: 16px; }
 .contest-controls label, .contest-save-row label { font-weight: 700; font-size: 12px; }
 .contest-controls select { max-width: 100%; }
-.contest-deadline { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 0 0 10px; padding: 11px 14px; border: 1px solid #c8dcf4; border-radius: 8px; background: #edf5ff; }
-.contest-deadline strong { color: #174f9c; }
-.contest-deadline time { font-weight: 700; }
 .contest-tabs { margin-bottom: 16px; }
 .contest-message { min-height: 1.5em; margin-top: 10px; font-weight: 700; color: #174f9c; }
 .contest-message.is-error { color: #942d26; }

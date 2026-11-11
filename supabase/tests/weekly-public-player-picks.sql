@@ -1,4 +1,4 @@
--- Run after the weekly contest migrations. Fixtures are rolled back.
+-- Run after both weekly contest migrations. Fixtures are rolled back.
 begin;
 set local plpgsql.check_asserts = on;
 insert into auth.users(id) values
@@ -13,7 +13,7 @@ declare
 begin
   v_game := jsonb_build_object('id', 'first', 'week', 11, 'seasonType', 'regular',
     'home', 'A', 'away', 'B', 'homeName', 'Alpha Team', 'awayName', 'Beta Team',
-    'neutral', false, 'startDate', v_now + interval '2 days', 'status', 'scheduled',
+    'neutral', false, 'startDate', v_now + interval '1 day', 'status', 'scheduled',
     'modelTeam', 'A', 'homeWinProbability', .7, 'modelCapturedAt', v_now - interval '2 hours');
   perform public.weekly_sync(2099, v_now, jsonb_build_array(v_game,
     v_game || jsonb_build_object('id', 'later', 'startDate', v_now + interval '2 days'),
@@ -22,10 +22,6 @@ begin
     v_game || jsonb_build_object('id', 'bowl', 'seasonType', 'postseason', 'startDate', v_now + interval '5 days')));
 end;
 $$;
-
-reset role;
--- Keep this legacy sharing fixture on its original kickoff deadline.
-update weekly_private.deadlines set lock_at = null where season = 2099;
 
 set local role authenticated;
 do $$

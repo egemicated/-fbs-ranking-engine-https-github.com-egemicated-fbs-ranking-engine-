@@ -14,7 +14,7 @@ declare
 begin
   v_game := jsonb_build_object('id', 'g1', 'week', 11, 'seasonType', 'regular',
     'home', 'A', 'away', 'B', 'homeName', 'Alpha Team', 'awayName', 'Beta Team',
-    'neutral', false, 'startDate', v_now + interval '2 days', 'status', 'scheduled',
+    'neutral', false, 'startDate', v_now + interval '1 day', 'status', 'scheduled',
     'homePoints', null, 'awayPoints', null, 'modelTeam', 'A', 'homeWinProbability', .7,
     'modelCapturedAt', v_now - interval '2 hours');
   perform set_config('weekly_test.games', jsonb_build_array(v_game,
@@ -57,10 +57,6 @@ begin
   perform public.weekly_sync(2099, clock_timestamp(), v_games);
 end;
 $$;
-
-reset role;
--- Preserve kickoff-based behavior for a slate published before the weekly deadline rule.
-update weekly_private.deadlines set lock_at = null where season = 2099;
 
 set local role authenticated;
 do $$

@@ -3,11 +3,10 @@ import { renderWeeklyTeamStats } from './weekly-team-stats.js';
 import {
   contestGames, contestGameLocked, contestGameWinner, contestPickChanges,
   contestWeekKey, contestWeekLabel, defaultContestWeek, scoreContestPicks,
-} from './weekly-contest-score.js?v=weekly-deadline';
+} from './weekly-contest-score.js?v=kickoff-lock';
 
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const mountainTime = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
-const pacificTime = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Los_Angeles', weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
 const date = value => Number.isFinite(Date.parse(value)) ? `${mountainTime.format(new Date(value))} MT` : '';
 const percent = value => value === null ? '—' : `${(value * 100).toFixed(1)}%`;
 let stopCurrent;
@@ -25,17 +24,6 @@ export function renderContestScores(games, picks, week) {
       <div><span>Model on your games</span><strong>${score.graded ? score.modelCorrect : '—'}</strong><small>${score.graded ? `${score.modelCorrect} of ${score.graded} right · ${percent(score.modelAccuracy)}` : 'Compared on the same games'}</small></div>
       </div><p>${score.pending} saved ${score.pending === 1 ? 'pick awaiting' : 'picks awaiting'} a result${score.voided ? ` · ${score.voided} excluded` : ''}. One point per correct pick.</p></section>`;
   }).join('')}</div>`;
-}
-
-export function renderContestDeadline(games, week, now = Date.now()) {
-  const eligible = games.filter(game => game.eligible === true && !game.voidReason);
-  if (!eligible.length) return '';
-  const label = escape(contestWeekLabel(week));
-  const deadline = eligible.find(game => Number.isFinite(Date.parse(game.weeklyLockAt)))?.weeklyLockAt;
-  if (!deadline) return `<p class="compact-note">${label} picks lock at each game’s kickoff.</p>`;
-  const time = pacificTime.format(new Date(deadline)).replace('AM', 'a.m.').replace('PM', 'p.m.');
-  const heading = Date.parse(deadline) <= now ? 'picks closed' : 'pick deadline';
-  return `<div class="contest-deadline"><strong>${label} ${heading}</strong><time datetime="${escape(deadline)}">${escape(time)} PT</time></div>`;
 }
 
 function teamName(game, side, teams) {
@@ -344,13 +332,12 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
         <h2>Your picks against the model</h2></div><div class="contest-actions">${session
           ? `<span class="compact-note">Signed in</span><button class="button light" type="button" data-contest-action="logout"${busy ? ' disabled' : ''}>Sign out</button>`
           : signInEnabled ? `<button class="button" type="button" data-contest-action="login"${busy ? ' disabled' : ''}>Continue with Google</button>` : '<span class="compact-note">Sign-in is currently unavailable.</span>'}</div></div>
-        <p>Pick one winner per game. Each correct pick earns one point.</p>
+        <p>Pick one winner per game. <strong>Each game locks at its own kickoff.</strong> Each correct pick earns one point.</p>
         ${!session ? '<p class="compact-note">Use the same Google login as your playoff bracket. Save your picks to start your record.</p>' : ''}
         <div class="contest-controls"><label for="contest-week">Select week</label><select id="contest-week"${busy || !weeks.length ? ' disabled' : ''}>
         ${weeks.map(key => `<option value="${escape(key)}"${key === week ? ' selected' : ''}>${escape(contestWeekLabel(key))}</option>`).join('')}</select>
         <button type="button" class="button light" data-contest-action="refresh"${busy ? ' disabled' : ''}>Refresh results</button>
         <a class="button light" href="#compare/weekly">Model picks and results</a></div>
-        ${renderContestDeadline(selectedGames, week, now())}
         <p class="compact-note">${contest.observedAt ? `Results updated ${escape(date(contest.observedAt))}. ` : ''}${open} ${open === 1 ? 'game open' : 'games open'} for this week. Game times are Mountain Time.</p>
         ${week ? renderContestScores(games, entry.picks, week) : '<p class="contest-empty">The contest will open when an eligible upcoming model forecast is saved.</p>'}
         <p class="contest-message${messageError ? ' is-error' : ''}" role="status" aria-live="polite">${escape(message)}</p></div></section>
@@ -365,7 +352,7 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
             <label class="contest-public"><input type="checkbox" id="contest-public"${publicLeaderboard ? ' checked' : ''}${busy ? ' disabled' : ''}> Show my nickname and scores on public leaderboards</label>
             <label class="contest-public contest-share"><input type="checkbox" id="contest-share-picks"${sharePicksImmediately ? ' checked' : ''}${busy || !publicLeaderboard ? ' disabled' : ''}> Show my picks publicly as soon as I save them</label>
             ${entry.sharePicks ? `<label class="contest-public contest-share"><input type="checkbox" id="contest-share-after-kickoff"${sharePicks ? ' checked' : ''}${busy || !publicLeaderboard ? ' disabled' : ''}> Show my picks after each game kicks off</label>` : ''}
-            <p class="compact-note">You can save a few games at a time and change your picks before the deadline.</p></form>` : ''}</div></section>`
+            <p class="compact-note">Save a few games at a time and change each pick until its game kicks off.</p></form>` : ''}</div></section>`
           : `<section class="panel"><div class="panel-body"><div class="contest-controls"><label for="contest-board-scope">Standings</label><select id="contest-board-scope"><option value="week"${boardScope === 'week' ? ' selected' : ''}>${escape(contestWeekLabel(week))}</option><option value="season"${boardScope === 'season' ? ' selected' : ''}>Season</option></select></div>
             <section class="contest-player-panel" id="contest-player-picks" aria-labelledby="contest-player-title"${player ? '' : ' hidden'}>
               <div class="contest-heading"><h3 id="contest-player-title" tabindex="-1">${escape(playerTitle())}</h3>
@@ -432,7 +419,7 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
         publicLeaderboard = entry.publicLeaderboard;
         sharePicks = entry.sharePicks;
         sharePicksImmediately = entry.sharePicksImmediately;
-        message = Object.keys(pending).length ? 'Picks saved. You can change them until the deadline.' : 'Profile saved.';
+        message = Object.keys(pending).length ? 'Picks saved. You can change each pick until its game kicks off.' : 'Profile saved.';
         void refreshBoard();
       } catch {
         messageError = true;
@@ -526,7 +513,7 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
       const next = games.map(game => Number(contestGameLocked(game, now()))).join('');
       if (next !== boundary) {
         boundary = next;
-        message = 'A pick deadline has passed.';
+        message = 'A game kicked off and its picks are locked.';
         messageError = false;
         draw();
       }

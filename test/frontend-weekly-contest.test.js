@@ -4,7 +4,7 @@ import {
   contestGames, contestGameLocked, contestGameWinner, contestPickChanges,
   defaultContestWeek, scoreContestPicks,
 } from '../frontend/weekly-contest-score.js';
-import { renderContestDeadline, renderContestGames, renderContestLeaderboard, renderContestPlayerPicks, renderContestScores } from '../frontend/weekly-contest.js';
+import { renderContestGames, renderContestLeaderboard, renderContestPlayerPicks, renderContestScores } from '../frontend/weekly-contest.js';
 
 const startDate = '2026-11-14T19:00:00Z';
 const modelCapturedAt = '2026-11-08T19:00:00Z';
@@ -35,22 +35,17 @@ test('a game locks at its own kickoff, on the server flag, and when voided', () 
   assert.deepEqual(contestPickChanges([game('one')], {}, { one: 'a-one' }, kickoff), {});
 });
 
-test('all games in a slate respect the Pacific deadline while keeping their kickoff times', () => {
-  const lockAt = '2026-11-14T07:59:00Z';
-  const lock = Date.parse(lockAt);
-  const games = [game('first', { lockAt, weeklyLockAt: lockAt }),
-    game('later', { startDate: '2026-11-15T02:00:00Z', lockAt, weeklyLockAt: lockAt })];
-  assert.equal(contestGameLocked(games[0], lock - 1), false);
-  assert.equal(contestGameLocked(games[1], lock - 1), false);
-  assert.equal(contestGameLocked(games[0], lock), true);
-  assert.equal(contestGameLocked(games[1], lock), true);
-  assert.deepEqual(contestPickChanges(games, {}, { later: 'a-later' }, lock), {});
-  const deadline = renderContestDeadline(games, 'regular:11', lock - 1);
-  assert.match(deadline, /Week 11 pick deadline/);
-  assert.match(deadline, /Fri, Nov 13, 11:59 p\.m\. PT/);
-  assert.match(renderContestDeadline(games, 'regular:11', lock), /Week 11 picks closed/);
-  assert.match(renderContestDeadline([game('old')], 'regular:11'), /Week 11 picks lock at each game’s kickoff/);
-  assert.match(renderContestGames(games, { now: lock }), /Kickoff · <time datetime="2026-11-15T02:00:00Z">.*?MT/);
+test('an early kickoff locks that game while later picks remain editable', () => {
+  const games = [game('first'), game('later', { startDate: '2026-11-15T02:00:00Z' })];
+  const firstKickoff = Date.parse(games[0].startDate);
+  const laterKickoff = Date.parse(games[1].startDate);
+  const draft = { first: 'h-first', later: 'a-later' };
+  assert.deepEqual(contestPickChanges(games, {}, draft, firstKickoff - 1), draft);
+  assert.deepEqual(contestPickChanges(games, {}, draft, firstKickoff), { later: 'a-later' });
+  assert.deepEqual(contestPickChanges(games, {}, draft, laterKickoff), {});
+  const html = renderContestGames(games, { signedIn: true, draft, now: firstKickoff });
+  assert.match(html, /data-contest-game="first" data-contest-team="h-first"\s+aria-pressed="false" disabled/);
+  assert.match(html, /data-contest-game="later" data-contest-team="a-later"\s+aria-pressed="true">/);
 });
 
 test('head to head grades the exact same decided saved-game cohort for both players', () => {
