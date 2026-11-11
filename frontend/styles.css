@@ -137,6 +137,21 @@ ul.edition-notice{padding-inline-start:20px}
 .calculation-facts { margin-top: 12px; }
 .calculation-facts .fact-row { align-items: flex-start; }
 .calculation-facts .fact-row > strong { flex-shrink: 0; }
+.weekly-team-stats {
+  grid-column: 1 / -1;
+  min-width: 0;
+  padding: 0 9px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f5f8fc;
+}
+.contest-game .weekly-team-stats { margin: 10px 12px; }
+.weekly-team-stats summary { padding: 9px 0; color: #1753a3; font-size: 12px; font-weight: 700; cursor: pointer; }
+.weekly-team-stats table { width: 100%; margin: 0 0 8px; table-layout: fixed; }
+.weekly-team-stats th, .weekly-team-stats td { padding: 6px 4px; font-size: 11px; text-align: center; overflow-wrap: anywhere; }
+.weekly-team-stats th:first-child { width: 40%; text-align: left; }
+.weekly-team-stats tbody th { text-transform: none; letter-spacing: 0; }
+.weekly-team-stats .compact-note { padding-bottom: 8px; }
 .nav-more { display: none; }
 @media (max-width: 767px) {
   .nav { position: relative; z-index: 5; }

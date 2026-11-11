@@ -364,6 +364,7 @@ function matchupNav(active) {
   return `<nav class="matchup-views" aria-label="Matchup Lab views">
     <a href="#compare"${active === 'compare' ? ' aria-current="page"' : ''}>Compare teams</a>
     <a href="#compare/weekly"${active === 'weekly' ? ' aria-current="page"' : ''}>Weekly picks</a>
+    <a href="#beat-the-model">Beat the Model</a>
   </nav>`;
 }
 function picksTime(value) {
@@ -413,7 +414,14 @@ async function loadWeeklyPicks() {
       weeklyPicks.status = 'missing';
     } else {
       Object.assign(weeklyPicks, picksPublication(await response.json()), { status: 'ready' });
-      if (weeklyPicks.weeks.size) void loadPredictability();
+      if (weeklyPicks.weeks.size) {
+        void loadPredictability();
+        try {
+          const { buildWeeklyTeamStats, renderWeeklyTeamStats } = await import('./weekly-team-stats.js?v=1');
+          weeklyPicks.teamStats = buildWeeklyTeamStats(weeklyPicks.data);
+          weeklyPicks.renderTeamStats = renderWeeklyTeamStats;
+        } catch (error) { console.warn('Weekly team stats are unavailable', error); }
+      }
     }
   } catch (error) {
     weeklyPicks.status = 'error';
@@ -478,7 +486,7 @@ function weeklyPicksGame(game) {
     <dl class="weekly-game-details">
       <div><dt>${pickLabel}</dt><dd>${pickText}${capture ? `<small><time datetime="${esc(capture)}">${picksTimestamp.format(picksTime(capture))} MT</time></small>` : ''}</dd></div>
       <div><dt>${game.status === 'final' ? 'Final' : 'Status'}</dt><dd>${result}${grade ? ` <span class="weekly-grade ${grade.toLowerCase()}">${grade}</span>` : ''}</dd></div>
-    </dl></li>` };
+    </dl>${weeklyPicks.renderTeamStats?.(weeklyPicks.teamStats, game, { awayName: away.name, homeName: home.name }) ?? ''}</li>` };
 }
 function scoreAccuracy(value) {
   return Number.isFinite(value) ? `${number(value * 100, 1)}%` : '—';
@@ -745,11 +753,11 @@ function renderBracketPage() {
 }
 function renderContestPage() {
   main.innerHTML = '<div class="wrap page-content"><p role="status">Loading Beat the Model…</p></div>';
-  contestModule ??= import('./weekly-contest.js?v=1');
+  contestModule ??= import('./weekly-contest.js?v=team-stats');
   contestModule.then(({ renderWeeklyContest, unmountWeeklyContest }) => {
     if (route()[0] !== 'beat-the-model') return;
     closeContest = unmountWeeklyContest;
-    return renderWeeklyContest(main, { teams: state.byId, weeklyPicksUrl: publicationPath('weekly-picks'), season: state.snapshot.season });
+    return renderWeeklyContest(main, { teams: state.byId, statsUrl: publicationPath('weekly-team-stats'), season: state.snapshot.season });
   }).catch(error => {
     if (route()[0] === 'beat-the-model') main.innerHTML = '<div class="wrap page-content"><p role="status">Beat the Model could not load. Please reload this page to try again.</p></div>';
     console.error(error);
@@ -867,7 +875,8 @@ async function load(){
     if(snapshot.performanceEndpoint===publicationPath('performance')){
       try{
         const performanceResponse=await fetch(snapshot.performanceEndpoint,{headers:{Accept:'application/json'}});
-        if(performanceResponse.ok&&state.snapshot===snapshot&&acceptPerformance(await performanceResponse.json())&&route()[0]!=='bracket')render();
+        if (performanceResponse.ok && state.snapshot === snapshot && acceptPerformance(await performanceResponse.json()) &&
+            !['bracket', 'beat-the-model'].includes(route()[0])) render();
       }catch{}
     }
   }catch(error){main.innerHTML=`<section class="loading"><h1>The rankings are taking a moment.</h1><p>${dataRoot?'The published data could not load. Please try again shortly.':'The free service may be waking up. Please try again shortly.'}</p><button id="retry" class="button">Try again</button></section>`;document.querySelector('#retry').addEventListener('click',load);console.error(error);}

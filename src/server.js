@@ -7,6 +7,7 @@ import publicationPolicy from '../data/publication-model.json' with { type: 'jso
 import { readPerformance } from './performance-publication.js';
 import { publicRankings, publicTeamDetails } from './site-publication.js';
 import { matchupValidation, snapshotCoverage } from './site-validation.js';
+import { buildWeeklyTeamStats } from '../frontend/weekly-team-stats.js';
 
 const directory = resolve(process.env.DATA_DIR || 'data', 'snapshots');
 // Read-only API. No login to view public sports ratings; no write/admin routes.
@@ -23,6 +24,7 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     ['/bracket-demo.json', ['bracket-demo.json', 'application/json; charset=utf-8']],
     ['/ranking-editions.json', ['ranking-editions.json', 'application/json; charset=utf-8']],
     ['/weekly-picks-score.js', ['weekly-picks-score.js', 'text/javascript; charset=utf-8']],
+    ['/weekly-team-stats.js', ['weekly-team-stats.js', 'text/javascript; charset=utf-8']],
     ['/weekly-contest.js', ['weekly-contest.js', 'text/javascript; charset=utf-8']],
     ['/weekly-contest-score.js', ['weekly-contest-score.js', 'text/javascript; charset=utf-8']],
     ['/weekly-contest.css', ['weekly-contest.css', 'text/css; charset=utf-8']],
@@ -65,9 +67,10 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
         return performance ? send(200, performance) : send(503, { error: 'Experimental Performance is unavailable for this snapshot' });
       } catch { return send(503, { error: 'Experimental Performance is unavailable for this snapshot' }); }
     }
-    if (path === '/weekly-picks') {
+    if (path === '/weekly-picks' || path === '/weekly-team-stats') {
       try {
-        return send(200, JSON.parse(await readFile(new URL('../published/weekly-picks.json', import.meta.url), 'utf8')));
+        const picks = JSON.parse(await readFile(new URL('../published/weekly-picks.json', import.meta.url), 'utf8'));
+        return send(200, path === '/weekly-picks' ? picks : buildWeeklyTeamStats(picks));
       } catch (error) {
         return send(error.code === 'ENOENT' ? 404 : 503, { error: 'Weekly picks are unavailable' });
       }

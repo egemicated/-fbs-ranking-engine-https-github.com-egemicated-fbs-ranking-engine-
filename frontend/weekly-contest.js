@@ -1,4 +1,5 @@
 import { googleSignInEnabled, loadBracketClient } from './bracket-auth.js';
+import { renderWeeklyTeamStats } from './weekly-team-stats.js';
 import {
   contestGames, contestGameLocked, contestGameWinner, contestPickChanges,
   contestWeekKey, contestWeekLabel, defaultContestWeek, scoreContestPicks,
@@ -51,7 +52,8 @@ export function renderContestGames(games, { saved = {}, draft = {}, teams, signe
       ${['away', 'home'].map(side => `<button type="button" class="contest-team${winner === game[side] ? ' is-winner' : ''}" data-contest-game="${escape(game.id)}" data-contest-team="${escape(game[side])}"
         aria-pressed="${selected === game[side]}"${!signedIn || locked || busy ? ' disabled' : ''}>
         <span>${escape(teamName(game, side, teams))}</span><small>${winner ? escape(game[`${side}Points`]) : selected === game[side] ? changed ? 'Unsaved' : 'Your pick' : 'Pick'}</small></button>`).join('')}
-      <p class="contest-pick-status${userGrade ? ` is-${userGrade}` : ''}">${escape(note)}</p></li>`;
+      <p class="contest-pick-status${userGrade ? ` is-${userGrade}` : ''}">${escape(note)}</p>
+      <div data-contest-team-stats="${escape(game.id)}"></div></li>`;
   }).join('')}</ul>`;
 }
 
@@ -77,13 +79,25 @@ async function getConfig() {
   return response.json();
 }
 
+async function getTeamStats(statsUrl, season) {
+  if (!statsUrl) return null;
+  try {
+    const response = await fetch(statsUrl, { cache: 'no-cache', headers: { Accept: 'application/json' }, signal: AbortSignal.timeout(4_000) });
+    if (!response.ok) return null;
+    const stats = await response.json();
+    return stats?.schemaVersion === 1 && stats.season === season ? stats : null;
+  } catch {
+    return null;
+  }
+}
+
 function cleanEntry(entry, games) {
   const picks = Object.fromEntries(games.filter(game => [game.home, game.away].includes(entry?.picks?.[game.id]))
     .map(game => [game.id, entry.picks[game.id]]));
   return { nickname: typeof entry?.nickname === 'string' ? entry.nickname : '', publicLeaderboard: entry?.publicLeaderboard === true, picks };
 }
 
-export async function renderWeeklyContest(main, { teams = new Map(), season = 2026 } = {}) {
+export async function renderWeeklyContest(main, { teams = new Map(), season = 2026, statsUrl } = {}) {
   if (main.querySelector('[data-weekly-contest]')) return;
   unmountWeeklyContest();
   main.innerHTML = `<section class="hero page-banner"><div class="wrap"><div class="eyebrow">Weekly picks · ${escape(season)}</div>
@@ -105,10 +119,11 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
     root.onclick = event => {
       if (!event.target.closest('[data-contest-retry]')) return;
       main.querySelector('[data-weekly-contest]').remove();
-      void renderWeeklyContest(main, { teams, season });
+      void renderWeeklyContest(main, { teams, season, statsUrl });
     };
   };
 
+  const statsRequest = getTeamStats(statsUrl, season);
   try {
     const config = await getConfig();
     if (!current()) return;
@@ -126,6 +141,27 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
     let nickname = '', publicLeaderboard = false, week = '', view = 'picks', boardScope = 'week';
     let board = null, boardError = false, boardBusy = false, boardRequest = 0;
     let busy = false, message = '', messageError = false, clockOffset = 0, boundary = '';
+    let teamStats;
+    const expandedTeamStats = new Set();
+
+    function showTeamStats() {
+      if (!current() || !teamStats) return;
+      const gamesById = new Map(games.map(game => [game.id, game]));
+      for (const slot of root.querySelectorAll('[data-contest-team-stats]')) {
+        const game = gamesById.get(slot.dataset.contestTeamStats);
+        if (!game || slot.hasChildNodes()) continue;
+        slot.innerHTML = renderWeeklyTeamStats(teamStats, game, {
+          awayName: teamName(game, 'away', teams), homeName: teamName(game, 'home', teams),
+        });
+        if (expandedTeamStats.has(game.id)) slot.querySelector('details')?.setAttribute('open', '');
+      }
+    }
+
+    void statsRequest.then(stats => {
+      teamStats = stats;
+      showTeamStats();
+    });
+
     const now = () => Date.now() + clockOffset;
     const rpc = async (method, args = {}) => {
       const { data, error } = await client.rpc(method, { p_season: season, ...args });
@@ -168,6 +204,11 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
 
     function draw(focusGame) {
       if (!current()) return;
+      for (const details of root.querySelectorAll('[data-contest-team-stats] details')) {
+        const gameId = details.closest('[data-contest-team-stats]').dataset.contestTeamStats;
+        if (details.open) expandedTeamStats.add(gameId);
+        else expandedTeamStats.delete(gameId);
+      }
       const selectedGames = games.filter(game => contestWeekKey(game) === week);
       const weeks = [...new Set(games.map(contestWeekKey))];
       const open = selectedGames.filter(game => !contestGameLocked(game, now())).length;
@@ -180,7 +221,8 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
         ${!session ? '<p class="compact-note">Use the same Google login as your playoff bracket. Save your picks to start your record.</p>' : ''}
         <div class="contest-controls"><label for="contest-week">Select week</label><select id="contest-week"${busy || !weeks.length ? ' disabled' : ''}>
         ${weeks.map(key => `<option value="${escape(key)}"${key === week ? ' selected' : ''}>${escape(contestWeekLabel(key))}</option>`).join('')}</select>
-        <button type="button" class="button light" data-contest-action="refresh"${busy ? ' disabled' : ''}>Refresh results</button></div>
+        <button type="button" class="button light" data-contest-action="refresh"${busy ? ' disabled' : ''}>Refresh results</button>
+        <a class="button light" href="#compare/weekly">Model picks and results</a></div>
         <p class="compact-note">${contest.observedAt ? `Results updated ${escape(date(contest.observedAt))}. ` : ''}${open} ${open === 1 ? 'game open' : 'games open'} for this week. Times are Mountain Time.</p>
         ${week ? renderContestScores(games, entry.picks, week) : '<p class="contest-empty">The contest will open when an eligible upcoming model forecast is saved.</p>'}
         <p class="contest-message${messageError ? ' is-error' : ''}" role="status" aria-live="polite">${escape(message)}</p></div></section>
@@ -197,6 +239,7 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
           : `<section class="panel"><div class="panel-body"><div class="contest-controls"><label for="contest-board-scope">Standings</label><select id="contest-board-scope"><option value="week"${boardScope === 'week' ? ' selected' : ''}>${escape(contestWeekLabel(week))}</option><option value="season"${boardScope === 'season' ? ' selected' : ''}>Season</option></select></div>
             ${boardBusy ? '<p role="status" class="contest-empty">Loading standings…</p>' : renderContestLeaderboard(boardError ? null : board, boardScope === 'week' ? contestWeekLabel(week) : 'Season')}
             <p class="compact-note">Public standings show up to 100 players and your own entry. You control whether your nickname appears publicly.</p></div></section>`}`;
+      showTeamStats();
       if (focusGame) root.querySelector(`[data-contest-game="${CSS.escape(focusGame)}"][aria-pressed="true"]`)?.focus({ preventScroll: true });
     }
 
@@ -285,7 +328,7 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
           if (error) throw error;
           session = null;
           main.querySelector('[data-weekly-contest]')?.remove();
-          void renderWeeklyContest(main, { teams, season });
+          void renderWeeklyContest(main, { teams, season, statsUrl });
           return;
         }
       } catch {
@@ -301,7 +344,7 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
       setTimeout(() => {
         if (!current()) return;
         main.querySelector('[data-weekly-contest]')?.remove();
-        void renderWeeklyContest(main, { teams, season });
+        void renderWeeklyContest(main, { teams, season, statsUrl });
       }, 0);
     })?.data?.subscription;
     timer = setInterval(() => {

@@ -5,6 +5,7 @@ import { publishDivisionSnapshot, readPublicationPolicy } from '../src/publicati
 import { publicRankings, publicTeamDetails } from '../src/site-publication.js';
 import { matchupValidation, snapshotCoverage } from '../src/site-validation.js';
 import { UPDATE_SCHEDULE } from '../src/weekly.js';
+import { buildWeeklyTeamStats } from '../frontend/weekly-team-stats.js';
 
 const root = resolve(import.meta.dirname, '..');
 const frontend = join(root, 'frontend');
@@ -48,10 +49,18 @@ const staleTeamFiles = (await readdir(teamDirectory, { withFileTypes: true }))
 await Promise.all(staleTeamFiles.map(file => rm(join(teamDirectory, file.name), { force: true })));
 const performanceFile = join(data, 'performance.json');
 const picksFile = join(data, 'weekly-picks.json');
+const statsFile = join(data, 'weekly-team-stats.json');
+const weeklyStats = await readFile(join(published, 'weekly-picks.json'), 'utf8')
+  .then(source => buildWeeklyTeamStats(JSON.parse(source)))
+  .catch(error => {
+    if (error.code !== 'ENOENT') console.warn('Weekly team stats are unavailable:', error.message);
+    return null;
+  });
 await Promise.all([
   writeFile(join(output, 'index.html'), html.replace(marker, '<meta name="publication-data-root" content="/data">')),
   writeFile(join(data, 'rankings.json'), JSON.stringify(publicSnapshot)),
   performance ? writeFile(performanceFile, JSON.stringify(performance)) : rm(performanceFile, { force: true }),
+  weeklyStats ? writeFile(statsFile, JSON.stringify(weeklyStats)) : rm(statsFile, { force: true }),
   cp(join(published, 'weekly-picks.json'), picksFile).catch(error => {
     if (error.code !== 'ENOENT') throw error;
     return rm(picksFile, { force: true });
