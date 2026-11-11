@@ -4,7 +4,7 @@ import {
   contestGames, contestGameLocked, contestGameWinner, contestPickChanges,
   defaultContestWeek, scoreContestPicks,
 } from '../frontend/weekly-contest-score.js';
-import { renderContestGames, renderContestLeaderboard, renderContestPlayerPicks, renderContestScores } from '../frontend/weekly-contest.js';
+import { renderContestDeadline, renderContestGames, renderContestLeaderboard, renderContestPlayerPicks, renderContestScores } from '../frontend/weekly-contest.js';
 
 const startDate = '2026-11-14T19:00:00Z';
 const modelCapturedAt = '2026-11-08T19:00:00Z';
@@ -33,6 +33,24 @@ test('a game locks at its own kickoff, on the server flag, and when voided', () 
   assert.deepEqual(contestPickChanges([game('one'), game('two', { locked: true })],
     { one: 'h-one', two: 'h-two' }, { one: 'a-one', two: 'a-two', invented: 'x' }, kickoff - 1), { one: 'a-one' });
   assert.deepEqual(contestPickChanges([game('one')], {}, { one: 'a-one' }, kickoff), {});
+});
+
+test('all games in a slate respect the Pacific deadline while keeping their kickoff times', () => {
+  const lockAt = '2026-11-14T07:59:00Z';
+  const lock = Date.parse(lockAt);
+  const games = [game('first', { lockAt, weeklyLockAt: lockAt }),
+    game('later', { startDate: '2026-11-15T02:00:00Z', lockAt, weeklyLockAt: lockAt })];
+  assert.equal(contestGameLocked(games[0], lock - 1), false);
+  assert.equal(contestGameLocked(games[1], lock - 1), false);
+  assert.equal(contestGameLocked(games[0], lock), true);
+  assert.equal(contestGameLocked(games[1], lock), true);
+  assert.deepEqual(contestPickChanges(games, {}, { later: 'a-later' }, lock), {});
+  const deadline = renderContestDeadline(games, 'regular:11', lock - 1);
+  assert.match(deadline, /Week 11 pick deadline/);
+  assert.match(deadline, /Fri, Nov 13, 11:59 p\.m\. PT/);
+  assert.match(renderContestDeadline(games, 'regular:11', lock), /Week 11 picks closed/);
+  assert.match(renderContestDeadline([game('old')], 'regular:11'), /Week 11 picks lock at each game’s kickoff/);
+  assert.match(renderContestGames(games, { now: lock }), /Kickoff · <time datetime="2026-11-15T02:00:00Z">.*?MT/);
 });
 
 test('head to head grades the exact same decided saved-game cohort for both players', () => {
@@ -103,19 +121,20 @@ test('leaderboard names open game picks only for players with a public sharing I
   assert.match(html, /My name.*?data-contest-sharing-settings>Share picks/s);
 });
 
-test('published picks show verified grades and stay hidden before kickoff', () => {
-  const kickoff = Date.parse(startDate);
+test('server-published picks show verified grades and include future games', () => {
   const first = { ...final('first', { homeName: '<Home>' }), teamId: 'h-first' };
   const second = { ...final('second'), teamId: 'a-second' };
   const pending = { ...game('pending'), teamId: 'h-pending' };
   const later = { ...game('later', { startDate: '2026-11-15T20:00:00Z' }), teamId: 'h-later' };
-  const profile = { picks: [first, second, pending, later] };
-  assert.match(renderContestPlayerPicks(profile, { now: kickoff - 1 }), /Picks appear after kickoff/);
-  const html = renderContestPlayerPicks(profile, { now: kickoff });
+  const voided = { ...game('voided', { voidReason: 'Removed game' }), teamId: 'h-voided' };
+  const profile = { picks: [first, second, pending, later, voided] };
+  assert.match(renderContestPlayerPicks({ picks: [] }), /No shared picks for this selection yet/);
+  const html = renderContestPlayerPicks(profile);
   assert.match(html, /Player pick.*?&lt;Home&gt;/s);
   assert.match(html, /Model pick/);
   assert.match(html, /is-correct">Correct/);
   assert.match(html, /is-wrong">Miss/);
   assert.match(html, />Pending<\/dd>/);
-  assert.doesNotMatch(html, /later|<Home>/);
+  assert.match(html, /Away later at Home later/);
+  assert.doesNotMatch(html, /voided|<Home>/);
 });

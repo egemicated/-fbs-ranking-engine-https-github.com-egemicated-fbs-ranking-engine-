@@ -29,7 +29,10 @@ export function contestGames(contest) {
 }
 
 export function contestGameLocked(game, now = Date.now()) {
-  return game.locked === true || Boolean(game.voidReason) || game.status === 'final' || now >= isoTime(game.startDate);
+  const kickoff = isoTime(game.startDate);
+  const lock = isoTime(game.lockAt);
+  const deadline = Number.isFinite(lock) ? Math.min(lock, kickoff) : kickoff;
+  return game.locked === true || Boolean(game.voidReason) || game.status === 'final' || now >= deadline;
 }
 
 export function contestGameWinner(game) {
