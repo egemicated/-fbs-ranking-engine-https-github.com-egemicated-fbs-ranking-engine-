@@ -4,7 +4,7 @@ import {
   contestGames, contestGameLocked, contestGameWinner, contestPickChanges,
   defaultContestWeek, scoreContestPicks,
 } from '../frontend/weekly-contest-score.js';
-import { renderContestGames, renderContestLeaderboard, renderContestScores } from '../frontend/weekly-contest.js';
+import { renderContestGames, renderContestLeaderboard, renderContestPlayerPicks, renderContestScores } from '../frontend/weekly-contest.js';
 
 const startDate = '2026-11-14T19:00:00Z';
 const modelCapturedAt = '2026-11-08T19:00:00Z';
@@ -87,4 +87,32 @@ test('empty scorecards use a pending state and leaderboards preserve server tie 
   assert.match(html, /&lt;script&gt;bad&lt;\/script&gt;/);
   assert.match(html, /Model overall: 7 of 10/);
   assert.doesNotMatch(html, /<script>/);
+});
+
+test('leaderboard names open game picks only for players with a public sharing ID', () => {
+  const row = { rank: 1, points: 2, correct: 2, graded: 3, picked: 4, modelCorrect: 1, compared: 3 };
+  const html = renderContestLeaderboard({ rows: [
+    { ...row, nickname: 'Score only' },
+    { ...row, nickname: '<Shared name>', publicPickId: 'public-id' },
+  ] }, 'Week 11', 'public-id');
+  assert.equal((html.match(/data-contest-player=/g) ?? []).length, 1);
+  assert.match(html, /data-contest-player="public-id" aria-label="View picks by &lt;Shared name&gt;" aria-expanded="true"/);
+  assert.match(html, /<th scope="row">Score only<\/th>/);
+});
+
+test('published picks show verified grades and stay hidden before kickoff', () => {
+  const kickoff = Date.parse(startDate);
+  const first = { ...final('first', { homeName: '<Home>' }), teamId: 'h-first' };
+  const second = { ...final('second'), teamId: 'a-second' };
+  const pending = { ...game('pending'), teamId: 'h-pending' };
+  const later = { ...game('later', { startDate: '2026-11-15T20:00:00Z' }), teamId: 'h-later' };
+  const profile = { picks: [first, second, pending, later] };
+  assert.match(renderContestPlayerPicks(profile, { now: kickoff - 1 }), /Picks appear after kickoff/);
+  const html = renderContestPlayerPicks(profile, { now: kickoff });
+  assert.match(html, /Player pick.*?&lt;Home&gt;/s);
+  assert.match(html, /Model pick/);
+  assert.match(html, /is-correct">Correct/);
+  assert.match(html, /is-wrong">Miss/);
+  assert.match(html, />Pending<\/dd>/);
+  assert.doesNotMatch(html, /later|<Home>/);
 });

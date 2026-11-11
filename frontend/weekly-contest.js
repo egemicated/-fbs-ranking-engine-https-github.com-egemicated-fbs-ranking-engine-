@@ -57,20 +57,49 @@ export function renderContestGames(games, { saved = {}, draft = {}, teams, signe
   }).join('')}</ul>`;
 }
 
-export function renderContestLeaderboard(board, label) {
+function leaderboardRows(board) {
+  const rows = Array.isArray(board?.rows) ? [...board.rows] : [];
+  if (board?.me && !rows.some(row => row.isYou)) rows.push({ ...board.me, isYou: true });
+  return rows;
+}
+
+export function renderContestLeaderboard(board, label, selectedPlayerId = '') {
   if (!board || !Array.isArray(board.rows)) return '<p class="contest-empty">The leaderboard is unavailable. Refresh to try again.</p>';
-  const rows = [...board.rows];
-  if (board.me && !rows.some(row => row.isYou)) rows.push({ ...board.me, isYou: true });
+  const rows = leaderboardRows(board);
   const model = board.model;
   return `<div class="contest-heading"><h3>${escape(label)} leaderboard</h3></div>
     <p class="compact-note">Ranked by points. Tied scores share a place. The model column grades the same games each player picked.</p>
     ${rows.length ? `<table class="contest-leaderboard"><caption class="sr-only">${escape(label)} Beat the Model standings</caption>
       <thead><tr><th scope="col">Place</th><th scope="col">Player</th><th scope="col">Points</th><th scope="col">Decided</th><th scope="col">Model</th></tr></thead><tbody>
-      ${rows.map(row => `<tr${row.isYou ? ' class="is-you"' : ''}><td>${escape(row.rank ?? '—')}</td><th scope="row">${escape(row.nickname)}${row.isYou ? ' <small>You</small>' : ''}</th>
-        <td><strong>${escape(row.points)}</strong></td><td>${escape(row.correct)} / ${escape(row.graded)}<small>${escape(row.picked)} picked</small></td>
-        <td>${escape(row.modelCorrect)} / ${escape(row.compared)}<small>${row.compared ? row.points > row.modelCorrect ? 'Ahead of model' : row.points === row.modelCorrect ? 'Tied with model' : 'Behind model' : 'Awaiting results'}</small></td></tr>`).join('')}
+      ${rows.map(row => {
+        const name = escape(row.nickname);
+        const player = row.publicPickId
+          ? `<button type="button" class="contest-player-link" data-contest-player="${escape(row.publicPickId)}" aria-label="View picks by ${name}" aria-expanded="${row.publicPickId === selectedPlayerId}" aria-controls="contest-player-picks">${name}</button>`
+          : name;
+        return `<tr${row.isYou ? ' class="is-you"' : ''}><td>${escape(row.rank ?? '—')}</td><th scope="row">${player}${row.isYou ? ' <small>You</small>' : ''}</th>
+          <td><strong>${escape(row.points)}</strong></td><td>${escape(row.correct)} / ${escape(row.graded)}<small>${escape(row.picked)} picked</small></td>
+          <td>${escape(row.modelCorrect)} / ${escape(row.compared)}<small>${row.compared ? row.points > row.modelCorrect ? 'Ahead of model' : row.points === row.modelCorrect ? 'Tied with model' : 'Behind model' : 'Awaiting results'}</small></td></tr>`;
+      }).join('')}
       </tbody></table>` : '<p class="contest-empty">No players have joined this public leaderboard yet.</p>'}
     ${model && Number.isInteger(model.graded) && Number.isInteger(model.correct) ? `<p class="compact-note">Model overall: ${model.correct} of ${model.graded} decided eligible games correct.</p>` : ''}`;
+}
+
+export function renderContestPlayerPicks(profile, { teams, now = Date.now() } = {}) {
+  if (!Array.isArray(profile?.picks)) return '<p class="contest-empty">This player’s picks are unavailable.</p>';
+  const picks = profile.picks.filter(game => !game.voidReason && Date.parse(game.startDate) <= now &&
+    [game.home, game.away].includes(game.teamId) && [game.home, game.away].includes(game.modelTeam));
+  if (!picks.length) return '<p class="contest-empty">Picks appear after kickoff.</p>';
+  return `<ul class="contest-player-games" aria-label="Published game picks">${picks.map(game => {
+    const winner = contestGameWinner(game);
+    const correct = winner && winner === game.teamId;
+    const grade = winner ? correct ? 'Correct' : 'Miss' : 'Pending';
+    const pickName = teamName(game, game.teamId === game.home ? 'home' : 'away', teams);
+    const modelName = teamName(game, game.modelTeam === game.home ? 'home' : 'away', teams);
+    return `<li class="contest-player-game"><h4>${escape(teamName(game, 'away', teams))} at ${escape(teamName(game, 'home', teams))}</h4>
+      <p class="compact-note">${escape(contestWeekLabel(contestWeekKey(game)))} · <time datetime="${escape(game.startDate)}">${escape(date(game.startDate))}</time></p>
+      <dl><div><dt>Player pick</dt><dd>${escape(pickName)}</dd></div><div><dt>Model pick</dt><dd>${escape(modelName)}</dd></div>
+      <div><dt>Result</dt><dd class="${winner ? correct ? 'is-correct' : 'is-wrong' : ''}">${grade}</dd></div></dl></li>`;
+  }).join('')}</ul>`;
 }
 
 async function getConfig() {
@@ -94,7 +123,11 @@ async function getTeamStats(statsUrl, season) {
 function cleanEntry(entry, games) {
   const picks = Object.fromEntries(games.filter(game => [game.home, game.away].includes(entry?.picks?.[game.id]))
     .map(game => [game.id, entry.picks[game.id]]));
-  return { nickname: typeof entry?.nickname === 'string' ? entry.nickname : '', publicLeaderboard: entry?.publicLeaderboard === true, picks };
+  const publicLeaderboard = entry?.publicLeaderboard === true;
+  return {
+    nickname: typeof entry?.nickname === 'string' ? entry.nickname : '', publicLeaderboard,
+    sharePicks: publicLeaderboard && entry?.sharePicks === true, picks,
+  };
 }
 
 export async function renderWeeklyContest(main, { teams = new Map(), season = 2026, statsUrl } = {}) {
@@ -137,9 +170,10 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
     let session = sessionResult.data?.session;
     const signInEnabled = !session && await googleSignInEnabled(config);
     if (!current()) return;
-    let contest, games = [], entry = { nickname: '', publicLeaderboard: false, picks: {} }, draft = {};
-    let nickname = '', publicLeaderboard = false, week = '', view = 'picks', boardScope = 'week';
+    let contest, games = [], entry = cleanEntry(null, []), draft = {};
+    let nickname = '', publicLeaderboard = false, sharePicks = false, week = '', view = 'picks', boardScope = 'week';
     let board = null, boardError = false, boardBusy = false, boardRequest = 0;
+    let player = null, playerRequest = 0;
     let busy = false, message = '', messageError = false, clockOffset = 0, boundary = '';
     let teamStats;
     const expandedTeamStats = new Set();
@@ -169,16 +203,72 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
       return data;
     };
     const changes = () => contestPickChanges(games, entry.picks, draft, now());
-    const dirty = () => Object.keys(changes()).length > 0 || nickname.trim() !== entry.nickname || publicLeaderboard !== entry.publicLeaderboard;
+    const profileChanged = () => nickname.trim() !== entry.nickname || publicLeaderboard !== entry.publicLeaderboard || sharePicks !== entry.sharePicks;
+    const dirty = () => Object.keys(changes()).length > 0 || profileChanged();
     const canSave = () => session && dirty() && [...nickname.trim()].length >= 2 && [...nickname.trim()].length <= 30 && !busy;
+    const saveState = () => {
+      const pending = Object.keys(changes()).length;
+      if (pending) return `${pending} unsaved ${pending === 1 ? 'pick' : 'picks'}`;
+      if (profileChanged()) return 'Unsaved profile changes';
+      return Object.keys(entry.picks).length ? 'All picks saved' : 'No picks saved yet';
+    };
+    const updateSaveControls = () => {
+      root.querySelector('[data-contest-save-button]').disabled = !canSave();
+      root.querySelector('[data-contest-save-state]').textContent = saveState();
+    };
+    const scopeLabel = () => boardScope === 'week' ? contestWeekLabel(week) : 'Season';
+    const scopeArgs = () => {
+      if (boardScope === 'season') return {};
+      const [type, number] = week.split(':');
+      return { p_season_type: type, p_week: Number(number) };
+    };
+
+    function playerTitle() {
+      return player ? `${player.profile?.nickname ?? player.nickname} · ${scopeLabel()} picks` : '';
+    }
+
+    function playerContent() {
+      if (!player) return '';
+      if (player.loading) return '<p class="contest-empty" role="status">Loading published picks…</p>';
+      return renderContestPlayerPicks(player.profile, { teams, now: now() });
+    }
+
+    function updatePlayerPanel() {
+      if (!current() || view !== 'leaderboard') return;
+      const title = root.querySelector('#contest-player-title');
+      const content = root.querySelector('[data-contest-player-content]');
+      if (title && content) {
+        title.textContent = playerTitle();
+        content.innerHTML = playerContent();
+      }
+    }
+
+    async function refreshPlayer() {
+      if (!player) return;
+      const request = ++playerRequest;
+      const id = player.id;
+      player.loading = true;
+      player.profile = null;
+      updatePlayerPanel();
+      let profile = null;
+      try {
+        profile = await rpc('weekly_player_picks', { p_public_pick_id: id, ...scopeArgs() });
+      } catch {
+        // Leave the panel available so the player can retry or close it.
+      }
+      if (!current() || request !== playerRequest) return;
+      player.loading = false;
+      player.profile = profile;
+      updatePlayerPanel();
+    }
+
     const refreshBoard = async () => {
       const request = ++boardRequest;
       boardBusy = true;
       boardError = false;
       if (view === 'leaderboard') draw();
       try {
-        const [p_season_type, rawWeek] = week.split(':');
-        const result = await rpc('weekly_leaderboard', boardScope === 'season' ? {} : { p_season_type, p_week: Number(rawWeek) });
+        const result = await rpc('weekly_leaderboard', scopeArgs());
         if (current() && request === boardRequest) board = result;
       } catch {
         if (current() && request === boardRequest) { board = null; boardError = true; }
@@ -186,18 +276,27 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
         if (current() && request === boardRequest) { boardBusy = false; if (view === 'leaderboard') draw(); }
       }
     };
+    const refreshLeaderboard = () => {
+      void refreshPlayer();
+      void refreshBoard();
+    };
     const loadData = async ({ keepDraft = false } = {}) => {
       const previousChanges = keepDraft ? changes() : {};
+      const keepProfile = keepDraft && profileChanged();
       const nextContest = await rpc('weekly_contest');
       const nextGames = contestGames(nextContest);
-      const nextEntry = session ? cleanEntry(await rpc('weekly_entry'), nextGames) : cleanEntry(null, nextGames);
+      const nextEntry = session ? cleanEntry(await rpc('weekly_entry_with_sharing'), nextGames) : cleanEntry(null, nextGames);
       if (!current()) return;
       contest = nextContest;
       games = nextGames;
       clockOffset = Date.parse(contest.serverNow) - Date.now();
       entry = nextEntry;
       draft = { ...entry.picks, ...contestPickChanges(games, entry.picks, previousChanges, now()) };
-      if (!keepDraft) { nickname = entry.nickname; publicLeaderboard = entry.publicLeaderboard; }
+      if (!keepProfile) {
+        nickname = entry.nickname;
+        publicLeaderboard = entry.publicLeaderboard;
+        sharePicks = entry.sharePicks;
+      }
       if (!games.some(game => contestWeekKey(game) === week)) week = defaultContestWeek(games, now());
       boundary = games.map(game => Number(contestGameLocked(game, now()))).join('');
     };
@@ -212,7 +311,6 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
       const selectedGames = games.filter(game => contestWeekKey(game) === week);
       const weeks = [...new Set(games.map(contestWeekKey))];
       const open = selectedGames.filter(game => !contestGameLocked(game, now())).length;
-      const pending = Object.keys(changes()).length;
       root.innerHTML = `<section class="panel"><div class="panel-body"><div class="contest-heading"><div><div class="section-label">${season} season</div>
         <h2>Your picks against the model</h2></div><div class="contest-actions">${session
           ? `<span class="compact-note">Signed in</span><button class="button light" type="button" data-contest-action="logout"${busy ? ' disabled' : ''}>Sign out</button>`
@@ -232,12 +330,17 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
           ${renderContestGames(selectedGames, { saved: entry.picks, draft, teams, signedIn: Boolean(session), busy, now: now() })}
           ${session ? `<form data-contest-save class="contest-save-row"><label for="contest-nickname">Leaderboard nickname</label>
             <input id="contest-nickname" name="nickname" value="${escape(nickname)}" minlength="2" maxlength="30" autocomplete="nickname" required${busy ? ' disabled' : ''}>
-            <span class="contest-save-state" data-contest-save-state>${dirty() ? `${pending} unsaved ${pending === 1 ? 'pick' : 'picks'}${pending ? '' : ' · profile changed'}` : Object.keys(entry.picks).length ? 'All picks saved' : 'No picks saved yet'}</span>
+            <span class="contest-save-state" data-contest-save-state>${saveState()}</span>
             <button type="submit" class="button" data-contest-save-button${canSave() ? '' : ' disabled'}>${busy ? 'Saving…' : 'Save picks'}</button>
             <label class="contest-public"><input type="checkbox" id="contest-public"${publicLeaderboard ? ' checked' : ''}${busy ? ' disabled' : ''}> Show my nickname and scores on public leaderboards</label>
+            <label class="contest-public contest-share"><input type="checkbox" id="contest-share-picks"${sharePicks ? ' checked' : ''}${busy || !publicLeaderboard ? ' disabled' : ''}> Show my picks after each game kicks off</label>
             <p class="compact-note">You can save a few games at a time and change each pick before its kickoff. Your scorecard uses saved picks.</p></form>` : ''}</div></section>`
           : `<section class="panel"><div class="panel-body"><div class="contest-controls"><label for="contest-board-scope">Standings</label><select id="contest-board-scope"><option value="week"${boardScope === 'week' ? ' selected' : ''}>${escape(contestWeekLabel(week))}</option><option value="season"${boardScope === 'season' ? ' selected' : ''}>Season</option></select></div>
-            ${boardBusy ? '<p role="status" class="contest-empty">Loading standings…</p>' : renderContestLeaderboard(boardError ? null : board, boardScope === 'week' ? contestWeekLabel(week) : 'Season')}
+            <section class="contest-player-panel" id="contest-player-picks" aria-labelledby="contest-player-title"${player ? '' : ' hidden'}>
+              <div class="contest-heading"><h3 id="contest-player-title" tabindex="-1">${escape(playerTitle())}</h3>
+              <button type="button" class="button light" data-contest-player-close>Close picks</button></div>
+              <div data-contest-player-content aria-live="polite">${playerContent()}</div></section>
+            ${boardBusy ? '<p role="status" class="contest-empty">Loading standings…</p>' : renderContestLeaderboard(boardError ? null : board, scopeLabel(), player?.id)}
             <p class="compact-note">Public standings show up to 100 players and your own entry. You control whether your nickname appears publicly.</p></div></section>`}`;
       showTeamStats();
       if (focusGame) root.querySelector(`[data-contest-game="${CSS.escape(focusGame)}"][aria-pressed="true"]`)?.focus({ preventScroll: true });
@@ -249,21 +352,26 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
     root.oninput = event => {
       if (event.target.id !== 'contest-nickname') return;
       nickname = event.target.value;
-      root.querySelector('[data-contest-save-button]').disabled = !canSave();
-      root.querySelector('[data-contest-save-state]').textContent = dirty() ? `${Object.keys(changes()).length} unsaved picks · profile changed` : 'All picks saved';
+      updateSaveControls();
     };
     root.onchange = event => {
       if (event.target.id === 'contest-week') {
         week = event.target.value;
-        draw();
-        if (view === 'leaderboard' && boardScope === 'week') void refreshBoard();
+        if (view === 'leaderboard' && boardScope === 'week') refreshLeaderboard();
+        else draw();
       } else if (event.target.id === 'contest-public') {
         publicLeaderboard = event.target.checked;
-        root.querySelector('[data-contest-save-button]').disabled = !canSave();
-        root.querySelector('[data-contest-save-state]').textContent = dirty() ? `${Object.keys(changes()).length} unsaved picks · profile changed` : 'All picks saved';
+        const sharing = root.querySelector('#contest-share-picks');
+        if (!publicLeaderboard) sharePicks = false;
+        sharing.checked = sharePicks;
+        sharing.disabled = !publicLeaderboard || busy;
+        updateSaveControls();
+      } else if (event.target.id === 'contest-share-picks') {
+        sharePicks = publicLeaderboard && event.target.checked;
+        updateSaveControls();
       } else if (event.target.id === 'contest-board-scope') {
         boardScope = event.target.value;
-        void refreshBoard();
+        refreshLeaderboard();
       }
     };
     root.onsubmit = async event => {
@@ -276,13 +384,16 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
       const pending = changes();
       draw();
       try {
-        const result = await rpc('weekly_save_picks', { p_nickname: nickname.trim(), p_picks: pending, p_public: publicLeaderboard });
+        const result = await rpc('weekly_save_picks_with_sharing', {
+          p_nickname: nickname.trim(), p_picks: pending, p_public: publicLeaderboard, p_share_picks: publicLeaderboard && sharePicks,
+        });
         if (!result || !result.picks || typeof result.nickname !== 'string') throw new Error('Save was not confirmed');
         entry = cleanEntry(result, games);
         draft = { ...entry.picks };
         nickname = entry.nickname;
         publicLeaderboard = entry.publicLeaderboard;
-        message = 'Picks saved. You can change each pick until its game kicks off.';
+        sharePicks = entry.sharePicks;
+        message = Object.keys(pending).length ? 'Picks saved. You can change each pick until its game kicks off.' : 'Profile saved.';
         void refreshBoard();
       } catch {
         messageError = true;
@@ -306,8 +417,26 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
       const tab = event.target.closest('[data-contest-view]')?.dataset.contestView;
       if (['picks', 'leaderboard'].includes(tab)) {
         view = tab;
+        if (view === 'leaderboard') refreshLeaderboard();
+        else draw();
+        return;
+      }
+      const publicPickId = event.target.closest('[data-contest-player]')?.dataset.contestPlayer;
+      if (publicPickId) {
+        const row = leaderboardRows(board).find(row => row.publicPickId === publicPickId);
+        if (!row) return;
+        player = { id: publicPickId, nickname: row.nickname, loading: true, profile: null };
         draw();
-        if (view === 'leaderboard') void refreshBoard();
+        root.querySelector('#contest-player-title')?.focus();
+        void refreshPlayer();
+        return;
+      }
+      if (event.target.closest('[data-contest-player-close]')) {
+        const id = player?.id;
+        player = null;
+        playerRequest++;
+        draw();
+        if (id) root.querySelector(`[data-contest-player="${CSS.escape(id)}"]`)?.focus();
         return;
       }
       const action = event.target.closest('[data-contest-action]')?.dataset.contestAction;
@@ -319,7 +448,7 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
           await loadData({ keepDraft: true });
           message = 'Results refreshed. Open unsaved selections are still here.';
           messageError = false;
-          if (view === 'leaderboard') void refreshBoard();
+          if (view === 'leaderboard') refreshLeaderboard();
         } else if (action === 'login') {
           const { error } = await client.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: new URL('/?weekly=1', location.origin).href } });
           if (error) throw error;
