@@ -76,7 +76,9 @@ export function renderContestLeaderboard(board, label, selectedPlayerId = '') {
         const player = row.publicPickId
           ? `<button type="button" class="contest-player-link" data-contest-player="${escape(row.publicPickId)}" aria-label="View picks by ${name}" aria-expanded="${row.publicPickId === selectedPlayerId}" aria-controls="contest-player-picks">${name}</button>`
           : name;
-        return `<tr${row.isYou ? ' class="is-you"' : ''}><td>${escape(row.rank ?? '—')}</td><th scope="row">${player}${row.isYou ? ' <small>You</small>' : ''}</th>
+        const share = row.isYou && !row.publicPickId
+          ? '<small><button type="button" class="contest-player-link" data-contest-sharing-settings>Share picks</button></small>' : '';
+        return `<tr${row.isYou ? ' class="is-you"' : ''}><td>${escape(row.rank ?? '—')}</td><th scope="row">${player}${row.isYou ? ' <small>You</small>' : ''}${share}</th>
           <td><strong>${escape(row.points)}</strong></td><td>${escape(row.correct)} / ${escape(row.graded)}<small>${escape(row.picked)} picked</small></td>
           <td>${escape(row.modelCorrect)} / ${escape(row.compared)}<small>${row.compared ? row.points > row.modelCorrect ? 'Ahead of model' : row.points === row.modelCorrect ? 'Tied with model' : 'Behind model' : 'Awaiting results'}</small></td></tr>`;
       }).join('')}
@@ -404,6 +406,12 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
       }
     };
     root.onclick = async event => {
+      if (event.target.closest('[data-contest-sharing-settings]')) {
+        view = 'picks';
+        draw();
+        root.querySelector(publicLeaderboard ? '#contest-share-picks' : '#contest-public')?.focus();
+        return;
+      }
       const choice = event.target.closest('[data-contest-game][data-contest-team]');
       if (choice) {
         const game = games.find(game => game.id === choice.dataset.contestGame);

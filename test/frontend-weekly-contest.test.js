@@ -94,10 +94,13 @@ test('leaderboard names open game picks only for players with a public sharing I
   const html = renderContestLeaderboard({ rows: [
     { ...row, nickname: 'Score only' },
     { ...row, nickname: '<Shared name>', publicPickId: 'public-id' },
+    { ...row, nickname: 'My name', isYou: true },
   ] }, 'Week 11', 'public-id');
   assert.equal((html.match(/data-contest-player=/g) ?? []).length, 1);
   assert.match(html, /data-contest-player="public-id" aria-label="View picks by &lt;Shared name&gt;" aria-expanded="true"/);
   assert.match(html, /<th scope="row">Score only<\/th>/);
+  assert.equal((html.match(/data-contest-sharing-settings/g) ?? []).length, 1);
+  assert.match(html, /My name.*?data-contest-sharing-settings>Share picks/s);
 });
 
 test('published picks show verified grades and stay hidden before kickoff', () => {
