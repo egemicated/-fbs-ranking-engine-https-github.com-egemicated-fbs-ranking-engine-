@@ -12,6 +12,7 @@ let contestModule;
 let closeContest;
 let historyModule;
 let closeHistory;
+let renderedHeader;
 const pollSources = {
   ap: { name: 'AP Top 25', short: 'AP', url: 'https://apnews.com/hub/ap-top-25-college-football-poll' },
   coaches: { name: 'Coaches Poll', short: 'Coaches', url: 'https://www.afca.com/polls/' },
@@ -108,8 +109,22 @@ function displayRank(t, model = state.model) { return model === 'achievement' ? 
 function brand() { return `<a class="brand" href="#home" aria-label="${BRAND} home"><img class="brand-logo" src="/assets/fbs-intelligence-logo.svg?v=outline" width="1340" height="430" alt="${BRAND}" fetchpriority="high"></a>`; }
 function renderHeader() {
   const page = route()[0];
+  if (renderedHeader?.snapshot === state.snapshot && renderedHeader.page === page) return;
+  renderedHeader = { snapshot: state.snapshot, page };
   const navs = [['home','home','Home'],['rankings','trophy','Rankings'],['ranking-history','chart','Weekly movement'],['teams','teams','Teams'],['compare','compare','Matchup lab'],['beat-the-model','trophy','Beat the Model'],['polls','layers','Compare rankings'],['bracket','network','Playoff bracket'],['methodology','layers','Methodology']];
-  document.querySelector('#header').innerHTML = `<div class="masthead"><div class="wrap masthead-inner">${brand()}<span class="brand-divider"></span><div class="masthead-tag">THE INDEPENDENT COLLEGE FOOTBALL RANKING ENGINE<strong>DATA &nbsp; › &nbsp; OPPONENTS &nbsp; › &nbsp; EVIDENCE</strong></div><div class="header-right"><div class="engine-badge">${icon('check')}<div><strong>Published rankings</strong><small>CFBD snapshot · ${snapshotDate()}</small></div></div><div class="season-badge">${state.snapshot.season}<small>SEASON SNAPSHOT</small></div></div></div></div><nav class="nav" aria-label="Main navigation"><div class="wrap nav-inner">${navs.map(([id,ic,text])=>`<a href="#${id}" class="${page===id || (page==='team' && id==='teams') ? 'active':''}" ${page===id?'aria-current="page"':''}>${icon(ic)}${text}</a>`).join('')}<span class="nav-spacer"></span><span class="nav-note">${icon('clock')}Sundays · 12:01 AM Mountain</span></div></nav>`;
+  const primaryPages = ['home', 'rankings', 'beat-the-model'];
+  const activePage = page === 'team' ? 'teams' : page;
+  const link = ([id, glyph, label], placement = '') => `<a href="#${id}" class="${placement}${activePage === id ? ' active' : ''}" ${page === id ? 'aria-current="page"' : ''}>${icon(glyph)}${label}</a>`;
+  const moreLinks = navs.filter(([id]) => !primaryPages.includes(id));
+  document.querySelector('#header').innerHTML = `<div class="masthead"><div class="wrap masthead-inner">${brand()}<span class="brand-divider"></span><div class="masthead-tag">THE INDEPENDENT COLLEGE FOOTBALL RANKING ENGINE<strong>DATA &nbsp; › &nbsp; OPPONENTS &nbsp; › &nbsp; EVIDENCE</strong></div><div class="header-right"><div class="engine-badge">${icon('check')}<div><strong>Published rankings</strong><small>CFBD snapshot · ${snapshotDate()}</small></div></div><div class="season-badge">${state.snapshot.season}<small>SEASON SNAPSHOT</small></div></div></div></div>
+    <nav class="nav" aria-label="Main navigation"><div class="wrap nav-inner">
+      ${navs.map(item => link(item, primaryPages.includes(item[0]) ? 'nav-primary' : 'nav-desktop-link')).join('')}
+      <details class="nav-more${moreLinks.some(([id]) => id === activePage) ? ' active' : ''}">
+        <summary>More ${icon('chevron')}</summary>
+        <div class="nav-more-links">${moreLinks.map(item => link(item)).join('')}</div>
+      </details>
+      <span class="nav-spacer"></span><span class="nav-note">${icon('clock')}Sundays · 12:01 AM Mountain</span>
+    </div></nav>`;
   document.querySelector('#footer').innerHTML = `<div class="footer"><div class="wrap footer-inner"><div><div class="footer-brand">${BRAND.toUpperCase()}</div><p>Independent FBS rankings calculated from game data. No human polls or manual ranking overrides.</p></div><div class="footer-links"><a href="#methodology">${icon('layers')}Model methodology</a><a href="${esc(publicationPath('rankings'))}" target="_blank" rel="noopener">${icon('database')}Published data</a><span>Ranking engine · v${esc(state.snapshot.modelVersion)}</span></div></div></div>`;
 }
 function schedulePanel() { return `<section class="panel schedule-card"><div class="panel-head"><div class="panel-head-title">${icon('calendar')}<h2>The weekly picture</h2></div></div><div class="panel-body"><div class="section-label">Scheduled refresh</div><div class="schedule-title">SUNDAY. 12:01 AM.</div><p>Mountain Time · daylight saving aware.<br>Completed results from CollegeFootballData, published after the weekly calculation.</p><p style="margin-top:12px">Last publication: <strong>${snapshotDate({ hour:'numeric', minute:'2-digit' })} MT</strong></p></div></section>`; }
@@ -800,6 +815,12 @@ document.addEventListener('change',e=>{
   }
 });
 document.addEventListener('click',e=>{
+  const more = document.querySelector('.nav-more');
+  if (more?.open) {
+    const moreLink = e.target.closest('.nav-more-links a');
+    if (moreLink || !more.contains(e.target)) more.open = false;
+    if (moreLink?.hash === location.hash) more.querySelector('summary').focus();
+  }
   if(e.target.closest('.skip-link')){e.preventDefault();main.focus();main.scrollIntoView();return;}
   const button=e.target.closest('[data-action]');if(!button)return;
   const {action,value}=button.dataset;
@@ -821,6 +842,13 @@ document.addEventListener('click',e=>{
   if(action==='retry-team-details'){void load();}
   if(action==='venue'){state.venue=value;renderCompare();}
   if(action==='compare-team'){state.compareA=value;if(state.compareB===value)state.compareB=state.snapshot.rankings.find(t=>t.id!==value).id;location.hash='compare';}
+});
+document.addEventListener('keydown', event => {
+  if (event.key !== 'Escape') return;
+  const more = document.querySelector('.nav-more');
+  if (!more?.open) return;
+  more.open = false;
+  more.querySelector('summary').focus();
 });
 window.addEventListener('hashchange',()=>{state.teamTab='overview';render();window.scrollTo({top:0,behavior:'instant'});});
 async function load(){
