@@ -8,6 +8,10 @@ const weeklyPicks = { request: null, status: 'loading', scoring: null, scoringEr
 const rankingEditions = { data: null, request: null, failed: false };
 let bracketModule;
 let closeBracket;
+let contestModule;
+let closeContest;
+let historyModule;
+let closeHistory;
 const pollSources = {
   ap: { name: 'AP Top 25', short: 'AP', url: 'https://apnews.com/hub/ap-top-25-college-football-poll' },
   coaches: { name: 'Coaches Poll', short: 'Coaches', url: 'https://www.afca.com/polls/' },
@@ -104,7 +108,7 @@ function displayRank(t, model = state.model) { return model === 'achievement' ? 
 function brand() { return `<a class="brand" href="#home" aria-label="${BRAND} home"><img class="brand-logo" src="/assets/fbs-intelligence-logo.svg?v=outline" width="1340" height="430" alt="${BRAND}" fetchpriority="high"></a>`; }
 function renderHeader() {
   const page = route()[0];
-  const navs = [['home','home','Home'],['rankings','trophy','Rankings'],['teams','teams','Teams'],['compare','compare','Matchup lab'],['polls','layers','Compare rankings'],['bracket','network','Playoff bracket'],['methodology','layers','Methodology']];
+  const navs = [['home','home','Home'],['rankings','trophy','Rankings'],['ranking-history','chart','Weekly movement'],['teams','teams','Teams'],['compare','compare','Matchup lab'],['beat-the-model','trophy','Beat the Model'],['polls','layers','Compare rankings'],['bracket','network','Playoff bracket'],['methodology','layers','Methodology']];
   document.querySelector('#header').innerHTML = `<div class="masthead"><div class="wrap masthead-inner">${brand()}<span class="brand-divider"></span><div class="masthead-tag">THE INDEPENDENT COLLEGE FOOTBALL RANKING ENGINE<strong>DATA &nbsp; › &nbsp; OPPONENTS &nbsp; › &nbsp; EVIDENCE</strong></div><div class="header-right"><div class="engine-badge">${icon('check')}<div><strong>Published rankings</strong><small>CFBD snapshot · ${snapshotDate()}</small></div></div><div class="season-badge">${state.snapshot.season}<small>SEASON SNAPSHOT</small></div></div></div></div><nav class="nav" aria-label="Main navigation"><div class="wrap nav-inner">${navs.map(([id,ic,text])=>`<a href="#${id}" class="${page===id || (page==='team' && id==='teams') ? 'active':''}" ${page===id?'aria-current="page"':''}>${icon(ic)}${text}</a>`).join('')}<span class="nav-spacer"></span><span class="nav-note">${icon('clock')}Sundays · 12:01 AM Mountain</span></div></nav>`;
   document.querySelector('#footer').innerHTML = `<div class="footer"><div class="wrap footer-inner"><div><div class="footer-brand">${BRAND.toUpperCase()}</div><p>Independent FBS rankings calculated from game data. No human polls or manual ranking overrides.</p></div><div class="footer-links"><a href="#methodology">${icon('layers')}Model methodology</a><a href="${esc(publicationPath('rankings'))}" target="_blank" rel="noopener">${icon('database')}Published data</a><span>Ranking engine · v${esc(state.snapshot.modelVersion)}</span></div></div></div>`;
 }
@@ -145,7 +149,9 @@ function pipeline() { return `<section class="pipeline" aria-label="How the engi
 function companionPanel() {
   const views = [[rankingHash('strength'), 'Predictive Strength', 'Estimates team strength from score margins, opponents, venue, and our own historical ratings.']];
   if (hasPerformance()) views.push([rankingHash('performance'), 'Performance · Experimental', 'Measures how consistently teams succeeded on covered scrimmage plays, adjusted for opponents and venue.']);
-  views.push(['#polls', 'Compare Rankings', 'Compare our rankings with dated AP, Coaches, and CFP editions.'],
+  views.push(['#ranking-history', 'What changed this week?', 'See SOR movers, Top 25 arrivals and departures, and saved weekly editions.'],
+    ['#beat-the-model', 'Beat the Model', 'Save your game picks before kickoff and compare your results with our predictions.'],
+    ['#polls', 'Compare Rankings', 'Compare our rankings with dated AP, Coaches, and CFP editions.'],
     ['#forge-top-25', 'Forge’s Top 25', 'An AI-authored editorial ballot grounded in game results.']);
   return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('layers')}<h2>Companion views</h2></div></div><div class="panel-body companion-views">${views.map(([url,label,description])=>`<div><a class="text-link" href="${url}">${label} ${icon('arrow')}</a><p>${description}</p></div>`).join('')}<p class="compact-note">These views run separately from the national ranking.</p></div></section>`;
 }
@@ -722,6 +728,30 @@ function renderBracketPage() {
     console.error(error);
   });
 }
+function renderContestPage() {
+  main.innerHTML = '<div class="wrap page-content"><p role="status">Loading Beat the Model…</p></div>';
+  contestModule ??= import('./weekly-contest.js?v=1');
+  contestModule.then(({ renderWeeklyContest, unmountWeeklyContest }) => {
+    if (route()[0] !== 'beat-the-model') return;
+    closeContest = unmountWeeklyContest;
+    return renderWeeklyContest(main, { teams: state.byId, weeklyPicksUrl: publicationPath('weekly-picks'), season: state.snapshot.season });
+  }).catch(error => {
+    if (route()[0] === 'beat-the-model') main.innerHTML = '<div class="wrap page-content"><p role="status">Beat the Model could not load. Please reload this page to try again.</p></div>';
+    console.error(error);
+  });
+}
+function renderHistoryPage(week) {
+  main.innerHTML = '<div class="wrap page-content"><p role="status">Loading weekly SOR history…</p></div>';
+  historyModule ??= import('./ranking-history.js?v=1');
+  historyModule.then(({ renderRankingHistory, unmountRankingHistory }) => {
+    if (route()[0] !== 'ranking-history') return;
+    closeHistory = unmountRankingHistory;
+    return renderRankingHistory(main, { week });
+  }).catch(error => {
+    if (route()[0] === 'ranking-history') main.innerHTML = '<div class="wrap page-content"><p role="status">Weekly SOR history could not load. Please reload this page to try again.</p></div>';
+    console.error(error);
+  });
+}
 function render() {
   if(!state.snapshot)return;
   renderHeader();
@@ -730,12 +760,20 @@ function render() {
     closeBracket();
     closeBracket = undefined;
   }
+  if (page !== 'beat-the-model' && closeContest) {
+    closeContest();
+    closeContest = undefined;
+  }
+  if (page !== 'ranking-history' && closeHistory) {
+    closeHistory();
+    closeHistory = undefined;
+  }
   if (page === 'rankings') {
     state.model = id === 'strength' || (id === 'performance' && hasPerformance()) ? id : 'achievement';
     state.all = id === 'all' || scope === 'all';
   }
-  if(page==='home')renderHome();else if(page==='rankings')renderRankings();else if(page==='teams')renderTeams();else if(page==='team')renderTeam(id);else if(page==='methodology')renderMethodology();else if(page==='compare')renderCompare();else if (page === 'polls' || page === 'forge-top-25') renderRankingEditions(page,id,scope);else if (page === 'bracket') renderBracketPage();else renderHome();
-  const team=state.byId.get(id);document.title=`${page==='team'&&team?team.name:({home:'FBS Top 25',rankings:'National rankings',teams:'Team directory',compare:id==='weekly'?'Weekly picks':'Matchup lab',methodology:'Methodology',polls:'Compare Rankings','forge-top-25':'Forge’s Top 25',bracket:'Playoff Bracket'}[page]||'Home')} · ${BRAND}`;
+  if(page==='home')renderHome();else if(page==='rankings')renderRankings();else if(page==='teams')renderTeams();else if(page==='team')renderTeam(id);else if(page==='methodology')renderMethodology();else if(page==='compare')renderCompare();else if (page === 'polls' || page === 'forge-top-25') renderRankingEditions(page,id,scope);else if (page === 'bracket') renderBracketPage();else if (page === 'beat-the-model') renderContestPage();else if (page === 'ranking-history') renderHistoryPage(id);else renderHome();
+  const team=state.byId.get(id);document.title=`${page==='team'&&team?team.name:({home:'FBS Top 25',rankings:'National rankings',teams:'Team directory',compare:id==='weekly'?'Weekly picks':'Matchup lab',methodology:'Methodology',polls:'Compare Rankings','forge-top-25':'Forge’s Top 25',bracket:'Playoff Bracket','beat-the-model':'Beat the Model','ranking-history':'Weekly SOR movement'}[page]||'Home')} · ${BRAND}`;
   document.querySelector('#announce').textContent=document.title;
 }
 document.addEventListener('error',e=>{if(e.target instanceof HTMLImageElement && e.target.closest('.logo'))e.target.closest('.logo').classList.add('failed');},true);
@@ -806,9 +844,9 @@ async function load(){
     }
   }catch(error){main.innerHTML=`<section class="loading"><h1>The rankings are taking a moment.</h1><p>${dataRoot?'The published data could not load. Please try again shortly.':'The free service may be waking up. Please try again shortly.'}</p><button id="retry" class="button">Try again</button></section>`;document.querySelector('#retry').addEventListener('click',load);console.error(error);}
 }
-if (location.search && new URLSearchParams(location.search).get('cfp') === '1') {
+if (location.search && (new URLSearchParams(location.search).get('cfp') === '1' || new URLSearchParams(location.search).get('weekly') === '1')) {
   const signInReturn = new URL(location.href);
-  signInReturn.hash = 'bracket';
+  signInReturn.hash = new URLSearchParams(location.search).get('weekly') === '1' ? 'beat-the-model' : 'bracket';
   history.replaceState(history.state, '', signInReturn);
 }
 load();

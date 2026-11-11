@@ -4,6 +4,7 @@ import { importSeason, atomicJson } from '../src/ingest.js';
 import { buildWeeklySnapshot } from '../src/weekly.js';
 import { saveEvidence } from '../src/evidence.js';
 import { readPublicationPolicy, publishDivisionSnapshot } from '../src/publication.js';
+import { saveSorHistory } from '../src/ranking-history.js';
 
 if (!process.env.CFBD_API_KEY) throw new Error('Add the CFBD_API_KEY GitHub Actions repository secret; no data was published');
 const year = Number(process.env.RANKING_SEASON || 2026);
@@ -23,6 +24,11 @@ try {
   if (existing?.season === year && snapshot.fbsTeams < existing.fbsTeams) throw new Error('FBS membership unexpectedly shrank; preserving the published snapshot');
   await saveEvidence({ year, dataDir: resolve('data'), outputDir: resolve('evidence/weekly'), snapshot, attemptStartedAt });
   await atomicJson(join('published', 'latest.json'), snapshot);
+  try {
+    await saveSorHistory(snapshot, season);
+  } catch (error) {
+    console.warn(`Weekly rankings published, but SOR history needs a retry: ${error.message}`);
+  }
 } catch (error) {
   await saveEvidence({ year, dataDir: resolve('data'), outputDir: resolve('evidence/weekly'), error, attemptStartedAt });
   throw error;

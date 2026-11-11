@@ -1,0 +1,40 @@
+.history-page { display: grid; gap: 24px; }
+.history-card { padding: 24px; }
+.history-card h2 { margin-bottom: 16px; }
+.history-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }
+.history-toolbar label, .history-search label { font-size: 13px; font-weight: 700; }
+.history-toolbar .text-link { margin-left: auto; }
+.history-context h2 { margin-bottom: 8px; }
+.history-context p { max-width: 850px; color: var(--muted); font-size: 13px; line-height: 1.8; }
+.history-context .history-alert { margin-top: 10px; color: #805717; }
+.history-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.history-movers, .history-members { list-style: none; margin: 0; padding: 0; }
+.history-movers li { padding: 15px 0; border-bottom: 1px solid var(--line); }
+.history-movers li:first-child { padding-top: 0; }
+.history-movers li:last-child { border-bottom: 0; padding-bottom: 0; }
+.history-movers li > div, .history-members li { display: flex; gap: 14px; align-items: center; justify-content: space-between; }
+.history-movers a, .history-members a { font-size: 15px; }
+.history-movers p { margin-top: 5px; font-size: 12px; line-height: 1.7; color: var(--muted); }
+.history-movers .history-positions { color: var(--ink); font-weight: 700; }
+.history-members li { font-size: 13px; padding: 10px 0; }
+.history-members span { white-space: nowrap; color: var(--muted); }
+.history-move { display: inline-block; min-width: 40px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+.history-move.up { color: #087545; }
+.history-move.down { color: #b1343c; }
+.history-search { display: flex; gap: 16px; align-items: center; }
+.history-search input { flex: 1; max-width: 400px; padding: 11px 14px; border: 1px solid var(--line); border-radius: 7px; font: inherit; font-size: 14px; min-width: 0; }
+.history-table { min-width: 640px; }
+.history-table td:nth-child(n+3) { font-variant-numeric: tabular-nums; }
+.history-table td:nth-child(2) { font-weight: 700; }
+@media (max-width: 640px) {
+  .history-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .history-card { padding: 20px; }
+  .history-toolbar .text-link { margin-left: 0; }
+  .history-toolbar select { min-width: 0; max-width: 100%; }
+  .history-search { align-items: flex-start; flex-direction: column; gap: 9px; }
+  .history-search input { width: 100%; }
+  .history-table { min-width: 465px; }
+  .history-table th, .history-table td { padding-inline: 11px; }
+  .history-score-change { display: none; }
+  .history-context p { font-size: 12px; }
+}

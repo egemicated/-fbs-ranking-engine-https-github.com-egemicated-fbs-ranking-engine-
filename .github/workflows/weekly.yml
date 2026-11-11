@@ -58,6 +58,12 @@ jobs:
         if: steps.primary-publish.outcome == 'success'
         continue-on-error: true
         run: node scripts/record-research-comparison.js
+      - name: Update Beat the Model games and grade saved picks
+        if: steps.weekly-picks.outcome == 'success'
+        continue-on-error: true
+        env:
+          CFP_SUPABASE_SECRET_KEY: ${{ secrets.CFP_SUPABASE_SECRET_KEY }}
+        run: node scripts/sync-weekly-contest.js
       - name: Record frozen division candidate and next-week forecasts
         if: steps.primary-publish.outcome == 'success'
         continue-on-error: true
@@ -127,12 +133,14 @@ jobs:
           git add published/latest.json
           git add published/performance-latest.json
           if test -f published/weekly-picks.json; then git add published/weekly-picks.json; fi
+          if test -f frontend/ranking-history.json; then git add frontend/ranking-history.json frontend/ranking-editions.json; fi
           git add research/observations/
           git add research/division-observations/
           git add research/blend-observations/
           git add research/blend-evaluations/
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Publish weekly CFBD rankings'
+          git pull --rebase origin main
           git push origin HEAD:main
       - name: Grade playoff brackets from the saved finals
         if: steps.weekly-picks.outcome == 'success'

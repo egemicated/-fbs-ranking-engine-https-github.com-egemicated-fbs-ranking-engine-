@@ -1605,695 +1605,837 @@
       "rows": [
         {
           "team": "Utah",
+          "rank": 1,
           "record": "9–0",
-          "rank": 1
+          "sor": 3.0762177839168707
         },
         {
           "team": "UCLA",
+          "rank": 2,
           "record": "9–0",
-          "rank": 2
+          "sor": 2.8371020879491953
         },
         {
           "team": "Miami",
+          "rank": 3,
           "record": "8–1",
-          "rank": 3
+          "sor": 2.6206001224203925
         },
         {
           "team": "Georgia",
+          "rank": 4,
           "record": "8–1",
-          "rank": 4
+          "sor": 2.3760037998027927
         },
         {
           "team": "Notre Dame",
+          "rank": 5,
           "record": "8–1",
-          "rank": 5
+          "sor": 2.2673954075375593
         },
         {
           "team": "Alabama",
+          "rank": 6,
           "record": "7–2",
-          "rank": 6
+          "sor": 2.1421604022469167
         },
         {
           "team": "Texas",
+          "rank": 7,
           "record": "7–2",
-          "rank": 7
+          "sor": 2.0838308129553313
         },
         {
           "team": "Boise State",
+          "rank": 8,
           "record": "8–1",
-          "rank": 8
+          "sor": 1.8619944565237097
         },
         {
           "team": "Texas Tech",
+          "rank": 9,
           "record": "8–1",
-          "rank": 9
+          "sor": 1.8566254557416924
         },
         {
           "team": "Kentucky",
+          "rank": 10,
           "record": "7–2",
-          "rank": 10
+          "sor": 1.7651940459751256
         },
         {
           "team": "Indiana",
+          "rank": 11,
           "record": "8–1",
-          "rank": 11
+          "sor": 1.682159537778038
         },
         {
           "team": "BYU",
+          "rank": 12,
           "record": "7–2",
-          "rank": 12
+          "sor": 1.600792196295988
         },
         {
           "team": "Houston",
+          "rank": 13,
           "record": "7–2",
-          "rank": 13
+          "sor": 1.5990841983359834
         },
         {
           "team": "Wake Forest",
+          "rank": 14,
           "record": "8–1",
-          "rank": 14
+          "sor": 1.5073941253572065
         },
         {
           "team": "Tennessee",
+          "rank": 15,
           "record": "7–2",
-          "rank": 15
+          "sor": 1.4726200800590545
         },
         {
           "team": "Oregon",
+          "rank": 16,
           "record": "6–3",
-          "rank": 16
+          "sor": 1.4476112452311178
         },
         {
           "team": "Ole Miss",
+          "rank": 17,
           "record": "6–3",
-          "rank": 17
+          "sor": 1.3402514903217748
         },
         {
           "team": "USC",
+          "rank": 18,
           "record": "7–2",
-          "rank": 18
+          "sor": 1.23447060659983
         },
         {
           "team": "Iowa",
+          "rank": 19,
           "record": "7–2",
-          "rank": 19
+          "sor": 1.2157749184166686
         },
         {
           "team": "Ohio State",
+          "rank": 20,
           "record": "6–3",
-          "rank": 20
+          "sor": 1.1780953921625958
         },
         {
           "team": "Arizona",
+          "rank": 21,
           "record": "7–2",
-          "rank": 21
+          "sor": 1.0891023046800248
         },
         {
           "team": "LSU",
+          "rank": 22,
           "record": "6–3",
-          "rank": 22
+          "sor": 1.0825982013995203
         },
         {
           "team": "New Mexico",
+          "rank": 23,
           "record": "8–1",
-          "rank": 23
+          "sor": 1.0742877632660826
         },
         {
           "team": "South Carolina",
+          "rank": 24,
           "record": "6–3",
-          "rank": 24
+          "sor": 0.9538907080322176
         },
         {
           "team": "UTSA",
+          "rank": 25,
           "record": "7–2",
-          "rank": 25
+          "sor": 0.9402311870372291
         },
         {
           "team": "Oklahoma",
+          "rank": 26,
           "record": "5–4",
-          "rank": 26
+          "sor": 0.8695267896666867
         },
         {
           "team": "Wisconsin",
+          "rank": 27,
           "record": "6–3",
-          "rank": 27
+          "sor": 0.8393098130000644
         },
         {
           "team": "Louisiana Tech",
+          "rank": 28,
           "record": "7–2",
-          "rank": 28
+          "sor": 0.8382617931949411
         },
         {
           "team": "North Texas",
+          "rank": 29,
           "record": "7–2",
-          "rank": 29
+          "sor": 0.7346158387638129
         },
         {
           "team": "North Dakota State",
+          "rank": 30,
           "record": "7–2",
-          "rank": 30
+          "sor": 0.7323037834260417
         },
         {
           "team": "Florida",
+          "rank": 31,
           "record": "5–4",
-          "rank": 31
+          "sor": 0.7269683494655871
         },
         {
           "team": "Oklahoma State",
+          "rank": 32,
           "record": "6–3",
-          "rank": 32
+          "sor": 0.7117060095065368
         },
         {
           "team": "Liberty",
+          "rank": 33,
           "record": "8–1",
-          "rank": 33
+          "sor": 0.709382662995111
         },
         {
           "team": "James Madison",
+          "rank": 34,
           "record": "8–2",
-          "rank": 34
+          "sor": 0.706660707908864
         },
         {
           "team": "Duke",
+          "rank": 35,
           "record": "7–2",
-          "rank": 35
+          "sor": 0.6867852483122898
         },
         {
           "team": "Memphis",
+          "rank": 36,
           "record": "7–2",
-          "rank": 36
+          "sor": 0.6676819089292708
         },
         {
           "team": "Missouri",
+          "rank": 37,
           "record": "6–3",
-          "rank": 37
+          "sor": 0.6602767108069683
         },
         {
           "team": "Clemson",
+          "rank": 38,
           "record": "6–3",
-          "rank": 38
+          "sor": 0.6561669232789684
         },
         {
           "team": "Auburn",
+          "rank": 39,
           "record": "5–4",
-          "rank": 39
+          "sor": 0.628773166715679
         },
         {
           "team": "SMU",
+          "rank": 40,
           "record": "7–2",
-          "rank": 40
+          "sor": 0.5433597242530975
         },
         {
           "team": "Air Force",
+          "rank": 41,
           "record": "7–2",
-          "rank": 41
+          "sor": 0.5326029335520195
         },
         {
           "team": "Northwestern",
+          "rank": 42,
           "record": "6–3",
-          "rank": 42
+          "sor": 0.5224816481084945
         },
         {
           "team": "Louisville",
+          "rank": 43,
           "record": "6–3",
-          "rank": 43
+          "sor": 0.5122752138611559
         },
         {
           "team": "Illinois",
+          "rank": 44,
           "record": "6–3",
-          "rank": 44
+          "sor": 0.5094886626322486
         },
         {
           "team": "Jacksonville State",
+          "rank": 45,
           "record": "7–2",
-          "rank": 45
+          "sor": 0.4805829971619093
         },
         {
           "team": "Baylor",
+          "rank": 46,
           "record": "6–3",
-          "rank": 46
+          "sor": 0.468025189077133
         },
         {
           "team": "North Carolina",
+          "rank": 47,
           "record": "5–4",
-          "rank": 47
+          "sor": 0.4598059747694329
         },
         {
           "team": "Western Michigan",
+          "rank": 48,
           "record": "6–3",
-          "rank": 48
+          "sor": 0.44801790396184477
         },
         {
           "team": "Cincinnati",
+          "rank": 49,
           "record": "5–4",
-          "rank": 49
+          "sor": 0.4426148643136295
         },
         {
           "team": "Ohio",
+          "rank": 50,
           "record": "7–2",
-          "rank": 50
+          "sor": 0.4137994280544891
         },
         {
           "team": "Toledo",
+          "rank": 51,
           "record": "7–2",
-          "rank": 51
+          "sor": 0.411307219199155
         },
         {
           "team": "Pittsburgh",
+          "rank": 52,
           "record": "6–3",
-          "rank": 52
+          "sor": 0.40623908576975487
         },
         {
           "team": "Texas State",
+          "rank": 53,
           "record": "5–4",
-          "rank": 53
+          "sor": 0.3964469717292667
         },
         {
           "team": "Mississippi State",
+          "rank": 54,
           "record": "4–5",
-          "rank": 54
+          "sor": 0.3487151445780581
         },
         {
           "team": "Penn State",
+          "rank": 55,
           "record": "5–4",
-          "rank": 55
+          "sor": 0.34845954672274504
         },
         {
           "team": "Florida Atlantic",
+          "rank": 56,
           "record": "6–3",
-          "rank": 56
+          "sor": 0.34414436669713494
         },
         {
           "team": "UCF",
+          "rank": 57,
           "record": "5–4",
-          "rank": 57
+          "sor": 0.33727034722238064
         },
         {
           "team": "Virginia Tech",
+          "rank": 58,
           "record": "6–3",
-          "rank": 58
+          "sor": 0.3269381884023562
         },
         {
           "team": "Wyoming",
+          "rank": 59,
           "record": "6–3",
-          "rank": 59
+          "sor": 0.2931983654969548
         },
         {
           "team": "Minnesota",
+          "rank": 60,
           "record": "5–4",
-          "rank": 60
+          "sor": 0.28807082341214785
         },
         {
           "team": "West Virginia",
+          "rank": 61,
           "record": "5–4",
-          "rank": 61
+          "sor": 0.2859381927170745
         },
         {
           "team": "Michigan",
+          "rank": 62,
           "record": "5–4",
-          "rank": 62
+          "sor": 0.2813655984272259
         },
         {
           "team": "Iowa State",
+          "rank": 63,
           "record": "4–5",
-          "rank": 63
+          "sor": 0.2563399199371941
         },
         {
           "team": "Louisiana",
+          "rank": 64,
           "record": "6–3",
-          "rank": 64
+          "sor": 0.2513618417212921
         },
         {
           "team": "Buffalo",
+          "rank": 65,
           "record": "6–3",
-          "rank": 65
+          "sor": 0.2392240801173792
         },
         {
           "team": "South Florida",
+          "rank": 66,
           "record": "6–3",
-          "rank": 66
+          "sor": 0.23167053683286304
         },
         {
           "team": "Nebraska",
+          "rank": 67,
           "record": "5–4",
-          "rank": 67
+          "sor": 0.22586244032044114
         },
         {
           "team": "Army",
+          "rank": 68,
           "record": "5–4",
-          "rank": 68
+          "sor": 0.1971694884160916
         },
         {
           "team": "Georgia Southern",
+          "rank": 69,
           "record": "5–4",
-          "rank": 69
+          "sor": 0.1876835748415636
         },
         {
           "team": "Washington",
+          "rank": 70,
           "record": "5–4",
-          "rank": 70
+          "sor": 0.18518404984936426
         },
         {
           "team": "Texas A&M",
+          "rank": 71,
           "record": "4–5",
-          "rank": 71
+          "sor": 0.17530820211744683
         },
         {
           "team": "Fresno State",
+          "rank": 72,
           "record": "5–4",
-          "rank": 72
+          "sor": 0.16657980483644247
         },
         {
           "team": "Arizona State",
+          "rank": 73,
           "record": "5–4",
-          "rank": 73
+          "sor": 0.1652547329664579
         },
         {
           "team": "UNLV",
+          "rank": 74,
           "record": "5–4",
-          "rank": 74
+          "sor": 0.1631976134896326
         },
         {
           "team": "Oregon State",
+          "rank": 75,
           "record": "5–4",
-          "rank": 75
+          "sor": 0.1459439128727375
         },
         {
           "team": "Vanderbilt",
+          "rank": 76,
           "record": "4–5",
-          "rank": 76
+          "sor": 0.14227910540099373
         },
         {
           "team": "Michigan State",
+          "rank": 77,
           "record": "3–6",
-          "rank": 77
+          "sor": 0.12585205526600934
         },
         {
           "team": "Stanford",
+          "rank": 78,
           "record": "4–5",
-          "rank": 78
+          "sor": 0.12332542686869381
         },
         {
           "team": "Florida State",
+          "rank": 79,
           "record": "4–5",
-          "rank": 79
+          "sor": 0.11594917391230818
         },
         {
           "team": "UAB",
+          "rank": 80,
           "record": "5–4",
-          "rank": 80
+          "sor": 0.11358209876808338
         },
         {
           "team": "TCU",
+          "rank": 81,
           "record": "4–5",
-          "rank": 81
+          "sor": 0.09694811864205892
         },
         {
           "team": "East Carolina",
+          "rank": 82,
           "record": "5–4",
-          "rank": 82
+          "sor": 0.09196302037591228
         },
         {
           "team": "Tulsa",
+          "rank": 83,
           "record": "5–4",
-          "rank": 83
+          "sor": 0.08965131579761607
         },
         {
           "team": "Marshall",
+          "rank": 84,
           "record": "5–4",
-          "rank": 84
+          "sor": 0.0838627437664668
         },
         {
           "team": "Miami (OH)",
+          "rank": 85,
           "record": "5–4",
-          "rank": 85
+          "sor": 0.08256448888647276
         },
         {
           "team": "Syracuse",
+          "rank": 86,
           "record": "4–5",
-          "rank": 86
+          "sor": 0.08172019455688705
         },
         {
           "team": "Arkansas",
+          "rank": 87,
           "record": "3–6",
-          "rank": 87
+          "sor": 0.07950177463132661
         },
         {
           "team": "San Diego State",
+          "rank": 88,
           "record": "4–5",
-          "rank": 88
+          "sor": 0.07389376291429804
         },
         {
           "team": "Virginia",
+          "rank": 89,
           "record": "4–5",
-          "rank": 89
+          "sor": 0.06950077122012936
         },
         {
           "team": "NC State",
+          "rank": 90,
           "record": "4–5",
-          "rank": 90
+          "sor": 0.06695282944353105
         },
         {
           "team": "Utah State",
+          "rank": 91,
           "record": "4–5",
-          "rank": 91
+          "sor": 0.06607727784199155
         },
         {
           "team": "Tulane",
+          "rank": 92,
           "record": "4–5",
-          "rank": 92
+          "sor": 0.06473953659092518
         },
         {
           "team": "South Alabama",
+          "rank": 93,
           "record": "4–5",
-          "rank": 93
+          "sor": 0.061225373684965397
         },
         {
           "team": "Colorado",
+          "rank": 94,
           "record": "3–6",
-          "rank": 94
+          "sor": 0.060329890415641706
         },
         {
           "team": "App State",
+          "rank": 95,
           "record": "5–4",
-          "rank": 95
+          "sor": 0.05879453371885773
         },
         {
           "team": "Boston College",
+          "rank": 96,
           "record": "4–5",
-          "rank": 96
+          "sor": 0.058417287921496926
         },
         {
           "team": "Central Michigan",
+          "rank": 97,
           "record": "4–5",
-          "rank": 97
+          "sor": 0.052221229560334904
         },
         {
           "team": "California",
+          "rank": 98,
           "record": "3–6",
-          "rank": 98
+          "sor": 0.04740448052187019
         },
         {
           "team": "Georgia State",
+          "rank": 99,
           "record": "5–4",
-          "rank": 99
+          "sor": 0.04455776425976981
         },
         {
           "team": "Middle Tennessee",
+          "rank": 100,
           "record": "5–4",
-          "rank": 100
+          "sor": 0.04062904476357549
         },
         {
           "team": "Florida International",
+          "rank": 101,
           "record": "4–5",
-          "rank": 101
+          "sor": 0.03648186094647719
         },
         {
           "team": "Kansas State",
+          "rank": 102,
           "record": "4–5",
-          "rank": 102
+          "sor": 0.036404447495001546
         },
         {
           "team": "Purdue",
+          "rank": 103,
           "record": "3–6",
-          "rank": 103
+          "sor": 0.03611580391692721
         },
         {
           "team": "Colorado State",
+          "rank": 104,
           "record": "3–6",
-          "rank": 104
+          "sor": 0.03523786927432245
         },
         {
           "team": "San José State",
+          "rank": 105,
           "record": "5–5",
-          "rank": 105
+          "sor": 0.029609636585689145
         },
         {
           "team": "Navy",
+          "rank": 106,
           "record": "3–6",
-          "rank": 106
+          "sor": 0.023933291894733647
         },
         {
           "team": "Troy",
+          "rank": 107,
           "record": "4–5",
-          "rank": 107
+          "sor": 0.023479569212043222
         },
         {
           "team": "Kansas",
+          "rank": 108,
           "record": "3–6",
-          "rank": 108
+          "sor": 0.020257460130486214
         },
         {
           "team": "Maryland",
+          "rank": 109,
           "record": "3–6",
-          "rank": 109
+          "sor": 0.01658540911183167
         },
         {
           "team": "Massachusetts",
+          "rank": 110,
           "record": "5–4",
-          "rank": 110
+          "sor": 0.014410517729849324
         },
         {
           "team": "UConn",
+          "rank": 111,
           "record": "4–5",
-          "rank": 111
+          "sor": 0.014225984780297272
         },
         {
           "team": "Arkansas State",
+          "rank": 112,
           "record": "4–5",
-          "rank": 112
+          "sor": 0.013648794321685058
         },
         {
           "team": "Nevada",
+          "rank": 113,
           "record": "3–6",
-          "rank": 113
+          "sor": 0.010972197093765382
         },
         {
           "team": "Delaware",
+          "rank": 114,
           "record": "4–5",
-          "rank": 114
+          "sor": 0.01069364315522509
         },
         {
           "team": "Eastern Michigan",
+          "rank": 115,
           "record": "4–6",
-          "rank": 115
+          "sor": 0.010669619678461756
         },
         {
           "team": "Ball State",
+          "rank": 116,
           "record": "3–6",
-          "rank": 116
+          "sor": 0.0074299170755421345
         },
         {
           "team": "Hawai'i",
+          "rank": 117,
           "record": "3–6",
-          "rank": 117
+          "sor": 0.004847817734602398
         },
         {
           "team": "Kent State",
+          "rank": 118,
           "record": "3–6",
-          "rank": 118
+          "sor": 0.004711875639794879
         },
         {
           "team": "Old Dominion",
+          "rank": 119,
           "record": "3–7",
-          "rank": 119
+          "sor": 0.003919845912782181
         },
         {
           "team": "Kennesaw State",
+          "rank": 120,
           "record": "3–6",
-          "rank": 120
+          "sor": 0.0037232444914910186
         },
         {
           "team": "Coastal Carolina",
+          "rank": 121,
           "record": "3–6",
-          "rank": 121
+          "sor": 0.0033854409861249282
         },
         {
           "team": "Southern Miss",
+          "rank": 122,
           "record": "3–6",
-          "rank": 122
+          "sor": 0.003314998462049972
         },
         {
           "team": "Georgia Tech",
+          "rank": 123,
           "record": "2–7",
-          "rank": 123
+          "sor": 0.002850775485883455
         },
         {
           "team": "Rutgers",
+          "rank": 124,
           "record": "2–7",
-          "rank": 124
+          "sor": 0.0025271168109397635
         },
         {
           "team": "New Mexico State",
+          "rank": 125,
           "record": "3–6",
-          "rank": 125
+          "sor": 0.002111429487984656
         },
         {
           "team": "Bowling Green",
+          "rank": 126,
           "record": "2–7",
-          "rank": 126
+          "sor": 0.001370846805734224
         },
         {
           "team": "Western Kentucky",
+          "rank": 127,
           "record": "3–6",
-          "rank": 127
+          "sor": 0.0013570456845363385
         },
         {
           "team": "Missouri State",
+          "rank": 128,
           "record": "3–6",
-          "rank": 128
+          "sor": 0.0008425697516085488
         },
         {
           "team": "UL Monroe",
+          "rank": 129,
           "record": "2–7",
-          "rank": 129
+          "sor": 0.0006586447942416176
         },
         {
           "team": "Temple",
+          "rank": 130,
           "record": "2–7",
-          "rank": 130
+          "sor": 0.00017085322265711467
         },
         {
           "team": "Rice",
+          "rank": 131,
           "record": "1–8",
-          "rank": 131
+          "sor": 0.00014603294438628433
         },
         {
           "team": "Washington State",
+          "rank": 132,
           "record": "1–8",
-          "rank": 132
+          "sor": 0.00005944330112238241
         },
         {
           "team": "Sacramento State",
+          "rank": 133,
           "record": "2–8",
-          "rank": 133
+          "sor": 0.000055873002582435315
         },
         {
           "team": "Akron",
+          "rank": 134,
           "record": "1–8",
-          "rank": 134
+          "sor": 0.000012934394228515167
         },
         {
           "team": "Charlotte",
+          "rank": 135,
           "record": "1–8",
-          "rank": 135
+          "sor": 0.000009947124869685818
         },
         {
           "team": "UTEP",
+          "rank": 136,
           "record": "1–8",
-          "rank": 136
+          "sor": 0.000006156094383841059
         },
         {
           "team": "Sam Houston",
+          "rank": 137,
           "record": "1–8",
-          "rank": 137
+          "sor": 0.000001929341413767575
         },
         {
           "team": "Northern Illinois",
+          "rank": 138,
           "record": "0–9",
-          "rank": 138
+          "sor": 0
         }
-      ]
+      ],
+      "asOf": "2026-11-08T19:16:55.258Z",
+      "modelId": "division-sor-v2",
+      "snapshotHash": "1cba520c894e2a14c4b9356025b40fd93295f84e0630b27ec5e9583797ccfd61",
+      "publicationHash": "7f16a93d77c5cd85a164718615c089b95edc5c392542205eeb111953fd26d34b"
     }
   ],
   "polls": {
