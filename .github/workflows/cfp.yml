@@ -1,14 +1,10 @@
 name: CFP committee rankings
 on:
   schedule:
-    # Start a minute before each 2026 broadcast window opens.
-    - cron: '59 18 10,17 11 *'
+    # Check at 8:00 p.m. Mountain, with one backup at 8:05 p.m.
+    - cron: '0,5 20 17,24 11 *'
       timezone: 'America/Denver'
-    - cron: '29 17 24 11 *'
-      timezone: 'America/Denver'
-    - cron: '59 16 1 12 *'
-      timezone: 'America/Denver'
-    - cron: '59 9 6 12 *'
+    - cron: '0,5 20 1,6 12 *'
       timezone: 'America/Denver'
   workflow_dispatch:
     inputs:
@@ -23,7 +19,7 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 225
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
@@ -31,7 +27,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Wait for the official CFP Top 25
+      - name: Check for the official CFP Top 25
         env:
           CFP_RELEASE_DATE: ${{ inputs.release_date }}
         run: node scripts/publish-cfp-poll.js
