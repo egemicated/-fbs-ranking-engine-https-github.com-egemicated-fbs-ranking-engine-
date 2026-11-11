@@ -2841,6 +2841,114 @@
             "record": "7–1"
           }
         ]
+      },
+      {
+        "week": 10,
+        "gamesThrough": "2026-11-07",
+        "released": "2026-11-10",
+        "url": "https://collegefootballplayoff.com/rankings",
+        "rows": [
+          {
+            "team": "Georgia",
+            "record": "8–1"
+          },
+          {
+            "team": "Utah",
+            "record": "9–0"
+          },
+          {
+            "team": "Alabama",
+            "record": "7–2"
+          },
+          {
+            "team": "UCLA",
+            "record": "9–0"
+          },
+          {
+            "team": "Notre Dame",
+            "record": "8–1"
+          },
+          {
+            "team": "Texas",
+            "record": "7–2"
+          },
+          {
+            "team": "Miami",
+            "record": "8–1"
+          },
+          {
+            "team": "Tennessee",
+            "record": "7–2"
+          },
+          {
+            "team": "Indiana",
+            "record": "8–1"
+          },
+          {
+            "team": "BYU",
+            "record": "7–2"
+          },
+          {
+            "team": "Kentucky",
+            "record": "7–2"
+          },
+          {
+            "team": "Texas Tech",
+            "record": "8–1"
+          },
+          {
+            "team": "Wake Forest",
+            "record": "8–1"
+          },
+          {
+            "team": "Houston",
+            "record": "7–2"
+          },
+          {
+            "team": "Iowa",
+            "record": "7–2"
+          },
+          {
+            "team": "Oregon",
+            "record": "6–3"
+          },
+          {
+            "team": "South Carolina",
+            "record": "6–3"
+          },
+          {
+            "team": "USC",
+            "record": "7–2"
+          },
+          {
+            "team": "Ole Miss",
+            "record": "6–3"
+          },
+          {
+            "team": "Ohio State",
+            "record": "6–3"
+          },
+          {
+            "team": "LSU",
+            "record": "6–3"
+          },
+          {
+            "team": "Missouri",
+            "record": "6–3"
+          },
+          {
+            "team": "Arizona",
+            "record": "7–2"
+          },
+          {
+            "team": "Boise State",
+            "record": "8–1"
+          },
+          {
+            "team": "Oklahoma State",
+            "record": "6–3"
+          }
+        ]
       }
     ]
   },
