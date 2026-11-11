@@ -753,7 +753,7 @@ function renderBracketPage() {
 }
 function renderContestPage() {
   main.innerHTML = '<div class="wrap page-content"><p role="status">Loading Beat the Model…</p></div>';
-  contestModule ??= import('./weekly-contest.js?v=team-stats');
+  contestModule ??= import('./weekly-contest.js?v=team-stats-aligned');
   contestModule.then(({ renderWeeklyContest, unmountWeeklyContest }) => {
     if (route()[0] !== 'beat-the-model') return;
     closeContest = unmountWeeklyContest;

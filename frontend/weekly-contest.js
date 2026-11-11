@@ -145,7 +145,7 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
     const expandedTeamStats = new Set();
 
     function showTeamStats() {
-      if (!current() || !teamStats) return;
+      if (!current() || !teamStats || Date.parse(teamStats.asOf) !== Date.parse(contest?.observedAt)) return;
       const gamesById = new Map(games.map(game => [game.id, game]));
       for (const slot of root.querySelectorAll('[data-contest-team-stats]')) {
         const game = gamesById.get(slot.dataset.contestTeamStats);
