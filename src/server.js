@@ -8,6 +8,7 @@ import { readPerformance } from './performance-publication.js';
 import { publicRankings, publicTeamDetails } from './site-publication.js';
 import { matchupValidation, snapshotCoverage } from './site-validation.js';
 import { buildWeeklyTeamStats } from '../frontend/weekly-team-stats.js';
+import { browserSorSource, buildScenarioPublication } from './scenario-publication.js';
 
 const directory = resolve(process.env.DATA_DIR || 'data', 'snapshots');
 // Read-only API. No login to view public sports ratings; no write/admin routes.
@@ -22,6 +23,11 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     ['/bracket.css', ['bracket.css', 'text/css; charset=utf-8']],
     ['/bracket-config.json', ['bracket-config.json', 'application/json; charset=utf-8']],
     ['/bracket-demo.json', ['bracket-demo.json', 'application/json; charset=utf-8']],
+    ['/cfp-scenario.js', ['cfp-scenario.js', 'text/javascript; charset=utf-8']],
+    ['/cfp-scenario-model.js', ['cfp-scenario-model.js', 'text/javascript; charset=utf-8']],
+    ['/cfp-scenario-field.js', ['cfp-scenario-field.js', 'text/javascript; charset=utf-8']],
+    ['/cfp-scenario-worker.js', ['cfp-scenario-worker.js', 'text/javascript; charset=utf-8']],
+    ['/cfp-scenario.css', ['cfp-scenario.css', 'text/css; charset=utf-8']],
     ['/ranking-editions.json', ['ranking-editions.json', 'application/json; charset=utf-8']],
     ['/weekly-picks-score.js', ['weekly-picks-score.js', 'text/javascript; charset=utf-8']],
     ['/weekly-team-stats.js', ['weekly-team-stats.js', 'text/javascript; charset=utf-8']],
@@ -74,6 +80,23 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
       } catch (error) {
         return send(error.code === 'ENOENT' ? 404 : 503, { error: 'Weekly picks are unavailable' });
       }
+    }
+    if (path === '/scenario-sor.js') {
+      try {
+        const source = await browserSorSource();
+        res.setHeader('Content-Type', 'text/javascript; charset=utf-8');
+        res.writeHead(200); res.end(req.method === 'HEAD' ? undefined : source); return;
+      } catch { return send(503, { error: 'Scenario calculator unavailable' }); }
+    }
+    if (path === '/cfp-scenarios') {
+      try {
+        const [snapshot, weekly] = await Promise.all([
+          readFile(join(snapshotDirectory, 'latest.json'), 'utf8').then(JSON.parse),
+          readFile(new URL('../published/weekly-picks.json', import.meta.url), 'utf8').then(JSON.parse),
+        ]);
+        const scenario = buildScenarioPublication(snapshot, weekly, publicationPolicy);
+        return scenario ? send(200, scenario) : send(503, { error: 'CFP scenarios are unavailable' });
+      } catch { return send(503, { error: 'CFP scenarios are unavailable' }); }
     }
     const match = /^\/rankings(?:\/(\d{4}))?(?:\/teams\/([^/]+)\.json)?$/.exec(path);
     if (!match) return send(404, { error: 'Not found' });

@@ -254,6 +254,7 @@ export async function renderBracket(main, teams) {
     <h1>Playoff Bracket</h1><p>Pick the winners, follow the results, and see where your bracket stands.</p></div></section>
     <div class="wrap page-content bracket-page" data-bracket-view="${view}"><nav class="matchup-views bracket-tabs" aria-label="Playoff bracket">
     ${[['entry', '#bracket', 'My bracket'], ['leaderboard', '#bracket/leaderboard', 'Leaderboard'], ['demo', '#bracket/demo', '2025 demo']].map(([tab, path, label]) => `<a href="${path}"${tab === view ? ' aria-current="page"' : ''}>${label}</a>`).join('')}
+    <a href="#cfp-scenarios">CFP Scenario Builder</a>
     </nav><div data-bracket-content><p class="compact-note" role="status">Loading the bracket…</p></div></div>`;
   const root = main.querySelector('[data-bracket-content]');
   const current = () => root.isConnected && location.hash.split('/')[0] === '#bracket' && bracketView() === view;

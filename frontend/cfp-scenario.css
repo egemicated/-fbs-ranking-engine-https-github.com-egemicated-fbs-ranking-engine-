@@ -1,0 +1,70 @@
+.scenario-page { min-width: 0; }
+.scenario-page .panel-body { min-width: 0; }
+.scenario-summary { margin-bottom: 18px; }
+.scenario-summary p { margin-top: 5px; }
+.scenario-actions, .scenario-projection-heading { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.scenario-actions { margin-block: 12px 4px; }
+.scenario-status { min-height: 1.5em; color: #174f9c; font-weight: 700; }
+.scenario-layout { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: start; gap: 18px; }
+.scenario-editor, .scenario-output { display: grid; min-width: 0; gap: 16px; }
+.scenario-projection-heading { justify-content: space-between; margin-bottom: 5px; }
+.scenario-projection-status { margin-block: 10px; color: #174f9c; font-weight: 700; font-size: 12px; }
+.scenario-filter, .scenario-form, .scenario-champion-inputs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; align-items: end; margin-block: 13px; }
+.scenario-filter label, .scenario-form label, .scenario-champion-inputs label { display: grid; min-width: 0; gap: 4px; font-size: 12px; font-weight: 700; }
+.scenario-page select { width: 100%; min-width: 0; max-width: 100%; }
+.scenario-form .button { justify-self: start; }
+.scenario-form .compact-note, .scenario-form-message { grid-column: 1 / -1; }
+.scenario-form-message { min-height: 1.35em; color: #174f9c; font-size: 12px; }
+.scenario-game-count { margin: 8px 0 10px; }
+.scenario-games, .scenario-field, .scenario-first-round ul, .scenario-assumed ul { list-style: none; padding: 0; margin: 0; }
+.scenario-games { display: grid; gap: 8px; }
+.scenario-game { padding: 9px 10px 10px; border: 1px solid var(--line); border-radius: 8px; background: white; }
+.scenario-game-meta { display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin-bottom: 6px; color: var(--muted); font-size: 11px; }
+.scenario-choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.scenario-choice { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2px 8px; min-width: 0; min-height: 42px; border: 1px solid var(--line); border-radius: 7px; background: #f7faff; padding: 7px 9px; text-align: left; font-size: 12px; font-weight: 700; }
+.scenario-choice span { overflow-wrap: anywhere; }
+.scenario-choice small { color: #28578a; font-size: 10px; white-space: nowrap; }
+.scenario-choice[aria-pressed="true"] { background: #e7f2ff; color: #124b91; border-color: #387cd0; box-shadow: inset 0 0 0 1px #387cd0; }
+.scenario-text-button { padding: 2px 0; border: 0; background: transparent; color: #174f9c; font-size: 11px; font-weight: 700; text-decoration: underline; text-align: left; }
+.scenario-pagination { justify-content: space-between; }
+.scenario-details summary { padding: 13px 18px; font: 700 21px Barlow, 'Arial Narrow', sans-serif; cursor: pointer; }
+.scenario-details[open] summary { border-bottom: 1px solid var(--line); }
+.scenario-field { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.scenario-field li { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 7px 9px; background: white; }
+.scenario-field li + li { border-top: 1px solid var(--line); }
+.scenario-field li:nth-child(-n+4) { background: #f0f6fe; }
+.scenario-seed { display: grid; place-items: center; min-height: 27px; border-radius: 5px; color: #174f9c; background: #e0efff; font: 700 19px Barlow, 'Arial Narrow', sans-serif; }
+.scenario-field strong, .scenario-field small { display: block; overflow-wrap: anywhere; }
+.scenario-field strong { font-size: 13px; }
+.scenario-field small { color: var(--muted); font-size: 10px; }
+.scenario-field-record { text-align: right; white-space: nowrap; }
+.scenario-first-round, .scenario-assumed { margin-top: 16px; }
+.scenario-first-round h3, .scenario-assumed h3 { margin-bottom: 6px; font-size: 21px; }
+.scenario-first-round ul { display: grid; gap: 6px; }
+.scenario-first-round li { padding: 7px 9px; border: 1px solid var(--line); border-radius: 6px; background: #f7faff; overflow-wrap: anywhere; }
+.scenario-first-round strong, .scenario-first-round span { display: block; }
+.scenario-first-round strong { font-size: 12px; }
+.scenario-first-round span { color: var(--muted); font-size: 11px; }
+.scenario-assumed li { display: grid; grid-template-columns: minmax(50px, .75fr) minmax(0, 1fr) auto; gap: 6px; align-items: baseline; padding-block: 4px; border-top: 1px solid var(--line); font-size: 11px; overflow-wrap: anywhere; }
+.scenario-assumed small { color: var(--muted); }
+.scenario-all-rankings { display: flex; align-items: center; gap: 7px; padding: 9px 14px; color: #174f9c; font-size: 12px; font-weight: 700; }
+.scenario-all-rankings input { margin: 0; }
+.scenario-rankings { width: 100%; table-layout: fixed; font-variant-numeric: tabular-nums; }
+.scenario-rankings th, .scenario-rankings td { padding: 7px 6px; font-size: 11px; overflow-wrap: anywhere; }
+.scenario-rankings th { white-space: normal; }
+.scenario-rankings th[scope="row"] { background: transparent; color: var(--ink); text-transform: none; letter-spacing: normal; font-weight: 700; }
+.scenario-rankings th:first-child { width: 11%; }
+.scenario-rankings th:nth-child(2) { width: 43%; }
+.scenario-rankings th:nth-child(3), .scenario-rankings th:nth-child(4) { width: 14%; }
+.scenario-muted { color: var(--muted); }
+.scenario-movement { white-space: nowrap; font-weight: 700; }
+.scenario-movement.up { color: #17623d; }
+.scenario-movement.down { color: #942d26; }
+@media (max-width: 760px) {
+  .scenario-layout { grid-template-columns: minmax(0, 1fr); }
+  .scenario-actions .button { padding-inline: 12px; }
+}
+@media (max-width: 410px) {
+  .scenario-filter, .scenario-form, .scenario-champion-inputs { grid-template-columns: minmax(0, 1fr); }
+  .scenario-rankings th, .scenario-rankings td { padding-inline: 4px; font-size: 10px; letter-spacing: normal; }
+}

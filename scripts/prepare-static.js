@@ -6,6 +6,7 @@ import { publicRankings, publicTeamDetails } from '../src/site-publication.js';
 import { matchupValidation, snapshotCoverage } from '../src/site-validation.js';
 import { UPDATE_SCHEDULE } from '../src/weekly.js';
 import { buildWeeklyTeamStats } from '../frontend/weekly-team-stats.js';
+import { browserSorSource, buildScenarioPublication } from '../src/scenario-publication.js';
 
 const root = resolve(import.meta.dirname, '..');
 const frontend = join(root, 'frontend');
@@ -50,17 +51,24 @@ await Promise.all(staleTeamFiles.map(file => rm(join(teamDirectory, file.name), 
 const performanceFile = join(data, 'performance.json');
 const picksFile = join(data, 'weekly-picks.json');
 const statsFile = join(data, 'weekly-team-stats.json');
-const weeklyStats = await readFile(join(published, 'weekly-picks.json'), 'utf8')
-  .then(source => buildWeeklyTeamStats(JSON.parse(source)))
+const scenarioFile = join(data, 'cfp-scenarios.json');
+const weeklySource = readFile(join(published, 'weekly-picks.json'), 'utf8').then(JSON.parse);
+const weeklyStats = await weeklySource.then(buildWeeklyTeamStats)
   .catch(error => {
     if (error.code !== 'ENOENT') console.warn('Weekly team stats are unavailable:', error.message);
     return null;
   });
+const scenario = await weeklySource.then(weekly => buildScenarioPublication(snapshot, weekly, policy)).catch(error => {
+  if (error.code !== 'ENOENT') console.warn('CFP scenarios are unavailable:', error.message);
+  return null;
+});
 await Promise.all([
   writeFile(join(output, 'index.html'), html.replace(marker, '<meta name="publication-data-root" content="/data">')),
   writeFile(join(data, 'rankings.json'), JSON.stringify(publicSnapshot)),
   performance ? writeFile(performanceFile, JSON.stringify(performance)) : rm(performanceFile, { force: true }),
   weeklyStats ? writeFile(statsFile, JSON.stringify(weeklyStats)) : rm(statsFile, { force: true }),
+  scenario ? writeFile(scenarioFile, JSON.stringify(scenario)) : rm(scenarioFile, { force: true }),
+  browserSorSource().then(source => writeFile(join(output, 'scenario-sor.js'), source)),
   cp(join(published, 'weekly-picks.json'), picksFile).catch(error => {
     if (error.code !== 'ENOENT') throw error;
     return rm(picksFile, { force: true });

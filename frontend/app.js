@@ -8,6 +8,8 @@ const weeklyPicks = { request: null, status: 'loading', scoring: null, scoringEr
 const rankingEditions = { data: null, request: null, failed: false };
 let bracketModule;
 let closeBracket;
+let scenarioModule;
+let closeScenario;
 let contestModule;
 let closeContest;
 let historyModule;
@@ -111,7 +113,7 @@ function renderHeader() {
   const page = route()[0];
   if (renderedHeader?.snapshot === state.snapshot && renderedHeader.page === page) return;
   renderedHeader = { snapshot: state.snapshot, page };
-  const navs = [['home','home','Home'],['rankings','trophy','Rankings'],['ranking-history','chart','Weekly movement'],['teams','teams','Teams'],['compare','compare','Matchup lab'],['beat-the-model','trophy','Beat the Model'],['polls','layers','Compare rankings'],['bracket','network','Playoff bracket'],['methodology','layers','Methodology']];
+  const navs = [['home','home','Home'],['rankings','trophy','Rankings'],['ranking-history','chart','Weekly movement'],['teams','teams','Teams'],['compare','compare','Matchup lab'],['beat-the-model','trophy','Beat the Model'],['polls','layers','Compare rankings'],['bracket','network','Playoff bracket'],['cfp-scenarios','network','CFP scenarios'],['methodology','layers','Methodology']];
   const primaryPages = ['home', 'rankings', 'beat-the-model'];
   const activePage = page === 'team' ? 'teams' : page;
   const link = ([id, glyph, label], placement = '') => `<a href="#${id}" class="${placement}${activePage === id ? ' active' : ''}" ${page === id ? 'aria-current="page"' : ''}>${icon(glyph)}${label}</a>`;
@@ -739,7 +741,7 @@ function renderRankingEditions(page, id, scope) {
 function renderBracketPage() {
   if (!bracketModule) {
     main.innerHTML = '<div class="wrap page-content"><p role="status">Loading the playoff bracket…</p></div>';
-    bracketModule = import('./bracket.js?v=3');
+    bracketModule = import('./bracket.js?v=4');
   }
   bracketModule.then(({ renderBracket, unmountBracket }) => {
     if (route()[0] !== 'bracket') return;
@@ -748,6 +750,22 @@ function renderBracketPage() {
     return renderBracket(main, teams);
   }).catch(error => {
     if (route()[0] === 'bracket') main.innerHTML = '<div class="wrap page-content"><p role="status">The playoff bracket could not load. Refresh to try again.</p></div>';
+    console.error(error);
+  });
+}
+function renderScenarioPage() {
+  main.innerHTML = '<div class="wrap page-content"><p role="status">Loading the CFP Scenario Builder…</p></div>';
+  scenarioModule ??= import('./cfp-scenario.js?v=1');
+  scenarioModule.then(({ renderCfpScenario, unmountCfpScenario }) => {
+    if (route()[0] !== 'cfp-scenarios') return;
+    closeScenario = unmountCfpScenario;
+    return renderCfpScenario(main, {
+      snapshot: state.snapshot,
+      inputUrl: publicationPath('cfp-scenarios'),
+      workerUrl: '/cfp-scenario-worker.js?v=1',
+    });
+  }).catch(error => {
+    if (route()[0] === 'cfp-scenarios') main.innerHTML = '<div class="wrap page-content"><p role="status">The CFP Scenario Builder could not load. Refresh to try again.</p></div>';
     console.error(error);
   });
 }
@@ -783,6 +801,10 @@ function render() {
     closeBracket();
     closeBracket = undefined;
   }
+  if (page !== 'cfp-scenarios' && closeScenario) {
+    closeScenario();
+    closeScenario = undefined;
+  }
   if (page !== 'beat-the-model' && closeContest) {
     closeContest();
     closeContest = undefined;
@@ -795,8 +817,8 @@ function render() {
     state.model = id === 'strength' || (id === 'performance' && hasPerformance()) ? id : 'achievement';
     state.all = id === 'all' || scope === 'all';
   }
-  if(page==='home')renderHome();else if(page==='rankings')renderRankings();else if(page==='teams')renderTeams();else if(page==='team')renderTeam(id);else if(page==='methodology')renderMethodology();else if(page==='compare')renderCompare();else if (page === 'polls' || page === 'forge-top-25') renderRankingEditions(page,id,scope);else if (page === 'bracket') renderBracketPage();else if (page === 'beat-the-model') renderContestPage();else if (page === 'ranking-history') renderHistoryPage(id);else renderHome();
-  const team=state.byId.get(id);document.title=`${page==='team'&&team?team.name:({home:'FBS Top 25',rankings:'National rankings',teams:'Team directory',compare:id==='weekly'?'Weekly picks':'Matchup lab',methodology:'Methodology',polls:'Compare Rankings','forge-top-25':'Forge’s Top 25',bracket:'Playoff Bracket','beat-the-model':'Beat the Model','ranking-history':'Weekly SOR movement'}[page]||'Home')} · ${BRAND}`;
+  if(page==='home')renderHome();else if(page==='rankings')renderRankings();else if(page==='teams')renderTeams();else if(page==='team')renderTeam(id);else if(page==='methodology')renderMethodology();else if(page==='compare')renderCompare();else if (page === 'polls' || page === 'forge-top-25') renderRankingEditions(page,id,scope);else if (page === 'bracket') renderBracketPage();else if (page === 'cfp-scenarios') renderScenarioPage();else if (page === 'beat-the-model') renderContestPage();else if (page === 'ranking-history') renderHistoryPage(id);else renderHome();
+  const team=state.byId.get(id);document.title=`${page==='team'&&team?team.name:({home:'FBS Top 25',rankings:'National rankings',teams:'Team directory',compare:id==='weekly'?'Weekly picks':'Matchup lab',methodology:'Methodology',polls:'Compare Rankings','forge-top-25':'Forge’s Top 25',bracket:'Playoff Bracket','cfp-scenarios':'CFP Scenario Builder','beat-the-model':'Beat the Model','ranking-history':'Weekly SOR movement'}[page]||'Home')} · ${BRAND}`;
   document.querySelector('#announce').textContent=document.title;
 }
 document.addEventListener('error',e=>{if(e.target instanceof HTMLImageElement && e.target.closest('.logo'))e.target.closest('.logo').classList.add('failed');},true);
@@ -876,7 +898,7 @@ async function load(){
       try{
         const performanceResponse=await fetch(snapshot.performanceEndpoint,{headers:{Accept:'application/json'}});
         if (performanceResponse.ok && state.snapshot === snapshot && acceptPerformance(await performanceResponse.json()) &&
-            !['bracket', 'beat-the-model'].includes(route()[0])) render();
+            !['bracket', 'beat-the-model', 'cfp-scenarios'].includes(route()[0])) render();
       }catch{}
     }
   }catch(error){main.innerHTML=`<section class="loading"><h1>The rankings are taking a moment.</h1><p>${dataRoot?'The published data could not load. Please try again shortly.':'The free service may be waking up. Please try again shortly.'}</p><button id="retry" class="button">Try again</button></section>`;document.querySelector('#retry').addEventListener('click',load);console.error(error);}
