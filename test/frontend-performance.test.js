@@ -28,20 +28,22 @@ function fixture(advertise = true) {
   return { snapshot, performance };
 }
 
-async function browser({ snapshot, performance, performanceStatus = 200, rejectPerformance = false }) {
+async function browser({ snapshot, performance, performanceStatus = 200, rejectPerformance = false,
+  initialRoute = '#rankings', performanceGate }) {
   const nodes = new Map(), calls = [], errors = [], listeners = new Map();
   const node = id => {
-    if (!nodes.has(id)) nodes.set(id, { innerHTML: '', textContent: '', addEventListener() {} });
+    if (!nodes.has(id)) nodes.set(id, { innerHTML: '', textContent: '', querySelector: node, addEventListener() {} });
     return nodes.get(id);
   };
   const context = { document: { querySelector: node, addEventListener: (name, callback) => {
     if (!listeners.has(name)) listeners.set(name, []); listeners.get(name).push(callback);
-  }, title: '' }, location: { hash: '#rankings' }, window: { addEventListener() {}, scrollTo() {} },
+  }, title: '' }, location: { hash: initialRoute }, window: { addEventListener() {}, scrollTo() {} },
     HTMLImageElement: class {}, console: { error: error => errors.push(error) },
     fetch: async path => {
       calls.push(path);
       if (path === '/rankings') return { ok: true, json: async () => snapshot };
       assert.equal(path, '/performance');
+      if (performanceGate) await performanceGate;
       if (rejectPerformance) throw new Error('Optional snapshot offline');
       return { ok: performanceStatus === 200, status: performanceStatus, json: async () => performance };
     } };
@@ -49,11 +51,16 @@ async function browser({ snapshot, performance, performanceStatus = 200, rejectP
   vm.runInNewContext(source + '\nglobalThis.ui={state,render,renderRankings,renderTeam,renderMethodology,rankingsContent,ordered,compareResult,acceptPerformance,hasPerformance};', context);
   await new Promise(setImmediate); await new Promise(setImmediate);
   assert.deepEqual(errors, []);
-  return { ...context, calls, node, html: () => node('#main').innerHTML,
+  async function click(action, value) {
+    for (const listener of listeners.get('click') || []) listener({ target: {
+      closest(selector) { return selector === '[data-action]' ? { dataset: { action, value } } : null; }
+    } });
+    await new Promise(setImmediate);
+    return node('#main').innerHTML;
+  }
+  return { ...context, calls, node, html: () => node('#main').innerHTML, click,
     go(hash) { context.location.hash = hash; context.ui.render(); return node('#main').innerHTML; },
-    clickModel(value) { for (const listener of listeners.get('click') || []) listener({ target: {
-      closest(selector) { return selector === '[data-action]' ? { dataset: { action: 'model', value } } : null; }
-    } }); return node('#main').innerHTML; },
+    clickModel: value => click('model', value),
     search(value) { for (const listener of listeners.get('input') || []) listener({ target: { id: 'team-search', value } });
       return node('#ranking-results').innerHTML; },
     conference(value) { for (const listener of listeners.get('change') || []) listener({ target: { id: 'conference-filter', value } });
@@ -63,10 +70,11 @@ async function browser({ snapshot, performance, performanceStatus = 200, rejectP
 
 test('matching Performance snapshot provides a third model with independent ordering, units and coverage', async () => {
   const data = fixture(), before = JSON.stringify(data), page = await browser(data);
-  assert.deepEqual(page.calls, ['/rankings', '/performance']);
+  assert.deepEqual(page.calls, ['/rankings']);
   assert.match(page.html(), /Performance · Experimental/);
   assert.match(page.html(), /SOR score/);
-  const html = page.clickModel('performance');
+  const html = await page.clickModel('performance');
+  assert.deepEqual(page.calls, ['/rankings', '/performance']);
   assert.match(html, /Experimental scrimmage consistency/);
   assert.match(html, /Performance · pp/); assert.match(html, /Offense success/); assert.match(html, /Defense allowed/);
   assert.match(html, /table-rank top">1<\/span>.*?href="#team\/b"/s);
@@ -79,7 +87,7 @@ test('matching Performance snapshot provides a third model with independent orde
 });
 
 test('Performance search and conference filters retain its rank while team pages show the measured evidence', async () => {
-  const page = await browser(fixture()); page.clickModel('performance');
+  const page = await browser(fixture()); await page.clickModel('performance');
   const searched = page.search('Beta');
   assert.match(searched, /href="#team\/b"/); assert.doesNotMatch(searched, /href="#team\/a"/);
   page.search(''); const conference = page.conference('East');
@@ -93,8 +101,9 @@ test('Performance search and conference filters retain its rank while team pages
 });
 
 test('Performance deep link and methodology distinguish consistency from achievement and matchup probability', async () => {
-  const page = await browser(fixture());
-  assert.match(page.go('#rankings/performance'), /Performance · pp/);
+  const page = await browser({ ...fixture(), initialRoute: '#rankings/performance' });
+  assert.match(page.html(), /Performance · pp/);
+  assert.deepEqual(page.calls, ['/rankings', '/performance']);
   const method = page.go('#methodology');
   assert.match(method, /Three views\./); assert.match(method, /03 · Experimental Performance/);
   assert.match(method, /50% of needed yards on first down, 70% on second down, and 100%/);
@@ -109,10 +118,10 @@ test('stale, wrong-season, partial and duplicated Performance artifacts remain u
   for (const change of [p => p.baseSnapshotHash = 'older-game-set', p => p.asOf = '2026-11-05T03:39:55.757Z', p => p.season = 2025,
     p => p.rankings.pop(), p => p.rankings[1].id = 'b', p => p.status = 'approved']) {
     const data = fixture(); change(data.performance); const page = await browser(data);
+    assert.match(await page.clickModel('performance'), /Performance is temporarily unavailable/);
     assert.equal(page.ui.hasPerformance(), false);
-    assert.doesNotMatch(page.html(), /Performance · Experimental/);
-    assert.match(page.html(), /SOR score/);
-    assert.doesNotMatch(page.go('#team/a'), /<h2>Performance<\/h2>/);
+    assert.match(page.go('#rankings'), /SOR score/);
+    assert.doesNotMatch(page.go('#team/a'), /Games measured/);
     assert.doesNotMatch(page.go('#rankings/performance'), /Performance · pp/);
   }
 });
@@ -120,16 +129,19 @@ test('stale, wrong-season, partial and duplicated Performance artifacts remain u
 test('optional Performance failure preserves the primary rankings, while unadvertised snapshots make no extra request', async () => {
   for (const options of [{ performanceStatus: 404 }, { rejectPerformance: true }]) {
     const page = await browser({ ...fixture(), ...options });
+    assert.match(await page.clickModel('performance'), /Performance is temporarily unavailable/);
+    page.go('#rankings');
     assert.match(page.html(), /SOR score/); assert.equal(page.ui.hasPerformance(), false);
     assert.doesNotMatch(page.html(), /rankings are taking a moment/);
   }
   const old = await browser(fixture(false));
+  old.go('#rankings/performance');
   assert.deepEqual(old.calls, ['/rankings']); assert.match(old.html(), /SOR score/);
 });
 
 test('untrusted Performance explanatory text is escaped before display', async () => {
   const data = fixture(); data.performance.limitations = ['<script>unsafe()</script>'];
-  const page = await browser(data); const html = page.clickModel('performance');
+  const page = await browser(data); const html = await page.clickModel('performance');
   assert.match(html, /&lt;script&gt;unsafe\(\)&lt;\/script&gt;/); assert.doesNotMatch(html, /<script>/);
 });
 
@@ -138,9 +150,31 @@ test('team evidence exposes additive model terms in the same displayed percentag
     observedNetContribution: .1, venueContribution: -.01, divisionAdjustmentContribution: -.02,
     opponentContribution: .005, divisionOffset: .08, fbsReferenceAdjustment: -.1225
   };
-  const page = await browser(data); const html = page.go('#team/b');
+  const page = await browser(data);
+  assert.match(page.go('#team/b'), /Show Performance details/);
+  assert.deepEqual(page.calls, ['/rankings']);
+  await page.click('load-performance');
+  assert.deepEqual(page.calls, ['/rankings', '/performance']);
+  const html = page.go('#team/b');
   assert.match(html, /Inspect score contributions/); assert.match(html, /Measured net play success<\/span><strong>\+10\.00 pp/);
   assert.match(html, /FBS-average reference<\/span><strong>-12\.25 pp/);
   assert.match(html, /Performance score<\/span><strong>\+3\.25 pp/);
   assert.match(html, /rounded for display/);
+});
+
+test('a delayed Performance response does not replace another page and is reused on return', async () => {
+  let release;
+  const performanceGate = new Promise(resolve => { release = resolve; });
+  const page = await browser({ ...fixture(), performanceGate });
+  assert.match(page.go('#home'), /Performance · Experimental/);
+  assert.match(page.go('#methodology'), /03 · Experimental Performance/);
+  assert.deepEqual(page.calls, ['/rankings']);
+  assert.match(await page.clickModel('performance'), /Loading Performance/);
+  assert.match(page.go('#rankings/performance/all'), /Loading Performance/);
+  const home = page.go('#home');
+  release();
+  await new Promise(setImmediate);
+  assert.equal(page.html(), home);
+  assert.match(page.go('#rankings/performance/all'), /Performance · pp/);
+  assert.deepEqual(page.calls, ['/rankings', '/performance']);
 });

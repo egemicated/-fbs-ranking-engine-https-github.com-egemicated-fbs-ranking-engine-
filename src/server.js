@@ -39,10 +39,13 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     ['/ranking-history.json', ['ranking-history.json', 'application/json; charset=utf-8']],
     ['/assets/stadium.png', ['assets/stadium.png', 'image/png']],
     ['/assets/stadium.webp', ['assets/stadium.webp', 'image/webp']],
+    ['/assets/stadium-mobile.webp', ['assets/stadium-mobile.webp', 'image/webp']],
     ['/assets/fbs-intelligence-logo.svg', ['assets/fbs-intelligence-logo.svg', 'image/svg+xml']],
     ['/assets/fbs-intelligence-icon.png', ['assets/fbs-intelligence-icon.png', 'image/png']],
     ['/fonts/BarlowCondensed-Bold.ttf', ['fonts/BarlowCondensed-Bold.ttf', 'font/ttf']],
-    ['/fonts/BarlowCondensed-SemiBold.ttf', ['fonts/BarlowCondensed-SemiBold.ttf', 'font/ttf']]
+    ['/fonts/BarlowCondensed-SemiBold.ttf', ['fonts/BarlowCondensed-SemiBold.ttf', 'font/ttf']],
+    ['/fonts/BarlowCondensed-Bold.woff2', ['fonts/BarlowCondensed-Bold.woff2', 'font/woff2']],
+    ['/fonts/BarlowCondensed-SemiBold.woff2', ['fonts/BarlowCondensed-SemiBold.woff2', 'font/woff2']]
   ]);
   return createServer(async (req, res) => {
     res.setHeader('Content-Type', 'application/json; charset=utf-8');

@@ -420,7 +420,7 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
         sharePicks = entry.sharePicks;
         sharePicksImmediately = entry.sharePicksImmediately;
         message = Object.keys(pending).length ? 'Picks saved. You can change each pick until its game kicks off.' : 'Profile saved.';
-        void refreshBoard();
+        if (current() && view === 'leaderboard') refreshLeaderboard();
       } catch {
         messageError = true;
         message = 'Could not confirm your save. A game may have locked. Refresh results to check your saved picks, then try again.';

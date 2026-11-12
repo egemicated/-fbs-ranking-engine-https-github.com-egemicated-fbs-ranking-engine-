@@ -3,6 +3,8 @@ const main = document.querySelector('#main');
 // Static builds set this root. The web service keeps its existing JSON routes.
 const dataRoot = document.querySelector('meta[name="publication-data-root"]')?.content;
 const state = { snapshot: null, byId: new Map(), performance: null, performanceById: new Map(), model: 'achievement', search: '', conference: '', all: false, teamTab: 'overview', compareA: '254', compareB: '2390', venue: 'neutral' };
+let performanceLoading = false;
+let performanceFailed = false;
 const teamDetails = new Map();
 const weeklyPicks = { request: null, status: 'loading', scoring: null, scoringError: false, selectedWeek: '', weeks: new Map(), teams: new Map() };
 const rankingEditions = { data: null, request: null, failed: false };
@@ -53,6 +55,7 @@ function usesSor(t = state.snapshot?.rankings?.[0]) { return Boolean(t && Object
 function nationalRank(t) { return Object.hasOwn(t, 'displayRank') ? t.displayRank : t.rank; }
 function achievementScore(t) { return usesSor(t) ? t.sor : t.achievement; }
 function achievementName() { return usesSor() ? 'Strength of Record' : 'Colley achievement'; }
+function performancePublished() { return state.snapshot?.performanceEndpoint === publicationPath('performance'); }
 function hasPerformance() { return Boolean(state.performance && state.performance.status === 'experimental' && state.performance.season === state.snapshot?.season && state.performance.asOf === state.snapshot.asOf && state.performance.baseSnapshotHash && state.performance.baseSnapshotHash === state.snapshot.snapshotHash); }
 function performanceRow(t) { return hasPerformance() ? state.performanceById.get(t.id) : null; }
 function performanceScore(value) { return Number.isFinite(value) ? `${value > 0 ? '+' : ''}${number(value, 2)} pp` : '—'; }
@@ -70,6 +73,25 @@ function acceptPerformance(snapshot) {
   }
   state.performance = snapshot; state.performanceById = byId;
   return true;
+}
+async function loadPerformance() {
+  if (!performancePublished() || performanceLoading || hasPerformance()) return;
+  const snapshot = state.snapshot;
+  performanceLoading = true;
+  performanceFailed = false;
+  let data;
+  try {
+    const response = await fetch(snapshot.performanceEndpoint, { headers: { Accept: 'application/json' } });
+    if (response.ok) data = await response.json();
+  } catch {
+    // An optional companion view can be retried from its own panel.
+  }
+  if (state.snapshot !== snapshot) return;
+  performanceLoading = false;
+  performanceFailed = !acceptPerformance(data);
+  const [page, id] = route();
+  if (page === 'rankings' && id === 'performance') render();
+  if (page === 'team') updateTeamPerformance(id);
 }
 function conferenceRank(t) {
   if (Object.hasOwn(t, 'displayConferenceRank')) return t.displayConferenceRank;
@@ -108,7 +130,7 @@ function strengthRank(t) { return ordered('strength').findIndex(x => x.id === t.
 function sosRank(t) { return [...state.snapshot.rankings].sort((a,b) => (b.achievementScheduleStrength ?? -1) - (a.achievementScheduleStrength ?? -1)).findIndex(x => x.id === t.id) + 1; }
 function teamLink(t, label = t.name) { return `<a href="#team/${encodeURIComponent(t.id)}">${esc(label)}</a>`; }
 function displayRank(t, model = state.model) { return model === 'achievement' ? rank(nationalRank(t)) : model === 'performance' ? rank(performanceRow(t)?.rank) : rank(strengthRank(t)); }
-function brand() { return `<a class="brand" href="#home" aria-label="${BRAND} home"><img class="brand-logo" src="/assets/fbs-intelligence-logo.svg?v=outline" width="1340" height="430" alt="${BRAND}" fetchpriority="high"></a>`; }
+function brand() { return `<a class="brand" href="#home" aria-label="${BRAND} home"><img class="brand-logo" src="/assets/fbs-intelligence-logo.svg?v=compact" width="1340" height="430" alt="${BRAND}" fetchpriority="high"></a>`; }
 function renderHeader() {
   const page = route()[0];
   if (renderedHeader?.snapshot === state.snapshot && renderedHeader.page === page) return;
@@ -154,18 +176,28 @@ function performanceBreakdown(p) {
   if (!terms.every(([, value]) => Number.isFinite(value))) return '';
   return `<details><summary>Inspect score contributions</summary><div class="fact-list" style="margin-top:12px">${terms.map(([label, value]) => `<div class="fact-row"><span>${label}</span><strong>${performanceScore(100*value)}</strong></div>`).join('')}<div class="fact-row"><span>Performance score</span><strong>${performanceScore(p.score)}</strong></div></div><p class="compact-note">Contributions use percentage-point units and are rounded for display. Opponent and context adjustments come from the model’s results network.</p></details>`;
 }
+function performanceStatus() {
+  if (performanceLoading) return '<p role="status">Loading Performance…</p>';
+  return `${performanceFailed ? '<p role="status">Performance is temporarily unavailable.</p>' : ''}<button type="button" class="button light small" data-action="load-performance">${performanceFailed ? 'Try again' : 'Show Performance details'}</button>`;
+}
 function performanceTeamPanel(t) {
-  const p = performanceRow(t); if (!p) return '';
-  return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('chart')}<h2>Performance</h2></div><span class="tag">EXPERIMENTAL</span></div><div class="panel-body"><div class="section-label">Scrimmage consistency</div><div class="model-rank-label"><strong>${rank(p.rank)}</strong><strong>${performanceScore(p.score)}</strong></div><p class="compact-note">Opponent-adjusted net success rate relative to the measured FBS average.</p><div class="fact-list"><div class="fact-row"><span>Offense success rate</span><strong>${probability(p.offensiveSuccessRate)}</strong></div><div class="fact-row"><span>Opponent success allowed</span><strong>${probability(p.defensiveSuccessRateAllowed)}</strong></div><div class="fact-row"><span>Games measured</span><strong>${esc(p.measuredGames)} / ${esc(p.expectedGames)}</strong></div></div><p class="compact-note">${esc(t.name)} succeeded on ${probability(p.offensiveSuccessRate)} of measured offensive plays; opponents succeeded on ${probability(p.defensiveSuccessRateAllowed)}. The score also accounts for the opponents faced and game location.${p.provisional?' Fewer than four measured games: provisional.':''}</p>${performanceBreakdown(p)}<p class="compact-note">This is a separate experimental view. Historical FBS–FCS forecasting checks remain under review.</p></div><a class="method-link" href="#rankings/performance">Explore Performance rankings ${icon('arrow')}</a></section>`;
+  if (!performancePublished()) return '';
+  const p = performanceRow(t);
+  return `<section class="panel" id="team-performance"><div class="panel-head"><div class="panel-head-title">${icon('chart')}<h2>Performance</h2></div><span class="tag">EXPERIMENTAL</span></div><div class="panel-body">${p ? `<div class="section-label">Scrimmage consistency</div><div class="model-rank-label"><strong>${rank(p.rank)}</strong><strong>${performanceScore(p.score)}</strong></div><p class="compact-note">Opponent-adjusted net success rate relative to the measured FBS average.</p><div class="fact-list"><div class="fact-row"><span>Offense success rate</span><strong>${probability(p.offensiveSuccessRate)}</strong></div><div class="fact-row"><span>Opponent success allowed</span><strong>${probability(p.defensiveSuccessRateAllowed)}</strong></div><div class="fact-row"><span>Games measured</span><strong>${esc(p.measuredGames)} / ${esc(p.expectedGames)}</strong></div></div><p class="compact-note">${esc(t.name)} succeeded on ${probability(p.offensiveSuccessRate)} of measured offensive plays; opponents succeeded on ${probability(p.defensiveSuccessRateAllowed)}. The score also accounts for the opponents faced and game location.${p.provisional?' Fewer than four measured games: provisional.':''}</p>${performanceBreakdown(p)}<p class="compact-note">This is a separate experimental view. Historical FBS–FCS forecasting checks remain under review.</p>` : performanceStatus()}</div><a class="method-link" href="#rankings/performance">Explore Performance rankings ${icon('arrow')}</a></section>`;
+}
+function updateTeamPerformance(id) {
+  const panel = main.querySelector('#team-performance');
+  const team = state.byId.get(id);
+  if (panel && team) panel.outerHTML = performanceTeamPanel(team);
 }
 function performanceMethodology() {
-  if (!hasPerformance()) return '';
+  if (!performancePublished()) return '';
   return `<section class="panel method-block"><div class="section-label">03 · Experimental Performance</div><h2>HOW CONSISTENTLY DID THE TEAM PLAY?</h2><p>This separate view measures scrimmage consistency on CollegeFootballData’s covered plays. A play succeeds when it gains at least 50% of needed yards on first down, 70% on second down, and 100% on third or fourth down, following the source’s scoring-play rules.</p><div class="formula-display">Game net success rate = own offense success rate − opponent offense success rate</div><p>Each measured game receives one weight. Individual opponents, venue and FBS/FCS context inform an opponent-adjusted model. Displayed scores subtract the measured FBS average and use percentage-point units. Raw offense and defense rates are diagnostics rather than separate adjusted unit grades.</p><p>Human polls, betting lines, recruiting, conference reputation and previous team-season ratings do not enter this Performance calculation. It is separate from earned SOR and the matchup lab.</p><p>These source-covered plays do not represent every box-score play. This is not a complete special-teams, turnover, field-position or overtime-adjusted grade. Historical FBS–FCS forecasting checks remain under review; experimental display does not convert a failed check into a pass.</p></section>`;
 }
 function pipeline() { return `<section class="pipeline" aria-label="How the engine works"><div class="pipeline-title"><h2>HOW IT<br>COMES TOGETHER.</h2><p>TRANSPARENT BY DESIGN</p></div>${[['Acquire the data','Completed games and season-specific FBS membership.'],['Validate the results','Incomplete scores stay out. Every source is recorded.'],['Solve the network','Every opponent’s results connect to the bigger picture.'],['Explain the rank','A reproducible score, with evidence you can inspect.']].map(([title,desc],i)=>`<div class="pipeline-step"><span class="step-num">0${i+1}</span><div><h3>${title}</h3><p>${desc}</p></div></div>`).join('')}</section>`; }
 function companionPanel() {
   const views = [[rankingHash('strength'), 'Predictive Strength', 'Estimates team strength from score margins, opponents, venue, and our own historical ratings.']];
-  if (hasPerformance()) views.push([rankingHash('performance'), 'Performance · Experimental', 'Measures how consistently teams succeeded on covered scrimmage plays, adjusted for opponents and venue.']);
+  if (performancePublished()) views.push([rankingHash('performance'), 'Performance · Experimental', 'Measures how consistently teams succeeded on covered scrimmage plays, adjusted for opponents and venue.']);
   views.push(['#ranking-history', 'What changed this week?', 'See SOR movers, Top 25 arrivals and departures, and saved weekly editions.'],
     ['#beat-the-model', 'Beat the Model', 'Save your game picks before kickoff and compare your results with our predictions.'],
     ['#polls', 'Compare Rankings', 'Compare our rankings with dated AP, Coaches, and CFP editions.'],
@@ -185,7 +217,7 @@ function filterControls(showModel = false) {
 }
 function rankingViews() {
   const views = [['achievement', usesSor() ? 'Official · Strength of Record' : achievementName()], ['strength', 'Predictive Strength']];
-  if (hasPerformance()) views.push(['performance', 'Performance · Experimental']);
+  if (performancePublished()) views.push(['performance', 'Performance · Experimental']);
   return `<div class="segmented ranking-views" role="group" aria-label="Ranking views">${views.map(([model,label])=>`<button data-action="model" data-value="${model}" class="${state.model===model?'active':''}" aria-pressed="${state.model===model}">${label}</button>`).join('')}</div>`;
 }
 function filtered(teams) { return teams.filter(t => (!state.conference || t.conference===state.conference) && (!state.search || t.name.toLowerCase().includes(state.search.toLowerCase()))); }
@@ -198,7 +230,6 @@ function rankingsContent() {
   return `<div class="panel-head"><div class="panel-head-title"><h2>${title}</h2></div><span class="tag">${teams.length} shown</span></div>${teams.length?rankingTable(teams):`<div class="empty">${isFiltered?'No teams match these filters.':'No ranked teams in this snapshot.'}</div>`}<div class="panel-body" style="padding-block:12px"><p class="compact-note">${state.model==='performance'?'Identical Performance scores share a rank. pp means percentage points relative to the measured FBS average.':'SOS ranks opponents’ average Colley ratings. '+(state.model==='strength'?'Strength is an experimental points-based estimate, separate from earned rank.':(usesSor()?'Identical SOR scores share a rank. SOR scores are not win probabilities.':'Identical Colley scores share a rank. Ratings are scores, not probabilities.'))}</p></div>`;
 }
 function renderRankings() {
-  if (state.model === 'performance' && !hasPerformance()) state.model = 'achievement';
   const official = state.model === 'achievement';
   const views = {
     achievement: [usesSor() ? 'Official national ranking' : 'Historical national ranking', 'NATIONAL RANKINGS', usesSor() ? 'Strength of Record measures how hard it was to earn this many wins against the same schedule.' : 'This snapshot uses Colley achievement to rank teams from completed game results.'],
@@ -206,6 +237,11 @@ function renderRankings() {
     performance: ['Experimental companion view', 'PERFORMANCE', 'How consistently did teams gain the yards they needed and stop opponents from doing the same?']
   };
   const [kicker,title,description] = views[state.model];
+  if (state.model === 'performance' && !hasPerformance()) {
+    if (!performanceFailed) void loadPerformance();
+    main.innerHTML = `${banner(`${kicker} · ${state.snapshot.season}`,title,description)}<div class="wrap page-content">${rankingViews()}<section class="panel"><div class="panel-body">${performanceStatus()}</div></section></div>`;
+    return;
+  }
   const context = official ? coveragePanel() : state.model === 'performance' ? performanceNotice() : `<section class="panel"><div class="panel-body"><div class="section-label">Predictive Strength</div><h2 style="margin:10px 0">HOW WOULD THEY MATCH UP?</h2><p>Predictive Strength powers the matchup lab. ${state.snapshot.matchupValidation ? 'Win probabilities are calibrated on historical results.' : 'Its game probabilities are uncalibrated estimates.'}</p></div><a class="method-link" href="#compare">Open matchup lab ${icon('arrow')}</a></section>`;
   main.innerHTML = `${banner(`${kicker} · ${state.snapshot.season}`,title,description)}<div class="wrap page-content">${rankingViews()}<nav class="edition-links" aria-label="Other ranking views"><a class="text-link" href="#polls">Compare rankings ${icon('arrow')}</a><a class="text-link" href="#forge-top-25">Forge’s Top 25 ${icon('arrow')}</a></nav><div class="two-column"><div>${filterControls(true)}<section class="panel" id="ranking-results">${rankingsContent()}</section></div><aside class="stack">${context}${schedulePanel()}</aside></div></div>`;
 }
@@ -771,7 +807,7 @@ function renderScenarioPage() {
 }
 function renderContestPage() {
   main.innerHTML = '<div class="wrap page-content"><p role="status">Loading Beat the Model…</p></div>';
-  contestModule ??= import('./weekly-contest.js?v=kickoff-lock');
+  contestModule ??= import('./weekly-contest.js?v=trimmed-load');
   contestModule.then(({ renderWeeklyContest, unmountWeeklyContest }) => {
     if (route()[0] !== 'beat-the-model') return;
     closeContest = unmountWeeklyContest;
@@ -814,7 +850,7 @@ function render() {
     closeHistory = undefined;
   }
   if (page === 'rankings') {
-    state.model = id === 'strength' || (id === 'performance' && hasPerformance()) ? id : 'achievement';
+    state.model = id === 'strength' || (id === 'performance' && performancePublished()) ? id : 'achievement';
     state.all = id === 'all' || scope === 'all';
   }
   if(page==='home')renderHome();else if(page==='rankings')renderRankings();else if(page==='teams')renderTeams();else if(page==='team')renderTeam(id);else if(page==='methodology')renderMethodology();else if(page==='compare')renderCompare();else if (page === 'polls' || page === 'forge-top-25') renderRankingEditions(page,id,scope);else if (page === 'bracket') renderBracketPage();else if (page === 'cfp-scenarios') renderScenarioPage();else if (page === 'beat-the-model') renderContestPage();else if (page === 'ranking-history') renderHistoryPage(id);else renderHome();
@@ -858,9 +894,17 @@ document.addEventListener('click',e=>{
     rankingEditions.failed = false;
     render();
   }
-  if (action === 'model' && (['achievement', 'strength'].includes(value) || (value === 'performance' && hasPerformance()))) {
+  if (action === 'model' && (['achievement', 'strength'].includes(value) || (value === 'performance' && performancePublished()))) {
     location.hash = rankingHash(value, state.all);
     render();
+  }
+  if (action === 'load-performance') {
+    const [page, id] = route();
+    performanceFailed = false;
+    if (page === 'team') {
+      void loadPerformance();
+      updateTeamPerformance(id);
+    } else if (page === 'rankings' && id === 'performance') renderRankings();
   }
   if (action === 'toggle-all') {
     state.search = '';
@@ -890,17 +934,9 @@ async function load(){
     state.snapshot=snapshot;state.byId=new Map(snapshot.rankings.map(t=>[t.id,t]));
     teamDetails.clear();
     state.performance=null;state.performanceById=new Map();
+    performanceLoading=false;performanceFailed=false;
     state.compareA=snapshot.rankings[0].id;state.compareB=snapshot.rankings[1].id;
     render();
-    // The primary publication stays usable when the optional research view is
-    // absent, stale or unavailable. Visitors read stored snapshots only.
-    if(snapshot.performanceEndpoint===publicationPath('performance')){
-      try{
-        const performanceResponse=await fetch(snapshot.performanceEndpoint,{headers:{Accept:'application/json'}});
-        if (performanceResponse.ok && state.snapshot === snapshot && acceptPerformance(await performanceResponse.json()) &&
-            !['bracket', 'beat-the-model', 'cfp-scenarios'].includes(route()[0])) render();
-      }catch{}
-    }
   }catch(error){main.innerHTML=`<section class="loading"><h1>The rankings are taking a moment.</h1><p>${dataRoot?'The published data could not load. Please try again shortly.':'The free service may be waking up. Please try again shortly.'}</p><button id="retry" class="button">Try again</button></section>`;document.querySelector('#retry').addEventListener('click',load);console.error(error);}
 }
 if (location.search && (new URLSearchParams(location.search).get('cfp') === '1' || new URLSearchParams(location.search).get('weekly') === '1')) {
