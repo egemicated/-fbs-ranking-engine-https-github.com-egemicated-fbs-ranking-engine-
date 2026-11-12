@@ -108,6 +108,7 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
         return team ? send(200, publicTeamDetails(snapshot, team)) : send(404, { error: 'Team not found' });
       }
       const publicSnapshot = publicRankings(snapshot, `/rankings${year ? `/${year}` : ''}/teams`);
+      if (!year && snapshot.update) publicSnapshot.update = { ...snapshot.update, schedule: UPDATE_SCHEDULE };
       if (snapshot.rankingMethod?.id === publicationPolicy.id) {
         publicSnapshot.rankingMethod = { ...snapshot.rankingMethod, publicationStatus: 'official' };
         publicSnapshot.coverageValidation = snapshotCoverage(snapshot);

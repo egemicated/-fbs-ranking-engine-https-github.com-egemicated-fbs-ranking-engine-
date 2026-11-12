@@ -131,6 +131,7 @@ export function buildWeeklyPicks(season, snapshot, { capturedAt, prior = null, p
       }
     }
     return { id, week, seasonType, home, away, startDate, neutral, status,
+      ...(typeof game.startTimeTbd === 'boolean' ? { startTimeTbd: game.startTimeTbd } : {}),
       homePoints: status === 'final' ? game.homePoints : null, awayPoints: status === 'final' ? game.awayPoints : null,
       pick, estimate, replay };
   }).sort((a, b) => a.startDate.localeCompare(b.startDate) || a.id.localeCompare(b.id));

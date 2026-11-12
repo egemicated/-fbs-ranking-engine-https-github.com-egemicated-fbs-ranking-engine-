@@ -26,6 +26,7 @@ test('preview odds yield to Sunday picks and final scores preserve the original 
   const saved = buildWeeklyPicks(season('cfbd', capture, [previousWeek, game]), snapshot(capture, -10),
     { capturedAt: capture, previous: archive });
   assert.equal(pickRow(saved).estimate, null);
+  assert.equal(pickRow(saved).startTimeTbd, false);
   assert.equal(pickRow(saved).pick.favored, 'away');
 
   const final = { ...game, completed: true, homePoints: 31, awayPoints: 21 };

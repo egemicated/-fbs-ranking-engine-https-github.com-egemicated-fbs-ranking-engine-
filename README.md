@@ -39,10 +39,9 @@ SIL Open Font License. The unbranded stadium illustration was generated with
 the built-in image tool; its production prompt is in
 `frontend/assets/ASSET-NOTES.txt`.
 
-The current site refreshes from CFBD on Sunday at 12:01 AM Mountain through the
-existing GitHub workflow. Its two successful provider requests are unchanged.
-Render promotes the committed CFBD snapshot using the pinned publication policy;
-deployment does not request newer CFBD data. The next weekly snapshot is promoted
+The site checks CFBD for results Wednesday through Sunday through the existing
+GitHub workflow. Render promotes the committed snapshot using the pinned
+publication policy. Deployments use the committed data. Each snapshot is promoted
 before its source evidence and publication are saved. To reconstruct an archive cutoff use
 `npm run build -- --before 2025-10-01T00:00:00Z`.
 
@@ -124,10 +123,12 @@ The service serves the frontend and read-only JSON API. The free plan can sleep 
 
 ## Weekly CFBD publication
 
-`.github/workflows/weekly.yml` targets **Sunday at 00:01 America/Denver**, using
-GitHub's timezone-aware schedule (including daylight saving time). A second
-check at 04:11 only requests CFBD data if the overnight publication is missing
-or a Saturday FBS game remains unconfirmed. GitHub scheduling and Render
+`.github/workflows/weekly.yml` checks for new results **Wednesday through Saturday
+at 04:11 America/Denver**. The midweek check uses the saved schedule to skip a
+pull when there are no recent FBS games awaiting results. On **Sunday at 00:01**
+the main refresh runs, with a **04:11** backup if the overnight publication is
+missing or a Saturday FBS game remains unconfirmed. GitHub's schedule follows
+Mountain Time through daylight saving changes. GitHub scheduling and Render
 deployment can delay the actual publication.
 
 Set the repository secret `CFBD_API_KEY` once. The workflow fetches the current
@@ -135,8 +136,8 @@ season's games and FBS roster (two API calls for the existing models),
 uses our stored prior-season strength from `published/prior-2025.json`, and
 commits the derived `published/latest.json`. The separate experimental Performance
 step fetches advanced game statistics once and commits
-`published/performance-latest.json`. Normal successful operation therefore uses
-three CFBD calls each Sunday, usually 12–15/month. Render automatically deploys
+`published/performance-latest.json`. A full refresh uses three CFBD calls. The
+schedule uses at most 84 calls in a calendar month if all scheduled checks pull,+before manual refreshes. Render automatically deploys
 the commit. No paid cron service, database, or additional user login is required.
 The repository is public and the workflow uses standard `ubuntu-latest` runners,
 whose compute is free outside the shared private-repository Actions allowance.
@@ -204,7 +205,7 @@ pick, with shared ranks for ties and only nicknames and standings shown publicly
    on the sides with named entrants. Omit historical `results`.
    `lockAt` must equal the earliest kickoff. The push publishes the field.
 
-The Sunday workflow grades from its saved finals, with no additional CFBD
+The rankings workflow grades from its saved finals, with no additional CFBD
 request. `cfp-bracket.yml` also runs a one-request postseason check on each of
 the seven playoff game days after the last scheduled game. To retry a missed
 update, dispatch `CFP bracket contest` with `game-night`. If the field update
