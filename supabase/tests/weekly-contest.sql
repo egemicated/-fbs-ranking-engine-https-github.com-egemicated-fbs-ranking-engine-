@@ -122,8 +122,8 @@ set local role service_role;
 do $$
 declare v_games jsonb := current_setting('weekly_test.games')::jsonb;
 begin
-  -- A changed kickoff after stored picks excludes the original contest game.
-  v_games := jsonb_set(v_games, '{3,startDate}', to_jsonb((v_games -> 3 ->> 'startDate')::timestamptz + interval '1 hour'));
+  -- A venue change after stored picks excludes the original contest game.
+  v_games := jsonb_set(v_games, '{3,neutral}', 'true');
   perform public.weekly_sync(2099, clock_timestamp(), v_games);
   perform set_config('weekly_test.games', v_games::text, true);
 end;

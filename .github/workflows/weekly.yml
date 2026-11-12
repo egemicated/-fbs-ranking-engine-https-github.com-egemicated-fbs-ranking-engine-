@@ -8,6 +8,11 @@ on:
     - cron: '11 4 * * 3-6'
       timezone: 'America/Denver'
   workflow_dispatch:
+    inputs:
+      contest_sync_only:
+        description: Grade Beat the Model from the saved finals without pulling CFBD
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths: ['published/refresh-request.json']
@@ -34,8 +39,11 @@ jobs:
         env:
           EVENT_NAME: ${{ github.event_name }}
           CRON: ${{ github.event.schedule }}
+          CONTEST_SYNC_ONLY: ${{ inputs.contest_sync_only }}
         run: |
-          if [[ "$EVENT_NAME" != schedule ]]; then
+          if [[ "$CONTEST_SYNC_ONLY" == true ]]; then
+            needed=false
+          elif [[ "$EVENT_NAME" != schedule ]]; then
             needed=true
           elif [[ "$CRON" == '11 4 * * 0' ]]; then
             needed=$(node scripts/weekly-refresh-needed.js --catch-up)
@@ -62,12 +70,6 @@ jobs:
         if: steps.primary-publish.outcome == 'success'
         continue-on-error: true
         run: node scripts/record-research-comparison.js
-      - name: Update Beat the Model games and grade saved picks
-        if: steps.weekly-picks.outcome == 'success'
-        continue-on-error: true
-        env:
-          CFP_SUPABASE_SECRET_KEY: ${{ secrets.CFP_SUPABASE_SECRET_KEY }}
-        run: node scripts/sync-weekly-contest.js
       - name: Record frozen division candidate and next-week forecasts
         if: steps.primary-publish.outcome == 'success'
         continue-on-error: true
@@ -130,6 +132,7 @@ jobs:
           retention-days: 14
           if-no-files-found: warn
       - name: Save the weekly snapshot
+        id: saved-snapshot
         if: always() && steps.primary-publish.outcome == 'success'
         run: |
           git config user.name 'github-actions[bot]'
@@ -152,3 +155,8 @@ jobs:
         env:
           CFP_SUPABASE_SECRET_KEY: ${{ secrets.CFP_SUPABASE_SECRET_KEY }}
         run: node scripts/sync-cfp-bracket.js
+      - name: Update Beat the Model games and grade saved picks
+        if: ${{ !cancelled() && (inputs.contest_sync_only || (steps.saved-snapshot.outcome == 'success' && steps.weekly-picks.outcome == 'success')) }}
+        env:
+          CFP_SUPABASE_SECRET_KEY: ${{ secrets.CFP_SUPABASE_SECRET_KEY }}
+        run: node scripts/sync-weekly-contest.js

@@ -139,6 +139,11 @@ step fetches advanced game statistics once and commits
 `published/performance-latest.json`. A full refresh uses three CFBD calls. The
 schedule uses at most 84 calls in a calendar month if all scheduled checks pull,+before manual refreshes. Render automatically deploys
 the commit. No paid cron service, database, or additional user login is required.
+Beat the Model grades saved picks after the results are committed. Set
+`CFP_SUPABASE_SECRET_KEY` to the project's server-side `sb_secret_` API key in
+GitHub Actions secrets. To retry grading from the committed results, enable
+`contest_sync_only` when manually running **Weekly CFBD rankings**. This uses
+zero CFBD calls.
 The repository is public and the workflow uses standard `ubuntu-latest` runners,
 whose compute is free outside the shared private-repository Actions allowance.
 The workflow has a five-minute timeout. The optional
