@@ -4,15 +4,15 @@
   "protocolSha256": "667669f3315fabd1eb9c0ee28642f05e6f8d475971f68410cf320a982fd4b5eb",
   "frozenAt": "2026-11-06T22:49:59.146Z",
   "season": 2026,
-  "asOf": "2026-11-12T15:42:47.454Z",
-  "generatedAt": "2026-11-12T15:43:08.352Z",
-  "resultSourceHash": "927bc3e7391a9b6c2160006b5a38e519c423ff2303e2546c41d44e8488655386",
+  "asOf": "2026-11-13T18:30:36.573Z",
+  "generatedAt": "2026-11-13T18:31:19.467Z",
+  "resultSourceHash": "4acc3c89bdb0b9cca645ac23de93b1568d7574ccf51de75e7d6c3394cfac05ea",
   "selectionRule": "First valid immutable captured-before-kickoff forecast per season/game; choose before reading eventual outcomes or rescheduling exclusions.",
-  "observationsRead": 3,
+  "observationsRead": 4,
   "ignoredOtherSeasonObservations": 0,
   "ignoredAfterResultCutoffObservations": 1,
-  "eligibleForecasts": 67,
-  "duplicateCheckpoints": 67,
+  "eligibleForecasts": 72,
+  "duplicateCheckpoints": 128,
   "pending": [
     {
       "gameId": "401856857",
@@ -171,10 +171,6 @@
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
-      "gameId": "401862824",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
       "gameId": "401862825",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
@@ -215,6 +211,26 @@
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
+      "gameId": "401866464",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401866465",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401866466",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401866467",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
+      "gameId": "401866469",
+      "reason": "unfinished-or-not-yet-at-result-cutoff"
+    },
+    {
       "gameId": "401869928",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
@@ -224,10 +240,6 @@
     },
     {
       "gameId": "401869952",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401869969",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
@@ -262,8 +274,8 @@
   "excluded": [],
   "trackingCoverage": {
     "rule": "All currently sourced confirmed-completed FBS-FBS games with corrected kickoff from protocol freeze through result asOf; no claim of complete contemporaneous schedule availability.",
-    "completedFbsFbsGamesSinceFreeze": 61,
-    "scored": 6,
+    "completedFbsFbsGamesSinceFreeze": 63,
+    "scored": 8,
     "selectedButExcluded": 0,
     "selectedButPending": 0,
     "noSavedForecastCount": 55,
@@ -294,37 +306,7 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401858285",
-        "kickoff": "2026-11-07T17:00:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401856743",
-        "kickoff": "2026-11-07T17:00:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401858289",
-        "kickoff": "2026-11-07T17:00:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
         "gameId": "401862822",
-        "kickoff": "2026-11-07T17:00:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401856849",
-        "kickoff": "2026-11-07T17:00:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401856853",
-        "kickoff": "2026-11-07T17:00:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401858512",
         "kickoff": "2026-11-07T17:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -334,12 +316,42 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401858286",
-        "kickoff": "2026-11-07T17:30:00.000Z",
+        "gameId": "401856743",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858285",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858512",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856853",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856849",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858289",
+        "kickoff": "2026-11-07T17:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
         "gameId": "401858515",
+        "kickoff": "2026-11-07T17:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858286",
         "kickoff": "2026-11-07T17:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -349,12 +361,12 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401869945",
+        "gameId": "401856854",
         "kickoff": "2026-11-07T18:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401856854",
+        "gameId": "401869945",
         "kickoff": "2026-11-07T18:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -364,7 +376,7 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401856744",
+        "gameId": "401869936",
         "kickoff": "2026-11-07T20:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -374,23 +386,8 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401869936",
+        "gameId": "401856744",
         "kickoff": "2026-11-07T20:00:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401862820",
-        "kickoff": "2026-11-07T20:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401858514",
-        "kickoff": "2026-11-07T20:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401862819",
-        "kickoff": "2026-11-07T20:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
@@ -404,7 +401,27 @@
         "reason": "no-valid-saved-forecast"
       },
       {
+        "gameId": "401858516",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401862819",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858514",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
         "gameId": "401869951",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401862820",
         "kickoff": "2026-11-07T20:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -414,17 +431,12 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401858516",
-        "kickoff": "2026-11-07T20:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
         "gameId": "401856850",
         "kickoff": "2026-11-07T20:45:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401871098",
+        "gameId": "401864534",
         "kickoff": "2026-11-07T21:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -434,7 +446,7 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401864534",
+        "gameId": "401871098",
         "kickoff": "2026-11-07T21:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -444,12 +456,12 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401856742",
+        "gameId": "401858517",
         "kickoff": "2026-11-07T21:15:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401858517",
+        "gameId": "401856742",
         "kickoff": "2026-11-07T21:15:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -474,17 +486,17 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401856852",
+        "gameId": "401858511",
+        "kickoff": "2026-11-08T00:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401862823",
         "kickoff": "2026-11-08T00:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
         "gameId": "401858291",
-        "kickoff": "2026-11-08T00:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401858511",
         "kickoff": "2026-11-08T00:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -499,12 +511,12 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401862823",
+        "gameId": "401858513",
         "kickoff": "2026-11-08T00:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401858513",
+        "gameId": "401856852",
         "kickoff": "2026-11-08T00:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -547,186 +559,186 @@
   },
   "scores": {
     "primary": {
-      "games": 6,
+      "games": 8,
       "models": {
         "sor": {
-          "accuracy": 0.6666666666666666,
+          "accuracy": 0.75,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.8333333333333334,
-          "brier": 0.1284411988802879,
-          "logLoss": 0.42408116300738863,
-          "probabilityError": -0.1442559870244505
+          "probabilityAccuracy": 0.875,
+          "brier": 0.13177617700734973,
+          "logLoss": 0.43468678219444185,
+          "probabilityError": -0.016334707606761138
         },
         "strength": {
-          "accuracy": 0.8333333333333334,
+          "accuracy": 0.875,
           "rankingTies": 0,
-          "probabilityAccuracy": 1,
-          "brier": 0.10996942671130268,
-          "logLoss": 0.3759912559671579,
-          "probabilityError": -0.07636449616566608
+          "probabilityAccuracy": 0.875,
+          "brier": 0.13139477653473894,
+          "logLoss": 0.42401005388435464,
+          "probabilityError": 0.0448622068760072
         },
         "performance": {
-          "accuracy": 0.5,
+          "accuracy": 0.625,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.5,
-          "brier": 0.24957109099642247,
-          "logLoss": 0.6889575116460955,
-          "probabilityError": -0.04454075967948168
+          "probabilityAccuracy": 0.625,
+          "brier": 0.21503384423854177,
+          "logLoss": 0.6181821149721749,
+          "probabilityError": 0.04994136485490001
         },
         "triple": {
-          "accuracy": 0.8333333333333334,
+          "accuracy": 0.875,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.8333333333333334,
-          "brier": 0.14005293099813207,
-          "logLoss": 0.44723212577492616,
-          "probabilityError": -0.09807498146998268
+          "probabilityAccuracy": 0.875,
+          "brier": 0.13342652219132645,
+          "logLoss": 0.4360454692929564,
+          "probabilityError": 0.007909227246672097
         },
         "sor+strength": {
-          "accuracy": 0.6666666666666666,
+          "accuracy": 0.75,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.8333333333333334,
-          "brier": 0.11445607601481166,
-          "logLoss": 0.3866520771938578,
-          "probabilityError": -0.11876690437336192
+          "probabilityAccuracy": 0.875,
+          "brier": 0.12379055465277622,
+          "logLoss": 0.409903632489893,
+          "probabilityError": 0.0028772063485177253
         },
         "sor+performance": {
-          "accuracy": 0.8333333333333334,
+          "accuracy": 0.875,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.8333333333333334,
-          "brier": 0.16157184601133825,
-          "logLoss": 0.4984200084791397,
-          "probabilityError": -0.10640010253758975
+          "probabilityAccuracy": 0.875,
+          "brier": 0.14472893292914896,
+          "logLoss": 0.4648846126445121,
+          "probabilityError": -0.003791515144085336
         },
         "strength+performance": {
-          "accuracy": 0.6666666666666666,
+          "accuracy": 0.75,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.6666666666666666,
-          "brier": 0.16438265437015534,
-          "logLoss": 0.5021112871502115,
-          "probabilityError": -0.05827420086982893
+          "probabilityAccuracy": 0.75,
+          "brier": 0.1536223036934983,
+          "logLoss": 0.4820521191765409,
+          "probabilityError": 0.04120218082590093
         }
       }
     },
     "allEligible": {
-      "games": 6,
+      "games": 8,
       "models": {
         "sor": {
-          "accuracy": 0.6666666666666666,
+          "accuracy": 0.75,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.8333333333333334,
-          "brier": 0.1284411988802879,
-          "logLoss": 0.42408116300738863,
-          "probabilityError": -0.1442559870244505
+          "probabilityAccuracy": 0.875,
+          "brier": 0.13177617700734973,
+          "logLoss": 0.43468678219444185,
+          "probabilityError": -0.016334707606761138
         },
         "strength": {
-          "accuracy": 0.8333333333333334,
+          "accuracy": 0.875,
           "rankingTies": 0,
-          "probabilityAccuracy": 1,
-          "brier": 0.10996942671130268,
-          "logLoss": 0.3759912559671579,
-          "probabilityError": -0.07636449616566608
+          "probabilityAccuracy": 0.875,
+          "brier": 0.13139477653473894,
+          "logLoss": 0.42401005388435464,
+          "probabilityError": 0.0448622068760072
         },
         "performance": {
-          "accuracy": 0.5,
+          "accuracy": 0.625,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.5,
-          "brier": 0.24957109099642247,
-          "logLoss": 0.6889575116460955,
-          "probabilityError": -0.04454075967948168
+          "probabilityAccuracy": 0.625,
+          "brier": 0.21503384423854177,
+          "logLoss": 0.6181821149721749,
+          "probabilityError": 0.04994136485490001
         },
         "triple": {
-          "accuracy": 0.8333333333333334,
+          "accuracy": 0.875,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.8333333333333334,
-          "brier": 0.14005293099813207,
-          "logLoss": 0.44723212577492616,
-          "probabilityError": -0.09807498146998268
+          "probabilityAccuracy": 0.875,
+          "brier": 0.13342652219132645,
+          "logLoss": 0.4360454692929564,
+          "probabilityError": 0.007909227246672097
         },
         "sor+strength": {
-          "accuracy": 0.6666666666666666,
+          "accuracy": 0.75,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.8333333333333334,
-          "brier": 0.11445607601481166,
-          "logLoss": 0.3866520771938578,
-          "probabilityError": -0.11876690437336192
+          "probabilityAccuracy": 0.875,
+          "brier": 0.12379055465277622,
+          "logLoss": 0.409903632489893,
+          "probabilityError": 0.0028772063485177253
         },
         "sor+performance": {
-          "accuracy": 0.8333333333333334,
+          "accuracy": 0.875,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.8333333333333334,
-          "brier": 0.16157184601133825,
-          "logLoss": 0.4984200084791397,
-          "probabilityError": -0.10640010253758975
+          "probabilityAccuracy": 0.875,
+          "brier": 0.14472893292914896,
+          "logLoss": 0.4648846126445121,
+          "probabilityError": -0.003791515144085336
         },
         "strength+performance": {
-          "accuracy": 0.6666666666666666,
+          "accuracy": 0.75,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.6666666666666666,
-          "brier": 0.16438265437015534,
-          "logLoss": 0.5021112871502115,
-          "probabilityError": -0.05827420086982893
+          "probabilityAccuracy": 0.75,
+          "brier": 0.1536223036934983,
+          "logLoss": 0.4820521191765409,
+          "probabilityError": 0.04120218082590093
         }
       }
     },
     "groups": {
       "regular": {
-        "games": 6,
+        "games": 8,
         "models": {
           "sor": {
-            "accuracy": 0.6666666666666666,
+            "accuracy": 0.75,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.8333333333333334,
-            "brier": 0.1284411988802879,
-            "logLoss": 0.42408116300738863,
-            "probabilityError": -0.1442559870244505
+            "probabilityAccuracy": 0.875,
+            "brier": 0.13177617700734973,
+            "logLoss": 0.43468678219444185,
+            "probabilityError": -0.016334707606761138
           },
           "strength": {
-            "accuracy": 0.8333333333333334,
+            "accuracy": 0.875,
             "rankingTies": 0,
-            "probabilityAccuracy": 1,
-            "brier": 0.10996942671130268,
-            "logLoss": 0.3759912559671579,
-            "probabilityError": -0.07636449616566608
+            "probabilityAccuracy": 0.875,
+            "brier": 0.13139477653473894,
+            "logLoss": 0.42401005388435464,
+            "probabilityError": 0.0448622068760072
           },
           "performance": {
-            "accuracy": 0.5,
+            "accuracy": 0.625,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.5,
-            "brier": 0.24957109099642247,
-            "logLoss": 0.6889575116460955,
-            "probabilityError": -0.04454075967948168
+            "probabilityAccuracy": 0.625,
+            "brier": 0.21503384423854177,
+            "logLoss": 0.6181821149721749,
+            "probabilityError": 0.04994136485490001
           },
           "triple": {
-            "accuracy": 0.8333333333333334,
+            "accuracy": 0.875,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.8333333333333334,
-            "brier": 0.14005293099813207,
-            "logLoss": 0.44723212577492616,
-            "probabilityError": -0.09807498146998268
+            "probabilityAccuracy": 0.875,
+            "brier": 0.13342652219132645,
+            "logLoss": 0.4360454692929564,
+            "probabilityError": 0.007909227246672097
           },
           "sor+strength": {
-            "accuracy": 0.6666666666666666,
+            "accuracy": 0.75,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.8333333333333334,
-            "brier": 0.11445607601481166,
-            "logLoss": 0.3866520771938578,
-            "probabilityError": -0.11876690437336192
+            "probabilityAccuracy": 0.875,
+            "brier": 0.12379055465277622,
+            "logLoss": 0.409903632489893,
+            "probabilityError": 0.0028772063485177253
           },
           "sor+performance": {
-            "accuracy": 0.8333333333333334,
+            "accuracy": 0.875,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.8333333333333334,
-            "brier": 0.16157184601133825,
-            "logLoss": 0.4984200084791397,
-            "probabilityError": -0.10640010253758975
+            "probabilityAccuracy": 0.875,
+            "brier": 0.14472893292914896,
+            "logLoss": 0.4648846126445121,
+            "probabilityError": -0.003791515144085336
           },
           "strength+performance": {
-            "accuracy": 0.6666666666666666,
+            "accuracy": 0.75,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6666666666666666,
-            "brier": 0.16438265437015534,
-            "logLoss": 0.5021112871502115,
-            "probabilityError": -0.05827420086982893
+            "probabilityAccuracy": 0.75,
+            "brier": 0.1536223036934983,
+            "logLoss": 0.4820521191765409,
+            "probabilityError": 0.04120218082590093
           }
         }
       },
@@ -739,63 +751,63 @@
         "models": {}
       },
       "homeVenue": {
-        "games": 6,
+        "games": 8,
         "models": {
           "sor": {
-            "accuracy": 0.6666666666666666,
+            "accuracy": 0.75,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.8333333333333334,
-            "brier": 0.1284411988802879,
-            "logLoss": 0.42408116300738863,
-            "probabilityError": -0.1442559870244505
+            "probabilityAccuracy": 0.875,
+            "brier": 0.13177617700734973,
+            "logLoss": 0.43468678219444185,
+            "probabilityError": -0.016334707606761138
           },
           "strength": {
-            "accuracy": 0.8333333333333334,
+            "accuracy": 0.875,
             "rankingTies": 0,
-            "probabilityAccuracy": 1,
-            "brier": 0.10996942671130268,
-            "logLoss": 0.3759912559671579,
-            "probabilityError": -0.07636449616566608
+            "probabilityAccuracy": 0.875,
+            "brier": 0.13139477653473894,
+            "logLoss": 0.42401005388435464,
+            "probabilityError": 0.0448622068760072
           },
           "performance": {
-            "accuracy": 0.5,
+            "accuracy": 0.625,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.5,
-            "brier": 0.24957109099642247,
-            "logLoss": 0.6889575116460955,
-            "probabilityError": -0.04454075967948168
+            "probabilityAccuracy": 0.625,
+            "brier": 0.21503384423854177,
+            "logLoss": 0.6181821149721749,
+            "probabilityError": 0.04994136485490001
           },
           "triple": {
-            "accuracy": 0.8333333333333334,
+            "accuracy": 0.875,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.8333333333333334,
-            "brier": 0.14005293099813207,
-            "logLoss": 0.44723212577492616,
-            "probabilityError": -0.09807498146998268
+            "probabilityAccuracy": 0.875,
+            "brier": 0.13342652219132645,
+            "logLoss": 0.4360454692929564,
+            "probabilityError": 0.007909227246672097
           },
           "sor+strength": {
-            "accuracy": 0.6666666666666666,
+            "accuracy": 0.75,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.8333333333333334,
-            "brier": 0.11445607601481166,
-            "logLoss": 0.3866520771938578,
-            "probabilityError": -0.11876690437336192
+            "probabilityAccuracy": 0.875,
+            "brier": 0.12379055465277622,
+            "logLoss": 0.409903632489893,
+            "probabilityError": 0.0028772063485177253
           },
           "sor+performance": {
-            "accuracy": 0.8333333333333334,
+            "accuracy": 0.875,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.8333333333333334,
-            "brier": 0.16157184601133825,
-            "logLoss": 0.4984200084791397,
-            "probabilityError": -0.10640010253758975
+            "probabilityAccuracy": 0.875,
+            "brier": 0.14472893292914896,
+            "logLoss": 0.4648846126445121,
+            "probabilityError": -0.003791515144085336
           },
           "strength+performance": {
-            "accuracy": 0.6666666666666666,
+            "accuracy": 0.75,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6666666666666666,
-            "brier": 0.16438265437015534,
-            "logLoss": 0.5021112871502115,
-            "probabilityError": -0.05827420086982893
+            "probabilityAccuracy": 0.75,
+            "brier": 0.1536223036934983,
+            "logLoss": 0.4820521191765409,
+            "probabilityError": 0.04120218082590093
           }
         }
       },
@@ -869,6 +881,69 @@
   "evaluated": [
     {
       "season": 2026,
+      "gameId": "401862824",
+      "home": "58",
+      "away": "235",
+      "kickoff": "2026-11-13T01:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -21.897810218978094,
+          "homeWinProbability": 0.449751335069138,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -2.919708029197075,
+          "homeWinProbability": 0.5781418503210385,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -34.306569343065696,
+          "homeWinProbability": 0.3168130646835817,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -19.70802919708028,
+          "homeWinProbability": 0.4116601533321165,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -12.408759124087581,
+          "homeWinProbability": 0.496301304572037,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -28.10218978102189,
+          "homeWinProbability": 0.34602675007653644,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -18.613138686131393,
+          "homeWinProbability": 0.41703813518749006,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "908aa5872547b2913b361ac79d1d1bb4fbf39a76a2e4b9f0b2dc50b6894b4bdd",
+      "snapshotHash": "1cba520c894e2a14c4b9356025b40fd93295f84e0630b27ec5e9583797ccfd61",
+      "sourceHash": "a665ba80308b26c7e300d04ddf4e5b6a9f252c695b77d3d87cf4d05408aa6b53",
+      "performancePublicationHash": "b104ab3d8880de954daa8d56cea0ca4671cbf3a3de5f0fed0fc6c3c07bb3de9b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 0,
+      "resultKickoff": "2026-11-13T01:00:00.000Z",
+      "resultSourceHash": "4acc3c89bdb0b9cca645ac23de93b1568d7574ccf51de75e7d6c3394cfac05ea",
+      "seasonType": "regular",
+      "week": 11
+    },
+    {
+      "season": 2026,
       "gameId": "401866458",
       "home": "2006",
       "away": "2711",
@@ -926,7 +1001,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-11T00:00:00.000Z",
-      "resultSourceHash": "927bc3e7391a9b6c2160006b5a38e519c423ff2303e2546c41d44e8488655386",
+      "resultSourceHash": "4acc3c89bdb0b9cca645ac23de93b1568d7574ccf51de75e7d6c3394cfac05ea",
       "seasonType": "regular",
       "week": 11
     },
@@ -989,7 +1064,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-11T00:00:00.000Z",
-      "resultSourceHash": "927bc3e7391a9b6c2160006b5a38e519c423ff2303e2546c41d44e8488655386",
+      "resultSourceHash": "4acc3c89bdb0b9cca645ac23de93b1568d7574ccf51de75e7d6c3394cfac05ea",
       "seasonType": "regular",
       "week": 11
     },
@@ -1052,7 +1127,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-11T01:00:00.000Z",
-      "resultSourceHash": "927bc3e7391a9b6c2160006b5a38e519c423ff2303e2546c41d44e8488655386",
+      "resultSourceHash": "4acc3c89bdb0b9cca645ac23de93b1568d7574ccf51de75e7d6c3394cfac05ea",
       "seasonType": "regular",
       "week": 11
     },
@@ -1115,7 +1190,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-12T00:30:00.000Z",
-      "resultSourceHash": "927bc3e7391a9b6c2160006b5a38e519c423ff2303e2546c41d44e8488655386",
+      "resultSourceHash": "4acc3c89bdb0b9cca645ac23de93b1568d7574ccf51de75e7d6c3394cfac05ea",
       "seasonType": "regular",
       "week": 11
     },
@@ -1178,7 +1253,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-12T00:30:00.000Z",
-      "resultSourceHash": "927bc3e7391a9b6c2160006b5a38e519c423ff2303e2546c41d44e8488655386",
+      "resultSourceHash": "4acc3c89bdb0b9cca645ac23de93b1568d7574ccf51de75e7d6c3394cfac05ea",
       "seasonType": "regular",
       "week": 11
     },
@@ -1241,11 +1316,74 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-12T00:30:00.000Z",
-      "resultSourceHash": "927bc3e7391a9b6c2160006b5a38e519c423ff2303e2546c41d44e8488655386",
+      "resultSourceHash": "4acc3c89bdb0b9cca645ac23de93b1568d7574ccf51de75e7d6c3394cfac05ea",
+      "seasonType": "regular",
+      "week": 11
+    },
+    {
+      "season": 2026,
+      "gameId": "401869969",
+      "home": "2433",
+      "away": "309",
+      "kickoff": "2026-11-13T02:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "forecastCapturedAt": "2026-11-08T15:51:51.331Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -47.44525547445255,
+          "homeWinProbability": 0.28510692622347583,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -41.605839416058394,
+          "homeWinProbability": 0.2389427816810156,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -29.927007299270073,
+          "homeWinProbability": 0.3499624122325084,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -39.65936739659367,
+          "homeWinProbability": 0.24006355346115638,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -44.52554744525547,
+          "homeWinProbability": 0.2393177724562763,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -38.68613138686132,
+          "homeWinProbability": 0.2620417439963193,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -35.76642335766423,
+          "homeWinProbability": 0.2622245166386909,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "908aa5872547b2913b361ac79d1d1bb4fbf39a76a2e4b9f0b2dc50b6894b4bdd",
+      "snapshotHash": "1cba520c894e2a14c4b9356025b40fd93295f84e0630b27ec5e9583797ccfd61",
+      "sourceHash": "a665ba80308b26c7e300d04ddf4e5b6a9f252c695b77d3d87cf4d05408aa6b53",
+      "performancePublicationHash": "b104ab3d8880de954daa8d56cea0ca4671cbf3a3de5f0fed0fc6c3c07bb3de9b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 0,
+      "resultKickoff": "2026-11-13T02:00:00.000Z",
+      "resultSourceHash": "4acc3c89bdb0b9cca645ac23de93b1568d7574ccf51de75e7d6c3394cfac05ea",
       "seasonType": "regular",
       "week": 11
     }
   ],
   "interpretation": "Only immutable forecasts actually captured before kickoff count. No scored games means evidence is pending. This is future-game ordering/probability evidence, not proof of the correct earned-achievement order. Local capture timestamps and public repository history are retained; this is not an external trusted timestamp service.",
-  "reportSha256": "cac7c7fd10214c591ad7a5b8bd6d1540950940b42b5e52e0397e122912f9b58c"
+  "reportSha256": "b7022a2bac25316921c2102d982211ddd370b58f928cc2300e450bf9d5ffe784"
 }

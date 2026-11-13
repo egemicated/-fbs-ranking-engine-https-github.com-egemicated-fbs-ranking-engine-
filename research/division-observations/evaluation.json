@@ -1,39 +1,39 @@
 {
   "schemaVersion": 1,
-  "asOf": "2026-11-12T15:42:47.454Z",
+  "asOf": "2026-11-13T18:30:36.573Z",
   "season": 2026,
-  "resultSourceHash": "927bc3e7391a9b6c2160006b5a38e519c423ff2303e2546c41d44e8488655386",
+  "resultSourceHash": "4acc3c89bdb0b9cca645ac23de93b1568d7574ccf51de75e7d6c3394cfac05ea",
   "selectionRule": "First eligible immutable seven-day-window forecast per model/game; no selection by eventual outcome",
-  "observationsRead": 3,
-  "eligibleForecasts": 67,
-  "pending": 61,
+  "observationsRead": 4,
+  "eligibleForecasts": 72,
+  "pending": 64,
   "excluded": [],
   "scoresByModel": {
     "division-sor-v2": {
       "overall": {
-        "games": 6,
+        "games": 8,
         "candidate": {
-          "logLoss": 0.39156355548934624,
-          "brier": 0.11618393564268435,
-          "accuracy": 0.8333333333333334
+          "logLoss": 0.4069798419583029,
+          "brier": 0.1221156387316069,
+          "accuracy": 0.875
         },
         "control": {
-          "logLoss": 0.36755789311289727,
-          "brier": 0.10441668396272767,
-          "accuracy": 1
+          "logLoss": 0.4100850729526729,
+          "brier": 0.12289134347312836,
+          "accuracy": 0.875
         }
       },
       "fbsVsFbs": {
-        "games": 6,
+        "games": 8,
         "candidate": {
-          "logLoss": 0.39156355548934624,
-          "brier": 0.11618393564268435,
-          "accuracy": 0.8333333333333334
+          "logLoss": 0.4069798419583029,
+          "brier": 0.1221156387316069,
+          "accuracy": 0.875
         },
         "control": {
-          "logLoss": 0.36755789311289727,
-          "brier": 0.10441668396272767,
-          "accuracy": 1
+          "logLoss": 0.4100850729526729,
+          "brier": 0.12289134347312836,
+          "accuracy": 0.875
         }
       },
       "fbsVsFcs": {
@@ -42,6 +42,30 @@
     }
   },
   "evaluated": [
+    {
+      "gameId": "401862824",
+      "modelId": "division-sor-v2",
+      "season": 2026,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "kickoff": "2026-11-13T01:00:00.000Z",
+      "home": "58",
+      "away": "235",
+      "neutral": false,
+      "homeDivision": "fbs",
+      "awayDivision": "fbs",
+      "homeWinProbability": 0.4786844508954994,
+      "controlHomeWinProbability": 0.5328122588152595,
+      "homeColley": 0.6518964622854362,
+      "awayColley": 0.7609949557778021,
+      "sourceHash": "a665ba80308b26c7e300d04ddf4e5b6a9f252c695b77d3d87cf4d05408aa6b53",
+      "snapshotHash": "1cba520c894e2a14c4b9356025b40fd93295f84e0630b27ec5e9583797ccfd61",
+      "phase": "post-freeze-saved-before-kickoff",
+      "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
+      "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
+      "outcome": 0,
+      "resultSourceHash": "4acc3c89bdb0b9cca645ac23de93b1568d7574ccf51de75e7d6c3394cfac05ea",
+      "resultKickoff": "2026-11-13T01:00:00.000Z"
+    },
     {
       "gameId": "401866458",
       "modelId": "division-sor-v2",
@@ -63,7 +87,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "927bc3e7391a9b6c2160006b5a38e519c423ff2303e2546c41d44e8488655386",
+      "resultSourceHash": "4acc3c89bdb0b9cca645ac23de93b1568d7574ccf51de75e7d6c3394cfac05ea",
       "resultKickoff": "2026-11-11T00:00:00.000Z"
     },
     {
@@ -87,7 +111,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "927bc3e7391a9b6c2160006b5a38e519c423ff2303e2546c41d44e8488655386",
+      "resultSourceHash": "4acc3c89bdb0b9cca645ac23de93b1568d7574ccf51de75e7d6c3394cfac05ea",
       "resultKickoff": "2026-11-11T00:00:00.000Z"
     },
     {
@@ -111,7 +135,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "927bc3e7391a9b6c2160006b5a38e519c423ff2303e2546c41d44e8488655386",
+      "resultSourceHash": "4acc3c89bdb0b9cca645ac23de93b1568d7574ccf51de75e7d6c3394cfac05ea",
       "resultKickoff": "2026-11-11T01:00:00.000Z"
     },
     {
@@ -135,7 +159,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "927bc3e7391a9b6c2160006b5a38e519c423ff2303e2546c41d44e8488655386",
+      "resultSourceHash": "4acc3c89bdb0b9cca645ac23de93b1568d7574ccf51de75e7d6c3394cfac05ea",
       "resultKickoff": "2026-11-12T00:30:00.000Z"
     },
     {
@@ -159,7 +183,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "927bc3e7391a9b6c2160006b5a38e519c423ff2303e2546c41d44e8488655386",
+      "resultSourceHash": "4acc3c89bdb0b9cca645ac23de93b1568d7574ccf51de75e7d6c3394cfac05ea",
       "resultKickoff": "2026-11-12T00:30:00.000Z"
     },
     {
@@ -183,8 +207,32 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "927bc3e7391a9b6c2160006b5a38e519c423ff2303e2546c41d44e8488655386",
+      "resultSourceHash": "4acc3c89bdb0b9cca645ac23de93b1568d7574ccf51de75e7d6c3394cfac05ea",
       "resultKickoff": "2026-11-12T00:30:00.000Z"
+    },
+    {
+      "gameId": "401869969",
+      "modelId": "division-sor-v2",
+      "season": 2026,
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "kickoff": "2026-11-13T02:00:00.000Z",
+      "home": "2433",
+      "away": "309",
+      "neutral": false,
+      "homeDivision": "fbs",
+      "awayDivision": "fbs",
+      "homeWinProbability": 0.225128168978525,
+      "controlHomeWinProbability": 0.2697067682963143,
+      "homeColley": 0.3095489358996717,
+      "awayColley": 0.6847484101746966,
+      "sourceHash": "a665ba80308b26c7e300d04ddf4e5b6a9f252c695b77d3d87cf4d05408aa6b53",
+      "snapshotHash": "1cba520c894e2a14c4b9356025b40fd93295f84e0630b27ec5e9583797ccfd61",
+      "phase": "post-freeze-saved-before-kickoff",
+      "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
+      "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
+      "outcome": 0,
+      "resultSourceHash": "4acc3c89bdb0b9cca645ac23de93b1568d7574ccf51de75e7d6c3394cfac05ea",
+      "resultKickoff": "2026-11-13T02:00:00.000Z"
     }
   ],
   "interpretation": "Prospective probability evidence only after checksummed forecastCapturedAt precedes actual kickoff. No games evaluated means evidence is pending, not success. No achievement-order superiority claim."
