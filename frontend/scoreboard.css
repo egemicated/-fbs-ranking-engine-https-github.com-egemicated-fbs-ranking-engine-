@@ -1,12 +1,17 @@
 .scoreboard-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 3;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
-  padding-bottom: 16px;
+  padding-block: 8px 12px;
+  background: var(--pale);
   border-bottom: 1px solid var(--line);
 }
+.scoreboard-toolbar > div { flex: 1 1 0; min-width: 0; }
 .scoreboard-toolbar h2 { font-size: 24px; }
 .scoreboard-toolbar p, .scoreboard-source { color: var(--muted); font-size: 12px; }
 .scoreboard-toolbar p { font-variant-numeric: tabular-nums; }
