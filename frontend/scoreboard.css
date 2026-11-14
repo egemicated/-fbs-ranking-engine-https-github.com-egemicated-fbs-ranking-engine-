@@ -12,7 +12,6 @@
   border-bottom: 1px solid var(--line);
 }
 .scoreboard-toolbar > div { flex: 1 1 0; min-width: 0; }
-.scoreboard-toolbar > .scoreboard-actions { flex: 0 0 auto; display: flex; gap: 6px; }
 .scoreboard-toolbar h2 { font-size: 24px; }
 .scoreboard-toolbar p, .scoreboard-source { color: var(--muted); font-size: 12px; }
 .scoreboard-toolbar p { font-variant-numeric: tabular-nums; }
@@ -28,7 +27,6 @@
   font-size: 13px;
 }
 .scoreboard-order-help button { cursor: pointer; min-height: 44px; }
-.scoreboard-order-help button:disabled { cursor: default; opacity: .6; }
 [data-scoreboard] [hidden] { display: none; }
 .scoreboard-sections > section { margin-block: 20px 27px; }
 .scoreboard-sections h2 { margin-bottom: 9px; }
@@ -39,38 +37,28 @@
 }
 .scoreboard-game { display: flex; flex-direction: column; }
 .scoreboard-game-details { flex: 1; display: flex; flex-direction: column; }
-.scoreboard-game-order {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 12px;
-  border-top: 1px solid var(--line);
-  background: #edf4ff;
-  color: #244a79;
-}
-.scoreboard-game-order label { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 650; }
-.scoreboard-game-order select { min-width: 0; min-height: 44px; font-size: 16px; padding-inline: 10px; }
-.scoreboard-drag-handle, .scoreboard-drag-tip { display: none; }
+.scoreboard-game[data-movable] { user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.scoreboard-game:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.scoreboard-mouse-tip { display: none; }
 @media (hover: hover) and (pointer: fine) {
-  .scoreboard-drag-tip { display: inline; }
-  .scoreboard-drag-handle {
-    display: grid;
-    place-items: center;
-    min-width: 44px;
-    min-height: 44px;
-    margin-inline-end: auto;
-    cursor: grab;
-    user-select: none;
-    font-size: 22px;
-  }
+  .scoreboard-touch-tip { display: none; }
+  .scoreboard-mouse-tip { display: inline; }
+  .scoreboard-game[data-movable] { cursor: grab; }
 }
-.scoreboard-dragging { opacity: .55; }
+.scoreboard-dragging { opacity: .45; }
 .scoreboard-drop-target { outline: 2px solid var(--blue); outline-offset: -2px; }
+.scoreboard-drag-preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  pointer-events: none;
+  box-shadow: 0 12px 28px #06153640;
+}
 @media (max-width: 480px) {
   .scoreboard-toolbar { gap: 8px; }
   .scoreboard-toolbar h2 { font-size: 18px; line-height: 1.15; }
-  .scoreboard-toolbar .scoreboard-actions button { padding-inline: 8px; }
+  .scoreboard-toolbar button { padding-inline: 8px; }
 }
 .scoreboard-game-top, .scoreboard-game-bottom {
   display: flex;

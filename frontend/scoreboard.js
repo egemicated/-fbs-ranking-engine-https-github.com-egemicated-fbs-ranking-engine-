@@ -2,6 +2,8 @@ const feedUrl = 'https://site.api.espn.com/apis/site/v2/sports/football/college-
 const sourceUrl = 'https://www.espn.com/college-football/scoreboard/_/group/80';
 const pollInterval = 15_000;
 const orderStorageKey = 'fbs-scoreboard-order-v1';
+const dragHold = 350;
+const dragSlop = 8;
 const gameDate = new Intl.DateTimeFormat('en-US', {
   timeZone: 'America/Denver', weekday: 'short', month: 'short', day: 'numeric',
 });
@@ -191,39 +193,35 @@ function newCard(id) {
   const card = document.createElement('article');
   card.className = 'panel scoreboard-game';
   card.dataset.gameId = id;
-  card.innerHTML = `<div class="scoreboard-game-details"></div>
-    <div class="scoreboard-game-order" hidden>
-      <span class="scoreboard-drag-handle" draggable="true" aria-hidden="true" title="Drag to reorder">⠿</span>
-      <label>Position <select></select></label>
-    </div>`;
+  card.innerHTML = '<div class="scoreboard-game-details"></div>';
   return card;
 }
 
-function updateCard(card, game, index, count, reordering) {
+function updateCard(card, game, count) {
   const name = gameName(game);
   card.dataset.state = game.state;
   if (card.getAttribute('aria-label') !== name) card.setAttribute('aria-label', name);
+  card.toggleAttribute('data-movable', count > 1);
+  if (count > 1) {
+    card.tabIndex = 0;
+    card.setAttribute('aria-describedby', 'scoreboard-keyboard-help');
+    card.setAttribute('aria-keyshortcuts', 'Alt+ArrowUp Alt+ArrowDown');
+  } else {
+    card.removeAttribute('tabindex');
+    card.removeAttribute('aria-describedby');
+    card.removeAttribute('aria-keyshortcuts');
+  }
   const details = card.querySelector('.scoreboard-game-details');
   const markup = gameDetails(game);
   if (details.scoreboardMarkup !== markup) {
     details.innerHTML = markup;
     details.scoreboardMarkup = markup;
   }
-  const controls = card.querySelector('.scoreboard-game-order');
-  controls.hidden = !reordering || count < 2;
-  if (controls.hidden) return;
-  const select = controls.querySelector('select');
-  select.setAttribute('aria-label', `Position of ${name}`);
-  if (select.options.length !== count) {
-    select.innerHTML = Array.from({ length: count }, (_, i) => `<option value="${i}">${i + 1}</option>`).join('');
-  }
-  if (select.value !== String(index)) select.value = String(index);
 }
 
-function drawSlate(root, slate, order, reordering, cards) {
+function drawSlate(root, slate, order, cards) {
   const focused = document.activeElement;
   const focusedCard = focused?.closest('[data-game-id]');
-  const focusedControl = focused?.matches('select') ? 'select' : 'a';
   const present = new Set(slate.games.map(game => game.id));
   for (const [id, card] of cards) {
     if (present.has(id)) continue;
@@ -249,36 +247,173 @@ function drawSlate(root, slate, order, reordering, cards) {
         card = newCard(game.id);
         cards.set(game.id, card);
       }
-      updateCard(card, game, index, games.length, reordering);
+      updateCard(card, game, games.length);
       if (content.children[index] !== card) content.insertBefore(card, content.children[index] ?? null);
     });
   }
   if (focusedCard && root.contains(focusedCard) && document.activeElement !== focused) {
-    const control = focusedCard.querySelector(focusedControl);
+    const control = focused === focusedCard ? focusedCard : focusedCard.querySelector('a');
     if (control && !control.closest('[hidden]')) control.focus({ preventScroll: true });
   }
+}
+
+function mountCardDrag(list, move) {
+  const listeners = new AbortController();
+  const options = { signal: listeners.signal };
+  const toolbar = list.closest('[data-scoreboard]').querySelector('.scoreboard-toolbar');
+  let gesture;
+  let holdTimer;
+  let frame;
+
+  function cancel() {
+    clearTimeout(holdTimer);
+    cancelAnimationFrame(frame);
+    if (!gesture) return;
+    const { card, target, ghost, id, touch } = gesture;
+    gesture = undefined;
+    if (!touch && card.hasPointerCapture(id)) card.releasePointerCapture(id);
+    card.classList.remove('scoreboard-dragging');
+    target?.classList.remove('scoreboard-drop-target');
+    ghost?.remove();
+  }
+
+  function updateTarget() {
+    const candidate = document.elementFromPoint(gesture.x, gesture.y)?.closest('[data-game-id]');
+    const target = candidate && list.contains(candidate) && candidate !== gesture.card &&
+      candidate.dataset.state === gesture.card.dataset.state ? candidate : undefined;
+    if (target === gesture.target) return;
+    gesture.target?.classList.remove('scoreboard-drop-target');
+    gesture.target = target;
+    target?.classList.add('scoreboard-drop-target');
+  }
+
+  function autoScroll() {
+    const edge = 70;
+    const top = Math.max(0, toolbar.getBoundingClientRect().bottom);
+    const bottom = window.innerHeight;
+    const speed = gesture.y < top + edge ? -Math.min(15, (top + edge - gesture.y) / 4)
+      : gesture.y > bottom - edge ? Math.min(15, (gesture.y - bottom + edge) / 4) : 0;
+    if (speed) {
+      window.scrollBy({ top: speed, behavior: 'instant' });
+      updateTarget();
+    }
+    frame = requestAnimationFrame(autoScroll);
+  }
+
+  function start() {
+    const { card, touch, id } = gesture;
+    if (!touch) card.setPointerCapture(id);
+    const ghost = card.cloneNode(true);
+    ghost.removeAttribute('data-game-id');
+    ghost.removeAttribute('data-movable');
+    ghost.classList.add('scoreboard-drag-preview');
+    ghost.setAttribute('aria-hidden', 'true');
+    ghost.inert = true;
+    ghost.style.width = `${card.getBoundingClientRect().width}px`;
+    document.body.append(ghost);
+    gesture.ghost = ghost;
+    card.classList.add('scoreboard-dragging');
+    positionPreview();
+    frame = requestAnimationFrame(autoScroll);
+  }
+
+  function positionPreview() {
+    const { ghost, x, y, offsetX, offsetY } = gesture;
+    ghost.style.transform = `translate3d(${x - offsetX}px, ${y - offsetY}px, 0)`;
+    updateTarget();
+  }
+
+  function begin(target, point, id, touch) {
+    if (gesture || target.closest('a, button, select, input, textarea')) return;
+    const card = target.closest('[data-movable]');
+    if (!card) return;
+    const bounds = card.getBoundingClientRect();
+    const { clientX: x, clientY: y } = point;
+    gesture = { card, id, touch, x, y, startX: x, startY: y, offsetX: x - bounds.left, offsetY: y - bounds.top };
+    if (touch) holdTimer = setTimeout(start, dragHold);
+  }
+
+  function track(point, event) {
+    gesture.x = point.clientX;
+    gesture.y = point.clientY;
+    if (!gesture.ghost && Math.hypot(gesture.x - gesture.startX, gesture.y - gesture.startY) >= dragSlop) {
+      if (gesture.touch) { cancel(); return; }
+      start();
+    }
+    if (gesture.ghost) {
+      event.preventDefault();
+      positionPreview();
+    }
+  }
+
+  function finish(point, event) {
+    if (gesture.ghost) {
+      gesture.x = point.clientX;
+      gesture.y = point.clientY;
+      updateTarget();
+    }
+    const { card, target, ghost } = gesture;
+    if (ghost) event.preventDefault();
+    cancel();
+    if (target && list.contains(target) && card.dataset.state === target.dataset.state) move(card, target);
+  }
+
+  list.addEventListener('pointerdown', event => {
+    if (event.pointerType !== 'touch' && event.isPrimary && event.button === 0) begin(event.target, event, event.pointerId, false);
+  }, options);
+  window.addEventListener('pointermove', event => {
+    if (gesture && !gesture.touch && event.pointerId === gesture.id) track(event, event);
+  }, options);
+  window.addEventListener('pointerup', event => {
+    if (gesture && !gesture.touch && event.pointerId === gesture.id) finish(event, event);
+  }, options);
+  window.addEventListener('pointercancel', event => {
+    if (gesture && !gesture.touch && event.pointerId === gesture.id) cancel();
+  }, options);
+  list.addEventListener('touchstart', event => {
+    if (event.touches.length !== 1) { cancel(); return; }
+    const touch = event.changedTouches[0];
+    begin(event.target, touch, touch.identifier, true);
+  }, { ...options, passive: true });
+  list.addEventListener('touchmove', event => {
+    if (!gesture?.touch) return;
+    const touch = Array.from(event.changedTouches).find(point => point.identifier === gesture.id);
+    if (touch) track(touch, event);
+  }, { ...options, passive: false });
+  list.addEventListener('touchend', event => {
+    if (!gesture?.touch) return;
+    const touch = Array.from(event.changedTouches).find(point => point.identifier === gesture.id);
+    if (touch) finish(touch, event);
+  }, { ...options, passive: false });
+  list.addEventListener('touchcancel', cancel, options);
+  list.addEventListener('dragstart', event => { if (gesture) event.preventDefault(); }, options);
+  list.addEventListener('contextmenu', event => { if (gesture?.touch) event.preventDefault(); }, options);
+  window.addEventListener('keydown', event => { if (event.key === 'Escape') cancel(); }, options);
+  window.addEventListener('blur', cancel, options);
+  return {
+    get source() { return gesture?.card; },
+    cancel,
+    unmount() { cancel(); listeners.abort(); },
+  };
 }
 
 export function mountScoreboard(root) {
   root.innerHTML = `<div class="scoreboard-toolbar">
     <div><h2 data-scoreboard-slate>FBS schedule</h2><p data-scoreboard-checked>Checking the ESPN feed…</p></div>
-    <div class="scoreboard-actions">
-      <button class="button light small" type="button" data-scoreboard-refresh>Refresh now</button>
-      <button class="button light small" type="button" data-scoreboard-reorder aria-expanded="false" aria-controls="scoreboard-order-help" hidden>Reorder</button>
-    </div>
+    <button class="button light small" type="button" data-scoreboard-refresh>Refresh now</button>
   </div>
-  <div id="scoreboard-order-help" class="scoreboard-order-help" hidden>
-    <p>Choose a position for a game within its section.<span class="scoreboard-drag-tip"> You can also drag by the handle.</span> Your order is kept in this tab for the current slate.</p>
-    <button class="button light small" type="button" data-scoreboard-reset>Reset order</button>
+  <div class="scoreboard-order-help" data-scoreboard-order-help hidden>
+    <p><span class="scoreboard-touch-tip">Touch and hold a game, then drag to move it.</span><span class="scoreboard-mouse-tip">Drag a game to move it.</span></p>
+    <button class="button light small" type="button" data-scoreboard-reset hidden>Reset order</button>
   </div>
+  <p id="scoreboard-keyboard-help" class="sr-only">Press Alt and the Up or Down arrow to move this game within its section.</p>
   <p class="sr-only" role="status" data-scoreboard-move-status></p>
   <p class="scoreboard-warning" role="status" hidden></p>
   <div class="scoreboard-sections" hidden>${sections.map(([key, label]) => `<section data-scoreboard-section="${key}" aria-labelledby="scoreboard-${key}"><h2 id="scoreboard-${key}">${label}</h2><p class="scoreboard-empty"></p><div class="scoreboard-games" data-scoreboard-games></div></section>`).join('')}</div>
   <p class="scoreboard-source">Scores from <a href="${sourceUrl}" target="_blank" rel="noopener">ESPN</a>. Kickoffs are shown in Mountain Time.</p>`;
 
   const refresh = root.querySelector('[data-scoreboard-refresh]');
-  const reorderButton = root.querySelector('[data-scoreboard-reorder]');
-  const reorderHelp = root.querySelector('#scoreboard-order-help');
+  const reorderHelp = root.querySelector('[data-scoreboard-order-help]');
   const resetButton = root.querySelector('[data-scoreboard-reset]');
   const moveStatus = root.querySelector('[data-scoreboard-move-status]');
   const checked = root.querySelector('[data-scoreboard-checked]');
@@ -286,24 +421,16 @@ export function mountScoreboard(root) {
   const sectionList = root.querySelector('.scoreboard-sections');
   const cards = new Map();
   let order = readOrder();
-  let reordering = false;
-  let dragCard;
-  let dropTarget;
   let previous;
   let controller;
   let timer;
   let closed = false;
 
-  function clearDrag() {
-    dragCard?.classList.remove('scoreboard-dragging');
-    dropTarget?.classList.remove('scoreboard-drop-target');
-    dragCard = undefined;
-    dropTarget = undefined;
-  }
-
   function renderGames() {
-    drawSlate(root, previous, order, reordering, cards);
-    resetButton.disabled = !Object.keys(order.groups).length;
+    drawSlate(root, previous, order, cards);
+    const hasOrder = Object.keys(order.groups).length > 0;
+    resetButton.hidden = !hasOrder;
+    reorderHelp.hidden = !hasOrder && !sectionList.querySelector('[data-movable]');
   }
 
   function moveGame(card, to) {
@@ -319,6 +446,11 @@ export function mountScoreboard(root) {
     moveStatus.textContent = `${gameName(moved)} moved to position ${to + 1} of ${games.length}.`;
   }
 
+  const drag = mountCardDrag(sectionList, (card, target) => {
+    const games = sectionGames(previous, card.dataset.state, order);
+    moveGame(card, games.findIndex(game => game.id === target.dataset.gameId));
+  });
+
   async function update() {
     if (controller || closed) return;
     clearTimeout(timer);
@@ -331,14 +463,13 @@ export function mountScoreboard(root) {
       if (closed) return;
       const key = slateId(slate);
       if (order?.slate !== key) {
-        clearDrag();
+        drag.cancel();
         order = { slate: key, groups: {} };
         saveOrder(order);
       }
-      if (dragCard && !slate.games.some(game => game.id === dragCard.dataset.gameId && game.state === dragCard.dataset.state)) clearDrag();
+      if (drag.source && !slate.games.some(game => game.id === drag.source.dataset.gameId && game.state === drag.source.dataset.state)) drag.cancel();
       previous = slate;
       renderGames();
-      reorderButton.hidden = false;
       sectionList.hidden = false;
       warning.textContent = slate.nextUnavailable ? 'The next schedule is temporarily unavailable. Checking again shortly.' : '';
       warning.hidden = !slate.nextUnavailable;
@@ -360,57 +491,29 @@ export function mountScoreboard(root) {
     else update();
   }
   refresh.addEventListener('click', update);
-  reorderButton.addEventListener('click', () => {
-    reordering = !reordering;
-    reorderButton.textContent = reordering ? 'Done' : 'Reorder';
-    reorderButton.setAttribute('aria-expanded', String(reordering));
-    reorderHelp.hidden = !reordering;
-    clearDrag();
-    renderGames();
-  });
   resetButton.addEventListener('click', () => {
+    drag.cancel();
     order.groups = {};
     saveOrder(order);
-    reorderButton.focus();
+    refresh.focus({ preventScroll: true });
     renderGames();
     moveStatus.textContent = 'Default game order restored.';
   });
-  sectionList.addEventListener('change', event => {
-    if (!reordering || !event.target.matches('.scoreboard-game-order select')) return;
-    moveGame(event.target.closest('[data-game-id]'), Number(event.target.value));
-  });
-  sectionList.addEventListener('dragstart', event => {
-    if (!reordering || !event.target.matches('.scoreboard-drag-handle')) return;
-    dragCard = event.target.closest('[data-game-id]');
-    event.dataTransfer.setData('text/plain', dragCard.dataset.gameId);
-    event.dataTransfer.effectAllowed = 'move';
-    dragCard.classList.add('scoreboard-dragging');
-  });
-  sectionList.addEventListener('dragover', event => {
-    if (!dragCard) return;
-    const card = event.target.closest('[data-game-id]');
-    dropTarget?.classList.remove('scoreboard-drop-target');
-    dropTarget = undefined;
-    if (!card || card === dragCard || card.dataset.state !== dragCard.dataset.state) return;
+  sectionList.addEventListener('keydown', event => {
+    const card = event.target;
+    if (!event.altKey || !card.matches('[data-movable]') || !['ArrowUp', 'ArrowDown'].includes(event.key)) return;
     event.preventDefault();
-    event.dataTransfer.dropEffect = 'move';
-    dropTarget = card;
-    dropTarget.classList.add('scoreboard-drop-target');
+    const games = sectionGames(previous, card.dataset.state, order);
+    const index = games.findIndex(game => game.id === card.dataset.gameId);
+    moveGame(card, index + (event.key === 'ArrowUp' ? -1 : 1));
+    card.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   });
-  sectionList.addEventListener('drop', event => {
-    if (!dragCard || !dropTarget || event.target.closest('[data-game-id]') !== dropTarget) return;
-    event.preventDefault();
-    const card = dragCard;
-    const targetId = dropTarget.dataset.gameId;
-    clearDrag();
-    moveGame(card, sectionGames(previous, card.dataset.state, order).findIndex(game => game.id === targetId));
-  });
-  sectionList.addEventListener('dragend', clearDrag);
   document.addEventListener('visibilitychange', onVisibility);
   window.addEventListener('online', update);
   update();
   return () => {
     closed = true;
+    drag.unmount();
     clearTimeout(timer);
     controller?.abort();
     document.removeEventListener('visibilitychange', onVisibility);
