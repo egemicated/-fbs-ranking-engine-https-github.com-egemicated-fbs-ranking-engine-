@@ -16,6 +16,9 @@ let contestModule;
 let closeContest;
 let historyModule;
 let closeHistory;
+let scoreboardModule;
+let closeScoreboard;
+let rankingsFailed = false;
 let renderedHeader;
 const pollSources = {
   ap: { name: 'AP Top 25', short: 'AP', url: 'https://apnews.com/hub/ap-top-25-college-football-poll' },
@@ -135,12 +138,13 @@ function renderHeader() {
   const page = route()[0];
   if (renderedHeader?.snapshot === state.snapshot && renderedHeader.page === page) return;
   renderedHeader = { snapshot: state.snapshot, page };
-  const navs = [['home','home','Home'],['rankings','trophy','Rankings'],['ranking-history','chart','Weekly movement'],['teams','teams','Teams'],['compare','compare','Matchup lab'],['beat-the-model','trophy','Beat the Model'],['polls','layers','Compare rankings'],['bracket','network','Playoff bracket'],['cfp-scenarios','network','CFP scenarios'],['methodology','layers','Methodology']];
+  const navs = [['home','home','Home'],['rankings','trophy','Rankings'],['scoreboard','clock','Scoreboard'],['ranking-history','chart','Weekly movement'],['teams','teams','Teams'],['compare','compare','Matchup lab'],['beat-the-model','trophy','Beat the Model'],['polls','layers','Compare rankings'],['bracket','network','Playoff bracket'],['cfp-scenarios','network','CFP scenarios'],['methodology','layers','Methodology']];
   const primaryPages = ['home', 'rankings', 'beat-the-model'];
   const activePage = page === 'team' ? 'teams' : page;
   const link = ([id, glyph, label], placement = '') => `<a href="#${id}" class="${placement}${activePage === id ? ' active' : ''}" ${page === id ? 'aria-current="page"' : ''}>${icon(glyph)}${label}</a>`;
   const moreLinks = navs.filter(([id]) => !primaryPages.includes(id));
-  document.querySelector('#header').innerHTML = `<div class="masthead"><div class="wrap masthead-inner">${brand()}<span class="brand-divider"></span><div class="masthead-tag">THE INDEPENDENT COLLEGE FOOTBALL RANKING ENGINE<strong>DATA &nbsp; › &nbsp; OPPONENTS &nbsp; › &nbsp; EVIDENCE</strong></div><div class="header-right"><div class="engine-badge">${icon('check')}<div><strong>Published rankings</strong><small>CFBD snapshot · ${snapshotDate()}</small></div></div><div class="season-badge">${state.snapshot.season}<small>SEASON SNAPSHOT</small></div></div></div></div>
+  const snapshotBadges = state.snapshot ? `<div class="header-right"><div class="engine-badge">${icon('check')}<div><strong>Published rankings</strong><small>CFBD snapshot · ${snapshotDate()}</small></div></div><div class="season-badge">${state.snapshot.season}<small>SEASON SNAPSHOT</small></div></div>` : '';
+  document.querySelector('#header').innerHTML = `<div class="masthead"><div class="wrap masthead-inner">${brand()}<span class="brand-divider"></span><div class="masthead-tag">THE INDEPENDENT COLLEGE FOOTBALL RANKING ENGINE<strong>DATA &nbsp; › &nbsp; OPPONENTS &nbsp; › &nbsp; EVIDENCE</strong></div>${snapshotBadges}</div></div>
     <nav class="nav" aria-label="Main navigation"><div class="wrap nav-inner">
       ${navs.map(item => link(item, primaryPages.includes(item[0]) ? 'nav-primary' : 'nav-desktop-link')).join('')}
       <details class="nav-more${moreLinks.some(([id]) => id === activePage) ? ' active' : ''}">
@@ -149,7 +153,7 @@ function renderHeader() {
       </details>
       <span class="nav-spacer"></span><span class="nav-note">${icon('clock')}Refresh checks · Wed–Sun</span>
     </div></nav>`;
-  document.querySelector('#footer').innerHTML = `<div class="footer"><div class="wrap footer-inner"><div><div class="footer-brand">${BRAND.toUpperCase()}</div><p>Independent FBS rankings calculated from game data. No human polls or manual ranking overrides.</p></div><div class="footer-links"><a href="#methodology">${icon('layers')}Model methodology</a><a href="${esc(publicationPath('rankings'))}" target="_blank" rel="noopener">${icon('database')}Published data</a><span>Ranking engine · v${esc(state.snapshot.modelVersion)}</span></div></div></div>`;
+  document.querySelector('#footer').innerHTML = `<div class="footer"><div class="wrap footer-inner"><div><div class="footer-brand">${BRAND.toUpperCase()}</div><p>Independent FBS rankings calculated from game data. No human polls or manual ranking overrides.</p></div><div class="footer-links"><a href="#methodology">${icon('layers')}Model methodology</a><a href="${esc(publicationPath('rankings'))}" target="_blank" rel="noopener">${icon('database')}Published data</a>${state.snapshot ? `<span>Ranking engine · v${esc(state.snapshot.modelVersion)}</span>` : ''}</div></div></div>`;
 }
 function schedulePanel() { return `<section class="panel schedule-card"><div class="panel-head"><div class="panel-head-title">${icon('calendar')}<h2>Results updates</h2></div></div><div class="panel-body"><div class="section-label">Mountain Time</div><div class="schedule-title">WEDNESDAY–SUNDAY</div><p>Wednesday–Saturday at <strong>4:11 a.m.</strong> when games are due for results. Sunday at <strong>12:01 a.m.</strong>, with a 4:11 a.m. backup check.</p><p style="margin-top:12px">Last publication <strong>${snapshotDate({ hour:'numeric', minute:'2-digit' })} MT</strong></p></div></section>`; }
 function coveragePanel() { return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('shield')}<h2>Behind the rankings</h2></div><span class="tag green">CFBD</span></div><div class="panel-body"><p>${usesSor()?'A team climbs when its record is harder to match against the same opponents at the same venues.':'The Colley model links results across the opponent network.'}</p><div class="fact-list"><div class="fact-row"><span>FBS teams in this snapshot</span><strong>${state.snapshot.fbsTeams}</strong></div><div class="fact-row"><span>Game records modeled</span><strong>${state.snapshot.gamesUsed.toLocaleString()}</strong></div><div class="fact-row"><span>Human poll inputs</span><strong>Zero</strong></div></div></div><a class="method-link" href="#methodology">See how we calculate each rank ${icon('arrow')}</a></section>`; }
@@ -829,10 +833,37 @@ function renderHistoryPage(week) {
     console.error(error);
   });
 }
+function renderScoreboardPage() {
+  if (main.querySelector('[data-scoreboard]')) return;
+  main.innerHTML = banner('FBS game day', 'Live Scoreboard', 'Kickoff times, live scores and final results. Refreshes every 15 seconds.') +
+    '<div class="wrap page-content" data-scoreboard><p role="status">Loading the scoreboard…</p></div>';
+  const target = main.querySelector('[data-scoreboard]');
+  scoreboardModule ??= import('./scoreboard.js?v=1');
+  scoreboardModule.then(({ mountScoreboard }) => {
+    if (route()[0] === 'scoreboard' && target.isConnected) closeScoreboard = mountScoreboard(target);
+  }).catch(error => {
+    if (target.isConnected) target.innerHTML = '<p role="status">The scoreboard could not load. Please reload this page to try again.</p>';
+    console.error(error);
+  });
+}
+function renderRankingsStatus() {
+  main.innerHTML = rankingsFailed
+    ? `<section class="loading"><h1>The rankings are taking a moment.</h1><p>${dataRoot?'The published data could not load. Please try again shortly.':'The free service may be waking up. Please try again shortly.'}</p><button id="retry" class="button">Try again</button></section>`
+    : '<div class="loading"><span class="loader"></span><h1>Building the picture.</h1><p>Loading our latest published rankings…</p></div>';
+  document.querySelector('#retry')?.addEventListener('click', load);
+}
 function render() {
-  if(!state.snapshot)return;
-  renderHeader();
   const [page,id,scope]=route();
+  if (page !== 'scoreboard' && closeScoreboard) {
+    closeScoreboard();
+    closeScoreboard = undefined;
+  }
+  if (page === 'scoreboard') {
+    renderHeader();
+    renderScoreboardPage();
+    document.title = `Live Scoreboard · ${BRAND}`;
+    document.querySelector('#announce').textContent = document.title;
+  }
   if (page !== 'bracket' && closeBracket) {
     closeBracket();
     closeBracket = undefined;
@@ -849,6 +880,9 @@ function render() {
     closeHistory();
     closeHistory = undefined;
   }
+  if (page === 'scoreboard') return;
+  if (!state.snapshot) { renderRankingsStatus(); return; }
+  renderHeader();
   if (page === 'rankings') {
     state.model = id === 'strength' || (id === 'performance' && performancePublished()) ? id : 'achievement';
     state.all = id === 'all' || scope === 'all';
@@ -926,6 +960,7 @@ document.addEventListener('keydown', event => {
 });
 window.addEventListener('hashchange',()=>{state.teamTab='overview';render();window.scrollTo({top:0,behavior:'instant'});});
 async function load(){
+  rankingsFailed = false;
   try{
     const response=await fetch(publicationPath('rankings'),{headers:{Accept:'application/json'}});
     if(!response.ok)throw Error(`Rankings returned ${response.status}`);
@@ -937,11 +972,16 @@ async function load(){
     performanceLoading=false;performanceFailed=false;
     state.compareA=snapshot.rankings[0].id;state.compareB=snapshot.rankings[1].id;
     render();
-  }catch(error){main.innerHTML=`<section class="loading"><h1>The rankings are taking a moment.</h1><p>${dataRoot?'The published data could not load. Please try again shortly.':'The free service may be waking up. Please try again shortly.'}</p><button id="retry" class="button">Try again</button></section>`;document.querySelector('#retry').addEventListener('click',load);console.error(error);}
+  }catch(error){
+    rankingsFailed = true;
+    if (route()[0] !== 'scoreboard') renderRankingsStatus();
+    console.error(error);
+  }
 }
 if (location.search && (new URLSearchParams(location.search).get('cfp') === '1' || new URLSearchParams(location.search).get('weekly') === '1')) {
   const signInReturn = new URL(location.href);
   signInReturn.hash = new URLSearchParams(location.search).get('weekly') === '1' ? 'beat-the-model' : 'bracket';
   history.replaceState(history.state, '', signInReturn);
 }
+if (route()[0] === 'scoreboard') render();
 load();

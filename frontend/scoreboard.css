@@ -1,0 +1,52 @@
+.scoreboard-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.scoreboard-toolbar h2 { font-size: 24px; }
+.scoreboard-toolbar p, .scoreboard-source { color: var(--muted); font-size: 12px; }
+.scoreboard-toolbar p { font-variant-numeric: tabular-nums; }
+.scoreboard-toolbar button { cursor: pointer; min-height: 44px; }
+.scoreboard-sections > section { margin-block: 20px 27px; }
+.scoreboard-sections h2 { margin-bottom: 9px; }
+.scoreboard-games {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+  gap: 12px;
+}
+.scoreboard-game { display: flex; flex-direction: column; }
+.scoreboard-game-top, .scoreboard-game-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 4px 8px;
+  flex-wrap: wrap;
+  padding: 9px 12px;
+}
+.scoreboard-game-top { background: #edf4ff; color: #244a79; font-size: 12px; }
+.scoreboard-game-top small { font-size: 11px; }
+.scoreboard-game[data-state="live"] .scoreboard-game-top { background: #e8f5ed; color: #1a6838; }
+.scoreboard-teams { flex: 1; display: grid; gap: 7px; padding: 9px 12px; }
+.scoreboard-team {
+  display: grid;
+  grid-template-columns: 29px minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  min-height: 29px;
+}
+.scoreboard-team .logo { width: 29px; height: 29px; }
+.scoreboard-team-name { overflow-wrap: anywhere; font-size: 13px; line-height: 1.25; }
+.scoreboard-team-name small { color: var(--muted); font-size: 11px; display: block; margin-top: 3px; }
+.scoreboard-possession { color: #1a743e; font-size: 10px; margin-inline-start: 4px; }
+.scoreboard-score { font: 700 26px/1 Barlow, sans-serif; font-variant-numeric: tabular-nums; }
+.scoreboard-winner .scoreboard-score { color: #075bb5; }
+.scoreboard-game-bottom { border-top: 1px solid var(--line); font-size: 11px; color: var(--muted); }
+.scoreboard-game-bottom a { margin-inline-start: auto; color: var(--blue); font-weight: 650; }
+.scoreboard-game-bottom a:hover, .scoreboard-source a:hover { text-decoration: underline; }
+.scoreboard-empty { grid-column: 1 / -1; color: var(--muted); font-size: 13px; }
+.scoreboard-source a { color: var(--blue); }
+.scoreboard-warning { margin-top: 12px; padding: 10px 12px; border-radius: 7px; background: #fff2d9; color: #785106; font-size: 13px; }
