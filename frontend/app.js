@@ -838,7 +838,7 @@ function renderScoreboardPage() {
   main.innerHTML = banner('FBS game day', 'Live Scoreboard', 'Kickoff times, live scores and final results. Refreshes every 15 seconds.') +
     '<div class="wrap page-content" data-scoreboard><p role="status">Loading the scoreboard…</p></div>';
   const target = main.querySelector('[data-scoreboard]');
-  scoreboardModule ??= import('./scoreboard.js?v=1');
+  scoreboardModule ??= import('./scoreboard.js?v=2');
   scoreboardModule.then(({ mountScoreboard }) => {
     if (route()[0] === 'scoreboard' && target.isConnected) closeScoreboard = mountScoreboard(target);
   }).catch(error => {
