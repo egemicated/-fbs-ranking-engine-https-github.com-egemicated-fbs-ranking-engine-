@@ -1,3 +1,5 @@
+.scenario-banner-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
+.scenario-refresh-note { font-weight: 600; }
 .scenario-page { min-width: 0; }
 .scenario-page .panel-body { min-width: 0; }
 .scenario-summary { margin-bottom: 18px; }

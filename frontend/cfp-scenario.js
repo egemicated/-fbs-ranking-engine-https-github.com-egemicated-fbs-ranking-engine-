@@ -142,7 +142,10 @@ export async function renderCfpScenario(main, { snapshot, inputUrl, workerUrl } 
   const abort = new AbortController();
   let worker, debounce, timeout, active = true;
   main.innerHTML = `<section class="hero page-banner"><div class="wrap"><h1>CFP Scenario Builder</h1>
-    <p>See how your game results could change the playoff field and Strength of Record.</p></div></section>
+    <div class="scenario-banner-meta">
+      <p>See how your game results could change the playoff field and Strength of Record.</p>
+      <p class="scenario-refresh-note">Refresh checks · Wed–Sun</p>
+    </div></div></section>
     <div class="wrap page-content scenario-page" data-scenario-page><p role="status">Loading the scenario schedule…</p></div>`;
   const root = main.querySelector('[data-scenario-page]');
   const current = () => active && root.isConnected;

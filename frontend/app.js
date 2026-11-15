@@ -155,7 +155,6 @@ function renderHeader() {
         <summary>More ${icon('chevron')}</summary>
         <div class="nav-more-links">${moreLinks.map(item => link(item, desktopPages.includes(item[0]) ? 'nav-more-mobile-link' : '')).join('')}</div>
       </details>
-      <span class="nav-spacer"></span><span class="nav-note">${icon('clock')}Refresh checks · Wed–Sun</span>
     </div></nav>`;
   document.querySelector('#footer').innerHTML = `<div class="footer"><div class="wrap footer-inner"><div><div class="footer-brand">${BRAND.toUpperCase()}</div><p>Independent FBS rankings calculated from game data. No human polls or manual ranking overrides.</p></div><div class="footer-links"><a href="#methodology">${icon('layers')}Model methodology</a><a href="${esc(publicationPath('rankings'))}" target="_blank" rel="noopener">${icon('database')}Published data</a>${state.snapshot ? `<span>Ranking engine · v${esc(state.snapshot.modelVersion)}</span>` : ''}</div></div></div>`;
 }
@@ -802,7 +801,7 @@ function renderBracketPage() {
 }
 function renderScenarioPage() {
   main.innerHTML = '<div class="wrap page-content"><p role="status">Loading the CFP Scenario Builder…</p></div>';
-  scenarioModule ??= import('./cfp-scenario.js?v=1');
+  scenarioModule ??= import('./cfp-scenario.js?v=2');
   scenarioModule.then(({ renderCfpScenario, unmountCfpScenario }) => {
     if (route()[0] !== 'cfp-scenarios') return;
     closeScenario = unmountCfpScenario;
