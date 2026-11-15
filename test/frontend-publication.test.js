@@ -23,14 +23,18 @@ function fixture(sor = true) {
   return snapshot;
 }
 
-async function browser(snapshot, detailResponse) {
-  const nodes = new Map(), calls = [], errors = [];
+async function browser(snapshot, detailResponse, now = Date.parse('2026-11-06T12:00:00Z')) {
+  const nodes = new Map(), calls = [], errors = [], listeners = new Map();
   const node = id => {
-    if (!nodes.has(id)) nodes.set(id, { innerHTML: '', textContent: '', addEventListener() {}, querySelector: node });
+    if (!nodes.has(id)) nodes.set(id, { innerHTML: '', textContent: '', addEventListener() {}, querySelector: node, focus() {} });
     return nodes.get(id);
   };
-  const context = { document: { querySelector: node, addEventListener() {}, title: '' },
+  const context = { document: { querySelector: node, addEventListener: (type, handler) => listeners.set(type, handler), title: '' },
     location: { hash: '#home' }, window: { addEventListener() {}, scrollTo() {} },
+    Date: class extends Date {
+      constructor(...args) { super(...(args.length ? args : [now])); }
+      static now() { return now; }
+    },
     HTMLImageElement: class {}, console: { error: e => errors.push(e) },
     fetch: async path => {
       calls.push(path);
@@ -42,20 +46,41 @@ async function browser(snapshot, detailResponse) {
   await new Promise(setImmediate);
   assert.deepEqual(errors, []);
   return { ...context, calls, html: () => node('#main').innerHTML,
-    go(hash) { context.location.hash = hash; context.ui.render(); return node('#main').innerHTML; } };
+    go(hash) { context.location.hash = hash; context.ui.render(); return node('#main').innerHTML; },
+    teamTab(value) {
+      listeners.get('click')({ target: { closest: selector => selector === '[data-action]' ? { dataset: { action: 'team-tab', value } } : null } });
+      return node('#main').innerHTML;
+    },
+  };
 }
 
-function separatedFixture() {
+function separatedFixture(includeFcs = false) {
   const snapshot = { ...fixture(), publicationHash: 'test-version', teamDetailsPath: '/data/teams' };
   const details = new Map();
-  snapshot.rankings = snapshot.rankings.map(row => {
+  const separate = row => {
     const { contributions, explanation, evidence, sorTailProbability, sorExpectedWins, preseasonStrength, ...summary } = row;
     details.set(`/data/teams/${row.id}.json?v=test-version`, { id: row.id, publicationHash: snapshot.publicationHash,
       contributions, explanation, evidence, sorTailProbability, sorExpectedWins, preseasonStrength });
     return summary;
-  });
+  };
+  snapshot.rankings = snapshot.rankings.map(separate);
+  if (includeFcs) {
+    snapshot.fcsRankings = snapshot.ratings.filter(row => row.division === 'fcs')
+      .map(row => separate({ ...row, displayRank: 1, displayConferenceRank: 1, sor: 0.5, sorWins: 0, sorGames: 1 }));
+  }
   return { snapshot, details };
 }
+
+const detailPath = id => `/data/teams/${id}.json?v=test-version`;
+const lookupDetails = details => async path => ({ ok: details.has(path), json: async () => details.get(path) });
+
+async function openResults(page, id) {
+  page.go(`#team/${id}`);
+  await new Promise(setImmediate);
+  return page.teamTab('results');
+}
+
+const upcomingPanel = html => html.match(/<section\b[^>]*class="[^"]*\bteam-upcoming\b[^"]*"[^>]*>[\s\S]*?<\/section>/)?.[0] ?? '';
 
 test('home, national table and directory display published SOR ranks and scores rather than legacy Colley', async () => {
   const snapshot = fixture(), before = JSON.stringify(snapshot), page = await browser(snapshot);
@@ -141,6 +166,80 @@ test('team details from another publication stay off the page and offer a retry'
   assert.match(page.html(), /The team details could not load/);
   assert.match(page.html(), /data-action="retry-team-details"/);
   assert.doesNotMatch(page.html(), /WHY WE RANK ALPHA/);
+});
+
+test('team Results shows the dated upcoming schedule without changing completed records', async () => {
+  const { snapshot, details } = separatedFixture(true);
+  const upcomingGames = [
+    { opponentId: 'outside', opponentName: '<Neutral opponent>', startDate: '2026-11-28T19:00:00Z', venue: 'neutral',
+      winProbability: null, probabilitySource: null },
+    { opponentId: 'c', opponentName: 'Gamma', startDate: '2026-11-15T01:30:00Z', venue: 'away', startTimeTbd: false,
+      winProbability: .625, probabilitySource: 'saved', calibrated: false },
+    { opponentId: 'b', opponentName: 'Beta', startDate: '2026-11-21T18:00:00Z', venue: 'home', startTimeTbd: true,
+      winProbability: .44, probabilitySource: 'estimate', calibrated: true },
+    { opponentId: 'old', opponentName: 'Kickoff passed', startDate: '2026-11-06T10:00:00Z', venue: 'away' },
+  ];
+  details.get(detailPath('a')).upcomingGames = upcomingGames;
+  const before = JSON.stringify(details.get(detailPath('a')));
+  const page = await browser(snapshot, lookupDetails(details));
+  page.go('#team/a');
+  await new Promise(setImmediate);
+  assert.match(page.html(), /<button\b[^>]*data-action="team-tab"[^>]*data-value="results"[^>]*>\s*<span\b[^>]*>Record<\/span>/);
+  const results = page.teamTab('results');
+  const upcoming = upcomingPanel(results);
+  assert.match(upcoming, /upcoming games/i);
+  assert.match(upcoming, /href="#team\/c"[^>]*>Gamma</);
+  assert.match(upcoming, /href="#team\/b"[^>]*>Beta</);
+  assert.match(upcoming, /Gamma[\s\S]*Beta[\s\S]*&lt;Neutral opponent&gt;/);
+  assert.match(upcoming, /Nov 14[^<]*6:30\s?PM/i);
+  assert.match(upcoming, /Time TBD/i);
+  assert.match(upcoming, /\bHome\b/i);
+  assert.match(upcoming, /\bAway\b/i);
+  assert.match(upcoming, /neutral site/i);
+  assert.match(upcoming, /62\.5%<\/strong><small>Saved win chance · Experimental/);
+  assert.match(upcoming, /44\.0%<\/strong><small>Win chance estimate/);
+  assert.match(upcoming, /Odds unavailable/);
+  assert.doesNotMatch(upcoming, /Kickoff passed|<Neutral opponent>|href="#team\/outside"/);
+  assert.match(results, /1–1 overall/);
+  assert.match(results, /THE COMPLETED RESULTS/);
+  const completed = results.match(/<table class="evidence-table">[\s\S]*?<\/table>/)?.[0] ?? '';
+  assert.equal((completed.match(/<tr>/g) ?? []).length, 3);
+  assert.doesNotMatch(completed, /2026-11|Neutral opponent/);
+  assert.doesNotMatch(page.teamTab('overview'), /upcoming games/i);
+  assert.deepEqual(page.calls, ['/rankings', detailPath('a')]);
+  assert.equal(JSON.stringify(details.get(detailPath('a'))), before);
+});
+
+test('FCS team Results links a ranked FBS opponent from the same team-details response', async () => {
+  const { snapshot, details } = separatedFixture(true);
+  details.get(detailPath('c')).upcomingGames = [
+    { opponentId: 'b', opponentName: 'Beta', startDate: '2026-11-21T18:00:00Z', venue: 'home',
+      winProbability: .257, probabilitySource: 'estimate', calibrated: false },
+  ];
+  const page = await browser(snapshot, lookupDetails(details));
+  const results = await openResults(page, 'c');
+  assert.match(results, /<h1>GAMMA<\/h1>/);
+  const upcoming = upcomingPanel(results);
+  assert.match(upcoming, /upcoming games/i);
+  assert.match(upcoming, /href="#team\/b"[^>]*>Beta</);
+  assert.match(upcoming, /25\.7%/);
+  assert.match(results, /0–1 overall/);
+  assert.match(results, /THE COMPLETED RESULTS/);
+  assert.deepEqual(page.calls, ['/rankings', detailPath('c')]);
+});
+
+test('a known empty schedule differs from missing schedule data on older team details', async () => {
+  for (const upcomingGames of [[], null, undefined]) {
+    const { snapshot, details } = separatedFixture();
+    if (upcomingGames !== undefined) details.get(detailPath('a')).upcomingGames = upcomingGames;
+    const page = await browser(snapshot, lookupDetails(details));
+    const results = await openResults(page, 'a');
+    assert.match(results, /THE COMPLETED RESULTS/);
+    assert.match(results, /1–1 overall/);
+    assert.match(results, Array.isArray(upcomingGames) ? /no upcoming games/i : /schedule[^<]*unavailable/i);
+    assert.doesNotMatch(results, Array.isArray(upcomingGames) ? /schedule[^<]*unavailable/i : /no upcoming games/i);
+    assert.deepEqual(page.calls, ['/rankings', detailPath('a')]);
+  }
 });
 
 test('SOS keeps the Colley opponent average while predictive ordering and matchup calculations remain separate', async () => {

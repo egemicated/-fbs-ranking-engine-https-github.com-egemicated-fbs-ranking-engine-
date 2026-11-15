@@ -4,7 +4,7 @@ import { pathToFileURL } from 'node:url';
 import { validateSeason, rankSeason } from '../src/engine.js';
 import { assertNoLogicalDuplicates } from '../src/data-quality.js';
 import { atomicJson } from '../src/ingest.js';
-import { matchupValidation } from '../src/site-validation.js';
+import { fcsMatchupValidation, matchupValidation, strengthWinProbability } from '../src/site-validation.js';
 
 const DAY = 86400000;
 const HORIZON_DAYS = 7;
@@ -28,8 +28,7 @@ function strengthByTeam(rows) {
 
 function predictGame(game, strengths, homeAdvantage, scale) {
   if (!strengths.has(game.home) || !strengths.has(game.away)) return null;
-  const edge = strengths.get(game.home) - strengths.get(game.away) + (game.neutral ? 0 : homeAdvantage);
-  const homeWinProbability = 1 / (1 + Math.exp(-edge / scale));
+  const homeWinProbability = strengthWinProbability(strengths.get(game.home), strengths.get(game.away), game.neutral ? 0 : homeAdvantage, scale);
   return { homeWinProbability, favored: favored(homeWinProbability) };
 }
 
@@ -53,19 +52,6 @@ function previousGames(previous, season, capture, scheduleCutoff) {
   const byId = new Map(previous.games.map(game => [game.id, game]));
   if (byId.size !== previous.games.length) throw new Error('Duplicate game in previous Weekly Picks artifact');
   return byId;
-}
-
-function validateFcsCalibration(calibration, snapshot) {
-  const expected = calibration?.strengthConfig;
-  if (calibration?.approvedForWeeklyPicks !== true || calibration.population !== 'fcs-fcs' ||
-      typeof calibration.modelVersion !== 'string' || calibration.modelVersion !== snapshot.modelVersion ||
-      !Number.isFinite(calibration.scale) || calibration.scale <= 0 ||
-      !Number.isInteger(calibration.evaluation?.lastSeason) || calibration.evaluation.lastSeason >= snapshot.season ||
-      !expected || Object.keys(expected).length !== Object.keys(snapshot.config ?? {}).length ||
-      !Object.entries(expected).every(([key, value]) => snapshot.config?.[key] === value)) {
-    throw new Error('FCS Weekly Picks requires approved historical calibration matching the saved Strength model');
-  }
-  return calibration;
 }
 
 function fcsReplayGameIds(season, isTarget, canceled) {
@@ -105,7 +91,8 @@ export function buildWeeklyPicks(season, snapshot, { capturedAt, prior = null, p
   if (live && (scheduleCutoff !== strengthFetched || season.source.sha256 !== snapshot.source.sha256)) {
     throw new Error('CFBD schedule and Strength snapshot must come from the same refresh');
   }
-  const validation = fcsCohort ? validateFcsCalibration(fcsValidation, snapshot) : matchupValidation(snapshot);
+  const validation = fcsCohort ? fcsMatchupValidation(snapshot, fcsValidation) : matchupValidation(snapshot);
+  if (fcsCohort && !validation) throw new Error('FCS Weekly Picks requires approved historical calibration matching the saved Strength model');
   const crossDivisionScale = snapshot.config?.probabilityScale;
   const scale = fcsCohort ? validation.scale : validation?.winProbability.scale ?? crossDivisionScale;
   const homeAdvantage = snapshot.config?.homeAdvantage;

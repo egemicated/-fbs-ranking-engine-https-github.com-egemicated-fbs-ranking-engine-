@@ -45,7 +45,11 @@ test('weekly CFBD input saves only timed unresolved FCS kickoffs for the refresh
   const snapshot = buildWeeklySnapshot(source, prior, config, new Date('2026-11-08T15:00:00Z'));
   assert.equal(snapshot.gamesUsed, 2);
   assert.deepEqual(snapshot.pendingFcsKickoffs, [kickoff, laterKickoff]);
+  assert.deepEqual(snapshot.futureFixtures.map(game => game.id), ['3', '4', '5', '8', '6']);
+  assert.equal(snapshot.futureFixtures.find(game => game.id === '5').startTimeTbd, true);
+  assert.equal(Object.hasOwn(snapshot.futureFixtures[0], 'homePoints'), false);
   assert.equal(Object.hasOwn(publicRankings(snapshot, '/teams'), 'pendingFcsKickoffs'), false);
+  assert.equal(Object.hasOwn(publicRankings(snapshot, '/teams'), 'futureFixtures'), false);
 });
 test('schedule means 12:01 AM Mountain in both daylight and standard time', () => {
   const localTime = new Intl.DateTimeFormat('en-US', { timeZone: UPDATE_SCHEDULE.timeZone, weekday: 'long',

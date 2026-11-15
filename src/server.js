@@ -6,7 +6,7 @@ import { UPDATE_SCHEDULE } from './weekly.js';
 import publicationPolicy from '../data/publication-model.json' with { type: 'json' };
 import { readPublicPerformance } from './public-performance.js';
 import { readFcsWeeklyPicks } from './weekly-fcs-publication.js';
-import { publicRankings, publicTeamDetails } from './site-publication.js';
+import { buildUpcomingTeamSchedule, publicRankings, publicTeamDetails } from './site-publication.js';
 import { matchupValidation, snapshotCoverage } from './site-validation.js';
 import { buildWeeklyTeamStats } from '../frontend/weekly-team-stats.js';
 import { browserSorSource, buildScenarioPublication } from './scenario-publication.js';
@@ -121,9 +121,16 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
       if (teamId) {
         const team = snapshot.rankings.find(row => encodeURIComponent(row.id) === teamId) ??
           snapshot.fcsRankings?.find(row => encodeURIComponent(row.id) === teamId);
-        return team ? send(200, publicTeamDetails(snapshot, team)) : send(404, { error: 'Team not found' });
+        if (!team) return send(404, { error: 'Team not found' });
+        if (year) return send(200, publicTeamDetails(snapshot, team));
+        const [fbsPicks, fcsPicks] = await Promise.all([
+          readFile(join(publicationDirectory, 'weekly-picks.json'), 'utf8').then(JSON.parse).catch(() => null),
+          readFcsWeeklyPicks(publicationDirectory, snapshot),
+        ]);
+        const schedule = buildUpcomingTeamSchedule(snapshot, fbsPicks, fcsPicks);
+        return send(200, publicTeamDetails(snapshot, team, { upcomingGames: schedule.get(team.id), includeTeamSchedule: true }));
       }
-      const publicSnapshot = publicRankings(snapshot, `/rankings${year ? `/${year}` : ''}/teams`);
+      const publicSnapshot = publicRankings(snapshot, `/rankings${year ? `/${year}` : ''}/teams`, !year);
       if (!year && snapshot.update) publicSnapshot.update = { ...snapshot.update, schedule: UPDATE_SCHEDULE };
       if (snapshot.rankingMethod?.id === publicationPolicy.id) {
         publicSnapshot.rankingMethod = { ...snapshot.rankingMethod, publicationStatus: 'official' };

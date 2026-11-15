@@ -4,7 +4,7 @@ import { readPublicPerformance } from '../src/public-performance.js';
 import { readFcsWeeklyPicks } from '../src/weekly-fcs-publication.js';
 import { publishDivisionSnapshot, readPublicationPolicy } from '../src/publication.js';
 import { publishFcsSnapshot } from '../src/fcs-publication.js';
-import { publicRankings, publicTeamDetails } from '../src/site-publication.js';
+import { buildUpcomingTeamSchedule, publicRankings, publicTeamDetails } from '../src/site-publication.js';
 import { matchupValidation, snapshotCoverage } from '../src/site-validation.js';
 import { UPDATE_SCHEDULE } from '../src/weekly.js';
 import { buildWeeklyTeamStats } from '../frontend/weekly-team-stats.js';
@@ -31,11 +31,14 @@ const fbsSnapshot = publishDivisionSnapshot(input, policy, {
   publishedAt: input.modelPublishedAt ?? policy.promotedAt,
 });
 const snapshot = publishFcsSnapshot(fbsSnapshot, policy);
-const [performance, fcsPicks] = await Promise.all([
+const weeklySource = readFile(join(published, 'weekly-picks.json'), 'utf8').then(JSON.parse);
+const [performance, fcsPicks, fbsPicks] = await Promise.all([
   readPublicPerformance(published, snapshot),
   readFcsWeeklyPicks(published, snapshot),
+  weeklySource.catch(() => null),
 ]);
-const publicSnapshot = publicRankings(snapshot, '/data/teams');
+const schedule = buildUpcomingTeamSchedule(snapshot, fbsPicks, fcsPicks);
+const publicSnapshot = publicRankings(snapshot, '/data/teams', true);
 if (snapshot.update) publicSnapshot.update = { ...snapshot.update, schedule: UPDATE_SCHEDULE };
 publicSnapshot.rankingMethod = { ...snapshot.rankingMethod, publicationStatus: 'official' };
 publicSnapshot.coverageValidation = snapshotCoverage(snapshot);
@@ -50,7 +53,8 @@ const teamFiles = new Set();
 await Promise.all([...snapshot.rankings, ...(snapshot.fcsRankings ?? [])].map(async row => {
   const filename = `${encodeURIComponent(row.id)}.json`;
   teamFiles.add(filename);
-  await writeFile(join(teamDirectory, filename), JSON.stringify(publicTeamDetails(snapshot, row)));
+  const details = publicTeamDetails(snapshot, row, { upcomingGames: schedule.get(row.id), includeTeamSchedule: true });
+  await writeFile(join(teamDirectory, filename), JSON.stringify(details));
 }));
 const staleTeamFiles = (await readdir(teamDirectory, { withFileTypes: true }))
   .filter(file => file.isFile() && file.name.endsWith('.json') && !teamFiles.has(file.name));
@@ -60,7 +64,6 @@ const picksFile = join(data, 'weekly-picks.json');
 const fcsPicksFile = join(data, 'weekly-fcs-picks.json');
 const statsFile = join(data, 'weekly-team-stats.json');
 const scenarioFile = join(data, 'cfp-scenarios.json');
-const weeklySource = readFile(join(published, 'weekly-picks.json'), 'utf8').then(JSON.parse);
 const weeklyStats = await weeklySource.then(buildWeeklyTeamStats)
   .catch(error => {
     if (error.code !== 'ENOENT') console.warn('Weekly team stats are unavailable:', error.message);

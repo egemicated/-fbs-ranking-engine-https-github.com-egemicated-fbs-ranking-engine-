@@ -37,6 +37,9 @@ const pollSources = {
 const editionDates = new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' });
 const picksDate = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', weekday: 'short', month: 'short', day: 'numeric' });
 const picksTimestamp = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', dateStyle: 'medium', timeStyle: 'short' });
+const scheduleDateOnly = new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', weekday: 'short', month: 'short', day: 'numeric' });
+const scheduleDay = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Denver', year: 'numeric', month: '2-digit', day: '2-digit' });
+const scheduleKickoff = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' });
 const paths = {
   home:'M3 10 12 3l9 7M5 9v12h5v-7h4v7h5V9',
   trophy:'M8 3h8v5a4 4 0 0 1-8 0V3ZM8 5H4v2a4 4 0 0 0 4 4m8-6h4v2a4 4 0 0 1-4 4m-4 1v6m-4 3h8m-7-3h6',
@@ -448,17 +451,49 @@ function resultsTable(t) { return `<div class="table-scroll"><table class="evide
   const position = team && nationalRank(team);
   return `<tr><td><span class="outcome ${g.result==='L'?'loss':''}">${g.result}</span></td><td><div class="team-cell">${logo(o)}<div>${team ? teamLink(o) : esc(o.name)}<small>${position ? `${rank(position)} ${team.division?.toUpperCase() || 'FBS'} ${achievementName(team)}` : 'Unranked opponent'}</small></div></div></td><td class="num">${esc(g.opponentRecord||'—')}</td><td class="num ${g.finalMargin>=0?'margin-positive':'margin-negative'}">${g.finalMargin>0?'+':''}${g.finalMargin}</td></tr>`;
   }).join('')}</tbody></table></div><div class="panel-body"><p class="compact-note">Only completed games appear. Opponent records and ranks reflect this publication, not the date of the matchup. Margins inform predictive strength, not achievement rank.</p></div>`; }
+function upcomingGamesPanel(team) {
+  const now = Date.now();
+  const today = scheduleDay.format(now);
+  const venues = { home: 'Home', away: 'Away', neutral: 'Neutral site' };
+  const available = Array.isArray(team.upcomingGames);
+  const games = (available ? team.upcomingGames : [])
+    .map(game => ({ ...game, kickoff: Date.parse(game.startDate) }))
+    .filter(game => Number.isFinite(game.kickoff) && (game.startTimeTbd === true
+      ? game.startDate.slice(0, 10) >= today : game.kickoff >= now))
+    .sort((a, b) => a.kickoff - b.kickoff);
+  const rows = games.map(game => {
+    const ranked = rankedTeam(game.opponentId);
+    const opponent = ranked ?? { id: game.opponentId, name: game.opponentName };
+    const when = game.startTimeTbd === true
+      ? `<time datetime="${esc(game.startDate.slice(0, 10))}">${scheduleDateOnly.format(game.kickoff)}</time> · Time TBD`
+      : `<time datetime="${esc(game.startDate)}">${picksDate.format(game.kickoff)} · ${scheduleKickoff.format(game.kickoff)}</time>`;
+    const odds = Number.isFinite(game.winProbability) && game.winProbability >= 0 && game.winProbability <= 1
+      ? `<strong>${number(game.winProbability * 100, 1)}%</strong><small>${game.probabilitySource === 'saved' ? 'Saved win chance' : 'Win chance estimate'}${game.calibrated === false ? ' · Experimental' : ''}</small>`
+      : '<small>Odds unavailable</small>';
+    return `<li class="team-upcoming-game">
+      <div class="team-upcoming-opponent">${logo(opponent)}<div><strong>${ranked ? teamLink(opponent) : esc(opponent.name)}</strong>
+      <div class="compact-note">${when} · ${venues[game.venue] ?? 'Venue TBD'}</div></div></div>
+      <div class="team-upcoming-odds">${odds}</div></li>`;
+  }).join('');
+  const content = rows ? `<ul class="team-upcoming-list">${rows}</ul>`
+    : `<div class="panel-body"><p class="compact-note">${available ? 'No upcoming games are listed.' : 'The upcoming schedule is unavailable for this snapshot.'}</p></div>`;
+  return `<section class="panel team-upcoming"><div class="panel-head"><div class="panel-head-title">${icon('calendar')}<h2>Upcoming games</h2></div></div>${content}</section>`;
+}
 function modelRanks(t) {
   const total = divisionTeams(t.division).length;
   return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('layers')}<h2>Rank and strength</h2></div></div><div class="panel-body">${[[achievementName(t),nationalRank(t),'What this team has earned from completed results.'],['Predictive strength',strengthRank(t),'A historical, opponent-adjusted estimate of team strength.']].map(([label,r,desc])=>`<div class="model-rank"><div class="model-rank-label"><div>${label}<br><small>${label===achievementName(t)?`${t.division?.toUpperCase() || 'FBS'} RANKING`:'EXPERIMENTAL MODEL'}</small></div><strong>${rank(r)}</strong></div><div class="model-track"><span style="width:${r ? Math.max(2,(total-r+1)/total*100) : 0}%"></span></div><p>${desc}</p></div>`).join('')}</div></section>`;
 }
 function qualityPanel(division = 'fbs') { const audit=state.snapshot.source?.audit||{};const incomplete=audit.incompleteFinals?.length||0;return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('shield')}<h2>Data & coverage</h2></div></div><div class="panel-body"><div class="data-status-row"><span>${icon('check')}${division.toUpperCase()} membership</span><b>${divisionTeams(division).length} teams</b></div><div class="data-status-row"><span>${icon('check')}Game records modeled</span><b>${state.snapshot.gamesUsed.toLocaleString()}</b></div><div class="data-status-row"><span>${icon('check')}Data provider</span><b>CFBD</b></div><div class="data-status-row"><span>${icon('check')}Publication</span><b>${snapshotDate()}</b></div>${incomplete?`<details class="quality-note"><summary>${incomplete} incomplete finals excluded</summary><p>CFBD marked these entries complete without valid final scores. They do not count toward the rankings: ${audit.incompleteFinals.map(esc).join(', ')}.</p></details>`:''}<p class="compact-note" style="font-size:10px;margin-top:12px">The site checks for new results Wednesday through Sunday.</p></div></section>`; }
 function teamCenterContent(t) {
-  if(state.teamTab==='results') return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('calendar')}<h2>THE COMPLETED RESULTS</h2></div><span class="tag">${t.games} GAMES</span></div>${resultsTable(t)}</section>`;
+  if(state.teamTab==='results') return `<div class="stack">${upcomingGamesPanel(t)}<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('calendar')}<h2>THE COMPLETED RESULTS</h2></div><span class="tag">${t.games} GAMES</span></div>${resultsTable(t)}</section></div>`;
   if(state.teamTab==='model') return teamCalculation(t);
   const position = nationalRank(t);
   const heading = position ? `WHY WE RANK ${esc(t.name.toUpperCase())} ${rank(position)}` : `${esc(t.name.toUpperCase())}’S RECORD`;
-  return `<div class="metric-grid">${[[achievementName(t),rank(position),`${t.division?.toUpperCase() || 'FBS'} rank`],['Schedule',rank(sosRank(t)),'Colley opponent average'],['Conference',rank(conferenceRank(t)),t.conference],['Record',record(t),`${t.games} completed games`]].map(([label,value,note])=>`<div class="metric"><span>${label}</span><strong>${value}</strong><small>${esc(note)}</small></div>`).join('')}</div><section class="panel"><div class="panel-body"><div class="explanation-head">${icon('network')}<h2>${heading}</h2></div><p class="team-narrative">${explanation(t)}</p><div class="evidence-chips"><span class="evidence-chip">Opponent Colley average <b>${number(t.achievementScheduleStrength)}</b></span><span class="evidence-chip">${t.evidence?.connectedTeams??'—'} connected teams</span><span class="evidence-chip">${t.evidence?.provisional?'Small sample · provisional':'Current-season evidence'}</span></div>${breakdown(t)}</div></section><section class="panel" style="margin-top:17px"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<h2>RESULTS THAT SHAPE THE RESUME</h2></div><button class="text-link" style="border:0;background:none" data-action="team-tab" data-value="results">All results ${icon('arrow')}</button></div>${resultsTable({...t,contributions:[...t.contributions].sort((a,b)=>b.opponentAchievement-a.opponentAchievement).slice(0,3)})}</section>`;
+  const overview = [[achievementName(t),rank(position),`${t.division?.toUpperCase() || 'FBS'} rank`],
+    ['Schedule',rank(sosRank(t)),'Colley opponent average'],['Conference',rank(conferenceRank(t)),t.conference]];
+  const recordButton = `<button type="button" class="metric team-record-button" data-action="team-tab" data-value="results">
+    <span>Record</span><strong>${record(t)}</strong><small>View schedule and results</small></button>`;
+  return `<div class="metric-grid">${overview.map(([label,value,note])=>`<div class="metric"><span>${label}</span><strong>${value}</strong><small>${esc(note)}</small></div>`).join('')}${recordButton}</div><section class="panel"><div class="panel-body"><div class="explanation-head">${icon('network')}<h2>${heading}</h2></div><p class="team-narrative">${explanation(t)}</p><div class="evidence-chips"><span class="evidence-chip">Opponent Colley average <b>${number(t.achievementScheduleStrength)}</b></span><span class="evidence-chip">${t.evidence?.connectedTeams??'—'} connected teams</span><span class="evidence-chip">${t.evidence?.provisional?'Small sample · provisional':'Current-season evidence'}</span></div>${breakdown(t)}</div></section><section class="panel" style="margin-top:17px"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<h2>RESULTS THAT SHAPE THE RESUME</h2></div><button class="text-link" style="border:0;background:none" data-action="team-tab" data-value="results">All results ${icon('arrow')}</button></div>${resultsTable({...t,contributions:[...t.contributions].sort((a,b)=>b.opponentAchievement-a.opponentAchievement).slice(0,3)})}</section>`;
 }
 async function loadTeamDetails(summary) {
   const { id } = summary;
@@ -466,11 +501,14 @@ async function loadTeamDetails(summary) {
   const detail = { team: null, failed: false };
   teamDetails.set(id, detail);
   try {
-    const url = `${snapshot.teamDetailsPath}/${encodeURIComponent(id)}.json?v=${encodeURIComponent(snapshot.publicationHash)}`;
+    const version = snapshot.teamDetailsVersion ?? snapshot.publicationHash;
+    const url = `${snapshot.teamDetailsPath}/${encodeURIComponent(id)}.json?v=${encodeURIComponent(version)}`;
     const response = await fetch(url, { headers: { Accept: 'application/json' } });
     if (!response.ok) throw Error('Team details are unavailable');
     const payload = await response.json();
-    if (payload?.id !== id || payload.publicationHash !== snapshot.publicationHash || !Array.isArray(payload.contributions)) {
+    if (payload?.id !== id || payload.publicationHash !== snapshot.publicationHash ||
+        (snapshot.teamDetailsVersion && payload.teamDetailsVersion !== snapshot.teamDetailsVersion) ||
+        !Array.isArray(payload.contributions)) {
       throw Error('Team details do not match the current rankings');
     }
     detail.team = { ...summary, ...payload };
@@ -1152,7 +1190,11 @@ document.addEventListener('click',e=>{
     location.hash = rankingHash(state.model, !state.all, state.division);
     render();
   }
-  if(action==='team-tab'){state.teamTab=value;renderTeam(route()[1]);}
+  if (action === 'team-tab') {
+    state.teamTab = value;
+    renderTeam(route()[1]);
+    if (button.classList?.contains('team-record-button')) main.querySelector('.tabs [data-value="results"]')?.focus();
+  }
   if(action==='retry-team-details'){void load();}
   if(action==='venue'){state.venue=value;renderCompare();}
   if(action==='compare-team'){state.compareA=value;if(state.compareB===value)state.compareB=state.snapshot.rankings.find(t=>t.id!==value).id;location.hash='compare';}
