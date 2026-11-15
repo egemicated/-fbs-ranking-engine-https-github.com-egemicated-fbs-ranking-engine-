@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "asOf": "2026-11-15T14:39:14.774Z",
+  "asOf": "2026-11-15T18:04:41.489Z",
   "season": 2026,
-  "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+  "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
   "selectionRule": "First eligible immutable seven-day-window forecast per model/game; no selection by eventual outcome",
-  "observationsRead": 6,
-  "eligibleForecasts": 101,
-  "pending": 35,
+  "observationsRead": 7,
+  "eligibleForecasts": 137,
+  "pending": 71,
   "excluded": [],
   "scoresByModel": {
     "division-sor-v2": {
@@ -63,7 +63,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T22:30:00.000Z"
     },
     {
@@ -87,7 +87,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-15T00:00:00.000Z"
     },
     {
@@ -111,7 +111,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T17:00:00.000Z"
     },
     {
@@ -135,7 +135,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T03:15:00.000Z"
     },
     {
@@ -159,7 +159,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T20:30:00.000Z"
     },
     {
@@ -183,7 +183,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T19:00:00.000Z"
     },
     {
@@ -207,7 +207,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-15T02:30:00.000Z"
     },
     {
@@ -231,7 +231,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-15T03:30:00.000Z"
     },
     {
@@ -255,7 +255,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-15T00:45:00.000Z"
     },
     {
@@ -279,7 +279,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T20:30:00.000Z"
     },
     {
@@ -303,7 +303,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T23:15:00.000Z"
     },
     {
@@ -327,7 +327,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-15T00:30:00.000Z"
     },
     {
@@ -351,7 +351,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T21:15:00.000Z"
     },
     {
@@ -375,7 +375,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T20:00:00.000Z"
     },
     {
@@ -399,7 +399,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T17:45:00.000Z"
     },
     {
@@ -423,7 +423,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T00:00:00.000Z"
     },
     {
@@ -447,7 +447,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T20:30:00.000Z"
     },
     {
@@ -471,7 +471,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T20:30:00.000Z"
     },
     {
@@ -495,7 +495,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T17:00:00.000Z"
     },
     {
@@ -519,7 +519,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T17:30:00.000Z"
     },
     {
@@ -543,7 +543,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-15T00:00:00.000Z"
     },
     {
@@ -567,7 +567,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-15T00:30:00.000Z"
     },
     {
@@ -591,7 +591,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T17:00:00.000Z"
     },
     {
@@ -615,7 +615,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T17:00:00.000Z"
     },
     {
@@ -639,7 +639,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T20:30:00.000Z"
     },
     {
@@ -663,7 +663,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-15T00:30:00.000Z"
     },
     {
@@ -687,7 +687,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T17:00:00.000Z"
     },
     {
@@ -711,7 +711,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T22:30:00.000Z"
     },
     {
@@ -735,7 +735,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T17:00:00.000Z"
     },
     {
@@ -759,7 +759,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T20:30:00.000Z"
     },
     {
@@ -783,7 +783,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-15T00:00:00.000Z"
     },
     {
@@ -807,7 +807,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T17:30:00.000Z"
     },
     {
@@ -831,7 +831,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T02:00:00.000Z"
     },
     {
@@ -855,7 +855,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T23:00:00.000Z"
     },
     {
@@ -879,7 +879,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-15T02:30:00.000Z"
     },
     {
@@ -903,7 +903,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T21:00:00.000Z"
     },
     {
@@ -927,7 +927,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-15T03:30:00.000Z"
     },
     {
@@ -951,7 +951,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T17:00:00.000Z"
     },
     {
@@ -975,7 +975,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-13T01:00:00.000Z"
     },
     {
@@ -999,7 +999,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T18:00:00.000Z"
     },
     {
@@ -1023,7 +1023,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-15T00:15:00.000Z"
     },
     {
@@ -1047,7 +1047,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-15T02:00:00.000Z"
     },
     {
@@ -1071,7 +1071,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T21:30:00.000Z"
     },
     {
@@ -1095,7 +1095,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T18:00:00.000Z"
     },
     {
@@ -1119,7 +1119,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T20:30:00.000Z"
     },
     {
@@ -1143,7 +1143,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-15T04:00:00.000Z"
     },
     {
@@ -1167,7 +1167,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-15T00:00:00.000Z"
     },
     {
@@ -1191,7 +1191,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-15T00:30:00.000Z"
     },
     {
@@ -1215,7 +1215,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-15T03:00:00.000Z"
     },
     {
@@ -1239,7 +1239,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-11T00:00:00.000Z"
     },
     {
@@ -1263,7 +1263,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-11T00:00:00.000Z"
     },
     {
@@ -1287,7 +1287,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-11T01:00:00.000Z"
     },
     {
@@ -1311,7 +1311,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-12T00:30:00.000Z"
     },
     {
@@ -1335,7 +1335,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-12T00:30:00.000Z"
     },
     {
@@ -1359,7 +1359,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-12T00:30:00.000Z"
     },
     {
@@ -1383,7 +1383,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T23:00:00.000Z"
     },
     {
@@ -1407,7 +1407,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T18:00:00.000Z"
     },
     {
@@ -1431,7 +1431,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T20:30:00.000Z"
     },
     {
@@ -1455,7 +1455,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-13T02:00:00.000Z"
     },
     {
@@ -1479,7 +1479,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T20:30:00.000Z"
     },
     {
@@ -1503,7 +1503,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 0,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T19:00:00.000Z"
     },
     {
@@ -1527,7 +1527,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T20:00:00.000Z"
     },
     {
@@ -1551,7 +1551,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T20:00:00.000Z"
     },
     {
@@ -1575,7 +1575,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T20:30:00.000Z"
     },
     {
@@ -1599,7 +1599,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-14T22:00:00.000Z"
     },
     {
@@ -1623,7 +1623,7 @@
       "forecastCapturedAt": "2026-11-08T15:51:34.700Z",
       "resultSha256": "870ac2f94624927cb74b161099ce781fbfdb6934dcd48aef8dbf06d6f69de32e",
       "outcome": 1,
-      "resultSourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "resultSourceHash": "5fb9939228a8a25e6a3b0bdbfe0fc0a5966b33c2394620102bbfe3e2027eee46",
       "resultKickoff": "2026-11-15T00:00:00.000Z"
     }
   ],
