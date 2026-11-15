@@ -8,6 +8,7 @@ let performanceFailed = false;
 const teamDetails = new Map();
 const weeklyPicks = { request: null, status: 'loading', scoring: null, scoringError: false, selectedWeek: '', weeks: new Map(), teams: new Map() };
 const rankingEditions = { data: null, cfpRanks: new Map(), request: null, failed: false };
+let focusMoreDestination = false;
 let bracketModule;
 let closeBracket;
 let scenarioModule;
@@ -140,16 +141,19 @@ function renderHeader() {
   renderedHeader = { snapshot: state.snapshot, page };
   const navs = [['home','home','Home'],['rankings','trophy','Rankings'],['scoreboard','clock','Scoreboard'],['ranking-history','chart','Weekly movement'],['teams','teams','Teams'],['compare','compare','Matchup lab'],['beat-the-model','trophy','Beat the Model'],['polls','layers','Compare rankings'],['bracket','network','Playoff bracket'],['cfp-scenarios','network','CFP scenarios'],['methodology','layers','Methodology']];
   const primaryPages = ['home', 'rankings', 'beat-the-model'];
+  const desktopPages = ['scoreboard', 'teams', 'compare'];
   const activePage = page === 'team' ? 'teams' : page;
   const link = ([id, glyph, label], placement = '') => `<a href="#${id}" class="${placement}${activePage === id ? ' active' : ''}" ${page === id ? 'aria-current="page"' : ''}>${icon(glyph)}${label}</a>`;
+  const mainLinks = navs.filter(([id]) => primaryPages.includes(id) || desktopPages.includes(id));
   const moreLinks = navs.filter(([id]) => !primaryPages.includes(id));
+  const moreActive = moreLinks.some(([id]) => id === activePage) ? (desktopPages.includes(activePage) ? ' active-on-mobile' : ' active') : '';
   const snapshotBadges = state.snapshot ? `<div class="header-right"><div class="engine-badge">${icon('check')}<div><strong>Published rankings</strong><small>CFBD snapshot · ${snapshotDate()}</small></div></div><div class="season-badge">${state.snapshot.season}<small>SEASON SNAPSHOT</small></div></div>` : '';
   document.querySelector('#header').innerHTML = `<div class="masthead"><div class="wrap masthead-inner">${brand()}<span class="brand-divider"></span><div class="masthead-tag">THE INDEPENDENT COLLEGE FOOTBALL RANKING ENGINE<strong>DATA &nbsp; › &nbsp; OPPONENTS &nbsp; › &nbsp; EVIDENCE</strong></div>${snapshotBadges}</div></div>
     <nav class="nav" aria-label="Main navigation"><div class="wrap nav-inner">
-      ${navs.map(item => link(item, primaryPages.includes(item[0]) ? 'nav-primary' : 'nav-desktop-link')).join('')}
-      <details class="nav-more${moreLinks.some(([id]) => id === activePage) ? ' active' : ''}">
+      ${mainLinks.map(item => link(item, primaryPages.includes(item[0]) ? 'nav-primary' : 'nav-desktop-link')).join('')}
+      <details class="nav-more${moreActive}">
         <summary>More ${icon('chevron')}</summary>
-        <div class="nav-more-links">${moreLinks.map(item => link(item)).join('')}</div>
+        <div class="nav-more-links">${moreLinks.map(item => link(item, desktopPages.includes(item[0]) ? 'nav-more-mobile-link' : '')).join('')}</div>
       </details>
       <span class="nav-spacer"></span><span class="nav-note">${icon('clock')}Refresh checks · Wed–Sun</span>
     </div></nav>`;
@@ -932,6 +936,7 @@ document.addEventListener('click',e=>{
     const moreLink = e.target.closest('.nav-more-links a');
     if (moreLink || !more.contains(e.target)) more.open = false;
     if (moreLink?.hash === location.hash) more.querySelector('summary').focus();
+    else if (moreLink && e.detail === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey) focusMoreDestination = true;
   }
   if(e.target.closest('.skip-link')){e.preventDefault();main.focus();main.scrollIntoView();return;}
   const button=e.target.closest('[data-action]');if(!button)return;
@@ -970,7 +975,15 @@ document.addEventListener('keydown', event => {
   more.open = false;
   more.querySelector('summary').focus();
 });
-window.addEventListener('hashchange',()=>{state.teamTab='overview';render();window.scrollTo({top:0,behavior:'instant'});});
+window.addEventListener('hashchange', () => {
+  state.teamTab = 'overview';
+  render();
+  if (focusMoreDestination) {
+    focusMoreDestination = false;
+    main.focus({ preventScroll: true });
+  }
+  window.scrollTo({ top: 0, behavior: 'instant' });
+});
 async function load(){
   rankingsFailed = false;
   try{
