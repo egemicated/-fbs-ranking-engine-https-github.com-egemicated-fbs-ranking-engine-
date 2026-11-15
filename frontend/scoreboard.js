@@ -134,8 +134,9 @@ function teamLine(team, game, leader) {
   const hasLogo = /^\d+$/.test(team.id);
   const logo = hasLogo ? `<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/${team.id}.png" alt="" loading="lazy" decoding="async">` : '';
   return `<div class="scoreboard-team${leader ? ' scoreboard-winner' : ''}">
+    <span class="scoreboard-team-rank" data-scoreboard-rank="${escapeHtml(team.id)}"></span>
     <span class="logo${hasLogo ? '' : ' failed'}" aria-hidden="true">${logo}<span>${escapeHtml(team.abbr)}</span></span>
-    <div class="scoreboard-team-name"><strong>${escapeHtml(team.name)}</strong>${possession ? '<span class="scoreboard-possession" role="img" aria-label="Has possession" title="Has possession">●</span>' : ''}${game.state === 'upcoming' && team.record ? `<small>${escapeHtml(team.record)}</small>` : ''}</div>
+    <div class="scoreboard-team-name"><strong>${escapeHtml(team.name)}</strong>${possession ? '<span class="scoreboard-possession" role="img" aria-label="Has possession" title="Has possession">●</span>' : ''}${team.record ? `<small>${escapeHtml(team.record)}</small>` : ''}</div>
     ${game.state === 'live' || game.state === 'final' ? `<strong class="scoreboard-score">${escapeHtml(team.score ?? '—')}</strong>` : ''}
   </div>`;
 }
@@ -397,7 +398,7 @@ function mountCardDrag(list, move) {
   };
 }
 
-export function mountScoreboard(root) {
+export function mountScoreboard(root, rankForTeam = () => undefined) {
   root.innerHTML = `<div class="scoreboard-toolbar">
     <div><h2 data-scoreboard-slate>FBS schedule</h2><p data-scoreboard-checked>Checking the ESPN feed…</p></div>
     <button class="button light small" type="button" data-scoreboard-refresh>Refresh now</button>
@@ -410,7 +411,7 @@ export function mountScoreboard(root) {
   <p class="sr-only" role="status" data-scoreboard-move-status></p>
   <p class="scoreboard-warning" role="status" hidden></p>
   <div class="scoreboard-sections" hidden>${sections.map(([key, label]) => `<section data-scoreboard-section="${key}" aria-labelledby="scoreboard-${key}"><h2 id="scoreboard-${key}">${label}</h2><p class="scoreboard-empty"></p><div class="scoreboard-games" data-scoreboard-games></div></section>`).join('')}</div>
-  <p class="scoreboard-source">Scores from <a href="${sourceUrl}" target="_blank" rel="noopener">ESPN</a>. Kickoffs are shown in Mountain Time.</p>`;
+  <p class="scoreboard-source">Ranks from the <a href="#rankings">FBS Intelligence Top 25</a>. Scores and records from <a href="${sourceUrl}" target="_blank" rel="noopener">ESPN</a>. Kickoffs are shown in Mountain Time.</p>`;
 
   const refresh = root.querySelector('[data-scoreboard-refresh]');
   const reorderHelp = root.querySelector('[data-scoreboard-order-help]');
@@ -426,8 +427,18 @@ export function mountScoreboard(root) {
   let timer;
   let closed = false;
 
+  function updateRankings() {
+    if (!previous) return;
+    for (const cell of sectionList.querySelectorAll('[data-scoreboard-rank]')) {
+      const rank = rankForTeam(cell.dataset.scoreboardRank, previous.year);
+      const label = Number.isInteger(rank) && rank >= 1 && rank <= 25 ? `#${rank}` : '';
+      if (cell.textContent !== label) cell.textContent = label;
+    }
+  }
+
   function renderGames() {
     drawSlate(root, previous, order, cards);
+    updateRankings();
     const hasOrder = Object.keys(order.groups).length > 0;
     resetButton.hidden = !hasOrder;
     reorderHelp.hidden = !hasOrder && !sectionList.querySelector('[data-movable]');
@@ -511,12 +522,15 @@ export function mountScoreboard(root) {
   document.addEventListener('visibilitychange', onVisibility);
   window.addEventListener('online', update);
   update();
-  return () => {
-    closed = true;
-    drag.unmount();
-    clearTimeout(timer);
-    controller?.abort();
-    document.removeEventListener('visibilitychange', onVisibility);
-    window.removeEventListener('online', update);
+  return {
+    updateRankings,
+    unmount() {
+      closed = true;
+      drag.unmount();
+      clearTimeout(timer);
+      controller?.abort();
+      document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener('online', update);
+    },
   };
 }

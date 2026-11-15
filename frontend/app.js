@@ -17,7 +17,7 @@ let closeContest;
 let historyModule;
 let closeHistory;
 let scoreboardModule;
-let closeScoreboard;
+let scoreboardPage;
 let rankingsFailed = false;
 let renderedHeader;
 const pollSources = {
@@ -834,13 +834,21 @@ function renderHistoryPage(week) {
   });
 }
 function renderScoreboardPage() {
-  if (main.querySelector('[data-scoreboard]')) return;
+  if (main.querySelector('[data-scoreboard]')) {
+    scoreboardPage?.updateRankings();
+    return;
+  }
   main.innerHTML = banner('FBS game day', 'Live Scoreboard', 'Kickoff times, live scores and final results. Refreshes every 15 seconds.') +
     '<div class="wrap page-content" data-scoreboard><p role="status">Loading the scoreboard…</p></div>';
   const target = main.querySelector('[data-scoreboard]');
-  scoreboardModule ??= import('./scoreboard.js?v=3');
+  scoreboardModule ??= import('./scoreboard.js?v=4');
   scoreboardModule.then(({ mountScoreboard }) => {
-    if (route()[0] === 'scoreboard' && target.isConnected) closeScoreboard = mountScoreboard(target);
+    if (route()[0] !== 'scoreboard' || !target.isConnected) return;
+    scoreboardPage = mountScoreboard(target, (teamId, season) => {
+      if (String(state.snapshot?.season) !== season) return;
+      const team = state.byId.get(teamId);
+      return team ? nationalRank(team) : undefined;
+    });
   }).catch(error => {
     if (target.isConnected) target.innerHTML = '<p role="status">The scoreboard could not load. Please reload this page to try again.</p>';
     console.error(error);
@@ -854,9 +862,9 @@ function renderRankingsStatus() {
 }
 function render() {
   const [page,id,scope]=route();
-  if (page !== 'scoreboard' && closeScoreboard) {
-    closeScoreboard();
-    closeScoreboard = undefined;
+  if (page !== 'scoreboard' && scoreboardPage) {
+    scoreboardPage.unmount();
+    scoreboardPage = undefined;
   }
   if (page === 'scoreboard') {
     renderHeader();
