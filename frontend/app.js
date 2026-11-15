@@ -2,7 +2,7 @@ const BRAND = 'FBS Intelligence';
 const main = document.querySelector('#main');
 // Static builds set this root. The web service keeps its existing JSON routes.
 const dataRoot = document.querySelector('meta[name="publication-data-root"]')?.content;
-const state = { snapshot: null, byId: new Map(), performance: null, performanceById: new Map(), model: 'achievement', search: '', conference: '', all: false, teamTab: 'overview', compareA: '254', compareB: '2390', venue: 'neutral' };
+const state = { snapshot: null, byId: new Map(), byFcsId: new Map(), performance: null, performanceById: new Map(), fcsPerformanceById: null, division: 'fbs', model: 'achievement', search: '', conference: '', all: false, teamTab: 'overview', compareA: '254', compareB: '2390', venue: 'neutral' };
 let performanceLoading = false;
 let performanceFailed = false;
 const teamDetails = new Map();
@@ -21,6 +21,11 @@ let scoreboardModule;
 let scoreboardPage;
 let rankingsFailed = false;
 let renderedHeader;
+let rankingsHubView;
+const rankingsHubTabs = [
+  ['fbs', '#rankings', 'FBS'], ['fcs', '#rankings/fcs/sor', 'FCS'],
+  ['polls', '#polls', 'Compare Rankings'], ['forge-top-25', '#forge-top-25', 'Forge’s Rankings'],
+];
 const pollSources = {
   ap: { name: 'AP Top 25', short: 'AP', url: 'https://apnews.com/hub/ap-top-25-college-football-poll' },
   coaches: { name: 'Coaches Poll', short: 'Coaches', url: 'https://www.afca.com/polls/' },
@@ -58,24 +63,32 @@ function rank(r) { return r ? `#${r}` : 'Unranked'; }
 function usesSor(t = state.snapshot?.rankings?.[0]) { return Boolean(t && Object.hasOwn(t, 'displayRank') && Number.isFinite(t.sor)); }
 function nationalRank(t) { return Object.hasOwn(t, 'displayRank') ? t.displayRank : t.rank; }
 function achievementScore(t) { return usesSor(t) ? t.sor : t.achievement; }
-function achievementName() { return usesSor() ? 'Strength of Record' : 'Colley achievement'; }
+function achievementName(t) { return t?.division === 'fcs' || usesSor(t) ? 'Strength of Record' : 'Colley achievement'; }
 function performancePublished() { return state.snapshot?.performanceEndpoint === publicationPath('performance'); }
 function hasPerformance() { return Boolean(state.performance && state.performance.status === 'experimental' && state.performance.season === state.snapshot?.season && state.performance.asOf === state.snapshot.asOf && state.performance.baseSnapshotHash && state.performance.baseSnapshotHash === state.snapshot.snapshotHash); }
-function performanceRow(t) { return hasPerformance() ? state.performanceById.get(t.id) : null; }
+function performanceRow(t) {
+  return hasPerformance() ? (t.division === 'fcs' ? state.fcsPerformanceById : state.performanceById)?.get(t.id) : null;
+}
 function performanceScore(value) { return Number.isFinite(value) ? `${value > 0 ? '+' : ''}${number(value, 2)} pp` : '—'; }
+function performanceIndex(rows, teams) {
+  if (!Array.isArray(rows) || rows.length !== teams.size) return null;
+  const index = new Map();
+  for (const row of rows) {
+    if (!row || !teams.has(row.id) || index.has(row.id) ||
+        !(row.rank === null || (Number.isInteger(row.rank) && row.rank > 0)) ||
+        !(row.score === null || Number.isFinite(row.score))) return null;
+    index.set(row.id, row);
+  }
+  return index;
+}
 function acceptPerformance(snapshot) {
   if (!snapshot || snapshot.status !== 'experimental' || snapshot.season !== state.snapshot?.season ||
       snapshot.asOf !== state.snapshot.asOf ||
-      !snapshot.baseSnapshotHash || snapshot.baseSnapshotHash !== state.snapshot.snapshotHash ||
-      !Array.isArray(snapshot.rankings) || snapshot.rankings.length !== state.snapshot.rankings.length) return false;
-  const byId = new Map();
-  for (const row of snapshot.rankings) {
-    if (!row || !state.byId.has(row.id) || byId.has(row.id) ||
-        !(row.rank === null || (Number.isInteger(row.rank) && row.rank > 0)) ||
-        !(row.score === null || Number.isFinite(row.score))) return false;
-    byId.set(row.id, row);
-  }
+      !snapshot.baseSnapshotHash || snapshot.baseSnapshotHash !== state.snapshot.snapshotHash) return false;
+  const byId = performanceIndex(snapshot.rankings, state.byId);
+  if (!byId) return false;
   state.performance = snapshot; state.performanceById = byId;
+  state.fcsPerformanceById = performanceIndex(snapshot.fcsRankings, state.byFcsId);
   return true;
 }
 async function loadPerformance() {
@@ -94,14 +107,15 @@ async function loadPerformance() {
   performanceLoading = false;
   performanceFailed = !acceptPerformance(data);
   const [page, id] = route();
-  if (page === 'rankings' && id === 'performance') render();
+  if (page === 'rankings' && rankingsRoute().model === 'performance') render();
   if (page === 'team') updateTeamPerformance(id);
 }
 function conferenceRank(t) {
   if (Object.hasOwn(t, 'displayConferenceRank')) return t.displayConferenceRank;
   return t.conferenceRank;
 }
-function opponentRank(g) { const t = state.byId.get(g.opponentId); return t ? nationalRank(t) : null; }
+function rankedTeam(id) { return state.byId.get(id) ?? state.byFcsId.get(id); }
+function opponentRank(g) { const t = rankedTeam(g.opponentId); return t ? nationalRank(t) : null; }
 function probability(n) { return Number.isFinite(n) ? `${number(n * 100, 2)}%` : '—'; }
 function logo(t, size = '') {
   const initials = t.name.split(/\s+/).slice(0, 2).map(x => x[0]).join('');
@@ -112,26 +126,47 @@ function snapshotDate(options = {}) {
   return new Intl.DateTimeFormat('en-US', { timeZone:'America/Denver', month:'short', day:'numeric', ...options }).format(new Date(value));
 }
 function route() { return (location.hash.slice(1) || 'home').split('/'); }
-function rankingHash(model = 'achievement', all = false) {
+function isRankingsHub(page) { return ['rankings', 'polls', 'forge-top-25'].includes(page); }
+function rankingsRoute() {
+  const [, first, second, third] = route();
+  const division = first === 'fcs' ? 'fcs' : 'fbs';
+  const explicit = first === 'fbs' || first === 'fcs';
+  const view = explicit ? second : first;
+  const model = view === 'strength' || view === 'predictive' ? 'strength'
+    : view === 'performance' ? 'performance' : 'achievement';
+  return { division, model, all: view === 'all' || (explicit ? third : second) === 'all' };
+}
+function rankingHash(model = 'achievement', all = false, division = 'fbs') {
+  if (division === 'fcs') return `#rankings/fcs/${{ achievement: 'sor', strength: 'predictive', performance: 'performance' }[model]}${all ? '/all' : ''}`;
   const view = model === 'achievement' ? '' : `/${model}`;
   return `#rankings${view}${all ? '/all' : ''}`;
 }
-function ordered(model = state.model) {
-  if (model === 'achievement') return state.snapshot.rankings;
-  if (model === 'performance' && hasPerformance()) return [...state.performance.rankings]
-    .sort((a,b) => (a.rank ?? Infinity) - (b.rank ?? Infinity) || (b.score ?? -Infinity) - (a.score ?? -Infinity) || a.id.localeCompare(b.id))
-    .map(row => ({ ...state.byId.get(row.id), performance: row }));
-  return [...state.snapshot.rankings].sort((a, b) => b.strength - a.strength || a.id.localeCompare(b.id));
+function divisionTeams(division) {
+  return division === 'fcs' ? state.snapshot.fcsRankings ?? [] : state.snapshot.rankings;
+}
+function ordered(model = state.model, division = state.division) {
+  const teams = divisionTeams(division);
+  if (model === 'achievement') return teams;
+  if (model === 'performance') {
+    const index = division === 'fcs' ? state.fcsPerformanceById : state.performanceById;
+    if (!hasPerformance() || !index) return [];
+    return [...teams].sort((a,b) => (index.get(a.id).rank ?? Infinity) - (index.get(b.id).rank ?? Infinity) || a.id.localeCompare(b.id));
+  }
+  return [...teams].sort((a, b) => {
+    const rankOrder = (a.strengthRank ?? Infinity) - (b.strengthRank ?? Infinity);
+    return rankOrder || b.strength - a.strength || a.id.localeCompare(b.id);
+  });
 }
 function topTwentyFive(teams, model) {
-  if (model === 'strength') return teams.slice(0, 25);
+  if (model === 'strength') return teams[0]?.division === 'fcs'
+    ? teams.filter(t => strengthRank(t) > 0 && strengthRank(t) <= 25) : teams.slice(0, 25);
   return teams.filter(t => {
     const position = model === 'performance' ? performanceRow(t)?.rank : nationalRank(t);
     return position > 0 && position <= 25;
   });
 }
-function strengthRank(t) { return ordered('strength').findIndex(x => x.id === t.id) + 1; }
-function sosRank(t) { return [...state.snapshot.rankings].sort((a,b) => (b.achievementScheduleStrength ?? -1) - (a.achievementScheduleStrength ?? -1)).findIndex(x => x.id === t.id) + 1; }
+function strengthRank(t) { return Object.hasOwn(t, 'strengthRank') ? t.strengthRank : ordered('strength', t.division).findIndex(x => x.id === t.id) + 1; }
+function sosRank(t) { return Object.hasOwn(t, 'sosRank') ? t.sosRank : [...divisionTeams(t.division)].sort((a,b) => (b.achievementScheduleStrength ?? -1) - (a.achievementScheduleStrength ?? -1)).findIndex(x => x.id === t.id) + 1; }
 function teamLink(t, label = t.name) { return `<a href="#team/${encodeURIComponent(t.id)}">${esc(label)}</a>`; }
 function displayRank(t, model = state.model) { return model === 'achievement' ? rank(nationalRank(t)) : model === 'performance' ? rank(performanceRow(t)?.rank) : rank(strengthRank(t)); }
 function brand() { return `<a class="brand" href="#home" aria-label="${BRAND} home"><img class="brand-logo" src="/assets/fbs-intelligence-logo.svg?v=compact" width="1340" height="430" alt="${BRAND}" fetchpriority="high"></a>`; }
@@ -142,8 +177,8 @@ function renderHeader() {
   const navs = [['home','home','Home'],['rankings','trophy','Rankings'],['scoreboard','clock','Scoreboard'],['ranking-history','chart','Weekly movement'],['teams','teams','Teams'],['compare','compare','Matchup lab'],['beat-the-model','trophy','Beat the Model'],['polls','layers','Compare rankings'],['bracket','network','Playoff bracket'],['cfp-scenarios','network','CFP scenarios'],['methodology','layers','Methodology']];
   const primaryPages = ['home', 'rankings', 'beat-the-model'];
   const desktopPages = ['scoreboard', 'teams', 'compare'];
-  const activePage = page === 'team' ? 'teams' : page;
-  const link = ([id, glyph, label], placement = '') => `<a href="#${id}" class="${placement}${activePage === id ? ' active' : ''}" ${page === id ? 'aria-current="page"' : ''}>${icon(glyph)}${label}</a>`;
+  const activePage = page === 'team' ? 'teams' : isRankingsHub(page) ? 'rankings' : page;
+  const link = ([id, glyph, label], placement = '') => `<a href="#${id}" class="${placement}${activePage === id ? ' active' : ''}" ${page === id || (isRankingsHub(page) && id === 'rankings') ? 'aria-current="page"' : ''}>${icon(glyph)}${label}</a>`;
   const mainLinks = navs.filter(([id]) => primaryPages.includes(id) || desktopPages.includes(id));
   const moreLinks = navs.filter(([id]) => !primaryPages.includes(id));
   const moreActive = moreLinks.some(([id]) => id === activePage) ? (desktopPages.includes(activePage) ? ' active-on-mobile' : ' active') : '';
@@ -161,25 +196,31 @@ function renderHeader() {
 function schedulePanel() { return `<section class="panel schedule-card"><div class="panel-head"><div class="panel-head-title">${icon('calendar')}<h2>Results updates</h2></div></div><div class="panel-body"><div class="section-label">Mountain Time</div><div class="schedule-title">WEDNESDAY–SUNDAY</div><p>Wednesday–Saturday at <strong>4:11 a.m.</strong> when games are due for results. Sunday at <strong>12:01 a.m.</strong>, with a 4:11 a.m. backup check.</p><p style="margin-top:12px">Last publication <strong>${snapshotDate({ hour:'numeric', minute:'2-digit' })} MT</strong></p></div></section>`; }
 function coveragePanel() { return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('shield')}<h2>Behind the rankings</h2></div><span class="tag green">CFBD</span></div><div class="panel-body"><p>${usesSor()?'A team climbs when its record is harder to match against the same opponents at the same venues.':'The Colley model links results across the opponent network.'}</p><div class="fact-list"><div class="fact-row"><span>FBS teams in this snapshot</span><strong>${state.snapshot.fbsTeams}</strong></div><div class="fact-row"><span>Game records modeled</span><strong>${state.snapshot.gamesUsed.toLocaleString()}</strong></div><div class="fact-row"><span>Human poll inputs</span><strong>Zero</strong></div></div></div><a class="method-link" href="#methodology">See how we calculate each rank ${icon('arrow')}</a></section>`; }
 function tableRows(teams, model = state.model, compact = false) {
-  return teams.map(t => `<tr><td><span class="table-rank ${((model==='achievement'?nationalRank(t):strengthRank(t))||999)<=3?'top':''}">${model==='achievement'?(nationalRank(t)??'—'):strengthRank(t)}</span></td><td><div class="team-cell">${logo(t)}<div>${teamLink(t)}${compact?'':`<small>${esc(t.conference)}</small>`}</div></div></td><td class="num">${record(t)}</td><td class="hide-mobile">#${sosRank(t)}</td><td class="rating num">${model==='achievement'?number(achievementScore(t)):`${number(t.strength,1)}`}</td><td class="hide-mobile"><a class="text-link" href="#team/${t.id}" aria-label="Explore ${esc(t.name)}">${icon('arrow')}</a></td></tr>`).join('');
+  return teams.map(t => {
+    const position = model === 'achievement' ? nationalRank(t) : strengthRank(t);
+    const sos = sosRank(t);
+    const score = position ? number(model === 'achievement' ? achievementScore(t) : t.strength, model === 'achievement' ? 4 : 1) : '—';
+    return `<tr><td><span class="table-rank ${(position || Infinity) <= 3 ? 'top' : ''}">${position ?? '—'}</span></td><td><div class="team-cell">${logo(t)}<div>${teamLink(t)}${compact?'':`<small>${esc(t.conference)}</small>`}</div></div></td><td class="num">${record(t)}</td><td class="hide-mobile">${sos ? rank(sos) : '—'}</td><td class="rating num">${score}</td><td class="hide-mobile"><a class="text-link" href="#team/${encodeURIComponent(t.id)}" aria-label="Explore ${esc(t.name)}">${icon('arrow')}</a></td></tr>`;
+  }).join('');
 }
-function rankingTable(teams, model = state.model, compact = false) { if (model === 'performance') return performanceTable(teams); return `<div class="table-scroll"><table><caption class="sr-only">${model==='achievement'?achievementName():'Predictive strength'} rankings</caption><thead><tr><th scope="col">Rank</th><th scope="col">Team</th><th scope="col">Record</th><th scope="col" class="hide-mobile" title="Rank of opponents’ average Colley ratings">SOS · Colley</th><th scope="col">${model==='achievement'?(usesSor()?'SOR score':'Colley rating'):'Strength · pts'}</th><th class="hide-mobile"><span class="sr-only">Details</span></th></tr></thead><tbody>${tableRows(teams, model, compact)}</tbody></table></div>`; }
+function rankingTable(teams, model = state.model, compact = false) { if (model === 'performance') return performanceTable(teams); return `<div class="table-scroll"><table><caption class="sr-only">${model==='achievement'?achievementName(teams[0]):'Predictive strength'} rankings</caption><thead><tr><th scope="col">Rank</th><th scope="col">Team</th><th scope="col">Record</th><th scope="col" class="hide-mobile" title="Rank of opponents’ average Colley ratings">SOS · Colley</th><th scope="col">${model==='achievement'?(achievementName(teams[0])==='Strength of Record'?'SOR score':'Colley rating'):'Strength · pts'}</th><th class="hide-mobile"><span class="sr-only">Details</span></th></tr></thead><tbody>${tableRows(teams, model, compact)}</tbody></table></div>`; }
 function performanceTable(teams) {
-  return `<div class="table-scroll"><table class="performance-table"><caption class="sr-only">Experimental Performance · Scrimmage consistency rankings</caption><thead><tr><th scope="col">Rank</th><th scope="col">Team</th><th scope="col" title="Opponent-adjusted net success rate relative to the measured FBS average, in percentage points">Performance · pp</th><th scope="col" class="hide-mobile">Offense success</th><th scope="col" class="hide-mobile">Defense allowed</th><th scope="col">Games measured</th><th class="hide-mobile"><span class="sr-only">Details</span></th></tr></thead><tbody>${teams.map(t => {
+  return `<div class="table-scroll"><table class="performance-table"><caption class="sr-only">Experimental Performance · Scrimmage consistency rankings</caption><thead><tr><th scope="col">Rank</th><th scope="col">Team</th><th scope="col" title="Opponent-adjusted net success rate relative to the measured ${state.division.toUpperCase()} average, in percentage points">Performance · pp</th><th scope="col" class="hide-mobile">Offense success</th><th scope="col" class="hide-mobile">Defense allowed</th><th scope="col">Games measured</th><th class="hide-mobile"><span class="sr-only">Details</span></th></tr></thead><tbody>${teams.map(t => {
     const p = performanceRow(t);
     return `<tr><td><span class="table-rank ${(p.rank||999)<=3?'top':''}">${p.rank??'—'}</span></td><td><div class="team-cell">${logo(t)}<div>${teamLink(t)}<small>${esc(t.conference)}</small></div></div></td><td class="rating num">${performanceScore(p.score)}</td><td class="num hide-mobile">${probability(p.offensiveSuccessRate)}</td><td class="num hide-mobile">${probability(p.defensiveSuccessRateAllowed)}</td><td class="num performance-coverage">${esc(p.measuredGames)} / ${esc(p.expectedGames)}${p.provisional?' · provisional':''}</td><td class="hide-mobile"><a class="text-link" href="#team/${encodeURIComponent(t.id)}" aria-label="Explore ${esc(t.name)} Performance evidence">${icon('arrow')}</a></td></tr>`;
   }).join('')}</tbody></table></div>`;
 }
-function performanceNotice() {
+function performanceNotice(division = 'fbs') {
   if (!hasPerformance()) return '';
   const coverage = state.performance.coverage || {};
-  return `<div class="notice"><strong>Experimental scrimmage consistency</strong><p>This view measures how consistently teams gained the needed yards and prevented opponents from doing so, adjusted for opponents and location. Scores are percentage points above the measured FBS average. They are not win probabilities or a complete football-performance grade.</p><p><strong>Coverage:</strong> ${esc(coverage.measuredFbsGames??'—')} / ${esc(coverage.eligibleFbsGames??'—')} FBS games · ${esc(coverage.measuredFbsTeams??'—')} / ${esc(coverage.sourceFbsTeams??'—')} teams · same completed-game cutoff as SOR.</p><p>Historical FBS–FCS forecasting checks remain under review. All source-covered game states are included; special teams and turnover costs are not fully measured.</p><p class="compact-note">Game cutoff: ${snapshotDate({hour:'numeric',minute:'2-digit'})} MT · ${esc(state.performance.method?.name || 'Scrimmage consistency')} · ${esc(state.performance.method?.id || 'Experimental version')}</p>${Array.isArray(state.performance.limitations)&&state.performance.limitations.length?`<details><summary>Model limitations</summary><ul>${state.performance.limitations.map(item=>`<li>${esc(item)}</li>`).join('')}</ul></details>`:''}</div>`;
+  const d = division === 'fcs' ? 'Fcs' : 'Fbs';
+  return `<div class="notice"><strong>Experimental scrimmage consistency</strong><p>This view measures how consistently teams gained the needed yards and prevented opponents from doing so, adjusted for opponents and location. Scores are in percentage points relative to the measured ${division.toUpperCase()} average.</p><p><strong>Coverage:</strong> ${esc(coverage[`measured${d}Games`]??'—')} / ${esc(coverage[`eligible${d}Games`]??'—')} games involving ${division.toUpperCase()} teams · ${esc(coverage[`measured${d}Teams`]??'—')} / ${esc(coverage[`source${d}Teams`]??'—')} teams · same completed-game cutoff as SOR.</p><p>Historical FBS–FCS forecasting checks remain under review. The model measures covered scrimmage plays.</p><p class="compact-note">Game cutoff: ${snapshotDate({hour:'numeric',minute:'2-digit'})} MT · ${esc(state.performance.method?.name || 'Scrimmage consistency')} · ${esc(state.performance.method?.id || 'Experimental version')}</p>${Array.isArray(state.performance.limitations)&&state.performance.limitations.length?`<details><summary>Model limitations</summary><ul>${state.performance.limitations.map(item=>`<li>${esc(item)}</li>`).join('')}</ul></details>`:''}</div>`;
 }
-function performanceBreakdown(p) {
+function performanceBreakdown(p, fcs) {
   const x = p.explanation || {};
   const terms = [['Measured net play success', x.observedNetContribution], ['Game-location adjustment', x.venueContribution],
     ['FBS/FCS matchup adjustment', x.divisionAdjustmentContribution], ['Opponent network', x.opponentContribution],
-    ['Population reference', x.divisionOffset], ['FBS-average reference', x.fbsReferenceAdjustment]];
+    ['Population reference', x.divisionOffset], fcs ? ['FCS-average reference', x.fcsReferenceAdjustment] : ['FBS-average reference', x.fbsReferenceAdjustment]];
   if (!terms.every(([, value]) => Number.isFinite(value))) return '';
   return `<details><summary>Inspect score contributions</summary><div class="fact-list" style="margin-top:12px">${terms.map(([label, value]) => `<div class="fact-row"><span>${label}</span><strong>${performanceScore(100*value)}</strong></div>`).join('')}<div class="fact-row"><span>Performance score</span><strong>${performanceScore(p.score)}</strong></div></div><p class="compact-note">Contributions use percentage-point units and are rounded for display. Opponent and context adjustments come from the model’s results network.</p></details>`;
 }
@@ -189,12 +230,15 @@ function performanceStatus() {
 }
 function performanceTeamPanel(t) {
   if (!performancePublished()) return '';
+  const fcs = t.division === 'fcs';
   const p = performanceRow(t);
-  return `<section class="panel" id="team-performance"><div class="panel-head"><div class="panel-head-title">${icon('chart')}<h2>Performance</h2></div><span class="tag">EXPERIMENTAL</span></div><div class="panel-body">${p ? `<div class="section-label">Scrimmage consistency</div><div class="model-rank-label"><strong>${rank(p.rank)}</strong><strong>${performanceScore(p.score)}</strong></div><p class="compact-note">Opponent-adjusted net success rate relative to the measured FBS average.</p><div class="fact-list"><div class="fact-row"><span>Offense success rate</span><strong>${probability(p.offensiveSuccessRate)}</strong></div><div class="fact-row"><span>Opponent success allowed</span><strong>${probability(p.defensiveSuccessRateAllowed)}</strong></div><div class="fact-row"><span>Games measured</span><strong>${esc(p.measuredGames)} / ${esc(p.expectedGames)}</strong></div></div><p class="compact-note">${esc(t.name)} succeeded on ${probability(p.offensiveSuccessRate)} of measured offensive plays; opponents succeeded on ${probability(p.defensiveSuccessRateAllowed)}. The score also accounts for the opponents faced and game location.${p.provisional?' Fewer than four measured games: provisional.':''}</p>${performanceBreakdown(p)}<p class="compact-note">This is a separate experimental view. Historical FBS–FCS forecasting checks remain under review.</p>` : performanceStatus()}</div><a class="method-link" href="#rankings/performance">Explore Performance rankings ${icon('arrow')}</a></section>`;
+  const evidence = p ? `<div class="section-label">Scrimmage consistency</div><div class="model-rank-label"><strong>${rank(p.rank)}</strong><strong>${performanceScore(p.score)}</strong></div><p class="compact-note">Opponent-adjusted net success rate relative to the measured ${fcs ? 'FCS' : 'FBS'} average.</p><div class="fact-list"><div class="fact-row"><span>Offense success rate</span><strong>${probability(p.offensiveSuccessRate)}</strong></div><div class="fact-row"><span>Opponent success allowed</span><strong>${probability(p.defensiveSuccessRateAllowed)}</strong></div><div class="fact-row"><span>Games measured</span><strong>${esc(p.measuredGames)} / ${esc(p.expectedGames)}</strong></div></div><p class="compact-note">${p.measuredGames ? `${esc(t.name)} succeeded on ${probability(p.offensiveSuccessRate)} of measured offensive plays; opponents succeeded on ${probability(p.defensiveSuccessRateAllowed)}. The score also accounts for the opponents faced and game location.` : 'There are no measured games for this team.'}${p.provisional && p.measuredGames ? fcs ? ' Coverage is provisional.' : ' Fewer than four measured games: provisional.' : ''}</p>${performanceBreakdown(p, fcs)}<p class="compact-note">Historical FBS–FCS forecasting checks remain under review.</p>`
+    : fcs && hasPerformance() ? '<p>FCS Performance is unavailable for this snapshot.</p>' : performanceStatus();
+  return `<section class="panel" id="team-performance"><div class="panel-head"><div class="panel-head-title">${icon('chart')}<h2>Performance</h2></div><span class="tag">EXPERIMENTAL</span></div><div class="panel-body">${evidence}</div><a class="method-link" href="${rankingHash('performance', false, t.division)}">Explore Performance rankings ${icon('arrow')}</a></section>`;
 }
 function updateTeamPerformance(id) {
   const panel = main.querySelector('#team-performance');
-  const team = state.byId.get(id);
+  const team = rankedTeam(id);
   if (panel && team) panel.outerHTML = performanceTeamPanel(team);
 }
 function performanceMethodology() {
@@ -218,13 +262,14 @@ function renderHome() {
   main.innerHTML = `<section class="hero home-hero"><div class="wrap hero-layout"><div><div class="eyebrow">${state.snapshot.season} FBS season · ${achievementName()}</div><h1>THE FBS<em>TOP 25.</em></h1><p class="hero-copy">${summary} Select a team to see how it earned its rank.</p><div class="hero-actions"><a class="button" href="${rankingHash('achievement', true)}">${icon('chart')}View all ${state.snapshot.fbsTeams} teams ${icon('chevron')}</a><a class="button outline" href="#methodology">${icon('layers')}Inside the engine</a></div></div><aside class="top-five"><div class="top-five-title">${icon('trophy')}<h2>THE TOP FIVE</h2><small>${snapshotDate()} SNAPSHOT</small></div>${top.slice(0,5).map(t=>`<a class="top-five-row" href="#team/${t.id}"><span class="rank-chip">${nationalRank(t)}</span>${logo(t)}<strong>${esc(t.name)}</strong><span>${record(t)}</span></a>`).join('')}<a class="top-five-footer" href="#rankings">Explore the Top 25 ${icon('chevron')}</a></aside></div></section><div class="wrap home-body"><div class="two-column"><section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<div><h2>${title}</h2><p>${achievementName()} rankings · ${state.snapshot.season} season · ${snapshotDate()} publication</p></div></div></div>${top.length?rankingTable(top,'achievement',true):'<div class="empty">No ranked teams in this snapshot.</div>'}<div class="table-footer"><a class="text-link" href="${rankingHash('achievement', true)}">View all ${state.snapshot.fbsTeams} FBS teams ${icon('arrow')}</a></div></section><aside class="stack">${coveragePanel()}${companionPanel()}${schedulePanel()}</aside></div>${pipeline()}</div>`;
 }
 function banner(kicker, title, description) { return `<section class="hero page-banner"><div class="wrap"><div class="eyebrow">${kicker}</div><h1>${title}</h1><p>${description}</p></div></section>`; }
-function filterControls(showModel = false) {
-  const conferences = [...new Set(state.snapshot.rankings.map(t=>t.conference))].sort();
-  return `<div class="toolbar"><div class="toolbar-group"><label class="search-box">${icon('search')}<span class="sr-only">Search all FBS teams</span><input id="team-search" type="search" placeholder="Search all teams…" value="${esc(state.search)}" autocomplete="off"></label><label><span class="sr-only">Conference</span><select id="conference-filter" aria-label="Conference"><option value="">All conferences</option>${conferences.map(c=>`<option ${state.conference===c?'selected':''}>${esc(c)}</option>`).join('')}</select></label></div>${showModel?`<button class="button light small" data-action="toggle-all">${state.all?'Show Top 25':`Show all ${state.snapshot.fbsTeams} teams`}</button>`:''}</div>`;
+function filterControls(showModel = false, division = 'fbs') {
+  const teams = divisionTeams(division);
+  const conferences = [...new Set(teams.map(t=>t.conference))].sort();
+  return `<div class="toolbar"><div class="toolbar-group"><label class="search-box">${icon('search')}<span class="sr-only">Search all ${division.toUpperCase()} teams</span><input id="team-search" type="search" placeholder="Search all teams…" value="${esc(state.search)}" autocomplete="off"></label><label><span class="sr-only">Conference</span><select id="conference-filter" aria-label="Conference"><option value="">All conferences</option>${conferences.map(c=>`<option ${state.conference===c?'selected':''}>${esc(c)}</option>`).join('')}</select></label></div>${showModel?`<button class="button light small" data-action="toggle-all">${state.all?'Show Top 25':`Show all ${teams.length} teams`}</button>`:''}</div>`;
 }
 function rankingViews() {
-  const views = [['achievement', usesSor() ? 'Official · Strength of Record' : achievementName()], ['strength', 'Predictive Strength']];
-  if (performancePublished()) views.push(['performance', 'Performance · Experimental']);
+  const views = [['achievement', state.division === 'fcs' || usesSor() ? 'Strength of Record (SOR)' : achievementName()],
+    ['strength', 'Predictive Strength'], ['performance', 'Performance · Experimental']];
   return `<div class="segmented ranking-views" role="group" aria-label="Ranking views">${views.map(([model,label])=>`<button data-action="model" data-value="${model}" class="${state.model===model?'active':''}" aria-pressed="${state.model===model}">${label}</button>`).join('')}</div>`;
 }
 function filtered(teams) { return teams.filter(t => (!state.conference || t.conference===state.conference) && (!state.search || t.name.toLowerCase().includes(state.search.toLowerCase()))); }
@@ -233,34 +278,111 @@ function rankingsContent() {
   const isFiltered = Boolean(state.search || state.conference);
   const pool = state.all || isFiltered ? list : topTwentyFive(list, state.model);
   const teams = filtered(pool);
-  const title = isFiltered ? 'Matching teams' : state.all ? 'All FBS teams' : 'Top 25';
-  return `<div class="panel-head"><div class="panel-head-title"><h2>${title}</h2></div><span class="tag">${teams.length} shown</span></div>${teams.length?rankingTable(teams):`<div class="empty">${isFiltered?'No teams match these filters.':'No ranked teams in this snapshot.'}</div>`}<div class="panel-body" style="padding-block:12px"><p class="compact-note">${state.model==='performance'?'Identical Performance scores share a rank. pp means percentage points relative to the measured FBS average.':'SOS ranks opponents’ average Colley ratings. '+(state.model==='strength'?'Strength is an experimental points-based estimate, separate from earned rank.':(usesSor()?'Identical SOR scores share a rank. SOR scores are not win probabilities.':'Identical Colley scores share a rank. Ratings are scores, not probabilities.'))}</p></div>`;
+  const tier = state.division.toUpperCase();
+  const title = isFiltered ? 'Matching teams' : state.all ? `All ${tier} teams` : 'Top 25';
+  const note = state.model === 'performance' ? `Identical Performance scores share a rank. pp means percentage points relative to the measured ${tier} average.`
+    : `SOS ranks opponents’ average Colley ratings. ${state.model === 'strength' ? 'Strength estimates point margins on a neutral field.' : usesSor() ? 'Identical SOR scores share a rank.' : 'Identical Colley scores share a rank.'}`;
+  return `<div class="panel-head"><div class="panel-head-title"><h3>${title}</h3></div><span class="tag">${teams.length} shown</span></div>${teams.length?rankingTable(teams):`<div class="empty">${isFiltered?'No teams match these filters.':'No ranked teams in this snapshot.'}</div>`}<div class="panel-body" style="padding-block:12px"><p class="compact-note">${note}</p></div>`;
 }
-function renderRankings() {
-  const official = state.model === 'achievement';
-  const views = {
-    achievement: [usesSor() ? 'Official national ranking' : 'Historical national ranking', 'NATIONAL RANKINGS', usesSor() ? 'Strength of Record measures how hard it was to earn this many wins against the same schedule.' : 'This snapshot uses Colley achievement to rank teams from completed game results.'],
-    strength: ['Companion view', 'PREDICTIVE STRENGTH', 'An opponent-adjusted estimate in points using score margins, location, and our own historical strength ratings.'],
-    performance: ['Experimental companion view', 'PERFORMANCE', 'How consistently did teams gain the yards they needed and stop opponents from doing the same?']
-  };
-  const [kicker,title,description] = views[state.model];
-  if (state.model === 'performance' && !hasPerformance()) {
-    if (!performanceFailed) void loadPerformance();
-    main.innerHTML = `${banner(`${kicker} · ${state.snapshot.season}`,title,description)}<div class="wrap page-content">${rankingViews()}<section class="panel"><div class="panel-body">${performanceStatus()}</div></section></div>`;
+function rankingsHubNav(active) {
+  return `<nav class="rankings-hub-nav" aria-label="Rankings pages">${rankingsHubTabs
+    .map(([id, href, label]) => `<a href="${href}" data-ranking-section="${id}"${active === id ? ' aria-current="page"' : ''}>${label}</a>`).join('')}</nav>`;
+}
+function renderRankingsHub(active, key, markup) {
+  const panel = main.querySelector('#rankings-hub-content');
+  const previous = rankingsHubView;
+  if (!panel?.animate || previous?.panel !== panel) {
+    const heading = banner(`${state.snapshot.season} season`, 'RANKINGS', 'Explore FBS and FCS rankings or compare the FBS Top 25 across polls.');
+    main.innerHTML = `${heading}<div class="wrap page-content rankings-hub">${rankingsHubNav(active)}<div id="rankings-hub-content">${markup}</div></div>`;
+    rankingsHubView = { panel: main.querySelector('#rankings-hub-content'), key, markup };
     return;
   }
-  const context = official ? coveragePanel() : state.model === 'performance' ? performanceNotice() : `<section class="panel"><div class="panel-body"><div class="section-label">Predictive Strength</div><h2 style="margin:10px 0">HOW WOULD THEY MATCH UP?</h2><p>Predictive Strength powers the matchup lab. ${state.snapshot.matchupValidation ? 'Win probabilities are calibrated on historical results.' : 'Its game probabilities are uncalibrated estimates.'}</p></div><a class="method-link" href="#compare">Open matchup lab ${icon('arrow')}</a></section>`;
-  main.innerHTML = `${banner(`${kicker} · ${state.snapshot.season}`,title,description)}<div class="wrap page-content">${rankingViews()}<nav class="edition-links" aria-label="Other ranking views"><a class="text-link" href="#polls">Compare rankings ${icon('arrow')}</a><a class="text-link" href="#forge-top-25">Forge’s Top 25 ${icon('arrow')}</a></nav><div class="two-column"><div>${filterControls(true)}<section class="panel" id="ranking-results">${rankingsContent()}</section></div><aside class="stack">${context}${schedulePanel()}</aside></div></div>`;
+  if (previous.key === key && previous.markup === markup) return;
+  const changed = previous.key !== key;
+  const pending = { panel, key, markup, animation: previous.animation };
+  rankingsHubView = pending;
+  const apply = () => {
+    if (rankingsHubView !== pending || !panel.isConnected) return;
+    const focused = document.activeElement;
+    const keepModelFocus = panel.contains(focused) && focused?.dataset?.action === 'model';
+    const keepEditionFocus = panel.contains(focused) && focused?.id === 'edition-week';
+    const keepAllFocus = panel.contains(focused) && focused?.dataset?.action === 'toggle-all';
+    for (const link of main.querySelectorAll('[data-ranking-section]')) {
+      if (link.dataset.rankingSection === active) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    }
+    panel.innerHTML = markup;
+    if (keepModelFocus) panel.querySelector('[data-action="model"][aria-pressed="true"]')?.focus({ preventScroll: true });
+    if (keepEditionFocus) panel.querySelector('#edition-week')?.focus({ preventScroll: true });
+    if (keepAllFocus) panel.querySelector('[data-action="toggle-all"]')?.focus({ preventScroll: true });
+  };
+  if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+    previous.animation?.cancel();
+    pending.animation = null;
+    apply();
+  } else if (changed || previous.phase === 'out') {
+    const opacity = Number(window.getComputedStyle(panel).opacity);
+    previous.animation?.cancel();
+    pending.phase = 'out';
+    const exit = panel.animate([{ opacity }, { opacity: 0 }], { duration: 100, easing: 'ease-in', fill: 'forwards' });
+    pending.animation = exit;
+    exit.finished.then(() => {
+      if (rankingsHubView !== pending || !panel.isConnected) return;
+      apply();
+      exit.cancel();
+      pending.phase = 'in';
+      pending.animation = panel.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 170, easing: 'ease-out' });
+    }).catch(() => {});
+  } else {
+    apply();
+  }
+}
+function renderRankings() {
+  const { division, model } = state;
+  const fcs = division === 'fcs';
+  const sor = fcs || usesSor();
+  const views = {
+    achievement: [sor ? 'Strength of Record' : 'Colley Achievement', sor ? 'How hard would it be for an average team in this division to win as many games against the same schedule?' : 'This snapshot ranks teams by their results and the opponents they faced.'],
+    strength: ['Predictive Strength', 'Estimates point margins using score margins, location, opponents, and the engine’s historical strength ratings.'],
+    performance: ['Performance', 'How consistently did teams gain the yards they needed and stop opponents from doing the same?']
+  };
+  const [title, description] = views[model];
+  const tier = division.toUpperCase();
+  const heading = `${rankingViews()}<div class="rankings-view-heading"><h2>${tier} ${title}</h2>${fcs && model !== 'performance' ? '<span class="tag">Experimental</span>' : ''}<p>${description}</p></div>`;
+  const empty = content => `<section class="panel"><div class="panel-body">${content}</div></section>`;
+  let body;
+  if (fcs && !divisionTeams(division).length) {
+    body = empty('<p role="status">FCS rankings are unavailable for this snapshot.</p>');
+  } else if (model === 'performance' && (!hasPerformance() || (fcs && !state.fcsPerformanceById))) {
+    if (!performanceFailed) void loadPerformance();
+    body = empty(!performancePublished() || (fcs && hasPerformance())
+      ? `<p role="status">${tier} Performance is unavailable for this snapshot.</p>`
+      : performanceStatus());
+  } else {
+    const context = model === 'performance' ? performanceNotice(division)
+      : fcs ? `<div class="notice"><strong>FCS coverage</strong><p>${divisionTeams(division).length} FCS teams identified by CollegeFootballData in this snapshot. ${model === 'achievement' ? 'The displayed record includes all covered games. SOR scores decisive results against FCS and FBS opponents. Other results still inform the opponent network and SOS.' : 'These teams have been ranked by their ratings in the same opponent network as FBS. FCS matchup forecasts are still experimental.'}</p></div>`
+      : model === 'achievement' ? coveragePanel() : `<section class="panel"><div class="panel-body"><h3>Matchup lab</h3><p>Predictive Strength powers the matchup lab. ${state.snapshot.matchupValidation ? 'Win probabilities are calibrated on historical results.' : 'Its game probabilities are uncalibrated estimates.'}</p></div><a class="method-link" href="#compare">Open matchup lab ${icon('arrow')}</a></section>`;
+    body = `<div class="two-column"><div>${filterControls(true, division)}<section class="panel" id="ranking-results">${rankingsContent()}</section></div><aside class="stack">${context}${schedulePanel()}</aside></div>`;
+  }
+  renderRankingsHub(division, `${division}/${model}`, heading + body);
 }
 function teamsContent() { const teams=filtered(state.snapshot.rankings); return `${teams.length?`<div class="team-grid">${teams.map(t=>`<a class="panel team-card" href="#team/${t.id}"><span class="team-card-rank">${rank(nationalRank(t))}</span>${logo(t)}<div><h3>${esc(t.name)}</h3><p>${esc(t.conference)}</p><small>${record(t)} · ${number(achievementScore(t))} ${usesSor(t)?'SOR':'Colley'}</small></div></a>`).join('')}</div>`:'<div class="panel empty">No teams match these filters.</div>'}<p class="results-count">${teams.length} of ${state.snapshot.fbsTeams} FBS teams</p>`; }
 function renderTeams() { main.innerHTML = `${banner('The team directory','EVERY TEAM HAS A STORY.','Choose a team to inspect its results, opponent strength, and the exact calculation behind its rank.')}<div class="wrap page-content">${filterControls()}<div id="team-results">${teamsContent()}</div></div>`; }
 function explanation(t) {
   const wins = t.contributions.filter(g=>g.result==='W').sort((a,b)=>b.opponentAchievement-a.opponentAchievement);
   const losses = t.contributions.filter(g=>g.result==='L');
-  const winText = wins.filter(g=>state.byId.has(g.opponentId)).slice(0,2).map(g=>`<strong>${rank(opponentRank(g))} ${esc(g.opponentName)}</strong>`).join(' and ');
-  const evidence = `<strong>${esc(t.name)}</strong> holds a <strong>${record(t)}</strong> record and the <strong>#${sosRank(t)}</strong> schedule by opponents’ average Colley ratings.${winText?` Its wins include ${winText}.`:''} ${losses.length?`The ${losses.length===1?'loss came':'losses came'} against ${losses.map(g=>`${opponentRank(g)?rank(opponentRank(g))+' ':''}${esc(g.opponentName)}`).join(', ')}.`:'It has no losses in the completed results.'}`;
+  const opponent = g => {
+    const row = rankedTeam(g.opponentId);
+    const position = opponentRank(g);
+    const tier = row?.division === t.division ? '' : ` ${row?.division?.toUpperCase() || 'FBS'}`;
+    return `${position ? `${rank(position)}${tier} ` : ''}${esc(g.opponentName)}`;
+  };
+  const winText = wins.filter(g=>rankedTeam(g.opponentId)).slice(0,2).map(g=>`<strong>${opponent(g)}</strong>`).join(' and ');
+  const evidence = `<strong>${esc(t.name)}</strong> holds a <strong>${record(t)}</strong> record and the <strong>${rank(sosRank(t))}</strong> schedule by opponents’ average Colley ratings.${winText?` Its wins include ${winText}.`:''} ${losses.length?`The ${losses.length===1?'loss came':'losses came'} against ${losses.map(opponent).join(', ')}.`:'It has no losses in the completed results.'}`;
+  if (t.division === 'fcs' && !t.sorGames) return `${evidence} An FCS SOR rank requires a decisive result against an FBS or FCS opponent.`;
   if (!usesSor(t)) return `${evidence} The Colley network produces an achievement score of <strong>${number(t.achievement)}</strong>.`;
-  return `${evidence} Its <strong>Strength of Record score is ${number(t.sor)}</strong>. The model gives an average-strength FBS reference team a <strong>${probability(t.sorTailProbability)}</strong> chance of matching at least ${t.wins} wins against this schedule. Game location and a subdivision adjustment learned from historical FBS/FCS results affect those chances. Each game is removed from the network before its difficulty is measured.`;
+  const fcs = t.division === 'fcs';
+  return `${evidence} Its <strong>Strength of Record score is ${number(t.sor)}</strong>. The model gives an average-strength ${fcs ? 'FCS' : 'FBS'} reference team a <strong>${probability(t.sorTailProbability)}</strong> chance of matching at least ${t.sorWins ?? t.wins} wins ${fcs ? `in its ${t.sorGames} SOR-eligible games` : 'against this schedule'}. Game location and a subdivision adjustment learned from historical FBS/FCS results affect those chances. Each game is removed from the network before its difficulty is measured.`;
 }
 function sorCalculationNote(t, wins) {
   const p = t.sorTailProbability;
@@ -271,15 +393,16 @@ function sorCalculationNote(t, wins) {
 
   const count = Math.round(p * 1000);
   const frequency = p > 0 && p < 0.01 ? ` That’s ${count ? `about ${count} ${count === 1 ? 'time' : 'times'}` : 'less than once'} out of 1,000 tries.` : '';
-  const outcome = t.wins
+  const outcome = (t.sorWins ?? t.wins)
     ? `It has a <strong>${chance}</strong> chance of finishing with at least <strong>${wins}</strong>.${frequency}`
     : `Any team can reach zero wins, so the chance is <strong>${chance}</strong> and the SOR score is zero.`;
-  return `Imagine a team with the average FBS Colley rating playing the same opponents in the same places. The model expects it to win <strong>${expected} games</strong> on average. ${outcome}`;
+  return `Imagine a team with the average ${t.division === 'fcs' ? 'FCS' : 'FBS'} Colley rating playing the same ${t.division === 'fcs' ? 'SOR-eligible ' : ''}opponents in the same places. The model expects it to win <strong>${expected} games</strong> on average. ${outcome}`;
 }
 function breakdown(t, explain = false) {
   const x = t.explanation;
   const official = usesSor(t);
-  const wins = `${t.wins} ${t.wins === 1 ? 'win' : 'wins'}`;
+  const winCount = t.sorWins ?? t.wins;
+  const wins = `${winCount} ${winCount === 1 ? 'win' : 'wins'}`;
   const sor = official ? `<h3>STRENGTH OF RECORD</h3>
     ${explain ? `<p class="team-narrative calculation-copy">${sorCalculationNote(t, wins)}</p>` : ''}
     <div class="equation">SOR = −log10[P(at least ${wins})] = <b>${number(t.sor)}</b></div>
@@ -304,7 +427,7 @@ function breakdown(t, explain = false) {
     <p class="${explain ? 'team-narrative calculation-copy' : 'compact-note'}">${colleyNote}</p></div>`;
 }
 function teamCalculation(t) {
-  const ranking = usesSor(t) ? 'Strength of Record' : 'Colley achievement';
+  const ranking = achievementName(t);
   return `<section class="panel"><div class="panel-body">
     <div class="explanation-head">${icon('layers')}<h2>THE CALCULATION</h2></div>
     ${breakdown(t, true)}
@@ -318,15 +441,22 @@ function teamCalculation(t) {
     </div></div><a class="method-link" href="#methodology">Read the full methodology ${icon('arrow')}</a></section>`;
 }
 function resultsTable(t) { return `<div class="table-scroll"><table class="evidence-table"><caption class="sr-only">${esc(t.name)} completed results</caption><thead><tr><th>Result</th><th>Opponent</th><th>Record</th><th>Margin</th></tr></thead><tbody>${t.contributions.map(g=>{
-  const o=state.byId.get(g.opponentId)||{id:g.opponentId,name:g.opponentName||g.opponentId};
-  return `<tr><td><span class="outcome ${g.result==='L'?'loss':''}">${g.result}</span></td><td><div class="team-cell">${logo(o)}<div>${state.byId.has(o.id)?teamLink(o):esc(o.name)}<small>${opponentRank(g)?`${rank(opponentRank(g))} FBS ${achievementName()}`:'Opponent outside FBS rankings'}</small></div></div></td><td class="num">${esc(g.opponentRecord||'—')}</td><td class="num ${g.finalMargin>=0?'margin-positive':'margin-negative'}">${g.finalMargin>0?'+':''}${g.finalMargin}</td></tr>`;
+  const team = rankedTeam(g.opponentId);
+  const o = team ?? { id: g.opponentId, name: g.opponentName || g.opponentId };
+  const position = team && nationalRank(team);
+  return `<tr><td><span class="outcome ${g.result==='L'?'loss':''}">${g.result}</span></td><td><div class="team-cell">${logo(o)}<div>${team ? teamLink(o) : esc(o.name)}<small>${position ? `${rank(position)} ${team.division?.toUpperCase() || 'FBS'} ${achievementName(team)}` : 'Unranked opponent'}</small></div></div></td><td class="num">${esc(g.opponentRecord||'—')}</td><td class="num ${g.finalMargin>=0?'margin-positive':'margin-negative'}">${g.finalMargin>0?'+':''}${g.finalMargin}</td></tr>`;
   }).join('')}</tbody></table></div><div class="panel-body"><p class="compact-note">Only completed games appear. Opponent records and ranks reflect this publication, not the date of the matchup. Margins inform predictive strength, not achievement rank.</p></div>`; }
-function modelRanks(t) { return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('layers')}<h2>Rank and strength</h2></div></div><div class="panel-body">${[[achievementName(),nationalRank(t),'What this team has earned from completed results.'],['Predictive strength',strengthRank(t),'A historical, opponent-adjusted estimate of team strength.']].map(([label,r,desc])=>`<div class="model-rank"><div class="model-rank-label"><div>${label}<br><small>${label===achievementName()?'NATIONAL RANKING':'EXPERIMENTAL MODEL'}</small></div><strong>${rank(r)}</strong></div><div class="model-track"><span style="width:${Math.max(2,(state.snapshot.fbsTeams-(r||state.snapshot.fbsTeams)+1)/state.snapshot.fbsTeams*100)}%"></span></div><p>${desc}</p></div>`).join('')}</div></section>`; }
-function qualityPanel() { const audit=state.snapshot.source?.audit||{};const incomplete=audit.incompleteFinals?.length||0;return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('shield')}<h2>Data & coverage</h2></div></div><div class="panel-body"><div class="data-status-row"><span>${icon('check')}FBS membership</span><b>${state.snapshot.fbsTeams} teams</b></div><div class="data-status-row"><span>${icon('check')}Game records modeled</span><b>${state.snapshot.gamesUsed.toLocaleString()}</b></div><div class="data-status-row"><span>${icon('check')}Data provider</span><b>CFBD</b></div><div class="data-status-row"><span>${icon('check')}Publication</span><b>${snapshotDate()}</b></div>${incomplete?`<details class="quality-note"><summary>${incomplete} incomplete finals excluded</summary><p>CFBD marked these entries complete without valid final scores. They do not count toward the rankings: ${audit.incompleteFinals.map(esc).join(', ')}.</p></details>`:''}<p class="compact-note" style="font-size:10px;margin-top:12px">The site checks for new results Wednesday through Sunday.</p></div></section>`; }
+function modelRanks(t) {
+  const total = divisionTeams(t.division).length;
+  return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('layers')}<h2>Rank and strength</h2></div></div><div class="panel-body">${[[achievementName(t),nationalRank(t),'What this team has earned from completed results.'],['Predictive strength',strengthRank(t),'A historical, opponent-adjusted estimate of team strength.']].map(([label,r,desc])=>`<div class="model-rank"><div class="model-rank-label"><div>${label}<br><small>${label===achievementName(t)?`${t.division?.toUpperCase() || 'FBS'} RANKING`:'EXPERIMENTAL MODEL'}</small></div><strong>${rank(r)}</strong></div><div class="model-track"><span style="width:${r ? Math.max(2,(total-r+1)/total*100) : 0}%"></span></div><p>${desc}</p></div>`).join('')}</div></section>`;
+}
+function qualityPanel(division = 'fbs') { const audit=state.snapshot.source?.audit||{};const incomplete=audit.incompleteFinals?.length||0;return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('shield')}<h2>Data & coverage</h2></div></div><div class="panel-body"><div class="data-status-row"><span>${icon('check')}${division.toUpperCase()} membership</span><b>${divisionTeams(division).length} teams</b></div><div class="data-status-row"><span>${icon('check')}Game records modeled</span><b>${state.snapshot.gamesUsed.toLocaleString()}</b></div><div class="data-status-row"><span>${icon('check')}Data provider</span><b>CFBD</b></div><div class="data-status-row"><span>${icon('check')}Publication</span><b>${snapshotDate()}</b></div>${incomplete?`<details class="quality-note"><summary>${incomplete} incomplete finals excluded</summary><p>CFBD marked these entries complete without valid final scores. They do not count toward the rankings: ${audit.incompleteFinals.map(esc).join(', ')}.</p></details>`:''}<p class="compact-note" style="font-size:10px;margin-top:12px">The site checks for new results Wednesday through Sunday.</p></div></section>`; }
 function teamCenterContent(t) {
   if(state.teamTab==='results') return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('calendar')}<h2>THE COMPLETED RESULTS</h2></div><span class="tag">${t.games} GAMES</span></div>${resultsTable(t)}</section>`;
   if(state.teamTab==='model') return teamCalculation(t);
-  return `<div class="metric-grid">${[[achievementName(),rank(nationalRank(t)),'National rank'],['Schedule',`#${sosRank(t)}`,'Colley opponent average'],['Conference',rank(conferenceRank(t)),t.conference],['Record',record(t),`${t.games} completed games`]].map(([label,value,note])=>`<div class="metric"><span>${label}</span><strong>${value}</strong><small>${esc(note)}</small></div>`).join('')}</div><section class="panel"><div class="panel-body"><div class="explanation-head">${icon('network')}<h2>WHY WE RANK ${esc(t.name.toUpperCase())} ${rank(nationalRank(t))}</h2></div><p class="team-narrative">${explanation(t)}</p><div class="evidence-chips"><span class="evidence-chip">Opponent Colley average <b>${number(t.achievementScheduleStrength)}</b></span><span class="evidence-chip">${t.evidence?.connectedTeams??'—'} connected teams</span><span class="evidence-chip">${t.evidence?.provisional?'Small sample · provisional':'Current-season evidence'}</span></div>${breakdown(t)}</div></section><section class="panel" style="margin-top:17px"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<h2>RESULTS THAT SHAPE THE RESUME</h2></div><button class="text-link" style="border:0;background:none" data-action="team-tab" data-value="results">All results ${icon('arrow')}</button></div>${resultsTable({...t,contributions:[...t.contributions].sort((a,b)=>b.opponentAchievement-a.opponentAchievement).slice(0,3)})}</section>`;
+  const position = nationalRank(t);
+  const heading = position ? `WHY WE RANK ${esc(t.name.toUpperCase())} ${rank(position)}` : `${esc(t.name.toUpperCase())}’S RECORD`;
+  return `<div class="metric-grid">${[[achievementName(t),rank(position),`${t.division?.toUpperCase() || 'FBS'} rank`],['Schedule',rank(sosRank(t)),'Colley opponent average'],['Conference',rank(conferenceRank(t)),t.conference],['Record',record(t),`${t.games} completed games`]].map(([label,value,note])=>`<div class="metric"><span>${label}</span><strong>${value}</strong><small>${esc(note)}</small></div>`).join('')}</div><section class="panel"><div class="panel-body"><div class="explanation-head">${icon('network')}<h2>${heading}</h2></div><p class="team-narrative">${explanation(t)}</p><div class="evidence-chips"><span class="evidence-chip">Opponent Colley average <b>${number(t.achievementScheduleStrength)}</b></span><span class="evidence-chip">${t.evidence?.connectedTeams??'—'} connected teams</span><span class="evidence-chip">${t.evidence?.provisional?'Small sample · provisional':'Current-season evidence'}</span></div>${breakdown(t)}</div></section><section class="panel" style="margin-top:17px"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<h2>RESULTS THAT SHAPE THE RESUME</h2></div><button class="text-link" style="border:0;background:none" data-action="team-tab" data-value="results">All results ${icon('arrow')}</button></div>${resultsTable({...t,contributions:[...t.contributions].sort((a,b)=>b.opponentAchievement-a.opponentAchievement).slice(0,3)})}</section>`;
 }
 async function loadTeamDetails(summary) {
   const { id } = summary;
@@ -349,14 +479,16 @@ async function loadTeamDetails(summary) {
   if (state.snapshot === snapshot && page === 'team' && currentId === id) renderTeam(id);
 }
 function renderTeam(id) {
-  const summary = state.byId.get(id);
-  if(!summary){main.innerHTML=`<div class="wrap page-content"><section class="panel empty"><h2>Team not found</h2><p>Choose a team from the FBS directory.</p><a class="button" style="margin-top:15px" href="#teams">Explore teams</a></section></div>`;return;}
+  const summary = rankedTeam(id);
+  if(!summary){main.innerHTML=`<div class="wrap page-content"><section class="panel empty"><h2>Team not found</h2><a class="button" style="margin-top:15px" href="#rankings">Explore rankings</a></section></div>`;return;}
   const detail = state.snapshot.teamDetailsPath ? teamDetails.get(id) : null;
   const t = detail?.team ?? summary;
   const needsDetails = state.snapshot.teamDetailsPath && !detail?.team;
   const content = needsDetails ? `<section class="panel empty"><p role="status">${detail?.failed ? 'The team details could not load.' : 'Loading team details…'}</p>
     ${detail?.failed ? '<button type="button" class="button light small" data-action="retry-team-details">Try again</button>' : ''}</section>` : teamCenterContent(t);
-  main.innerHTML=`<section class="hero team-banner"><div class="wrap"><a class="breadcrumb" href="#rankings">${icon('back')}Back to the rankings</a><div class="team-banner-content">${logo(t,'large')}<div><div class="eyebrow">${esc(t.conference)} · ${state.snapshot.season} season</div><h1>${esc(t.name.toUpperCase())}</h1><div class="team-meta"><span><b>${rank(nationalRank(t))}</b> ${achievementName()}</span><span>${record(t)} overall</span><span>${rank(conferenceRank(t))} in conference</span></div></div><div class="team-banner-score"><strong>${number(achievementScore(t))}</strong><span>${usesSor(t)?'SOR score':'Colley rating'}</span></div></div></div></section><div class="wrap page-content"><div class="team-layout"><aside class="panel rank-rail"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<h2>THE TOP 25</h2></div></div><div class="rail-list">${topTwentyFive(state.snapshot.rankings, 'achievement').map(o=>`<a href="#team/${o.id}" class="rail-row ${o.id===t.id?'selected':''}" ${o.id===t.id?'aria-current="page"':''}><span>${nationalRank(o)}</span>${logo(o)}<b>${esc(o.name)}</b><small>${record(o)}</small></a>`).join('')}</div><a class="method-link" href="#rankings/all">All rankings ${icon('arrow')}</a></aside><div class="team-center"><div class="tabs" aria-label="Team sections">${[['overview','Overview'],['results','Results'],['model','Model details']].map(([value,label])=>`<button data-action="team-tab" data-value="${value}" class="${state.teamTab===value?'active':''}" aria-pressed="${state.teamTab===value}">${label}</button>`).join('')}</div><div id="team-center-content">${content}</div></div><aside class="stack team-right">${modelRanks(t)}${performanceTeamPanel(t)}${qualityPanel()}<section class="panel"><div class="panel-body"><div class="section-label">Ask a different question</div><h3 style="margin:9px 0 12px">HOW WOULD THEY MATCH UP?</h3><p class="compact-note">Use the strength model to explore a matchup on a neutral field.</p><button class="button small full-width" style="margin-top:15px" data-action="compare-team" data-value="${t.id}">${icon('compare')}Open matchup lab</button></div></section></aside></div></div>`;
+  const tier = t.division?.toUpperCase() || 'FBS';
+  const matchup = t.division === 'fcs' ? '' : `<section class="panel"><div class="panel-body"><h3>Matchup lab</h3><p class="compact-note">Use the strength model to explore a matchup on a neutral field.</p><button class="button small full-width" style="margin-top:15px" data-action="compare-team" data-value="${esc(t.id)}">${icon('compare')}Open matchup lab</button></div></section>`;
+  main.innerHTML=`<section class="hero team-banner"><div class="wrap"><a class="breadcrumb" href="${rankingHash('achievement', false, t.division)}">${icon('back')}Back to ${tier} rankings</a><div class="team-banner-content">${logo(t,'large')}<div><div class="eyebrow">${tier} · ${esc(t.conference)} · ${state.snapshot.season} season</div><h1>${esc(t.name.toUpperCase())}</h1><div class="team-meta"><span><b>${rank(nationalRank(t))}</b> ${achievementName(t)}</span><span>${record(t)} overall</span><span>${rank(conferenceRank(t))} in conference</span></div></div><div class="team-banner-score"><strong>${number(t.division === 'fcs' ? t.sor : achievementScore(t))}</strong><span>${achievementName(t)==='Strength of Record'?'SOR score':'Colley rating'}</span></div></div></div></section><div class="wrap page-content"><div class="team-layout"><aside class="panel rank-rail"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<h2>${tier} TOP 25</h2></div></div><div class="rail-list">${topTwentyFive(divisionTeams(t.division), 'achievement').map(o=>`<a href="#team/${encodeURIComponent(o.id)}" class="rail-row ${o.id===t.id?'selected':''}" ${o.id===t.id?'aria-current="page"':''}><span>${nationalRank(o)}</span>${logo(o)}<b>${esc(o.name)}</b><small>${record(o)}</small></a>`).join('')}</div><a class="method-link" href="${rankingHash('achievement', true, t.division)}">All ${tier} rankings ${icon('arrow')}</a></aside><div class="team-center"><div class="tabs" aria-label="Team sections">${[['overview','Overview'],['results','Results'],['model','Model details']].map(([value,label])=>`<button data-action="team-tab" data-value="${value}" class="${state.teamTab===value?'active':''}" aria-pressed="${state.teamTab===value}">${label}</button>`).join('')}</div><div id="team-center-content">${content}</div></div><aside class="stack team-right">${modelRanks(t)}${performanceTeamPanel(t)}${qualityPanel(t.division)}${matchup}</aside></div></div>`;
   if (needsDetails && !detail) void loadTeamDetails(summary);
 }
 function validationSummary() {
@@ -720,7 +852,7 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
     const position = index + 1;
     return `<tr><th scope="row">${position}</th>${columns.map(column => pollRankCell(column, position, teams)).join('')}</tr>`;
   }).join('');
-  return `<div class="wrap page-content"><section class="panel edition-panel"><div class="panel-body">
+  return `<section class="panel edition-panel"><div class="panel-body">
     ${tabs}<div class="edition-controls">${editionPicker(weeks, week)}${editionLink}</div>
     <h2>${editionLabel(week)}</h2><p>Games through ${editionDate(gamesThrough)}.${poll ? ` ${source.name} released ${editionDate(poll.released)}.` : ''}${official ? ` SOR published ${editionDate(official.released)}.` : ''}${forge ? ` Forge ballot reconstructed ${editionDate(forge.released)}.` : ''}</p>
     ${replay ? `<p class="compact-note edition-context">SOR replay calculated ${editionDate(replay.released)} using the official formula and ${replay.networkGames.toLocaleString()} confirmed games through this cutoff. That includes ${replay.fbsGames.toLocaleString()} games involving FBS teams.</p>` : ''}
@@ -731,7 +863,7 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
     <caption class="sr-only">Ranking comparison for ${editionLabel(week)}</caption>
     <thead><tr><th scope="col">Rank</th><th scope="col">${sorLabel}</th><th scope="col">Forge</th><th scope="col">${source.short}</th></tr></thead><tbody>${rows}</tbody></table></div>
     <div class="panel-body"><p class="compact-note">Tied teams share a cell. A dash marks a skipped rank or an unavailable edition. Team links open current profiles.</p><nav class="edition-links" aria-label="FBS Intelligence rankings"><a class="text-link" href="#rankings">Official SOR ${icon('arrow')}</a><a class="text-link" href="#forge-top-25/${week}">Forge’s full ballot ${icon('arrow')}</a></nav></div>
-    </section></div>`;
+    </section>`;
 }
 function renderForgeBallot(data, requestedWeek) {
   const edition = data.forge.find(item => item.week === Number(requestedWeek)) ?? data.forge.at(-1);
@@ -747,14 +879,14 @@ function renderForgeBallot(data, requestedWeek) {
   }).join('');
   const hasPollComparison = data.sor.some(item => item.week === edition.week)
     || Object.values(data.polls).some(items => items.some(item => item.week === edition.week));
-  return `<div class="wrap page-content"><section class="panel edition-panel"><div class="panel-body">
+  return `<section class="panel edition-panel"><div class="panel-body">
     <div class="edition-controls">${editionPicker(data.forge.map(item => item.week).reverse(), edition.week)}<a class="text-link" href="#polls${hasPollComparison ? `/ap/${edition.week}` : ''}">Compare rankings ${icon('arrow')}</a></div>
     <h2>${editionLabel(edition.week)}</h2><p>${edition.week < 0 ? 'Preseason context as of' : 'Games through'} ${editionDate(edition.gamesThrough)}. Retrospective ballot reconstructed ${editionDate(edition.released)}.</p>
     ${edition.week === -1 ? '<p class="compact-note edition-context">Forge used 2025 results, roster and coaching context, and preseason AP and Coaches polls as background.</p>' : ''}
     ${edition.notes?.length ? `<ul class="edition-notice">${edition.notes.map(note => `<li>${esc(note)}</li>`).join('')}</ul>` : ''}
     </div><div class="table-scroll"><table class="edition-table">
     <caption class="sr-only">Forge’s Top 25 for ${editionLabel(edition.week)}</caption><thead><tr><th scope="col">Rank</th><th scope="col">Team</th><th scope="col">${edition.week === -1 ? '2025 record' : 'Record'}</th>${edition.week >= 0 ? '<th scope="col">Move</th>' : ''}</tr></thead>
-    <tbody>${rows}</tbody></table></div></section></div>`;
+    <tbody>${rows}</tbody></table></div></section>`;
 }
 async function loadRankingEditions() {
   try {
@@ -774,16 +906,15 @@ async function loadRankingEditions() {
 }
 function renderRankingEditions(page, id, scope) {
   const comparing = page === 'polls';
-  const heading = comparing
-    ? banner('Dated poll comparisons', 'Compare Rankings', 'Compare the official Strength of Record and Forge’s AI-authored ballot with AP, Coaches, and CFP editions covering the same games.')
-    : banner('AI-authored editorial ballot', 'Forge’s Top 25', 'Forge uses game results, opponent quality, scoring margins, and venue to make each week’s ranking calls.');
+  const [title, description] = comparing
+    ? ['Compare Rankings', 'Compare FBS Strength of Record and Forge’s AI-authored ballot with AP, Coaches, and CFP editions covering the same games.']
+    : ['Forge’s Top 25', 'An AI-authored FBS ballot based on game results, opponent quality, scoring margins, and venue.'];
+  const heading = `<div class="rankings-view-heading"><h2>${title}</h2><p>${description}</p></div>`;
   const { data, failed } = rankingEditions;
-  if (data) {
-    main.innerHTML = heading + (comparing ? renderPollComparison(data, id, scope) : renderForgeBallot(data, id));
-    return;
-  }
-  main.innerHTML = heading + `<div class="wrap page-content"><p role="status">${failed ? 'The ranking archive is unavailable.' : 'Loading ranking editions…'}</p>${failed ? '<button class="button light small" data-action="retry-editions">Try again</button>' : ''}</div>`;
-  if (!failed) rankingEditions.request ??= loadRankingEditions();
+  const content = data ? (comparing ? renderPollComparison(data, id, scope) : renderForgeBallot(data, id))
+    : `<section class="panel"><div class="panel-body"><p role="status">${failed ? 'The ranking archive is unavailable.' : 'Loading ranking editions…'}</p>${failed ? '<button class="button light small" data-action="retry-editions">Try again</button>' : ''}</div></section>`;
+  renderRankingsHub(page, [page, id, scope].join('/'), heading + content);
+  if (!data && !failed) rankingEditions.request ??= loadRankingEditions();
 }
 function renderBracketPage() {
   if (!bracketModule) {
@@ -870,6 +1001,10 @@ function renderRankingsStatus() {
 }
 function render() {
   const [page,id,scope]=route();
+  if (!isRankingsHub(page) && rankingsHubView) {
+    rankingsHubView.animation?.cancel();
+    rankingsHubView = undefined;
+  }
   if (page !== 'scoreboard' && scoreboardPage) {
     scoreboardPage.unmount();
     scoreboardPage = undefined;
@@ -900,11 +1035,19 @@ function render() {
   if (!state.snapshot) { renderRankingsStatus(); return; }
   renderHeader();
   if (page === 'rankings') {
-    state.model = id === 'strength' || (id === 'performance' && performancePublished()) ? id : 'achievement';
-    state.all = id === 'all' || scope === 'all';
+    const next = rankingsRoute();
+    if (state.division !== next.division) {
+      state.search = '';
+      state.conference = '';
+    }
+    Object.assign(state, next);
+  } else if (page === 'teams' && state.division === 'fcs') {
+    state.division = 'fbs';
+    state.search = '';
+    state.conference = '';
   }
   if(page==='home')renderHome();else if(page==='rankings')renderRankings();else if(page==='teams')renderTeams();else if(page==='team')renderTeam(id);else if(page==='methodology')renderMethodology();else if(page==='compare')renderCompare();else if (page === 'polls' || page === 'forge-top-25') renderRankingEditions(page,id,scope);else if (page === 'bracket') renderBracketPage();else if (page === 'cfp-scenarios') renderScenarioPage();else if (page === 'beat-the-model') renderContestPage();else if (page === 'ranking-history') renderHistoryPage(id);else renderHome();
-  const team=state.byId.get(id);document.title=`${page==='team'&&team?team.name:({home:'FBS Top 25',rankings:'National rankings',teams:'Team directory',compare:id==='weekly'?'Weekly picks':'Matchup lab',methodology:'Methodology',polls:'Compare Rankings','forge-top-25':'Forge’s Top 25',bracket:'Playoff Bracket','cfp-scenarios':'CFP Scenario Builder','beat-the-model':'Beat the Model','ranking-history':'Weekly SOR movement'}[page]||'Home')} · ${BRAND}`;
+  const team=rankedTeam(id);document.title=`${page==='team'&&team?team.name:({home:'FBS Top 25',rankings:`${state.division.toUpperCase()} rankings`,teams:'Team directory',compare:id==='weekly'?'Weekly picks':'Matchup lab',methodology:'Methodology',polls:'Compare Rankings','forge-top-25':'Forge’s Top 25',bracket:'Playoff Bracket','cfp-scenarios':'CFP Scenario Builder','beat-the-model':'Beat the Model','ranking-history':'Weekly SOR movement'}[page]||'Home')} · ${BRAND}`;
   document.querySelector('#announce').textContent=document.title;
 }
 document.addEventListener('error',e=>{if(e.target instanceof HTMLImageElement && e.target.closest('.logo'))e.target.closest('.logo').classList.add('failed');},true);
@@ -945,8 +1088,8 @@ document.addEventListener('click',e=>{
     rankingEditions.failed = false;
     render();
   }
-  if (action === 'model' && (['achievement', 'strength'].includes(value) || (value === 'performance' && performancePublished()))) {
-    location.hash = rankingHash(value, state.all);
+  if (action === 'model' && ['achievement', 'strength', 'performance'].includes(value)) {
+    location.hash = rankingHash(value, state.all, state.division);
     render();
   }
   if (action === 'load-performance') {
@@ -955,12 +1098,12 @@ document.addEventListener('click',e=>{
     if (page === 'team') {
       void loadPerformance();
       updateTeamPerformance(id);
-    } else if (page === 'rankings' && id === 'performance') renderRankings();
+    } else if (page === 'rankings' && rankingsRoute().model === 'performance') renderRankings();
   }
   if (action === 'toggle-all') {
     state.search = '';
     state.conference = '';
-    location.hash = rankingHash(state.model, !state.all);
+    location.hash = rankingHash(state.model, !state.all, state.division);
     render();
   }
   if(action==='team-tab'){state.teamTab=value;renderTeam(route()[1]);}
@@ -975,14 +1118,15 @@ document.addEventListener('keydown', event => {
   more.open = false;
   more.querySelector('summary').focus();
 });
-window.addEventListener('hashchange', () => {
+window.addEventListener('hashchange', event => {
   state.teamTab = 'overview';
   render();
   if (focusMoreDestination) {
     focusMoreDestination = false;
     main.focus({ preventScroll: true });
   }
-  window.scrollTo({ top: 0, behavior: 'instant' });
+  const from = event.oldURL ? new URL(event.oldURL).hash.slice(1).split('/')[0] : '';
+  if (!isRankingsHub(from) || !isRankingsHub(route()[0])) window.scrollTo({ top: 0, behavior: 'instant' });
 });
 async function load(){
   rankingsFailed = false;
@@ -992,8 +1136,9 @@ async function load(){
     const snapshot=await response.json();
     if(!snapshot.rankings?.length)throw Error('No published rankings');
     state.snapshot=snapshot;state.byId=new Map(snapshot.rankings.map(t=>[t.id,t]));
+    state.byFcsId=new Map(divisionTeams('fcs').map(t=>[t.id,t]));
     teamDetails.clear();
-    state.performance=null;state.performanceById=new Map();
+    state.performance=null;state.performanceById=new Map();state.fcsPerformanceById=null;
     performanceLoading=false;performanceFailed=false;
     state.compareA=snapshot.rankings[0].id;state.compareB=snapshot.rankings[1].id;
     render();

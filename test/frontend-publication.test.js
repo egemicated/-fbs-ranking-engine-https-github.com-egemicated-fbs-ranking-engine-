@@ -26,7 +26,7 @@ function fixture(sor = true) {
 async function browser(snapshot, detailResponse) {
   const nodes = new Map(), calls = [], errors = [];
   const node = id => {
-    if (!nodes.has(id)) nodes.set(id, { innerHTML: '', textContent: '', addEventListener() {} });
+    if (!nodes.has(id)) nodes.set(id, { innerHTML: '', textContent: '', addEventListener() {}, querySelector: node });
     return nodes.get(id);
   };
   const context = { document: { querySelector: node, addEventListener() {}, title: '' },
@@ -65,7 +65,8 @@ test('home, national table and directory display published SOR ranks and scores 
   assert.match(page.html(), /SOR score/); assert.match(page.html(), /2\.3456/);
   const ranking = page.go('#rankings');
   assert.match(ranking, /table-rank top">1<\/span>.*?href="#team\/a"/s);
-  assert.match(ranking, /SOR scores are not win probabilities/); assert.match(ranking, /SOS · Colley/);
+  assert.match(ranking, /How hard would it be for an average team in this division to win as many games/);
+  assert.match(ranking, /SOS · Colley/);
   assert.match(page.go('#teams'), /team-card-rank">#1<\/span>.*?<h3>Alpha<\/h3>.*?2\.3456 SOR/s);
   assert.equal(JSON.stringify(snapshot), before);
 });

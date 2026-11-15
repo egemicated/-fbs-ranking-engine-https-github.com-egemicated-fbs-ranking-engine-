@@ -136,7 +136,7 @@ test('optional Performance failure preserves the primary rankings, while unadver
   }
   const old = await browser(fixture(false));
   old.go('#rankings/performance');
-  assert.deepEqual(old.calls, ['/rankings']); assert.match(old.html(), /SOR score/);
+  assert.deepEqual(old.calls, ['/rankings']); assert.match(old.html(), /FBS Performance is unavailable/);
 });
 
 test('untrusted Performance explanatory text is escaped before display', async () => {

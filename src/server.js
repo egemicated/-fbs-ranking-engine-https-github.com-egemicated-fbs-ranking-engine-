@@ -4,7 +4,7 @@ import { resolve, join } from 'node:path';
 import { VERSION } from './engine.js';
 import { UPDATE_SCHEDULE } from './weekly.js';
 import publicationPolicy from '../data/publication-model.json' with { type: 'json' };
-import { readPerformance } from './performance-publication.js';
+import { readPublicPerformance } from './public-performance.js';
 import { publicRankings, publicTeamDetails } from './site-publication.js';
 import { matchupValidation, snapshotCoverage } from './site-validation.js';
 import { buildWeeklyTeamStats } from '../frontend/weekly-team-stats.js';
@@ -74,7 +74,7 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     if (path === '/performance') {
       try {
         const snapshot = JSON.parse(await readFile(join(snapshotDirectory, 'latest.json'), 'utf8'));
-        const performance = await readPerformance(snapshotDirectory, snapshot);
+        const performance = await readPublicPerformance(snapshotDirectory, snapshot);
         return performance ? send(200, performance) : send(503, { error: 'Experimental Performance is unavailable for this snapshot' });
       } catch { return send(503, { error: 'Experimental Performance is unavailable for this snapshot' }); }
     }
@@ -109,7 +109,8 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     try {
       const snapshot = JSON.parse(await readFile(join(snapshotDirectory, `${year || 'latest'}.json`), 'utf8'));
       if (teamId) {
-        const team = snapshot.rankings.find(row => encodeURIComponent(row.id) === teamId);
+        const team = snapshot.rankings.find(row => encodeURIComponent(row.id) === teamId) ??
+          snapshot.fcsRankings?.find(row => encodeURIComponent(row.id) === teamId);
         return team ? send(200, publicTeamDetails(snapshot, team)) : send(404, { error: 'Team not found' });
       }
       const publicSnapshot = publicRankings(snapshot, `/rankings${year ? `/${year}` : ''}/teams`);
@@ -119,7 +120,7 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
         publicSnapshot.coverageValidation = snapshotCoverage(snapshot);
         publicSnapshot.matchupValidation = matchupValidation(snapshot);
       }
-      if (await readPerformance(snapshotDirectory, snapshot)) publicSnapshot.performanceEndpoint = '/performance';
+      if (await readPublicPerformance(snapshotDirectory, snapshot)) publicSnapshot.performanceEndpoint = '/performance';
       return send(200, publicSnapshot);
     } catch (e) { return send(e.code === 'ENOENT' ? 503 : 500, { error: e.code === 'ENOENT' ? 'Rankings have not been built for this season' : 'Could not read rankings' }); }
   });

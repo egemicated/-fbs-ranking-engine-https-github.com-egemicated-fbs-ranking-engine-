@@ -15,6 +15,9 @@ PATH = Path(__file__).with_name('publish-performance.py')
 SPEC = importlib.util.spec_from_file_location('performance_publisher', PATH)
 publisher = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(publisher)
+FCS_SPEC = importlib.util.spec_from_file_location('fcs_performance_publisher', PATH.with_name('publish-fcs-performance.py'))
+fcs_publisher = importlib.util.module_from_spec(FCS_SPEC)
+FCS_SPEC.loader.exec_module(fcs_publisher)
 
 
 def fixtures():
@@ -69,6 +72,41 @@ class PerformancePublicationChecks(unittest.TestCase):
             self.assertTrue(row['explanation']['gameContributions'][0]['opponentName'])
         self.assertNotIn('unknownPrivateField', json.dumps(result))
         self.assertNotIn('successes', json.dumps(result))
+
+    def test_fcs_ranks_have_their_own_mean_and_count_cross_division_games_once(self):
+        snapshot, rows, policy, source, _ = fixtures()
+        result = fcs_publisher.build_performance(snapshot, rows, policy, source)
+        frozen = publisher.build_performance(snapshot, rows, policy, source)
+        self.assertEqual(result['rankings'], frozen['rankings'])
+        self.assertEqual(result['context'], frozen['context'])
+        self.assertEqual([t['rank'] for t in result['fcsRankings']], [1, 2])
+        self.assertEqual({t['id'] for t in result['fcsRankings']}, {'3', '4'})
+        self.assertEqual(result['coverage']['sourceFcsTeams'], 2)
+        self.assertEqual(result['coverage']['measuredFcsTeams'], 2)
+        self.assertEqual(result['coverage']['eligibleFcsGames'], 2)
+        self.assertEqual(result['coverage']['measuredFcsGames'], 2)
+        self.assertEqual(result['coverage']['measuredFcsContextGames'], 1)
+        self.assertAlmostEqual(sum(t['score'] for t in result['fcsRankings']), 0., places=12)
+        self.assertNotEqual(result['reference']['measuredFcsMean'], result['reference']['measuredFbsMean'])
+        for row in result['fcsRankings']:
+            self.assertEqual(row['conference'], 'Fixture')
+            self.assertTrue(row['provisional'])
+            self.assertAlmostEqual(row['score'], row['explanation']['reconstructedScore'], places=12)
+            self.assertAlmostEqual(row['explanation']['fcsReferenceAdjustment'], -result['reference']['measuredFcsMean'])
+
+    def test_missing_fcs_only_stats_preserve_fbs_publication_and_unmeasured_fcs_rows(self):
+        snapshot, rows, policy, source, _ = fixtures()
+        result = fcs_publisher.build_performance(snapshot, [r for r in rows if r['gameId'] != 12], policy, source)
+        self.assertEqual(result['coverage']['measuredFbsGames'], 2)
+        self.assertEqual(result['coverage']['eligibleFcsGames'], 2)
+        self.assertEqual(result['coverage']['measuredFcsGames'], 1)
+        self.assertEqual(result['coverage']['measuredFcsTeams'], 1)
+        cedar, delta = result['fcsRankings']
+        self.assertEqual((cedar['id'], cedar['rank'], cedar['score'], cedar['measuredGames'], cedar['expectedGames']), ('3', 1, 0., 1, 2))
+        self.assertEqual((delta['id'], delta['rank'], delta['score'], delta['measuredGames'], delta['expectedGames']), ('4', None, None, 0, 1))
+        self.assertIsNone(delta['offensiveSuccessRate'])
+        self.assertIsNone(delta['defensiveSuccessRateAllowed'])
+        self.assertTrue(delta['provisional'])
 
     def test_value_hash_excludes_operation_clock_but_binds_source_policy_and_primary(self):
         snapshot, rows, policy, source, _ = fixtures()
@@ -159,6 +197,23 @@ class PerformancePublicationChecks(unittest.TestCase):
         self.assertEqual(request.full_url,'https://api.collegefootballdata.com/stats/game/advanced?year=2026&seasonType=both&excludeGarbageTime=false')
         self.assertEqual(request.get_header('Authorization'),'Bearer test-only-key')
         self.assertEqual(source['remainingCalls'],977);self.assertNotIn('authorization',json.dumps(source).lower())
+
+    def test_fcs_cli_uses_one_shared_source_pull(self):
+        snapshot, rows, policy, source, season = fixtures()
+        with tempfile.TemporaryDirectory() as folder:
+            d = Path(folder)
+            inputs = {'snapshot': snapshot, 'config': policy, 'season': season}
+            args = []
+            for name, value in inputs.items():
+                path = d/(name+'.json'); path.write_text(json.dumps(value))
+                args.extend([f'--{name}', str(path)])
+            output = d/'performance.json'
+            with patch.object(fcs_publisher.base, 'fetch_source', return_value=(rows, dict(source, requestCount=1))) as fetch, redirect_stdout(io.StringIO()):
+                self.assertEqual(fcs_publisher.main([*args, '--output', str(output)]), 0)
+            fetch.assert_called_once()
+            result = json.loads(output.read_bytes())
+            self.assertEqual(result['source']['requestCount'], 1)
+            self.assertEqual(result['coverage']['measuredFcsGames'], 2)
 
     def test_collector_failure_does_not_retry_or_expose_error_details_and_redirects_fail(self):
         class Opener:

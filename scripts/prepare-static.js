@@ -1,7 +1,8 @@
 import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
-import { readPerformance } from '../src/performance-publication.js';
+import { readPublicPerformance } from '../src/public-performance.js';
 import { publishDivisionSnapshot, readPublicationPolicy } from '../src/publication.js';
+import { publishFcsSnapshot } from '../src/fcs-publication.js';
 import { publicRankings, publicTeamDetails } from '../src/site-publication.js';
 import { matchupValidation, snapshotCoverage } from '../src/site-validation.js';
 import { UPDATE_SCHEDULE } from '../src/weekly.js';
@@ -25,10 +26,11 @@ const [policy, source, html] = await Promise.all([
 const marker = '<meta name="publication-data-root" content="">';
 if (!html.includes(marker)) throw new Error('Missing publication data root in frontend/index.html');
 const input = JSON.parse(source);
-const snapshot = publishDivisionSnapshot(input, policy, {
+const fbsSnapshot = publishDivisionSnapshot(input, policy, {
   publishedAt: input.modelPublishedAt ?? policy.promotedAt,
 });
-const performance = await readPerformance(published, snapshot);
+const snapshot = publishFcsSnapshot(fbsSnapshot, policy);
+const performance = await readPublicPerformance(published, snapshot);
 const publicSnapshot = publicRankings(snapshot, '/data/teams');
 if (snapshot.update) publicSnapshot.update = { ...snapshot.update, schedule: UPDATE_SCHEDULE };
 publicSnapshot.rankingMethod = { ...snapshot.rankingMethod, publicationStatus: 'official' };
@@ -40,7 +42,7 @@ if (performance) publicSnapshot.performanceEndpoint = '/data/performance.json';
 await cp(frontend, output, { recursive: true, filter: source => source !== legacyHero });
 await mkdir(teamDirectory, { recursive: true });
 const teamFiles = new Set();
-await Promise.all(snapshot.rankings.map(async row => {
+await Promise.all([...snapshot.rankings, ...(snapshot.fcsRankings ?? [])].map(async row => {
   const filename = `${encodeURIComponent(row.id)}.json`;
   teamFiles.add(filename);
   await writeFile(join(teamDirectory, filename), JSON.stringify(publicTeamDetails(snapshot, row)));
@@ -74,4 +76,4 @@ await Promise.all([
     return rm(picksFile, { force: true });
   }),
 ]);
-console.log(`Ready: ${snapshot.season} static rankings for ${snapshot.fbsTeams} FBS teams${performance ? ' with experimental Performance' : ''}`);
+console.log(`Ready: ${snapshot.season} static rankings for ${snapshot.fbsTeams} FBS and ${snapshot.fcsTeams ?? 0} FCS teams${performance ? ' with experimental Performance' : ''}`);

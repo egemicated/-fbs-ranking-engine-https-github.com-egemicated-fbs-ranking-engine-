@@ -4,7 +4,8 @@ import { spawnSync } from 'node:child_process';
 import { importSeason, atomicJson } from '../src/ingest.js';
 import { buildHistory } from '../src/history.js';
 import { readPublicationPolicy, publishDivisionSnapshot } from '../src/publication.js';
-import { performanceForSnapshot } from '../src/performance-publication.js';
+import { publishFcsSnapshot } from '../src/fcs-publication.js';
+import { publicPerformanceForSnapshot } from '../src/public-performance.js';
 
 // Build artifacts are carried into Render's runtime filesystem. A fresh build
 // reconstructs the ratings without requiring a database or persistent disk.
@@ -31,7 +32,7 @@ for (const snapshot of buildHistory(seasons, config, before)) {
 try {
   const published = JSON.parse(await readFile('published/latest.json', 'utf8'));
   if (published.season !== year || !published.rankings?.length || published.source?.provider !== 'cfbd') throw new Error('Invalid published CFBD snapshot');
-  latest = publishDivisionSnapshot(published, publicationPolicy);
+  latest = publishFcsSnapshot(publishDivisionSnapshot(published, publicationPolicy), publicationPolicy);
   await atomicJson(join(data, 'snapshots', `${year}.json`), latest);
 } catch (e) { if (e.code !== 'ENOENT') throw e; }
 if (!latest?.rankings.length || !latest.gamesUsed) throw new Error('Build produced no rankings');
@@ -39,7 +40,7 @@ await atomicJson(join(data, 'snapshots', 'latest.json'), latest);
 // Experimental scores are calculated by the weekly runner and committed once.
 // Render only serves the derived artifact; builds and page views spend no calls.
 try {
-  const performance = performanceForSnapshot(JSON.parse(await readFile('published/performance-latest.json', 'utf8')), latest);
+  const performance = publicPerformanceForSnapshot(JSON.parse(await readFile('published/performance-latest.json', 'utf8')), latest);
   if (performance) await atomicJson(join(data, 'snapshots', 'performance-latest.json'), performance);
   else console.log('Experimental Performance does not match this snapshot; the existing rankings remain available.');
 } catch (error) { if (error.code !== 'ENOENT') throw error; }

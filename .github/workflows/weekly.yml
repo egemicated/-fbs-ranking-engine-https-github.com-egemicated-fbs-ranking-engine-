@@ -96,7 +96,7 @@ jobs:
         continue-on-error: true
         env:
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
-        run: python scripts/publish-performance.py --snapshot published/latest.json --season data/seasons/2026.json --output published/performance-latest.json
+        run: python scripts/publish-fcs-performance.py --snapshot published/latest.json --season data/seasons/2026.json --output published/performance-latest.json
       - name: Retain the successful derived Performance snapshot
         if: steps.performance-publish.outcome == 'success'
         continue-on-error: true
