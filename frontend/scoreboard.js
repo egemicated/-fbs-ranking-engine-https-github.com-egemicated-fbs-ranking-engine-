@@ -411,7 +411,7 @@ export function mountScoreboard(root, rankForTeam = () => undefined) {
   <p class="sr-only" role="status" data-scoreboard-move-status></p>
   <p class="scoreboard-warning" role="status" hidden></p>
   <div class="scoreboard-sections" hidden>${sections.map(([key, label]) => `<section data-scoreboard-section="${key}" aria-labelledby="scoreboard-${key}"><h2 id="scoreboard-${key}">${label}</h2><p class="scoreboard-empty"></p><div class="scoreboard-games" data-scoreboard-games></div></section>`).join('')}</div>
-  <p class="scoreboard-source">Ranks from the <a href="#rankings">FBS Intelligence Top 25</a>. Scores and records from <a href="${sourceUrl}" target="_blank" rel="noopener">ESPN</a>. Kickoffs are shown in Mountain Time.</p>`;
+  <p class="scoreboard-source">Ranks from the <a href="https://collegefootballplayoff.com/rankings" target="_blank" rel="noopener">CFP Selection Committee Top 25</a>. Scores and records from <a href="${sourceUrl}" target="_blank" rel="noopener">ESPN</a>. Kickoffs are shown in Mountain Time.</p>`;
 
   const refresh = root.querySelector('[data-scoreboard-refresh]');
   const reorderHelp = root.querySelector('[data-scoreboard-order-help]');

@@ -7,7 +7,7 @@ let performanceLoading = false;
 let performanceFailed = false;
 const teamDetails = new Map();
 const weeklyPicks = { request: null, status: 'loading', scoring: null, scoringError: false, selectedWeek: '', weeks: new Map(), teams: new Map() };
-const rankingEditions = { data: null, request: null, failed: false };
+const rankingEditions = { data: null, cfpRanks: new Map(), request: null, failed: false };
 let bracketModule;
 let closeBracket;
 let scenarioModule;
@@ -756,13 +756,16 @@ async function loadRankingEditions() {
   try {
     const response = await fetch('/ranking-editions.json');
     if (!response.ok) throw Error(`Ranking archive returned ${response.status}`);
-    rankingEditions.data = await response.json();
+    const data = await response.json();
+    rankingEditions.cfpRanks = editionRankMap(data.polls?.cfp?.at(-1));
+    rankingEditions.data = data;
   } catch (error) {
     rankingEditions.failed = true;
     console.error(error);
   } finally {
     rankingEditions.request = null;
     if (['polls', 'forge-top-25'].includes(route()[0])) render();
+    if (route()[0] === 'scoreboard') scoreboardPage?.updateRankings();
   }
 }
 function renderRankingEditions(page, id, scope) {
@@ -834,6 +837,7 @@ function renderHistoryPage(week) {
   });
 }
 function renderScoreboardPage() {
+  if (!rankingEditions.data && !rankingEditions.failed) rankingEditions.request ??= loadRankingEditions();
   if (main.querySelector('[data-scoreboard]')) {
     scoreboardPage?.updateRankings();
     return;
@@ -841,13 +845,13 @@ function renderScoreboardPage() {
   main.innerHTML = banner('FBS game day', 'Live Scoreboard', 'Kickoff times, live scores and final results. Refreshes every 15 seconds.') +
     '<div class="wrap page-content" data-scoreboard><p role="status">Loading the scoreboard…</p></div>';
   const target = main.querySelector('[data-scoreboard]');
-  scoreboardModule ??= import('./scoreboard.js?v=4');
+  scoreboardModule ??= import('./scoreboard.js?v=5');
   scoreboardModule.then(({ mountScoreboard }) => {
     if (route()[0] !== 'scoreboard' || !target.isConnected) return;
     scoreboardPage = mountScoreboard(target, (teamId, season) => {
-      if (String(state.snapshot?.season) !== season) return;
+      if (String(rankingEditions.data?.season) !== season || String(state.snapshot?.season) !== season) return;
       const team = state.byId.get(teamId);
-      return team ? nationalRank(team) : undefined;
+      return rankingEditions.cfpRanks.get(team?.name)?.rank;
     });
   }).catch(error => {
     if (target.isConnected) target.innerHTML = '<p role="status">The scoreboard could not load. Please reload this page to try again.</p>';
