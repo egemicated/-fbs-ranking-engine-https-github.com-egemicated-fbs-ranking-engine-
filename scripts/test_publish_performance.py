@@ -70,6 +70,38 @@ class PerformancePublicationChecks(unittest.TestCase):
         self.assertNotIn('unknownPrivateField', json.dumps(result))
         self.assertNotIn('successes', json.dumps(result))
 
+    def test_fcs_ranks_have_their_own_mean_and_count_cross_division_games_once(self):
+        snapshot, rows, policy, source, _ = fixtures()
+        result = publisher.build_performance(snapshot, rows, policy, source)
+        self.assertEqual([t['rank'] for t in result['fcsRankings']], [1, 2])
+        self.assertEqual({t['id'] for t in result['fcsRankings']}, {'3', '4'})
+        self.assertEqual(result['coverage']['sourceFcsTeams'], 2)
+        self.assertEqual(result['coverage']['measuredFcsTeams'], 2)
+        self.assertEqual(result['coverage']['eligibleFcsGames'], 2)
+        self.assertEqual(result['coverage']['measuredFcsGames'], 2)
+        self.assertEqual(result['coverage']['measuredFcsContextGames'], 1)
+        self.assertAlmostEqual(sum(t['score'] for t in result['fcsRankings']), 0., places=12)
+        self.assertNotEqual(result['reference']['measuredFcsMean'], result['reference']['measuredFbsMean'])
+        for row in result['fcsRankings']:
+            self.assertEqual(row['conference'], 'Fixture')
+            self.assertTrue(row['provisional'])
+            self.assertAlmostEqual(row['score'], row['explanation']['reconstructedScore'], places=12)
+            self.assertAlmostEqual(row['explanation']['fcsReferenceAdjustment'], -result['reference']['measuredFcsMean'])
+
+    def test_missing_fcs_only_stats_preserve_fbs_publication_and_unmeasured_fcs_rows(self):
+        snapshot, rows, policy, source, _ = fixtures()
+        result = publisher.build_performance(snapshot, [r for r in rows if r['gameId'] != 12], policy, source)
+        self.assertEqual(result['coverage']['measuredFbsGames'], 2)
+        self.assertEqual(result['coverage']['eligibleFcsGames'], 2)
+        self.assertEqual(result['coverage']['measuredFcsGames'], 1)
+        self.assertEqual(result['coverage']['measuredFcsTeams'], 1)
+        cedar, delta = result['fcsRankings']
+        self.assertEqual((cedar['id'], cedar['rank'], cedar['score'], cedar['measuredGames'], cedar['expectedGames']), ('3', 1, 0., 1, 2))
+        self.assertEqual((delta['id'], delta['rank'], delta['score'], delta['measuredGames'], delta['expectedGames']), ('4', None, None, 0, 1))
+        self.assertIsNone(delta['offensiveSuccessRate'])
+        self.assertIsNone(delta['defensiveSuccessRateAllowed'])
+        self.assertTrue(delta['provisional'])
+
     def test_value_hash_excludes_operation_clock_but_binds_source_policy_and_primary(self):
         snapshot, rows, policy, source, _ = fixtures()
         one = publisher.build_performance(snapshot, rows, policy, source, generated_at='2026-11-06T21:00:00Z')

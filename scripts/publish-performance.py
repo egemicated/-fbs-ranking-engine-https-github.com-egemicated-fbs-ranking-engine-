@@ -173,6 +173,44 @@ def validate_policy(policy, season):
             raise PublicationError('Pinned Performance selection protocol changed; version its policy')
 
 
+def publication_row(team, coverage, team_names, reference, division):
+    explanation = copy.deepcopy(team['explanation'])
+    for game in explanation['gameContributions']:
+        game['opponentName'] = team_names[game['opponentId']]
+    explanation[f'{division}ReferenceAdjustment'] = -reference if reference is not None else None
+    score = 100*(team['rating']-reference) if team['measuredGames'] else None
+    explanation['reconstructedScore'] = 100*(explanation['reconstructedRating']-reference) if score is not None else None
+    if score is not None and abs(score-explanation['reconstructedScore']) > 1e-9:
+        raise PublicationError('Displayed Performance score did not reconcile')
+    return dict(id=team['id'], name=team['team'], rank=team['rank'], score=score,
+        measuredGames=team['measuredGames'], expectedGames=coverage['expectedGames'],
+        offensiveSuccessRate=team['rawOffenseRate'], defensiveSuccessRateAllowed=team['rawDefenseRateAllowed'],
+        provisional=team['provisional'], minOpponentMeasuredGames=team['minOpponentMeasuredGames'],
+        connectedTeams=team['connectedTeams'], explanation=explanation)
+
+
+def fcs_publication(fitted, baseline, team_names, audit):
+    teams = {t['id']: t for t in baseline['teams'] if t['division'] == 'fcs'}
+    fcs_ratings = sorted((r for r in fitted['ratings'] if r['id'] in teams),
+                         key=lambda r: (not bool(r['measuredGames']), -r['rating'], r['id']))
+    measured = [r for r in fcs_ratings if r['measuredGames']]
+    reference = sum(r['rating'] for r in measured)/len(measured) if measured else None
+    last_distinct, rank = None, None
+    rows = []
+    for position, rating in enumerate(fcs_ratings, 1):
+        if rating['measuredGames'] and (last_distinct is None or
+                abs(rating['rating']-last_distinct) > fitted['rankTolerance']):
+            last_distinct, rank = rating['rating'], position
+        row = publication_row(dict(rating, rank=rank if rating['measuredGames'] else None),
+                              audit['teamCoverage'][rating['id']], team_names, reference, 'fcs')
+        row['conference'] = teams[rating['id']]['conference']
+        row['provisional'] = row['provisional'] or row['measuredGames'] < row['expectedGames']
+        rows.append(row)
+    return rows, reference, dict(measuredFcsTeams=len(measured), sourceFcsTeams=len(teams),
+        measuredFcsGames=sum(audit['acceptedByDivisionPair'].get(pair, 0) for pair in ('fbs-fcs', 'fcs-fcs')),
+        eligibleFcsGames=sum(audit['expectedByDivisionPair'].get(pair, 0) for pair in ('fbs-fcs', 'fcs-fcs')))
+
+
 def build_performance(snapshot, rows, policy, source, *, context=None, generated_at=None):
     validate_policy(policy, snapshot.get('season'))
     baseline = snapshot_context(snapshot)
@@ -205,23 +243,10 @@ def build_performance(snapshot, rows, policy, source, *, context=None, generated
     if not measured or fitted['maxExplanationReconciliationError'] > 1e-9:
         raise PublicationError('Performance scores did not reconcile')
     reference = sum(t['rating'] for t in measured)/len(measured)
-    rankings = []
     team_names = {t['id']: t['name'] for t in normalized['teams']}
-    for team in fitted['rows']:
-        coverage = audit['teamCoverage'][team['id']]
-        explanation = copy.deepcopy(team['explanation'])
-        for game in explanation['gameContributions']:
-            game['opponentName'] = team_names[game['opponentId']]
-        explanation['fbsReferenceAdjustment'] = -reference
-        explanation['reconstructedScore'] = 100*(explanation['reconstructedRating']-reference) if team['measuredGames'] else None
-        score = 100*(team['rating']-reference) if team['measuredGames'] else None
-        if score is not None and abs(score-explanation['reconstructedScore']) > 1e-9:
-            raise PublicationError('Displayed Performance score did not reconcile')
-        rankings.append(dict(id=team['id'], name=team['team'], rank=team['rank'], score=score,
-            measuredGames=team['measuredGames'], expectedGames=coverage['expectedGames'],
-            offensiveSuccessRate=team['rawOffenseRate'], defensiveSuccessRateAllowed=team['rawDefenseRateAllowed'],
-            provisional=team['provisional'], minOpponentMeasuredGames=team['minOpponentMeasuredGames'],
-            connectedTeams=team['connectedTeams'], explanation=explanation))
+    rankings = [publication_row(team, audit['teamCoverage'][team['id']], team_names, reference, 'fbs')
+                for team in fitted['rows']]
+    fcs_rankings, fcs_reference, fcs_coverage = fcs_publication(fitted, baseline, team_names, audit)
     generated_at = generated_at or utc_now()
     timestamp(generated_at)
     payload = dict(season=snapshot['season'], asOf=snapshot['asOf'], baseSnapshotHash=snapshot['snapshotHash'],
@@ -240,6 +265,11 @@ def build_performance(snapshot, rows, policy, source, *, context=None, generated
         reference=dict(measuredFbsMean=reference, teamEffects='Current-season only; no inherited team ranking points'),
         context=dict(homeRate=fitted['contextFit']['homeRate'], divisionRate=fitted['contextFit']['divisionRate']),
         rankings=rankings)
+    if fcs_rankings:
+        payload['fcsRankings'] = fcs_rankings
+        payload['coverage'].update(fcs_coverage)
+        payload['reference']['measuredFcsMean'] = fcs_reference
+        payload['method']['fcsUnits'] = 'Percentage points above the measured FCS mean'
     payload['method']['priorSeason'] = policy.get('priorSeason')
     payload['method']['priorProvenance'] = copy.deepcopy(policy.get('priorSource'))
     payload['method']['researchFingerprint'] = policy.get('researchFingerprint')
@@ -343,6 +373,8 @@ def main(argv=None):
         payload = publish_to_file(snapshot, rows, policy, source, args.output, context=context)
         print(json.dumps(dict(status='published-experimental', season=payload['season'],
                               teams=payload['coverage']['measuredFbsTeams'], games=payload['coverage']['measuredFbsGames'],
+                              fcsTeams=payload['coverage'].get('measuredFcsTeams', 0),
+                              fcsGames=payload['coverage'].get('measuredFcsGames', 0),
                               cfbdCalls=source['requestCount'], publicationHash=payload['publicationHash'])))
         return 0
     except PublicationError as exc:
