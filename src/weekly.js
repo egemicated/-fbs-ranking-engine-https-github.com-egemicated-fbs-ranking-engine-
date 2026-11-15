@@ -4,6 +4,7 @@ export const UPDATE_SCHEDULE = Object.freeze({
   day: 'Sunday', hour: 0, minute: 1, timeZone: 'America/Denver', cron: '1 0 * * 0',
   midweek: { days: ['Wednesday', 'Thursday', 'Friday', 'Saturday'], hour: 4, minute: 11, cron: '11 4 * * 3-6' },
   sundayCatchUp: { day: 'Sunday', hour: 4, minute: 11, cron: '11 4 * * 0' },
+  sundayNight: { day: 'Sunday', hour: 20, minute: 11, cron: '11 20 * * 0' },
 });
 
 export function buildWeeklySnapshot(season, prior, config, now = new Date()) {
