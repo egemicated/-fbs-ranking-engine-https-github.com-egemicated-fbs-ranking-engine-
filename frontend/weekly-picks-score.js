@@ -2,14 +2,16 @@ function picksTime(value) {
   return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value) ? Date.parse(value) : NaN;
 }
 
-export function validWeeklyPick(game, pick, capturedAt, publicationAsOf, teams) {
+export function validWeeklyPick(game, pick, capturedAt, publicationAsOf, teams, division = 'fbs') {
   const probability = pick?.homeWinProbability;
   const capture = picksTime(capturedAt);
   const divisions = [game.home, game.away].map(id => teams.get(id)?.division);
+  const inScope = division === 'fcs' ? divisions.every(value => value === 'fcs')
+    : divisions.includes('fbs') && divisions.every(value => value === 'fbs' || value === 'fcs');
   return Number.isFinite(probability) && probability >= 0 && probability <= 1 &&
     pick.favored === (probability === 0.5 ? 'even' : probability > 0.5 ? 'home' : 'away') &&
     Number.isFinite(capture) && capture < picksTime(game.startDate) && capture <= picksTime(publicationAsOf) &&
-    divisions.includes('fbs') && divisions.every(division => division === 'fbs' || division === 'fcs');
+    inScope;
 }
 
 const newTally = () => ({ availablePicks: 0, pendingPicks: 0, completedPicks: 0, decisivePicks: 0, correctPicks: 0, squaredError: 0 });
@@ -41,7 +43,7 @@ function compare(week, previousWeek) {
   };
 }
 
-export function weeklyPicksScore(artifact, selectedWeek) {
+export function weeklyPicksScore(artifact, selectedWeek, division = 'fbs') {
   const teams = new Map(artifact.teams.map(team => [team.id, team]));
   const publicationTime = picksTime(artifact.asOf);
   const weeks = new Map();
@@ -52,10 +54,10 @@ export function weeklyPicksScore(artifact, selectedWeek) {
     const key = `${seasonType}:${week}`;
     if (!weeks.has(key)) weeks.set(key, { label: { key, seasonType, week }, saved: newTally(), replay: newTally() });
     const group = weeks.get(key);
-    if (validWeeklyPick(game, pick, pick?.capturedAt, artifact.asOf, teams)) {
+    if (validWeeklyPick(game, pick, pick?.capturedAt, artifact.asOf, teams, division)) {
       tally(group.saved, game, pick, publicationTime);
       tally(season, game, pick, publicationTime);
-    } else if (picksTime(game.startDate) <= publicationTime && validWeeklyPick(game, replay, replay?.asOf, artifact.asOf, teams)) {
+    } else if (picksTime(game.startDate) <= publicationTime && validWeeklyPick(game, replay, replay?.asOf, artifact.asOf, teams, division)) {
       tally(group.replay, game, replay, publicationTime);
     }
   }

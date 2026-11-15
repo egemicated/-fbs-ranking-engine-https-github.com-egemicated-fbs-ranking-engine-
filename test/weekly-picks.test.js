@@ -106,3 +106,76 @@ test('cross-division replay uses full prior-week ratings and excludes the gameâ€
   assert.ok(Date.parse(first.replay?.asOf) < Date.parse(kickoff));
   assert.deepEqual(first.replay, second.replay);
 });
+
+const fcsValidation = { modelVersion: '0.2.0', strengthConfig: config, population: 'fcs-fcs', scale: 8,
+  approvedForWeeklyPicks: true, evaluation: { firstSeason: 2021, lastSeason: 2025, games: 1200 } };
+const fcsOptions = { cohort: 'fcs', fcsValidation };
+const fcsGame = { ...crossGame, away: fcsAway.id };
+
+test('FCS picks use the approved scale for FCSâ€“FCS only and preserve captured odds', () => {
+  const scheduled = [fcsGame, { ...crossGame, id: 'fbs-fcs' }, { ...game, id: 'fbs-fbs' },
+    { ...fcsGame, id: 'unclassified', away: unknown.id }];
+  const current = fullSnapshot(capture, 10, -4);
+  const options = { ...fcsOptions, capturedAt: capture };
+  const preview = buildWeeklyPicks(withOpponents('sportsdataverse', capture, scheduled), current, options);
+  const live = buildWeeklyPicks(withOpponents('cfbd', capture, scheduled), current, { ...options, previous: preview });
+  assert.deepEqual(live.games.map(match => match.id), [fcsGame.id]);
+  assert.deepEqual(new Set(live.teams.map(team => team.division)), new Set(['fcs']));
+  assert.equal(live.source.matchupScope, 'fcs-fcs');
+  assert.equal(live.source.calibrated, true);
+  assert.equal(live.source.probabilityScale, 8);
+  assert.deepEqual(live.source.validation, fcsValidation.evaluation);
+  const odds = { homeWinProbability: 1 / (1 + Math.exp(7 / 8)), favored: 'away' };
+  assert.deepEqual(pickRow(preview).estimate, { asOf: capture, ...odds });
+  assert.deepEqual(pickRow(live).pick, { capturedAt: capture, ...odds });
+  const final = { ...fcsGame, completed: true, homePoints: 27, awayPoints: 17 };
+  const updated = buildWeeklyPicks(withOpponents('cfbd', later, [final]), fullSnapshot(later, 20, 30),
+    { ...fcsOptions, capturedAt: later, previous: live });
+  assert.equal(pickRow(updated).status, 'final');
+  assert.deepEqual(pickRow(updated).pick, pickRow(live).pick);
+});
+
+test('FCS publication rejects unsupported calibration and cross-cohort previous artifacts', () => {
+  const input = withOpponents('cfbd', capture, [fcsGame, { ...game, id: 'fbs' }]);
+  const current = fullSnapshot(capture, 10, -4);
+  for (const candidate of [null, { ...fcsValidation, approvedForWeeklyPicks: false },
+    { ...fcsValidation, population: 'fbs-fbs' }, { ...fcsValidation, modelVersion: 'older' },
+    { ...fcsValidation, strengthConfig: { ...config, ridge: 999 } },
+    { ...fcsValidation, evaluation: { ...fcsValidation.evaluation, lastSeason: 2026 } }]) {
+    assert.throws(() => buildWeeklyPicks(input, current, { ...fcsOptions, fcsValidation: candidate, capturedAt: capture }),
+      /approved historical calibration/);
+  }
+  const fbsResult = buildWeeklyPicks(input, current, { capturedAt: capture });
+  assert.throws(() => buildWeeklyPicks(input, current, { ...fcsOptions, capturedAt: capture, previous: fbsResult }), /different cohort/);
+});
+
+test('FCS replay excludes the whole target week and very recent older games', () => {
+  const prior = { season: 2025, snapshotHash: 'c'.repeat(64), ratings: fullSnapshot(capture, 10, -4).ratings };
+  const completed = { ...fcsGame, completed: true, homePoints: 21, awayPoints: 14 };
+  const old = { ...completed, id: 'eligible-older-final', week: 8, startDate: '2026-10-24T01:00:00Z' };
+  const tooRecent = { ...completed, id: 'not-yet-available', week: 9, startDate: '2026-11-06T23:00:00Z' };
+  const sameWeek = { ...completed, id: 'excluded-cross-game', home: 'home', away: 'fcs', startDate: '2026-11-04T01:00:00Z' };
+  const tbd = { ...fcsGame, id: 'time-unconfirmed', startDate: '2026-11-04T00:00:00Z', startTimeTbd: true };
+  const run = (older, recent, cross, target) => buildWeeklyPicks(withOpponents('sportsdataverse', later,
+    [older, recent, cross, target, tbd]), fullSnapshot(later, 25, -5), { ...fcsOptions, capturedAt: later, prior });
+  const reverse = match => ({ ...match, homePoints: match.awayPoints, awayPoints: match.homePoints });
+  const base = pickRow(run(old, tooRecent, sameWeek, completed));
+  const ignored = pickRow(run(old, reverse(tooRecent), reverse(sameWeek), reverse(completed)));
+  const changed = pickRow(run(reverse(old), tooRecent, sameWeek, completed));
+  assert.equal(base.replay.asOf, '2026-11-07T19:59:59.999Z');
+  assert.deepEqual(base.replay, ignored.replay);
+  assert.notDeepEqual(base.replay, changed.replay);
+  assert.equal(base.pick, null);
+});
+
+test('FCS saved picks require a safe kickoff and leave explicit TBD fixtures unpicked', () => {
+  const today = '2026-11-07T14:00:00Z';
+  const run = (value, game) => pickRow(buildWeeklyPicks(withOpponents('cfbd', value, [game]),
+    fullSnapshot(value, 0, -4), { ...fcsOptions, capturedAt: value }));
+  assert.ok(run(today, fcsGame).pick);
+  assert.equal(run(today, { ...fcsGame, startTimeTbd: undefined }).pick, null);
+  assert.ok(run(capture, { ...fcsGame, startTimeTbd: undefined }).pick);
+  const tbd = run(capture, { ...fcsGame, startTimeTbd: true });
+  assert.equal(tbd.status, 'scheduled');
+  assert.equal(tbd.pick, null);
+});

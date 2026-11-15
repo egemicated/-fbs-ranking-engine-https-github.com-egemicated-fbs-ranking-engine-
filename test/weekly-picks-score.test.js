@@ -57,3 +57,21 @@ test('compares with the preceding listed group and keeps replay comparisons sepa
   assert.equal(replayOnly.comparison, null);
   assert.deepEqual(replayOnly.replay.comparison, { accuracyDifference: -1, brierDifference: 0.5625 - 0.0625 });
 });
+
+test('FCS scorecards keep replay and genuine FCS–FCS pregame picks separate', () => {
+  const fcsGame = (id, fields) => game(id, { home: 'fcs', away: 'other-fcs', ...fields });
+  const artifact = { asOf, teams, games: [
+    fcsGame('saved'),
+    fcsGame('replay', { pick: null, replay: replay(.3, 'away') }),
+    fcsGame('late', { pick: { ...pick(), capturedAt: '2026-11-07T20:00:00Z' } }),
+    game('cross', { home: 'fcs' }),
+    game('fbs'),
+  ] };
+  const fcs = weeklyPicksScore(artifact, 'regular:10', 'fcs');
+  assert.equal(fcs.season.correctPicks, 1);
+  assert.equal(fcs.season.decisivePicks, 1);
+  assert.equal(fcs.week.brier, .0625);
+  assert.equal(fcs.replay.week.completedPicks, 1);
+  assert.equal(fcs.replay.week.correctPicks, 0);
+  assert.equal(weeklyPicksScore(artifact, 'regular:10').season.decisivePicks, 2);
+});

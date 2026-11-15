@@ -97,6 +97,10 @@ ul.edition-notice{padding-inline-start:20px}
 }
 .weekly-picks h2{margin-bottom:8px}
 .weekly-picks .compact-note+.compact-note{margin-top:5px}
+.weekly-division-nav{margin-block:11px 13px}
+.weekly-validation{margin-top:12px}
+.weekly-validation summary{font-size:13px;font-weight:700;cursor:pointer}
+.weekly-validation p{margin-top:5px}
 .weekly-controls{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-top:15px}
 .weekly-controls label,.weekly-record{font-size:12px;font-weight:700}
 .weekly-controls select{min-width:0;max-width:100%}

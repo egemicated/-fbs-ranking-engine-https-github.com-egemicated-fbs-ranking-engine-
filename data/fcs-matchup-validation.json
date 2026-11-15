@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 1,
+  "population": "fcs-fcs",
+  "modelVersion": "0.2.0",
+  "strengthConfig": {
+    "ridge": 3,
+    "retention": 0.75,
+    "homeAdvantage": 2.5,
+    "marginCap": 28,
+    "probabilityScale": 14
+  },
+  "scale": 6.74434303402901,
+  "source": "fcs-coverage-v1 outcome archive and the original earlier-season Strength snapshots",
+  "method": "One positive logistic slope fitted to preweek Strength margins with home advantage",
+  "fit": {
+    "seasons": [
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019
+    ],
+    "games": 3777,
+    "venueHomeWinRate": 0.5659961421879306,
+    "preseasonScale": 8.069341550302607
+  },
+  "evaluation": {
+    "firstSeason": 2021,
+    "lastSeason": 2025,
+    "games": 3293,
+    "picked": 3292,
+    "correct": 2326,
+    "accuracy": 0.7065613608748481,
+    "brier": 0.185814039906547,
+    "logLoss": 0.5484319734837674,
+    "nearSeventy": {
+      "games": 761,
+      "meanForecast": 0.69908106525065,
+      "actualWinRate": 0.7135348226018396
+    }
+  },
+  "baseline": {
+    "uncalibrated": {
+      "games": 3293,
+      "picked": 3292,
+      "correct": 2326,
+      "accuracy": 0.7065613608748481,
+      "brier": 0.19773447692226498,
+      "logLoss": 0.5825681551832567,
+      "nearSeventy": {
+        "games": 842,
+        "meanForecast": 0.6932462337564923,
+        "actualWinRate": 0.8598574821852731
+      }
+    },
+    "fbsTransfer": {
+      "games": 3293,
+      "picked": 3292,
+      "correct": 2326,
+      "accuracy": 0.7065613608748481,
+      "brier": 0.1860923827007525,
+      "logLoss": 0.5488207908427296,
+      "nearSeventy": {
+        "games": 738,
+        "meanForecast": 0.6985005376083403,
+        "actualWinRate": 0.6802168021680217
+      }
+    },
+    "venueOnly": {
+      "games": 3293,
+      "picked": 3215,
+      "correct": 1807,
+      "accuracy": 0.5620528771384137,
+      "brier": 0.24625582816174274,
+      "logLoss": 0.6856399330359115,
+      "nearSeventy": {
+        "games": 0,
+        "meanForecast": null,
+        "actualWinRate": null
+      }
+    },
+    "preseasonOnly": {
+      "games": 3293,
+      "picked": 3288,
+      "correct": 2139,
+      "accuracy": 0.6505474452554745,
+      "brier": 0.21231156714335295,
+      "logLoss": 0.6122422492942233,
+      "nearSeventy": {
+        "games": 764,
+        "meanForecast": 0.698024176146235,
+        "actualWinRate": 0.7198952879581152
+      }
+    }
+  },
+  "bySeason": {
+    "2021": {
+      "games": 635,
+      "picked": 634,
+      "correct": 422,
+      "accuracy": 0.6656151419558359,
+      "brier": 0.20255013226464613,
+      "logLoss": 0.5871375822559323,
+      "nearSeventy": {
+        "games": 164,
+        "meanForecast": 0.6986834041199602,
+        "actualWinRate": 0.7012195121951219
+      }
+    },
+    "2022": {
+      "games": 644,
+      "picked": 644,
+      "correct": 462,
+      "accuracy": 0.717391304347826,
+      "brier": 0.17877278789572562,
+      "logLoss": 0.5296259323553753,
+      "nearSeventy": {
+        "games": 138,
+        "meanForecast": 0.6997789980094531,
+        "actualWinRate": 0.6884057971014492
+      }
+    },
+    "2023": {
+      "games": 634,
+      "picked": 634,
+      "correct": 437,
+      "accuracy": 0.6892744479495269,
+      "brier": 0.1927045861793762,
+      "logLoss": 0.5654130810301108,
+      "nearSeventy": {
+        "games": 140,
+        "meanForecast": 0.6991208070615458,
+        "actualWinRate": 0.6642857142857143
+      }
+    },
+    "2024": {
+      "games": 689,
+      "picked": 689,
+      "correct": 499,
+      "accuracy": 0.7242380261248186,
+      "brier": 0.18235551390677834,
+      "logLoss": 0.5409289916195612,
+      "nearSeventy": {
+        "games": 166,
+        "meanForecast": 0.6979285278927513,
+        "actualWinRate": 0.7289156626506024
+      }
+    },
+    "2025": {
+      "games": 691,
+      "picked": 691,
+      "correct": 506,
+      "accuracy": 0.7322720694645442,
+      "brier": 0.1741229628073353,
+      "logLoss": 0.522290962248483,
+      "nearSeventy": {
+        "games": 153,
+        "meanForecast": 0.7000919087317246,
+        "actualWinRate": 0.7777777777777778
+      }
+    }
+  },
+  "byCoverage": {
+    "earlySeason": {
+      "games": 984,
+      "picked": 983,
+      "correct": 681,
+      "accuracy": 0.6927772126144456,
+      "brier": 0.19430768201289145,
+      "logLoss": 0.5685733117779022,
+      "nearSeventy": {
+        "games": 220,
+        "meanForecast": 0.6992835320998323,
+        "actualWinRate": 0.6681818181818182
+      }
+    },
+    "established": {
+      "games": 2309,
+      "picked": 2309,
+      "correct": 1645,
+      "accuracy": 0.7124296232135123,
+      "brier": 0.18219440204052653,
+      "logLoss": 0.5398485707633568,
+      "nearSeventy": {
+        "games": 541,
+        "meanForecast": 0.6989987312269541,
+        "actualWinRate": 0.7319778188539742
+      }
+    },
+    "neutralSite": {
+      "games": 78,
+      "picked": 77,
+      "correct": 55,
+      "accuracy": 0.7142857142857143,
+      "brier": 0.20254733547071382,
+      "logLoss": 0.5898872082202847,
+      "nearSeventy": {
+        "games": 16,
+        "meanForecast": 0.701791353848074,
+        "actualWinRate": 0.6875
+      }
+    }
+  },
+  "coverage": {
+    "2014": {
+      "teams": 124,
+      "finals": 640,
+      "tiedFinals": 0
+    },
+    "2015": {
+      "teams": 125,
+      "finals": 611,
+      "tiedFinals": 0
+    },
+    "2016": {
+      "teams": 125,
+      "finals": 620,
+      "tiedFinals": 0
+    },
+    "2017": {
+      "teams": 124,
+      "finals": 629,
+      "tiedFinals": 0
+    },
+    "2018": {
+      "teams": 125,
+      "finals": 611,
+      "tiedFinals": 0
+    },
+    "2019": {
+      "teams": 126,
+      "finals": 666,
+      "tiedFinals": 0
+    },
+    "2021": {
+      "teams": 128,
+      "finals": 635,
+      "tiedFinals": 0
+    },
+    "2022": {
+      "teams": 130,
+      "finals": 645,
+      "tiedFinals": 1
+    },
+    "2023": {
+      "teams": 128,
+      "finals": 635,
+      "tiedFinals": 1
+    },
+    "2024": {
+      "teams": 129,
+      "finals": 692,
+      "tiedFinals": 3
+    },
+    "2025": {
+      "teams": 129,
+      "finals": 691,
+      "tiedFinals": 0
+    }
+  },
+  "gates": {
+    "beatsBaselines": true,
+    "beatsNaiveWinner": true,
+    "noMaterialSeasonRegression": true,
+    "reliabilityNearSeventy": true
+  },
+  "sourceHashes": {
+    "research/datasets/fcs-coverage-v1/seasons/2015.json": "ec50d753edeb723aa0b2a2bc2c7b5f4e9d81ba152f950b8cd54819f51b9875be",
+    "research/datasets/fcs-coverage-v1/seasons/2014.json": "f6c41ef2dd5b751407efa196c2c6a76aaef7e226ab4766678120e7eb8783f193",
+    "research/datasets/fcs-coverage-v1/seasons/2017.json": "b2610ad25d7ebd931de5dd05f4e14df8f8bf2b0052a2549c0d65a4530b8af3f4",
+    "research/datasets/fcs-coverage-v1/seasons/2016.json": "3846e2ea6963eda4baec894c901f7cd12a80893e525e006d2d7e4df4f1f1200a",
+    "research/datasets/fcs-coverage-v1/seasons/2018.json": "089672a2e3509990c36a75e30910ebe4abf2e37091a89551166aaf287f41fdb3",
+    "research/datasets/fcs-coverage-v1/seasons/2019.json": "8966102ad775cf682a905f70d7b6a50fa204019135587a6fe287871a7994fd53",
+    "data/snapshots/2013.json": "9cb272ee78240a7fba77dfa5efb8c2cfc1eb9ffd886921af04c994433f802ab0",
+    "data/snapshots/2020.json": "3c06514d95e1c6b1cf4001fe1babdc335f7280763608f3d202de54be9544d10e",
+    "research/datasets/fcs-coverage-v1/seasons/2021.json": "0984695be1618d188d80d9d62de550ebda1d8afe542fde20075a8f54e45e0bd6",
+    "data/snapshots/2014.json": "adcbc1c3d3a9239034549aada1f86184fe127c9de2f020f1de2a7aa1686ac1ba",
+    "data/snapshots/2016.json": "fc55316d9b9decdf3fc186566e60cdcc5a85295a10df580f3757087e8b8981aa",
+    "data/snapshots/2015.json": "d3e82aeceec851c62573f2a69acfd3b3c00b6ecd3a635b66c25c8d3c8ab1f41a",
+    "data/snapshots/2018.json": "bfbdfcbfa5ce9798c3a9dc1cb95aebd4c9aed6a4642dce53ffdb8fd086470268",
+    "data/snapshots/2017.json": "7ce4583318eec13c63967284841c90ab3f47f6077aa204f4705797baf435ef5b",
+    "research/datasets/fcs-coverage-v1/seasons/2023.json": "5e7e5975fcde9caf5b1e12f5a39449005fac05a7b41a9399b6ed86621f2dd397",
+    "research/datasets/fcs-coverage-v1/seasons/2022.json": "58935e17f016e04abc58f5aa3d7e3ad91822430459828108bb98ba872e7db694",
+    "research/datasets/fcs-coverage-v1/seasons/2024.json": "84a3f1132e3805d71c9ba02ba285b9e66806646804c570f1dfd6e6568bddae98",
+    "data/snapshots/2021.json": "fefb60d16f1a5372e77ff9f7e7f9b73ae4c39c5bf6f3af17b4440eae448bf5c7",
+    "research/datasets/fcs-coverage-v1/seasons/2025.json": "2b652655b8bdb89d92a939a0bc4c34b0e3036526edef3c442e36b0df129907ff",
+    "data/snapshots/2022.json": "17793fab663cce0122ef82fbfabbce1645a4ad7b6d0b35756f82562f5815be2a",
+    "data/snapshots/2024.json": "94729d25462d3abadeca51373ff8a7d3a6104190b8fe8762479aafa93b658464",
+    "data/snapshots/2023.json": "ce002ebe5504cbbee664da6947ea3f72200d6912b4b74d03d763ecf9098db53c"
+  },
+  "limitations": [
+    "Corrected archive with a 24-hour results buffer. Historical as-of availability is reconstructed.",
+    "The general Strength model and source seasons have prior project use.",
+    "Sparse 2020 FCS results were excluded as targets; archived 2020 priors remain for 2021.",
+    "Provider coverage and venue labels can vary. Neutral-site evidence is limited."
+  ],
+  "approvedForWeeklyPicks": true
+}

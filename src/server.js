@@ -5,14 +5,16 @@ import { VERSION } from './engine.js';
 import { UPDATE_SCHEDULE } from './weekly.js';
 import publicationPolicy from '../data/publication-model.json' with { type: 'json' };
 import { readPublicPerformance } from './public-performance.js';
+import { readFcsWeeklyPicks } from './weekly-fcs-publication.js';
 import { publicRankings, publicTeamDetails } from './site-publication.js';
 import { matchupValidation, snapshotCoverage } from './site-validation.js';
 import { buildWeeklyTeamStats } from '../frontend/weekly-team-stats.js';
 import { browserSorSource, buildScenarioPublication } from './scenario-publication.js';
 
 const directory = resolve(process.env.DATA_DIR || 'data', 'snapshots');
+const publications = resolve(import.meta.dirname, '../published');
 // Read-only API. No login to view public sports ratings; no write/admin routes.
-export function createApi(snapshotDirectory = directory, frontendDirectory = resolve('frontend')) {
+export function createApi(snapshotDirectory = directory, frontendDirectory = resolve('frontend'), publicationDirectory = publications) {
   const staticFiles = new Map([
     ['/', ['index.html', 'text/html; charset=utf-8']],
     ['/styles.css', ['styles.css', 'text/css; charset=utf-8']],
@@ -70,7 +72,7 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
       rankingMethod: { id: publicationPolicy.id, name: publicationPolicy.name, publicationStatus: 'official', rankField: 'displayRank', scoreField: 'sor', baselineRankField: 'rank', baselineScoreField: 'achievement' },
       historicalMethod: 'Colley; inspect the selected snapshot metadata', updateSchedule: UPDATE_SCHEDULE,
       experimentalPerformance: { endpoint: '/performance', name: 'Scrimmage consistency', status: 'experimental', providerCallsPerPageView: 0 },
-      endpoints: ['/health', '/rankings', '/rankings/2025', '/performance'] });
+      endpoints: ['/health', '/rankings', '/rankings/2025', '/performance', '/weekly-fcs-picks'] });
     if (path === '/performance') {
       try {
         const snapshot = JSON.parse(await readFile(join(snapshotDirectory, 'latest.json'), 'utf8'));
@@ -80,11 +82,19 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     }
     if (path === '/weekly-picks' || path === '/weekly-team-stats') {
       try {
-        const picks = JSON.parse(await readFile(new URL('../published/weekly-picks.json', import.meta.url), 'utf8'));
+        const picks = JSON.parse(await readFile(join(publicationDirectory, 'weekly-picks.json'), 'utf8'));
         return send(200, path === '/weekly-picks' ? picks : buildWeeklyTeamStats(picks));
       } catch (error) {
         return send(error.code === 'ENOENT' ? 404 : 503, { error: 'Weekly picks are unavailable' });
       }
+    }
+    if (path === '/weekly-fcs-picks') {
+      res.setHeader('Cache-Control', 'no-cache');
+      try {
+        const snapshot = JSON.parse(await readFile(join(snapshotDirectory, 'latest.json'), 'utf8'));
+        const picks = await readFcsWeeklyPicks(publicationDirectory, snapshot);
+        return picks ? send(200, picks) : send(404, { error: 'FCS weekly picks are unavailable for this snapshot' });
+      } catch { return send(503, { error: 'FCS weekly picks are unavailable for this snapshot' }); }
     }
     if (path === '/scenario-sor.js') {
       try {
@@ -97,7 +107,7 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
       try {
         const [snapshot, weekly] = await Promise.all([
           readFile(join(snapshotDirectory, 'latest.json'), 'utf8').then(JSON.parse),
-          readFile(new URL('../published/weekly-picks.json', import.meta.url), 'utf8').then(JSON.parse),
+          readFile(join(publicationDirectory, 'weekly-picks.json'), 'utf8').then(JSON.parse),
         ]);
         const scenario = buildScenarioPublication(snapshot, weekly, publicationPolicy);
         return scenario ? send(200, scenario) : send(503, { error: 'CFP scenarios are unavailable' });
@@ -121,6 +131,7 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
         publicSnapshot.matchupValidation = matchupValidation(snapshot);
       }
       if (await readPublicPerformance(snapshotDirectory, snapshot)) publicSnapshot.performanceEndpoint = '/performance';
+      if (!year && await readFcsWeeklyPicks(publicationDirectory, snapshot)) publicSnapshot.weeklyFcsPicksEndpoint = '/weekly-fcs-picks';
       return send(200, publicSnapshot);
     } catch (e) { return send(e.code === 'ENOENT' ? 503 : 500, { error: e.code === 'ENOENT' ? 'Rankings have not been built for this season' : 'Could not read rankings' }); }
   });

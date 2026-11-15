@@ -6,7 +6,10 @@ const state = { snapshot: null, byId: new Map(), byFcsId: new Map(), performance
 let performanceLoading = false;
 let performanceFailed = false;
 const teamDetails = new Map();
-const weeklyPicks = { request: null, status: 'loading', scoring: null, scoringError: false, selectedWeek: '', weeks: new Map(), teams: new Map() };
+const weeklyPickTabs = {
+  fbs: { division: 'fbs', endpoint: 'weekly-picks', status: 'loading' },
+  fcs: { division: 'fcs', endpoint: 'weekly-fcs-picks', status: 'loading' },
+};
 const rankingEditions = { data: null, cfpRanks: new Map(), request: null, failed: false };
 let focusMoreDestination = false;
 let bracketModule;
@@ -548,12 +551,37 @@ function picksTime(value) {
 }
 function weekKey(game) { return `${game.seasonType}:${game.week}`; }
 function weekLabel(game) { return game.seasonType === 'postseason' ? `Postseason · Week ${game.week}` : `Week ${game.week}`; }
-function picksPublication(data) {
+function activeWeeklyPicks() {
+  const [page, view, division] = route();
+  return page === 'compare' && view === 'weekly' ? weeklyPickTabs[division === 'fcs' ? 'fcs' : 'fbs'] : null;
+}
+function validFcsPicksSource(source) {
+  const evidence = source?.validation;
+  const nearSeventy = evidence?.nearSeventy;
+  const proportion = value => Number.isFinite(value) && value >= 0 && value <= 1;
+  return source?.provider === 'cfbd' && source.matchupScope === 'fcs-fcs' && source.calibrated === true &&
+    Number.isFinite(source.probabilityScale) && source.probabilityScale > 0 &&
+    source.rankingAsOf === state.snapshot.asOf && source.snapshotHash === state.snapshot.snapshotHash &&
+    Number.isFinite(picksTime(source.scheduleAsOf)) &&
+    (!state.snapshot.source?.fetchedAt || source.scheduleAsOf === state.snapshot.source.fetchedAt) &&
+    Number.isInteger(evidence?.firstSeason) && Number.isInteger(evidence?.lastSeason) &&
+    evidence.firstSeason <= evidence.lastSeason && evidence.lastSeason < state.snapshot.season &&
+    Number.isInteger(evidence.games) && Number.isInteger(evidence.picked) && Number.isInteger(evidence.correct) &&
+    evidence.games >= evidence.picked && evidence.picked > 0 && evidence.correct >= 0 && evidence.correct <= evidence.picked &&
+    proportion(evidence.accuracy) && proportion(evidence.brier) &&
+    Number.isInteger(nearSeventy?.games) && nearSeventy.games > 0 && nearSeventy.games <= evidence.picked &&
+    proportion(nearSeventy.meanForecast) && proportion(nearSeventy.actualWinRate);
+}
+function picksPublication(data, division) {
   if (data?.schemaVersion !== 1 || data.season !== state.snapshot.season || !Number.isFinite(picksTime(data.asOf)) ||
     !Array.isArray(data.teams) || !Array.isArray(data.games)) throw new Error('Invalid weekly picks publication');
+  const fcs = division === 'fcs';
+  if (fcs && (!validFcsPicksSource(data.source) || picksTime(data.asOf) < picksTime(data.source.rankingAsOf) ||
+    picksTime(data.asOf) < picksTime(data.source.scheduleAsOf))) throw new Error('FCS weekly picks do not match the current rankings or validation');
   const teams = new Map();
   for (const team of data.teams) {
-    if (typeof team?.id !== 'string' || !team.id || typeof team.name !== 'string' || !team.name.trim() || teams.has(team.id))
+    if (typeof team?.id !== 'string' || !team.id || typeof team.name !== 'string' || !team.name.trim() ||
+      teams.has(team.id) || (fcs && team.division !== 'fcs'))
       throw new Error('Invalid weekly picks team');
     teams.set(team.id, team);
   }
@@ -578,70 +606,71 @@ function picksPublication(data) {
   const latest = games.findLast(game => game.status !== 'scheduled');
   return { data, teams, weeks, selectedWeek: games.length ? weekKey(next ?? latest ?? games[0]) : '' };
 }
-async function loadWeeklyPicks() {
+async function loadWeeklyPicks(picks) {
   try {
-    const response = await fetch(publicationPath('weekly-picks'), { headers: { Accept: 'application/json' } });
-    if (response.status === 404 || response.status === 410) weeklyPicks.status = 'missing';
+    const response = await fetch(publicationPath(picks.endpoint), { headers: { Accept: 'application/json' } });
+    if (response.status === 404 || response.status === 410) picks.status = 'missing';
     else if (!response.ok) throw new Error(`Weekly picks returned ${response.status}`);
     else if (response.headers?.get('content-type')?.includes('text/html')) {
       const html = await response.text();
       if (!html.includes('<title>FBS Intelligence · FBS Top 25</title>') || !html.includes('name="publication-data-root"'))
         throw new Error('Weekly picks returned unexpected HTML');
-      weeklyPicks.status = 'missing';
+      picks.status = 'missing';
     } else {
-      Object.assign(weeklyPicks, picksPublication(await response.json()), { status: 'ready' });
-      if (weeklyPicks.weeks.size) {
-        void loadPredictability();
+      Object.assign(picks, picksPublication(await response.json(), picks.division), { status: 'ready' });
+      if (picks.weeks.size) void loadPredictability(picks);
+      if (picks.weeks.size && picks.division === 'fbs') {
         try {
           const { buildWeeklyTeamStats, renderWeeklyTeamStats } = await import('./weekly-team-stats.js?v=1');
-          weeklyPicks.teamStats = buildWeeklyTeamStats(weeklyPicks.data);
-          weeklyPicks.renderTeamStats = renderWeeklyTeamStats;
+          picks.teamStats = buildWeeklyTeamStats(picks.data);
+          picks.renderTeamStats = renderWeeklyTeamStats;
         } catch (error) { console.warn('Weekly team stats are unavailable', error); }
       }
     }
   } catch (error) {
-    weeklyPicks.status = 'error';
+    picks.status = 'error';
     console.error(error);
   }
-  if (route()[0] === 'compare' && route()[1] === 'weekly') {
-    renderWeeklyPicks();
-    document.querySelector('#announce').textContent = weeklyPicks.status === 'ready' ? 'Weekly picks loaded' : 'Weekly picks unavailable';
+  if (activeWeeklyPicks() === picks) {
+    renderWeeklyPicks(picks);
+    document.querySelector('#announce').textContent = `${picks.division.toUpperCase()} weekly picks ${picks.status === 'ready' ? 'loaded' : 'unavailable'}`;
   }
 }
-async function loadPredictability() {
+async function loadPredictability(picks) {
   try {
-    const { weeklyPicksScore } = await import('./weekly-picks-score.js?v=fcs-picks');
+    const { weeklyPicksScore } = await import('./weekly-picks-score.js?v=fcs-weekly-picks');
     if (typeof weeklyPicksScore !== 'function') throw new Error('Missing Weekly Picks scoring function');
-    weeklyPicks.scoring = weeklyPicksScore;
+    picks.scoring = weeklyPicksScore;
   } catch (error) {
-    weeklyPicks.scoringError = true;
+    picks.scoringError = true;
     console.error(error);
   }
-  if (route()[0] === 'compare' && route()[1] === 'weekly') {
+  if (activeWeeklyPicks() === picks) {
     const score = document.querySelector('#predictability-content');
-    if (score) score.innerHTML = predictabilityContent();
+    if (score) score.innerHTML = predictabilityContent(picks);
   }
 }
-function validWeeklyPick(game, pick, capturedAt) {
+function validWeeklyPick(picks, game, pick, capturedAt) {
   const p = pick?.homeWinProbability;
   const capture = picksTime(capturedAt);
-  const divisions = [game.home, game.away].map(id => weeklyPicks.teams.get(id)?.division);
+  const divisions = [game.home, game.away].map(id => picks.teams.get(id)?.division);
+  const inScope = picks.division === 'fcs' ? divisions.every(division => division === 'fcs')
+    : divisions.includes('fbs') && divisions.every(division => division === 'fbs' || division === 'fcs');
   return Number.isFinite(p) && p >= 0 && p <= 1 && pick.favored === (p === .5 ? 'even' : p > .5 ? 'home' : 'away') &&
-    Number.isFinite(capture) && capture < picksTime(game.startDate) && capture <= picksTime(weeklyPicks.data.asOf) &&
-    divisions.includes('fbs') && divisions.every(division => division === 'fbs' || division === 'fcs');
+    Number.isFinite(capture) && capture < picksTime(game.startDate) && capture <= picksTime(picks.data.asOf) && inScope;
 }
-function weeklyPreviewEstimate(game, scheduled = game.status === 'scheduled' && picksTime(game.startDate) >= picksTime(weeklyPicks.data.asOf)) {
-  return scheduled && validWeeklyPick(game, game.estimate, game.estimate?.asOf);
+function weeklyPreviewEstimate(picks, game, scheduled = game.status === 'scheduled' && picksTime(game.startDate) >= picksTime(picks.data.asOf)) {
+  return scheduled && validWeeklyPick(picks, game, game.estimate, game.estimate?.asOf);
 }
-function weeklyPicksGame(game) {
-  const away = weeklyPicks.teams.get(game.away);
-  const home = weeklyPicks.teams.get(game.home);
+function weeklyPicksGame(picks, game) {
+  const away = picks.teams.get(game.away);
+  const home = picks.teams.get(game.home);
   const kickoff = picksTime(game.startDate);
-  const cutoff = picksTime(weeklyPicks.data.asOf);
+  const cutoff = picksTime(picks.data.asOf);
   const scheduled = game.status === 'scheduled' && kickoff >= cutoff;
-  const live = validWeeklyPick(game, game.pick, game.pick?.capturedAt);
-  const replay = !live && !scheduled && kickoff <= cutoff && validWeeklyPick(game, game.replay, game.replay?.asOf);
-  const estimate = !live && weeklyPreviewEstimate(game, scheduled);
+  const live = validWeeklyPick(picks, game, game.pick, game.pick?.capturedAt);
+  const replay = !live && !scheduled && kickoff <= cutoff && validWeeklyPick(picks, game, game.replay, game.replay?.asOf);
+  const estimate = !live && weeklyPreviewEstimate(picks, game, scheduled);
   const pick = live ? game.pick : replay ? game.replay : estimate ? game.estimate : null;
   const capture = live ? pick.capturedAt : pick?.asOf;
   const pickLabel = live ? 'Saved pregame pick' : replay ? 'Historical replay' : estimate ? 'Preview odds · From saved ratings' : 'Model pick';
@@ -656,14 +685,15 @@ function weeklyPicksGame(game) {
     (winner ? `${esc(winner === 'home' ? home.name : away.name)} won ${Math.max(game.homePoints, game.awayPoints)}–${Math.min(game.homePoints, game.awayPoints)}` :
       `Tied ${game.awayPoints}–${game.homePoints}`) :
     (scheduled ? 'Scheduled' : 'Final score pending');
-  const team = entry => state.byId.has(entry.id) ? `<a href="#team/${encodeURIComponent(entry.id)}">${esc(entry.name)}</a>` : esc(entry.name);
+  const team = entry => rankedTeam(entry.id) ? teamLink(entry) : esc(entry.name);
+  const crossDivision = home.division === 'fbs' && away.division === 'fcs' || home.division === 'fcs' && away.division === 'fbs';
   return { grade, html: `<li class="weekly-game">
     <div><h3>${team(away)} ${game.neutral ? 'vs' : 'at'} ${team(home)}</h3>
-    <p class="compact-note"><time datetime="${esc(game.startDate)}">${picksDate.format(picksTime(game.startDate))}</time>${game.neutral ? ' · Neutral site' : ''}${[home.division, away.division].includes('fcs') ? ' · FBS–FCS' : ''}</p></div>
+    <p class="compact-note"><time datetime="${esc(game.startDate)}">${picksDate.format(picksTime(game.startDate))}</time>${game.neutral ? ' · Neutral site' : ''}${crossDivision ? ' · FBS–FCS' : ''}</p></div>
     <dl class="weekly-game-details">
       <div><dt>${pickLabel}</dt><dd>${pickText}${capture ? `<small><time datetime="${esc(capture)}">${picksTimestamp.format(picksTime(capture))} MT</time></small>` : ''}</dd></div>
       <div><dt>${game.status === 'final' ? 'Final' : 'Status'}</dt><dd>${result}${grade ? ` <span class="weekly-grade ${grade.toLowerCase()}">${grade}</span>` : ''}</dd></div>
-    </dl>${weeklyPicks.renderTeamStats?.(weeklyPicks.teamStats, game, { awayName: away.name, homeName: home.name }) ?? ''}</li>` };
+    </dl>${picks.renderTeamStats?.(picks.teamStats, game, { awayName: away.name, homeName: home.name }) ?? ''}</li>` };
 }
 function scoreAccuracy(value) {
   return Number.isFinite(value) ? `${number(value * 100, 1)}%` : '—';
@@ -718,14 +748,14 @@ function historicalPredictability(replay, season) {
     <p class="compact-note">${predictabilityCoverage(week, 'replay forecasts')} Replay forecasts are reconstructed using results available before each week.</p>
     <p class="compact-note"><strong>Saved-pick season record</strong> · ${season.decisivePicks ? savedSeasonRecord(season) : 'Awaiting decided saved picks'}</p>`;
 }
-function predictabilityContent() {
-  if (!weeklyPicks.scoring) {
-    return `<p class="compact-note" role="status">${weeklyPicks.scoringError ? 'The scorecard could not load. Game results are available below.' : 'Loading the saved-pick scores…'}</p>`;
+function predictabilityContent(picks) {
+  if (!picks.scoring) {
+    return `<p class="compact-note" role="status">${picks.scoringError ? 'The scorecard could not load. Game results are available below.' : 'Loading the saved-pick scores…'}</p>`;
   }
-  const { week, previousWeek, season, comparison, replay } = weeklyPicks.scoring(weeklyPicks.data, weeklyPicks.selectedWeek);
+  const { week, previousWeek, season, comparison, replay } = picks.scoring(picks.data, picks.selectedWeek, picks.division);
   if (!week) return '<p class="compact-note">Scores are unavailable for this week.</p>';
   if (!week.availablePicks && replay?.week?.availablePicks) return historicalPredictability(replay, season);
-  const previews = week.availablePicks ? 0 : weeklyPicks.weeks.get(weeklyPicks.selectedWeek).filter(game => weeklyPreviewEstimate(game)).length;
+  const previews = week.availablePicks ? 0 : picks.weeks.get(picks.selectedWeek).filter(game => weeklyPreviewEstimate(picks, game)).length;
   const weekDetail = week.availablePicks ? (week.pendingPicks === week.availablePicks ? 'Awaiting final scores' : predictabilitySample(week)) :
     previews ? `${previews} preview forecasts available` : 'No saved picks this week';
   const delta = comparison?.accuracyDifference;
@@ -743,40 +773,56 @@ function predictabilityContent() {
   ${replay ? replayPredictability(replay) : ''}
   ${Number.isFinite(season.brier) || Number.isFinite(replay?.week?.brier) ? '<p class="compact-note">Lower Brier scores are better. Confident misses cost more.</p>' : ''}`;
 }
-function weeklyResults() {
-  const games = weeklyPicks.weeks.get(weeklyPicks.selectedWeek);
-  const rows = games.map(weeklyPicksGame);
+function weeklyResults(picks) {
+  const games = picks.weeks.get(picks.selectedWeek);
+  const rows = games.map(game => weeklyPicksGame(picks, game));
   const correct = rows.filter(row => row.grade === 'Correct').length;
   const missed = rows.filter(row => row.grade === 'Missed').length;
   const record = correct + missed ? `${correct} correct · ${missed} missed` : 'No saved picks graded this week';
   return `<section class="predictability" aria-labelledby="predictability-title">
-    <h3 id="predictability-title">Predictability score</h3><div id="predictability-content">${predictabilityContent()}</div>
+    <h3 id="predictability-title">Predictability score</h3><div id="predictability-content">${predictabilityContent(picks)}</div>
     </section><p class="weekly-record">${games.length} ${games.length === 1 ? 'game' : 'games'} · ${record}</p>
     <ul class="weekly-list" aria-label="Games for ${esc(weekLabel(games[0]))}">${rows.map(row => row.html).join('')}</ul>`;
 }
-function renderWeeklyPicks() {
-  const { status, data, weeks, selectedWeek } = weeklyPicks;
+function fcsForecastValidation({ firstSeason, lastSeason, games, picked, correct, accuracy, brier, nearSeventy }) {
+  const seasons = firstSeason === lastSeason ? firstSeason : `${firstSeason}–${lastSeason}`;
+  return `<details class="weekly-validation"><summary>FCS forecast validation</summary>
+    <p class="compact-note">Historical replay covered ${games.toLocaleString()} games in ${seasons}. The model picked ${correct.toLocaleString()} of ${picked.toLocaleString()} winners correctly (${scoreAccuracy(accuracy)}), with a Brier score of ${number(brier, 3)}.</p>
+    <p class="compact-note">In ${nearSeventy.games.toLocaleString()} games with favorites near 70%, the average forecast was ${scoreAccuracy(nearSeventy.meanForecast)} and those favorites won ${scoreAccuracy(nearSeventy.actualWinRate)} of the time.</p></details>`;
+}
+function renderWeeklyPicks(picks) {
+  const { status, data, weeks, selectedWeek, division } = picks;
+  const fcs = division === 'fcs';
+  const label = division.toUpperCase();
+  const group = `<nav class="matchup-views weekly-division-nav" aria-label="Weekly Picks divisions">
+    <a href="#compare/weekly"${fcs ? '' : ' aria-current="page"'}>FBS</a>
+    <a href="#compare/weekly/fcs"${fcs ? ' aria-current="page"' : ''}>FCS</a></nav>`;
   let body;
   if (status === 'ready') {
     const cutoff = Number.isFinite(picksTime(data.source?.scheduleAsOf)) ? data.source.scheduleAsOf : data.asOf;
     const provider = data.source?.provider === 'cfbd' ? 'CollegeFootballData' : data.source?.provider === 'sportsdataverse' ? 'sportsdataverse' : '';
     body = `<p class="compact-note">Schedule and results${provider ? ` from ${provider}` : ''} as of <time datetime="${esc(cutoff)}">${picksTimestamp.format(picksTime(cutoff))} MT</time>.${data.source?.extraScoreProvider === 'ESPN' ? ' Some final scores are from ESPN.' : ''}</p>
-      <p class="compact-note">Predictive Strength picks cover FBS–FBS and FBS–FCS games. FBS–FCS win chances are uncalibrated estimates. Each refresh can save picks up to seven days ahead. The record grades picks saved before kickoff. Historical replays and preview odds are separate.</p>
+      <p class="compact-note">${fcs
+        ? 'Predictive Strength picks cover games between two FCS teams. The record grades picks saved before kickoff. Historical replays appear separately.'
+        : 'Predictive Strength picks cover FBS–FBS and FBS–FCS games. FBS–FCS win chances are uncalibrated estimates. Each refresh can save picks up to seven days ahead. The record grades picks saved before kickoff. Historical replays and preview odds are separate.'}</p>
+      ${fcs ? fcsForecastValidation(data.source.validation) : ''}
       ${weeks.size ? `<div class="weekly-controls"><label for="weekly-week">Select week</label><select id="weekly-week">${[...weeks].map(([key, games]) =>
         `<option value="${esc(key)}"${key === selectedWeek ? ' selected' : ''}>${esc(weekLabel(games[0]))}</option>`).join('')}</select></div>
-        <div id="weekly-results">${weeklyResults()}</div>` : '<p class="compact-note">No games in the saved schedule.</p>'}`;
+        <div id="weekly-results">${weeklyResults(picks)}</div>` : '<p class="compact-note">No games in the saved schedule.</p>'}`;
   } else {
-    body = `<p class="compact-note" role="status">${status === 'loading' ? 'Loading the saved schedule and picks…' :
-      status === 'missing' ? 'Weekly picks will appear when the first schedule is published.' :
-        'The saved weekly picks could not load. Refresh to try again.'}</p>`;
+    body = `<p class="compact-note" role="status">${status === 'loading' ? `Loading ${label} weekly picks…` :
+      status === 'missing' ? (fcs ? 'FCS forecasts passed historical testing. The first saved schedule and picks for games between FCS teams will appear after a normal results refresh.'
+        : 'Weekly picks will appear when the first schedule is published.') :
+        `The saved ${label} weekly picks could not load. Refresh to try again.`}</p>`;
   }
   main.innerHTML = `${banner('Matchup lab · Predictive Strength', 'WEEKLY PICKS', 'See the model’s win chances for scheduled games and how its saved picks did once the scores were final.')}
     <div class="wrap page-content">${matchupNav('weekly')}<section class="panel weekly-picks" aria-labelledby="weekly-picks-title">
-    <div class="panel-body"><h2 id="weekly-picks-title">${state.snapshot.season} schedule and picks</h2>${body}</div></section></div>`;
-  if (status === 'loading') weeklyPicks.request ??= loadWeeklyPicks();
+    <div class="panel-body"><h2 id="weekly-picks-title">${state.snapshot.season} ${label} schedule and picks</h2>${group}${body}</div></section></div>`;
+  if (status === 'loading') picks.request ??= loadWeeklyPicks(picks);
 }
 function renderCompare() {
-  if (route()[0] === 'compare' && route()[1] === 'weekly') return renderWeeklyPicks();
+  const picks = activeWeeklyPicks();
+  if (picks) return renderWeeklyPicks(picks);
   const {a,b,edge,probability}=compareResult();
   const matchup = state.snapshot.matchupValidation;
   const explanation = matchup
@@ -1044,7 +1090,8 @@ function render() {
     state.conference = '';
   }
   if(page==='home')renderHome();else if(page==='rankings')renderRankings();else if(page==='teams')renderTeams();else if(page==='team')renderTeam(id);else if(page==='methodology')renderMethodology();else if(page==='compare')renderCompare();else if (page === 'polls' || page === 'forge-top-25') renderRankingEditions(page,id,scope);else if (page === 'bracket') renderBracketPage();else if (page === 'cfp-scenarios') renderScenarioPage();else if (page === 'beat-the-model') renderContestPage();else if (page === 'ranking-history') renderHistoryPage(id);else renderHome();
-  const team=rankedTeam(id);document.title=`${page==='team'&&team?team.name:({home:'FBS Top 25',rankings:`${state.division.toUpperCase()} rankings`,teams:'Team directory',compare:id==='weekly'?'Weekly picks':'Matchup lab',methodology:'Methodology',polls:'Compare Rankings','forge-top-25':'Forge’s Top 25',bracket:'Playoff Bracket','cfp-scenarios':'CFP Scenario Builder','beat-the-model':'Beat the Model','ranking-history':'Weekly SOR movement'}[page]||'Home')} · ${BRAND}`;
+  const compareTitle = id === 'weekly' ? scope === 'fcs' ? 'FCS Weekly Picks' : 'Weekly picks' : 'Matchup lab';
+  const team=rankedTeam(id);document.title=`${page==='team'&&team?team.name:({home:'FBS Top 25',rankings:`${state.division.toUpperCase()} rankings`,teams:'Team directory',compare:compareTitle,methodology:'Methodology',polls:'Compare Rankings','forge-top-25':'Forge’s Top 25',bracket:'Playoff Bracket','cfp-scenarios':'CFP Scenario Builder','beat-the-model':'Beat the Model','ranking-history':'Weekly SOR movement'}[page]||'Home')} · ${BRAND}`;
   document.querySelector('#announce').textContent=document.title;
 }
 document.addEventListener('error',e=>{if(e.target instanceof HTMLImageElement && e.target.closest('.logo'))e.target.closest('.logo').classList.add('failed');},true);
@@ -1064,10 +1111,12 @@ document.addEventListener('change',e=>{
   if(e.target.id==='conference-filter'){state.conference=e.target.value;route()[0]==='teams'?renderTeams():renderRankings();}
   if(e.target.id==='compare-a'){state.compareA=e.target.value;renderCompare();}
   if(e.target.id==='compare-b'){state.compareB=e.target.value;renderCompare();}
-  if (e.target.id === 'weekly-week' && weeklyPicks.weeks.has(e.target.value)) {
-    weeklyPicks.selectedWeek = e.target.value;
-    document.querySelector('#weekly-results').innerHTML = weeklyResults();
-    document.querySelector('#announce').textContent = `${weekLabel(weeklyPicks.weeks.get(weeklyPicks.selectedWeek)[0])} games shown`;
+  if (e.target.id === 'weekly-week') {
+    const picks = activeWeeklyPicks();
+    if (!picks?.weeks?.has(e.target.value)) return;
+    picks.selectedWeek = e.target.value;
+    document.querySelector('#weekly-results').innerHTML = weeklyResults(picks);
+    document.querySelector('#announce').textContent = `${picks.division.toUpperCase()} ${weekLabel(picks.weeks.get(picks.selectedWeek)[0])} games shown`;
   }
 });
 document.addEventListener('click',e=>{

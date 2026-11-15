@@ -1,6 +1,7 @@
 import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { readPublicPerformance } from '../src/public-performance.js';
+import { readFcsWeeklyPicks } from '../src/weekly-fcs-publication.js';
 import { publishDivisionSnapshot, readPublicationPolicy } from '../src/publication.js';
 import { publishFcsSnapshot } from '../src/fcs-publication.js';
 import { publicRankings, publicTeamDetails } from '../src/site-publication.js';
@@ -30,7 +31,10 @@ const fbsSnapshot = publishDivisionSnapshot(input, policy, {
   publishedAt: input.modelPublishedAt ?? policy.promotedAt,
 });
 const snapshot = publishFcsSnapshot(fbsSnapshot, policy);
-const performance = await readPublicPerformance(published, snapshot);
+const [performance, fcsPicks] = await Promise.all([
+  readPublicPerformance(published, snapshot),
+  readFcsWeeklyPicks(published, snapshot),
+]);
 const publicSnapshot = publicRankings(snapshot, '/data/teams');
 if (snapshot.update) publicSnapshot.update = { ...snapshot.update, schedule: UPDATE_SCHEDULE };
 publicSnapshot.rankingMethod = { ...snapshot.rankingMethod, publicationStatus: 'official' };
@@ -38,6 +42,7 @@ publicSnapshot.coverageValidation = snapshotCoverage(snapshot);
 publicSnapshot.matchupValidation = matchupValidation(snapshot);
 delete publicSnapshot.performanceEndpoint;
 if (performance) publicSnapshot.performanceEndpoint = '/data/performance.json';
+if (fcsPicks) publicSnapshot.weeklyFcsPicksEndpoint = '/data/weekly-fcs-picks.json';
 
 await cp(frontend, output, { recursive: true, filter: source => source !== legacyHero });
 await mkdir(teamDirectory, { recursive: true });
@@ -52,6 +57,7 @@ const staleTeamFiles = (await readdir(teamDirectory, { withFileTypes: true }))
 await Promise.all(staleTeamFiles.map(file => rm(join(teamDirectory, file.name), { force: true })));
 const performanceFile = join(data, 'performance.json');
 const picksFile = join(data, 'weekly-picks.json');
+const fcsPicksFile = join(data, 'weekly-fcs-picks.json');
 const statsFile = join(data, 'weekly-team-stats.json');
 const scenarioFile = join(data, 'cfp-scenarios.json');
 const weeklySource = readFile(join(published, 'weekly-picks.json'), 'utf8').then(JSON.parse);
@@ -68,6 +74,7 @@ await Promise.all([
   writeFile(join(output, 'index.html'), html.replace(marker, '<meta name="publication-data-root" content="/data">')),
   writeFile(join(data, 'rankings.json'), JSON.stringify(publicSnapshot)),
   performance ? writeFile(performanceFile, JSON.stringify(performance)) : rm(performanceFile, { force: true }),
+  fcsPicks ? writeFile(fcsPicksFile, JSON.stringify(fcsPicks)) : rm(fcsPicksFile, { force: true }),
   weeklyStats ? writeFile(statsFile, JSON.stringify(weeklyStats)) : rm(statsFile, { force: true }),
   scenario ? writeFile(scenarioFile, JSON.stringify(scenario)) : rm(scenarioFile, { force: true }),
   browserSorSource().then(source => writeFile(join(output, 'scenario-sor.js'), source)),

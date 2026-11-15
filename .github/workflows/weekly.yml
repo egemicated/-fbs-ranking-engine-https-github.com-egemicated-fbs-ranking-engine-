@@ -70,6 +70,10 @@ jobs:
         if: steps.primary-publish.outcome == 'success'
         continue-on-error: true
         run: node scripts/publish-weekly-picks.js --season "data/seasons/${RANKING_SEASON}.json" --snapshot published/latest.json --output published/weekly-picks.json
+      - name: Save FCS weekly picks from the same refresh
+        if: steps.primary-publish.outcome == 'success'
+        continue-on-error: true
+        run: node scripts/publish-weekly-picks.js --cohort fcs --season "data/seasons/${RANKING_SEASON}.json" --snapshot published/latest.json --output published/weekly-fcs-picks.json
       - name: Record frozen achievement comparison
         if: steps.primary-publish.outcome == 'success'
         continue-on-error: true
@@ -144,6 +148,7 @@ jobs:
           git add published/latest.json
           git add published/performance-latest.json
           if test -f published/weekly-picks.json; then git add published/weekly-picks.json; fi
+          if test -f published/weekly-fcs-picks.json; then git add published/weekly-fcs-picks.json; fi
           if test -f frontend/ranking-history.json; then git add frontend/ranking-history.json frontend/ranking-editions.json; fi
           git add research/observations/
           git add research/division-observations/
