@@ -48,3 +48,61 @@ test('historical replay excludes current-week scores and stays outside the track
   assert.ok(Date.parse(one.replay.asOf) < Date.parse(kickoff));
   assert.deepEqual(one.replay, two.replay);
 });
+
+const fcs = { id: 'fcs', name: 'FCS opponent', division: 'fcs', conference: 'Subdivision' };
+const fcsAway = { id: 'fcs-away', name: 'Another FCS opponent', division: 'fcs', conference: 'Subdivision' };
+const unknown = { id: 'unknown', name: 'Unknown subdivision', division: 'unknown', conference: null };
+const crossGame = { ...game, home: 'fcs', away: 'home', neutral: true };
+const withOpponents = (provider, time, games) => ({ ...season(provider, time, games), teams: [...teams, fcs, fcsAway, unknown] });
+function fullSnapshot(time, homeStrength, fcsStrength) {
+  const value = snapshot(time, homeStrength);
+  return { ...value, modelVersion: '0.2.0', ratings: [...value.rankings, { ...fcs, strength: fcsStrength },
+    { ...fcsAway, strength: 3 }, { ...unknown, strength: 3 }] };
+}
+
+test('cross-division picks use full Strength ratings and preserve the saved odds after a final', () => {
+  const upcoming = [{ ...crossGame }, { ...game, id: 'fbs-only', neutral: true }, { ...crossGame, id: 'fcs-only', away: 'fcs-away' },
+    { ...crossGame, id: 'unknown', home: 'unknown' }];
+  const preview = buildWeeklyPicks(withOpponents('sportsdataverse', capture, upcoming),
+    fullSnapshot(capture, 10, -4), { capturedAt: capture });
+  const expected = 1 / (1 + Math.exp(14 / config.probabilityScale));
+  assert.deepEqual(pickRow(preview).estimate, { asOf: capture, homeWinProbability: expected, favored: 'away' });
+  assert.equal(pickRow(preview).pick, null);
+  assert.equal(preview.source.calibrated, true);
+  assert.equal(preview.source.crossDivisionCalibrated, false);
+  assert.equal(preview.source.crossDivisionProbabilityScale, config.probabilityScale);
+  assert.equal(preview.games.find(row => row.id === 'fbs-only').estimate.homeWinProbability,
+    1 / (1 + Math.exp(-10 / preview.source.probabilityScale)));
+  assert.equal(preview.games.some(row => row.id === 'fcs-only'), false);
+  assert.equal(preview.games.find(row => row.id === 'unknown').estimate, null);
+  const saved = buildWeeklyPicks(withOpponents('cfbd', capture, upcoming),
+    fullSnapshot(capture, 10, -4), { capturedAt: capture, previous: preview });
+  assert.deepEqual(pickRow(saved).pick, { capturedAt: capture, homeWinProbability: expected, favored: 'away' });
+  assert.equal(saved.games.find(row => row.id === 'unknown').pick, null);
+  const final = { ...crossGame, completed: true, homePoints: 21, awayPoints: 14 };
+  const refreshed = buildWeeklyPicks(withOpponents('cfbd', later, [final]),
+    fullSnapshot(later, -10, 12), { capturedAt: later, previous: saved });
+  assert.equal(pickRow(refreshed).status, 'final');
+  assert.deepEqual(pickRow(refreshed).pick, pickRow(saved).pick);
+});
+
+test('missing current FCS ratings leave new probabilities unavailable and preserve a valid saved pick', () => {
+  const input = withOpponents('cfbd', capture, [crossGame]);
+  const baseline = buildWeeklyPicks(input, snapshot(capture, 10), { capturedAt: capture });
+  assert.equal(pickRow(baseline).pick, null);
+  assert.equal(pickRow(baseline).estimate, null);
+  const previous = buildWeeklyPicks(input, fullSnapshot(capture, 10, -4), { capturedAt: capture });
+  const refreshed = buildWeeklyPicks(input, snapshot(capture, 10), { capturedAt: capture, previous });
+  assert.deepEqual(pickRow(refreshed).pick, pickRow(previous).pick);
+});
+
+test('cross-division replay uses full prior-week ratings and excludes the game’s own result', () => {
+  const prior = { season: 2025, snapshotHash: 'c'.repeat(64), ratings: fullSnapshot(capture, 10, -4).ratings };
+  const run = (homePoints, awayPoints) => buildWeeklyPicks(withOpponents('sportsdataverse', later,
+    [previousWeek, { ...crossGame, completed: true, homePoints, awayPoints }]), fullSnapshot(later, 25, -5),
+  { capturedAt: later, prior });
+  const first = pickRow(run(51, 10)), second = pickRow(run(10, 51));
+  assert.equal(first.pick, null);
+  assert.ok(Date.parse(first.replay?.asOf) < Date.parse(kickoff));
+  assert.deepEqual(first.replay, second.replay);
+});

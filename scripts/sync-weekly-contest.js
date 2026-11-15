@@ -32,7 +32,8 @@ export function buildWeeklyContestSync(artifact, now = new Date()) {
     const home = teams.get(game.home);
     const away = teams.get(game.away);
     if (!home || !away || home === away) throw new Error('Unknown Weekly Picks participant');
-    if (home.division !== 'fbs' || away.division !== 'fbs') continue;
+    const opponent = home.division === 'fbs' ? away : away.division === 'fbs' ? home : null;
+    if (!opponent || !['fbs', 'fcs'].includes(opponent.division)) continue;
     const kickoff = timestamp(game.startDate);
     if (!Number.isFinite(kickoff) || !Number.isInteger(game.week) || game.week < 0 || game.week > 30 ||
         !['regular', 'postseason'].includes(game.seasonType) || typeof game.neutral !== 'boolean' ||
@@ -88,7 +89,7 @@ async function run() {
   const credentials = cfpSyncCredentials(url, process.env.CFP_SUPABASE_SECRET_KEY);
   const payload = buildWeeklyContestSync(publication);
   const result = await publishWeeklyContest(credentials, payload);
-  console.log(`Weekly contest sync ${result.stale ? 'already current' : 'published'}: ${payload.p_games.length} FBS matchups. No CFBD calls.`);
+  console.log(`Weekly contest sync ${result.stale ? 'already current' : 'published'}: ${payload.p_games.length} matchups involving FBS teams. No CFBD calls.`);
 }
 
 if (process.argv[1] && pathToFileURL(resolve(process.argv[1])).href === import.meta.url) await run();

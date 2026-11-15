@@ -332,7 +332,7 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
         <h2>Your picks against the model</h2></div><div class="contest-actions">${session
           ? `<span class="compact-note">Signed in</span><button class="button light" type="button" data-contest-action="logout"${busy ? ' disabled' : ''}>Sign out</button>`
           : signInEnabled ? `<button class="button" type="button" data-contest-action="login"${busy ? ' disabled' : ''}>Continue with Google</button>` : '<span class="compact-note">Sign-in is currently unavailable.</span>'}</div></div>
-        <p>Pick one winner per game. <strong>Each game locks at its own kickoff.</strong> Each correct pick earns one point.</p>
+        <p>Pick winners for FBS–FBS and FBS–FCS games. <strong>Each game locks at its own kickoff.</strong> Each correct pick earns one point. FBS–FCS win chances are uncalibrated estimates.</p>
         ${!session ? '<p class="compact-note">Use the same Google login as your playoff bracket. Save your picks to start your record.</p>' : ''}
         <div class="contest-controls"><label for="contest-week">Select week</label><select id="contest-week"${busy || !weeks.length ? ' disabled' : ''}>
         ${weeks.map(key => `<option value="${escape(key)}"${key === week ? ' selected' : ''}>${escape(contestWeekLabel(key))}</option>`).join('')}</select>

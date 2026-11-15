@@ -70,13 +70,17 @@ export function buildWeeklyPicks(season, snapshot, { capturedAt, prior = null, p
     throw new Error('CFBD schedule and Strength snapshot must come from the same refresh');
   }
   const validation = matchupValidation(snapshot);
-  const scale = validation?.winProbability.scale ?? snapshot.config?.probabilityScale;
+  const crossDivisionScale = snapshot.config?.probabilityScale;
+  const scale = validation?.winProbability.scale ?? crossDivisionScale;
   const homeAdvantage = snapshot.config?.homeAdvantage;
-  if (!Number.isFinite(scale) || scale <= 0 || !Number.isFinite(homeAdvantage) || homeAdvantage < 0) throw new Error('Invalid Strength probability settings');
-  const strengths = strengthByTeam(snapshot.rankings.filter(team => team.division === 'fbs'));
+  if (![scale, crossDivisionScale].every(value => Number.isFinite(value) && value > 0) ||
+      !Number.isFinite(homeAdvantage) || homeAdvantage < 0) throw new Error('Invalid Strength probability settings');
+  const strengths = strengthByTeam(snapshot.ratings ?? snapshot.rankings);
   const modeledGames = new Set(snapshot.rankings.flatMap(team => (team.contributions ?? []).map(row => row.gameId)));
   const teamsById = new Map(season.teams.map(team => [team.id, team]));
-  const fbs = id => teamsById.get(id).division === 'fbs';
+  const division = id => teamsById.get(id).division;
+  const fbs = id => division(id) === 'fbs';
+  const fbsOrFcs = id => ['fbs', 'fcs'].includes(division(id));
   const schedule = season.games.filter(game => fbs(game.home) || fbs(game.away));
   if (!schedule.length) throw new Error('No FBS schedule games');
   const oldGames = previousGames(previous, season.year, capture, scheduleCutoff);
@@ -105,26 +109,27 @@ export function buildWeeklyPicks(season, snapshot, { capturedAt, prior = null, p
     const wasPlayed = modeledGames.has(id) || (sameMatchup(old, game) && old.status === 'final');
     const underway = wasPlayed || incomplete.has(id) || Number.isInteger(game.homePoints) || Number.isInteger(game.awayPoints);
     const status = game.completed && !isCanceled ? 'final' : kickoff <= capture || isCanceled || underway ? 'pending' : 'scheduled';
-    const fbsMatchup = fbs(home) && fbs(away);
-    let pick = fbsMatchup && !isCanceled ? savedPick(old, game, kickoff, timestamp(previous?.asOf)) : null;
+    const eligible = fbsOrFcs(home) && fbsOrFcs(away);
+    const gameScale = fbs(home) && fbs(away) ? scale : crossDivisionScale;
+    let pick = eligible && !isCanceled ? savedPick(old, game, kickoff, timestamp(previous?.asOf)) : null;
     let estimate = null;
     let replay = null;
-    if (!pick && fbsMatchup && status === 'scheduled' && kickoff <= capture + HORIZON_DAYS * DAY) {
-      const odds = predictGame(game, strengths, homeAdvantage, scale);
+    if (!pick && eligible && status === 'scheduled' && kickoff <= capture + HORIZON_DAYS * DAY) {
+      const odds = predictGame(game, strengths, homeAdvantage, gameScale);
       // If no verified time was supplied, the calendar day is the earliest safe boundary.
       const safeKickoff = game.startTimeTbd === false ? kickoff : Date.parse(`${startDate.slice(0, 10)}T00:00:00Z`);
       if (odds && live && capture < safeKickoff) pick = { capturedAt, ...odds };
       if (odds && !live) estimate = { asOf: snapshot.asOf, ...odds };
     }
-    if (!pick && fbsMatchup && !isCanceled && kickoff <= capture && !incomplete.has(id)) {
+    if (!pick && eligible && !isCanceled && kickoff <= capture && !incomplete.has(id)) {
       const key = weekKey(game);
       const asOf = new Date(openings.get(key) - 1).toISOString();
       if (prior) {
         if (!replayRatings.has(key)) {
           const replaySnapshot = rankSeason(season, { config: snapshot.config, previous: prior, before: asOf });
-          replayRatings.set(key, strengthByTeam(replaySnapshot.rankings));
+          replayRatings.set(key, strengthByTeam(replaySnapshot.ratings));
         }
-        const odds = predictGame(game, replayRatings.get(key), homeAdvantage, scale);
+        const odds = predictGame(game, replayRatings.get(key), homeAdvantage, gameScale);
         if (odds) replay = { asOf, ...odds };
       } else if (sameMatchup(old, game) && old.replay?.asOf === asOf) {
         replay = old.replay;
@@ -145,7 +150,8 @@ export function buildWeeklyPicks(season, snapshot, { capturedAt, prior = null, p
       provider: season.source.provider, scheduleAsOf: season.source.fetchedAt,
       ...(season.source.extraScoreProvider === 'ESPN' ? { extraScoreProvider: 'ESPN' } : {}),
       rankingAsOf: snapshot.asOf, snapshotHash: snapshot.snapshotHash, modelVersion: snapshot.modelVersion,
-      probabilityScale: scale, calibrated: Boolean(validation), homeAdvantage, pickHorizonDays: HORIZON_DAYS,
+      probabilityScale: scale, calibrated: Boolean(validation), crossDivisionProbabilityScale: crossDivisionScale,
+      crossDivisionCalibrated: false, homeAdvantage, pickHorizonDays: HORIZON_DAYS,
       replay: games.some(game => game.replay) ? {
         method: 'Archived Strength replay before the earliest available FBS kickoff of each week, with a 24-hour results buffer',
         priorSnapshotHash: prior?.snapshotHash ?? previous?.source?.replay?.priorSnapshotHash ?? null,

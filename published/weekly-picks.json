@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "season": 2026,
-  "asOf": "2026-11-15T14:39:16.239Z",
+  "asOf": "2026-11-15T16:15:58.335Z",
   "source": {
     "provider": "cfbd",
     "scheduleAsOf": "2026-11-15T14:39:13.405Z",
@@ -15,7 +15,9 @@
     "replay": {
       "method": "Archived Strength replay before the earliest available FBS kickoff of each week, with a 24-hour results buffer",
       "priorSnapshotHash": "507c6d23fec684ca9f356b0c89db07f2c40a11e54631eacd5f98abbc0f80a880"
-    }
+    },
+    "crossDivisionProbabilityScale": 14,
+    "crossDivisionCalibrated": false
   },
   "teams": [
     {
@@ -15692,7 +15694,11 @@
       "status": "scheduled",
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-15T16:15:58.335Z",
+        "homeWinProbability": 0.8304734620502491,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -15878,7 +15884,11 @@
       "status": "scheduled",
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-15T16:15:58.335Z",
+        "homeWinProbability": 0.5636440709308352,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -15912,7 +15922,11 @@
       "status": "scheduled",
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-15T16:15:58.335Z",
+        "homeWinProbability": 0.8413488650527147,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -16098,7 +16112,11 @@
       "status": "scheduled",
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-15T16:15:58.335Z",
+        "homeWinProbability": 0.8116043140785973,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },

@@ -2,7 +2,13 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { buildWeeklyContestSync, publishWeeklyContest } from '../scripts/sync-weekly-contest.js';
 
-const teams = [{ id: 'a', name: 'Alpha', division: 'fbs' }, { id: 'b', name: 'Beta', division: 'fbs' }, { id: 'c', name: 'Context', division: 'fcs' }];
+const teams = [
+  { id: 'a', name: 'Alpha', division: 'fbs' },
+  { id: 'b', name: 'Beta', division: 'fbs' },
+  { id: 'c', name: 'Context', division: 'fcs' },
+  { id: 'd', name: 'Delta', division: 'fcs' },
+  { id: 'e', name: 'Unknown', division: 'unknown' },
+];
 const publication = {
   schemaVersion: 1, season: 2026, asOf: '2026-11-10T12:00:00Z', source: { provider: 'cfbd', scheduleAsOf: '2026-11-10T11:59:00Z' }, teams,
   games: [{ id: 'g1', week: 11, seasonType: 'regular', home: 'a', away: 'b', startDate: '2026-11-11T01:00:00Z',
@@ -12,12 +18,19 @@ const publication = {
 };
 const now = '2026-11-10T12:01:00Z';
 
-test('weekly contest sync uses only saved pregame model picks and FBS matchups', () => {
+test('weekly contest sync uses saved pregame model picks for FBS vs. FBS and FBS vs. FCS', () => {
   const data = structuredClone(publication);
-  data.games.push({ ...data.games[0], id: 'fcs', away: 'c' });
+  const game = data.games[0];
+  data.games.push(
+    { ...game, id: 'fcs-away', away: 'c' },
+    { ...game, id: 'fcs-home', home: 'c', pick: { ...game.pick, homeWinProbability: .2, favored: 'away' } },
+    { ...game, id: 'both-fcs', home: 'c', away: 'd' },
+    { ...game, id: 'unknown-away', away: 'e' },
+    { ...game, id: 'unknown-home', home: 'e' },
+  );
   const payload = buildWeeklyContestSync(data, now);
-  assert.equal(payload.p_games.length, 1);
-  assert.equal(payload.p_games[0].modelTeam, 'a');
+  assert.deepEqual(payload.p_games.map(game => game.id), ['g1', 'fcs-away', 'fcs-home']);
+  assert.deepEqual(payload.p_games.map(game => game.modelTeam), ['a', 'a', 'b']);
   assert.equal(payload.p_games[0].homeWinProbability, .7);
   assert.equal(payload.p_observed_at, publication.asOf);
   assert.equal(JSON.stringify(payload).includes('replay'), false);
@@ -33,6 +46,7 @@ test('weekly contest source rejects duplicates, invalid captures, future source 
   };
   invalid(data => data.games.push(data.games[0]));
   invalid(data => { data.games[0].pick.capturedAt = data.games[0].startDate; });
+  invalid(data => { data.games[0].away = 'c'; data.games[0].pick.capturedAt = data.games[0].startDate; });
   invalid(data => { data.source.scheduleAsOf = '2026-11-10T12:00:01Z'; });
   invalid(data => { data.games[0].pick.favored = 'away'; });
   invalid(data => { data.games[0].status = 'final'; data.games[0].homePoints = 21; data.games[0].awayPoints = 7; });

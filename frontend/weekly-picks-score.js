@@ -5,10 +5,11 @@ function picksTime(value) {
 export function validWeeklyPick(game, pick, capturedAt, publicationAsOf, teams) {
   const probability = pick?.homeWinProbability;
   const capture = picksTime(capturedAt);
+  const divisions = [game.home, game.away].map(id => teams.get(id)?.division);
   return Number.isFinite(probability) && probability >= 0 && probability <= 1 &&
     pick.favored === (probability === 0.5 ? 'even' : probability > 0.5 ? 'home' : 'away') &&
     Number.isFinite(capture) && capture < picksTime(game.startDate) && capture <= picksTime(publicationAsOf) &&
-    teams.get(game.home)?.division === 'fbs' && teams.get(game.away)?.division === 'fbs';
+    divisions.includes('fbs') && divisions.every(division => division === 'fbs' || division === 'fcs');
 }
 
 const newTally = () => ({ availablePicks: 0, pendingPicks: 0, completedPicks: 0, decisivePicks: 0, correctPicks: 0, squaredError: 0 });

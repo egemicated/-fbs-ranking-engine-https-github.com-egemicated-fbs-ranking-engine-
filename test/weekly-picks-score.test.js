@@ -3,7 +3,8 @@ import test from 'node:test';
 import { weeklyPicksScore } from '../frontend/weekly-picks-score.js';
 
 const asOf = '2026-11-08T15:00:00Z';
-const teams = [{ id: 'home', division: 'fbs' }, { id: 'away', division: 'fbs' }, { id: 'fcs', division: 'fcs' }];
+const teams = [{ id: 'home', division: 'fbs' }, { id: 'away', division: 'fbs' }, { id: 'fcs', division: 'fcs' },
+  { id: 'other-fcs', division: 'fcs' }, { id: 'unknown', division: 'unknown' }];
 const capturedAt = '2026-10-30T16:00:00Z';
 const pick = (homeWinProbability = 0.75, favored = 'home') => ({ capturedAt, homeWinProbability, favored });
 const replay = (homeWinProbability = 0.75, favored = 'home') => ({ asOf: capturedAt, homeWinProbability, favored });
@@ -19,15 +20,18 @@ test('scores only valid saved picks, with different winner and probability denom
     game('tie', { homePoints: 14 }),
     game('pending', { status: 'pending', homePoints: null, awayPoints: null }),
     game('late', { pick: { ...pick(), capturedAt: '2026-11-07T20:00:00Z' }, replay: replay() }),
-    game('fcs', { away: 'fcs' }),
+    game('fcs-away', { away: 'fcs' }),
+    game('fcs-home', { home: 'fcs', homePoints: 7 }),
+    game('fcs-only', { home: 'other-fcs', away: 'fcs' }),
+    game('unknown', { away: 'unknown' }),
     game('replay', { pick: null, replay: replay(), homePoints: 7 }),
     game('estimate', { pick: null, estimate: replay() }),
     game('bad-favorite', { pick: pick(0.75, 'away') }),
     game('bad-probability', { pick: pick(1.01) }),
     game('future-capture', { startDate: '2026-11-10T20:00:00Z', status: 'scheduled', pick: { ...pick(), capturedAt: '2026-11-09T20:00:00Z' } }),
   ]);
-  const saved = { availablePicks: 5, pendingPicks: 1, completedPicks: 3, decisivePicks: 2, correctPicks: 1,
-    accuracy: 0.5, brier: (0.0625 + 0.5625 + 0.25) / 3 };
+  const saved = { availablePicks: 7, pendingPicks: 1, completedPicks: 5, decisivePicks: 4, correctPicks: 2,
+    accuracy: 0.5, brier: (0.0625 + 0.5625 + 0.25 + 0.0625 + 0.5625) / 5 };
   assert.deepEqual(result.week, { key: 'regular:10', seasonType: 'regular', week: 10, ...saved });
   assert.deepEqual(result.season, saved);
   assert.equal(result.replay.week.completedPicks, 2);

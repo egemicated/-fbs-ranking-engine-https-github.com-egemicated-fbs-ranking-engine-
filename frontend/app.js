@@ -479,7 +479,7 @@ async function loadWeeklyPicks() {
 }
 async function loadPredictability() {
   try {
-    const { weeklyPicksScore } = await import('./weekly-picks-score.js?v=predictability-score');
+    const { weeklyPicksScore } = await import('./weekly-picks-score.js?v=fcs-picks');
     if (typeof weeklyPicksScore !== 'function') throw new Error('Missing Weekly Picks scoring function');
     weeklyPicks.scoring = weeklyPicksScore;
   } catch (error) {
@@ -494,9 +494,10 @@ async function loadPredictability() {
 function validWeeklyPick(game, pick, capturedAt) {
   const p = pick?.homeWinProbability;
   const capture = picksTime(capturedAt);
+  const divisions = [game.home, game.away].map(id => weeklyPicks.teams.get(id)?.division);
   return Number.isFinite(p) && p >= 0 && p <= 1 && pick.favored === (p === .5 ? 'even' : p > .5 ? 'home' : 'away') &&
     Number.isFinite(capture) && capture < picksTime(game.startDate) && capture <= picksTime(weeklyPicks.data.asOf) &&
-    [game.home, game.away].every(id => weeklyPicks.teams.get(id).division === 'fbs');
+    divisions.includes('fbs') && divisions.every(division => division === 'fbs' || division === 'fcs');
 }
 function weeklyPreviewEstimate(game, scheduled = game.status === 'scheduled' && picksTime(game.startDate) >= picksTime(weeklyPicks.data.asOf)) {
   return scheduled && validWeeklyPick(game, game.estimate, game.estimate?.asOf);
@@ -527,7 +528,7 @@ function weeklyPicksGame(game) {
   const team = entry => state.byId.has(entry.id) ? `<a href="#team/${encodeURIComponent(entry.id)}">${esc(entry.name)}</a>` : esc(entry.name);
   return { grade, html: `<li class="weekly-game">
     <div><h3>${team(away)} ${game.neutral ? 'vs' : 'at'} ${team(home)}</h3>
-    <p class="compact-note"><time datetime="${esc(game.startDate)}">${picksDate.format(picksTime(game.startDate))}</time>${game.neutral ? ' · Neutral site' : ''}</p></div>
+    <p class="compact-note"><time datetime="${esc(game.startDate)}">${picksDate.format(picksTime(game.startDate))}</time>${game.neutral ? ' · Neutral site' : ''}${[home.division, away.division].includes('fcs') ? ' · FBS–FCS' : ''}</p></div>
     <dl class="weekly-game-details">
       <div><dt>${pickLabel}</dt><dd>${pickText}${capture ? `<small><time datetime="${esc(capture)}">${picksTimestamp.format(picksTime(capture))} MT</time></small>` : ''}</dd></div>
       <div><dt>${game.status === 'final' ? 'Final' : 'Status'}</dt><dd>${result}${grade ? ` <span class="weekly-grade ${grade.toLowerCase()}">${grade}</span>` : ''}</dd></div>
@@ -629,7 +630,7 @@ function renderWeeklyPicks() {
     const cutoff = Number.isFinite(picksTime(data.source?.scheduleAsOf)) ? data.source.scheduleAsOf : data.asOf;
     const provider = data.source?.provider === 'cfbd' ? 'CollegeFootballData' : data.source?.provider === 'sportsdataverse' ? 'sportsdataverse' : '';
     body = `<p class="compact-note">Schedule and results${provider ? ` from ${provider}` : ''} as of <time datetime="${esc(cutoff)}">${picksTimestamp.format(picksTime(cutoff))} MT</time>.${data.source?.extraScoreProvider === 'ESPN' ? ' Some final scores are from ESPN.' : ''}</p>
-      <p class="compact-note">Predictive Strength picks cover FBS vs. FBS games. Each refresh can save picks up to seven days ahead. The record grades picks saved before kickoff. Historical replays and preview odds are separate.</p>
+      <p class="compact-note">Predictive Strength picks cover FBS–FBS and FBS–FCS games. FBS–FCS win chances are uncalibrated estimates. Each refresh can save picks up to seven days ahead. The record grades picks saved before kickoff. Historical replays and preview odds are separate.</p>
       ${weeks.size ? `<div class="weekly-controls"><label for="weekly-week">Select week</label><select id="weekly-week">${[...weeks].map(([key, games]) =>
         `<option value="${esc(key)}"${key === selectedWeek ? ' selected' : ''}>${esc(weekLabel(games[0]))}</option>`).join('')}</select></div>
         <div id="weekly-results">${weeklyResults()}</div>` : '<p class="compact-note">No games in the saved schedule.</p>'}`;
@@ -817,7 +818,7 @@ function renderScenarioPage() {
 }
 function renderContestPage() {
   main.innerHTML = '<div class="wrap page-content"><p role="status">Loading Beat the Model…</p></div>';
-  contestModule ??= import('./weekly-contest.js?v=trimmed-load');
+  contestModule ??= import('./weekly-contest.js?v=fcs-picks');
   contestModule.then(({ renderWeeklyContest, unmountWeeklyContest }) => {
     if (route()[0] !== 'beat-the-model') return;
     closeContest = unmountWeeklyContest;
