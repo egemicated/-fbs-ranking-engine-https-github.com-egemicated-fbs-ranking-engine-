@@ -126,6 +126,32 @@ function activeModel(html) {
   return pressed[0][0].match(/data-value="([^"]+)"/)?.[1];
 }
 
+test('Compare Rankings lives in the hub while More still lists the other pages', async () => {
+  const page = await browser(fixture());
+  const header = page.node('#header').innerHTML;
+  assert.doesNotMatch(header, /href="#polls/);
+  assert.match(header, /<summary>More/);
+  assert.match(header, /href="#scoreboard"/);
+  assert.match(header, /href="#ranking-history"/);
+  assert.match(page.html(), /href="#polls" data-ranking-section="polls">Compare Rankings/);
+  const comparison = await page.go('#polls/ap/10');
+  assert.match(comparison, /After Week 10/);
+  assert.match(comparison, /href="#forge-top-25\/10">Forge’s full ballot for this week/);
+  assert.doesNotMatch(comparison, />Official SOR <svg/);
+});
+
+test('Home offers a single all-team link and methodology describes both subdivisions on direct load', async () => {
+  const data = fixture();
+  data.snapshot.fcsRankingMethod = { id: 'fcs-sor-reference-v1' };
+  const page = await browser({ ...data, initialRoute: '#home' });
+  assert.equal([...page.html().matchAll(/href="#rankings\/all"/g)].length, 1);
+  const methodology = await page.go('#methodology');
+  assert.match(methodology, /Three views\./);
+  assert.match(methodology, /FCS Strength of Record uses an average-strength FCS reference team/);
+  assert.match(methodology, /relative to the measured average for each subdivision/);
+  assert.deepEqual(page.calls, ['/rankings']);
+});
+
 test('Rankings Hub routes choose the tier and model independently', async () => {
   const page = await browser(fixture());
   for (const route of ['#rankings', '#rankings/sor', '#rankings/fbs/sor', '#rankings/all']) {
