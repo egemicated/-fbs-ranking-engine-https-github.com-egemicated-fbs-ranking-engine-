@@ -46,6 +46,13 @@ function matchesSnapshot(picks, snapshot) {
 }
 
 function hasUnresolvedKickoff(snapshot, picks, inWindow) {
+  const pendingFcs = snapshot.pendingFcsKickoffs;
+  if (Array.isArray(pendingFcs) && pendingFcs.some(startDate => {
+    const kickoff = Date.parse(startDate);
+    return Number.isFinite(kickoff) && inWindow(kickoff);
+  })) return true;
+  if (!matchesSnapshot(picks, snapshot)) return false;
+
   const fbs = new Set(picks.teams.filter(team => team.division === 'fbs').map(team => team.id));
   const canceled = new Set((snapshot.source.audit?.confirmedCanceledRecords ?? []).map(game => game.id));
   return picks.games.some(game => {
@@ -72,7 +79,7 @@ export function sundayNightRefreshNeeded(snapshot, picks, now = new Date()) {
   const currentTime = new Date(now).getTime();
   const fetchedAt = Date.parse(snapshot?.source?.fetchedAt);
   if (snapshot?.source?.provider !== 'cfbd' || !Number.isFinite(fetchedAt) ||
-      fetchedAt > currentTime || !matchesSnapshot(picks, snapshot)) return false;
+      fetchedAt > currentTime) return false;
 
   const sunday = mountainSunday(currentTime);
   const { hour, minute } = UPDATE_SCHEDULE.sundayNight;

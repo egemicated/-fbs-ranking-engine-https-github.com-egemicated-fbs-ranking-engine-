@@ -240,6 +240,9 @@ test('Compare and Forge remain accessible through the hub and retain dated editi
   const forge = await page.go('#forge-top-25/8');
   assert.equal(activeHubTab(forge), '#forge-top-25');
   assert.match(forge, /id="rankings-hub-content"/);
+  assert.match(forge, /<a\b[^>]*href="#polls"[^>]*>Compare Rankings<\/a>/);
+  assert.match(forge, /<select\b[^>]*id="edition-week"/);
+  assert.doesNotMatch(forge, /<a\b[^>]*class="text-link"[^>]*>Compare rankings/);
   assert.match(rankingTable(forge), /Forge’s Top 25 for After Week 8/);
   assert.deepEqual(page.calls, ['/rankings', '/ranking-editions.json']);
 });

@@ -15,7 +15,14 @@ export function buildWeeklySnapshot(season, prior, config, now = new Date()) {
   const eligible = new Set(season.games.filter(g => g.completed && Date.parse(g.startDate) <= now.getTime()).map(g => g.id));
   if (!eligible.size) throw new Error('CFBD has no completed games to publish');
   const snapshot = rankSeason(season, { config, previous: prior, gameIds: eligible });
-  return { ...snapshot, asOf: now.toISOString(), update: { schedule: UPDATE_SCHEDULE,
+  const fcs = new Set(season.teams.filter(team => team.division === 'fcs').map(team => team.id));
+  const canceled = new Set((season.source.audit?.confirmedCanceledRecords ?? []).map(game => game.id));
+  // Only keep kickoff times for the scheduler. The full source stays in the refresh workspace.
+  const pendingFcsKickoffs = [...new Set(season.games
+    .filter(game => !game.completed && game.startTimeTbd !== true && !canceled.has(game.id) &&
+      (fcs.has(game.home) || fcs.has(game.away)))
+    .map(game => new Date(game.startDate).toISOString()))].sort();
+  return { ...snapshot, pendingFcsKickoffs, asOf: now.toISOString(), update: { schedule: UPDATE_SCHEDULE,
     lastSuccessfulUpdate: now.toISOString(), provider: 'CollegeFootballData', apiCallsThisUpdate: 2,
     policy: 'Confirmed completed games available from CFBD at retrieval time' } };
 }

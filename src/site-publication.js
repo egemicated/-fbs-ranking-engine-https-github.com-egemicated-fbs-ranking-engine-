@@ -13,7 +13,7 @@ function publicationHash(snapshot) {
 }
 
 export function publicRankings(snapshot, teamDetailsPath) {
-  const { ratings, fcsRankings, ...summary } = snapshot;
+  const { ratings, fcsRankings, pendingFcsKickoffs, ...summary } = snapshot;
   return { ...summary, teamDetailsPath, publicationHash: publicationHash(snapshot),
     rankings: snapshot.rankings.map(row => selectFields(row, summaryFields)),
     ...(Array.isArray(fcsRankings) ? { fcsRankings: fcsRankings.map(row => selectFields(row, fcsSummaryFields)) } : {}) };

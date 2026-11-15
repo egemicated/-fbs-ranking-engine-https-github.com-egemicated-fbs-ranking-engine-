@@ -82,6 +82,7 @@ export function normalizeCfbd(games, roster, year, source = {}) {
     const incomplete = g.completed && ![g.homePoints, g.awayPoints].every(v => Number.isInteger(v) && v >= 0);
     if (incomplete) audit.incompleteFinals.push(String(g.id));
     return { id: String(g.id), week: g.week, seasonType: g.seasonType, startDate: g.startDate,
+      ...(typeof g.startTimeTBD === 'boolean' ? { startTimeTbd: g.startTimeTBD } : {}),
       completed: incomplete ? false : g.completed, neutral: g.neutralSite, home: String(g.homeId), away: String(g.awayId),
       homePoints: g.homePoints, awayPoints: g.awayPoints, ...(confirmedOT ? { regulationMargin: 0 } : {}) };
   });

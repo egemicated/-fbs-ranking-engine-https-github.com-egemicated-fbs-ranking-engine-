@@ -118,3 +118,15 @@ test('Sunday night does not repeat an aligned evening pull even if a game has no
   const schedule = { ...picks, source: { ...picks.source, scheduleAsOf: refreshed.source.fetchedAt, rankingAsOf: refreshed.asOf }, games: [sundayGame] };
   assert.equal(sundayNightRefreshNeeded(refreshed, schedule, '2026-11-02T03:18:00Z'), false);
 });
+
+test('FCS-only kickoffs can trigger each backup slot without adding games to Weekly Picks', () => {
+  const fcsSaturday = { ...snapshot, pendingFcsKickoffs: [lateGame.startDate] };
+  const fcsSunday = { ...snapshot, pendingFcsKickoffs: [sundayGame.startDate] };
+  const fcsMidweek = { ...snapshot, pendingFcsKickoffs: [tuesdayGame.startDate] };
+  assert.equal(weeklyRefreshNeeded(fcsSaturday, picks, catchUpTime, true), true);
+  assert.equal(midweekRefreshNeeded(fcsMidweek, picks, wednesday), true);
+  assert.equal(sundayNightRefreshNeeded(fcsSunday, picks, sundayNight), true);
+  assert.equal(sundayNightRefreshNeeded(fcsSunday, null, sundayNight), true);
+  assert.equal(sundayNightRefreshNeeded(fcsSaturday, picks, sundayNight), false);
+  assert.equal(sundayNightRefreshNeeded({ ...snapshot, pendingFcsKickoffs: ['no time supplied'] }, picks, sundayNight), false);
+});
