@@ -15,6 +15,10 @@ on:
         description: Grade Beat the Model from the saved finals without pulling CFBD
         type: boolean
         default: false
+      kickoff_sync_only:
+        description: Update confirmed ESPN kickoffs from the saved slate without pulling CFBD
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths: ['published/refresh-request.json']
@@ -41,9 +45,21 @@ jobs:
         env:
           EVENT_NAME: ${{ github.event_name }}
           CRON: ${{ github.event.schedule }}
+          PUSH_REVISION: ${{ github.sha }}
           CONTEST_SYNC_ONLY: ${{ inputs.contest_sync_only }}
+          KICKOFF_SYNC_ONLY: ${{ inputs.kickoff_sync_only }}
         run: |
-          if [[ "$CONTEST_SYNC_ONLY" == true ]]; then
+          if [[ "$EVENT_NAME" == push ]]; then
+            git cat-file -e "$PUSH_REVISION^{commit}" 2>/dev/null || git fetch --no-tags --depth=1 origin "$PUSH_REVISION"
+            request_mode=$(git show "$PUSH_REVISION:published/refresh-request.json" | node --input-type=module -e '
+              import { readFileSync } from "node:fs";
+              const { mode = "results" } = JSON.parse(readFileSync(0, "utf8"));
+              if (!["results", "kickoff-only"].includes(mode)) throw new Error("Unrecognized refresh request mode");
+              console.log(mode);
+            ')
+            if [[ "$request_mode" == kickoff-only ]]; then KICKOFF_SYNC_ONLY=true; fi
+          fi
+          if [[ "$CONTEST_SYNC_ONLY" == true || "$KICKOFF_SYNC_ONLY" == true ]]; then
             needed=false
           elif [[ "$EVENT_NAME" != schedule ]]; then
             needed=true
@@ -57,6 +73,7 @@ jobs:
             needed=$(node scripts/weekly-refresh-needed.js)
           fi
           echo "needed=$needed" >> "$GITHUB_OUTPUT"
+          echo "kickoff_only=$KICKOFF_SYNC_ONLY" >> "$GITHUB_OUTPUT"
       - if: steps.refresh-needed.outputs.needed == 'true'
         run: npm test
       - name: Fetch CFBD and calculate rankings
@@ -74,6 +91,11 @@ jobs:
         if: steps.primary-publish.outcome == 'success'
         continue-on-error: true
         run: node scripts/publish-weekly-picks.js --cohort fcs --season "data/seasons/${RANKING_SEASON}.json" --snapshot published/latest.json --output published/weekly-fcs-picks.json
+      - name: Verify confirmed kickoffs from the saved slate without pulling CFBD
+        id: kickoff-check
+        if: steps.refresh-needed.outputs.needed == 'false' && (github.event_name == 'schedule' || steps.refresh-needed.outputs.kickoff_only == 'true')
+        continue-on-error: true
+        run: node scripts/refresh-published-kickoffs.js
       - name: Record frozen achievement comparison
         if: steps.primary-publish.outcome == 'success'
         continue-on-error: true
@@ -141,7 +163,7 @@ jobs:
           if-no-files-found: warn
       - name: Save the weekly snapshot
         id: saved-snapshot
-        if: always() && steps.primary-publish.outcome == 'success'
+        if: always() && (steps.primary-publish.outcome == 'success' || steps.kickoff-check.outputs.updated == 'true')
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -165,7 +187,11 @@ jobs:
           CFP_SUPABASE_SECRET_KEY: ${{ secrets.CFP_SUPABASE_SECRET_KEY }}
         run: node scripts/sync-cfp-bracket.js
       - name: Update Beat the Model games and grade saved picks
-        if: ${{ !cancelled() && (inputs.contest_sync_only || (steps.saved-snapshot.outcome == 'success' && steps.weekly-picks.outcome == 'success')) }}
+        # Re-try the committed slate even on a later no-change check. The RPC treats an already synced observation as stale.
+        if: >-
+          ${{ !cancelled() && (inputs.contest_sync_only || steps.kickoff-check.outputs.updated == 'false' ||
+          (steps.saved-snapshot.outcome == 'success' &&
+          (steps.weekly-picks.outcome == 'success' || steps.kickoff-check.outputs.updated == 'true'))) }}
         env:
           CFP_SUPABASE_SECRET_KEY: ${{ secrets.CFP_SUPABASE_SECRET_KEY }}
         run: node scripts/sync-weekly-contest.js

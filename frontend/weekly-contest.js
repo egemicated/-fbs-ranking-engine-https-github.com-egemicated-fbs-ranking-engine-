@@ -3,11 +3,13 @@ import { renderWeeklyTeamStats } from './weekly-team-stats.js';
 import {
   contestGames, contestGameLocked, contestGameWinner, contestPickChanges,
   contestWeekKey, contestWeekLabel, defaultContestWeek, scoreContestPicks,
-} from './weekly-contest-score.js?v=kickoff-lock';
+} from './weekly-contest-score.js?v=kickoff-times';
 
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const mountainTime = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
 const date = value => Number.isFinite(Date.parse(value)) ? `${mountainTime.format(new Date(value))} MT` : '';
+const kickoffLabel = game => game.startTimeTbd === true ? 'Time TBD' :
+  `<time datetime="${escape(game.startDate)}">${escape(date(game.startDate))}</time>`;
 const percent = value => value === null ? '—' : `${(value * 100).toFixed(1)}%`;
 let stopCurrent;
 
@@ -30,7 +32,7 @@ function teamName(game, side, teams) {
   return game[`${side}Name`] || teams?.get(game[side])?.name || game[side];
 }
 
-export function renderContestGames(games, { saved = {}, draft = {}, teams, signedIn = false, busy = false, now = Date.now() } = {}) {
+export function renderContestGames(games, { saved = {}, draft = {}, teams, signedIn = false, busy = false, now = Date.now(), describeOdds } = {}) {
   if (!games.length) return '<p class="contest-empty">No eligible saved model forecasts are available for this week yet.</p>';
   return `<ul class="contest-games" aria-label="Weekly contest games">${games.map(game => {
     const locked = contestGameLocked(game, now);
@@ -39,15 +41,17 @@ export function renderContestGames(games, { saved = {}, draft = {}, teams, signe
     const changed = selected && selected !== saved[game.id] && !locked;
     const modelSide = game.modelTeam === game.home ? 'home' : 'away';
     const modelProbability = modelSide === 'home' ? game.homeWinProbability : 1 - game.homeWinProbability;
+    const oddsDescription = describeOdds?.(modelProbability, game);
     const userGrade = winner && saved[game.id] ? saved[game.id] === winner ? 'correct' : 'wrong' : '';
-    const status = game.voidReason ? 'Excluded from scoring' : winner ? 'Final' : locked ? 'Locked' : 'Open';
+    const waitingForKickoff = game.startTimeTbd === true;
+    const status = game.voidReason ? 'Excluded from scoring' : winner ? 'Final' : waitingForKickoff ? 'Awaiting kickoff time' : locked ? 'Locked' : 'Open';
     const note = game.voidReason ? game.voidReason
       : winner ? `${saved[game.id] ? `Your pick: ${userGrade === 'correct' ? 'correct · +1 point' : 'incorrect · 0 points'}. ` : 'No saved pick. ' }Model: ${game.modelTeam === winner ? 'correct' : 'incorrect'}.`
-        : changed ? 'Unsaved selection' : saved[game.id] ? 'Pick saved' : locked ? 'No saved pick' : signedIn ? 'Select your winner, then save picks.' : 'Sign in to make your pick.';
-    return `<li class="contest-game"><div class="contest-game-meta"><span>Kickoff · <time datetime="${escape(game.startDate)}">${escape(date(game.startDate))}</time></span>
+        : changed ? 'Unsaved selection' : saved[game.id] ? 'Pick saved' : waitingForKickoff ? 'Picks open when kickoff is confirmed.' : locked ? 'No saved pick' : signedIn ? 'Select your winner, then save picks.' : 'Sign in to make your pick.';
+    return `<li class="contest-game"><div class="contest-game-meta"><span>Kickoff · ${kickoffLabel(game)}</span>
       <span class="contest-lock${!locked ? ' contest-open' : ''}">${status}</span></div>
       <h3>${escape(teamName(game, 'away', teams))} at ${escape(teamName(game, 'home', teams))}</h3>
-      <p class="contest-model-pick">Model: <strong>${escape(teamName(game, modelSide, teams))}</strong> · ${percent(modelProbability)}
+      <p class="contest-model-pick">Model: <strong>${escape(teamName(game, modelSide, teams))}</strong> · ${percent(modelProbability)}${oddsDescription ? ` · ${escape(oddsDescription)}` : ''}
         <span class="sr-only">win probability, saved ${escape(date(game.modelCapturedAt))}</span></p>
       ${['away', 'home'].map(side => `<button type="button" class="contest-team${winner === game[side] ? ' is-winner' : ''}" data-contest-game="${escape(game.id)}" data-contest-team="${escape(game[side])}"
         aria-pressed="${selected === game[side]}"${!signedIn || locked || busy ? ' disabled' : ''}>
@@ -98,7 +102,7 @@ export function renderContestPlayerPicks(profile, { teams } = {}) {
     const pickName = teamName(game, game.teamId === game.home ? 'home' : 'away', teams);
     const modelName = teamName(game, game.modelTeam === game.home ? 'home' : 'away', teams);
     return `<li class="contest-player-game"><h4>${escape(teamName(game, 'away', teams))} at ${escape(teamName(game, 'home', teams))}</h4>
-      <p class="compact-note">${escape(contestWeekLabel(contestWeekKey(game)))} · <time datetime="${escape(game.startDate)}">${escape(date(game.startDate))}</time></p>
+      <p class="compact-note">${escape(contestWeekLabel(contestWeekKey(game)))} · ${kickoffLabel(game)}</p>
       <dl><div><dt>Player pick</dt><dd>${escape(pickName)}</dd></div><div><dt>Model pick</dt><dd>${escape(modelName)}</dd></div>
       <div><dt>Result</dt><dd class="${winner ? correct ? 'is-correct' : 'is-wrong' : ''}">${grade}</dd></div></dl></li>`;
   }).join('')}</ul>`;
@@ -134,7 +138,9 @@ function cleanEntry(entry, games) {
   };
 }
 
-export async function renderWeeklyContest(main, { teams = new Map(), season = 2026, statsUrl } = {}) {
+export async function renderWeeklyContest(main, options = {}) {
+  const { teams = new Map(), season = 2026, statsUrl, describeOdds } = options;
+  const preview = ['localhost', '127.0.0.1', '[::1]'].includes(globalThis.location?.hostname) ? options.preview : null;
   if (main.querySelector('[data-weekly-contest]')) return;
   unmountWeeklyContest();
   main.innerHTML = `<section class="hero page-banner"><div class="wrap"><div class="eyebrow">Weekly picks · ${escape(season)}</div>
@@ -156,23 +162,23 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
     root.onclick = event => {
       if (!event.target.closest('[data-contest-retry]')) return;
       main.querySelector('[data-weekly-contest]').remove();
-      void renderWeeklyContest(main, { teams, season, statsUrl });
+      void renderWeeklyContest(main, options);
     };
   };
 
   const statsRequest = getTeamStats(statsUrl, season);
   try {
-    const config = await getConfig();
+    const config = preview ? null : await getConfig();
     if (!current()) return;
-    if (!config?.url || !config.publishableKey || config.enabled === false) {
+    if (!preview && (!config?.url || !config.publishableKey || config.enabled === false)) {
       unavailable('The weekly contest is getting ready', 'Saved pregame picks and standings will appear here when the contest opens.');
       return;
     }
-    const client = await loadBracketClient(config);
+    const client = preview ? preview.client : await loadBracketClient(config);
     const sessionResult = await client.auth.getSession();
     if (sessionResult.error) throw sessionResult.error;
     let session = sessionResult.data?.session;
-    const signInEnabled = !session && await googleSignInEnabled(config);
+    const signInEnabled = !session && (preview ? preview.signInEnabled === true : await googleSignInEnabled(config));
     if (!current()) return;
     let contest, games = [], entry = cleanEntry(null, []), draft = {};
     let nickname = '', publicLeaderboard = false, sharePicks = false, sharePicksImmediately = false;
@@ -332,19 +338,19 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
         <h2>Your picks against the model</h2></div><div class="contest-actions">${session
           ? `<span class="compact-note">Signed in</span><button class="button light" type="button" data-contest-action="logout"${busy ? ' disabled' : ''}>Sign out</button>`
           : signInEnabled ? `<button class="button" type="button" data-contest-action="login"${busy ? ' disabled' : ''}>Continue with Google</button>` : '<span class="compact-note">Sign-in is currently unavailable.</span>'}</div></div>
-        <p>Pick winners for FBS–FBS and FBS–FCS games. <strong>Each game locks at its own kickoff.</strong> Each correct pick earns one point. FBS–FCS win chances are uncalibrated estimates.</p>
+        <p>Pick winners for FBS–FBS and FBS–FCS games. <strong>Each game locks at its own kickoff.</strong> Picks open once the kickoff time is confirmed. Each correct pick earns one point. FBS–FCS win chances are uncalibrated estimates.</p>
         ${!session ? '<p class="compact-note">Use the same Google login as your playoff bracket. Save your picks to start your record.</p>' : ''}
         <div class="contest-controls"><label for="contest-week">Select week</label><select id="contest-week"${busy || !weeks.length ? ' disabled' : ''}>
         ${weeks.map(key => `<option value="${escape(key)}"${key === week ? ' selected' : ''}>${escape(contestWeekLabel(key))}</option>`).join('')}</select>
         <button type="button" class="button light" data-contest-action="refresh"${busy ? ' disabled' : ''}>Refresh results</button>
         <a class="button light" href="#compare/weekly">Model picks and results</a></div>
-        <p class="compact-note">${contest.observedAt ? `Results updated ${escape(date(contest.observedAt))}. ` : ''}${open} ${open === 1 ? 'game open' : 'games open'} for this week. Game times are Mountain Time.</p>
+        <p class="compact-note">${contest.observedAt ? `Contest updated ${escape(date(contest.observedAt))}. ` : ''}${open} ${open === 1 ? 'game open' : 'games open'} for this week. Game times are Mountain Time.</p>
         ${week ? renderContestScores(games, entry.picks, week) : '<p class="contest-empty">The contest will open when an eligible upcoming model forecast is saved.</p>'}
         <p class="contest-message${messageError ? ' is-error' : ''}" role="status" aria-live="polite">${escape(message)}</p></div></section>
         <nav class="matchup-views contest-tabs" aria-label="Weekly contest views"><button type="button" class="button${view === 'picks' ? '' : ' light'}" data-contest-view="picks" aria-pressed="${view === 'picks'}">My picks</button>
         <button type="button" class="button${view === 'leaderboard' ? '' : ' light'}" data-contest-view="leaderboard" aria-pressed="${view === 'leaderboard'}">Leaderboards</button></nav>
         ${view === 'picks' ? `<section class="panel"><div class="panel-body"><div class="contest-heading"><h2>${week ? escape(contestWeekLabel(week)) : 'Upcoming games'}</h2><span class="compact-note">${selectedGames.length} eligible games</span></div>
-          ${renderContestGames(selectedGames, { saved: entry.picks, draft, teams, signedIn: Boolean(session), busy, now: now() })}
+          ${renderContestGames(selectedGames, { saved: entry.picks, draft, teams, signedIn: Boolean(session), busy, now: now(), describeOdds })}
           ${session ? `<form data-contest-save class="contest-save-row"><label for="contest-nickname">Leaderboard nickname</label>
             <input id="contest-nickname" name="nickname" value="${escape(nickname)}" minlength="2" maxlength="30" autocomplete="nickname" required${busy ? ' disabled' : ''}>
             <span class="contest-save-state" data-contest-save-state>${saveState()}</span>
@@ -489,7 +495,7 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
           if (error) throw error;
           session = null;
           main.querySelector('[data-weekly-contest]')?.remove();
-          void renderWeeklyContest(main, { teams, season, statsUrl });
+          void renderWeeklyContest(main, options);
           return;
         }
       } catch {
@@ -505,7 +511,7 @@ export async function renderWeeklyContest(main, { teams = new Map(), season = 20
       setTimeout(() => {
         if (!current()) return;
         main.querySelector('[data-weekly-contest]')?.remove();
-        void renderWeeklyContest(main, { teams, season, statsUrl });
+        void renderWeeklyContest(main, options);
       }, 0);
     })?.data?.subscription;
     timer = setInterval(() => {

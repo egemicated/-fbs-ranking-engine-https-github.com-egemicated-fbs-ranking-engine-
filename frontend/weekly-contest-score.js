@@ -22,14 +22,15 @@ export function contestGames(contest) {
     return (game.eligible === true || Boolean(game.voidReason)) && teamId(game.home) && teamId(game.away) && game.home !== game.away &&
       [game.home, game.away].includes(game.modelTeam) && Number.isInteger(game.week) && game.week >= 0 &&
       ['regular', 'postseason'].includes(game.seasonType) && Number.isFinite(isoTime(game.startDate)) &&
-      Number.isFinite(isoTime(game.modelCapturedAt)) && isoTime(game.modelCapturedAt) < isoTime(game.startDate) &&
+      Number.isFinite(isoTime(game.modelCapturedAt)) && (game.startTimeTbd === true || isoTime(game.modelCapturedAt) < isoTime(game.startDate)) &&
       Number.isFinite(game.homeWinProbability) && game.homeWinProbability >= 0 && game.homeWinProbability <= 1 &&
       game.homeWinProbability !== .5 && game.modelTeam === (game.homeWinProbability > .5 ? game.home : game.away);
   }).sort((a, b) => isoTime(a.startDate) - isoTime(b.startDate) || a.id.localeCompare(b.id));
 }
 
 export function contestGameLocked(game, now = Date.now()) {
-  return game.locked === true || Boolean(game.voidReason) || game.status === 'final' || now >= isoTime(game.startDate);
+  return game.locked === true || game.startTimeTbd === true || Boolean(game.voidReason) ||
+    game.status === 'final' || now >= isoTime(game.startDate);
 }
 
 export function contestGameWinner(game) {

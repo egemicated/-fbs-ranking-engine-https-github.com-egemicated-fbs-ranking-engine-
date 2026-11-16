@@ -6,6 +6,8 @@ import { publishDivisionSnapshot, readPublicationPolicy } from '../src/publicati
 import { publishFcsSnapshot } from '../src/fcs-publication.js';
 import { buildUpcomingTeamSchedule, publicRankings, publicTeamDetails } from '../src/site-publication.js';
 import { matchupValidation, snapshotCoverage } from '../src/site-validation.js';
+import { readRankingMovement } from '../src/ranking-movement.js';
+import { buildHomeHighlights } from '../src/home-highlights.js';
 import { UPDATE_SCHEDULE } from '../src/weekly.js';
 import { buildWeeklyTeamStats } from '../frontend/weekly-team-stats.js';
 import { browserSorSource, buildScenarioPublication } from '../src/scenario-publication.js';
@@ -32,13 +34,17 @@ const fbsSnapshot = publishDivisionSnapshot(input, policy, {
 });
 const snapshot = publishFcsSnapshot(fbsSnapshot, policy);
 const weeklySource = readFile(join(published, 'weekly-picks.json'), 'utf8').then(JSON.parse);
-const [performance, fcsPicks, fbsPicks] = await Promise.all([
+const [performance, fcsPicks, fbsPicks, movement] = await Promise.all([
   readPublicPerformance(published, snapshot),
   readFcsWeeklyPicks(published, snapshot),
   weeklySource.catch(() => null),
+  readRankingMovement(join(frontend, 'ranking-history.json'), snapshot),
 ]);
 const schedule = buildUpcomingTeamSchedule(snapshot, fbsPicks, fcsPicks);
 const publicSnapshot = publicRankings(snapshot, '/data/teams', true);
+if (movement) publicSnapshot.rankingMovement = movement;
+const weekHighlights = buildHomeHighlights(snapshot, fbsPicks);
+if (weekHighlights) publicSnapshot.weekHighlights = weekHighlights;
 if (snapshot.update) publicSnapshot.update = { ...snapshot.update, schedule: UPDATE_SCHEDULE };
 publicSnapshot.rankingMethod = { ...snapshot.rankingMethod, publicationStatus: 'official' };
 publicSnapshot.coverageValidation = snapshotCoverage(snapshot);

@@ -5,6 +5,7 @@ import { buildWeeklySnapshot } from '../src/weekly.js';
 import { saveEvidence } from '../src/evidence.js';
 import { readPublicationPolicy, publishDivisionSnapshot } from '../src/publication.js';
 import { saveSorHistory } from '../src/ranking-history.js';
+import { verifySeasonKickoffs } from '../src/kickoff-times.js';
 
 if (!process.env.CFBD_API_KEY) throw new Error('Add the CFBD_API_KEY GitHub Actions repository secret; no data was published');
 const year = Number(process.env.RANKING_SEASON || 2026);
@@ -16,7 +17,10 @@ const publicationPolicy = await readPublicationPolicy();
 let snapshot;
 const attemptStartedAt = new Date().toISOString();
 try {
-  const season = await importSeason(year, resolve('data'), { provider: 'cfbd', refresh: true });
+  const input = await importSeason(year, resolve('data'), { provider: 'cfbd', refresh: true });
+  const previousPicks = await readFile('published/weekly-picks.json', 'utf8').then(JSON.parse).catch(() => null);
+  const season = await verifySeasonKickoffs(input, previousPicks);
+  if (season !== input) await atomicJson(join('data', 'seasons', `${year}.json`), season);
   snapshot = publishDivisionSnapshot(buildWeeklySnapshot(season, prior, config), publicationPolicy);
   let existing;
   try { existing = JSON.parse(await readFile('published/latest.json', 'utf8')); }

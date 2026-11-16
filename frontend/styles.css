@@ -314,4 +314,28 @@ ul.edition-notice{padding-inline-start:20px}
   }
   .nav-more.active-on-mobile summary { color: #064cac; background: #dfeafb; border-color: #bfd4ee; }
 }
+.rank-with-movement { display: inline-flex; align-items: baseline; gap: 2px; white-space: nowrap; }
+.rank-movement { font-size: 11px; font-weight: 750; font-variant-numeric: tabular-nums; }
+.rank-movement.up { color: #1c6640; }
+.rank-movement.down { color: #a23733; }
+.rank-movement.even, .rank-movement-note { color: var(--muted); }
+.rank-movement-note { font-size: 12px; }
+.results-movement-context { padding: 0 20px 10px; }
+.home-week { margin-bottom: 18px; }
+.home-week .panel-head { padding-block: 11px; }
+.home-week-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 195px), 1fr)); }
+.home-week-links > a { display: grid; gap: 2px; padding: 10px 16px; box-shadow: inset 0 1px var(--line); }
+.home-week-links > a:hover { background: #edf4ff; }
+.home-week-links > a:focus-visible { outline-offset: -3px; }
+.home-week-links span, .home-week-links small { color: var(--muted); font-size: 12px; }
+.home-week-links strong { font-size: 15px; }
+.team-favorite-action { margin-top: 9px; }
+.prediction-odds-description { font-weight: 700; }
+@media (max-width: 550px) {
+  .rank-with-movement .table-rank { min-width: 19px; }
+  .rank-with-movement { gap: 1px; }
+  .rank-movement { font-size: 10px; }
+  .home-week-links > a { grid-template-columns: minmax(90px, 32%) minmax(0, 1fr); gap: 0 8px; }
+  .home-week-links small { grid-column: 2; }
+}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}

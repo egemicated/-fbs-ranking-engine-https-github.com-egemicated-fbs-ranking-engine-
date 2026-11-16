@@ -74,12 +74,12 @@
 .scoreboard-teams { flex: 1; display: grid; gap: 7px; padding: 9px 12px; }
 .scoreboard-team {
   display: grid;
-  grid-template-columns: 26px 29px minmax(0, 1fr) auto;
+  grid-template-columns: 47px 29px minmax(0, 1fr) auto;
   gap: 8px;
   align-items: center;
   min-height: 29px;
 }
-.scoreboard-team-rank { text-align: right; color: var(--muted); font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.scoreboard-team-rank { text-align: right; color: var(--muted); font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .scoreboard-team .logo { width: 29px; height: 29px; }
 .scoreboard-team-name { overflow-wrap: anywhere; font-size: 13px; line-height: 1.25; }
 .scoreboard-team-name small { color: var(--muted); font-size: 11px; display: block; margin-top: 3px; }

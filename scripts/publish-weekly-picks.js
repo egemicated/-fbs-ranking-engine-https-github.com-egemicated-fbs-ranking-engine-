@@ -164,6 +164,9 @@ export function buildWeeklyPicks(season, snapshot, { capturedAt, prior = null, p
     }
     return { id, week, seasonType, home, away, startDate, neutral, status,
       ...(typeof game.startTimeTbd === 'boolean' ? { startTimeTbd: game.startTimeTbd } : {}),
+      ...(game.kickoffSource === 'espn' ? {
+        kickoffSource: game.kickoffSource, kickoffVerifiedAt: game.kickoffVerifiedAt, kickoffOriginalDate: game.kickoffOriginalDate,
+      } : {}),
       homePoints: status === 'final' ? game.homePoints : null, awayPoints: status === 'final' ? game.awayPoints : null,
       pick, estimate, replay };
   }).sort((a, b) => a.startDate.localeCompare(b.startDate) || a.id.localeCompare(b.id));
@@ -173,6 +176,7 @@ export function buildWeeklyPicks(season, snapshot, { capturedAt, prior = null, p
     ({ id, name, division, conference: conference ?? null })).sort((a, b) => a.id.localeCompare(b.id));
   return {
     schemaVersion: 1, season: season.year, asOf: capturedAt,
+    ...(live && !fcsCohort ? { kickoffVerificationAsOf: capturedAt } : {}),
     source: {
       provider: season.source.provider, scheduleAsOf: season.source.fetchedAt,
       ...(season.source.extraScoreProvider === 'ESPN' ? { extraScoreProvider: 'ESPN' } : {}),

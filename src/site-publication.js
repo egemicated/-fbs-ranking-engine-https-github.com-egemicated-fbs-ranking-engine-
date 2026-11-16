@@ -17,7 +17,7 @@ function publicationHash(snapshot) {
 function teamScheduleVersion(snapshot) {
   const fetchedAt = snapshot.source?.fetchedAt;
   if (snapshot.source?.provider !== 'cfbd' || !Number.isFinite(Date.parse(fetchedAt))) return {};
-  return { teamDetailsVersion: `${publicationHash(snapshot)}:${fetchedAt}` };
+  return { teamDetailsVersion: `${publicationHash(snapshot)}:${snapshot.kickoffVerificationAsOf ?? fetchedAt}` };
 }
 
 function alignedWeeklyPicks(snapshot, picks, fcs) {

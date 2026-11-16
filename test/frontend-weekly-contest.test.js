@@ -18,8 +18,10 @@ test('the contest admits only actual saved pregame favorites and retains voided 
   const rows = [game('ok'), game('replay', { eligible: false, modelTeam: null }),
     game('late', { modelCapturedAt: startDate }), game('even', { homeWinProbability: .5 }),
     game('mismatch', { modelTeam: 'a-mismatch' }), game('unknown', { eligible: false }),
-    game('void', { eligible: false, voidReason: 'Game no longer available for contest scoring' })];
-  assert.deepEqual(contestGames(publication(rows)).map(game => game.id), ['ok', 'void']);
+    game('void', { eligible: false, voidReason: 'Game no longer available for contest scoring' }),
+    game('paused', { startTimeTbd: true, modelCapturedAt: startDate })];
+  assert.deepEqual(contestGames(publication(rows)).map(game => game.id), ['ok', 'paused', 'void']);
+  assert.equal(contestGameLocked(rows.at(-1), Date.parse(startDate) - 1), true);
   assert.throws(() => contestGames(publication([game('same'), game('same')])), /Invalid weekly contest game/);
   assert.throws(() => contestGames({ ...publication([]), serverNow: null }), /Invalid weekly contest/);
 });

@@ -1,0 +1,16 @@
+{
+  "season": {"type":2,"year":2026},
+  "week": {"number":12},
+  "events": [
+    {"id":"401858302","competitions":[{"id":"401858302","date":"2026-11-21T05:00Z","dateValid":true,"timeValid":false,"neutralSite":false,"status":{"type":{"state":"pre"}},"competitors":[{"id":"2390","homeAway":"home"},{"id":"259","homeAway":"away"}]}]},
+    {"id":"401858306","competitions":[{"id":"401858306","date":"2026-11-21T05:00Z","dateValid":true,"timeValid":false,"neutralSite":false,"status":{"type":{"state":"pre"}},"competitors":[{"id":"97","homeAway":"home"},{"id":"221","homeAway":"away"}]}]},
+    {"id":"401862835","competitions":[{"id":"401862835","date":"2026-11-21T05:00Z","dateValid":true,"timeValid":false,"neutralSite":false,"status":{"type":{"state":"pre"}},"competitors":[{"id":"2655","homeAway":"home"},{"id":"249","homeAway":"away"}]}]},
+    {"id":"401856866","competitions":[{"id":"401856866","date":"2026-11-21T17:00Z","dateValid":true,"timeValid":true,"neutralSite":false,"status":{"type":{"state":"pre"}},"competitors":[{"id":"2305","homeAway":"home"},{"id":"252","homeAway":"away"}]}]},
+    {"id":"401858310","competitions":[{"id":"401858310","date":"2026-11-21T17:00Z","dateValid":true,"timeValid":true,"neutralSite":false,"status":{"type":{"state":"pre"}},"competitors":[{"id":"59","homeAway":"home"},{"id":"154","homeAway":"away"}]}]},
+    {"id":"401856868","competitions":[{"id":"401856868","date":"2026-11-21T18:00Z","dateValid":true,"timeValid":true,"neutralSite":false,"status":{"type":{"state":"pre"}},"competitors":[{"id":"277","homeAway":"home"},{"id":"248","homeAway":"away"}]}]},
+    {"id":"401856871","competitions":[{"id":"401856871","date":"2026-11-21T20:30Z","dateValid":true,"timeValid":true,"neutralSite":false,"status":{"type":{"state":"pre"}},"competitors":[{"id":"239","homeAway":"home"},{"id":"2641","homeAway":"away"}]}]},
+    {"id":"401856865","competitions":[{"id":"401856865","date":"2026-11-22T00:00Z","dateValid":true,"timeValid":true,"neutralSite":false,"status":{"type":{"state":"pre"}},"competitors":[{"id":"2306","homeAway":"home"},{"id":"12","homeAway":"away"}]}]},
+    {"id":"401862836","competitions":[{"id":"401862836","date":"2026-11-22T01:00Z","dateValid":true,"timeValid":true,"neutralSite":false,"status":{"type":{"state":"pre"}},"competitors":[{"id":"5","homeAway":"home"},{"id":"2636","homeAway":"away"}]}]},
+    {"id":"401856872","competitions":[{"id":"401856872","date":"2026-11-22T02:00Z","dateValid":true,"timeValid":true,"neutralSite":false,"status":{"type":{"state":"pre"}},"competitors":[{"id":"2628","homeAway":"home"},{"id":"254","homeAway":"away"}]}]}
+  ]
+}

@@ -7,6 +7,9 @@ const dragSlop = 8;
 const gameDate = new Intl.DateTimeFormat('en-US', {
   timeZone: 'America/Denver', weekday: 'short', month: 'short', day: 'numeric',
 });
+const gameDateOnly = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'UTC', weekday: 'short', month: 'short', day: 'numeric',
+});
 const gameTime = new Intl.DateTimeFormat('en-US', {
   timeZone: 'America/Denver', hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
 });
@@ -125,8 +128,7 @@ async function advanceSlate(signal, current) {
 
 function kickoff(game) {
   if (!Number.isFinite(game.start)) return 'Kickoff TBD';
-  const date = gameDate.format(game.start);
-  return game.timeTbd ? `${date} · Time TBD` : `${date} · ${gameTime.format(game.start)}`;
+  return game.timeTbd ? `${gameDateOnly.format(game.start)} · Time TBD` : `${gameDate.format(game.start)} · ${gameTime.format(game.start)}`;
 }
 
 function teamLine(team, game, leader) {
@@ -431,7 +433,7 @@ export function mountScoreboard(root, rankForTeam = () => undefined) {
     if (!previous) return;
     for (const cell of sectionList.querySelectorAll('[data-scoreboard-rank]')) {
       const rank = rankForTeam(cell.dataset.scoreboardRank, previous.year);
-      const label = Number.isInteger(rank) && rank >= 1 && rank <= 25 ? `#${rank}` : '';
+      const label = Number.isInteger(rank) && rank >= 1 && rank <= 25 ? `CFP #${rank}` : '';
       if (cell.textContent !== label) cell.textContent = label;
     }
   }

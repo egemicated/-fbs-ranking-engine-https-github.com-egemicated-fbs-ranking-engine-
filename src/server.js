@@ -8,6 +8,8 @@ import { readPublicPerformance } from './public-performance.js';
 import { readFcsWeeklyPicks } from './weekly-fcs-publication.js';
 import { buildUpcomingTeamSchedule, publicRankings, publicTeamDetails } from './site-publication.js';
 import { matchupValidation, snapshotCoverage } from './site-validation.js';
+import { readRankingMovement } from './ranking-movement.js';
+import { buildHomeHighlights } from './home-highlights.js';
 import { buildWeeklyTeamStats } from '../frontend/weekly-team-stats.js';
 import { browserSorSource, buildScenarioPublication } from './scenario-publication.js';
 
@@ -21,6 +23,9 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     ['/app.js', ['app.js', 'text/javascript; charset=utf-8']],
     ['/scoreboard.js', ['scoreboard.js', 'text/javascript; charset=utf-8']],
     ['/scoreboard.css', ['scoreboard.css', 'text/css; charset=utf-8']],
+    ['/my-team.js', ['my-team.js', 'text/javascript; charset=utf-8']],
+    ['/my-team-colors.js', ['my-team-colors.js', 'text/javascript; charset=utf-8']],
+    ['/my-team.css', ['my-team.css', 'text/css; charset=utf-8']],
     ['/bracket.js', ['bracket.js', 'text/javascript; charset=utf-8']],
     ['/bracket-board.js', ['bracket-board.js', 'text/javascript; charset=utf-8']],
     ['/bracket-auth.js', ['bracket-auth.js', 'text/javascript; charset=utf-8']],
@@ -137,8 +142,17 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
         publicSnapshot.coverageValidation = snapshotCoverage(snapshot);
         publicSnapshot.matchupValidation = matchupValidation(snapshot);
       }
-      if (await readPublicPerformance(snapshotDirectory, snapshot)) publicSnapshot.performanceEndpoint = '/performance';
-      if (!year && await readFcsWeeklyPicks(publicationDirectory, snapshot)) publicSnapshot.weeklyFcsPicksEndpoint = '/weekly-fcs-picks';
+      const [performance, fcsPicks, movement, fbsPicks] = await Promise.all([
+        readPublicPerformance(snapshotDirectory, snapshot),
+        !year && readFcsWeeklyPicks(publicationDirectory, snapshot),
+        !year && readRankingMovement(join(frontendDirectory, 'ranking-history.json'), snapshot),
+        !year && readFile(join(publicationDirectory, 'weekly-picks.json'), 'utf8').then(JSON.parse).catch(() => null),
+      ]);
+      if (performance) publicSnapshot.performanceEndpoint = '/performance';
+      if (fcsPicks) publicSnapshot.weeklyFcsPicksEndpoint = '/weekly-fcs-picks';
+      if (movement) publicSnapshot.rankingMovement = movement;
+      const weekHighlights = buildHomeHighlights(snapshot, fbsPicks);
+      if (weekHighlights) publicSnapshot.weekHighlights = weekHighlights;
       return send(200, publicSnapshot);
     } catch (e) { return send(e.code === 'ENOENT' ? 503 : 500, { error: e.code === 'ENOENT' ? 'Rankings have not been built for this season' : 'Could not read rankings' }); }
   });

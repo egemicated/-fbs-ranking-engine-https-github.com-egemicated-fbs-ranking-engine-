@@ -60,6 +60,7 @@ export function buildWeeklyContestSync(artifact, now = new Date()) {
     }
     games.push({ id: game.id, week: game.week, seasonType: game.seasonType, home: home.id, away: away.id,
       homeName: home.name, awayName: away.name, startDate: game.startDate, neutral: game.neutral, status: game.status,
+      ...(typeof game.startTimeTbd === 'boolean' ? { startTimeTbd: game.status !== 'final' && game.startTimeTbd } : {}),
       homePoints: game.status === 'final' ? game.homePoints : null,
       awayPoints: game.status === 'final' ? game.awayPoints : null,
       modelTeam, modelCapturedAt, homeWinProbability });
