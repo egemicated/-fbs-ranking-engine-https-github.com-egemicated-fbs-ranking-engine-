@@ -87,6 +87,14 @@ jobs:
         if: steps.primary-publish.outcome == 'success'
         continue-on-error: true
         run: node scripts/publish-weekly-picks.js --season "data/seasons/${RANKING_SEASON}.json" --snapshot published/latest.json --output published/weekly-picks.json
+      - name: Record paired pregame forecasts for the recent-form trial
+        if: steps.weekly-picks.outcome == 'success'
+        continue-on-error: true
+        run: node research/capture-recent-form-shadow.mjs
+      - name: Grade the recent-form trial against verified finals
+        if: steps.weekly-picks.outcome == 'success'
+        continue-on-error: true
+        run: node research/evaluate-recent-form-shadow.mjs
       - name: Save FCS weekly picks from the same refresh
         if: steps.primary-publish.outcome == 'success'
         continue-on-error: true
@@ -159,6 +167,8 @@ jobs:
             evidence/weekly/division-comparison.json
             research/blend-observations/*.json
             research/blend-evaluations/latest.json
+            research/recent-form-observations/*.json
+            research/recent-form-evaluations/latest.json
           retention-days: 14
           if-no-files-found: warn
       - name: Save the weekly snapshot
@@ -176,6 +186,8 @@ jobs:
           git add research/division-observations/
           git add research/blend-observations/
           git add research/blend-evaluations/
+          git add research/recent-form-observations/
+          if test -f research/recent-form-evaluations/latest.json; then git add research/recent-form-evaluations/latest.json; fi
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Publish weekly CFBD rankings'
           git pull --rebase origin main

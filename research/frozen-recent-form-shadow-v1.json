@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "recent-form-shadow-v1",
+  "season": 2026,
+  "frozenAt": "2026-11-16T14:53:35.000Z",
+  "forecastHorizonDays": 7,
+  "baseline": {
+    "modelVersion": "0.2.0",
+    "strengthConfig": {
+      "ridge": 3,
+      "retention": 0.75,
+      "homeAdvantage": 2.5,
+      "marginCap": 28,
+      "probabilityScale": 14
+    },
+    "probabilityScale": 6.147406563247917
+  },
+  "coefficients": {
+    "graph": 0.2540683417149627,
+    "residual": -0.010280561743755447,
+    "ageHalfLife": 35,
+    "residualHalfLife": 21,
+    "residualPriorGames": 3
+  },
+  "historicalReplay": {
+    "fitSeasons": [
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019
+    ],
+    "selectionSeasons": [
+      2021,
+      2022
+    ],
+    "evaluationSeasons": [
+      2023,
+      2024,
+      2025
+    ],
+    "pairedGames": 2398,
+    "strength": {
+      "correct": 1709,
+      "brier": 0.1832462519718631,
+      "logLoss": 0.5413543665527801
+    },
+    "recentForm": {
+      "correct": 1710,
+      "brier": 0.18306897688211668,
+      "logLoss": 0.540820628145973
+    },
+    "interpretation": "Retrospective odds and winner gains are small. The paired week-block ranges cross zero for both probability scores."
+  },
+  "capture": "Compare only a newly issued and confirmed-kickoff FBS–FBS pick with a challenger at the exact same results checkpoint. Save only future games within seven days, using the real capture time.",
+  "evaluation": "Grade one first valid pair per game against a later verified final. Keep pending and excluded games visible in the tally. Use Brier and log loss to judge probability quality and report winner accuracy separately.",
+  "implementationSha256": {
+    "data/matchup-validation.json": "6e202565e2abd362d6b5c5a681e7bc7568ff2303c70d79b13a431926ccd7595b",
+    "data/model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+    "frontend/weekly-picks-score.js": "bd3de8ca32420e5b9acdb46524a71ff5164882a09153163974b45650f2118b75",
+    "research/capture-recent-form-shadow.mjs": "95db1654e08d34a3555c9d0c578e6ae3cdc5d168c2f60b57e8579a1c4f2099c4",
+    "research/evaluate-recent-form-shadow.mjs": "df4d8a5858188d92d2a86b391a0a489fff0f17eccabae9a960ee1ccc96d163ab",
+    "research/lib/recent-form-shadow.mjs": "ddf7958d095b5272d6a22f83e23b66946c0306db98d897cddc4678da3dbcf282",
+    "scripts/publish-weekly-picks.js": "40fd5dbb5b65623f2cd03c110e6463fe39e253d751ba19c9b8be82c607084d4e",
+    "src/engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+    "src/site-validation.js": "30fce63e9676e09a60ae15c989df5d01ae2ab7b74f9c8e6657b138c4c8475195",
+    "src/weekly.js": "9582cbadc95f1b78c527c8e99342d8653d705c61ba8c9c545365bf7e0e492382"
+  }
+}
