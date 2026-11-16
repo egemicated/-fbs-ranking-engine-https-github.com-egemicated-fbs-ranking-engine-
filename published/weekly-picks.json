@@ -1,12 +1,13 @@
 {
   "schemaVersion": 1,
   "season": 2026,
-  "asOf": "2026-11-16T00:07:36.952Z",
+  "asOf": "2026-11-16T11:04:58.251Z",
+  "kickoffVerificationAsOf": "2026-11-16T11:04:58.251Z",
   "source": {
     "provider": "cfbd",
-    "scheduleAsOf": "2026-11-15T18:04:39.844Z",
-    "rankingAsOf": "2026-11-15T18:04:41.489Z",
-    "snapshotHash": "acdeb4ce794a5c5c202d3ebacae7128c9e5964f000fbe20349e79daf8c7e5ef2",
+    "scheduleAsOf": "2026-11-16T11:04:55.596Z",
+    "rankingAsOf": "2026-11-16T11:04:56.531Z",
+    "snapshotHash": "1723941897aeed438ef3540b27177e8c6fdd99687cb2e138f91bac9518f4737f",
     "modelVersion": "0.2.0",
     "probabilityScale": 6.147406563247917,
     "calibrated": true,
@@ -15986,10 +15987,10 @@
       "away": "145",
       "startDate": "2026-11-15T18:00:00.000Z",
       "neutral": false,
-      "status": "pending",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 24,
+      "awayPoints": 17,
       "pick": {
         "capturedAt": "2026-11-08T15:51:33.734Z",
         "homeWinProbability": 0.42378055331868053,
@@ -16239,66 +16240,6 @@
       "replay": null
     },
     {
-      "id": "401858302",
-      "week": 12,
-      "seasonType": "regular",
-      "home": "2390",
-      "away": "259",
-      "startDate": "2026-11-21T05:00:00.000Z",
-      "neutral": false,
-      "status": "scheduled",
-      "startTimeTbd": true,
-      "homePoints": null,
-      "awayPoints": null,
-      "pick": {
-        "capturedAt": "2026-11-14T17:02:40.824Z",
-        "homeWinProbability": 0.9412167905537754,
-        "favored": "home"
-      },
-      "estimate": null,
-      "replay": null
-    },
-    {
-      "id": "401858306",
-      "week": 12,
-      "seasonType": "regular",
-      "home": "97",
-      "away": "221",
-      "startDate": "2026-11-21T05:00:00.000Z",
-      "neutral": false,
-      "status": "scheduled",
-      "startTimeTbd": true,
-      "homePoints": null,
-      "awayPoints": null,
-      "pick": {
-        "capturedAt": "2026-11-14T17:02:40.824Z",
-        "homeWinProbability": 0.8048391114474349,
-        "favored": "home"
-      },
-      "estimate": null,
-      "replay": null
-    },
-    {
-      "id": "401862835",
-      "week": 12,
-      "seasonType": "regular",
-      "home": "2655",
-      "away": "249",
-      "startDate": "2026-11-21T05:00:00.000Z",
-      "neutral": false,
-      "status": "scheduled",
-      "startTimeTbd": true,
-      "homePoints": null,
-      "awayPoints": null,
-      "pick": {
-        "capturedAt": "2026-11-14T17:02:40.824Z",
-        "homeWinProbability": 0.2136214466191471,
-        "favored": "away"
-      },
-      "estimate": null,
-      "replay": null
-    },
-    {
       "id": "401856748",
       "week": 12,
       "seasonType": "regular",
@@ -16339,26 +16280,6 @@
       "replay": null
     },
     {
-      "id": "401856752",
-      "week": 12,
-      "seasonType": "regular",
-      "home": "201",
-      "away": "245",
-      "startDate": "2026-11-21T17:00:00.000Z",
-      "neutral": false,
-      "status": "scheduled",
-      "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
-      "pick": {
-        "capturedAt": "2026-11-14T17:02:40.824Z",
-        "homeWinProbability": 0.5906041455485643,
-        "favored": "home"
-      },
-      "estimate": null,
-      "replay": null
-    },
-    {
       "id": "401856866",
       "week": 12,
       "seasonType": "regular",
@@ -16376,10 +16297,7 @@
         "favored": "away"
       },
       "estimate": null,
-      "replay": null,
-      "kickoffSource": "espn",
-      "kickoffVerifiedAt": "2026-11-16T00:07:36.952Z",
-      "kickoffOriginalDate": "2026-11-21T05:00:00.000Z"
+      "replay": null
     },
     {
       "id": "401856867",
@@ -16439,10 +16357,7 @@
         "favored": "away"
       },
       "estimate": null,
-      "replay": null,
-      "kickoffSource": "espn",
-      "kickoffVerifiedAt": "2026-11-16T00:07:36.952Z",
-      "kickoffOriginalDate": "2026-11-21T05:00:00.000Z"
+      "replay": null
     },
     {
       "id": "401858530",
@@ -16545,6 +16460,26 @@
       "replay": null
     },
     {
+      "id": "401862835",
+      "week": 12,
+      "seasonType": "regular",
+      "home": "2655",
+      "away": "249",
+      "startDate": "2026-11-21T17:00:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-14T17:02:40.824Z",
+        "homeWinProbability": 0.2136214466191471,
+        "favored": "away"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
       "id": "401858305",
       "week": 12,
       "seasonType": "regular",
@@ -16602,10 +16537,7 @@
         "favored": "away"
       },
       "estimate": null,
-      "replay": null,
-      "kickoffSource": "espn",
-      "kickoffVerifiedAt": "2026-11-16T00:07:36.952Z",
-      "kickoffOriginalDate": "2026-11-21T05:00:00.000Z"
+      "replay": null
     },
     {
       "id": "401871080",
@@ -16905,10 +16837,7 @@
         "favored": "away"
       },
       "estimate": null,
-      "replay": null,
-      "kickoffSource": "espn",
-      "kickoffVerifiedAt": "2026-11-16T00:07:36.952Z",
-      "kickoffOriginalDate": "2026-11-21T05:00:00.000Z"
+      "replay": null
     },
     {
       "id": "401858304",
@@ -17005,6 +16934,26 @@
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.8307554231994241,
+        "favored": "home"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
+      "id": "401856752",
+      "week": 12,
+      "seasonType": "regular",
+      "home": "201",
+      "away": "245",
+      "startDate": "2026-11-21T20:45:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-14T17:02:40.824Z",
+        "homeWinProbability": 0.5906041455485643,
         "favored": "home"
       },
       "estimate": null,
@@ -17148,10 +17097,27 @@
         "favored": "away"
       },
       "estimate": null,
-      "replay": null,
-      "kickoffSource": "espn",
-      "kickoffVerifiedAt": "2026-11-16T00:07:36.952Z",
-      "kickoffOriginalDate": "2026-11-21T05:00:00.000Z"
+      "replay": null
+    },
+    {
+      "id": "401858302",
+      "week": 12,
+      "seasonType": "regular",
+      "home": "2390",
+      "away": "259",
+      "startDate": "2026-11-22T00:00:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-14T17:02:40.824Z",
+        "homeWinProbability": 0.9412167905537754,
+        "favored": "home"
+      },
+      "estimate": null,
+      "replay": null
     },
     {
       "id": "401864544",
@@ -17234,6 +17200,26 @@
       "replay": null
     },
     {
+      "id": "401858306",
+      "week": 12,
+      "seasonType": "regular",
+      "home": "97",
+      "away": "221",
+      "startDate": "2026-11-22T00:30:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-14T17:02:40.824Z",
+        "homeWinProbability": 0.8048391114474349,
+        "favored": "home"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
       "id": "401858307",
       "week": 12,
       "seasonType": "regular",
@@ -17311,10 +17297,7 @@
         "favored": "away"
       },
       "estimate": null,
-      "replay": null,
-      "kickoffSource": "espn",
-      "kickoffVerifiedAt": "2026-11-16T00:07:36.952Z",
-      "kickoffOriginalDate": "2026-11-21T05:00:00.000Z"
+      "replay": null
     },
     {
       "id": "401856872",
@@ -17334,10 +17317,7 @@
         "favored": "away"
       },
       "estimate": null,
-      "replay": null,
-      "kickoffSource": "espn",
-      "kickoffVerifiedAt": "2026-11-16T00:07:36.952Z",
-      "kickoffOriginalDate": "2026-11-21T05:00:00.000Z"
+      "replay": null
     },
     {
       "id": "401860925",
@@ -18475,6 +18455,5 @@
       "estimate": null,
       "replay": null
     }
-  ],
-  "kickoffVerificationAsOf": "2026-11-16T00:07:36.952Z"
+  ]
 }
