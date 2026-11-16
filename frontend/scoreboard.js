@@ -1,5 +1,4 @@
 const feedUrl = 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard';
-const sourceUrl = 'https://www.espn.com/college-football/scoreboard/_/group/80';
 const pollInterval = 15_000;
 const orderStorageKey = 'fbs-scoreboard-order-v1';
 const dragHold = 350;
@@ -401,7 +400,7 @@ function mountCardDrag(list, move) {
 }
 
 export function mountScoreboard(root, rankForTeam = () => undefined) {
-  root.innerHTML = `<p class="scoreboard-source">Ranks from the <a href="https://collegefootballplayoff.com/rankings" target="_blank" rel="noopener">CFP Selection Committee Top 25</a>. Scores and records from <a href="${sourceUrl}" target="_blank" rel="noopener">ESPN</a>. Kickoffs are shown in Mountain Time.</p>
+  root.innerHTML = `<p class="scoreboard-source">Kickoffs are shown in Mountain Time.</p>
   <div class="scoreboard-toolbar">
     <div><h2 data-scoreboard-slate>FBS schedule</h2><p data-scoreboard-checked>Checking the ESPN feed…</p></div>
     <button class="button light small" type="button" data-scoreboard-refresh>Refresh now</button>
