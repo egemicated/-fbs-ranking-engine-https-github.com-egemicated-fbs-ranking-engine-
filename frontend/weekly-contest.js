@@ -1,4 +1,4 @@
-import { googleSignInEnabled, loadBracketClient } from './bracket-auth.js';
+import { loadBracketClient } from './bracket-auth.js?v=header-account';
 import { renderWeeklyTeamStats } from './weekly-team-stats.js';
 import {
   contestGames, contestGameLocked, contestGameWinner, contestPickChanges,
@@ -47,7 +47,7 @@ export function renderContestGames(games, { saved = {}, draft = {}, teams, signe
     const status = game.voidReason ? 'Excluded from scoring' : winner ? 'Final' : waitingForKickoff ? 'Awaiting kickoff time' : locked ? 'Locked' : 'Open';
     const note = game.voidReason ? game.voidReason
       : winner ? `${saved[game.id] ? `Your pick: ${userGrade === 'correct' ? 'correct · +1 point' : 'incorrect · 0 points'}. ` : 'No saved pick. ' }Model: ${game.modelTeam === winner ? 'correct' : 'incorrect'}.`
-        : changed ? 'Unsaved selection' : saved[game.id] ? 'Pick saved' : waitingForKickoff ? 'Picks open when kickoff is confirmed.' : locked ? 'No saved pick' : signedIn ? 'Select your winner, then save picks.' : 'Sign in to make your pick.';
+        : changed ? 'Unsaved selection' : saved[game.id] ? 'Pick saved' : waitingForKickoff ? 'Picks open when kickoff is confirmed.' : locked ? 'No saved pick' : signedIn ? 'Select your winner, then save picks.' : 'Sign in from the header to make your pick.';
     return `<li class="contest-game"><div class="contest-game-meta"><span>Kickoff · ${kickoffLabel(game)}</span>
       <span class="contest-lock${!locked ? ' contest-open' : ''}">${status}</span></div>
       <h3>${escape(teamName(game, 'away', teams))} at ${escape(teamName(game, 'home', teams))}</h3>
@@ -177,8 +177,7 @@ export async function renderWeeklyContest(main, options = {}) {
     const client = preview ? preview.client : await loadBracketClient(config);
     const sessionResult = await client.auth.getSession();
     if (sessionResult.error) throw sessionResult.error;
-    let session = sessionResult.data?.session;
-    const signInEnabled = !session && (preview ? preview.signInEnabled === true : await googleSignInEnabled(config));
+    const session = sessionResult.data?.session;
     if (!current()) return;
     let contest, games = [], entry = cleanEntry(null, []), draft = {};
     let nickname = '', publicLeaderboard = false, sharePicks = false, sharePicksImmediately = false;
@@ -334,12 +333,10 @@ export async function renderWeeklyContest(main, options = {}) {
       const selectedGames = games.filter(game => contestWeekKey(game) === week);
       const weeks = [...new Set(games.map(contestWeekKey))];
       const open = selectedGames.filter(game => !contestGameLocked(game, now())).length;
-      root.innerHTML = `<section class="panel"><div class="panel-body"><div class="contest-heading"><div><div class="section-label">${season} season</div>
-        <h2>Your picks against the model</h2></div><div class="contest-actions">${session
-          ? `<span class="compact-note">Signed in</span><button class="button light" type="button" data-contest-action="logout"${busy ? ' disabled' : ''}>Sign out</button>`
-          : signInEnabled ? `<button class="button" type="button" data-contest-action="login"${busy ? ' disabled' : ''}>Continue with Google</button>` : '<span class="compact-note">Sign-in is currently unavailable.</span>'}</div></div>
+      root.innerHTML = `<section class="panel"><div class="panel-body"><div class="section-label">${season} season</div>
+        <h2>Your picks against the model</h2>
         <p>Pick winners for FBS–FBS and FBS–FCS games. <strong>Each game locks at its own kickoff.</strong> Picks open once the kickoff time is confirmed. Each correct pick earns one point. FBS–FCS win chances are uncalibrated estimates.</p>
-        ${!session ? '<p class="compact-note">Use the same Google login as your playoff bracket. Save your picks to start your record.</p>' : ''}
+        ${!session ? '<p class="compact-note">Sign in from the header to save your picks.</p>' : ''}
         <div class="contest-controls"><label for="contest-week">Select week</label><select id="contest-week"${busy || !weeks.length ? ' disabled' : ''}>
         ${weeks.map(key => `<option value="${escape(key)}"${key === week ? ' selected' : ''}>${escape(contestWeekLabel(key))}</option>`).join('')}</select>
         <button type="button" class="button light" data-contest-action="refresh"${busy ? ' disabled' : ''}>Refresh results</button>
@@ -478,29 +475,17 @@ export async function renderWeeklyContest(main, options = {}) {
         return;
       }
       const action = event.target.closest('[data-contest-action]')?.dataset.contestAction;
-      if (busy || !['login', 'logout', 'refresh'].includes(action)) return;
+      if (busy || action !== 'refresh') return;
       busy = true;
       draw();
       try {
-        if (action === 'refresh') {
-          await loadData({ keepDraft: true });
-          message = 'Results refreshed. Open unsaved selections are still here.';
-          messageError = false;
-          if (view === 'leaderboard') refreshLeaderboard();
-        } else if (action === 'login') {
-          const { error } = await client.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: new URL('/?weekly=1', location.origin).href } });
-          if (error) throw error;
-        } else {
-          const { error } = await client.auth.signOut({ scope: 'local' });
-          if (error) throw error;
-          session = null;
-          main.querySelector('[data-weekly-contest]')?.remove();
-          void renderWeeklyContest(main, options);
-          return;
-        }
+        await loadData({ keepDraft: true });
+        message = 'Results refreshed. Open unsaved selections are still here.';
+        messageError = false;
+        if (view === 'leaderboard') refreshLeaderboard();
       } catch {
         messageError = true;
-        message = action === 'refresh' ? 'Results could not refresh. Your current selections are still here.' : action === 'login' ? 'Could not start Google sign-in. Please try again.' : 'Could not sign out. Please try again.';
+        message = 'Results could not refresh. Your current selections are still here.';
       } finally {
         busy = false;
         if (current()) draw();

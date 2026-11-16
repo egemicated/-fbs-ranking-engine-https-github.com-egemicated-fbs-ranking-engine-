@@ -28,6 +28,7 @@ let rankingsHubView;
 let favoriteModule;
 let closeFavorite;
 let chosenFavorite;
+const accountReturnKey = 'fbs-account-return';
 const localPreview = ['localhost', '127.0.0.1', '[::1]'].includes(window.location?.hostname) && window.fbsReviewPreview;
 const rankingsHubTabs = [
   ['fbs', '#rankings', 'FBS'], ['fcs', '#rankings/fcs/sor', 'FCS'],
@@ -201,8 +202,10 @@ function renderHeader() {
   const mainLinks = navs.filter(([id]) => primaryPages.includes(id) || desktopPages.includes(id));
   const moreLinks = navs.filter(([id]) => !primaryPages.includes(id));
   const moreActive = moreLinks.some(([id]) => id === activePage) ? (desktopPages.includes(activePage) ? ' active-on-mobile' : ' active') : '';
-  const snapshotBadges = state.snapshot ? `<div class="header-right"><div class="engine-badge">${icon('check')}<div><strong>Published rankings</strong><small>CFBD snapshot · ${snapshotDate()}</small></div></div><div class="season-badge">${state.snapshot.season}<small>SEASON SNAPSHOT</small></div></div>` : '';
-  document.querySelector('#header').innerHTML = `<div class="masthead"><div class="wrap masthead-inner">${brand()}<span class="brand-divider"></span><div class="masthead-tag">THE INDEPENDENT COLLEGE FOOTBALL RANKING ENGINE<strong>DATA &nbsp; › &nbsp; OPPONENTS &nbsp; › &nbsp; EVIDENCE</strong></div>${snapshotBadges}</div></div>
+  const snapshotBadges = state.snapshot ? `<div class="engine-badge">${icon('check')}<div><strong>Published rankings</strong><small>CFBD snapshot · ${snapshotDate()}</small></div></div><div class="season-badge">${state.snapshot.season}<small>SEASON SNAPSHOT</small></div>` : '';
+  const header = document.querySelector('#header');
+  const account = header.querySelector?.('[data-header-account]');
+  header.innerHTML = `<div class="masthead"><div class="wrap masthead-inner">${brand()}<span class="brand-divider"></span><div class="masthead-tag">THE INDEPENDENT COLLEGE FOOTBALL RANKING ENGINE<strong>DATA &nbsp; › &nbsp; OPPONENTS &nbsp; › &nbsp; EVIDENCE</strong></div><div class="header-right">${snapshotBadges}<div class="header-account" data-header-account><button class="header-account-button" type="button" disabled>${icon('teams')}<span>Sign in</span></button></div></div></div></div>
     <nav class="nav" aria-label="Main navigation"><div class="wrap nav-inner">
       ${mainLinks.map(item => link(item, primaryPages.includes(item[0]) ? 'nav-primary' : 'nav-desktop-link')).join('')}
       <details class="nav-more${moreActive}">
@@ -210,6 +213,15 @@ function renderHeader() {
         <div class="nav-more-links">${moreLinks.map(item => link(item, desktopPages.includes(item[0]) ? 'nav-more-mobile-link' : '')).join('')}</div>
       </details>
     </div></nav>`;
+  const slot = header.querySelector?.('[data-header-account]');
+  if (account && slot?.isConnected) slot.replaceWith(account);
+  else if (slot?.isConnected) void import('./bracket-auth.js?v=header-account').then(({ mountHeaderAccount }) => {
+    mountHeaderAccount(slot, { icon: icon('teams'), previewClient: localPreview?.contest?.client,
+      rememberPage() {
+        try { window.sessionStorage.setItem(accountReturnKey, location.hash || '#home'); } catch {}
+      },
+    });
+  }).catch(() => { slot.innerHTML = '<span class="header-account-message" role="status">Sign-in is unavailable.</span>'; });
   document.querySelector('#footer').innerHTML = `<div class="footer"><div class="wrap footer-inner"><div><div class="footer-brand">${BRAND.toUpperCase()}</div><p>Independent FBS and FCS rankings calculated from game data.</p></div><div class="footer-links"><a href="#methodology">${icon('layers')}Model methodology</a><a href="${esc(publicationPath('rankings'))}" target="_blank" rel="noopener">${icon('database')}Published data</a>${state.snapshot ? `<span>Ranking engine · v${esc(state.snapshot.modelVersion)}</span>` : ''}</div></div></div>`;
 }
 function schedulePanel() { return `<section class="panel schedule-card"><div class="panel-head"><div class="panel-head-title">${icon('calendar')}<h2>Results updates</h2></div></div><div class="panel-body"><div class="section-label">Mountain Time</div><div class="schedule-title">WEDNESDAY–SUNDAY</div><p>FBS and FCS share a schedule. Wednesday–Saturday at <strong>4:11 a.m.</strong> when games are due for results. Sunday at <strong>12:01 a.m.</strong>, with checks at <strong>4:11 a.m.</strong> for Saturday games and <strong>8:11 p.m.</strong> for Sunday games.</p><p style="margin-top:12px">Last publication <strong>${snapshotDate({ hour:'numeric', minute:'2-digit' })} MT</strong></p></div></section>`; }
@@ -341,7 +353,7 @@ function favoriteCard(team) {
 function mountHomeFavorite() {
   const target = main.querySelector('[data-my-team]');
   if (!target?.isConnected) return;
-  favoriteModule ??= import('./my-team.js?v=team-banner');
+  favoriteModule ??= import('./my-team.js?v=header-account');
   favoriteModule.then(({ mountMyTeam }) => {
     if (!target.isConnected || route()[0] !== 'home') return;
     closeFavorite = mountMyTeam(target, {
@@ -1136,7 +1148,7 @@ function renderRankingEditions(page, id, scope) {
 function renderBracketPage() {
   if (!bracketModule) {
     main.innerHTML = '<div class="wrap page-content"><p role="status">Loading the playoff bracket…</p></div>';
-    bracketModule = import('./bracket.js?v=4');
+    bracketModule = import('./bracket.js?v=header-account');
   }
   bracketModule.then(({ renderBracket, unmountBracket }) => {
     if (route()[0] !== 'bracket') return;
@@ -1166,7 +1178,7 @@ function renderScenarioPage() {
 }
 function renderContestPage() {
   main.innerHTML = '<div class="wrap page-content"><p role="status">Loading Beat the Model…</p></div>';
-  contestModule ??= import('./weekly-contest.js?v=kickoff-times');
+  contestModule ??= import('./weekly-contest.js?v=header-account');
   contestModule.then(({ renderWeeklyContest, unmountWeeklyContest }) => {
     if (route()[0] !== 'beat-the-model') return;
     closeContest = unmountWeeklyContest;
@@ -1398,10 +1410,20 @@ async function load(){
   }
 }
 const authReturn = location.search && new URLSearchParams(location.search);
-if (authReturn && ['cfp', 'weekly', 'myteam'].some(key => authReturn.get(key) === '1')) {
+const authMarkers = ['cfp', 'weekly', 'myteam'];
+let savedAccountPage;
+if (authReturn && (authReturn.get('myteam') === '1' || authReturn.has('code'))) {
+  try {
+    savedAccountPage = window.sessionStorage.getItem(accountReturnKey);
+    window.sessionStorage.removeItem(accountReturnKey);
+  } catch {}
+}
+if (authReturn && (savedAccountPage || authMarkers.some(key => authReturn.get(key) === '1'))) {
   const signInReturn = new URL(location.href);
-  signInReturn.hash = authReturn.get('myteam') === '1' ? 'home' : authReturn.get('weekly') === '1' ? 'beat-the-model' : 'bracket';
+  signInReturn.hash = authReturn.get('weekly') === '1' ? 'beat-the-model' : authReturn.get('cfp') === '1' ? 'bracket' : savedAccountPage || 'home';
+  for (const marker of authMarkers) signInReturn.searchParams.delete(marker);
   history.replaceState(history.state, '', signInReturn);
 }
 if (route()[0] === 'scoreboard') render();
+else renderHeader();
 load();

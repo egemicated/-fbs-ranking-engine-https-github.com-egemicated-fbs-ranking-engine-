@@ -285,10 +285,45 @@ ul.edition-notice{padding-inline-start:20px}
 }
 .nav-more-links a { min-height: 44px; padding: 8px 10px; font-size: 13px; }
 .nav .nav-more-mobile-link { display: none; }
+.header-account { position: relative; flex: none; }
+.header-account-button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 7px;
+  padding: 0 12px;
+  border: 1px solid #6491c6;
+  border-radius: 9px;
+  background: #173760;
+  color: white;
+  font: 700 13px/1.2 'Segoe UI', sans-serif;
+  white-space: nowrap;
+}
+.header-account-button:not(:disabled) { cursor: pointer; }
+.header-account-button:not(:disabled):hover { background: #244b79; }
+.header-account-button:disabled { opacity: .7; }
+.header-account-button:focus-visible { outline: 2px solid #8edfff; outline-offset: 3px; }
+.header-account-button svg { width: 18px; height: 18px; color: #c2ddff; }
+.header-account-message:not(:empty) {
+  position: absolute;
+  z-index: 5;
+  top: calc(100% + 5px);
+  right: 0;
+  width: max-content;
+  max-width: 205px;
+  padding: 7px 9px;
+  border: 1px solid #365678;
+  border-radius: 7px;
+  background: #0a1d39;
+  color: #e9f4ff;
+  font-size: 12px;
+}
 @media (max-width: 950px) {
   .nav-inner > a, .nav-more > summary { gap: 7px; padding-inline: 10px; }
 }
 @media (max-width: 767px) {
+  .header-right .engine-badge, .header-right .season-badge { display: none; }
+  .header-account-button { padding-inline: 10px; }
   .nav-inner {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr)) minmax(0, 1.7fr) minmax(0, 1fr);

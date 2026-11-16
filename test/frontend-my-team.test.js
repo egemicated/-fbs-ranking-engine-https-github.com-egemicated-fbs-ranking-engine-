@@ -20,21 +20,20 @@ function fixture(adapter, chosenTeamId) {
   };
 }
 
-test('signed-out visitors see Google sign-in and the known team draft stays unsaved until account selection', async () => {
-  let signIns = 0, onChange, signedIn = false;
+test('signed-out visitors use the header and the known team draft stays unsaved until account selection', async () => {
+  let onChange, signedIn = false;
   const saved = [];
   const ui = fixture({
     getPreference: async () => ({ signedIn, teamId: null }),
     savePreference: async id => saved.push(id),
-    signIn: async () => { signIns++; signedIn = true; onChange(); },
     subscribe: callback => { onChange = callback; },
   }, '147');
   await flush();
-  assert.match(ui.root.innerHTML, /Continue with Google/);
-  assert.doesNotMatch(ui.root.innerHTML, /my-team-select/);
-  await ui.click('signin');
+  assert.match(ui.root.innerHTML, /Sign in from the header/);
+  assert.doesNotMatch(ui.root.innerHTML, /my-team-select|data-my-team-action="signin"/);
+  signedIn = true;
+  onChange();
   await flush();
-  assert.equal(signIns, 1);
   assert.match(ui.root.innerHTML, /value="147" selected>Montana &lt;State&gt;/);
   assert.deepEqual(saved, []);
   ui.save('invalid');

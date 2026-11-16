@@ -88,7 +88,10 @@ test('cards distinguish unsaved, saved, locked, and completed selections while e
   assert.match(html, /data-contest-game="done" data-contest-team="h-done"\s+aria-pressed="true" disabled/);
   assert.match(html, /&lt;img src=x onerror=alert\(1\)&gt;/);
   assert.doesNotMatch(html, /<img src=x/);
-  assert.doesNotMatch(renderContestGames([game('one')]), /aria-pressed="true"/);
+  const signedOut = renderContestGames([game('one')], { now: Date.parse('2026-11-10T12:00:00Z') });
+  assert.match(signedOut, /Sign in from the header to make your pick\./);
+  assert.match(signedOut, /data-contest-team="h-one"\s+aria-pressed="false" disabled/);
+  assert.doesNotMatch(signedOut, /aria-pressed="true"/);
 });
 
 test('empty scorecards use a pending state and leaderboards preserve server tie ranks', () => {

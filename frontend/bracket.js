@@ -1,9 +1,10 @@
-import { googleSignInEnabled, loadBracketClient } from './bracket-auth.js';
+import { loadBracketClient } from './bracket-auth.js?v=header-account';
 import { mountBracketBoard, renderBracketBoard } from './bracket-board.js?v=2';
 
 const season = 2026;
 const pointsByRound = [1, 2, 4, 8];
 let stopBoard;
+let accountSubscription;
 const mountainTime = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', dateStyle: 'medium', timeStyle: 'short' });
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const date = value => Number.isFinite(Date.parse(value)) ? `${mountainTime.format(new Date(value))} MT` : '';
@@ -100,39 +101,10 @@ async function rpc(client, method, args = {}) {
   return data;
 }
 
-function accountButton(session, signInEnabled, busy = false) {
-  const disabled = busy ? ' disabled' : '';
-  if (session) return `<button type="button" class="button light" data-bracket-action="logout"${disabled}>Sign out</button>`;
-  return signInEnabled ? `<button type="button" class="button" data-bracket-action="login"${disabled}>Continue with Google</button>` : '';
-}
-
-async function changeAccount(client, action) {
-  const { error } = action === 'login'
-    ? await client.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: new URL('/?cfp=1', location.origin).href } })
-    : await client.auth.signOut({ scope: 'local' });
-  if (error) throw error;
-}
-
-function accountError(action) {
-  return action === 'login' ? 'Could not start Google sign-in. Please try again.' : 'Could not sign out. Please try again.';
-}
-
-function mountWaiting(root, { client, session, signInEnabled, current, refresh } = {}) {
+function mountWaiting(root, showSignIn = false) {
   root.innerHTML = panel('Waiting for the official field', 'The CFP announces the 12 teams on Dec. 6. Entries open when we load the official field.',
-    `${session ? '<p class="compact-note">Signed in.</p>' : ''}<div class="bracket-waiting-actions">${accountButton(session, signInEnabled)}
-      <a class="button light" href="#bracket/demo">Open the 2025 demo</a></div><p role="status" class="bracket-message"></p>`);
-  const button = root.querySelector('[data-bracket-action]');
-  button?.addEventListener('click', async () => {
-    const action = button.dataset.bracketAction;
-    button.disabled = true;
-    try {
-      await changeAccount(client, action);
-      if (action === 'logout' && current()) refresh();
-    } catch {
-      if (current()) root.querySelector('.bracket-message').textContent = accountError(action);
-      button.disabled = false;
-    }
-  });
+    `${showSignIn ? '<p class="compact-note">Sign in from the header to enter when the field is set.</p>' : ''}
+    <div class="bracket-waiting-actions"><a class="button light" href="#bracket/demo">Open the 2025 demo</a></div>`);
 }
 
 function mountFieldPreview(root) {
@@ -154,12 +126,18 @@ function leaderboard(rows) {
     </tbody></table></section>`;
 }
 
-export function unmountBracket() {
+function unmountBoard() {
   stopBoard?.();
   stopBoard = undefined;
 }
 
-function mountContest(root, contest, { demo = false, client, session, entry, signInEnabled, current, refresh, teams }) {
+export function unmountBracket() {
+  unmountBoard();
+  accountSubscription?.unsubscribe();
+  accountSubscription = undefined;
+}
+
+function mountContest(root, contest, { demo = false, client, session, entry, current, teams }) {
   const slots = orderedSlots(contest);
   const results = contest.results ?? {};
   const winners = Object.fromEntries(Object.entries(results).map(([id, result]) => [id, result.winner]));
@@ -176,15 +154,14 @@ function mountContest(root, contest, { demo = false, client, session, entry, sig
     const { points, correct, graded } = scoreBracket(slots, picks, results);
     const selected = Object.keys(picks).length;
     const open = editable();
-    const actions = demo ? '<button type="button" class="button light" data-bracket-action="sample">Fill sample picks</button>'
-      : accountButton(session, signInEnabled, busy);
-    unmountBracket();
+    const actions = demo ? '<button type="button" class="button light" data-bracket-action="sample">Fill sample picks</button>' : '';
+    unmountBoard();
     root.innerHTML = `<section class="panel bracket-summary"><div class="panel-body">
       <div class="bracket-heading"><div><div class="section-label">${demo ? 'Historical demo' : `${season} contest`}</div>
       <h2>${demo ? 'Replay the 2025 playoff' : locked() ? 'Entries are locked' : 'Pick the playoff winners'}</h2></div>${actions}</div>
       <p>${demo ? 'Select a team to advance it and see how your picks would have scored.'
         : `Save all 11 picks before <time datetime="${escape(contest.lockAt)}">${escape(date(contest.lockAt))}</time>. One bracket per account.`}</p>
-      ${!demo && !session && !signInEnabled ? '<p class="compact-note">Sign-in is currently unavailable.</p>' : ''}
+      ${!demo && !session ? `<p class="compact-note">Sign in from the header to ${locked() ? 'view your bracket' : 'save your bracket'}.</p>` : ''}
       <p class="compact-note">Correct picks earn 1, 2, 4 and 8 points by round, up to 28 points.</p>
       ${open || selected ? `<p class="bracket-progress">${selected} of 11 picks${graded ? ` · ${correct} of ${graded} correct · ${points} points` : ''}</p>` : ''}
       <p role="status" class="bracket-message">${escape(message)}</p>
@@ -217,7 +194,7 @@ function mountContest(root, contest, { demo = false, client, session, entry, sig
       if (current()) draw();
     }
   };
-  root.onclick = async event => {
+  root.onclick = event => {
     const pick = event.target.closest('button[data-bracket-game][data-bracket-team]');
     if (pick) {
       if (!editable() || busy) return;
@@ -230,17 +207,6 @@ function mountContest(root, contest, { demo = false, client, session, entry, sig
     if (action === 'sample') {
       picks = sampleBracket(slots);
       draw();
-    }
-    if (!['login', 'logout'].includes(action) || busy) return;
-    busy = true;
-    draw();
-    try {
-      await changeAccount(client, action);
-      if (action === 'logout' && current()) refresh();
-    } catch {
-      busy = false;
-      message = accountError(action);
-      if (current()) draw();
     }
   };
   draw();
@@ -278,6 +244,7 @@ export async function renderBracket(main, teams) {
     }
     const client = await loadBracketClient(config);
     const { data, error } = await client.auth.getSession();
+    if (!current()) return;
     const callback = new URL(location.href);
     if (callback.searchParams.has('cfp')) {
       for (const key of ['cfp', 'code', 'error', 'error_code', 'error_description']) callback.searchParams.delete(key);
@@ -285,23 +252,26 @@ export async function renderBracket(main, teams) {
     }
     if (error) throw error;
     const session = data?.session;
+    accountSubscription = client.auth.onAuthStateChange?.((event, nextSession) => {
+      if (!['SIGNED_IN', 'SIGNED_OUT'].includes(event) || nextSession?.user?.id === session?.user?.id) return;
+      setTimeout(() => { if (current()) refresh(); }, 0);
+    })?.data?.subscription;
     const contest = await rpc(client, 'cfp_contest');
-    const signInEnabled = view === 'entry' && !session && await googleSignInEnabled(config);
     if (!current()) return;
     if (!contest) {
-      mountWaiting(pendingNotice ?? root, { client, session: view === 'entry' ? session : null, signInEnabled, current, refresh });
+      mountWaiting(pendingNotice ?? root, view === 'entry' && !session);
     } else if (view === 'leaderboard') {
       const rows = contest.locked || Date.now() >= Date.parse(contest.lockAt) ? await rpc(client, 'cfp_leaderboard') : null;
       if (current()) root.innerHTML = rows ? leaderboard(rows) : panel('Leaderboard opens at kickoff', 'Enter your bracket before the first game to appear in the standings.');
     } else {
       const entry = session ? await rpc(client, 'cfp_my_entry') : null;
-      if (current()) mountContest(root, contest, { client, session, entry, signInEnabled, current, refresh, teams });
+      if (current()) mountContest(root, contest, { client, session, entry, current, teams });
     }
   } catch {
     if (!current()) return;
     const notice = pendingNotice?.isConnected ? pendingNotice : root;
     notice.innerHTML = panel('Bracket update unavailable', pendingNotice?.isConnected
-      ? 'The official field and sign-in could not load. You can still view the bracket below.' : 'Try again in a moment.',
+      ? 'The official field could not load. You can still view the bracket below.' : 'Try again in a moment.',
     '<button type="button" class="button light bracket-retry">Try again</button>');
     notice.querySelector('button').addEventListener('click', refresh);
   }
