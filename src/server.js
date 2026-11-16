@@ -12,6 +12,7 @@ import { readRankingMovement } from './ranking-movement.js';
 import { buildHomeHighlights } from './home-highlights.js';
 import { buildWeeklyTeamStats } from '../frontend/weekly-team-stats.js';
 import { browserSorSource, buildScenarioPublication } from './scenario-publication.js';
+import { readTeamPage } from './player-publication.js';
 
 const directory = resolve(process.env.DATA_DIR || 'data', 'snapshots');
 const publications = resolve(import.meta.dirname, '../published');
@@ -26,6 +27,8 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     ['/my-team.js', ['my-team.js', 'text/javascript; charset=utf-8']],
     ['/my-team-colors.js', ['my-team-colors.js', 'text/javascript; charset=utf-8']],
     ['/my-team.css', ['my-team.css', 'text/css; charset=utf-8']],
+    ['/team-players.js', ['team-players.js', 'text/javascript; charset=utf-8']],
+    ['/team-players.css', ['team-players.css', 'text/css; charset=utf-8']],
     ['/bracket.js', ['bracket.js', 'text/javascript; charset=utf-8']],
     ['/bracket-board.js', ['bracket-board.js', 'text/javascript; charset=utf-8']],
     ['/bracket-auth.js', ['bracket-auth.js', 'text/javascript; charset=utf-8']],
@@ -117,6 +120,14 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
         const scenario = buildScenarioPublication(snapshot, weekly, publicationPolicy);
         return scenario ? send(200, scenario) : send(503, { error: 'CFP scenarios are unavailable' });
       } catch { return send(503, { error: 'CFP scenarios are unavailable' }); }
+    }
+    const playerPage = /^\/(team-players|team-availability)\/(\d{1,24})(?:\.json)?$/.exec(path);
+    if (playerPage) {
+      try {
+        const snapshot = JSON.parse(await readFile(join(snapshotDirectory, 'latest.json'), 'utf8'));
+        const page = await readTeamPage(publicationDirectory, playerPage[1], playerPage[2], snapshot.season);
+        return page ? send(200, page) : send(404, { error: 'No player report for this season' });
+      } catch { return send(503, { error: 'Player report unavailable' }); }
     }
     const match = /^\/rankings(?:\/(\d{4}))?(?:\/teams\/([^/]+)\.json)?$/.exec(path);
     if (!match) return send(404, { error: 'Not found' });

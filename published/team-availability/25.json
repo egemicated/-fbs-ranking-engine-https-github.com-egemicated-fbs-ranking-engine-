@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "25",
+  "reports": [
+    {
+      "gameId": "401858295",
+      "kickoff": "2026-11-14T20:30:00.000Z",
+      "opponentId": "258",
+      "opponentName": "Virginia",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-14T18:30:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.855Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5148905",
+          "name": "Carter Vargas",
+          "position": "RB",
+          "jersey": 1,
+          "status": "Out"
+        },
+        {
+          "playerId": "4908552",
+          "name": "Dorian Thomas",
+          "position": "TE",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "5209183",
+          "name": "JD McKinley",
+          "position": "ILB",
+          "jersey": 33,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "4899704",
+          "name": "Jordan King",
+          "position": "WR",
+          "jersey": 4,
+          "status": "Out"
+        },
+        {
+          "playerId": "4685281",
+          "name": "Nate Burrell",
+          "position": "DL",
+          "jersey": 98,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

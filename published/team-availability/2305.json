@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "2305",
+  "reports": [
+    {
+      "gameId": "401856861",
+      "kickoff": "2026-11-14T20:30:00.000Z",
+      "opponentId": "277",
+      "opponentName": "West Virginia",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-14T19:00:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.716Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "4917985",
+          "name": "Connor Stroh",
+          "position": "OL",
+          "jersey": 79,
+          "status": "Out"
+        },
+        {
+          "playerId": "5151070",
+          "name": "Grady Seyfert",
+          "position": "DT",
+          "jersey": 71,
+          "status": "Out"
+        },
+        {
+          "playerId": "5163002",
+          "name": "Jack Utz",
+          "position": "TE",
+          "jersey": 35,
+          "status": "Out"
+        },
+        {
+          "playerId": "5193112",
+          "name": "Jalen Dupree",
+          "position": "RB",
+          "jersey": 4,
+          "status": "Out"
+        },
+        {
+          "playerId": "5091820",
+          "name": "Kasen Carpenter",
+          "position": "OL",
+          "jersey": 51,
+          "status": "Out"
+        },
+        {
+          "playerId": "4912139",
+          "name": "Mason Ellis",
+          "position": "S",
+          "jersey": 23,
+          "status": "Game Time Decision"
+        }
+      ]
+    }
+  ]
+}

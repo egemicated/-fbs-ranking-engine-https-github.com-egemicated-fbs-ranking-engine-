@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "127",
+  "reports": [
+    {
+      "gameId": "401858521",
+      "kickoff": "2026-11-14T22:30:00.000Z",
+      "opponentId": "264",
+      "opponentName": "Washington",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-14T20:30:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.688Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "4869649",
+          "name": "Ben Roberts",
+          "position": "DL",
+          "jersey": 55,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5265158",
+          "name": "Brayden Thomas",
+          "position": "S",
+          "jersey": 28,
+          "status": "Out"
+        },
+        {
+          "playerId": "5086034",
+          "name": "Cam Edwards",
+          "position": "RB",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "5153819",
+          "name": "Devin Vaught",
+          "position": "S",
+          "jersey": 2,
+          "status": "Out"
+        },
+        {
+          "playerId": "5084950",
+          "name": "Jay Coyne",
+          "position": "FB",
+          "jersey": 44,
+          "status": "Out"
+        },
+        {
+          "playerId": "5214448",
+          "name": "Jayden Savoury",
+          "position": "TE",
+          "jersey": 31,
+          "status": "Out"
+        },
+        {
+          "playerId": "5081332",
+          "name": "Jaziun Patterson",
+          "position": "RB",
+          "jersey": 4,
+          "status": "Out"
+        },
+        {
+          "playerId": "5264656",
+          "name": "Joe Caudill",
+          "position": "TE",
+          "jersey": 87,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870737",
+          "name": "Jordan Hall",
+          "position": "LB",
+          "jersey": 5,
+          "status": "Out"
+        },
+        {
+          "playerId": "5258024",
+          "name": "Marvis Parrish",
+          "position": "RB",
+          "jersey": 21,
+          "status": "Out"
+        },
+        {
+          "playerId": "5260691",
+          "name": "Rodney Bullard Jr.",
+          "position": "WR",
+          "jersey": 3,
+          "status": "Out"
+        },
+        {
+          "playerId": "5086080",
+          "name": "Tre Bell",
+          "position": "CB",
+          "jersey": 3,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5290642",
+          "name": "Tristan Comer",
+          "position": "OL",
+          "jersey": 79,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

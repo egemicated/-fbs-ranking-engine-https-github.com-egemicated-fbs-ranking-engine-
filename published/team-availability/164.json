@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "164",
+  "reports": [
+    {
+      "gameId": "401858525",
+      "kickoff": "2026-11-14T17:30:00.000Z",
+      "opponentId": "158",
+      "opponentName": "Nebraska",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-14T15:30:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.688Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5079717",
+          "name": "AJ Surace",
+          "position": "QB",
+          "jersey": 10,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5092802",
+          "name": "Chris Joines",
+          "position": "DB",
+          "jersey": 20,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870900",
+          "name": "Dylan Lonergan",
+          "position": "QB",
+          "jersey": 12,
+          "status": "Out"
+        },
+        {
+          "playerId": "4687358",
+          "name": "J'Dan Burnett",
+          "position": "DL",
+          "jersey": 94,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079671",
+          "name": "Kaj Sanders",
+          "position": "DB",
+          "jersey": 1,
+          "status": "Out"
+        },
+        {
+          "playerId": "4596665",
+          "name": "Keshon Griffin",
+          "position": "DL",
+          "jersey": 96,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5084771",
+          "name": "KJ Duff",
+          "position": "WR",
+          "jersey": 8,
+          "status": "Out"
+        },
+        {
+          "playerId": "4714999",
+          "name": "Kwabena Asamoah",
+          "position": "OL",
+          "jersey": 69,
+          "status": "Out"
+        },
+        {
+          "playerId": "4683918",
+          "name": "Tyler Needham",
+          "position": "OL",
+          "jersey": 56,
+          "status": "Out"
+        },
+        {
+          "playerId": "5154001",
+          "name": "Zahmir Dawud",
+          "position": "DB",
+          "jersey": 12,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

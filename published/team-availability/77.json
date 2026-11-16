@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "77",
+  "reports": [
+    {
+      "gameId": "401858522",
+      "kickoff": "2026-11-14T17:00:00.000Z",
+      "opponentId": "194",
+      "opponentName": "Ohio State",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-14T15:00:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.688Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5075805",
+          "name": "Aidan Chiles",
+          "position": "QB",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "4812341",
+          "name": "Chris Petrucci",
+          "position": "TE",
+          "jersey": 81,
+          "status": "Out"
+        },
+        {
+          "playerId": "5149001",
+          "name": "Daniel Anderson",
+          "position": "RB",
+          "jersey": 22,
+          "status": "Out"
+        },
+        {
+          "playerId": "5195388",
+          "name": "Ezomo Oratokhai",
+          "position": "OL",
+          "jersey": 62,
+          "status": "Out"
+        },
+        {
+          "playerId": "5158275",
+          "name": "J.J. Lewis",
+          "position": "DB",
+          "jersey": 16,
+          "status": "Out"
+        },
+        {
+          "playerId": "4838692",
+          "name": "Jason Reynolds II",
+          "position": "LB",
+          "jersey": 40,
+          "status": "Out"
+        },
+        {
+          "playerId": "4923270",
+          "name": "Josh Fussell",
+          "position": "DB",
+          "jersey": 13,
+          "status": "Out"
+        },
+        {
+          "playerId": "5291097",
+          "name": "Max Mohring",
+          "position": "LB",
+          "jersey": 37,
+          "status": "Out"
+        },
+        {
+          "playerId": "5193589",
+          "name": "Qayvier Johnson",
+          "position": "LB",
+          "jersey": 50,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

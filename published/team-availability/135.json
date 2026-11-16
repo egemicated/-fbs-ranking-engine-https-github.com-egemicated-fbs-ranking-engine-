@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "135",
+  "reports": [
+    {
+      "gameId": "401858524",
+      "kickoff": "2026-11-15T00:00:00.000Z",
+      "opponentId": "213",
+      "opponentName": "Penn State",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-14T22:00:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.688Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "4909948",
+          "name": "Ashton Beers",
+          "position": "OL",
+          "jersey": 78,
+          "status": "Out"
+        },
+        {
+          "playerId": "5146828",
+          "name": "Brett Carroll",
+          "position": "OL",
+          "jersey": 56,
+          "status": "Out"
+        },
+        {
+          "playerId": "5076621",
+          "name": "Garrison Monroe",
+          "position": "DB",
+          "jersey": 9,
+          "status": "Out"
+        },
+        {
+          "playerId": "5271219",
+          "name": "Hayden Moore",
+          "position": "WR",
+          "jersey": 84,
+          "status": "Out"
+        },
+        {
+          "playerId": "5146946",
+          "name": "Jaylin Hicks",
+          "position": "DL",
+          "jersey": 55,
+          "status": "Out"
+        },
+        {
+          "playerId": "4941011",
+          "name": "John Nestor",
+          "position": "DB",
+          "jersey": 17,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5079377",
+          "name": "Mason Carrier",
+          "position": "LB",
+          "jersey": 46,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141794",
+          "name": "Riley Sunram",
+          "position": "DL",
+          "jersey": 93,
+          "status": "Out"
+        },
+        {
+          "playerId": "5244756",
+          "name": "Ryan Estrada",
+          "position": "RB",
+          "jersey": 20,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079282",
+          "name": "Theorin Randle",
+          "position": "DL",
+          "jersey": 99,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

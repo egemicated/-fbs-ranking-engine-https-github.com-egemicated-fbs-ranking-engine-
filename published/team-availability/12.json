@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "12",
+  "reports": [
+    {
+      "gameId": "401856864",
+      "kickoff": "2026-11-15T03:30:00.000Z",
+      "opponentId": "254",
+      "opponentName": "Utah",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-15T02:00:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.716Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5229997",
+          "name": "Cam Chapa",
+          "position": "S",
+          "jersey": 13,
+          "status": "Out"
+        },
+        {
+          "playerId": "5306763",
+          "name": "Ezra Funa",
+          "position": "DL",
+          "jersey": 92,
+          "status": "Out"
+        },
+        {
+          "playerId": "5084798",
+          "name": "Ismail Mahdi",
+          "position": "RB",
+          "jersey": 21,
+          "status": "Out"
+        },
+        {
+          "playerId": "5377779",
+          "name": "Kevin Moorer Jr.",
+          "position": "DL",
+          "jersey": 38,
+          "status": "Out"
+        },
+        {
+          "playerId": "5162731",
+          "name": "Keytrin Harris",
+          "position": "DL",
+          "jersey": 27,
+          "status": "Out"
+        },
+        {
+          "playerId": "4910223",
+          "name": "Malcolm Hartzog Jr.",
+          "position": "S",
+          "jersey": 15,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": null,
+          "name": "Max Harris",
+          "position": "LB",
+          "jersey": 5,
+          "status": "Out"
+        },
+        {
+          "playerId": "5236393",
+          "name": "Shane King",
+          "position": "TE",
+          "jersey": 8,
+          "status": "Out"
+        },
+        {
+          "playerId": "5183931",
+          "name": "Swayde Griffin",
+          "position": "CB",
+          "jersey": 28,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

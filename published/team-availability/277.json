@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "277",
+  "reports": [
+    {
+      "gameId": "401856861",
+      "kickoff": "2026-11-14T20:30:00.000Z",
+      "opponentId": "2305",
+      "opponentName": "Kansas",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-14T19:00:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.716Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5184023",
+          "name": "Amare Grayson",
+          "position": "OL",
+          "jersey": 54,
+          "status": "Out"
+        },
+        {
+          "playerId": "5197058",
+          "name": "Andre Devine",
+          "position": "RB",
+          "jersey": 26,
+          "status": "Out"
+        },
+        {
+          "playerId": "4890881",
+          "name": "Cam Ball",
+          "position": "TE",
+          "jersey": 10,
+          "status": "Out"
+        },
+        {
+          "playerId": "5384829",
+          "name": "Darius Wiley",
+          "position": "DL",
+          "jersey": 91,
+          "status": "Out"
+        },
+        {
+          "playerId": "5278550",
+          "name": "Emory Snyder",
+          "position": "N/S",
+          "jersey": 23,
+          "status": "Out"
+        },
+        {
+          "playerId": "4702581",
+          "name": "Jacorey Thomas",
+          "position": "S",
+          "jersey": 30,
+          "status": "Out"
+        },
+        {
+          "playerId": "5158969",
+          "name": "Lamarcus Dillard",
+          "position": "OL",
+          "jersey": 56,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

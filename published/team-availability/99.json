@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "99",
+  "reports": [
+    {
+      "gameId": "401856885",
+      "kickoff": "2026-11-15T00:30:00.000Z",
+      "opponentId": "251",
+      "opponentName": "Texas",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-14T23:00:00.000Z",
+      "checkedAt": "2026-11-16T01:07:38.129Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5201881",
+          "name": "Charles Ross II",
+          "position": "LB",
+          "jersey": 26,
+          "status": "Out"
+        },
+        {
+          "playerId": "5218723",
+          "name": "Dashawn Spears",
+          "position": "S",
+          "jersey": 10,
+          "status": "Out"
+        },
+        {
+          "playerId": "5149484",
+          "name": "Phillip Wright III",
+          "position": "WR",
+          "jersey": 15,
+          "status": "Out"
+        },
+        {
+          "playerId": "5161801",
+          "name": "Richard Anderson",
+          "position": "DT",
+          "jersey": 88,
+          "status": "Out"
+        },
+        {
+          "playerId": "4871034",
+          "name": "Whit Weeks",
+          "position": "LB",
+          "jersey": 7,
+          "status": "Game Time Decision"
+        }
+      ]
+    }
+  ]
+}

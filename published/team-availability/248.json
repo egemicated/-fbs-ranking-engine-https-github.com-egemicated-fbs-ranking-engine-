@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "248",
+  "reports": [
+    {
+      "gameId": "401856860",
+      "kickoff": "2026-11-14T03:15:00.000Z",
+      "opponentId": "38",
+      "opponentName": "Colorado",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-14T01:45:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.716Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5265300",
+          "name": "Aaron Wolford",
+          "position": "OL",
+          "jersey": 50,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

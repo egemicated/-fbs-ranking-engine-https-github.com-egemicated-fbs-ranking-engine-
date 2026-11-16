@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "333",
+  "reports": [
+    {
+      "gameId": "401856889",
+      "kickoff": "2026-11-14T17:45:00.000Z",
+      "opponentId": "238",
+      "opponentName": "Vanderbilt",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-14T16:15:00.000Z",
+      "checkedAt": "2026-11-16T01:07:38.129Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5141426",
+          "name": "AK Dear",
+          "position": "RB",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079672",
+          "name": "Casey Poe",
+          "position": "OL",
+          "jersey": 50,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079479",
+          "name": "Cayden Jones",
+          "position": "LB",
+          "jersey": 23,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141587",
+          "name": "Chuck McDonald III",
+          "position": "DB",
+          "jersey": 19,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "4899417",
+          "name": "Desmond Umeozulu",
+          "position": "LB",
+          "jersey": 9,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079317",
+          "name": "Jeremiah Beaman",
+          "position": "DL",
+          "jersey": 92,
+          "status": "Out"
+        },
+        {
+          "playerId": "5124338",
+          "name": "Josh Ford",
+          "position": "TE",
+          "jersey": 40,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141629",
+          "name": "Keelon Russell",
+          "position": "QB",
+          "jersey": 12,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5276934",
+          "name": "Mhari Johnson",
+          "position": "DL",
+          "jersey": 26,
+          "status": "Out"
+        },
+        {
+          "playerId": "5369909",
+          "name": "Nick Sherman",
+          "position": "DB",
+          "jersey": 29,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

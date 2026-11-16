@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "30",
+  "reports": [
+    {
+      "gameId": "401858518",
+      "kickoff": "2026-11-14T20:30:00.000Z",
+      "opponentId": "84",
+      "opponentName": "Indiana",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-14T18:30:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.688Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5148664",
+          "name": "Corey Simms",
+          "position": "WR",
+          "jersey": 10,
+          "status": "Out"
+        },
+        {
+          "playerId": "5146426",
+          "name": "Hayden Treter",
+          "position": "OL",
+          "jersey": 68,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141644",
+          "name": "Kendarius Reddick",
+          "position": "S",
+          "jersey": 23,
+          "status": "Out"
+        },
+        {
+          "playerId": "5085032",
+          "name": "Kilian O'Connor",
+          "position": "OL",
+          "jersey": 67,
+          "status": "Out"
+        },
+        {
+          "playerId": "5085031",
+          "name": "Roman Marchetti",
+          "position": "LB",
+          "jersey": 57,
+          "status": "Out"
+        },
+        {
+          "playerId": null,
+          "name": "Taylor \"Taybo\" Johnson",
+          "position": "LB",
+          "jersey": 50,
+          "status": "Out"
+        },
+        {
+          "playerId": "5084658",
+          "name": "Terrell Anderson",
+          "position": "WR",
+          "jersey": 9,
+          "status": "Out"
+        },
+        {
+          "playerId": "5166804",
+          "name": "Trestin Castro",
+          "position": "S",
+          "jersey": 37,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079510",
+          "name": "Walter Matthews",
+          "position": "TE",
+          "jersey": 23,
+          "status": "Game Time Decision"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+name: Weekly player stats
+on:
+  workflow_run:
+    workflows: ['Weekly CFBD rankings']
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      bootstrap:
+        description: Build the current-season encrypted cache (up to 16 requests)
+        type: boolean
+        default: false
+permissions:
+  contents: write
+concurrency:
+  group: weekly-player-stats
+  cancel-in-progress: false
+jobs:
+  update:
+    if: >-
+      github.event_name == 'workflow_dispatch' || (github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.event == 'schedule' && github.event.workflow_run.conclusion == 'success')
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Check Mountain Time schedule
+        id: due
+        env:
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [[ "$EVENT" == workflow_dispatch || "$(TZ=America/Denver date +%u)" == 7 ]]; then
+            echo 'run=true' >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.due.outputs.run == 'true'
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        if: steps.due.outputs.run == 'true'
+        with:
+          node-version: '24'
+      - uses: actions/cache/restore@v4
+        if: steps.due.outputs.run == 'true'
+        with:
+          path: research/cache/player-inputs/season-cache.encrypted.json
+          key: player-source-v1-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: player-source-v1-${{ runner.os }}-
+      - name: Update player pages from the saved schedule
+        id: refresh
+        if: steps.due.outputs.run == 'true'
+        env:
+          EVENT: ${{ github.event_name }}
+          BOOTSTRAP: ${{ inputs.bootstrap }}
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+        run: |
+          if [[ "$BOOTSTRAP" == true ]]; then
+            node scripts/refresh-team-players.js --bootstrap
+          elif [[ "$EVENT" == workflow_dispatch ]]; then
+            node scripts/refresh-team-players.js --manual
+          else
+            node scripts/refresh-team-players.js
+          fi
+      - name: Publish the player page summaries
+        if: steps.refresh.outputs.refreshed == 'true'
+        run: |
+          if [[ ! -d published/team-players ]]; then exit 0; fi
+          git add published/team-players
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Refresh player page summaries'
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - uses: actions/cache/save@v4
+        if: steps.refresh.outputs.refreshed == 'true'
+        with:
+          path: research/cache/player-inputs/season-cache.encrypted.json
+          key: player-source-v1-${{ runner.os }}-${{ github.run_id }}

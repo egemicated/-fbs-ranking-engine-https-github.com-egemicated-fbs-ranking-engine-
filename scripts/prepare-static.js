@@ -11,6 +11,7 @@ import { buildHomeHighlights } from '../src/home-highlights.js';
 import { UPDATE_SCHEDULE } from '../src/weekly.js';
 import { buildWeeklyTeamStats } from '../frontend/weekly-team-stats.js';
 import { browserSorSource, buildScenarioPublication } from '../src/scenario-publication.js';
+import { copyPlayerPages } from '../src/player-publication.js';
 
 const root = resolve(import.meta.dirname, '..');
 const frontend = join(root, 'frontend');
@@ -56,7 +57,8 @@ if (fcsPicks) publicSnapshot.weeklyFcsPicksEndpoint = '/data/weekly-fcs-picks.js
 await cp(frontend, output, { recursive: true, filter: source => source !== legacyHero });
 await mkdir(teamDirectory, { recursive: true });
 const teamFiles = new Set();
-await Promise.all([...snapshot.rankings, ...(snapshot.fcsRankings ?? [])].map(async row => {
+const publicTeams = [...snapshot.rankings, ...(snapshot.fcsRankings ?? [])];
+await Promise.all(publicTeams.map(async row => {
   const filename = `${encodeURIComponent(row.id)}.json`;
   teamFiles.add(filename);
   const details = publicTeamDetails(snapshot, row, { upcomingGames: schedule.get(row.id), includeTeamSchedule: true });
@@ -80,6 +82,7 @@ const scenario = await weeklySource.then(weekly => buildScenarioPublication(snap
   return null;
 });
 await Promise.all([
+  copyPlayerPages(published, data, publicTeams, snapshot.season),
   writeFile(join(output, 'index.html'), html.replace(marker, '<meta name="publication-data-root" content="/data">')),
   writeFile(join(data, 'rankings.json'), JSON.stringify(publicSnapshot)),
   performance ? writeFile(performanceFile, JSON.stringify(performance)) : rm(performanceFile, { force: true }),

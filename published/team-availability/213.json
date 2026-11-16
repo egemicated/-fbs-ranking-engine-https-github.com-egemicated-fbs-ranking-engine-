@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "213",
+  "reports": [
+    {
+      "gameId": "401858524",
+      "kickoff": "2026-11-15T00:00:00.000Z",
+      "opponentId": "135",
+      "opponentName": "Minnesota",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-14T22:00:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.688Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5195702",
+          "name": "Alex Tatsch",
+          "position": "LB",
+          "jersey": 25,
+          "status": "Out"
+        },
+        {
+          "playerId": "5167309",
+          "name": "Alijah Carnell",
+          "position": "DT",
+          "jersey": 56,
+          "status": "Out"
+        },
+        {
+          "playerId": "5081877",
+          "name": "Caleb Bacon",
+          "position": "DE",
+          "jersey": 10,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141548",
+          "name": "Jahmir Joseph",
+          "position": "CB",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "4833357",
+          "name": "Jeremiah Cooper",
+          "position": "S",
+          "jersey": 4,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5141525",
+          "name": "Koby Howard",
+          "position": "WR",
+          "jersey": 6,
+          "status": "Out"
+        },
+        {
+          "playerId": "5208134",
+          "name": "Malachi Goodman",
+          "position": "OL",
+          "jersey": 78,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5141483",
+          "name": "Max Granville",
+          "position": "DE",
+          "jersey": 18,
+          "status": "Out"
+        },
+        {
+          "playerId": "5230372",
+          "name": "Tyler Armstead",
+          "position": "CB",
+          "jersey": 35,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

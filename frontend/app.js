@@ -21,6 +21,7 @@ let closeContest;
 let historyModule;
 let closeHistory;
 let scoreboardModule;
+let teamPlayersModule;
 let scoreboardPage;
 let rankingsFailed = false;
 let renderedHeader;
@@ -67,6 +68,17 @@ const paths = {
 };
 function icon(name) { return `<svg aria-hidden="true" viewBox="0 0 24 24"><path d="${paths[name] || paths.info}"/></svg>`; }
 function publicationPath(name) { return dataRoot ? `${dataRoot}/${name}.json` : `/${name}`; }
+const playerTabs = new Set(['players', 'availability']);
+function playerPublicationPath(kind, team) { return publicationPath(`${kind}/${encodeURIComponent(team.id)}`); }
+function mountPlayerFeature(target, mount) {
+  if (!target?.isConnected) return;
+  teamPlayersModule ??= import('./team-players.js?v=1').catch(error => { teamPlayersModule = null; throw error; });
+  teamPlayersModule.then(module => {
+    if (target.isConnected) return mount(module);
+  }).catch(() => {
+    if (target.isConnected) target.innerHTML = '<p class="compact-note">Player information could not load. Reload to try again.</p>';
+  });
+}
 function esc(value) { return String(value ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c])); }
 function record(t) { return `${t.wins}–${t.losses}${t.ties ? `–${t.ties}` : ''}`; }
 function number(n, digits = 4) { return Number.isFinite(n) ? n.toFixed(digits) : '—'; }
@@ -348,7 +360,7 @@ function favoriteCard(team) {
     </dl>
     ${movement ? `<p class="my-team-movement">${esc(movementComparison())}</p>` : ''}
     <div class="my-team-next"><h3>Next game</h3><div class="my-team-next-content" data-my-team-schedule="${esc(team.id)}">${favoriteNext(team)}</div></div>
-  </div>`;
+  </div><nav class="my-team-player-links" aria-label="My Team player information"><a href="#team/${encodeURIComponent(team.id)}/players">Players</a><a href="#team/${encodeURIComponent(team.id)}/availability">Availability</a></nav>`;
 }
 function mountHomeFavorite() {
   const target = main.querySelector('[data-my-team]');
@@ -655,7 +667,7 @@ async function loadTeamDetails(summary) {
   }
   const [page, currentId] = route();
   if (state.snapshot !== snapshot) return;
-  if (page === 'team' && currentId === id) renderTeam(id);
+  if (page === 'team' && currentId === id && !playerTabs.has(state.teamTab)) renderTeam(id);
   if (page === 'home') {
     const target = main.querySelector('[data-my-team-schedule]');
     if (target?.dataset?.myTeamSchedule === id) target.innerHTML = favoriteNext(summary);
@@ -666,13 +678,23 @@ function renderTeam(id) {
   if(!summary){main.innerHTML=`<div class="wrap page-content"><section class="panel empty"><h2>Team not found</h2><a class="button" style="margin-top:15px" href="#rankings">Explore rankings</a></section></div>`;return;}
   const detail = state.snapshot.teamDetailsPath ? teamDetails.get(id) : null;
   const t = detail?.team ?? summary;
-  const needsDetails = state.snapshot.teamDetailsPath && !detail?.team;
-  const content = needsDetails ? `<section class="panel empty"><p role="status">${detail?.failed ? 'The team details could not load.' : 'Loading team details…'}</p>
+  const playerTab = playerTabs.has(state.teamTab) ? state.teamTab : null;
+  const needsDetails = !playerTab && state.snapshot.teamDetailsPath && !detail?.team;
+  const content = playerTab ? `<section class="panel empty"><p role="status">Loading ${playerTab}…</p></section>`
+    : needsDetails ? `<section class="panel empty"><p role="status">${detail?.failed ? 'The team details could not load.' : 'Loading team details…'}</p>
     ${detail?.failed ? '<button type="button" class="button light small" data-action="retry-team-details">Try again</button>' : ''}</section>` : teamCenterContent(t);
   const tier = t.division?.toUpperCase() || 'FBS';
   const matchup = t.division === 'fcs' ? '' : `<section class="panel"><div class="panel-body"><h3>Matchup lab</h3><p class="compact-note">Use the strength model to explore a matchup on a neutral field.</p><button class="button small full-width" style="margin-top:15px" data-action="compare-team" data-value="${esc(t.id)}">${icon('compare')}Open matchup lab</button></div></section>`;
-  main.innerHTML=`<section class="hero team-banner"><div class="wrap"><a class="breadcrumb" href="${rankingHash('achievement', false, t.division)}">${icon('back')}Back to ${tier} rankings</a><div class="team-banner-content">${logo(t,'large')}<div><div class="eyebrow">${tier} · ${esc(t.conference)} · ${state.snapshot.season} season</div><h1>${esc(t.name.toUpperCase())}</h1><div class="team-meta"><span><b>${rank(nationalRank(t))}</b> ${achievementName(t)}</span><span>${record(t)} overall</span><span>${rank(conferenceRank(t))} in conference</span></div><button type="button" class="button outline small team-favorite-action" data-action="choose-my-team" data-value="${esc(t.id)}">Choose as My Team</button></div><div class="team-banner-score"><strong>${number(t.division === 'fcs' ? t.sor : achievementScore(t))}</strong><span>${achievementName(t)==='Strength of Record'?'SOR score':'Colley rating'}</span></div></div></div></section><div class="wrap page-content"><div class="team-layout"><aside class="panel rank-rail"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<h2>${tier} TOP 25</h2></div></div><div class="rail-list">${topTwentyFive(divisionTeams(t.division), 'achievement').map(o=>`<a href="#team/${encodeURIComponent(o.id)}" class="rail-row ${o.id===t.id?'selected':''}" ${o.id===t.id?'aria-current="page"':''}><span>${nationalRank(o)}</span>${logo(o)}<b>${esc(o.name)}</b><small>${record(o)}</small></a>`).join('')}</div><a class="method-link" href="${rankingHash('achievement', true, t.division)}">All ${tier} rankings ${icon('arrow')}</a></aside><div class="team-center"><div class="tabs" aria-label="Team sections">${[['overview','Overview'],['results','Results'],['model','Model details']].map(([value,label])=>`<button data-action="team-tab" data-value="${value}" class="${state.teamTab===value?'active':''}" aria-pressed="${state.teamTab===value}">${label}</button>`).join('')}</div><div id="team-center-content">${content}</div></div><aside class="stack team-right">${modelRanks(t)}${performanceTeamPanel(t)}${qualityPanel(t.division)}${matchup}</aside></div></div>`;
+  main.innerHTML=`<section class="hero team-banner"><div class="wrap"><a class="breadcrumb" href="${rankingHash('achievement', false, t.division)}">${icon('back')}Back to ${tier} rankings</a><div class="team-banner-content">${logo(t,'large')}<div><div class="eyebrow">${tier} · ${esc(t.conference)} · ${state.snapshot.season} season</div><h1>${esc(t.name.toUpperCase())}</h1><div class="team-meta"><span><b>${rank(nationalRank(t))}</b> ${achievementName(t)}</span><span>${record(t)} overall</span><span>${rank(conferenceRank(t))} in conference</span></div><button type="button" class="button outline small team-favorite-action" data-action="choose-my-team" data-value="${esc(t.id)}">Choose as My Team</button></div><div class="team-banner-score"><strong>${number(t.division === 'fcs' ? t.sor : achievementScore(t))}</strong><span>${achievementName(t)==='Strength of Record'?'SOR score':'Colley rating'}</span></div></div></div></section><div class="wrap page-content"><div class="team-layout"><aside class="panel rank-rail"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<h2>${tier} TOP 25</h2></div></div><div class="rail-list">${topTwentyFive(divisionTeams(t.division), 'achievement').map(o=>`<a href="#team/${encodeURIComponent(o.id)}" class="rail-row ${o.id===t.id?'selected':''}" ${o.id===t.id?'aria-current="page"':''}><span>${nationalRank(o)}</span>${logo(o)}<b>${esc(o.name)}</b><small>${record(o)}</small></a>`).join('')}</div><a class="method-link" href="${rankingHash('achievement', true, t.division)}">All ${tier} rankings ${icon('arrow')}</a></aside><div class="team-center"><div class="tabs team-section-tabs" aria-label="Team sections">${[['overview','Overview'],['results','Results'],['players','Players'],['availability','Availability'],['model','Model details']].map(([value,label])=>`<button data-action="team-tab" data-value="${value}" class="${state.teamTab===value?'active':''}" aria-pressed="${state.teamTab===value}">${label}</button>`).join('')}</div><div id="team-center-content">${content}</div></div><aside class="stack team-right">${modelRanks(t)}${performanceTeamPanel(t)}${qualityPanel(t.division)}${matchup}</aside></div></div>`;
   if (needsDetails && !detail) void loadTeamDetails(summary);
+  if (playerTab) {
+    const target = main.querySelector('#team-center-content');
+    let selectedPlayer;
+    if (playerTab === 'players') try { selectedPlayer = decodeURIComponent(route()[3] ?? ''); } catch {}
+    mountPlayerFeature(target, ({ mountTeamPlayerView }) => mountTeamPlayerView(target, {
+      team: summary, season: state.snapshot.season, urlFor: playerPublicationPath, view: playerTab, selectedPlayer,
+    }));
+  }
 }
 function validationSummary() {
   const coverage = state.snapshot.coverageValidation;
@@ -1008,13 +1030,29 @@ function renderWeeklyPicks(picks) {
 function renderCompare() {
   const picks = activeWeeklyPicks();
   if (picks) return renderWeeklyPicks(picks);
+  const playerDetailsOpen = main.querySelector('[data-matchup-players]')?.open === true;
   const {a,b,edge,probability}=compareResult();
   const oddsLabel = oddsDescription(Math.max(probability, 1 - probability));
   const matchup = state.snapshot.matchupValidation;
   const explanation = matchup
     ? 'Win probabilities were calibrated on past results. The historical margin range describes how far final scores varied from this estimate in a later test. Negative margins favor Team B.'
     : 'These probabilities have not been calibrated. The margin is fitted from bounded historical score differences and should not be treated as a betting spread.';
-  main.innerHTML=`${banner('Matchup lab · Experimental strength model','CHANGE THE MATCHUP. FOLLOW THE NUMBERS.','Compare two teams using our own historical and opponent-adjusted strength ratings.')}<div class="wrap page-content">${matchupNav('compare')}<div class="segmented compare-venue" aria-label="Game location">${[['neutral','Neutral field'],['home','Team A at home'],['away','Team B at home']].map(([v,label])=>`<button data-action="venue" data-value="${v}" class="${state.venue===v?'active':''}" aria-pressed="${state.venue===v}">${label}</button>`).join('')}</div><div class="compare-layout">${[a,b].map((t,i)=>`<section class="panel compare-picker"><div class="section-label">TEAM ${i?'B':'A'}</div>${logo(t,'large')}<h2>${esc(t.name)}</h2><p>${record(t)} · ${rank(nationalRank(t))} ${achievementName()}</p><label><span class="sr-only">Team ${i?'B':'A'}</span><select id="compare-${i?'b':'a'}">${compareOptions(t.id)}</select></label><p style="margin-top:14px">Strength <strong>${number(t.strength,2)} pts</strong> · ${rank(strengthRank(t))}</p></section>`).join('')}<section class="panel prediction-card"><div class="eyebrow">${matchup ? 'Historically calibrated odds' : 'Experimental model estimate'}</div><h2>${esc(edge>=0?a.name:b.name)} edge</h2><div class="prediction-number">${number(Math.abs(edge),1)}<span style="font-size:27px"> pts</span></div><p>Bounded-model margin estimate</p><div class="probability-track"><span style="width:${probability*100}%"></span></div><p>${esc(a.name)} ${number(probability*100,1)}% &nbsp; · &nbsp; ${esc(b.name)} ${number((1-probability)*100,1)}%${oddsLabel ? ` · <span class="prediction-odds-description">${oddsLabel}</span>` : ''}</p>${matchupMarginRange(a,b,edge)}</section></div><div class="notice"><strong>Reading the matchup.</strong> ${explanation} <a class="text-link" href="#methodology">See what we checked</a></div></div>`;
+  const playersPanel = `<details class="panel player-fold matchup-players" data-matchup-players${playerDetailsOpen ? ' open' : ''}>
+    <summary>Players to know</summary><div class="panel-body" data-matchup-player-content><p role="status">Loading player information…</p></div></details>`;
+  main.innerHTML=`${banner('Matchup lab · Experimental strength model','CHANGE THE MATCHUP. FOLLOW THE NUMBERS.','Compare two teams using our own historical and opponent-adjusted strength ratings.')}<div class="wrap page-content">${matchupNav('compare')}<div class="segmented compare-venue" aria-label="Game location">${[['neutral','Neutral field'],['home','Team A at home'],['away','Team B at home']].map(([v,label])=>`<button data-action="venue" data-value="${v}" class="${state.venue===v?'active':''}" aria-pressed="${state.venue===v}">${label}</button>`).join('')}</div><div class="compare-layout">${[a,b].map((t,i)=>`<section class="panel compare-picker"><div class="section-label">TEAM ${i?'B':'A'}</div>${logo(t,'large')}<h2>${esc(t.name)}</h2><p>${record(t)} · ${rank(nationalRank(t))} ${achievementName()}</p><label><span class="sr-only">Team ${i?'B':'A'}</span><select id="compare-${i?'b':'a'}">${compareOptions(t.id)}</select></label><p style="margin-top:14px">Strength <strong>${number(t.strength,2)} pts</strong> · ${rank(strengthRank(t))}</p></section>`).join('')}<section class="panel prediction-card"><div class="eyebrow">${matchup ? 'Historically calibrated odds' : 'Experimental model estimate'}</div><h2>${esc(edge>=0?a.name:b.name)} edge</h2><div class="prediction-number">${number(Math.abs(edge),1)}<span style="font-size:27px"> pts</span></div><p>Bounded-model margin estimate</p><div class="probability-track"><span style="width:${probability*100}%"></span></div><p>${esc(a.name)} ${number(probability*100,1)}% &nbsp; · &nbsp; ${esc(b.name)} ${number((1-probability)*100,1)}%${oddsLabel ? ` · <span class="prediction-odds-description">${oddsLabel}</span>` : ''}</p>${matchupMarginRange(a,b,edge)}</section></div><div class="notice"><strong>Reading the matchup.</strong> ${explanation} <a class="text-link" href="#methodology">See what we checked</a></div>${playersPanel}</div>`;
+  const disclosure = main.querySelector('[data-matchup-players]');
+  if (!disclosure?.isConnected) return;
+  const target = disclosure.querySelector('[data-matchup-player-content]');
+  const openPlayers = () => {
+    if (!disclosure.open) return;
+    disclosure.removeEventListener('toggle', openPlayers);
+    const season = state.snapshot.season;
+    mountPlayerFeature(target, ({ mountMatchupPlayerView }) => mountMatchupPlayerView(target, {
+      teams: [a, b], season, urlFor: playerPublicationPath,
+    }));
+  };
+  disclosure.addEventListener('toggle', openPlayers);
+  openPlayers();
 }
 function editionDate(date) {
   return editionDates.format(new Date(date));
@@ -1282,7 +1320,7 @@ function render() {
     state.search = '';
     state.conference = '';
   }
-  if (page === 'team' && scope === 'results') state.teamTab = 'results';
+  if (page === 'team' && (scope === 'results' || playerTabs.has(scope))) state.teamTab = scope;
   if(page==='home')renderHome();else if(page==='rankings')renderRankings();else if(page==='teams')renderTeams();else if(page==='team')renderTeam(id);else if(page==='methodology')renderMethodology();else if(page==='compare')renderCompare();else if (page === 'polls' || page === 'forge-top-25') renderRankingEditions(page,id,scope);else if (page === 'bracket') renderBracketPage();else if (page === 'cfp-scenarios') renderScenarioPage();else if (page === 'beat-the-model') renderContestPage();else if (page === 'ranking-history') renderHistoryPage(id);else renderHome();
   const compareTitle = id === 'weekly' ? scope === 'fcs' ? 'FCS Weekly Picks' : 'Weekly picks' : 'Matchup lab';
   const team=rankedTeam(id);document.title=`${page==='team'&&team?team.name:({home:'FBS Top 25',rankings:`${state.division.toUpperCase()} rankings`,teams:'Team directory',compare:compareTitle,methodology:'Methodology',polls:'Compare Rankings','forge-top-25':'Forge’s Top 25',bracket:'Playoff Bracket','cfp-scenarios':'CFP Scenario Builder','beat-the-model':'Beat the Model','ranking-history':'Weekly SOR movement'}[page]||'Home')} · ${BRAND}`;
@@ -1364,7 +1402,8 @@ document.addEventListener('click',e=>{
   if (action === 'team-tab') {
     state.teamTab = value;
     const [, id, scope] = route();
-    if (scope === 'results' && value !== 'results') history.replaceState(history.state, '', `#team/${encodeURIComponent(id)}`);
+    if (playerTabs.has(value)) history.replaceState(history.state, '', `#team/${encodeURIComponent(id)}/${value}`);
+    else if (playerTabs.has(scope) || (scope === 'results' && value !== 'results')) history.replaceState(history.state, '', `#team/${encodeURIComponent(id)}`);
     renderTeam(id);
     if (button.classList?.contains('team-record-button')) main.querySelector('.tabs [data-value="results"]')?.focus();
   }

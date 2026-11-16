@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "2306",
+  "reports": [
+    {
+      "gameId": "401856862",
+      "kickoff": "2026-11-14T19:00:00.000Z",
+      "opponentId": "2628",
+      "opponentName": "TCU",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-14T17:30:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.716Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "4870857",
+          "name": "Avery Johnson",
+          "position": "QB",
+          "jersey": 2,
+          "status": "Out"
+        },
+        {
+          "playerId": "5384689",
+          "name": "Eli Jackson",
+          "position": "DT",
+          "jersey": 88,
+          "status": "Out"
+        },
+        {
+          "playerId": "4736246",
+          "name": "Jacob Knuth",
+          "position": "QB",
+          "jersey": 7,
+          "status": "Out"
+        },
+        {
+          "playerId": "5086452",
+          "name": "Koy Beasley",
+          "position": "S",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "5291146",
+          "name": "Max Lovett",
+          "position": "WR",
+          "jersey": 14,
+          "status": "Out"
+        },
+        {
+          "playerId": "5209749",
+          "name": "Sawyer Schilke",
+          "position": "LB",
+          "jersey": 26,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

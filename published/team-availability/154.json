@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "154",
+  "reports": [
+    {
+      "gameId": "401858301",
+      "kickoff": "2026-11-14T17:00:00.000Z",
+      "opponentId": "2567",
+      "opponentName": "SMU",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-14T15:00:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.855Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5291731",
+          "name": "Dalton DeBoer",
+          "position": "OL",
+          "jersey": 69,
+          "status": "Out"
+        },
+        {
+          "playerId": "5139525",
+          "name": "Devin Cook",
+          "position": "DB",
+          "jersey": 15,
+          "status": "Out"
+        },
+        {
+          "playerId": "5291183",
+          "name": "Elijah Otieno",
+          "position": "WR",
+          "jersey": 20,
+          "status": "Out"
+        },
+        {
+          "playerId": "4683306",
+          "name": "Landon Morris",
+          "position": "TE",
+          "jersey": 81,
+          "status": "Out"
+        },
+        {
+          "playerId": "5088234",
+          "name": "Tolu Olajide",
+          "position": "OL",
+          "jersey": 55,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

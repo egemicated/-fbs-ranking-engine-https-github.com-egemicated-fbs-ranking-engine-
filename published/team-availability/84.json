@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "84",
+  "reports": [
+    {
+      "gameId": "401858518",
+      "kickoff": "2026-11-14T20:30:00.000Z",
+      "opponentId": "30",
+      "opponentName": "USC",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-14T18:30:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.688Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "4685276",
+          "name": "Joe Brunner",
+          "position": "OL",
+          "jersey": 56,
+          "status": "Out"
+        },
+        {
+          "playerId": "4695703",
+          "name": "Kellan Wyatt",
+          "position": "DL",
+          "jersey": 18,
+          "status": "Out"
+        },
+        {
+          "playerId": "5212941",
+          "name": "Rolijah Hardy",
+          "position": "LB",
+          "jersey": 5,
+          "status": "Out"
+        },
+        {
+          "playerId": "5146724",
+          "name": "Turbo Richard",
+          "position": "RB",
+          "jersey": 1,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

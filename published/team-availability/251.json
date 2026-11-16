@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "251",
+  "reports": [
+    {
+      "gameId": "401856885",
+      "kickoff": "2026-11-15T00:30:00.000Z",
+      "opponentId": "99",
+      "opponentName": "LSU",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-14T23:00:00.000Z",
+      "checkedAt": "2026-11-16T01:07:38.129Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "4871053",
+          "name": "Hollywood Smothers",
+          "position": "RB",
+          "jersey": 2,
+          "status": "Out"
+        },
+        {
+          "playerId": "5195299",
+          "name": "Nick Townsend",
+          "position": "TE",
+          "jersey": 81,
+          "status": "Out"
+        },
+        {
+          "playerId": "5273266",
+          "name": "Richard Wesley",
+          "position": "EDG",
+          "jersey": 99,
+          "status": "Out"
+        },
+        {
+          "playerId": "4918430",
+          "name": "Trevor Goosby",
+          "position": "OL",
+          "jersey": 74,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "2633",
+  "reports": [
+    {
+      "gameId": "401856888",
+      "kickoff": "2026-11-14T20:00:00.000Z",
+      "opponentId": "245",
+      "opponentName": "Texas A&M",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-14T18:30:00.000Z",
+      "checkedAt": "2026-11-16T01:07:38.129Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5141598",
+          "name": "Daune Morris",
+          "position": "RB",
+          "jersey": 17,
+          "status": "Out"
+        },
+        {
+          "playerId": "5166889",
+          "name": "Dylan Lewis",
+          "position": "DB",
+          "jersey": 24,
+          "status": "Out"
+        },
+        {
+          "playerId": "5101128",
+          "name": "Edrees Farooq",
+          "position": "DB",
+          "jersey": 15,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870683",
+          "name": "Ethan Davis",
+          "position": "TE",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141496",
+          "name": "Jaedon Harmon",
+          "position": "LB",
+          "jersey": 12,
+          "status": "Out"
+        },
+        {
+          "playerId": "5245505",
+          "name": "JJ Finch",
+          "position": "DL",
+          "jersey": 26,
+          "status": "Out"
+        },
+        {
+          "playerId": "5164355",
+          "name": "Joakim Dodson",
+          "position": "WR",
+          "jersey": 9,
+          "status": "Out"
+        },
+        {
+          "playerId": "5199950",
+          "name": "Nic Moore",
+          "position": "OL",
+          "jersey": 58,
+          "status": "Out"
+        },
+        {
+          "playerId": "4954447",
+          "name": "Tyree Weathersby",
+          "position": "DL",
+          "jersey": 18,
+          "status": "Out"
+        },
+        {
+          "playerId": "5086640",
+          "name": "Wendell Moe Jr.",
+          "position": "OL",
+          "jersey": 75,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+name: Official player availability
+on:
+  schedule:
+    - cron: '20 20 * 8-12,1 *'
+      timezone: 'America/Denver'
+    - cron: '4,19,34,49 6-22 * 8-12,1 *'
+      timezone: 'America/Denver'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Official report window to check
+        type: choice
+        options: [bootstrap, nightly, game-day]
+        default: bootstrap
+permissions:
+  contents: write
+concurrency:
+  group: official-player-availability
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Check official conference reports
+        env:
+          EVENT_CRON: ${{ github.event.schedule }}
+          MANUAL_MODE: ${{ inputs.mode }}
+        run: |
+          if [[ -n "$MANUAL_MODE" ]]; then
+            mode="$MANUAL_MODE"
+          elif [[ "$EVENT_CRON" == '20 20 * 8-12,1 *' ]]; then
+            mode=nightly
+          else
+            mode=game-day
+          fi
+          node scripts/publish-player-availability.js --mode "$mode"
+      - name: Commit changed availability reports
+        run: |
+          if [[ ! -d published/team-availability ]]; then exit 0; fi
+          git add -- published/team-availability
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Publish official player availability'
+          git pull --rebase origin main
+          git push origin HEAD:main

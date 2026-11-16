@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "254",
+  "reports": [
+    {
+      "gameId": "401856864",
+      "kickoff": "2026-11-15T03:30:00.000Z",
+      "opponentId": "12",
+      "opponentName": "Arizona",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-15T02:00:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.716Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5167750",
+          "name": "Karson Kaufusi",
+          "position": "DT",
+          "jersey": 51,
+          "status": "Game Time Decision"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "145",
+  "reports": [
+    {
+      "gameId": "401856887",
+      "kickoff": "2026-11-15T18:00:00.000Z",
+      "opponentId": "201",
+      "opponentName": "Oklahoma",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-15T16:30:00.000Z",
+      "checkedAt": "2026-11-16T01:07:38.129Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5200101",
+          "name": "Ant Davis Jr.",
+          "position": "LB",
+          "jersey": 26,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079630",
+          "name": "Brady Prieskorn",
+          "position": "TE",
+          "jersey": 86,
+          "status": "Out"
+        },
+        {
+          "playerId": "5148599",
+          "name": "Carius Curne",
+          "position": "OL",
+          "jersey": 57,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870765",
+          "name": "Edwin Joseph",
+          "position": "S",
+          "jersey": 14,
+          "status": "Out"
+        },
+        {
+          "playerId": "5166148",
+          "name": "Gerald Lacy Jr.",
+          "position": "S",
+          "jersey": 39,
+          "status": "Out"
+        },
+        {
+          "playerId": "4695341",
+          "name": "Izaiah Hartrup",
+          "position": "WR",
+          "jersey": 12,
+          "status": "Out"
+        },
+        {
+          "playerId": "5209347",
+          "name": "JaMichael Garrett",
+          "position": "LB",
+          "jersey": 30,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079400",
+          "name": "Kam Franklin",
+          "position": "DE",
+          "jersey": 5,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5102910",
+          "name": "Keaton Thomas",
+          "position": "LB",
+          "jersey": 11,
+          "status": "Out"
+        },
+        {
+          "playerId": "5323120",
+          "name": "Kervin Johnson Jr.",
+          "position": "WR",
+          "jersey": 27,
+          "status": "Out"
+        },
+        {
+          "playerId": "5086388",
+          "name": "Kewan Lacy",
+          "position": "RB",
+          "jersey": 5,
+          "status": "Out"
+        },
+        {
+          "playerId": "5084286",
+          "name": "Makhi Frazier",
+          "position": "RB",
+          "jersey": 25,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5156438",
+          "name": "MJ Preston",
+          "position": "S",
+          "jersey": 19,
+          "status": "Out"
+        },
+        {
+          "playerId": "5160499",
+          "name": "Nascar McCoy",
+          "position": "S",
+          "jersey": 46,
+          "status": "Out"
+        },
+        {
+          "playerId": "4701945",
+          "name": "Patrick Kutas",
+          "position": "OL",
+          "jersey": 75,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870700",
+          "name": "Sharif Denson",
+          "position": "S",
+          "jersey": 7,
+          "status": "Game Time Decision"
+        }
+      ]
+    }
+  ]
+}

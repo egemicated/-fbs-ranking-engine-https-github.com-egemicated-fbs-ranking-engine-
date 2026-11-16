@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "2628",
+  "reports": [
+    {
+      "gameId": "401856862",
+      "kickoff": "2026-11-14T19:00:00.000Z",
+      "opponentId": "2306",
+      "opponentName": "Kansas State",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-14T17:30:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.716Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5161853",
+          "name": "Ace Theus",
+          "position": "WR",
+          "jersey": 4,
+          "status": "Out"
+        },
+        {
+          "playerId": "5101112",
+          "name": "Ansel Din-Mbuh",
+          "position": "DT",
+          "jersey": 92,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5268642",
+          "name": "Braden Bach",
+          "position": "TE",
+          "jersey": 89,
+          "status": "Out"
+        },
+        {
+          "playerId": "4692559",
+          "name": "Cade Bennett",
+          "position": "OL",
+          "jersey": 60,
+          "status": "Out"
+        },
+        {
+          "playerId": "5251971",
+          "name": "Cooper Reid",
+          "position": "WR",
+          "jersey": 84,
+          "status": "Out"
+        },
+        {
+          "playerId": "5147184",
+          "name": "Devondre McGee",
+          "position": "CB",
+          "jersey": 17,
+          "status": "Out"
+        },
+        {
+          "playerId": "5214401",
+          "name": "Jon Denman",
+          "position": "RB",
+          "jersey": 2,
+          "status": "Out"
+        },
+        {
+          "playerId": "5085413",
+          "name": "Keagan Cunningham",
+          "position": "WR",
+          "jersey": 83,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

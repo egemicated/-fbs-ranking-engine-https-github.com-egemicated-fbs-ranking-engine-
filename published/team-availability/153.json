@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "153",
+  "reports": [
+    {
+      "gameId": "401858298",
+      "kickoff": "2026-11-15T00:00:00.000Z",
+      "opponentId": "97",
+      "opponentName": "Louisville",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-14T22:00:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.855Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5265566",
+          "name": "Emmanuel Nwaiwu",
+          "position": "DL",
+          "jersey": 89,
+          "status": "Out"
+        },
+        {
+          "playerId": "5153465",
+          "name": "Jacob Horvath",
+          "position": "P",
+          "jersey": 93,
+          "status": "Out"
+        },
+        {
+          "playerId": "5149828",
+          "name": "Jonathan Agumadu",
+          "position": "LB",
+          "jersey": 8,
+          "status": "Out"
+        },
+        {
+          "playerId": "4918106",
+          "name": "Joseph Mupoyi",
+          "position": "DL",
+          "jersey": 25,
+          "status": "Out"
+        },
+        {
+          "playerId": "5212608",
+          "name": "Keeyun Chapman",
+          "position": "WR",
+          "jersey": 82,
+          "status": "Out"
+        },
+        {
+          "playerId": "5271149",
+          "name": "Kymistrii Young",
+          "position": "WR",
+          "jersey": 81,
+          "status": "Out"
+        },
+        {
+          "playerId": "5078061",
+          "name": "Tre Miller",
+          "position": "DB",
+          "jersey": 6,
+          "status": "Out"
+        },
+        {
+          "playerId": "5162998",
+          "name": "Viliami Moala",
+          "position": "DL",
+          "jersey": 56,
+          "status": "Out"
+        },
+        {
+          "playerId": "5161006",
+          "name": "Vodney Cleveland",
+          "position": "DL",
+          "jersey": 88,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

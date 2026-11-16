@@ -96,9 +96,9 @@ export function normalizeCfbd(games, roster, year, source = {}) {
   return validateSeason({ year, teams: [...teams.values()], games: normalized, source: { ...source, audit, format: 'CFBD API', rosterCoverage: 'Year-specific FBS roster plus all scheduled opponents' } });
 }
 
-export async function atomicJson(path, data) {
+export async function atomicJson(path, data, { spacing = 2 } = {}) {
   await mkdir(dirname(path), { recursive: true });
-  await writeFile(path + '.tmp', JSON.stringify(data, null, 2) + '\n');
+  await writeFile(path + '.tmp', JSON.stringify(data, null, spacing) + '\n');
   await rename(path + '.tmp', path);
 }
 

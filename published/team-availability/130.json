@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "130",
+  "reports": [
+    {
+      "gameId": "401858523",
+      "kickoff": "2026-11-14T20:30:00.000Z",
+      "opponentId": "2483",
+      "opponentName": "Oregon",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-14T18:30:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.688Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5391402",
+          "name": "Ace Hamilton",
+          "position": "OL",
+          "jersey": 52,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079729",
+          "name": "Andrew Sprague",
+          "position": "OL",
+          "jersey": 54,
+          "status": "Out"
+        },
+        {
+          "playerId": "5110462",
+          "name": "Blake Frazier",
+          "position": "OL",
+          "jersey": 77,
+          "status": "Out"
+        },
+        {
+          "playerId": "5152089",
+          "name": "Brady Norton",
+          "position": "OL",
+          "jersey": 70,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5224470",
+          "name": "Braydon Alford",
+          "position": "WR",
+          "jersey": 22,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079417",
+          "name": "Channing Goodwin",
+          "position": "WR",
+          "jersey": 9,
+          "status": "Out"
+        },
+        {
+          "playerId": "5199856",
+          "name": "Julius Holly",
+          "position": "DE",
+          "jersey": 37,
+          "status": "Out"
+        },
+        {
+          "playerId": "5108220",
+          "name": "Kendrick Bell",
+          "position": "WR",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079546",
+          "name": "Micah Ka'apana",
+          "position": "RB",
+          "jersey": 25,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141534",
+          "name": "Nate Marshall",
+          "position": "DE",
+          "jersey": 94,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

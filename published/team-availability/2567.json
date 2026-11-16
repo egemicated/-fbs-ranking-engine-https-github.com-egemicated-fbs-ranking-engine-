@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "2567",
+  "reports": [
+    {
+      "gameId": "401858301",
+      "kickoff": "2026-11-14T17:00:00.000Z",
+      "opponentId": "154",
+      "opponentName": "Wake Forest",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-14T15:00:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.855Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5214468",
+          "name": "Abel Hoopii",
+          "position": "OL",
+          "jersey": 58,
+          "status": "Out"
+        },
+        {
+          "playerId": "5225948",
+          "name": "Caden Marshall",
+          "position": "LB",
+          "jersey": 12,
+          "status": "Out"
+        },
+        {
+          "playerId": "5164352",
+          "name": "Carterrious Brown",
+          "position": "WR",
+          "jersey": 11,
+          "status": "Out"
+        },
+        {
+          "playerId": "5204683",
+          "name": "Evan Goodwin",
+          "position": "OL",
+          "jersey": 60,
+          "status": "Out"
+        },
+        {
+          "playerId": "5207891",
+          "name": "I'Zayah Young",
+          "position": "LB",
+          "jersey": 25,
+          "status": "Out"
+        },
+        {
+          "playerId": "5148841",
+          "name": "Ira Singleton IV",
+          "position": "DE",
+          "jersey": 9,
+          "status": "Out"
+        },
+        {
+          "playerId": "4921501",
+          "name": "Jaden Milliner-Jones",
+          "position": "S",
+          "jersey": 11,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "4916238",
+          "name": "Jaelyn Davis-Robinson",
+          "position": "CB",
+          "jersey": 13,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870849",
+          "name": "Jahkai Lang",
+          "position": "DE",
+          "jersey": 52,
+          "status": "Out"
+        },
+        {
+          "playerId": "5295336",
+          "name": "Link Rhodes",
+          "position": "RB",
+          "jersey": 24,
+          "status": "Out"
+        },
+        {
+          "playerId": "4871072",
+          "name": "Trey Wilson",
+          "position": "DE",
+          "jersey": 14,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141639",
+          "name": "Tyren Polley Jr.",
+          "position": "S",
+          "jersey": 10,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

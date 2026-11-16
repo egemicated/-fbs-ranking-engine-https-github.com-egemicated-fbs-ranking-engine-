@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "356",
+  "reports": [
+    {
+      "gameId": "401858526",
+      "kickoff": "2026-11-14T02:00:00.000Z",
+      "opponentId": "26",
+      "opponentName": "UCLA",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-14T00:00:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.688Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5369901",
+          "name": "BJ Thurman",
+          "position": "TE",
+          "jersey": 87,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5106299",
+          "name": "Ca'Lil Valentine",
+          "position": "RB",
+          "jersey": 5,
+          "status": "Out"
+        },
+        {
+          "playerId": "5191859",
+          "name": "Carter Smith",
+          "position": "DL",
+          "jersey": 48,
+          "status": "Out"
+        },
+        {
+          "playerId": "5146952",
+          "name": "Demetrius John",
+          "position": "DL",
+          "jersey": 54,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5148652",
+          "name": "Grant Beerman",
+          "position": "LB",
+          "jersey": 33,
+          "status": "Out"
+        },
+        {
+          "playerId": "5271188",
+          "name": "Jacob Eberhart",
+          "position": "DB",
+          "jersey": 8,
+          "status": "Out"
+        },
+        {
+          "playerId": "4575844",
+          "name": "Jake Renfro",
+          "position": "OL",
+          "jersey": 59,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5203604",
+          "name": "Javari Barnett",
+          "position": "RB",
+          "jersey": 24,
+          "status": "Out"
+        },
+        {
+          "playerId": "4834817",
+          "name": "Jayshon Platt",
+          "position": "WR",
+          "jersey": 1,
+          "status": "Out"
+        },
+        {
+          "playerId": "5210855",
+          "name": "Kai Pritchard",
+          "position": "OL",
+          "jersey": 53,
+          "status": "Out"
+        },
+        {
+          "playerId": "5198286",
+          "name": "Michael Clayton II",
+          "position": "QB",
+          "jersey": 7,
+          "status": "Out"
+        },
+        {
+          "playerId": "4921262",
+          "name": "TJ McMillen",
+          "position": "OL",
+          "jersey": 55,
+          "status": "Out"
+        },
+        {
+          "playerId": "5214494",
+          "name": "Tywan Cox",
+          "position": "DB",
+          "jersey": 32,
+          "status": "Out"
+        },
+        {
+          "playerId": "5220661",
+          "name": "Will Holmes",
+          "position": "DL",
+          "jersey": 24,
+          "status": "Game Time Decision"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "259",
+  "reports": [
+    {
+      "gameId": "401858299",
+      "kickoff": "2026-11-15T00:30:00.000Z",
+      "opponentId": "24",
+      "opponentName": "Stanford",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-14T22:30:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.855Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5150880",
+          "name": "George Ballance",
+          "position": "LB",
+          "jersey": 25,
+          "status": "Out"
+        },
+        {
+          "playerId": "5138342",
+          "name": "Joshua Clarke",
+          "position": "CB",
+          "jersey": 5,
+          "status": "Out"
+        },
+        {
+          "playerId": "5158250",
+          "name": "Justin Terry",
+          "position": "OL",
+          "jersey": 72,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5192898",
+          "name": "Lucas Austin",
+          "position": "OL",
+          "jersey": 57,
+          "status": "Out"
+        },
+        {
+          "playerId": "5229094",
+          "name": "Luke Stuewe",
+          "position": "WR",
+          "jersey": 83,
+          "status": "Out"
+        },
+        {
+          "playerId": "5271187",
+          "name": "Marlen Bright",
+          "position": "OL",
+          "jersey": 74,
+          "status": "Out"
+        },
+        {
+          "playerId": "5214476",
+          "name": "Nathaniel Wright",
+          "position": "OL",
+          "jersey": 50,
+          "status": "Out"
+        },
+        {
+          "playerId": "5149000",
+          "name": "Randy Adirika",
+          "position": "DL",
+          "jersey": 36,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "4922987",
+          "name": "Takye Heath",
+          "position": "WR",
+          "jersey": 2,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

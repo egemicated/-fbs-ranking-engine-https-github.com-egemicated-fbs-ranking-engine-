@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "221",
+  "reports": [
+    {
+      "gameId": "401858293",
+      "kickoff": "2026-11-14T00:00:00.000Z",
+      "opponentId": "52",
+      "opponentName": "Florida State",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-13T22:00:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.855Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5146366",
+          "name": "Allen Bryant",
+          "position": "DB",
+          "jersey": 26,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079579",
+          "name": "Cameron Lindsey",
+          "position": "LB",
+          "jersey": 24,
+          "status": "Out"
+        },
+        {
+          "playerId": "5078256",
+          "name": "DeMarco Ward",
+          "position": "LB",
+          "jersey": 7,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5296040",
+          "name": "Elijah Lagg",
+          "position": "TE",
+          "jersey": 17,
+          "status": "Out"
+        },
+        {
+          "playerId": "5122153",
+          "name": "Eliyt Nairne",
+          "position": "DL",
+          "jersey": 16,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "4714300",
+          "name": "Holden Geriner",
+          "position": "QB",
+          "jersey": 15,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5269870",
+          "name": "Isaac Patterson",
+          "position": "DB",
+          "jersey": 41,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141677",
+          "name": "Ja'Kyrian Turner",
+          "position": "RB",
+          "jersey": 9,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5208095",
+          "name": "Mason Heintschel",
+          "position": "QB",
+          "jersey": 6,
+          "status": "Out"
+        },
+        {
+          "playerId": "5222252",
+          "name": "Max Hunt",
+          "position": "TE",
+          "jersey": 18,
+          "status": "Out"
+        },
+        {
+          "playerId": "5379963",
+          "name": "Rodney Dunbar",
+          "position": "WR",
+          "jersey": 81,
+          "status": "Out"
+        },
+        {
+          "playerId": "4806851",
+          "name": "Sean FitzSimmons",
+          "position": "DL",
+          "jersey": 55,
+          "status": "Out"
+        },
+        {
+          "playerId": "5216307",
+          "name": "Shawn Lee Jr.",
+          "position": "DB",
+          "jersey": 3,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5196024",
+          "name": "Tyreek Robinson",
+          "position": "WR",
+          "jersey": 24,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

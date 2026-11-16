@@ -1,0 +1,238 @@
+{
+  "method": "fbs-intelligence-qb-v1",
+  "firstPriorSeason": 2018,
+  "fitSeasons": [
+    2022,
+    2023
+  ],
+  "testSeasons": [
+    2024,
+    2025
+  ],
+  "cutoff": "One prediction snapshot for each regular or postseason week. Only games with kickoff at least 24 hours before its first kickoff contribute.",
+  "selection": "Highest recorded combined attempts across the prior two team games. A paired test needs a rated passer on both sides. Starter and report-of-availability confirmation are unavailable.",
+  "baseline": "Existing team Strength margins and pre-2022 logistic slopes for same-subdivision games, rebuilt from matched outcome archives.",
+  "challenger": "Baseline log odds plus a nonnegative coefficient times the difference in experimental QB ratings divided by 10. Choose the coefficient by paired fit Brier score, including zero.",
+  "candidateWeights": [
+    0,
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3,
+    0.4,
+    0.5
+  ],
+  "sources": {
+    "2018": {
+      "gameArchiveSha256": "089672a2e3509990c36a75e30910ebe4abf2e37091a89551166aaf287f41fdb3"
+    },
+    "2019": {
+      "gameArchiveSha256": "8966102ad775cf682a905f70d7b6a50fa204019135587a6fe287871a7994fd53"
+    },
+    "2020": {
+      "gameArchiveSha256": "ba7cf1c74247ee1d0543162c055c0329139b9a1a591261136c81e0f36fd98f2d"
+    },
+    "2021": {
+      "gameArchiveSha256": "0984695be1618d188d80d9d62de550ebda1d8afe542fde20075a8f54e45e0bd6"
+    },
+    "2022": {
+      "gameArchiveSha256": "58935e17f016e04abc58f5aa3d7e3ad91822430459828108bb98ba872e7db694",
+      "passingArchiveSha256": "c2cfedd77e66df4899ab6b4de5f4c36d9ef75c2876ffd7f998a4099e8f0caeac",
+      "passingArchiveSource": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_player_box/player_box_2022.csv.gz",
+      "verifiedPassingRows": 2696
+    },
+    "2023": {
+      "gameArchiveSha256": "5e7e5975fcde9caf5b1e12f5a39449005fac05a7b41a9399b6ed86621f2dd397",
+      "passingArchiveSha256": "2503160ff67e083b61ce49ad7e2eaa72cd8764860c2dcd145be44559441b9f28",
+      "passingArchiveSource": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_player_box/player_box_2023.csv.gz",
+      "verifiedPassingRows": 2776
+    },
+    "2024": {
+      "gameArchiveSha256": "84a3f1132e3805d71c9ba02ba285b9e66806646804c570f1dfd6e6568bddae98",
+      "passingArchiveSha256": "09025d0d842f3f81332ad4f08fa9c40a75f20085fb0f754696d5f5c4907f5662",
+      "passingArchiveSource": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_player_box/player_box_2024.csv.gz",
+      "verifiedPassingRows": 2774
+    },
+    "2025": {
+      "gameArchiveSha256": "2b652655b8bdb89d92a939a0bc4c34b0e3036526edef3c442e36b0df129907ff",
+      "passingArchiveSha256": "fb519f4ecf2d1ee447ee24b5c1c7b7b227e9f3c8d21fae22b50427475cfff8d6",
+      "passingArchiveSource": "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_player_box/player_box_2025.csv.gz",
+      "verifiedPassingRows": 2915
+    }
+  },
+  "resultsByDivision": {
+    "fbs": {
+      "fit": {
+        "eligibleGames": 1568,
+        "pairedGames": 1418,
+        "baseline": {
+          "games": 1418,
+          "brier": 0.19034898224065752,
+          "logLoss": 0.5607021164492662,
+          "picked": 1418,
+          "correct": 996,
+          "accuracy": 0.7023977433004231
+        },
+        "withQBs": {
+          "games": 1418,
+          "brier": 0.189882795063037,
+          "logLoss": 0.5600484756878037,
+          "picked": 1418,
+          "correct": 998,
+          "accuracy": 0.7038081805359662
+        }
+      },
+      "selectedWeight": 0.1,
+      "holdout": {
+        "eligibleGames": 1606,
+        "pairedGames": 1468,
+        "baseline": {
+          "games": 1468,
+          "brier": 0.18665145177959167,
+          "logLoss": 0.5479258773740375,
+          "picked": 1468,
+          "correct": 1031,
+          "accuracy": 0.702316076294278
+        },
+        "withQBs": {
+          "games": 1468,
+          "brier": 0.1873121527587693,
+          "logLoss": 0.5498038760503745,
+          "picked": 1468,
+          "correct": 1035,
+          "accuracy": 0.7050408719346049
+        }
+      },
+      "holdoutBySeason": {
+        "2024": {
+          "eligibleGames": 798,
+          "pairedGames": 734,
+          "baseline": {
+            "games": 734,
+            "brier": 0.19469635306303684,
+            "logLoss": 0.5665369829774973,
+            "picked": 734,
+            "correct": 501,
+            "accuracy": 0.6825613079019074
+          },
+          "withQBs": {
+            "games": 734,
+            "brier": 0.19565964458202267,
+            "logLoss": 0.5705217683163966,
+            "picked": 734,
+            "correct": 504,
+            "accuracy": 0.6866485013623979
+          }
+        },
+        "2025": {
+          "eligibleGames": 808,
+          "pairedGames": 734,
+          "baseline": {
+            "games": 734,
+            "brier": 0.17860655049614596,
+            "logLoss": 0.5293147717705748,
+            "picked": 734,
+            "correct": 530,
+            "accuracy": 0.7220708446866485
+          },
+          "withQBs": {
+            "games": 734,
+            "brier": 0.178964660935516,
+            "logLoss": 0.5290859837843528,
+            "picked": 734,
+            "correct": 531,
+            "accuracy": 0.723433242506812
+          }
+        }
+      }
+    },
+    "fcs": {
+      "fit": {
+        "eligibleGames": 1278,
+        "pairedGames": 44,
+        "baseline": {
+          "games": 44,
+          "brier": 0.17855916325402219,
+          "logLoss": 0.5364375289526102,
+          "picked": 44,
+          "correct": 32,
+          "accuracy": 0.7272727272727273
+        },
+        "withQBs": {
+          "games": 44,
+          "brier": 0.17855916325402219,
+          "logLoss": 0.5364375289526102,
+          "picked": 44,
+          "correct": 32,
+          "accuracy": 0.7272727272727273
+        }
+      },
+      "selectedWeight": 0,
+      "holdout": {
+        "eligibleGames": 1380,
+        "pairedGames": 40,
+        "baseline": {
+          "games": 40,
+          "brier": 0.2066718314001046,
+          "logLoss": 0.5942267759665538,
+          "picked": 40,
+          "correct": 26,
+          "accuracy": 0.65
+        },
+        "withQBs": {
+          "games": 40,
+          "brier": 0.2066718314001046,
+          "logLoss": 0.5942267759665538,
+          "picked": 40,
+          "correct": 26,
+          "accuracy": 0.65
+        }
+      },
+      "holdoutBySeason": {
+        "2024": {
+          "eligibleGames": 689,
+          "pairedGames": 21,
+          "baseline": {
+            "games": 21,
+            "brier": 0.18810979932775004,
+            "logLoss": 0.5483855865178376,
+            "picked": 21,
+            "correct": 14,
+            "accuracy": 0.6666666666666666
+          },
+          "withQBs": {
+            "games": 21,
+            "brier": 0.18810979932775004,
+            "logLoss": 0.5483855865178376,
+            "picked": 21,
+            "correct": 14,
+            "accuracy": 0.6666666666666666
+          }
+        },
+        "2025": {
+          "eligibleGames": 691,
+          "pairedGames": 19,
+          "baseline": {
+            "games": 19,
+            "brier": 0.2271877615853384,
+            "logLoss": 0.6448933537782927,
+            "picked": 19,
+            "correct": 12,
+            "accuracy": 0.631578947368421
+          },
+          "withQBs": {
+            "games": 19,
+            "brier": 0.2271877615853384,
+            "logLoss": 0.6448933537782927,
+            "picked": 19,
+            "correct": 12,
+            "accuracy": 0.631578947368421
+          }
+        }
+      }
+    }
+  },
+  "limitation": "Archived ESPN observations do not guarantee identical coverage to CFBD, or coverage of both teams and games. This evaluates a pregame research signal only."
+}

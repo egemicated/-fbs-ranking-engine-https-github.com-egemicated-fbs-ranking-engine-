@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "264",
+  "reports": [
+    {
+      "gameId": "401858521",
+      "kickoff": "2026-11-14T22:30:00.000Z",
+      "opponentId": "127",
+      "opponentName": "Michigan State",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-14T20:30:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.688Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "4709669",
+          "name": "Christian Moss",
+          "position": "WR",
+          "jersey": 5,
+          "status": "Out"
+        },
+        {
+          "playerId": "5219119",
+          "name": "Jordan Washington",
+          "position": "RB",
+          "jersey": 4,
+          "status": "Out"
+        },
+        {
+          "playerId": "4921406",
+          "name": "Landen Hatchett",
+          "position": "OL",
+          "jersey": 66,
+          "status": "Out"
+        },
+        {
+          "playerId": "5209302",
+          "name": "Quaid Carr",
+          "position": "RB",
+          "jersey": 21,
+          "status": "Out"
+        },
+        {
+          "playerId": null,
+          "name": "S CJ Christian",
+          "position": null,
+          "jersey": null,
+          "status": "Out"
+        },
+        {
+          "playerId": "4601283",
+          "name": "Trey Cooley",
+          "position": "RB",
+          "jersey": 22,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

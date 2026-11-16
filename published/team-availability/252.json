@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "252",
+  "reports": [
+    {
+      "gameId": "401856858",
+      "kickoff": "2026-11-15T00:00:00.000Z",
+      "opponentId": "239",
+      "opponentName": "Baylor",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-14T22:30:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.716Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "4917351",
+          "name": "Evan Johnson",
+          "position": "CB",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "5080697",
+          "name": "Isaiah Glasker",
+          "position": "LB",
+          "jersey": 16,
+          "status": "Out"
+        },
+        {
+          "playerId": "5296287",
+          "name": "Kila Keone",
+          "position": "WR",
+          "jersey": 84,
+          "status": "Out"
+        },
+        {
+          "playerId": "5130407",
+          "name": "Roger Saleapaga II",
+          "position": "TE",
+          "jersey": 2,
+          "status": "Out"
+        },
+        {
+          "playerId": "5219646",
+          "name": "Will Zundel",
+          "position": "TE",
+          "jersey": 83,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

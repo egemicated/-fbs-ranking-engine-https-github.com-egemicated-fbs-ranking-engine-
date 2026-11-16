@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "152",
+  "reports": [
+    {
+      "gameId": "401858300",
+      "kickoff": "2026-11-14T17:00:00.000Z",
+      "opponentId": "183",
+      "opponentName": "Syracuse",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-14T15:00:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.855Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5155981",
+          "name": "AJ Richardson",
+          "position": "ILB",
+          "jersey": 15,
+          "status": "Out"
+        },
+        {
+          "playerId": "5110445",
+          "name": "Daniel Cruz",
+          "position": "OL",
+          "jersey": 50,
+          "status": "Out"
+        },
+        {
+          "playerId": "4901373",
+          "name": "Harvey Dyson III",
+          "position": "OLB",
+          "jersey": 5,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5172608",
+          "name": "Hunter Provience",
+          "position": "TE",
+          "jersey": 86,
+          "status": "Out"
+        },
+        {
+          "playerId": "5126527",
+          "name": "Ian Flynt",
+          "position": "TE",
+          "jersey": 87,
+          "status": "Out"
+        },
+        {
+          "playerId": "4703064",
+          "name": "Isaiah Crowell",
+          "position": "NCK",
+          "jersey": 8,
+          "status": "Out"
+        },
+        {
+          "playerId": "5147970",
+          "name": "Jaren Sensabaugh",
+          "position": "CB",
+          "jersey": 14,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5220013",
+          "name": "Nick Konieczynski",
+          "position": "K",
+          "jersey": 91,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870590",
+          "name": "Popo Aguirre",
+          "position": "ILB",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870806",
+          "name": "Rico Jackson",
+          "position": "OL",
+          "jersey": 64,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5079666",
+          "name": "Ronnie Royal, III",
+          "position": "S",
+          "jersey": 2,
+          "status": "Out"
+        },
+        {
+          "playerId": "5296075",
+          "name": "Spike Sowells Jr.",
+          "position": "OL",
+          "jersey": 72,
+          "status": "Out"
+        },
+        {
+          "playerId": "5211398",
+          "name": "Tristan Teasdell",
+          "position": "S",
+          "jersey": 3,
+          "status": "Out"
+        },
+        {
+          "playerId": "5201877",
+          "name": "Vander Ploog",
+          "position": "TE",
+          "jersey": 4,
+          "status": "Out"
+        },
+        {
+          "playerId": "5148611",
+          "name": "Will Wilson",
+          "position": "QB",
+          "jersey": 10,
+          "status": "Out"
+        },
+        {
+          "playerId": "4431473",
+          "name": "Yousef Mugharbil",
+          "position": "OL",
+          "jersey": 71,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

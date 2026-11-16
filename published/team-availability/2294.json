@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "2294",
+  "reports": [
+    {
+      "gameId": "401858519",
+      "kickoff": "2026-11-15T00:30:00.000Z",
+      "opponentId": "2509",
+      "opponentName": "Purdue",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-14T22:30:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.688Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5272774",
+          "name": "Brody Schaffer",
+          "position": "WR",
+          "jersey": 11,
+          "status": "Out"
+        },
+        {
+          "playerId": "5177825",
+          "name": "Burke Gautcher",
+          "position": "LB",
+          "jersey": 10,
+          "status": "Out"
+        },
+        {
+          "playerId": "5150661",
+          "name": "Cael Winter",
+          "position": "OL",
+          "jersey": 61,
+          "status": "Out"
+        },
+        {
+          "playerId": "5077405",
+          "name": "Cannon Leonard",
+          "position": "OL",
+          "jersey": 75,
+          "status": "Out"
+        },
+        {
+          "playerId": "5093886",
+          "name": "Kamari Moulton",
+          "position": "RB",
+          "jersey": 28,
+          "status": "Out"
+        },
+        {
+          "playerId": "5218925",
+          "name": "Kyler Gerardy",
+          "position": "DB",
+          "jersey": 19,
+          "status": "Out"
+        },
+        {
+          "playerId": "5214460",
+          "name": "Lucas Allgeyer",
+          "position": "OL",
+          "jersey": 60,
+          "status": "Out"
+        },
+        {
+          "playerId": "5193099",
+          "name": "Tyler Brown",
+          "position": "DB",
+          "jersey": 2,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

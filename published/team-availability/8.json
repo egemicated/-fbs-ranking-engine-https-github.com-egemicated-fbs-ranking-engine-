@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "8",
+  "reports": [
+    {
+      "gameId": "401856882",
+      "kickoff": "2026-11-15T00:45:00.000Z",
+      "opponentId": "2579",
+      "opponentName": "South Carolina",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-14T23:15:00.000Z",
+      "checkedAt": "2026-11-16T01:07:38.129Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "5079493",
+          "name": "Braydon Lee",
+          "position": "DB",
+          "jersey": 3,
+          "status": "Out"
+        },
+        {
+          "playerId": "5150266",
+          "name": "Maddox Lassiter",
+          "position": "TE",
+          "jersey": 47,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

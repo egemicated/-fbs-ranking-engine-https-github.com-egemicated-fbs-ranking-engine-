@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "97",
+  "reports": [
+    {
+      "gameId": "401858298",
+      "kickoff": "2026-11-15T00:00:00.000Z",
+      "opponentId": "153",
+      "opponentName": "North Carolina",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-14T22:00:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.855Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "4838276",
+          "name": "Antonio Watts",
+          "position": "DB",
+          "jersey": 9,
+          "status": "Out"
+        },
+        {
+          "playerId": "4921265",
+          "name": "Anwar O'neal",
+          "position": "OL",
+          "jersey": 70,
+          "status": "Out"
+        },
+        {
+          "playerId": "5280615",
+          "name": "Bryten Close",
+          "position": "OT",
+          "jersey": 63,
+          "status": "Out"
+        },
+        {
+          "playerId": "5226577",
+          "name": "Hamilton Atkins",
+          "position": "TE",
+          "jersey": 90,
+          "status": "Out"
+        },
+        {
+          "playerId": "5153258",
+          "name": "Jacob Baker",
+          "position": "P",
+          "jersey": 48,
+          "status": "Out"
+        },
+        {
+          "playerId": "5160483",
+          "name": "Payton Cook",
+          "position": "WR",
+          "jersey": 84,
+          "status": "Out"
+        },
+        {
+          "playerId": "5263946",
+          "name": "Sam Dawson",
+          "position": "DL",
+          "jersey": 98,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

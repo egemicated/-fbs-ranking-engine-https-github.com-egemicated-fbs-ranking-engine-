@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "120",
+  "reports": [
+    {
+      "gameId": "401858520",
+      "kickoff": "2026-11-14T17:00:00.000Z",
+      "opponentId": "275",
+      "opponentName": "Wisconsin",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-14T15:00:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.688Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "4950548",
+          "name": "DJ Samuels",
+          "position": "RB",
+          "jersey": 20,
+          "status": "Out"
+        },
+        {
+          "playerId": null,
+          "name": "Dontay Joyner",
+          "position": "DB",
+          "jersey": 29,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141419",
+          "name": "Harry Dalton III",
+          "position": "RB",
+          "jersey": 25,
+          "status": "Out"
+        },
+        {
+          "playerId": "5290200",
+          "name": "Javonte Williams",
+          "position": "TE",
+          "jersey": 81,
+          "status": "Out"
+        },
+        {
+          "playerId": "5105561",
+          "name": "Jordan Williams",
+          "position": "LB",
+          "jersey": 23,
+          "status": "Out"
+        },
+        {
+          "playerId": "5327246",
+          "name": "Josiah Teasley",
+          "position": "WR",
+          "jersey": 18,
+          "status": "Out"
+        },
+        {
+          "playerId": "5270858",
+          "name": "Liam Willson",
+          "position": "RB",
+          "jersey": 29,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141695",
+          "name": "Malik Washington",
+          "position": "QB",
+          "jersey": 7,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5146851",
+          "name": "Trevor Szymanski",
+          "position": "OL",
+          "jersey": 50,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141583",
+          "name": "Zahir Mathis",
+          "position": "LB",
+          "jersey": 9,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

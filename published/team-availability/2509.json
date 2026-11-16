@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "2509",
+  "reports": [
+    {
+      "gameId": "401858519",
+      "kickoff": "2026-11-15T00:30:00.000Z",
+      "opponentId": "2294",
+      "opponentName": "Iowa",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-14T22:30:00.000Z",
+      "checkedAt": "2026-11-16T01:07:37.688Z",
+      "final": true,
+      "players": [
+        {
+          "playerId": "4831987",
+          "name": "Jaden Mangham",
+          "position": "DB",
+          "jersey": 2,
+          "status": "Game Time Decision"
+        },
+        {
+          "playerId": "5079462",
+          "name": "Kylan Fox",
+          "position": "TE",
+          "jersey": 16,
+          "status": "Out"
+        },
+        {
+          "playerId": "5274360",
+          "name": "Raderrion Daniels",
+          "position": "DB",
+          "jersey": 24,
+          "status": "Out"
+        },
+        {
+          "playerId": "5077897",
+          "name": "Rodney Lora",
+          "position": "DL",
+          "jersey": 94,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}
