@@ -1,0 +1,48 @@
+.rooting-guide {
+  margin-top: 6px;
+  border-top: 1px solid var(--my-team-divider, #b4d6fa58);
+  color: #e8f5ff;
+}
+.rooting-guide > summary, .rooting-result > summary {
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  gap: 8px 14px;
+  cursor: pointer;
+  list-style: none;
+}
+.rooting-guide > summary { font: 700 17px/1.15 Barlow, sans-serif; }
+.rooting-guide summary::-webkit-details-marker { display: none; }
+.rooting-guide summary::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  margin-left: auto;
+  flex: none;
+  border-right: 2px solid #96deff;
+  border-bottom: 2px solid #96deff;
+  transform: rotate(45deg);
+}
+.rooting-guide details[open] > summary::after, .rooting-guide[open] > summary::after { transform: rotate(225deg); }
+.rooting-guide-body { padding-bottom: 7px; color: var(--my-team-copy, #c4d5eb); font-size: 13px; }
+.rooting-guide-body a, .rooting-retry { color: #97e4ff; text-decoration: underline; text-underline-offset: .2em; }
+.rooting-retry { min-height: 42px; padding: 4px 0; border: 0; background: none; font: inherit; cursor: pointer; }
+.rooting-guide-note { overflow-wrap: anywhere; }
+.rooting-list { display: grid; gap: 6px; margin: 7px 0; padding: 0; list-style: none; }
+.rooting-result { overflow: hidden; border: 1px solid #9bc4f057; border-radius: 7px; background: #091c38b0; }
+.rooting-result > summary { padding: 7px 10px; color: #e8f5ff; overflow-wrap: anywhere; }
+.rooting-result > summary > span:first-child { flex: 1; min-width: 0; }
+.rooting-result strong, .rooting-result small { display: block; }
+.rooting-result small { color: #bdd3ec; }
+.rooting-effect { min-width: 0; color: #97e4ff; font-weight: 700; }
+.rooting-sides { padding: 6px 10px 9px; border-top: 1px solid #9bc4f057; }
+.rooting-sides dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin: 7px 0; }
+.rooting-sides dl > div { min-width: 0; padding: 7px; border-radius: 5px; background: #d9edff19; overflow-wrap: anywhere; }
+.rooting-sides dt { color: #e8f5ff; font-weight: 700; }
+.rooting-sides dd { display: grid; margin: 2px 0 0; }
+.rooting-sides dd strong { display: inline; }
+@media (max-width: 620px) {
+  .rooting-result > summary { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 3px 8px; }
+  .rooting-result > summary::after { grid-area: 1 / 2 / 3; }
+  .rooting-effect { grid-column: 1; }
+}

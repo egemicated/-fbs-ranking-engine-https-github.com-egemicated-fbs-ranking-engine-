@@ -36,7 +36,7 @@ test('API serves ratings without login, rejects writes, and keeps paths constrai
       const team = await teamResponse.json();
       assert.deepEqual(team, { id: expectedRow.id, publicationHash: summary.publicationHash,
         upcomingGames: null,
-        contributions: [contribution], explanation: detail.explanation, evidence: detail.evidence, preseasonStrength: 1,
+        contributions: [{ ...contribution, gameId: 'game' }], explanation: detail.explanation, evidence: detail.evidence, preseasonStrength: 1,
         ...(source === current ? { sorTailProbability: 0.05, sorExpectedWins: 2 } : {}) });
     }
     assert.equal((await fetch(base + '/rankings', { method: 'POST' })).status, 405);

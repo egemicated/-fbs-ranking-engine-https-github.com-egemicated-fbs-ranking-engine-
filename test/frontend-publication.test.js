@@ -192,7 +192,7 @@ test('team Results shows the dated upcoming schedule without changing completed 
   assert.match(upcoming, /href="#team\/b"[^>]*>Beta</);
   assert.match(upcoming, /Gamma[\s\S]*Beta[\s\S]*&lt;Neutral opponent&gt;/);
   assert.match(upcoming, /Nov 14[^<]*6:30\s?PM/i);
-  assert.match(upcoming, /Time TBD/i);
+  assert.match(upcoming, /Time pending/i);
   assert.match(upcoming, /\bHome\b/i);
   assert.match(upcoming, /\bAway\b/i);
   assert.match(upcoming, /neutral site/i);

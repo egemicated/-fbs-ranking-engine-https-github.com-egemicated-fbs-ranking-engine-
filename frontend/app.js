@@ -1,5 +1,16 @@
 const BRAND = 'FBS Intelligence';
 const main = document.querySelector('#main');
+let shareCardButton = () => '';
+let kickoffCalendar = () => '';
+let gameActionsModule;
+function loadGameActions() {
+  gameActionsModule ??= Promise.all([import('./share-card.js?v=1'), import('./game-calendar.js?v=1')]).then(([sharing, calendar]) => {
+    sharing.mountShareCards(main);
+    shareCardButton = sharing.shareCardButton;
+    kickoffCalendar = calendar.kickoffCalendar;
+  }).catch(() => { gameActionsModule = null; });
+  return gameActionsModule;
+}
 // Static builds set this root. The web service keeps its existing JSON routes.
 const dataRoot = document.querySelector('meta[name="publication-data-root"]')?.content;
 const state = { snapshot: null, byId: new Map(), byFcsId: new Map(), performance: null, performanceById: new Map(), fcsPerformanceById: null, division: 'fbs', model: 'achievement', search: '', conference: '', all: false, teamTab: 'overview', compareA: '254', compareB: '2390', venue: 'neutral' };
@@ -27,8 +38,10 @@ let rankingsFailed = false;
 let renderedHeader;
 let rankingsHubView;
 let favoriteModule;
+let rootingGuideModule;
 let closeFavorite;
 let chosenFavorite;
+let focusedGameLink;
 const accountReturnKey = 'fbs-account-return';
 const localPreview = ['localhost', '127.0.0.1', '[::1]'].includes(window.location?.hostname) && window.fbsReviewPreview;
 const rankingsHubTabs = [
@@ -94,6 +107,15 @@ function usesSor(t = state.snapshot?.rankings?.[0]) { return Boolean(t && Object
 function nationalRank(t) { return Object.hasOwn(t, 'displayRank') ? t.displayRank : t.rank; }
 function achievementScore(t) { return usesSor(t) ? t.sor : t.achievement; }
 function achievementName(t) { return t?.division === 'fcs' || usesSor(t) ? 'Strength of Record' : 'Colley achievement'; }
+function shareTeamData(team) {
+  const ranked = rankedTeam(team.id);
+  return ranked ? { id: ranked.id, name: ranked.name, rank: nationalRank(ranked), rankLabel: achievementName(ranked),
+    record: record(ranked), division: ranked.division } : { id: team.id, name: team.name, division: team.division };
+}
+function shareTeamButton(team) {
+  return shareCardButton({ teams: [shareTeamData(team)], asOf: state.snapshot.asOf,
+    href: `#team/${encodeURIComponent(team.id)}` });
+}
 function performancePublished() { return state.snapshot?.performanceEndpoint === publicationPath('performance'); }
 function hasPerformance() { return Boolean(state.performance && state.performance.status === 'experimental' && state.performance.season === state.snapshot?.season && state.performance.asOf === state.snapshot.asOf && state.performance.baseSnapshotHash && state.performance.baseSnapshotHash === state.snapshot.snapshotHash); }
 function performanceRow(t) {
@@ -339,11 +361,13 @@ function favoriteNext(team) {
   const forecast = Number.isFinite(odds) && odds >= 0 && odds <= 1 ? `<div class="my-team-forecast">
     <strong>${number(odds * 100, 1)}%</strong><span>${next.probabilitySource === 'saved' ? 'Saved win chance' : 'Win chance estimate'}</span>
     ${next.calibrated === false ? '<span>Experimental</span>' : ''}</div>` : '';
-  return `<a class="my-team-next-link" href="#team/${encodeURIComponent(team.id)}/results">
+  const href = teamFixtureHref(team, next);
+  return `<a class="my-team-next-link" href="${href}">
     <div class="my-team-matchup">${opponent ? `<div class="my-team-opponent-emblem">${logo(opponent, 'small')}</div>` : ''}
     <div><strong>${where} ${esc(next.opponentName)}</strong>
-    <p>${teamKickoff(next)}${next.venue === 'neutral' ? ' · Neutral site' : ''}</p></div></div>${forecast}
-    <span class="my-team-next-arrow" aria-hidden="true">${icon('chevron')}</span><span class="sr-only">See upcoming games</span></a>`;
+    <p>${teamKickoff(next, true)}${next.venue === 'neutral' ? ' · Neutral site' : ''}</p></div></div>${forecast}
+    <span class="my-team-next-arrow" aria-hidden="true">${icon('chevron')}</span><span class="sr-only">See matchup details</span></a>
+    ${next.startTimeTbd === false ? `<div class="my-team-next-calendar">${teamFixtureCalendar(next, href)}</div>` : ''}`;
 }
 function favoriteCard(team) {
   if (!teamDetails.has(team.id) && state.snapshot.teamDetailsPath) void loadTeamDetails(team);
@@ -360,12 +384,37 @@ function favoriteCard(team) {
     </dl>
     ${movement ? `<p class="my-team-movement">${esc(movementComparison())}</p>` : ''}
     <div class="my-team-next"><h3>Next game</h3><div class="my-team-next-content" data-my-team-schedule="${esc(team.id)}">${favoriteNext(team)}</div></div>
-  </div><nav class="my-team-player-links" aria-label="My Team player information"><a href="#team/${encodeURIComponent(team.id)}/players">Players</a><a href="#team/${encodeURIComponent(team.id)}/availability">Availability</a></nav>`;
+  </div><div class="my-team-player-links" aria-label="My Team shortcuts"><a href="#team/${encodeURIComponent(team.id)}/players">Players</a>
+  <a href="#team/${encodeURIComponent(team.id)}/availability">Availability</a>${shareTeamButton(team)}</div><div data-rooting-guide></div>`;
+}
+async function loadFavoriteUpdateFacts(team) {
+  const snapshot = state.snapshot;
+  const detail = teamDetails.get(team.id)?.request ?? (snapshot.teamDetailsPath ? loadTeamDetails(team) : null);
+  teamPlayersModule ??= import('./team-players.js?v=1').catch(error => { teamPlayersModule = null; throw error; });
+  const availability = teamPlayersModule.then(({ fetchPlayerData }) => fetchPlayerData('team-availability', team,
+    snapshot.season, playerPublicationPath('team-availability', team))).catch(() => null);
+  const [, report] = await Promise.all([detail, availability]);
+  return { rank: nationalRank(team) ?? null, method: usesSor(team) ? 'SOR rank' : 'Colley rank', asOf: snapshot.asOf,
+    contributions: teamDetails.get(team.id)?.team?.contributions, availability: report };
+}
+function mountFavoriteGuide(root, team) {
+  const target = root.querySelector('[data-rooting-guide]');
+  if (!target) return;
+  let cleanup;
+  rootingGuideModule ??= import('./rooting-guide.js?v=1').catch(error => { rootingGuideModule = null; throw error; });
+  rootingGuideModule.then(({ mountRootingGuide }) => {
+    if (!target.isConnected) return;
+    cleanup = mountRootingGuide(target, { team, snapshot: state.snapshot, inputUrl: publicationPath('cfp-scenarios'),
+      gameHref: weeklyGameHref, now: localPreview?.now });
+  }).catch(() => {
+    if (target.isConnected) target.textContent = 'The rooting guide is temporarily unavailable.';
+  });
+  return () => cleanup?.();
 }
 function mountHomeFavorite() {
   const target = main.querySelector('[data-my-team]');
   if (!target?.isConnected) return;
-  favoriteModule ??= import('./my-team.js?v=header-account');
+  favoriteModule ??= import('./my-team.js?v=home-updates');
   favoriteModule.then(({ mountMyTeam }) => {
     if (!target.isConnected || route()[0] !== 'home') return;
     closeFavorite = mountMyTeam(target, {
@@ -373,6 +422,9 @@ function mountHomeFavorite() {
       adapter: localPreview?.myTeam,
       renderTeam: favoriteCard,
       chosenTeamId: chosenFavorite,
+      season: state.snapshot.season,
+      loadUpdateFacts: loadFavoriteUpdateFacts,
+      mountExtras: mountFavoriteGuide,
     });
     chosenFavorite = null;
   }).catch(() => {
@@ -592,10 +644,11 @@ function resultsTable(t) { return `<div class="table-scroll"><table class="evide
   const team = rankedTeam(g.opponentId);
   const o = team ?? { id: g.opponentId, name: g.opponentName || g.opponentId };
   const position = team && nationalRank(team);
-  return `<tr><td><span class="outcome ${g.result==='L'?'loss':''}">${g.result}</span></td><td><div class="team-cell">${logo(o)}<div>${team ? teamLink(o) : esc(o.name)}<small>${position ? `${rank(position)} ${team.division?.toUpperCase() || 'FBS'} ${achievementName(team)}` : 'Unranked opponent'}</small></div></div></td><td class="num">${esc(g.opponentRecord||'—')}</td><td class="num ${g.finalMargin>=0?'margin-positive':'margin-negative'}">${g.finalMargin>0?'+':''}${g.finalMargin}</td></tr>`;
+  const target = /^\d+$/.test(g.gameId ?? '') ? ` id="team-game-${g.gameId}" tabindex="-1"` : '';
+  return `<tr${target}><td><span class="outcome ${g.result==='L'?'loss':''}">${g.result}</span></td><td><div class="team-cell">${logo(o)}<div>${team ? teamLink(o) : esc(o.name)}<small>${position ? `${rank(position)} ${team.division?.toUpperCase() || 'FBS'} ${achievementName(team)}` : 'Unranked opponent'}</small></div></div></td><td class="num">${esc(g.opponentRecord||'—')}</td><td class="num ${g.finalMargin>=0?'margin-positive':'margin-negative'}">${g.finalMargin>0?'+':''}${g.finalMargin}</td></tr>`;
   }).join('')}</tbody></table></div><div class="panel-body"><p class="compact-note">Only completed games appear. Opponent records and ranks reflect this publication, not the date of the matchup. Margins inform predictive strength, not achievement rank.</p></div>`; }
 function upcomingTeamGames(fixtures) {
-  const now = Date.now();
+  const now = localPreview?.now ?? Date.now();
   const today = scheduleDay.format(now);
   return (Array.isArray(fixtures) ? fixtures : [])
     .map(game => ({ ...game, kickoff: Date.parse(game.startDate) }))
@@ -603,11 +656,24 @@ function upcomingTeamGames(fixtures) {
       ? game.startDate.slice(0, 10) >= today : game.kickoff >= now))
     .sort((a, b) => a.kickoff - b.kickoff);
 }
-function teamKickoff(game) {
+function teamKickoff(game, upcoming = false) {
   const kickoff = Date.parse(game.startDate);
-  return game.startTimeTbd === true
-    ? `<time datetime="${esc(game.startDate.slice(0, 10))}">${scheduleDateOnly.format(kickoff)}</time> · Time TBD`
+  return game.startTimeTbd === true || upcoming && game.startTimeTbd !== false
+    ? `<time datetime="${esc(game.startDate.slice(0, 10))}">${scheduleDateOnly.format(kickoff)}</time> · Time pending`
     : `<time datetime="${esc(game.startDate)}">${picksDate.format(kickoff)} · ${scheduleKickoff.format(kickoff)}</time>`;
+}
+function teamFixtureHref(team, game) {
+  const divisions = [game.homeId, game.awayId].map(id => rankedTeam(id)?.division);
+  if (Number.isInteger(game.week) && divisions.every(division => ['fbs', 'fcs'].includes(division))) {
+    return weeklyGameHref({ ...game, id: game.gameId }, divisions.every(division => division === 'fcs') ? 'fcs' : 'fbs');
+  }
+  const gameSuffix = /^\d+$/.test(game.gameId ?? '') ? `/${game.gameId}` : '';
+  return `#team/${encodeURIComponent(team.id)}/results${gameSuffix}`;
+}
+function teamFixtureCalendar(game, href) {
+  return kickoffCalendar({ id: game.gameId, startDate: game.startDate, startTimeTbd: game.startTimeTbd, href,
+    awayName: game.awayName, homeName: game.homeName, neutral: game.venue === 'neutral',
+    asOf: state.snapshot.kickoffVerificationAsOf ?? state.snapshot.asOf, status: 'scheduled' });
 }
 function upcomingGamesPanel(team) {
   const venues = { home: 'Home', away: 'Away', neutral: 'Neutral site' };
@@ -620,9 +686,10 @@ function upcomingGamesPanel(team) {
     const odds = Number.isFinite(game.winProbability) && game.winProbability >= 0 && game.winProbability <= 1
       ? `<strong>${number(game.winProbability * 100, 1)}%</strong><small>${description ? esc(description) + ' · ' : ''}${game.probabilitySource === 'saved' ? 'Saved win chance' : 'Win chance estimate'}${game.calibrated === false ? ' · Experimental' : ''}</small>`
       : '<small>Odds unavailable</small>';
-    return `<li class="team-upcoming-game">
+    return `<li class="team-upcoming-game" id="team-game-${esc(game.gameId)}" tabindex="-1">
       <div class="team-upcoming-opponent">${logo(opponent)}<div><strong>${ranked ? teamLink(opponent) : esc(opponent.name)}</strong>
-      <div class="compact-note">${teamKickoff(game)} · ${venues[game.venue] ?? 'Venue TBD'}</div></div></div>
+      <div class="compact-note">${teamKickoff(game, true)} · ${venues[game.venue] ?? 'Venue TBD'}</div>
+      ${game.startTimeTbd === false ? teamFixtureCalendar(game, teamFixtureHref(team, game)) : ''}</div></div>
       <div class="team-upcoming-odds">${odds}</div></li>`;
   }).join('');
   const content = rows ? `<ul class="team-upcoming-list">${rows}</ul>`
@@ -645,11 +712,18 @@ function teamCenterContent(t) {
     <span>Record</span><strong>${record(t)}</strong><small>View schedule and results</small></button>`;
   return `<div class="metric-grid">${overview.map(([label,value,note])=>`<div class="metric"><span>${label}</span><strong>${value}</strong><small>${esc(note)}</small></div>`).join('')}${recordButton}</div><section class="panel"><div class="panel-body"><div class="explanation-head">${icon('network')}<h2>${heading}</h2></div><p class="team-narrative">${explanation(t)}</p><div class="evidence-chips"><span class="evidence-chip">Opponent Colley average <b>${number(t.achievementScheduleStrength)}</b></span><span class="evidence-chip">${t.evidence?.connectedTeams??'—'} connected teams</span><span class="evidence-chip">${t.evidence?.provisional?'Small sample · provisional':'Current-season evidence'}</span></div>${breakdown(t)}</div></section><section class="panel" style="margin-top:17px"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<h2>RESULTS THAT SHAPE THE RESUME</h2></div><button class="text-link" style="border:0;background:none" data-action="team-tab" data-value="results">All results ${icon('arrow')}</button></div>${resultsTable({...t,contributions:[...t.contributions].sort((a,b)=>b.opponentAchievement-a.opponentAchievement).slice(0,3)})}</section>`;
 }
-async function loadTeamDetails(summary) {
+function loadTeamDetails(summary) {
   const { id } = summary;
+  const existing = teamDetails.get(id);
+  if (existing && !existing.failed) return existing.request;
   const snapshot = state.snapshot;
   const detail = { team: null, failed: false };
   teamDetails.set(id, detail);
+  detail.request = populateTeamDetails(summary, detail, snapshot);
+  return detail.request;
+}
+async function populateTeamDetails(summary, detail, snapshot) {
+  const { id } = summary;
   try {
     const version = snapshot.teamDetailsVersion ?? snapshot.publicationHash;
     const url = `${snapshot.teamDetailsPath}/${encodeURIComponent(id)}.json?v=${encodeURIComponent(version)}`;
@@ -685,8 +759,9 @@ function renderTeam(id) {
     ${detail?.failed ? '<button type="button" class="button light small" data-action="retry-team-details">Try again</button>' : ''}</section>` : teamCenterContent(t);
   const tier = t.division?.toUpperCase() || 'FBS';
   const matchup = t.division === 'fcs' ? '' : `<section class="panel"><div class="panel-body"><h3>Matchup lab</h3><p class="compact-note">Use the strength model to explore a matchup on a neutral field.</p><button class="button small full-width" style="margin-top:15px" data-action="compare-team" data-value="${esc(t.id)}">${icon('compare')}Open matchup lab</button></div></section>`;
-  main.innerHTML=`<section class="hero team-banner"><div class="wrap"><a class="breadcrumb" href="${rankingHash('achievement', false, t.division)}">${icon('back')}Back to ${tier} rankings</a><div class="team-banner-content">${logo(t,'large')}<div><div class="eyebrow">${tier} · ${esc(t.conference)} · ${state.snapshot.season} season</div><h1>${esc(t.name.toUpperCase())}</h1><div class="team-meta"><span><b>${rank(nationalRank(t))}</b> ${achievementName(t)}</span><span>${record(t)} overall</span><span>${rank(conferenceRank(t))} in conference</span></div><button type="button" class="button outline small team-favorite-action" data-action="choose-my-team" data-value="${esc(t.id)}">Choose as My Team</button></div><div class="team-banner-score"><strong>${number(t.division === 'fcs' ? t.sor : achievementScore(t))}</strong><span>${achievementName(t)==='Strength of Record'?'SOR score':'Colley rating'}</span></div></div></div></section><div class="wrap page-content"><div class="team-layout"><aside class="panel rank-rail"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<h2>${tier} TOP 25</h2></div></div><div class="rail-list">${topTwentyFive(divisionTeams(t.division), 'achievement').map(o=>`<a href="#team/${encodeURIComponent(o.id)}" class="rail-row ${o.id===t.id?'selected':''}" ${o.id===t.id?'aria-current="page"':''}><span>${nationalRank(o)}</span>${logo(o)}<b>${esc(o.name)}</b><small>${record(o)}</small></a>`).join('')}</div><a class="method-link" href="${rankingHash('achievement', true, t.division)}">All ${tier} rankings ${icon('arrow')}</a></aside><div class="team-center"><div class="tabs team-section-tabs" aria-label="Team sections">${[['overview','Overview'],['results','Results'],['players','Players'],['availability','Availability'],['model','Model details']].map(([value,label])=>`<button data-action="team-tab" data-value="${value}" class="${state.teamTab===value?'active':''}" aria-pressed="${state.teamTab===value}">${label}</button>`).join('')}</div><div id="team-center-content">${content}</div></div><aside class="stack team-right">${modelRanks(t)}${performanceTeamPanel(t)}${qualityPanel(t.division)}${matchup}</aside></div></div>`;
+  main.innerHTML=`<section class="hero team-banner"><div class="wrap"><a class="breadcrumb" href="${rankingHash('achievement', false, t.division)}">${icon('back')}Back to ${tier} rankings</a><div class="team-banner-content">${logo(t,'large')}<div><div class="eyebrow">${tier} · ${esc(t.conference)} · ${state.snapshot.season} season</div><h1>${esc(t.name.toUpperCase())}</h1><div class="team-meta"><span><b>${rank(nationalRank(t))}</b> ${achievementName(t)}</span><span>${record(t)} overall</span><span>${rank(conferenceRank(t))} in conference</span></div><div class="team-banner-actions"><button type="button" class="button outline small team-favorite-action" data-action="choose-my-team" data-value="${esc(t.id)}">Choose as My Team</button>${shareTeamButton(t)}</div></div><div class="team-banner-score"><strong>${number(t.division === 'fcs' ? t.sor : achievementScore(t))}</strong><span>${achievementName(t)==='Strength of Record'?'SOR score':'Colley rating'}</span></div></div></div></section><div class="wrap page-content"><div class="team-layout"><aside class="panel rank-rail"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<h2>${tier} TOP 25</h2></div></div><div class="rail-list">${topTwentyFive(divisionTeams(t.division), 'achievement').map(o=>`<a href="#team/${encodeURIComponent(o.id)}" class="rail-row ${o.id===t.id?'selected':''}" ${o.id===t.id?'aria-current="page"':''}><span>${nationalRank(o)}</span>${logo(o)}<b>${esc(o.name)}</b><small>${record(o)}</small></a>`).join('')}</div><a class="method-link" href="${rankingHash('achievement', true, t.division)}">All ${tier} rankings ${icon('arrow')}</a></aside><div class="team-center"><div class="tabs team-section-tabs" aria-label="Team sections">${[['overview','Overview'],['results','Results'],['players','Players'],['availability','Availability'],['model','Model details']].map(([value,label])=>`<button data-action="team-tab" data-value="${value}" class="${state.teamTab===value?'active':''}" aria-pressed="${state.teamTab===value}">${label}</button>`).join('')}</div><div id="team-center-content">${content}</div></div><aside class="stack team-right">${modelRanks(t)}${performanceTeamPanel(t)}${qualityPanel(t.division)}${matchup}</aside></div></div>`;
   if (needsDetails && !detail) void loadTeamDetails(summary);
+  if (!needsDetails && state.teamTab === 'results') focusLinkedGame('team-game-', route()[3]);
   if (playerTab) {
     const target = main.querySelector('#team-center-content');
     let selectedPlayer;
@@ -753,6 +828,23 @@ function picksTime(value) {
   return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value) ? Date.parse(value) : NaN;
 }
 function weekKey(game) { return `${game.seasonType}:${game.week}`; }
+function weeklyGameHref(game, division = 'fbs') {
+  const base = `#compare/weekly${division === 'fcs' ? '/fcs' : ''}`;
+  return ['regular', 'postseason'].includes(game?.seasonType) && Number.isInteger(game.week) && /^\d+$/.test(game.id ?? '')
+    ? `${base}/${weekKey(game)}/${game.id}` : base;
+}
+function focusLinkedGame(prefix, id) {
+  if (!/^\d+$/.test(id ?? '') || location.hash === focusedGameLink) return;
+  const result = document.getElementById(prefix + id);
+  if (!result) return;
+  const hash = location.hash;
+  requestAnimationFrame(() => {
+    if (!result.isConnected || location.hash !== hash) return;
+    focusedGameLink = hash;
+    result.scrollIntoView({ block: 'start' });
+    result.focus({ preventScroll: true });
+  });
+}
 function weekLabel(game) { return game.seasonType === 'postseason' ? `Postseason · Week ${game.week}` : `Week ${game.week}`; }
 function activeWeeklyPicks() {
   const [page, view, division] = route();
@@ -892,9 +984,17 @@ function weeklyPicksGame(picks, game) {
     (scheduled ? 'Scheduled' : 'Final score pending');
   const team = entry => rankedTeam(entry.id) ? teamLink(entry) : esc(entry.name);
   const crossDivision = home.division === 'fbs' && away.division === 'fcs' || home.division === 'fcs' && away.division === 'fbs';
-  return { grade, html: `<li class="weekly-game">
+  const href = weeklyGameHref(game, picks.division);
+  const share = shareCardButton({ teams: [[away, pick && 1 - pick.homeWinProbability], [home, pick?.homeWinProbability]]
+    .map(([entry, probability]) => pick ? { id: entry.id, name: entry.name, division: entry.division, probability } : shareTeamData(entry)),
+    asOf: capture ?? picks.data.source?.scheduleAsOf ?? picks.data.asOf, href,
+    venue: game.neutral ? 'Neutral site' : `At ${home.name}`, forecastLabel: pick ? pickLabel : undefined });
+  const calendar = game.status === 'scheduled' && game.startTimeTbd === false && kickoff > (localPreview?.now ?? Date.now())
+    ? kickoffCalendar({ ...game, awayName: away.name, homeName: home.name, href, asOf: game.kickoffVerifiedAt ?? picks.data.asOf }) : '';
+  return { grade, html: `<li class="weekly-game" id="weekly-game-${esc(game.id)}" tabindex="-1">
     <div><h3>${team(away)} ${game.neutral ? 'vs' : 'at'} ${team(home)}</h3>
-    <p class="compact-note">${teamKickoff(game)}${game.neutral ? ' · Neutral site' : ''}${crossDivision ? ' · FBS–FCS' : ''}</p></div>
+    <p class="compact-note">${teamKickoff(game, game.status === 'scheduled')}${game.neutral ? ' · Neutral site' : ''}${crossDivision ? ' · FBS–FCS' : ''}</p>
+    <div class="matchup-actions">${share}${calendar}</div></div>
     <dl class="weekly-game-details">
       <div><dt>${pickLabel}</dt><dd>${pickText}${capture ? `<small><time datetime="${esc(capture)}">${picksTimestamp.format(picksTime(capture))} MT</time></small>` : ''}</dd></div>
       <div><dt>${game.status === 'final' ? 'Final' : 'Status'}</dt><dd>${result}${grade ? ` <span class="weekly-grade ${grade.toLowerCase()}">${grade}</span>` : ''}</dd></div>
@@ -1026,6 +1126,14 @@ function renderWeeklyPicks(picks) {
     <div class="wrap page-content">${matchupNav('weekly')}<section class="panel weekly-picks" aria-labelledby="weekly-picks-title">
     <div class="panel-body"><h2 id="weekly-picks-title">${state.snapshot.season} ${label} schedule and picks</h2>${group}${body}</div></section></div>`;
   if (status === 'loading') picks.request ??= loadWeeklyPicks(picks);
+  if (status === 'ready') focusLinkedGame('weekly-game-', route()[fcs ? 4 : 3]);
+}
+function matchupLabHref(a, b, venue) {
+  return `#compare/matchup/${a}/${b}/${venue}`;
+}
+function chooseMatchup() {
+  history.replaceState(history.state, '', matchupLabHref(state.compareA, state.compareB, state.venue));
+  renderCompare();
 }
 function renderCompare() {
   const picks = activeWeeklyPicks();
@@ -1039,7 +1147,13 @@ function renderCompare() {
     : 'These probabilities have not been calibrated. The margin is fitted from bounded historical score differences and should not be treated as a betting spread.';
   const playersPanel = `<details class="panel player-fold matchup-players" data-matchup-players${playerDetailsOpen ? ' open' : ''}>
     <summary>Players to know</summary><div class="panel-body" data-matchup-player-content><p role="status">Loading player information…</p></div></details>`;
-  main.innerHTML=`${banner('Matchup lab · Experimental strength model','CHANGE THE MATCHUP. FOLLOW THE NUMBERS.','Compare two teams using our own historical and opponent-adjusted strength ratings.')}<div class="wrap page-content">${matchupNav('compare')}<div class="segmented compare-venue" aria-label="Game location">${[['neutral','Neutral field'],['home','Team A at home'],['away','Team B at home']].map(([v,label])=>`<button data-action="venue" data-value="${v}" class="${state.venue===v?'active':''}" aria-pressed="${state.venue===v}">${label}</button>`).join('')}</div><div class="compare-layout">${[a,b].map((t,i)=>`<section class="panel compare-picker"><div class="section-label">TEAM ${i?'B':'A'}</div>${logo(t,'large')}<h2>${esc(t.name)}</h2><p>${record(t)} · ${rank(nationalRank(t))} ${achievementName()}</p><label><span class="sr-only">Team ${i?'B':'A'}</span><select id="compare-${i?'b':'a'}">${compareOptions(t.id)}</select></label><p style="margin-top:14px">Strength <strong>${number(t.strength,2)} pts</strong> · ${rank(strengthRank(t))}</p></section>`).join('')}<section class="panel prediction-card"><div class="eyebrow">${matchup ? 'Historically calibrated odds' : 'Experimental model estimate'}</div><h2>${esc(edge>=0?a.name:b.name)} edge</h2><div class="prediction-number">${number(Math.abs(edge),1)}<span style="font-size:27px"> pts</span></div><p>Bounded-model margin estimate</p><div class="probability-track"><span style="width:${probability*100}%"></span></div><p>${esc(a.name)} ${number(probability*100,1)}% &nbsp; · &nbsp; ${esc(b.name)} ${number((1-probability)*100,1)}%${oddsLabel ? ` · <span class="prediction-odds-description">${oddsLabel}</span>` : ''}</p>${matchupMarginRange(a,b,edge)}</section></div><div class="notice"><strong>Reading the matchup.</strong> ${explanation} <a class="text-link" href="#methodology">See what we checked</a></div>${playersPanel}</div>`;
+  const share = a.id !== b.id ? shareCardButton({
+    teams: [[a, probability], [b, 1 - probability]].map(([team, probability]) => ({ ...shareTeamData(team), probability })),
+    asOf: state.snapshot.asOf, href: matchupLabHref(a.id, b.id, state.venue),
+    venue: state.venue === 'neutral' ? 'Neutral field' : `At ${state.venue === 'home' ? a.name : b.name}`,
+    forecastLabel: 'Matchup Lab estimate',
+  }) : '';
+  main.innerHTML=`${banner('Matchup lab · Experimental strength model','CHANGE THE MATCHUP. FOLLOW THE NUMBERS.','Compare two teams using our own historical and opponent-adjusted strength ratings.')}<div class="wrap page-content">${matchupNav('compare')}<div class="segmented compare-venue" aria-label="Game location">${[['neutral','Neutral field'],['home','Team A at home'],['away','Team B at home']].map(([v,label])=>`<button data-action="venue" data-value="${v}" class="${state.venue===v?'active':''}" aria-pressed="${state.venue===v}">${label}</button>`).join('')}</div><div class="compare-layout">${[a,b].map((t,i)=>`<section class="panel compare-picker"><div class="section-label">TEAM ${i?'B':'A'}</div>${logo(t,'large')}<h2>${esc(t.name)}</h2><p>${record(t)} · ${rank(nationalRank(t))} ${achievementName()}</p><label><span class="sr-only">Team ${i?'B':'A'}</span><select id="compare-${i?'b':'a'}">${compareOptions(t.id)}</select></label><p style="margin-top:14px">Strength <strong>${number(t.strength,2)} pts</strong> · ${rank(strengthRank(t))}</p></section>`).join('')}<section class="panel prediction-card"><div class="eyebrow">${matchup ? 'Historically calibrated odds' : 'Experimental model estimate'}</div><h2>${esc(edge>=0?a.name:b.name)} edge</h2><div class="prediction-number">${number(Math.abs(edge),1)}<span style="font-size:27px"> pts</span></div><p>Bounded-model margin estimate</p><div class="probability-track"><span style="width:${probability*100}%"></span></div><p>${esc(a.name)} ${number(probability*100,1)}% &nbsp; · &nbsp; ${esc(b.name)} ${number((1-probability)*100,1)}%${oddsLabel ? ` · <span class="prediction-odds-description">${oddsLabel}</span>` : ''}</p>${matchupMarginRange(a,b,edge)}${share ? `<div class="matchup-actions">${share}</div>` : ''}</section></div><div class="notice"><strong>Reading the matchup.</strong> ${explanation} <a class="text-link" href="#methodology">See what we checked</a></div>${playersPanel}</div>`;
   const disclosure = main.querySelector('[data-matchup-players]');
   if (!disclosure?.isConnected) return;
   const target = disclosure.querySelector('[data-matchup-player-content]');
@@ -1216,7 +1330,7 @@ function renderScenarioPage() {
 }
 function renderContestPage() {
   main.innerHTML = '<div class="wrap page-content"><p role="status">Loading Beat the Model…</p></div>';
-  contestModule ??= import('./weekly-contest.js?v=header-account');
+  contestModule ??= import('./weekly-contest.js?v=community-picks');
   contestModule.then(({ renderWeeklyContest, unmountWeeklyContest }) => {
     if (route()[0] !== 'beat-the-model') return;
     closeContest = unmountWeeklyContest;
@@ -1321,6 +1435,12 @@ function render() {
     state.conference = '';
   }
   if (page === 'team' && (scope === 'results' || playerTabs.has(scope))) state.teamTab = scope;
+  if (page === 'compare' && id === 'matchup') {
+    const [, , a, b, venue] = route();
+    if (state.byId.has(a) && state.byId.has(b) && a !== b && ['neutral', 'home', 'away'].includes(venue)) {
+      Object.assign(state, { compareA: a, compareB: b, venue });
+    }
+  }
   if(page==='home')renderHome();else if(page==='rankings')renderRankings();else if(page==='teams')renderTeams();else if(page==='team')renderTeam(id);else if(page==='methodology')renderMethodology();else if(page==='compare')renderCompare();else if (page === 'polls' || page === 'forge-top-25') renderRankingEditions(page,id,scope);else if (page === 'bracket') renderBracketPage();else if (page === 'cfp-scenarios') renderScenarioPage();else if (page === 'beat-the-model') renderContestPage();else if (page === 'ranking-history') renderHistoryPage(id);else renderHome();
   const compareTitle = id === 'weekly' ? scope === 'fcs' ? 'FCS Weekly Picks' : 'Weekly picks' : 'Matchup lab';
   const team=rankedTeam(id);document.title=`${page==='team'&&team?team.name:({home:'FBS Top 25',rankings:`${state.division.toUpperCase()} rankings`,teams:'Team directory',compare:compareTitle,methodology:'Methodology',polls:'Compare Rankings','forge-top-25':'Forge’s Top 25',bracket:'Playoff Bracket','cfp-scenarios':'CFP Scenario Builder','beat-the-model':'Beat the Model','ranking-history':'Weekly SOR movement'}[page]||'Home')} · ${BRAND}`;
@@ -1350,8 +1470,8 @@ document.addEventListener('change',e=>{
     location.hash = page === 'polls' ? `polls/${key}/${e.target.value}` : `forge-top-25/${e.target.value}`;
   }
   if(e.target.id==='conference-filter'){state.conference=e.target.value;route()[0]==='teams'?renderTeams():renderRankings();}
-  if(e.target.id==='compare-a'){state.compareA=e.target.value;renderCompare();}
-  if(e.target.id==='compare-b'){state.compareB=e.target.value;renderCompare();}
+  if(e.target.id==='compare-a'){state.compareA=e.target.value;chooseMatchup();}
+  if(e.target.id==='compare-b'){state.compareB=e.target.value;chooseMatchup();}
   if (e.target.id === 'weekly-week') {
     const picks = activeWeeklyPicks();
     if (!picks?.weeks?.has(e.target.value)) return;
@@ -1408,7 +1528,7 @@ document.addEventListener('click',e=>{
     if (button.classList?.contains('team-record-button')) main.querySelector('.tabs [data-value="results"]')?.focus();
   }
   if(action==='retry-team-details'){void load();}
-  if(action==='venue'){state.venue=value;renderCompare();}
+  if(action==='venue' && ['neutral','home','away'].includes(value)){state.venue=value;chooseMatchup();}
   if(action==='compare-team'){state.compareA=value;if(state.compareB===value)state.compareB=state.snapshot.rankings.find(t=>t.id!==value).id;location.hash='compare';}
 });
 document.addEventListener('keydown', event => {
@@ -1419,6 +1539,7 @@ document.addEventListener('keydown', event => {
   more.querySelector('summary').focus();
 });
 window.addEventListener('hashchange', event => {
+  focusedGameLink = null;
   state.teamTab = 'overview';
   render();
   if (focusMoreDestination) {
@@ -1431,7 +1552,9 @@ window.addEventListener('hashchange', event => {
 async function load(){
   rankingsFailed = false;
   try{
-    const response=await fetch(publicationPath('rankings'),{headers:{Accept:'application/json'}});
+    const [response]=await Promise.all([
+      fetch(publicationPath('rankings'),{headers:{Accept:'application/json'}}), loadGameActions(),
+    ]);
     if(!response.ok)throw Error(`Rankings returned ${response.status}`);
     const snapshot=await response.json();
     if(!snapshot.rankings?.length)throw Error('No published rankings');

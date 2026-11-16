@@ -62,6 +62,7 @@ export function buildUpcomingTeamSchedule(snapshot, weeklyFbs = null, weeklyFcs 
   const upcoming = [fbsPicks, fcsPicks].flatMap(publication => (publication?.games ?? [])
     .filter(game => game.status === 'scheduled').map(game => ({ game, publication })));
   const saved = new Map(upcoming.filter(({ game }) => game.pick).map(entry => [entry.game.id, entry]));
+  const publishedFixtures = new Map(upcoming.map(({ game }) => [game.id, game]));
   const fixtures = captured ? snapshot.futureFixtures : upcoming.map(({ game }) => game);
   const fbsScale = matchupValidation(snapshot)?.winProbability.scale;
   const fcsScale = fcsMatchupValidation(snapshot)?.scale;
@@ -72,11 +73,17 @@ export function buildUpcomingTeamSchedule(snapshot, weeklyFbs = null, weeklyFcs 
         game.home === game.away || !teams.has(game.home) || !teams.has(game.away)) continue;
     seen.add(game.id);
     const odds = fixtureOdds(game, teams, saved.get(game.id), snapshot.config, fbsScale, fcsScale);
+    const publishedFixture = publishedFixtures.get(game.id);
+    const week = publishedFixture?.week ?? game.week;
+    const seasonType = publishedFixture?.seasonType ?? game.seasonType;
+    const scope = Number.isInteger(week) && ['regular', 'postseason'].includes(seasonType) ? { week, seasonType } : {};
     for (const home of [true, false]) {
       const list = schedule.get(home ? game.home : game.away);
       if (!list) continue;
       const opponent = teams.get(home ? game.away : game.home);
-      list.push({ opponentId: opponent.id, opponentName: opponent.name, startDate: new Date(kickoff).toISOString(),
+      list.push({ gameId: game.id, ...scope,
+        homeId: game.home, awayId: game.away, homeName: teams.get(game.home).name, awayName: teams.get(game.away).name,
+        opponentId: opponent.id, opponentName: opponent.name, startDate: new Date(kickoff).toISOString(),
         venue: game.neutral ? 'neutral' : home ? 'home' : 'away',
         ...(typeof game.startTimeTbd === 'boolean' ? { startTimeTbd: game.startTimeTbd } : {}),
         winProbability: odds ? home ? odds.homeWinProbability : 1 - odds.homeWinProbability : null,
@@ -97,8 +104,8 @@ export function publicRankings(snapshot, teamDetailsPath, includeTeamSchedule = 
 
 export function publicTeamDetails(snapshot, row, { upcomingGames = null, includeTeamSchedule = false } = {}) {
   const { id, contributions = [], explanation, evidence, sorTailProbability, sorExpectedWins, preseasonStrength } = row;
-  const results = contributions.map(({ opponentId, opponentName, opponentRecord, opponentAchievement, result, finalMargin }) =>
-    ({ opponentId, opponentName, opponentRecord, opponentAchievement, result, finalMargin }));
+  const results = contributions.map(({ gameId, opponentId, opponentName, opponentRecord, opponentAchievement, result, finalMargin }) =>
+    ({ gameId, opponentId, opponentName, opponentRecord, opponentAchievement, result, finalMargin }));
   return { id, publicationHash: publicationHash(snapshot), upcomingGames,
     ...(includeTeamSchedule ? teamScheduleVersion(snapshot) : {}),
     contributions: results, explanation, evidence,

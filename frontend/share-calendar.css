@@ -1,0 +1,112 @@
+.share-calendar-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: fit-content;
+  min-height: 38px;
+  padding: 5px 10px;
+  border: 1px solid #bfd2e9;
+  border-radius: 7px;
+  background: #f4f8fe;
+  color: #194978;
+  font: 700 12px/1.25 "Segoe UI", sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.share-calendar-button:hover { background: #e9f3ff; }
+.share-calendar-button svg { width: 16px; height: 16px; flex: 0 0 16px; }
+.share-calendar-button:focus-visible,
+.share-card-dialog button:focus-visible,
+.share-card-dialog a:focus-visible,
+.kickoff-calendar a:focus-visible { outline: 2px solid #0877df; outline-offset: 2px; }
+.share-calendar-button::-webkit-details-marker { display: none; }
+
+.team-banner .share-card-trigger,
+.prediction-card .share-card-trigger,
+.my-team[data-favorite-team] .share-calendar-button {
+  border-color: #5b899f;
+  background: #102c51;
+  color: #e6f4ff;
+}
+
+.team-banner .share-card-trigger:hover,
+.prediction-card .share-card-trigger:hover,
+.my-team[data-favorite-team] .share-calendar-button:hover,
+.my-team[data-favorite-team] .kickoff-calendar[open] .share-calendar-button {
+  background: #174876;
+}
+
+.team-banner .share-card-trigger:focus-visible,
+.prediction-card .share-card-trigger:focus-visible,
+.my-team[data-favorite-team] .share-calendar-button:focus-visible,
+.my-team[data-favorite-team] .kickoff-calendar a:focus-visible { outline-color: #81e5ff; }
+
+.kickoff-calendar { min-width: 0; margin-top: 5px; text-align: left; }
+.kickoff-calendar-detail { display: grid; gap: 5px; margin-top: 8px; }
+.kickoff-calendar-detail a { width: fit-content; color: #105caf; font-size: 13px; font-weight: 700; }
+.kickoff-calendar-detail p { max-width: 27ch; color: #526782; font-size: 12px; line-height: 1.45; }
+.kickoff-calendar-pending { color: #526782; font-size: 12px; }
+.my-team[data-favorite-team] .kickoff-calendar-detail p,
+.my-team[data-favorite-team] .kickoff-calendar-pending { color: #cae0f8; }
+.my-team[data-favorite-team] .kickoff-calendar-detail a { color: #9ee7ff; }
+
+.share-card-dialog {
+  position: fixed;
+  inset: 0;
+  width: min(640px, calc(100% - 28px));
+  max-width: none;
+  max-height: min(90dvh, 760px);
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #c5d6eb;
+  border-radius: 14px;
+  background: #fff;
+  color: #142944;
+  box-shadow: 0 16px 54px #06173356;
+  overflow: auto;
+}
+
+.share-card-dialog::backdrop { background: #08152caa; }
+.share-card-dialog-heading { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.share-card-dialog h2 { font-size: 25px; }
+.share-card-caption { margin: 3px 0 13px; color: #465d79; }
+.share-card-close {
+  width: 42px;
+  height: 42px;
+  border: 1px solid #c5d6eb;
+  border-radius: 8px;
+  background: #f1f6ff;
+  color: #183556;
+  font: 600 24px/1 "Segoe UI", sans-serif;
+  cursor: pointer;
+}
+.share-card-close:hover { background: #e4f0ff; }
+.share-card-preview {
+  aspect-ratio: 40 / 21;
+  overflow: hidden;
+  border-radius: 9px;
+  background: linear-gradient(145deg, #133359, #09182d);
+}
+.share-card-preview img { display: block; width: 100%; height: 100%; }
+.share-card-status { min-height: 21px; margin: 7px 0 3px; color: #3d5775; font-size: 12px; }
+.share-card-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.share-card-actions > * { min-height: 42px; }
+.share-card-dialog [hidden] { display: none; }
+.share-card-link {
+  width: 100%;
+  margin-top: 9px;
+  padding: 8px;
+  border: 1px solid #bfd2e9;
+  border-radius: 6px;
+  background: #f4f8fe;
+  color: #132d4b;
+  font: 13px "Segoe UI", sans-serif;
+}
+
+@media (max-width: 620px) {
+  .share-card-dialog { padding: 14px; }
+  .share-card-actions > * { min-height: 44px; }
+  .share-calendar-button { min-height: 40px; }
+}

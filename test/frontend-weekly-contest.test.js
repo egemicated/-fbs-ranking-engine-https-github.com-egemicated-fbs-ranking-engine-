@@ -4,7 +4,7 @@ import {
   contestGames, contestGameLocked, contestGameWinner, contestPickChanges,
   defaultContestWeek, scoreContestPicks,
 } from '../frontend/weekly-contest-score.js';
-import { renderContestGames, renderContestLeaderboard, renderContestPlayerPicks, renderContestScores } from '../frontend/weekly-contest.js';
+import { renderContestCommunityPicks, renderContestGames, renderContestLeaderboard, renderContestPlayerPicks, renderContestScores } from '../frontend/weekly-contest.js';
 
 const startDate = '2026-11-14T19:00:00Z';
 const modelCapturedAt = '2026-11-08T19:00:00Z';
@@ -92,6 +92,41 @@ test('cards distinguish unsaved, saved, locked, and completed selections while e
   assert.match(signedOut, /Sign in from the header to make your pick\./);
   assert.match(signedOut, /data-contest-team="h-one"\s+aria-pressed="false" disabled/);
   assert.doesNotMatch(signedOut, /aria-pressed="true"/);
+});
+
+test('community controls appear only for saved picks and identify Forge’s original probability', () => {
+  const first = game('saved'), second = game('draft'), third = game('void', { voidReason: 'Schedule changed' });
+  const saved = { saved: first.home, void: third.away };
+  const draft = { draft: second.home };
+  const html = renderContestGames([first, second, third], { signedIn: true, saved, draft, now: Date.parse(modelCapturedAt) });
+  assert.match(html, /Forge’s saved pick <strong>Home saved<\/strong> · 70\.0% win probability/);
+  assert.match(html, /data-contest-community="saved"/);
+  assert.doesNotMatch(html, /data-contest-community="(?:draft|void)"/);
+  assert.doesNotMatch(renderContestGames([first], { signedIn: false, saved, draft }), /data-contest-community/);
+});
+
+test('community results distinguish loading, sparse, invalid, and available totals', () => {
+  const row = game('poll', { awayName: '<Away>' });
+  const render = result => renderContestCommunityPicks(row, null, result, 'ready');
+  assert.match(render(undefined), /No community totals available yet/);
+  assert.match(renderContestCommunityPicks(row), /Loading community picks/);
+  assert.match(renderContestCommunityPicks(row, null, null, 'error'), /Try Refresh results/);
+  const sparse = render({ participants: 2, awayPicks: 1, homePicks: 1 });
+  assert.match(sparse, /2 participants/);
+  assert.match(sparse, /Early voting/);
+  assert.match(sparse, /after three people/);
+  assert.doesNotMatch(sparse, /50\.0%/);
+  const split = render({ participants: 7, awayPicks: 2, homePicks: 5 });
+  assert.match(split, /&lt;Away&gt; <b>28\.6%/);
+  assert.match(split, /Home poll <b>71\.4%/);
+  assert.match(split, /7 participants/);
+  assert.match(split, /Early voting/);
+  const even = render({ participants: 16, awayPicks: 3, homePicks: 13 });
+  assert.match(even, /18\.8%/);
+  assert.match(even, /81\.2%/);
+  assert.doesNotMatch(even, /Early voting/);
+  assert.doesNotMatch(render({ participants: 9, awayPicks: 1, homePicks: 4 }), /%/);
+  assert.match(renderContestCommunityPicks({ ...row, startTimeTbd: true }, null, null, 'ready'), /when kickoff is confirmed/);
 });
 
 test('empty scorecards use a pending state and leaderboards preserve server tie ranks', () => {

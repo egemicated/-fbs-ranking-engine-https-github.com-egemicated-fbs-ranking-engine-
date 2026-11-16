@@ -21,8 +21,8 @@ function schedule() {
     startDate: '2026-12-05T17:00:00Z' };
   return { season: 2026, source: { rankingAsOf: snapshot.asOf, snapshotHash: snapshot.snapshotHash,
     probabilityScale: 6, homeAdvantage: 2.5 }, games: [
-    { ...fixture, id: 'selected', pick: { homeWinProbability: 0.2 } },
-    { ...fixture, id: 'title', seasonType: 'postseason', neutral: true, estimate: { homeWinProbability: 0.6 } },
+    { ...fixture, id: 'selected', startTimeTbd: false, pick: { homeWinProbability: 0.2 } },
+    { ...fixture, id: 'title', seasonType: 'postseason', startTimeTbd: true, neutral: true, estimate: { homeWinProbability: 0.6 } },
     { ...fixture, id: 'pending', status: 'pending', away: 'c' },
     { ...fixture, id: 'cancelled', status: 'pending' },
     { ...fixture, id: 'final', status: 'final' },
@@ -38,6 +38,7 @@ test('publishes only eligible pre-selection fixtures matched to the rankings sna
     ['selected', 'scheduled', 'saved'], ['title', 'scheduled', 'estimate'], ['pending', 'pending', 'snapshot'],
   ]);
   assert.equal(result.fixtures[0].homeWinProbability, 0.2);
+  assert.deepEqual(result.fixtures.map(game => game.startTimeTbd), [false, true, null]);
   assert.equal(result.fixtures[2].homeWinProbability, predictScenarioGame(result, 'a', 'c', false));
   assert.equal(buildScenarioPublication({ ...snapshot, season: 2027 }, weekly, policy), null);
   assert.equal(buildScenarioPublication({ ...snapshot, asOf: '2026-12-06T17:00:00Z' }, weekly, policy), null);

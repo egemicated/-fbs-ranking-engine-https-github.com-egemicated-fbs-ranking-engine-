@@ -32,6 +32,28 @@ function teamName(game, side, teams) {
   return game[`${side}Name`] || teams?.get(game[side])?.name || game[side];
 }
 
+export function renderContestCommunityPicks(game, teams, result, state = 'loading') {
+  const count = result?.participants;
+  const hasParticipants = Number.isSafeInteger(count) && count > 0 && !game.startTimeTbd;
+  const waiting = game.startTimeTbd === true ? 'Available when kickoff is confirmed.'
+    : state === 'loading' ? 'Loading community picks…'
+    : state === 'error' ? 'Community picks could not load. Try Refresh results.'
+    : !hasParticipants ? 'No community totals available yet.'
+    : count < 3 ? 'The split appears after three people save picks.' : '';
+  const { homePicks, awayPicks } = result ?? {};
+  const hasCounts = !waiting && [homePicks, awayPicks].every(value => Number.isSafeInteger(value) && value >= 0) &&
+    homePicks + awayPicks === count;
+  const awayShare = hasCounts ? Math.round(awayPicks * 1000 / count) / 10 : null;
+  const homeShare = hasCounts ? 100 - awayShare : null;
+  return `<div class="contest-community"><div class="contest-community-heading"><strong>Community picks</strong>
+    ${hasParticipants ? `<span>${count.toLocaleString('en-US')} ${count === 1 ? 'participant' : 'participants'}</span>` : ''}</div>
+    ${hasParticipants && count < 10 ? '<span class="contest-community-early">Early voting</span>' : ''}
+    ${hasCounts ? `<div class="contest-community-sides"><span>${escape(teamName(game, 'away', teams))} <b>${awayShare.toFixed(1)}%</b></span>
+    <span>${escape(teamName(game, 'home', teams))} <b>${homeShare.toFixed(1)}%</b></span></div>
+    <div class="contest-community-bar" aria-hidden="true"><span style="width:${awayShare}%"></span></div>`
+    : `<p>${waiting || 'No community totals available yet.'}</p>`}</div>`;
+}
+
 export function renderContestGames(games, { saved = {}, draft = {}, teams, signedIn = false, busy = false, now = Date.now(), describeOdds } = {}) {
   if (!games.length) return '<p class="contest-empty">No eligible saved model forecasts are available for this week yet.</p>';
   return `<ul class="contest-games" aria-label="Weekly contest games">${games.map(game => {
@@ -51,12 +73,13 @@ export function renderContestGames(games, { saved = {}, draft = {}, teams, signe
     return `<li class="contest-game"><div class="contest-game-meta"><span>Kickoff · ${kickoffLabel(game)}</span>
       <span class="contest-lock${!locked ? ' contest-open' : ''}">${status}</span></div>
       <h3>${escape(teamName(game, 'away', teams))} at ${escape(teamName(game, 'home', teams))}</h3>
-      <p class="contest-model-pick">Model: <strong>${escape(teamName(game, modelSide, teams))}</strong> · ${percent(modelProbability)}${oddsDescription ? ` · ${escape(oddsDescription)}` : ''}
-        <span class="sr-only">win probability, saved ${escape(date(game.modelCapturedAt))}</span></p>
+      <p class="contest-model-pick">Forge’s saved pick <strong>${escape(teamName(game, modelSide, teams))}</strong> · ${percent(modelProbability)} win probability${oddsDescription ? ` · ${escape(oddsDescription)}` : ''}
+        <span class="sr-only">, saved ${escape(date(game.modelCapturedAt))}</span></p>
       ${['away', 'home'].map(side => `<button type="button" class="contest-team${winner === game[side] ? ' is-winner' : ''}" data-contest-game="${escape(game.id)}" data-contest-team="${escape(game[side])}"
         aria-pressed="${selected === game[side]}"${!signedIn || locked || busy ? ' disabled' : ''}>
         <span>${escape(teamName(game, side, teams))}</span><small>${winner ? escape(game[`${side}Points`]) : selected === game[side] ? changed ? 'Unsaved' : 'Your pick' : 'Pick'}</small></button>`).join('')}
       <p class="contest-pick-status${userGrade ? ` is-${userGrade}` : ''}">${escape(note)}</p>
+      ${signedIn && !game.voidReason && [game.home, game.away].includes(saved[game.id]) ? `<div data-contest-community="${escape(game.id)}"></div>` : ''}
       <div data-contest-team-stats="${escape(game.id)}"></div></li>`;
   }).join('')}</ul>`;
 }
@@ -184,6 +207,7 @@ export async function renderWeeklyContest(main, options = {}) {
     let week = '', view = 'picks', boardScope = 'week';
     let board = null, boardError = false, boardBusy = false, boardRequest = 0;
     let player = null, playerRequest = 0;
+    let community = new Map(), communityState = 'loading', communityRequest = 0;
     let busy = false, message = '', messageError = false, clockOffset = 0, boundary = '';
     let teamStats;
     const expandedTeamStats = new Set();
@@ -243,6 +267,38 @@ export async function renderWeeklyContest(main, options = {}) {
       const [type, number] = week.split(':');
       return { p_season_type: type, p_week: Number(number) };
     };
+
+    function showCommunityPicks() {
+      if (!current() || view !== 'picks') return;
+      const slots = root.querySelectorAll('[data-contest-community]');
+      if (!slots.length) return;
+      const gamesById = new Map(games.map(game => [game.id, game]));
+      for (const slot of slots) {
+        const game = gamesById.get(slot.dataset.contestCommunity);
+        if (game) slot.innerHTML = renderContestCommunityPicks(game, teams, community.get(game.id), communityState);
+      }
+    }
+
+    async function refreshCommunity() {
+      const request = ++communityRequest;
+      const selectedWeek = week;
+      community = new Map();
+      communityState = 'loading';
+      if (!session || view !== 'picks' || !games.some(game => contestWeekKey(game) === selectedWeek && !game.voidReason &&
+        !game.startTimeTbd && [game.home, game.away].includes(entry.picks[game.id]))) return;
+      showCommunityPicks();
+      const [type, number] = selectedWeek.split(':');
+      let result;
+      try {
+        result = await rpc('weekly_community_picks', { p_season_type: type, p_week: Number(number) });
+      } catch {
+        // Community totals can be unavailable while the saved contest remains usable.
+      }
+      if (!current() || request !== communityRequest || selectedWeek !== week) return;
+      communityState = Array.isArray(result) ? 'ready' : 'error';
+      if (communityState === 'ready') community = new Map(result.filter(row => typeof row?.gameId === 'string').map(row => [row.gameId, row]));
+      showCommunityPicks();
+    }
 
     function playerTitle() {
       return player ? `${player.profile?.nickname ?? player.nickname} · ${scopeLabel()} picks` : '';
@@ -336,6 +392,7 @@ export async function renderWeeklyContest(main, options = {}) {
       root.innerHTML = `<section class="panel"><div class="panel-body"><div class="section-label">${season} season</div>
         <h2>Your picks against the model</h2>
         <p>Pick winners for FBS–FBS and FBS–FCS games. <strong>Each game locks at its own kickoff.</strong> Picks open once the kickoff time is confirmed. Each correct pick earns one point. FBS–FCS win chances are uncalibrated estimates.</p>
+        ${session ? '<p class="compact-note">Save your pick to unlock the community split for that game.</p>' : ''}
         ${!session ? '<p class="compact-note">Sign in from the header to save your picks.</p>' : ''}
         <div class="contest-controls"><label for="contest-week">Select week</label><select id="contest-week"${busy || !weeks.length ? ' disabled' : ''}>
         ${weeks.map(key => `<option value="${escape(key)}"${key === week ? ' selected' : ''}>${escape(contestWeekLabel(key))}</option>`).join('')}</select>
@@ -364,12 +421,14 @@ export async function renderWeeklyContest(main, options = {}) {
             ${boardBusy ? '<p role="status" class="contest-empty">Loading standings…</p>' : renderContestLeaderboard(boardError ? null : board, scopeLabel(), player?.id, entry.sharePicks)}
             <p class="compact-note">Public standings show up to 100 players and your own entry. You control whether your nickname appears publicly.</p></div></section>`}`;
       showTeamStats();
+      showCommunityPicks();
       if (focusGame) root.querySelector(`[data-contest-game="${CSS.escape(focusGame)}"][aria-pressed="true"]`)?.focus({ preventScroll: true });
     }
 
     await loadData();
     if (!current()) return;
     draw();
+    void refreshCommunity();
     root.oninput = event => {
       if (event.target.id !== 'contest-nickname') return;
       nickname = event.target.value;
@@ -379,7 +438,7 @@ export async function renderWeeklyContest(main, options = {}) {
       if (event.target.id === 'contest-week') {
         week = event.target.value;
         if (view === 'leaderboard' && boardScope === 'week') refreshLeaderboard();
-        else draw();
+        else { draw(); void refreshCommunity(); }
       } else if (event.target.id === 'contest-public') {
         publicLeaderboard = event.target.checked;
         if (!publicLeaderboard) {
@@ -424,6 +483,7 @@ export async function renderWeeklyContest(main, options = {}) {
         sharePicksImmediately = entry.sharePicksImmediately;
         message = Object.keys(pending).length ? 'Picks saved. You can change each pick until its game kicks off.' : 'Profile saved.';
         if (current() && view === 'leaderboard') refreshLeaderboard();
+        else if (current() && Object.keys(pending).length) void refreshCommunity();
       } catch {
         messageError = true;
         message = 'Could not confirm your save. A game may have locked. Refresh results to check your saved picks, then try again.';
@@ -436,6 +496,7 @@ export async function renderWeeklyContest(main, options = {}) {
       if (event.target.closest('[data-contest-sharing-settings]')) {
         view = 'picks';
         draw();
+        void refreshCommunity();
         root.querySelector(publicLeaderboard ? '#contest-share-picks' : '#contest-public')?.focus();
         return;
       }
@@ -453,7 +514,7 @@ export async function renderWeeklyContest(main, options = {}) {
       if (['picks', 'leaderboard'].includes(tab)) {
         view = tab;
         if (view === 'leaderboard') refreshLeaderboard();
-        else draw();
+        else { draw(); void refreshCommunity(); }
         return;
       }
       const publicPickId = event.target.closest('[data-contest-player]')?.dataset.contestPlayer;
@@ -483,6 +544,7 @@ export async function renderWeeklyContest(main, options = {}) {
         message = 'Results refreshed. Open unsaved selections are still here.';
         messageError = false;
         if (view === 'leaderboard') refreshLeaderboard();
+        else void refreshCommunity();
       } catch {
         messageError = true;
         message = 'Results could not refresh. Your current selections are still here.';

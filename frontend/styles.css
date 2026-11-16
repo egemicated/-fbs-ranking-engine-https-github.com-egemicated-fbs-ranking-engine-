@@ -365,6 +365,12 @@ ul.edition-notice{padding-inline-start:20px}
 .home-week-links span, .home-week-links small { color: var(--muted); font-size: 12px; }
 .home-week-links strong { font-size: 15px; }
 .team-favorite-action { margin-top: 9px; }
+.team-banner-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: 9px; }
+.team-banner-actions .team-favorite-action { margin: 0; min-height: 38px; }
+.matchup-actions { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 7px; margin-top: 7px; }
+.matchup-actions .kickoff-calendar { margin-top: 0; }
+.prediction-card .matchup-actions { justify-content: center; margin-top: 10px; }
+.team-upcoming-game[id], .weekly-game[id], .evidence-table tr[id] { scroll-margin-top: 22px; }
 .prediction-odds-description { font-weight: 700; }
 @media (max-width: 550px) {
   .rank-with-movement .table-rank { min-width: 19px; }

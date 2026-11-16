@@ -35,10 +35,11 @@ const logistic = (margin, scale) => 1 / (1 + Math.exp(-margin / scale));
 
 test('aligned slates supply saved odds, current model estimates, and venue from either team perspective', () => {
   const fbs = artifact(false, [upcoming[0], track(upcoming[1], .7)]);
-  const fcs = artifact(true, [upcoming[2]]);
+  const fcs = artifact(true, [{ ...upcoming[2], week: 12, seasonType: 'regular' }]);
   const schedule = buildUpcomingTeamSchedule({ ...snapshot, futureFixtures: upcoming }, fbs, fcs);
   const [peer, cross, lower] = schedule.get('c');
-  assert.deepEqual(peer, { opponentId: 'd', opponentName: 'Delta', startDate: '2026-11-21T17:30:00.000Z',
+  assert.deepEqual(peer, { gameId: 'fcs', week: 12, seasonType: 'regular', homeId: 'c', awayId: 'd', homeName: 'Charlie', awayName: 'Delta',
+    opponentId: 'd', opponentName: 'Delta', startDate: '2026-11-21T17:30:00.000Z',
     venue: 'home', startTimeTbd: true, winProbability: logistic(6.5, fcsEvidence.scale),
     probabilitySource: 'estimate', calibrated: true });
   assert.equal(schedule.get('d')[0].venue, 'away');
@@ -47,7 +48,8 @@ test('aligned slates supply saved odds, current model estimates, and venue from 
   assert.equal(cross.probabilitySource, 'saved');
   assert.equal(cross.winProbability, 1 - .7);
   assert.equal(cross.calibrated, false);
-  assert.deepEqual(lower, { opponentId: 'e', opponentName: 'Echo', startDate: '2026-11-28T17:30:00.000Z',
+  assert.deepEqual(lower, { gameId: 'lower', homeId: 'e', awayId: 'c', homeName: 'Echo', awayName: 'Charlie',
+    opponentId: 'e', opponentName: 'Echo', startDate: '2026-11-28T17:30:00.000Z',
     venue: 'away', winProbability: null, probabilitySource: null, calibrated: false });
   assert.equal(schedule.get('a')[0].winProbability, logistic(8.5, matchupValidation(snapshot).winProbability.scale));
   assert.deepEqual(schedule.get('idle'), []);

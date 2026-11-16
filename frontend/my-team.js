@@ -1,5 +1,6 @@
 import { loadAccountConfig, loadBracketClient } from './bracket-auth.js?v=header-account';
 import { myTeamColors } from './my-team-colors.js?v=2026';
+import { mountMyTeamUpdates } from './my-team-updates.js?v=1';
 
 const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -20,9 +21,11 @@ function accountAdapter() {
       const id = await userId(connection.auth);
       preferenceUserId = id;
       if (id === null) return { signedIn: false, teamId: null };
-      const { data, error } = await connection.from(preferences).select('team_id').eq('user_id', id).maybeSingle();
+      let { data, error } = await connection.from(preferences).select('team_id,seen_updates').eq('user_id', id).maybeSingle();
+      const updatesEnabled = !['42703', 'PGRST204'].includes(error?.code);
+      if (!updatesEnabled) ({ data, error } = await connection.from(preferences).select('team_id').eq('user_id', id).maybeSingle());
       if (error) throw error;
-      return { signedIn: true, teamId: data?.team_id ?? null };
+      return { signedIn: true, teamId: data?.team_id ?? null, seen: data?.seen_updates ?? null, updatesEnabled };
     },
     async savePreference(teamId) {
       const expectedUserId = preferenceUserId;
@@ -33,6 +36,17 @@ function accountAdapter() {
       const { error } = await (teamId === null ? table.delete().eq('user_id', id)
         : table.upsert({ user_id: id, team_id: teamId }, { onConflict: 'user_id' }));
       if (error) throw error;
+    },
+    async markUpdatesSeen(teamId, seen, previousRevision) {
+      const expectedUserId = preferenceUserId;
+      const connection = await client();
+      const id = await userId(connection.auth);
+      if (!id || id !== expectedUserId) return false;
+      const row = connection.from(preferences).update({ seen_updates: seen }).eq('user_id', id).eq('team_id', teamId);
+      const guarded = previousRevision ? row.eq('seen_updates->>revision', previousRevision) : row.is('seen_updates', null);
+      const { data, error } = await guarded.select('team_id').maybeSingle();
+      if (error) throw error;
+      return data?.team_id === teamId;
     },
     subscribe(onChange) {
       let active = true, subscription, notification;
@@ -60,13 +74,16 @@ function options(teams, selected) {
   return '<option value="">Choose a team</option>'+groups.join('');
 }
 
-export function mountMyTeam(root, { teams, renderTeam, chosenTeamId, adapter = accountAdapter() }) {
+export function mountMyTeam(root, { teams, renderTeam, chosenTeamId, adapter = accountAdapter(), loadUpdateFacts, season, mountExtras }) {
   let active = true, version = 0, signedIn = false, loaded = false, failure = false, editing = false, busy = false;
   let favorite = null, draft = '', message = '';
+  let seen = null, updatesEnabled = true, cleanupUpdates, cleanupExtras;
   const current = request => active && root.isConnected && request === version;
 
   function draw(focus) {
     if (!current(version)) return;
+    cleanupUpdates?.();
+    cleanupExtras?.();
     const team = teams.get(favorite);
     const disabled = busy ? ' disabled' : '';
     const button = (action, label, symbol) => `<button type="button" class="button ${symbol ? 'my-team-change' : 'light small'}" data-my-team-action="${action}"${disabled}>${symbol ? `<span aria-hidden="true">${symbol}</span>` : ''}${label}</button>`;
@@ -83,8 +100,18 @@ export function mountMyTeam(root, { teams, renderTeam, chosenTeamId, adapter = a
     const teamColor = showFavorite ? myTeamColors[team.id] : null;
     const theme = showFavorite ? ` data-favorite-team="${escape(team.id)}"${teamColor ? ` style="--my-team-color:${teamColor}"` : ''}` : '';
     root.innerHTML = `<section class="panel my-team"${theme} aria-labelledby="my-team-title"><div class="panel-body">
-      <div class="my-team-header"><h2 id="my-team-title">${showFavorite ? '<span class="my-team-star" aria-hidden="true">☆</span>' : ''}My Team</h2>${showFavorite ? button('edit', 'Change team', '⇄') : ''}</div>
-      ${content}<p class="my-team-message compact-note" role="status">${escape(message)}</p></div></section>`;
+      <div class="my-team-header"><div class="my-team-header-title"><h2 id="my-team-title">${showFavorite ? '<span class="my-team-star" aria-hidden="true">☆</span>' : ''}My Team</h2>
+      ${showFavorite ? '<span data-my-team-update-badge></span>' : ''}</div>${showFavorite ? button('edit', 'Change team', '⇄') : ''}</div>
+      ${showFavorite ? '<div data-my-team-update-panel hidden></div>' : ''}${content}<p class="my-team-message compact-note" role="status">${escape(message)}</p></div></section>`;
+    if (showFavorite) {
+      cleanupExtras = mountExtras?.(root, team);
+      if (updatesEnabled && loadUpdateFacts && season) {
+        cleanupUpdates = mountMyTeamUpdates(root.querySelector('[data-my-team-update-badge]'), root.querySelector('[data-my-team-update-panel]'), {
+          team, season, previous: seen, adapter, loadFacts: () => loadUpdateFacts(team),
+          onSaved: value => { seen = value; }, onConflict: read,
+        });
+      }
+    }
     if (focus) root.querySelector(focus)?.focus();
   }
 
@@ -95,6 +122,8 @@ export function mountMyTeam(root, { teams, renderTeam, chosenTeamId, adapter = a
       const preference = await adapter.getPreference();
       if (!current(request)) return;
       signedIn = preference.signedIn === true;
+      seen = preference.seen ?? null;
+      updatesEnabled = preference.updatesEnabled !== false;
       favorite = signedIn && typeof preference.teamId === 'string' ? preference.teamId : null;
       editing = signedIn && teams.has(chosenTeamId) && chosenTeamId !== favorite;
       draft = editing ? chosenTeamId : teams.has(favorite) ? favorite : '';
@@ -113,6 +142,7 @@ export function mountMyTeam(root, { teams, renderTeam, chosenTeamId, adapter = a
     try {
       await adapter.savePreference(teamId);
       if (!current(request)) return;
+      if (favorite !== teamId) seen = null;
       favorite = teamId;
       draft = teamId ?? '';
       editing = false;
@@ -143,5 +173,11 @@ export function mountMyTeam(root, { teams, renderTeam, chosenTeamId, adapter = a
   };
   void read();
   const unsubscribe = adapter.subscribe?.(read);
-  return () => { active = false; unsubscribe?.(); root.onclick = root.onchange = root.onsubmit = null; };
+  return () => {
+    active = false;
+    cleanupUpdates?.();
+    cleanupExtras?.();
+    unsubscribe?.();
+    root.onclick = root.onchange = root.onsubmit = null;
+  };
 }

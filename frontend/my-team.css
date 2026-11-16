@@ -9,6 +9,33 @@
 }
 .my-team-header { margin-bottom: 8px; }
 .my-team-header h2 { margin: 0; font-size: 21px; }
+.my-team-header-title { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.my-team-header-title > span:empty { display: none; }
+.my-team-update-badge, .my-team-mark-read {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 5px 9px;
+  border: 1px solid #5b9fb9;
+  border-radius: 7px;
+  background: #10345b;
+  color: #dff7ff;
+  font: 700 12px/1.2 "Segoe UI", sans-serif;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.my-team-update-badge:hover, .my-team-mark-read:hover { background: #17517a; }
+.my-team-update-badge > span { width: 6px; height: 6px; border-radius: 50%; background: #86e4fa; }
+.my-team-updates { padding: 12px; margin-top: 8px; border: 1px solid #476d94; border-radius: 9px; background: #0b2649; }
+.my-team-updates ul { margin: 4px 0 10px; padding: 0; list-style: none; }
+.my-team-updates li { display: grid; gap: 2px; padding-block: 7px; }
+.my-team-updates li + li { border-top: 1px solid #36587c; }
+.my-team-updates a { width: fit-content; color: #a0eaff; font-weight: 700; }
+.my-team-updates a:hover { text-decoration: underline; }
+.my-team-updates small, .my-team-updates [role="status"] { color: #cfdef1; }
+.my-team-next-calendar { margin-top: 5px; }
+.my-team-player-links { align-items: center; }
 .my-team-choice { display: flex; flex-wrap: wrap; align-items: end; gap: 8px; margin-top: 12px; }
 .my-team-choice label { display: block; margin-bottom: 4px; font-weight: 600; }
 .my-team-choice select { max-width: 100%; }

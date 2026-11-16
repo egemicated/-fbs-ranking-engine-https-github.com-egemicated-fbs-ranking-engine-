@@ -65,7 +65,8 @@ export function buildScenarioPublication(snapshot, weekly, policy) {
       probabilitySource = homeWinProbability === null ? null : 'snapshot';
     }
     const { id, week, seasonType, startDate, neutral, status } = game;
-    input.fixtures.push({ id, home: game.home, away: game.away, week, seasonType, startDate, neutral, status,
+    const startTimeTbd = typeof game.startTimeTbd === 'boolean' ? game.startTimeTbd : null;
+    input.fixtures.push({ id, home: game.home, away: game.away, week, seasonType, startDate, startTimeTbd, neutral, status,
       homeWinProbability, probabilitySource });
   }
   return input;
