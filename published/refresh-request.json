@@ -1,4 +1,5 @@
 {
-  "requestedAt": "2026-11-15T18:04:02.000Z",
-  "reason": "Publish the first saved FCS picks for the upcoming week using the shared results refresh"
+  "requestedAt": "2026-11-16T00:07:05.000Z",
+  "mode": "kickoff-only",
+  "reason": "Verify Week 12 kickoffs and update Beat the Model from the saved schedule"
 }
