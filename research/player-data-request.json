@@ -1,0 +1,18 @@
+{
+  "season": 2026,
+  "weeks": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "maxRequests": 13,
+  "publicKey": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArhcFSDMRCFZGqNF7pYTs\nXNSt/MTE9YQEI6ufsn4kEIpmUqaekYV07Ge0V4VNdctX1fkTzH2XLZkm83xzH3uy\nKomsaUfLY5BSv77VoUXqLnWNVaMU8IMZZeG5CdHYYm5258CXVEzAP77UhrMTnjof\n3v3ZcyY8NwpFSEAjeetdzzzcMQV9m652/ARYa3llLz2FbyTLVVq1cZn60r9UKQ/1\np47R40Sy8gsNx7nqA0BqYugFdwQc2e2EkqmdxxUfnK6SnfmU+1mA6Yek6rkYAUDc\nmIY7NtkzAO0LxNqxQwsZX1K54Lecn8rYaL7yM7cXuczzGXfdImgJK7/T9XEZC8Z3\nsQIDAQAB\n-----END PUBLIC KEY-----\n"
+}

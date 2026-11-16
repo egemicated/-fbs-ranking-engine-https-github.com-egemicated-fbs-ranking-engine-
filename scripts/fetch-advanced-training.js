@@ -25,7 +25,7 @@ function validatedKey(request) {
   return key;
 }
 
-function encryptedEnvelope(raw, year, publicKey) {
+export function encryptedEnvelope(raw, year, publicKey) {
   const key = randomBytes(32), iv = randomBytes(12);
   try {
     const cipher = createCipheriv('aes-256-gcm', key, iv);
