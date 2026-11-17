@@ -273,6 +273,20 @@ test('Compare and Forge remain accessible through the hub and retain dated editi
   assert.deepEqual(page.calls, ['/rankings', '/ranking-editions.json']);
 });
 
+test('same-week Coaches and AP polls use their own archived SOR cutoff', async () => {
+  const page = await browser({ ...fixture(), initialRoute: '#polls/coaches/11' });
+  const coaches = page.html();
+  assert.match(coaches, /Games through Nov 14, 2026/);
+  assert.match(coaches, /saved SOR checkpoint/i);
+  assert.match(rankingTable(coaches), /<th scope="col">SOR checkpoint<\/th>/);
+  assert.match(rankingTable(coaches), /Ole Miss[\s\S]*6–3/);
+  const ap = await page.go('#polls/ap/11');
+  assert.match(ap, /Games through Nov 15, 2026/);
+  assert.match(rankingTable(ap), /<th scope="col">SOR<\/th>/);
+  assert.doesNotMatch(ap, /saved SOR checkpoint/i);
+  assert.match(ap, /Forge ballot reconstructed Nov 16, 2026/);
+});
+
 test('the rankings stylesheet disables animation and transitions for reduced motion', async () => {
   const css = await readFile(new URL('../frontend/styles.css', import.meta.url), 'utf8');
   assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*?animation:\s*none[\s\S]*?transition:\s*none/);

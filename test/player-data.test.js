@@ -52,6 +52,34 @@ test('publication keeps exact player identity per team and season and validates 
   assert.deepEqual(pages.get(fcs.id).players[0].stats, {});
 });
 
+test('an earlier cache must verify every scheduled team-game without changing its source timestamp', () => {
+  const schedule = playerSchedule(weekly, weeklyFcs);
+  const categories = [{ name: 'rushing', types: [{ name: 'YDS', athletes: [{ id: '500', name: 'Taylor Martin', stat: '70' }] }] }];
+  const home = { homeAway: 'home', team: fbs.name, points: 24, categories };
+  const away = { homeAway: 'away', team: fcs.name, points: 14, categories };
+  const cache = { schemaVersion: 1, source: 'cfbd', season: 2026, asOf: '2026-11-15T17:00:00Z',
+    roster: { rows: [] }, totals: { rows: [] } };
+  const withBoxes = (...boxes) => ({
+    ...cache, weeks: [{ week: 11, rows: [{ id: '301', teams: boxes }] }],
+  });
+  const pages = buildPlayerPublications(normalizePlayerData(withBoxes(home, away), schedule));
+  assert.equal(pages.get(fbs.id).asOf, cache.asOf);
+  assert.equal(pages.get(fcs.id).scheduleAsOf, schedule.scheduleAsOf);
+  assert.equal(pages.get(fcs.id).coverage.boxGames, 1);
+
+  for (const invalidAway of [{ ...away, points: undefined }, { ...away, points: 17 }, { ...away, team: fbs.name },
+    { ...away, categories: [] }]) {
+    assert.throws(() => normalizePlayerData(withBoxes(home, invalidAway), schedule), /1 missing team-game boxes/);
+  }
+  assert.throws(() => normalizePlayerData(withBoxes(home), schedule), /1 missing team-game boxes/);
+  assert.throws(() => normalizePlayerData(withBoxes(home, away, away), schedule), /1 duplicates/);
+  const beforeKickoff = { ...withBoxes(home, away), asOf: '2026-11-14T16:30:00Z' };
+  assert.throws(() => normalizePlayerData(beforeKickoff, schedule), /2 missing team-game boxes/);
+
+  const freshCache = { ...withBoxes({ ...home, points: undefined }), asOf: '2026-11-15T18:01:00Z' };
+  assert.equal(normalizePlayerData(freshCache, schedule).groups.get(fbs.id).matched.size, 1);
+});
+
 test('weekly source request includes the latest week and stays within three game-week batches', () => {
   const games = new Map([7, 8, 9, 10, 11].map(week => [String(week), {
     id: String(week), week, startDate: `2026-11-${week < 10 ? '0' : ''}${week}T18:00:00Z`,

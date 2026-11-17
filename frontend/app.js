@@ -1196,8 +1196,10 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
   const source = pollSources[key];
   const sourceEditions = data.polls[key];
   const replays = data.sorReplays ?? [];
+  const checkpoints = data.sorCheckpoints ?? [];
   const weeks = [...new Set([
     ...data.sor.map(edition => edition.week),
+    ...checkpoints.map(edition => edition.week),
     ...replays.map(edition => edition.week),
     ...Object.values(data.polls).flatMap(editions => editions.map(edition => edition.week))
   ])].sort((a, b) => b - a);
@@ -1207,13 +1209,16 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
   const poll = sourceEditions.find(edition => edition.week === week);
   const weekSor = data.sor.find(edition => edition.week === week);
   const weekReplay = replays.find(edition => edition.week === week);
+  const weekCheckpoints = checkpoints.filter(edition => edition.week === week);
   const latestSor = data.sor.at(-1);
   const weekForge = data.forge.find(edition => edition.week === week);
-  const gamesThrough = (poll ?? weekSor ?? weekReplay ?? weekForge).gamesThrough;
-  const official = weekSor?.gamesThrough === gamesThrough ? weekSor : undefined;
+  const gamesThrough = (poll ?? weekSor ?? weekReplay ?? weekCheckpoints.at(-1) ?? weekForge).gamesThrough;
+  const checkpoint = weekCheckpoints.find(edition => edition.gamesThrough === gamesThrough);
+  const official = weekSor?.gamesThrough === gamesThrough ? weekSor : checkpoint;
   const replay = !official && weekReplay?.gamesThrough === gamesThrough ? weekReplay : undefined;
   const sor = official ?? replay;
-  const sorLabel = replay ? 'SOR replay' : 'SOR';
+  const savedCheckpoint = Boolean(official && official === checkpoint);
+  const sorLabel = replay ? 'SOR replay' : savedCheckpoint ? 'SOR checkpoint' : 'SOR';
   const forge = weekForge?.gamesThrough === gamesThrough ? weekForge : undefined;
   const teams = new Map(state.snapshot.rankings.map(team => [team.name, team]));
   const columns = [sor, forge, poll].map(edition => [...editionRankMap(edition).values()]
@@ -1238,6 +1243,7 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
   return `<section class="panel edition-panel"><div class="panel-body">
     ${tabs}<div class="edition-controls">${editionPicker(weeks, week)}${editionLink}</div>
     <h2>${editionLabel(week)}</h2><p>Games through ${editionDate(gamesThrough)}.${poll ? ` ${source.name} released ${editionDate(poll.released)}.` : ''}${official ? ` SOR published ${editionDate(official.released)}.` : ''}${forge ? ` Forge ballot reconstructed ${editionDate(forge.released)}.` : ''}</p>
+    ${savedCheckpoint ? '<p class="compact-note edition-context">This saved SOR checkpoint covers games through the same date as the poll. The full week includes later games.</p>' : ''}
     ${replay ? `<p class="compact-note edition-context">SOR replay calculated ${editionDate(replay.released)} using the official formula and ${replay.networkGames.toLocaleString()} confirmed games through this cutoff. That includes ${replay.fbsGames.toLocaleString()} games involving FBS teams.</p>` : ''}
     ${summary.length ? `<p class="edition-notice">${summary.join(' · ')}.</p>` : ''}
     ${!poll && latestSource ? `<a class="text-link" href="#polls/${key}/${latestSource.week}">View the ${editionDate(latestSource.released)} edition ${icon('arrow')}</a>` : ''}

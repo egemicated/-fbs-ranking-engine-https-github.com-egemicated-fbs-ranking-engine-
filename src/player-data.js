@@ -109,10 +109,12 @@ function getPlayer(team, playerId, name) {
 
 export function normalizePlayerData(cache, schedule) {
   const { season, games, teams, scheduleAsOf } = schedule;
-  if (cache?.schemaVersion !== 1 || cache.source !== 'cfbd' || cache.season !== season || !Number.isFinite(time(cache.asOf)) ||
-      time(cache.asOf) < time(scheduleAsOf) || !Array.isArray(cache.roster?.rows) || !Array.isArray(cache.totals?.rows) || !Array.isArray(cache.weeks)) {
+  const collectedAt = time(cache?.asOf);
+  if (cache?.schemaVersion !== 1 || cache.source !== 'cfbd' || cache.season !== season || !Number.isFinite(collectedAt) ||
+      !Array.isArray(cache.roster?.rows) || !Array.isArray(cache.totals?.rows) || !Array.isArray(cache.weeks)) {
     throw new Error('The player cache does not match the published season and cutoff');
   }
+  const reusedCache = collectedAt < time(scheduleAsOf);
   const names = uniqueTeamNames(teams);
   const groups = new Map([...teams].map(([id, team]) => [id, { ...team, players: new Map(), expected: new Set(), matched: new Set() }]));
   const evidence = { unmatchedRoster: 0, unmatchedTotals: 0, unmatchedBoxes: 0, duplicateBoxes: 0, coveredWeeks: [] };
@@ -141,7 +143,8 @@ export function normalizePlayerData(cache, schedule) {
     evidence.coveredWeeks.push(batch.week);
     for (const gameBox of batch.rows) {
       const game = games.get(identifier(gameBox?.id));
-      if (!game || game.week !== batch.week || !Array.isArray(gameBox?.teams)) { evidence.unmatchedBoxes++; continue; }
+      if (!game || game.week !== batch.week || !Array.isArray(gameBox?.teams) ||
+          (reusedCache && time(game.startDate) > collectedAt)) { evidence.unmatchedBoxes++; continue; }
       for (const box of gameBox.teams) {
         const side = box?.homeAway;
         if (side !== 'home' && side !== 'away') { evidence.unmatchedBoxes++; continue; }
@@ -149,7 +152,7 @@ export function normalizePlayerData(cache, schedule) {
         const opponentId = game[side === 'home' ? 'away' : 'home'];
         const opponent = teams.get(opponentId);
         if (!team || names.get(nameKey(box.team)) !== team.id || !Array.isArray(box.categories) ||
-            (box.points != null && quantity(box.points) !== game[`${side}Points`])) { evidence.unmatchedBoxes++; continue; }
+            ((reusedCache || box.points != null) && quantity(box.points) !== game[`${side}Points`])) { evidence.unmatchedBoxes++; continue; }
         if (team.matched.has(game.id)) { evidence.duplicateBoxes++; continue; }
         const perPlayer = new Map();
         for (const category of box.categories) for (const metric of Array.isArray(category?.types) ? category.types : []) {
@@ -174,6 +177,14 @@ export function normalizePlayerData(cache, schedule) {
         }
         if (hasStats) team.matched.add(game.id);
       }
+    }
+  }
+  if (reusedCache) {
+    // A newer schedule can recognize a final that the already collected boxes include.
+    let missing = 0;
+    for (const team of groups.values()) missing += team.expected.size - team.matched.size;
+    if (missing || evidence.duplicateBoxes) {
+      throw new Error(`Older player cache cannot verify the full schedule: ${missing} missing team-game boxes, ${evidence.duplicateBoxes} duplicates`);
     }
   }
   return { season, scheduleAsOf, asOf: cache.asOf, groups, observations, evidence };
