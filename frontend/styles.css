@@ -380,4 +380,7 @@ ul.edition-notice{padding-inline-start:20px}
   .home-week-links > a { grid-template-columns: minmax(90px, 32%) minmax(0, 1fr); gap: 0 8px; }
   .home-week-links small { grid-column: 2; }
 }
+@media (max-width: 700px) {
+  .home-hero h1 { font-size: clamp(48px, 15vw, 61px); }
+}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}

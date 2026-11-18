@@ -15,14 +15,15 @@ const number = (value, digits = 2) => Number.isFinite(value) ? value.toFixed(dig
 
 function metadata(html, { path, title, description, image, route, content, links }) {
   const canonical = origin + path;
-  const head = `<title>${escapeHtml(title)} · FBS Intelligence</title>
+  const pageTitle = route === 'home' ? title : title + ' · FBS Intelligence';
+  const head = `<title>${escapeHtml(pageTitle)}</title>
   <meta name="description" content="${escapeHtml(description)}">
   <link rel="canonical" href="${canonical}">
   <meta property="og:type" content="website"><meta property="og:site_name" content="FBS Intelligence">
-  <meta property="og:title" content="${escapeHtml(title)} · FBS Intelligence"><meta property="og:description" content="${escapeHtml(description)}">
+  <meta property="og:title" content="${escapeHtml(pageTitle)}"><meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:url" content="${canonical}"><meta property="og:image" content="${origin}${image}">
   <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="${escapeHtml(title)}">
-  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(title)} · FBS Intelligence"><meta name="twitter:description" content="${escapeHtml(description)}"><meta name="twitter:image" content="${origin}${image}">
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(pageTitle)}"><meta name="twitter:description" content="${escapeHtml(description)}"><meta name="twitter:image" content="${origin}${image}">
   <meta name="app-route" content="${escapeHtml(route)}">`;
   return html.replace(/<title>[\s\S]*?<\/title>/, '').replace(/\s*<meta name="description"[^>]*>/, '')
     .replace(/\s*<link rel="canonical"[^>]*>/g, '')
@@ -64,7 +65,7 @@ export async function prerenderPublicPages({ root, output, snapshot, teams, html
     return `<table><caption>FBS interconference records · ${snapshot.season}</caption><thead><tr><th>Conference</th><th>Wins</th><th>Losses</th><th>FBS vs. FCS</th></tr></thead><tbody>${conferences.conferences.map(({id,name}) => `<tr><th>${escapeHtml(name)}</th><td>${records.summaries[id].wins}</td><td>${records.summaries[id].losses}</td><td>${record(records.fcs[id])}</td></tr>`).join('')}</tbody></table>`;
   })() : '';
   const primary = [
-    ['/', 'home', 'College football, examined', 'Independent FBS and FCS rankings, team evidence, saved predictions, and conference comparisons.', `<h1>FBS Intelligence</h1><p>Independent college football rankings and matchup analysis. Published ${asOf}.</p>${table('fbs')}`],
+    ['/', 'home', 'The FBS Intelligence Top 25', 'Independent FBS and FCS rankings, team evidence, saved predictions, and conference comparisons.', `<h1>The FBS Intelligence Top 25</h1><p>Independent college football rankings and matchup analysis. Published ${asOf}.</p>${table('fbs')}`],
     ['/rankings/fbs/', 'rankings', 'FBS Strength of Record', `Explore all ${snapshot.fbsTeams} FBS teams by achieved record and opponent quality. Published ${asOf}.`, '<h1>FBS Strength of Record</h1>' + table('fbs')],
     ['/rankings/fcs/', 'rankings/fcs/sor', 'FCS Strength of Record', `Explore ${snapshot.fcsTeams} FCS teams in the Experimental FCS Strength of Record rankings.`, '<h1>FCS Strength of Record · Experimental</h1>' + table('fcs')],
     ['/teams/fbs/', 'teams/fbs', 'FBS team directory', 'Browse FBS teams, records, rankings, and team profiles.', '<h1>FBS team directory</h1>' + table('fbs')],
