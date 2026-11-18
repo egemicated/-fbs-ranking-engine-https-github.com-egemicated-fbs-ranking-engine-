@@ -12,6 +12,7 @@ import { UPDATE_SCHEDULE } from '../src/refresh-schedule.js';
 import { buildWeeklyTeamStats } from '../frontend/weekly-team-stats.js';
 import { browserSorSource, buildScenarioPublication } from '../src/scenario-publication.js';
 import { copyPlayerPages } from '../src/player-publication.js';
+import { loadConferencePublications } from '../src/conference-publication.js';
 
 const root = resolve(import.meta.dirname, '..');
 const frontend = join(root, 'frontend');
@@ -72,6 +73,11 @@ const picksFile = join(data, 'weekly-picks.json');
 const fcsPicksFile = join(data, 'weekly-fcs-picks.json');
 const statsFile = join(data, 'weekly-team-stats.json');
 const scenarioFile = join(data, 'cfp-scenarios.json');
+const conferenceDirectory = join(data, 'conferences');
+const conferencePublication = loadConferencePublications({ root, snapshot, fbsPicks, performance }).catch(error => {
+  console.warn('Conference results are unavailable:', error.message);
+  return { manifest: { schemaVersion: 1, seasons: [] }, datasets: [] };
+});
 const weeklyStats = await weeklySource.then(buildWeeklyTeamStats)
   .catch(error => {
     if (error.code !== 'ENOENT') console.warn('Weekly team stats are unavailable:', error.message);
@@ -83,6 +89,15 @@ const scenario = await weeklySource.then(weekly => buildScenarioPublication(snap
 });
 await Promise.all([
   copyPlayerPages(published, data, publicTeams, snapshot.season),
+  conferencePublication.then(async ({ manifest, datasets }) => {
+    await mkdir(conferenceDirectory, { recursive: true });
+    const files = new Map([['index.json', manifest], ...datasets.map(dataset => [`${dataset.season}.json`, dataset])]);
+    const stale = (await readdir(conferenceDirectory)).filter(file => /^\d{4}\.json$/.test(file) && !files.has(file));
+    await Promise.all([
+      ...[...files].map(([file, contents]) => writeFile(join(conferenceDirectory, file), JSON.stringify(contents))),
+      ...stale.map(file => rm(join(conferenceDirectory, file), { force: true })),
+    ]);
+  }),
   writeFile(join(output, 'index.html'), html.replace(marker, '<meta name="publication-data-root" content="/data">')),
   writeFile(join(data, 'rankings.json'), JSON.stringify(publicSnapshot)),
   performance ? writeFile(performanceFile, JSON.stringify(performance)) : rm(performanceFile, { force: true }),

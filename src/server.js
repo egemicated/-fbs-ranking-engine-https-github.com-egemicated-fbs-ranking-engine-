@@ -13,7 +13,9 @@ import { buildHomeHighlights } from './home-highlights.js';
 import { buildWeeklyTeamStats } from '../frontend/weekly-team-stats.js';
 import { browserSorSource, buildScenarioPublication } from './scenario-publication.js';
 import { readTeamPage } from './player-publication.js';
+import { loadConferencePublications } from './conference-publication.js';
 
+const root = resolve(import.meta.dirname, '..');
 const directory = resolve(process.env.DATA_DIR || 'data', 'snapshots');
 const publications = resolve(import.meta.dirname, '../published');
 // Read-only API. No login to view public sports ratings; no write/admin routes.
@@ -57,6 +59,9 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     ['/ranking-history.js', ['ranking-history.js', 'text/javascript; charset=utf-8']],
     ['/ranking-history.css', ['ranking-history.css', 'text/css; charset=utf-8']],
     ['/ranking-history.json', ['ranking-history.json', 'application/json; charset=utf-8']],
+    ['/conference-strength.js', ['conference-strength.js', 'text/javascript; charset=utf-8']],
+    ['/conference-metrics.js', ['conference-metrics.js', 'text/javascript; charset=utf-8']],
+    ['/conference-strength.css', ['conference-strength.css', 'text/css; charset=utf-8']],
     ['/assets/stadium.png', ['assets/stadium.png', 'image/png']],
     ['/assets/stadium.webp', ['assets/stadium.webp', 'image/webp']],
     ['/assets/stadium-mobile.webp', ['assets/stadium-mobile.webp', 'image/webp']],
@@ -128,6 +133,22 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
         const scenario = buildScenarioPublication(snapshot, weekly, publicationPolicy);
         return scenario ? send(200, scenario) : send(503, { error: 'CFP scenarios are unavailable' });
       } catch { return send(503, { error: 'CFP scenarios are unavailable' }); }
+    }
+    const conferencePath = /^\/conferences\/(index|\d{4})(?:\.json)?$/.exec(path);
+    if (conferencePath) {
+      try {
+        const [snapshot, fbsPicks] = await Promise.all([
+          readFile(join(snapshotDirectory, 'latest.json'), 'utf8').then(JSON.parse).catch(() => null),
+          readFile(join(publicationDirectory, 'weekly-picks.json'), 'utf8').then(JSON.parse).catch(() => null),
+        ]);
+        const performance = snapshot ? await readPublicPerformance(snapshotDirectory, snapshot) : null;
+        const { manifest, datasets } = await loadConferencePublications({
+          root, snapshot, fbsPicks, performance, frontendDirectory, publicationDirectory,
+        });
+        if (conferencePath[1] === 'index') return send(200, manifest);
+        const dataset = datasets.find(item => String(item.season) === conferencePath[1]);
+        return dataset ? send(200, dataset) : send(404, { error: 'Conference results are unavailable for this season' });
+      } catch { return send(503, { error: 'Conference results are unavailable' }); }
     }
     const playerPage = /^\/(team-players|team-availability)\/(\d{1,24})(?:\.json)?$/.exec(path);
     if (playerPage) {

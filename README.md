@@ -123,6 +123,13 @@ The service serves the frontend and read-only JSON API. The free plan can sleep 
 
 ## Weekly CFBD publication
 
+The Rankings hub includes [Conference Strength](https://fbs-intelligence.onrender.com/#conference-strength/records)
+with a head-to-head matrix, matchup details, and Experimental quality rankings.
+The static build generates the current season's conference data from the
+existing results publication. The season menu also includes verified derived
+archives. See the [conference methodology](METHODOLOGY.md#conference-strength-and-quality-of-wins)
+for data coverage and the exact scoring formula.
+
 `.github/workflows/weekly.yml` checks for new FBS and FCS results **daily at 03:45
 America/Denver**. It uses the saved schedule to limit pulls to recent unresolved
 games and the weekly refresh of the upcoming slate. The **Sunday 20:11** backup

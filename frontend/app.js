@@ -37,6 +37,7 @@ let scoreboardPage;
 let rankingsFailed = false;
 let renderedHeader;
 let rankingsHubView;
+let conferenceStrengthModule;
 let favoriteModule;
 let rootingGuideModule;
 let closeFavorite;
@@ -47,6 +48,7 @@ const localPreview = ['localhost', '127.0.0.1', '[::1]'].includes(window.locatio
 const rankingsHubTabs = [
   ['fbs', '#rankings', 'FBS'], ['fcs', '#rankings/fcs/sor', 'FCS'],
   ['polls', '#polls', 'Compare Rankings'], ['forge-top-25', '#forge-top-25', 'Forge’s Rankings'],
+  ['conference-strength', '#conference-strength/records', 'Conference Strength'],
 ];
 const pollSources = {
   ap: { name: 'AP Top 25', short: 'AP', url: 'https://apnews.com/hub/ap-top-25-college-football-poll' },
@@ -181,7 +183,7 @@ function snapshotDate(options = {}) {
   return new Intl.DateTimeFormat('en-US', { timeZone:'America/Denver', month:'short', day:'numeric', ...options }).format(new Date(value));
 }
 function route() { return (location.hash.slice(1) || 'home').split('/'); }
-function isRankingsHub(page) { return ['rankings', 'polls', 'forge-top-25'].includes(page); }
+function isRankingsHub(page) { return ['rankings', 'polls', 'forge-top-25', 'conference-strength'].includes(page); }
 function rankingsRoute() {
   const [, first, second, third] = route();
   const division = first === 'fcs' ? 'fcs' : 'fbs';
@@ -488,18 +490,21 @@ function rankingsHubNav(active) {
   return `<nav class="rankings-hub-nav" aria-label="Rankings pages">${rankingsHubTabs
     .map(([id, href, label]) => `<a href="${href}" data-ranking-section="${id}"${active === id ? ' aria-current="page"' : ''}>${label}</a>`).join('')}</nav>`;
 }
-function renderRankingsHub(active, key, markup) {
+function renderRankingsHub(active, key, markup, mount) {
   const panel = main.querySelector('#rankings-hub-content');
   const previous = rankingsHubView;
   if (!panel?.animate || previous?.panel !== panel) {
-    const heading = banner(`${state.snapshot.season} season`, 'RANKINGS', 'Explore FBS and FCS rankings or compare the FBS Top 25 across polls.');
+    previous?.animation?.cancel();
+    previous?.unmount?.();
+    const heading = banner(`${state.snapshot.season} season`, 'RANKINGS', 'Explore FBS and FCS rankings, compare polls, and see how conferences match up.');
     main.innerHTML = `${heading}<div class="wrap page-content rankings-hub">${rankingsHubNav(active)}<div id="rankings-hub-content">${markup}</div></div>`;
-    rankingsHubView = { panel: main.querySelector('#rankings-hub-content'), key, markup };
+    const nextPanel = main.querySelector('#rankings-hub-content');
+    rankingsHubView = { panel: nextPanel, key, markup, unmount: mount?.(nextPanel) };
     return;
   }
   if (previous.key === key && previous.markup === markup) return;
   const changed = previous.key !== key;
-  const pending = { panel, key, markup, animation: previous.animation };
+  const pending = { panel, key, markup, animation: previous.animation, unmount: previous.unmount };
   rankingsHubView = pending;
   const apply = () => {
     if (rankingsHubView !== pending || !panel.isConnected) return;
@@ -511,7 +516,9 @@ function renderRankingsHub(active, key, markup) {
       if (link.dataset.rankingSection === active) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
     }
+    pending.unmount?.();
     panel.innerHTML = markup;
+    pending.unmount = mount?.(panel);
     if (keepModelFocus) panel.querySelector('[data-action="model"][aria-pressed="true"]')?.focus({ preventScroll: true });
     if (keepEditionFocus) panel.querySelector('#edition-week')?.focus({ preventScroll: true });
     if (keepAllFocus) panel.querySelector('[data-action="toggle-all"]')?.focus({ preventScroll: true });
@@ -536,6 +543,47 @@ function renderRankingsHub(active, key, markup) {
   } else {
     apply();
   }
+}
+function conferenceHash({ view, season, a, b }) {
+  const parts = ['conference-strength', view];
+  if (season) parts.push(season);
+  if (view === 'compare' && season && a && b) parts.push(a, b);
+  return `#${parts.map(encodeURIComponent).join('/')}`;
+}
+function conferenceId(segment) {
+  try { return decodeURIComponent(segment || ''); }
+  catch { return ''; }
+}
+function renderConferenceStrengthPage() {
+  const [, section, year, conferenceA, conferenceB] = route();
+  const view = ['quality', 'compare'].includes(section) ? section : 'records';
+  const season = /^\d{4}$/.test(year) ? Number(year) : undefined;
+  const a = conferenceId(conferenceA);
+  const b = conferenceId(conferenceB);
+  const key = conferenceHash({ view, season, a, b });
+  const placeholder = '<section id="conference-strength-panel" aria-busy="true"><p class="compact-note" role="status">Loading conference results…</p></section>';
+  renderRankingsHub('conference-strength', key, placeholder, panel => {
+    const target = panel.querySelector('#conference-strength-panel');
+    if (!target?.isConnected) return;
+    let unmount;
+    let cancelled = false;
+    conferenceStrengthModule ??= import('./conference-strength.js?v=1').catch(error => {
+      conferenceStrengthModule = undefined;
+      throw error;
+    });
+    conferenceStrengthModule.then(module => {
+      if (cancelled || !target.isConnected) return;
+      unmount = module.mountConferenceStrength(target, {
+        view, season, a, b, dataRoot,
+        onNavigate(destination) { location.hash = conferenceHash(destination); },
+      });
+    }).catch(() => {
+      if (cancelled || !target.isConnected) return;
+      target.removeAttribute('aria-busy');
+      target.innerHTML = '<p class="compact-note" role="status">Conference results could not load. Reload to try again.</p>';
+    });
+    return () => { cancelled = true; unmount?.(); };
+  });
 }
 function renderRankings() {
   const { division, model } = state;
@@ -1397,6 +1445,7 @@ function render() {
   }
   if (!isRankingsHub(page) && rankingsHubView) {
     rankingsHubView.animation?.cancel();
+    rankingsHubView.unmount?.();
     rankingsHubView = undefined;
   }
   if (page !== 'scoreboard' && scoreboardPage) {
@@ -1447,9 +1496,9 @@ function render() {
       Object.assign(state, { compareA: a, compareB: b, venue });
     }
   }
-  if(page==='home')renderHome();else if(page==='rankings')renderRankings();else if(page==='teams')renderTeams();else if(page==='team')renderTeam(id);else if(page==='methodology')renderMethodology();else if(page==='compare')renderCompare();else if (page === 'polls' || page === 'forge-top-25') renderRankingEditions(page,id,scope);else if (page === 'bracket') renderBracketPage();else if (page === 'cfp-scenarios') renderScenarioPage();else if (page === 'beat-the-model') renderContestPage();else if (page === 'ranking-history') renderHistoryPage(id);else renderHome();
+  if(page==='home')renderHome();else if(page==='rankings')renderRankings();else if(page==='teams')renderTeams();else if(page==='team')renderTeam(id);else if(page==='methodology')renderMethodology();else if(page==='compare')renderCompare();else if (page === 'polls' || page === 'forge-top-25') renderRankingEditions(page,id,scope);else if (page === 'conference-strength') renderConferenceStrengthPage();else if (page === 'bracket') renderBracketPage();else if (page === 'cfp-scenarios') renderScenarioPage();else if (page === 'beat-the-model') renderContestPage();else if (page === 'ranking-history') renderHistoryPage(id);else renderHome();
   const compareTitle = id === 'weekly' ? scope === 'fcs' ? 'FCS Weekly Picks' : 'Weekly picks' : 'Matchup lab';
-  const team=rankedTeam(id);document.title=`${page==='team'&&team?team.name:({home:'FBS Top 25',rankings:`${state.division.toUpperCase()} rankings`,teams:'Team directory',compare:compareTitle,methodology:'Methodology',polls:'Compare Rankings','forge-top-25':'Forge’s Top 25',bracket:'Playoff Bracket','cfp-scenarios':'CFP Scenario Builder','beat-the-model':'Beat the Model','ranking-history':'Weekly SOR movement'}[page]||'Home')} · ${BRAND}`;
+  const team=rankedTeam(id);document.title=`${page==='team'&&team?team.name:({home:'FBS Top 25',rankings:`${state.division.toUpperCase()} rankings`,teams:'Team directory',compare:compareTitle,methodology:'Methodology',polls:'Compare Rankings','forge-top-25':'Forge’s Top 25','conference-strength':'Conference Strength',bracket:'Playoff Bracket','cfp-scenarios':'CFP Scenario Builder','beat-the-model':'Beat the Model','ranking-history':'Weekly SOR movement'}[page]||'Home')} · ${BRAND}`;
   document.querySelector('#announce').textContent=document.title;
 }
 document.addEventListener('error', event => {

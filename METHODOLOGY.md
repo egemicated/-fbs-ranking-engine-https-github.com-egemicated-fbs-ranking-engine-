@@ -196,6 +196,53 @@ the same data under a newly approved model preserves those timestamps.
 it must not imply that newer games were fetched. A completed game after the
 cutoff enters when the underlying data is refreshed.
 
+## Conference Strength and Quality of Wins
+
+The conference records include each confirmed FBS game between different
+season-specific conference memberships once per matchup. The matrix shows both
+perspectives, so each conference's wins match the other's losses. FBS
+independents have their own group. FBS–FCS games have their own records and are
+excluded from FBS conference totals and the Experimental score. A tie contributes
+half a win to winning percentage. The win and loss margin averages use the final
+point difference.
+
+Team records and ratings use the selected season's published checkpoint. The
+2026 views join the CollegeFootballData results already published by the
+rankings workflow to the official SOR, Predictive Strength, aligned Experimental
+Performance, AP and CFP snapshots. The 2025 view uses the saved SportsDataverse
+season results and our archived end-of-season Predictive Strength checkpoint.
+Only a verified pre-kickoff ranking edition supplies a pregame rank. Polls
+without a release timestamp qualify only when their release date precedes the
+Mountain Time kickoff date. Teams outside a published AP or CFP Top 25 are
+unranked. A missing edition or rating appears as unavailable. Average opponent
+rank uses full-field rankings, and opponent records are counted per matchup.
+
+### Experimental conference score
+
+Let `R` be the mean Predictive Strength rating of the available FBS teams for
+the selected season, `O` the opponent rating, `H` the published home-field
+adjustment (positive at home, negative away and zero at neutral sites), and
+`s` the season's published probability scale. Compute
+`p = 1 / (1 + exp(−(R − O + H) / s))`. This is the reference team's estimated
+chance against that opponent at the same venue.
+
+For each rated game, assign `y = 1` for a win, `0.5` for a tie or `0` for a
+loss. With final margin `m`, game quality is
+`(y − p) × (0.8 + 0.2 × min(|m|, 28) / 28)`. A stronger opponent lowers
+the expected win chance and raises the result's value. The margin adjusts the
+weight by up to 20 percent, with a 28-point cap. Average win and loss quality
+use this same signed value for their respective games.
+
+For `n` rated games, the 0–100 conference score is
+`50 + 50 × sum(game quality) / (n + 8)`. The eight neutral observations
+shrink small samples toward 50. Fewer than eight rated games are flagged as a
+small sample, and an empty sample has no score. The Experimental comparison
+uses the selected season's opponent ratings and remains descriptive pending
+historical evaluation. The comparison is within each season because the older
+archive uses its own historical probability scale. The ranking-method selector
+changes the ranked-opponent statistics. A filter can also change which games
+enter the score.
+
 ## Known limitations and next evidence needed
 
 - Historical inputs contain retrospective corrections, not exact archived

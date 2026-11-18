@@ -134,6 +134,8 @@ test('Compare Rankings lives in the hub while More still lists the other pages',
   assert.match(header, /href="#scoreboard"/);
   assert.match(header, /href="#ranking-history"/);
   assert.match(page.html(), /href="#polls" data-ranking-section="polls">Compare Rankings/);
+  assert.match(page.html(), /href="#conference-strength\/records" data-ranking-section="conference-strength">Conference Strength/);
+  assert.deepEqual(page.calls, ['/rankings']);
   const comparison = await page.go('#polls/ap/10');
   assert.match(comparison, /After Week 10/);
   assert.match(comparison, /href="#forge-top-25\/10">Forge’s full ballot for this week/);
