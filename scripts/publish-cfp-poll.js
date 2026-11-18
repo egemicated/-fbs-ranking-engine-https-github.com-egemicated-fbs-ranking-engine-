@@ -5,7 +5,8 @@ import { readCfpEdition, saveCfpEdition } from '../src/cfp-poll.js';
 // https://collegefootballplayoff.com/news/2026/8/6/sc-aug-2627
 const releases = [
   { week: 10, gamesThrough: '2026-11-07', released: '2026-11-10' },
-  { week: 11, gamesThrough: '2026-11-14', released: '2026-11-17' },
+  // The Nov. 17 release included the postponed Sunday game.
+  { week: 11, gamesThrough: '2026-11-15', released: '2026-11-17' },
   { week: 12, gamesThrough: '2026-11-21', released: '2026-11-24' },
   { week: 13, gamesThrough: '2026-11-28', released: '2026-12-01' },
   { week: 14, gamesThrough: '2026-12-05', released: '2026-12-06' },
