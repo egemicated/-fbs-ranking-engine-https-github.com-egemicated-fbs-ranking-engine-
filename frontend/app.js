@@ -575,7 +575,7 @@ function renderConferenceStrengthPage() {
     if (!target?.isConnected) return;
     let unmount;
     let cancelled = false;
-    conferenceStrengthModule ??= import('./conference-strength.js?v=platform-review').catch(error => {
+    conferenceStrengthModule ??= import('./conference-strength.js?v=accuracy-20261118').catch(error => {
       conferenceStrengthModule = undefined;
       throw error;
     });
@@ -1449,7 +1449,7 @@ function renderContestPage() {
   closeContest?.();
   closeContest = undefined;
   main.innerHTML = '<div class="wrap page-content"><p role="status">Loading Beat the Model…</p></div>';
-  contestModule ??= import('./weekly-contest.js?v=platform-review');
+  contestModule ??= import('./weekly-contest.js?v=accuracy-20261118');
   contestModule.then(({ renderWeeklyContest, unmountWeeklyContest }) => {
     if (route()[0] !== 'beat-the-model') return;
     closeContest = unmountWeeklyContest;

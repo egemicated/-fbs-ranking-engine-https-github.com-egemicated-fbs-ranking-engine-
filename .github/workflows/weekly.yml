@@ -20,6 +20,7 @@ on:
     paths: ['published/refresh-request.json']
 permissions:
   contents: write
+  actions: write
 concurrency:
   group: weekly-cfbd-rankings
   cancel-in-progress: false
@@ -77,7 +78,6 @@ jobs:
       - name: Save weekly picks and confirmed results
         id: weekly-picks
         if: steps.primary-publish.outcome == 'success'
-        continue-on-error: true
         run: node scripts/publish-weekly-picks.js --season "data/seasons/${RANKING_SEASON}.json" --snapshot published/latest.json --output published/weekly-picks.json
       - name: Record paired pregame forecasts for the recent-form trial
         if: steps.weekly-picks.outcome == 'success'
@@ -88,8 +88,8 @@ jobs:
         continue-on-error: true
         run: node research/evaluate-recent-form-shadow.mjs
       - name: Save FCS weekly picks from the same refresh
+        id: fcs-weekly-picks
         if: steps.primary-publish.outcome == 'success'
-        continue-on-error: true
         run: node scripts/publish-weekly-picks.js --cohort fcs --season "data/seasons/${RANKING_SEASON}.json" --snapshot published/latest.json --output published/weekly-fcs-picks.json
       - name: Verify confirmed kickoffs from the saved slate without pulling CFBD
         id: kickoff-check
@@ -165,8 +165,15 @@ jobs:
           if-no-files-found: warn
       - name: Save the weekly snapshot
         id: saved-snapshot
-        if: always() && (steps.primary-publish.outcome == 'success' || steps.kickoff-check.outputs.updated == 'true')
+        if: >-
+          ${{ !cancelled() && ((steps.primary-publish.outcome == 'success' &&
+          steps.weekly-picks.outcome == 'success' && steps.fcs-weekly-picks.outcome == 'success') ||
+          steps.kickoff-check.outputs.updated == 'true') }}
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
+          # Verify the complete candidate before any changed data reaches main.
+          node scripts/prepare-static.js
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add published/latest.json
@@ -184,6 +191,9 @@ jobs:
           git commit -m 'Publish weekly CFBD rankings'
           git pull --rebase origin main
           git push origin HEAD:main
+          # Bot-token pushes do not trigger push workflows. Dispatch the same
+          # exact-main quality gate explicitly so Render can verify it.
+          gh workflow run test.yml --ref main
       - name: Grade playoff brackets from the saved finals
         if: steps.weekly-picks.outcome == 'success'
         continue-on-error: true

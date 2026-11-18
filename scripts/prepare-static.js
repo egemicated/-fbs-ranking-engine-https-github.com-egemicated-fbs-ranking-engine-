@@ -15,8 +15,11 @@ import { buildWeeklyTeamStats } from '../frontend/weekly-team-stats.js';
 import { browserSorSource, buildScenarioPublication } from '../src/scenario-publication.js';
 import { copyPlayerPages } from '../src/player-publication.js';
 import { loadConferencePublications } from '../src/conference-publication.js';
+import { requireRenderReleaseChecks } from './require-release-checks.mjs';
+import { assertPublicationBundle } from '../src/publication-integrity.js';
 
 const root = resolve(import.meta.dirname, '..');
+await requireRenderReleaseChecks();
 // Render's existing build command invokes this file directly. Install the
 // lockfile's build dependencies when the platform has not installed them.
 try { await import('sharp'); }
@@ -99,10 +102,8 @@ const fcsPicksFile = join(data, 'weekly-fcs-picks.json');
 const statsFile = join(data, 'weekly-team-stats.json');
 const scenarioFile = join(data, 'cfp-scenarios.json');
 const conferenceDirectory = join(data, 'conferences');
-const conferencePublication = loadConferencePublications({ root, snapshot, fbsPicks, performance }).catch(error => {
-  console.warn('Conference results are unavailable:', error.message);
-  return { manifest: { schemaVersion: 1, seasons: [] }, datasets: [] };
-});
+const conferencePublication = loadConferencePublications({ root, snapshot, fbsPicks, performance });
+assertPublicationBundle(snapshot, { fbsPicks, fcsPicks, conferences: await conferencePublication });
 const weeklyStats = await weeklySource.then(buildWeeklyTeamStats)
   .catch(error => {
     if (error.code !== 'ENOENT') console.warn('Weekly team stats are unavailable:', error.message);

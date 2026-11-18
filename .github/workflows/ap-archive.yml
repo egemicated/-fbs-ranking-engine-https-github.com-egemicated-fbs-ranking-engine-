@@ -1,0 +1,40 @@
+name: Archive published AP editions
+on:
+  schedule:
+    # Includes Monday/delayed and postseason releases, using one free public
+    # distributor request. No CFBD key, quota, or model calculation is used.
+    - cron: '47 15 * 8-12,1 *'
+      timezone: 'America/Denver'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: published-poll-archive
+  cancel-in-progress: false
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Observe the current complete AP edition
+        run: node scripts/archive-ap-history.js
+      - name: Validate and retain a new edition
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add published/poll-history frontend/ranking-editions.json
+          if git diff --cached --quiet; then exit 0; fi
+          node scripts/prepare-static.js
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Archive verified AP edition'
+          git pull --rebase origin main
+          git push origin HEAD:main
+          gh workflow run test.yml --ref main

@@ -11,6 +11,7 @@ on:
         default: false
 permissions:
   contents: write
+  actions: write
 concurrency:
   group: weekly-player-stats
   cancel-in-progress: false
@@ -61,8 +62,11 @@ jobs:
           fi
       - name: Publish the player page summaries
         if: steps.refresh.outputs.refreshed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           if [[ ! -d published/team-players ]]; then exit 0; fi
+          node scripts/prepare-static.js
           git add published/team-players
           if git diff --cached --quiet; then exit 0; fi
           git config user.name 'github-actions[bot]'
@@ -70,6 +74,7 @@ jobs:
           git commit -m 'Refresh player page summaries'
           git pull --rebase origin main
           git push origin HEAD:main
+          gh workflow run test.yml --ref main
       - uses: actions/cache/save@v4
         if: steps.refresh.outputs.refreshed == 'true'
         with:

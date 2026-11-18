@@ -20,6 +20,7 @@ const browser = await chromium.launch({headless:true, ...(process.env.QUALITY_BR
 const snapshot=JSON.parse(await readFile('static-dist/data/rankings.json','utf8'));
 const fcs=snapshot.fcsRankings[0], fbs=snapshot.rankings[0];
 const routes = [
+  ['home','.home-hero'], ['polls/ap/-1','.edition-panel'],
   ['rankings','#ranking-results'], ['teams/fcs','.team-grid'], ['team/'+fbs.id,'.team-narrative'],
   ['team/'+fcs.id,'.team-narrative'], ['conference-strength/records','.conference-matrix'],
   ['conference-strength/quality','.conference-quality-list'], ['compare','.compare-picker'],
@@ -27,6 +28,7 @@ const routes = [
   ['model-report/fcs','.model-report'], ['my-teams','.my-teams-page'],
   ['bracket/demo','[data-bracket-action="sample"]'], ['cfp-scenarios','[data-scenario-action="fill"]'],
   ['privacy','.platform-info'], ['support','.platform-info'],
+  ['conference-strength/compare/2025/SEC/Big%20Ten','.conference-game'],
 ];
 let checks=0;
 try {
@@ -68,6 +70,14 @@ try {
   await page.goto(base+'team/252/');
   await page.locator('.team-narrative').waitFor();
   assert.match(page.url(),/#team\/252$/);
+  await page.goto(base+'#polls/ap/-1');
+  await page.locator('.edition-panel').waitFor();
+  assert.match(await page.locator('.edition-panel').innerText(),/exact game cutoff has not been verified/);
+  assert.ok((await page.locator('.poll-rank-table tbody tr td:first-of-type').allTextContents()).every(text=>text.trim()==='—'));
+  await page.goto(base+'#conference-strength/quality/2025');
+  await page.locator('[data-conference-field="method"]').selectOption('ap');
+  await page.locator('[data-conference-field="rankScope"]').selectOption('pregame');
+  assert.match(await page.locator('main').innerText(),/Pregame ranking coverage · 245 of 245 eligible games/);
   const slate=JSON.parse(await readFile('static-dist/data/weekly-picks.json','utf8'));
   const names=new Map(slate.teams.map(team=>[team.id,team.name]));
   const sampleWeek=slate.games.find(game=>game.seasonType==='regular')?.week;

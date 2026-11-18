@@ -1,6 +1,6 @@
 import {
   CONFERENCE_QUALITY, conferenceGames, conferenceRecords, conferenceSummary, conferenceFilterCoverage,
-} from './conference-metrics.js?v=1';
+} from './conference-metrics.js?v=accuracy-20261118';
 import { formatNumber, formatProbability, formatRecord } from './format.js?v=1';
 
 const views = [
