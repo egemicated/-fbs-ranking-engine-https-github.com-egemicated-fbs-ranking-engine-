@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "protocolId": "recent-form-shadow-v1",
+  "protocolSha256": "3b9c35d2ac91b9d11e29f83909bb827797e555e008ddd3c6d4399ff82ccb8ea4",
+  "frozenAt": "2026-11-16T14:53:35.000Z",
+  "season": 2026,
+  "status": "awaiting-first-scored-game",
+  "asOf": "2026-11-18T12:30:14.250Z",
+  "generatedAt": "2026-11-18T12:30:16.182Z",
+  "resultSourceHash": "caf17786cbac28cbf5b90dabc621c845e89561152a3b5038fd3d136e9cfad8bb",
+  "observationsRead": 1,
+  "selectedForecasts": 2,
+  "duplicateCheckpoints": 0,
+  "pending": [
+    {
+      "gameId": "401866470",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401866471",
+      "reason": "awaiting-confirmed-final"
+    }
+  ],
+  "excluded": [],
+  "scores": {
+    "games": 0,
+    "baseline": {
+      "correct": 0,
+      "missed": 0,
+      "even": 0,
+      "accuracy": null,
+      "brier": null,
+      "logLoss": null
+    },
+    "challenger": {
+      "correct": 0,
+      "missed": 0,
+      "even": 0,
+      "accuracy": null,
+      "brier": null,
+      "logLoss": null
+    },
+    "changedFavorites": 0,
+    "challengerMinusBaseline": {
+      "correct": 0,
+      "accuracy": null,
+      "brier": null,
+      "logLoss": null
+    }
+  },
+  "evaluated": [],
+  "interpretation": "Compare the same FBS vs. FBS outcomes from the first valid paired pregame forecast for each game. A 50% forecast receives half credit for accuracy. Brier score and log loss reward the probabilities themselves, with lower values better. Early summaries are descriptive.",
+  "reportSha256": "ba6a15e14396fa2a91f0a792050efc7926b3b4260840c8f34da63aeeb79a8846"
+}
