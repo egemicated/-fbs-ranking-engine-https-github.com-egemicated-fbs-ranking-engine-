@@ -4,6 +4,145 @@
   "teamId": "228",
   "reports": [
     {
+      "gameId": "401858303",
+      "kickoff": "2026-11-21T00:30:00.000Z",
+      "opponentId": "150",
+      "opponentName": "Duke",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-18T01:00:00.000Z",
+      "checkedAt": "2026-11-18T11:56:32.739Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5258042",
+          "name": "Braden Wilmes",
+          "position": "OL",
+          "jersey": 79,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079608",
+          "name": "Champ Thompson",
+          "position": "DT",
+          "jersey": 29,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4899369",
+          "name": "Christopher Vizzina",
+          "position": "QB",
+          "jersey": 17,
+          "status": "Out"
+        },
+        {
+          "playerId": "4914980",
+          "name": "Cole Turner",
+          "position": "WR",
+          "jersey": 22,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079415",
+          "name": "Corian Gipson",
+          "position": "CB",
+          "jersey": 8,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079438",
+          "name": "David Eziomume",
+          "position": "RB",
+          "jersey": 24,
+          "status": "Out"
+        },
+        {
+          "playerId": "5214386",
+          "name": "Donovan Starr",
+          "position": "CB",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "5181316",
+          "name": "Easton Ware",
+          "position": "OL",
+          "jersey": 63,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5141422",
+          "name": "Gideon Davidson",
+          "position": "RB",
+          "jersey": 8,
+          "status": "Probable"
+        },
+        {
+          "playerId": "4870945",
+          "name": "Harris Sewell",
+          "position": "OL",
+          "jersey": 55,
+          "status": "Probable"
+        },
+        {
+          "playerId": "4685243",
+          "name": "Jeremiah Alexander",
+          "position": "LB",
+          "jersey": 7,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5121586",
+          "name": "Markus Strong",
+          "position": "DT",
+          "jersey": 99,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079750",
+          "name": "Mason Wade",
+          "position": "OL",
+          "jersey": 76,
+          "status": "Out"
+        },
+        {
+          "playerId": "5371960",
+          "name": "Polo Anderson",
+          "position": "S",
+          "jersey": 11,
+          "status": "Out"
+        },
+        {
+          "playerId": "5160475",
+          "name": "Shavar Young Jr.",
+          "position": "CB",
+          "jersey": 12,
+          "status": "Out"
+        },
+        {
+          "playerId": "5159078",
+          "name": "Tait Reynolds",
+          "position": "QB",
+          "jersey": 2,
+          "status": "Out"
+        },
+        {
+          "playerId": "4379471",
+          "name": "Tyler Brown",
+          "position": "WR",
+          "jersey": 6,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4870643",
+          "name": "Vic Burley",
+          "position": "DT",
+          "jersey": 45,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858297",
       "kickoff": "2026-11-14T17:30:00.000Z",
       "opponentId": "59",

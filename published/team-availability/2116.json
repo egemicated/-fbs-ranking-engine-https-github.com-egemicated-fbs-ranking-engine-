@@ -4,6 +4,75 @@
   "teamId": "2116",
   "reports": [
     {
+      "gameId": "401856869",
+      "kickoff": "2026-11-20T23:00:00.000Z",
+      "opponentId": "66",
+      "opponentName": "Iowa State",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-18T03:00:00.000Z",
+      "checkedAt": "2026-11-18T11:56:32.280Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5148656",
+          "name": "Caden Piening",
+          "position": "TE",
+          "jersey": 18,
+          "status": "Probable"
+        },
+        {
+          "playerId": "4808748",
+          "name": "Demari Henderson",
+          "position": "DB",
+          "jersey": 8,
+          "status": "Out"
+        },
+        {
+          "playerId": "5092994",
+          "name": "DJ Bell",
+          "position": "DB",
+          "jersey": 5,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5136049",
+          "name": "Duke Watson",
+          "position": "RB",
+          "jersey": 26,
+          "status": "Probable"
+        },
+        {
+          "playerId": "4875126",
+          "name": "Horace Lockett",
+          "position": "DT",
+          "jersey": 0,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4708164",
+          "name": "Jayden Jennings",
+          "position": "LB",
+          "jersey": 38,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5331180",
+          "name": "Kahmel Johnson",
+          "position": "DB",
+          "jersey": 14,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5142600",
+          "name": "Waden Charles",
+          "position": "WR",
+          "jersey": 9,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401856857",
       "kickoff": "2026-11-14T22:30:00.000Z",
       "opponentId": "9",

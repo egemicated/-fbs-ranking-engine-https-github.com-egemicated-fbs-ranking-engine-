@@ -4,6 +4,89 @@
   "teamId": "2483",
   "reports": [
     {
+      "gameId": "401858529",
+      "kickoff": "2026-11-21T01:00:00.000Z",
+      "opponentId": "127",
+      "opponentName": "Michigan State",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-18T01:00:00.000Z",
+      "checkedAt": "2026-11-18T11:56:31.503Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5079428",
+          "name": "Aaron Flowers",
+          "position": "DB",
+          "jersey": 21,
+          "status": "Out"
+        },
+        {
+          "playerId": "4685244",
+          "name": "Bear Alexander",
+          "position": "DL",
+          "jersey": 1,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5079670",
+          "name": "Brayden Platt",
+          "position": "ILB",
+          "jersey": 23,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870921",
+          "name": "Dante Moore",
+          "position": "QB",
+          "jersey": 5,
+          "status": "Out"
+        },
+        {
+          "playerId": "4685392",
+          "name": "Dave Iuli",
+          "position": "OL",
+          "jersey": 74,
+          "status": "Out"
+        },
+        {
+          "playerId": "5041962",
+          "name": "Jerry Mixon",
+          "position": "ILB",
+          "jersey": 6,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5141423",
+          "name": "Jordon Davison",
+          "position": "RB",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141533",
+          "name": "Matthew Johnson",
+          "position": "DL",
+          "jersey": 55,
+          "status": "Out"
+        },
+        {
+          "playerId": "4871005",
+          "name": "Teitum Tuioti",
+          "position": "OLB",
+          "jersey": 44,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141801",
+          "name": "Trent Ferguson",
+          "position": "OL",
+          "jersey": 56,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858523",
       "kickoff": "2026-11-14T20:30:00.000Z",
       "opponentId": "130",

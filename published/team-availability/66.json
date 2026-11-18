@@ -4,6 +4,61 @@
   "teamId": "66",
   "reports": [
     {
+      "gameId": "401856869",
+      "kickoff": "2026-11-20T23:00:00.000Z",
+      "opponentId": "2116",
+      "opponentName": "UCF",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-18T03:00:00.000Z",
+      "checkedAt": "2026-11-18T11:56:32.280Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5081857",
+          "name": "Carson Willich",
+          "position": "LB",
+          "jersey": 10,
+          "status": "Out"
+        },
+        {
+          "playerId": "4875853",
+          "name": "Cody Jackson",
+          "position": "WR",
+          "jersey": 2,
+          "status": "Out"
+        },
+        {
+          "playerId": "5140620",
+          "name": "Connor Moberly",
+          "position": "QB",
+          "jersey": 5,
+          "status": "Out"
+        },
+        {
+          "playerId": "5154698",
+          "name": "Ka'Mori Moore",
+          "position": "DT",
+          "jersey": 95,
+          "status": "Out"
+        },
+        {
+          "playerId": "5295184",
+          "name": "Maasai King",
+          "position": "OL",
+          "jersey": 51,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5290954",
+          "name": "Malcolm Watkins",
+          "position": "WR",
+          "jersey": 80,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401856859",
       "kickoff": "2026-11-14T17:00:00.000Z",
       "opponentId": "2132",
