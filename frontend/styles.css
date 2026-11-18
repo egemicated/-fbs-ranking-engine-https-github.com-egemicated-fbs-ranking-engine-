@@ -191,7 +191,7 @@ ul.edition-notice{padding-inline-start:20px}
     grid-template-columns: minmax(0, 1fr) auto;
   }
 
-  .two-column .toolbar select {
+  .toolbar select {
     max-width: none;
   }
 
@@ -383,4 +383,6 @@ ul.edition-notice{padding-inline-start:20px}
 @media (max-width: 700px) {
   .home-hero h1 { font-size: clamp(48px, 15vw, 61px); }
 }
+.team-card > div { min-width: 0; }
+.team-card h3 { overflow-wrap: anywhere; }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
