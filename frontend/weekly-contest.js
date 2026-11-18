@@ -32,14 +32,17 @@ function teamName(game, side, teams) {
   return game[`${side}Name`] || teams?.get(game[side])?.name || game[side];
 }
 
-export function renderContestCommunityPicks(game, teams, result, state = 'loading') {
-  const count = result?.participants;
+export function renderContestCommunityPicks(game, teams, result, state = 'loading', now = Date.now()) {
+  const releaseReady = !game.startTimeTbd && !game.voidReason && game.status !== 'pending' &&
+    Number.isFinite(Date.parse(game.startDate)) && Date.parse(game.startDate) <= now;
+  const count = releaseReady ? result?.participants : undefined;
   const hasParticipants = Number.isSafeInteger(count) && count > 0 && !game.startTimeTbd;
   const waiting = game.startTimeTbd === true ? 'Available when kickoff is confirmed.'
+    : !releaseReady ? 'Community picks appear after confirmed kickoff, from players who choose to share.'
     : state === 'loading' ? 'Loading community picks…'
     : state === 'error' ? 'Community picks could not load. Try Refresh results.'
     : !hasParticipants ? 'No community totals available yet.'
-    : count < 3 ? 'The split appears after three people save picks.' : '';
+    : count < 3 ? 'The split appears after three people choose to share picks.' : '';
   const { homePicks, awayPicks } = result ?? {};
   const hasCounts = !waiting && [homePicks, awayPicks].every(value => Number.isSafeInteger(value) && value >= 0) &&
     homePicks + awayPicks === count;
@@ -115,7 +118,7 @@ export function renderContestLeaderboard(board, label, selectedPlayerId = '', le
 
 export function renderContestPlayerPicks(profile, { teams, now = Date.now() } = {}) {
   if (!Array.isArray(profile?.picks)) return '<p class="contest-empty">This player’s picks are unavailable.</p>';
-  const picks = profile.picks.filter(game => !game.voidReason && game.startTimeTbd !== true && Number.isFinite(Date.parse(game.startDate)) && Date.parse(game.startDate) <= now &&
+  const picks = profile.picks.filter(game => !game.voidReason && game.status !== 'pending' && game.startTimeTbd !== true && Number.isFinite(Date.parse(game.startDate)) && Date.parse(game.startDate) <= now &&
     [game.home, game.away].includes(game.teamId) && [game.home, game.away].includes(game.modelTeam));
   if (!picks.length) return '<p class="contest-empty">Shared picks appear after each game kicks off.</p>';
   return `<ul class="contest-player-games" aria-label="Published game picks">${picks.map(game => {
@@ -273,7 +276,7 @@ export async function renderWeeklyContest(main, options = {}) {
       const gamesById = new Map(games.map(game => [game.id, game]));
       for (const slot of slots) {
         const game = gamesById.get(slot.dataset.contestCommunity);
-        if (game) slot.innerHTML = renderContestCommunityPicks(game, teams, community.get(game.id), communityState);
+        if (game) slot.innerHTML = renderContestCommunityPicks(game, teams, community.get(game.id), communityState, now());
       }
     }
 
@@ -389,7 +392,7 @@ export async function renderWeeklyContest(main, options = {}) {
       root.innerHTML = `<section class="panel"><div class="panel-body"><div class="section-label">${season} season</div>
         <h2>Your picks against the model</h2>
         <p>Pick winners for FBS–FBS and FBS–FCS games. <strong>Each game locks at its own kickoff.</strong> Picks open once the kickoff time is confirmed. Each correct pick earns one point. FBS–FCS win chances are uncalibrated estimates.</p>
-        ${session ? '<p class="compact-note">Save your pick to unlock the community split for that game.</p>' : ''}
+        ${session ? '<p class="compact-note">Save your pick to view the community split after confirmed kickoff. Only players who make their profile public and share picks enter the totals.</p>' : ''}
         ${!session ? '<p class="compact-note">Sign in from the header to save your picks.</p>' : ''}
         <div class="contest-controls"><label for="contest-week">Select week</label><select id="contest-week"${busy || !weeks.length ? ' disabled' : ''}>
         ${weeks.map(key => `<option value="${escape(key)}"${key === week ? ' selected' : ''}>${escape(contestWeekLabel(key))}</option>`).join('')}</select>

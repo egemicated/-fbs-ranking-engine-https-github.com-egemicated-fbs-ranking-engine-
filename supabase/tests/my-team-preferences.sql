@@ -37,7 +37,7 @@ begin
   begin
     update public.my_team_preferences set team_id = 'not-a-team-id';
     raise exception 'An invalid team identifier was accepted';
-  exception when check_violation then null;
+  exception when invalid_parameter_value then null;
   end;
 end;
 $$;

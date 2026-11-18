@@ -122,8 +122,9 @@ begin
     and v_game -> 'voidReason' = 'null'::jsonb, 'future verified correction preserves the original forecast';
   assert public.weekly_entry(2094) -> 'picks' ->> 'corrected' = 'B';
   perform public.weekly_save_picks(2094,'Kickoff Tester','{"corrected":"A"}',true);
-  assert (select g ->> 'teamId' from jsonb_array_elements(public.weekly_player_picks(2094,v_profile) -> 'picks') g
-    where g ->> 'gameId' = 'corrected') = 'A';
+  assert public.weekly_entry(2094) -> 'picks' ->> 'corrected' = 'A', 'owner sees the corrected future edit';
+  assert not exists (select 1 from jsonb_array_elements(public.weekly_player_picks(2094,v_profile) -> 'picks') g
+    where g ->> 'gameId' = 'corrected'), 'future verified corrections remain private until kickoff';
   select g into v_game from jsonb_array_elements(v_games) g where g ->> 'id' = 'bridge-past';
   assert v_game -> 'locked' = 'true'::jsonb and v_game ->> 'voidReason' = 'Matchup or kickoff changed after picks were saved',
     'a formerly verified elapsed kickoff cannot reopen through a placeholder';

@@ -57,7 +57,8 @@ do $$
 begin
   perform set_config('request.jwt.claim.sub', '30000000-0000-4000-8000-000000000002', true);
   perform public.weekly_save_picks_with_immediate_sharing(2098, 'Immediate Share', '{"first":"A","next-week":"A"}', true, true);
-  assert public.weekly_entry_with_sharing(2098) -> 'sharePicksImmediately' = 'true'::jsonb;
+  assert public.weekly_entry_with_sharing(2098) -> 'sharePicksImmediately' = 'false'::jsonb,
+    'legacy immediate-sharing clients now receive kickoff-only sharing';
 end;
 $$;
 
@@ -70,11 +71,8 @@ declare
 begin
   assert public.weekly_player_picks(2098, v_legacy, 'regular', 11) -> 'picks' = '[]'::jsonb,
     'legacy sharing consent does not reveal pregame picks';
-  assert jsonb_array_length(v_picks) = 2 and v_picks -> 0 ->> 'gameId' = 'first'
-    and v_picks -> 0 ->> 'teamId' = 'A' and v_picks -> 0 ->> 'status' = 'scheduled'
-    and v_picks -> 1 ->> 'gameId' = 'later' and v_picks -> 1 ->> 'teamId' = 'B',
-    'saved picks in the selected scope are visible immediately to anonymous viewers';
-  assert not (v_picks -> 0 ?| array['userId','email','capturedAt','updatedAt']);
+  assert v_picks = '[]'::jsonb,
+    'legacy immediate-sharing consent cannot expose any pregame selection';
 end;
 $$;
 
@@ -115,8 +113,9 @@ declare
 begin
   assert v_board -> 'model' = '{"correct":1,"graded":1}'::jsonb;
   assert v_board -> 'rows' -> 0 ->> 'nickname' = 'Immediate Share' and v_board -> 'rows' -> 0 -> 'points' = '1'::jsonb;
-  assert v_picks -> 0 ->> 'winner' = 'A' and v_picks -> 1 ->> 'teamId' = 'A',
-    'the shared panel shows both the result and the latest pregame edit';
+  assert jsonb_array_length(v_picks) = 1 and v_picks -> 0 ->> 'winner' = 'A',
+    'only the game whose kickoff has passed is shared';
+  assert not (v_picks -> 0 ?| array['userId','email','capturedAt','updatedAt']);
   assert jsonb_array_length(public.weekly_player_picks(2098, v_legacy, 'regular', 11) -> 'picks') = 1,
     'legacy sharing still reveals a pick when its game kicks off';
 end;

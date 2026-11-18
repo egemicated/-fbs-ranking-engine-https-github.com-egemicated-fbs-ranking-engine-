@@ -142,6 +142,19 @@ test('empty scorecards use a pending state and leaderboards preserve server tie 
   assert.doesNotMatch(html, /<script>/);
 });
 
+test('community tallies remain hidden for future or postponed kickoffs even with stale cached totals', () => {
+  const now = Date.parse('2026-11-14T19:00:00Z');
+  const totals = { participants: 3, homePicks: 3, awayPicks: 0 };
+  for (const row of [game('future', { startDate: '2026-11-14T20:00:00Z' }),
+    game('postponed', { status: 'pending', startDate: '2026-11-13T20:00:00Z' })]) {
+    const html = renderContestCommunityPicks(row, null, totals, 'ready', now);
+    assert.match(html, /after confirmed kickoff/);
+    assert.doesNotMatch(html, /participants|100\.0%|0\.0%/);
+  }
+  assert.doesNotMatch(renderContestPlayerPicks({ picks: [{ ...game('postponed', {
+    status: 'pending', startDate: '2026-11-13T20:00:00Z' }), teamId: 'h-postponed' }] }, { now }), /Player pick/);
+});
+
 test('leaderboard names open game picks only for players with a public sharing ID', () => {
   const row = { rank: 1, points: 2, correct: 2, graded: 3, picked: 4, modelCorrect: 1, compared: 3 };
   const html = renderContestLeaderboard({ rows: [
