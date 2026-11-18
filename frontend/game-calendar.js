@@ -1,3 +1,5 @@
+import { canonicalPath } from './page-routes.js';
+
 const liveOrigin = 'https://fbs-intelligence.onrender.com';
 const previewHosts = new Set(['localhost', '127.0.0.1', '[::1]']);
 const publicPath = /^#(?:team(?:\/[\w-]+)*|scoreboard(?:\/[\w-]+)*|compare(?:\/matchup(?:\/\d+){2}\/(?:neutral|home|away)|\/weekly(?:\/fcs)?(?:\/(?:(?:regular|postseason):)?\d+)?(?:\/\d+)?)?)$/;
@@ -23,6 +25,12 @@ export function publicFootballPageUrl(href) {
     const page = new URL(href, base);
     const preview = previewHosts.has(base.hostname);
     const allowedOrigin = page.origin === base.origin || (preview && page.origin === liveOrigin);
+    const matchup = /^#compare\/matchup\/(\d+)\/(\d+)\//.exec(page.hash);
+    if (matchup && matchup[1] === matchup[2]) return null;
+    if (allowedOrigin && /^\/team\/\d{1,24}\/$/.test(page.pathname) && !page.hash) return (preview ? liveOrigin : base.origin) + page.pathname;
+    if (allowedOrigin && page.pathname === '/' && /^#team\/\d{1,24}$/.test(page.hash)) {
+      return (preview ? liveOrigin : base.origin) + canonicalPath(page.hash);
+    }
     return allowedOrigin && page.pathname === '/' && publicPath.test(page.hash)
       ? (preview ? liveOrigin : base.origin) + '/' + page.hash : null;
   } catch {

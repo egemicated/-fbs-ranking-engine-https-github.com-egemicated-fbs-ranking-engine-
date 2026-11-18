@@ -50,7 +50,7 @@ test('card payload is restricted to display fields and uses a canonical public l
   const result = publicShareCard(source);
   assert.equal(result.teams[0].division, 'FBS');
   assert.deepEqual(publicShareCard(result), result);
-  assert.equal(result.href, 'https://fbs-intelligence.onrender.com/#team/254');
+  assert.equal(result.href, 'https://fbs-intelligence.onrender.com/team/254/');
   assert.doesNotMatch(shareCardButton(source), /private-owner|private=|private@example/);
   assert.match(shareCardButton(source), /aria-label="Share Utah &amp; Friends card"/);
   assert.equal(publicShareCard({ ...source, href: 'https://external.example/#team/254' }), null);

@@ -112,3 +112,29 @@ test('2025 conference archive preserves memberships and restores recorded Streng
   assert.equal(archive.teams['68'].ranks.cfp, null);
   assert.ok(archive.games.every(game => !Object.keys(game.pregame).length));
 });
+
+test('every published conference matrix reconciles with every unique game and reverse perspective', async () => {
+  const input = await current;
+  const { datasets } = await loadConferencePublications({ root, ...input });
+  for (const dataset of datasets) {
+    const {matrix,summaries,fcs}=conferenceRecords(dataset);
+    let directionalGames=0;
+    for (const a of dataset.conferences) {
+      const row=Object.values(matrix[a.id]);
+      assert.equal(summaries[a.id].games,row.reduce((sum,value)=>sum+value.games,0));
+      assert.equal(summaries[a.id].wins,row.reduce((sum,value)=>sum+value.wins,0));
+      for (const b of dataset.conferences) {
+        if(a.id===b.id){assert.equal(matrix[a.id][b.id].games,0);continue;}
+        const forward=matrix[a.id][b.id],reverse=matrix[b.id][a.id];
+        assert.equal(forward.wins,reverse.losses);
+        assert.equal(forward.losses,reverse.wins);
+        assert.equal(forward.ties,reverse.ties);
+        assert.equal(forward.games,conferenceGames(dataset,{conferenceA:a.id,conferenceB:b.id}).length);
+        directionalGames+=forward.games;
+      }
+    }
+    assert.equal(directionalGames,2*dataset.coverage.fbsInterconferenceGames);
+    assert.equal(Object.values(fcs).reduce((sum,value)=>sum+value.games,0),dataset.coverage.fbsFcsGames);
+    assert.equal(new Set(dataset.games.map(game=>game.id)).size,dataset.games.length);
+  }
+});

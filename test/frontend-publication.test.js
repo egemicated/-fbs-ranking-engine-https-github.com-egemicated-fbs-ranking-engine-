@@ -31,6 +31,7 @@ async function browser(snapshot, detailResponse, now = Date.parse('2026-11-06T12
   };
   const context = { document: { querySelector: node, addEventListener: (type, handler) => listeners.set(type, handler), title: '' },
     location: { hash: '#home' }, window: { addEventListener() {}, scrollTo() {} },
+    history: { state:null, replaceState(state,unused,url) { context.location.hash = String(url); } },
     Date: class extends Date {
       constructor(...args) { super(...(args.length ? args : [now])); }
       static now() { return now; }
@@ -42,7 +43,7 @@ async function browser(snapshot, detailResponse, now = Date.parse('2026-11-06T12
       return { ok: true, json: async () => snapshot };
     } };
   const source = await readFile('frontend/app.js', 'utf8');
-  vm.runInNewContext(source + '\nglobalThis.ui={state,render,renderHome,renderRankings,renderTeams,renderTeam,renderMethodology,renderCompare,rankingsContent,compareResult,ordered,sosRank,teamCenterContent};', context, { filename: 'frontend/app.js' });
+  vm.runInNewContext(source + '\nglobalThis.ui={state,render,renderHome,renderRankings,renderTeams,renderTeam,renderMethodology,renderCompare,rankingsContent,compareResult,compareOptions,selectMatchupTeam,ordered,sosRank,teamCenterContent};', context, { filename: 'frontend/app.js' });
   await new Promise(setImmediate);
   assert.deepEqual(errors, []);
   return { ...context, calls, html: () => node('#main').innerHTML,
@@ -294,4 +295,62 @@ test('validated matchup odds preserve the strength edge and show a range only fo
   const methodology = page.go('#methodology');
   assert.match(methodology, /WHAT WE CHECKED/);
   assert.match(methodology, /Confidence intervals for team ranks remain unvalidated/);
+});
+
+test('Matchup Lab rejects identical and invalid shared teams before calculating probabilities', async () => {
+  const page = await browser(fixture());
+  const identical = page.go('#compare/matchup/a/a/home');
+  assert.match(identical, /Choose a different opponent/);
+  assert.doesNotMatch(identical, /probability-track|prediction-number|Historically calibrated odds/);
+  assert.equal(page.ui.compareResult(), null);
+  const invalid = page.go('#compare/matchup/a/no-such-team/away');
+  assert.match(invalid, /Choose two different teams/);
+  assert.doesNotMatch(invalid, /prediction-number/);
+  page.go('#compare/matchup/a/b/home');
+  assert.match(page.ui.compareOptions('a','b'), /value="b" disabled/);
+  page.ui.selectMatchupTeam('a','b');
+  assert.equal(page.ui.state.compareB, '');
+  assert.equal(page.ui.compareResult(), null);
+  page.ui.selectMatchupTeam('b','a');
+  page.ui.selectMatchupTeam('a','a');
+  assert.equal(page.ui.compareResult(), null);
+  page.ui.selectMatchupTeam('b','b');
+  const restored = page.ui.compareResult();
+  assert.equal(restored.a.id, 'a');
+  assert.equal(restored.b.id, 'b');
+  assert.ok(restored.probability > 0 && restored.probability < 1);
+});
+
+test('FCS directory uses its own rows and preserves subdivision search state', async () => {
+  const { snapshot, details } = separatedFixture(true);
+  const page = await browser(snapshot, lookupDetails(details));
+  const fcs = page.go('#teams/fcs');
+  assert.match(fcs, /1 of 1 FCS teams/);
+  assert.match(fcs, /Gamma/);
+  assert.doesNotMatch(fcs, /<h3>Alpha|<h3>Beta/);
+  page.ui.state.search = 'no such team';
+  assert.match(page.go('#teams/fcs'), /No teams match these filters/);
+  const fbs = page.go('#teams');
+  assert.match(fbs, /2 of 2 FBS teams/);
+  assert.doesNotMatch(fbs, /<h3>Gamma/);
+  assert.match(fbs, /href="#teams\/fcs"/);
+});
+
+test('Matchup Lab uses the approved subdivision scale and keeps cross-division estimates uncalibrated', async () => {
+  const { snapshot, details } = separatedFixture(true);
+  snapshot.fcsRankings.push({ ...snapshot.fcsRankings[0], id:'d',name:'Delta',strength:snapshot.fcsRankings[0].strength-7 });
+  snapshot.fcsMatchupValidation = { scale:7,approvedForWeeklyPicks:true };
+  const page = await browser(snapshot,lookupDetails(details));
+  const fcs = page.go('#compare/matchup/c/d/neutral');
+  assert.match(fcs,/FCS Weekly Picks/);
+  assert.match(fcs,/<optgroup label="FCS">/);
+  const result = page.ui.compareResult();
+  assert.equal(result.probability,1/(1+Math.exp(-1)));
+  assert.equal(result.fcs,true);
+  assert.doesNotMatch(fcs,/Historical final-margin range for/);
+  const cross = page.go('#compare/matchup/a/c/home');
+  assert.match(cross,/have not been calibrated for FBS–FCS games/);
+  assert.doesNotMatch(cross,/Historically calibrated odds/);
+  const mixed=page.ui.compareResult();
+  assert.equal(mixed.probability,1/(1+Math.exp(-mixed.edge/snapshot.config.probabilityScale)));
 });

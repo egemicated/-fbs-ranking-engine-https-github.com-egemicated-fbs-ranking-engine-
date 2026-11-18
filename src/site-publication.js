@@ -97,6 +97,7 @@ export function buildUpcomingTeamSchedule(snapshot, weeklyFbs = null, weeklyFcs 
 export function publicRankings(snapshot, teamDetailsPath, includeTeamSchedule = false) {
   const { ratings, fcsRankings, futureFixtures, pendingFcsKickoffs, ...summary } = snapshot;
   return { ...summary, teamDetailsPath, publicationHash: publicationHash(snapshot),
+    fcsMatchupValidation: fcsMatchupValidation(snapshot),
     ...(includeTeamSchedule ? teamScheduleVersion(snapshot) : {}),
     rankings: snapshot.rankings.map(row => selectFields(row, summaryFields)),
     ...(Array.isArray(fcsRankings) ? { fcsRankings: fcsRankings.map(row => selectFields(row, fcsSummaryFields)) } : {}) };

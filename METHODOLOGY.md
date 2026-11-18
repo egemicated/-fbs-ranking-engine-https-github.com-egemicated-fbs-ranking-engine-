@@ -137,9 +137,13 @@ The selection command compares ridge {3,5,8} and retention {0,.5,.75} using
 2019-2022 weekly log loss. Other constants are engineering defaults and are
 not claimed optimal.
 
-Predicted margin is strength difference plus venue advantage. Experimental
-win probability is `logistic(predicted margin / 14)`; this scale is not yet
-calibrated. Predicted margins should not be treated as betting spreads. The
+Predicted margin is strength difference plus venue advantage. The frozen core
+backtest uses `logistic(predicted margin / 14)`. Current public FBS–FBS matchup
+probabilities use the separately validated scale 6.147406563247917, fitted on
+2014–2019 preweek forecasts. FCS–FCS Weekly Picks use the separately validated
+scale 6.74434303402901. FBS–FCS estimates use the original scale 14 and remain
+uncalibrated. Model-version and parameter guards determine which validation
+applies to a publication. Predicted margins remain separate from betting spreads. The
 reported prior weight `lambda/(lambda+games)` is the direct coefficient share,
 not an exact total historical influence: opponents' priors also propagate
 through the network.
@@ -247,7 +251,11 @@ enter the score.
 
 - Historical inputs contain retrospective corrections, not exact archived
   observations of what each provider displayed at every past cutoff.
-- Original 2004-2022 CSV archives lack provider-labeled postseason rows.
+- Original 2004–2022 CSV archives lack FBS postseason results. The checksum-pinned
+  research supplement recovers 674 games and removes eight duplicate groups.
+  The November 18 offline comparison found small mixed changes to forecasting
+  results. The committed historical prior and original archives remain the
+  production inputs. See [the current lineage audit](reports/platform-model-lineage-2026-11-18.md).
   Those labels do not prove that all actual FCS playoff games are absent:
   some were labeled regular season. Separate research repairs and semantic
   game checks do not silently rewrite the historical public archives.

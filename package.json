@@ -3,7 +3,9 @@
   "version": "0.2.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=24 <25" },
+  "engines": {
+    "node": ">=24 <25"
+  },
   "scripts": {
     "test": "node --test",
     "import": "node src/cli.js import",
@@ -14,5 +16,11 @@
     "refresh:weekly": "node scripts/refresh-weekly.js",
     "preview": "node scripts/preview.js",
     "start": "node src/server.js"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  },
+  "dependencies": {
+    "sharp": "0.35.5"
   }
 }

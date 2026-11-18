@@ -153,6 +153,7 @@ export function conferenceSummary(dataset, conference, rows = conferenceGames(da
     ? rows.filter(row => row.opponent.division === 'fbs' && isRank(row.opponent.ranks?.predictive)).length : 0;
   const rated = rows.filter(row => Number.isFinite(row.qualityScore));
   const opponentRecords = rows.filter(row => completeRecord(row.opponent));
+  const wins = rows.filter(row => row.result === 'win');
   const opponentWins = opponentRecords.reduce((total, row) => total + row.opponent.wins, 0);
   const opponentLosses = opponentRecords.reduce((total, row) => total + row.opponent.losses, 0);
   const opponentTies = opponentRecords.reduce((total, row) => total + row.opponent.ties, 0);
@@ -178,11 +179,34 @@ export function conferenceSummary(dataset, conference, rows = conferenceGames(da
     opponentWinningPercentage: ratio(opponentWins + opponentTies / 2, opponentWins + opponentLosses + opponentTies),
     winningRecordWins: opponentRecords.length ? opponentRecords.filter(row => row.result === 'win' && row.opponent.wins > row.opponent.losses).length : null,
     losingRecordWins: opponentRecords.length ? opponentRecords.filter(row => row.result === 'win' && row.opponent.wins < row.opponent.losses).length : null,
+    evenRecordWins: wins.filter(row => completeRecord(row.opponent) && row.opponent.wins === row.opponent.losses).length,
+    missingRecordWins: wins.filter(row => !completeRecord(row.opponent)).length,
     averageWinQuality: average(rated.filter(row => row.result === 'win').map(row => row.qualityScore)),
     averageLossQuality: average(rated.filter(row => row.result === 'loss').map(row => row.qualityScore)),
     experimentalScore: rated.length ? 50 + 50 * totalQuality / (rated.length + priorGames) : null,
     ratedGames: rated.length,
     smallSample: rated.length > 0 && rated.length < priorGames,
+  };
+}
+
+// Rank availability is measured before the Top 25 restriction. An uncovered
+// opponent must never become evidence that no ranked opponent was played.
+export function conferenceFilterCoverage(dataset, options = {}) {
+  const conferences = options.conferenceA ? [options.conferenceA] : dataset.conferences.map(row => row.id);
+  const byGame = new Map();
+  for (const conferenceA of conferences) {
+    for (const row of conferenceGames(dataset, { ...options, conferenceA, rankScope: 'all' })) {
+      const coverage = byGame.get(row.id) ?? { current: false, pregame: false };
+      coverage.current ||= row.opponentRank.currentAvailable;
+      coverage.pregame ||= row.opponentRank.pregameAvailable;
+      byGame.set(row.id, coverage);
+    }
+  }
+  const games = [...byGame.values()];
+  return {
+    games: games.length,
+    current: games.filter(row => row.current).length,
+    pregame: games.filter(row => row.pregame).length,
   };
 }
 

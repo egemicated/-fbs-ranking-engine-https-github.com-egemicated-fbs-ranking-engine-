@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
-  conferenceGames, conferenceRecords, conferenceSummary, CONFERENCE_QUALITY,
+  conferenceGames, conferenceRecords, conferenceSummary, conferenceFilterCoverage, CONFERENCE_QUALITY,
 } from '../frontend/conference-metrics.js';
 
 const season = 2026;
@@ -161,4 +161,23 @@ test('missing opponent metrics are unavailable rather than zero', () => {
   assert.equal(summary.averageOpponentPredictiveRating, null);
   assert.equal(summary.experimentalScore, null);
   assert.equal(summary.ratedGames, 0);
+});
+
+test('win record categories reconcile and pregame coverage precedes Top 25 filtering', () => {
+  const data = fixture([
+    game('winning', 'a', 'c', 28, 7, { pregame: { cfp: [null, null] } }),
+    game('losing', 'a', 'd', 28, 7),
+    game('even', 'a', 'e', 28, 7),
+    game('unknown', 'a', 'i', 28, 7),
+  ]);
+  data.teams.e.wins = 5; data.teams.e.losses = 5;
+  data.teams.i.wins = null;
+  const options = { conferenceA: 'SEC', method: 'cfp' };
+  const summary = conferenceSummary(data, 'SEC', conferenceGames(data, options));
+  assert.deepEqual([summary.winningRecordWins, summary.losingRecordWins, summary.evenRecordWins,
+    summary.missingRecordWins], [1, 1, 1, 1]);
+  assert.equal(summary.wins, summary.winningRecordWins + summary.losingRecordWins +
+    summary.evenRecordWins + summary.missingRecordWins);
+  assert.deepEqual(conferenceFilterCoverage(data, options), { games: 4, current: 4, pregame: 1 });
+  assert.equal(conferenceGames(data, { ...options, rankScope: 'pregame' }).length, 0);
 });

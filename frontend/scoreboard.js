@@ -1,3 +1,6 @@
+import { defaultGameFilters, filterGames, gameFilterControls, readGameFilterChange } from './game-filters.js?v=1';
+import { loadMyTeams, subscribeMyTeams, getMyTeamIds } from './my-teams-store.js?v=1';
+
 const feedUrl = 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard';
 const pollInterval = 15_000;
 const orderStorageKey = 'fbs-scoreboard-order-v1';
@@ -151,7 +154,8 @@ function gameDetails(game) {
   const note = game.state === 'live' ? game.situation?.downDistanceText || '' : game.state === 'final' ? kickoff(game) : '';
   return `<div class="scoreboard-game-top"><strong>${escapeHtml(detail)}</strong><small>${escapeHtml(game.networks)}</small></div>
     <div class="scoreboard-teams">${game.teams.map((team, index) => teamLine(team, game, game.state === 'final' && team.score != null && game.teams[1 - index].score != null && Number(team.score) > Number(game.teams[1 - index].score))).join('')}</div>
-    <div class="scoreboard-game-bottom"><span>${escapeHtml(note)}</span><a href="https://www.espn.com/college-football/game/_/gameId/${game.id}" target="_blank" rel="noopener">Gamecast<span class="sr-only"> for ${escapeHtml(gameName(game))}</span></a></div>`;
+    <div class="scoreboard-game-bottom"><span>${escapeHtml(note)}</span><a href="https://www.espn.com/college-football/game/_/gameId/${game.id}" target="_blank" rel="noopener">Gamecast<span class="sr-only"> for ${escapeHtml(gameName(game))}</span></a></div>
+    <div class="scoreboard-game-links">${game.teams.filter(team => team.published).map(team => `<a href="#team/${team.id}">${escapeHtml(team.name)}</a>`).join('')}${game.teams.every(team => team.published) ? `<a href="#compare/matchup/${game.teams[1].id}/${game.teams[0].id}/home">Matchup Lab</a><a href="${game.predictionHref ?? '#compare/weekly'}">Saved prediction</a>` : ''}<a href="#beat-the-model">Make picks</a></div>`;
 }
 
 function readOrder() {
@@ -221,7 +225,7 @@ function updateCard(card, game, count) {
   }
 }
 
-function drawSlate(root, slate, order, cards) {
+function drawSlate(root, slate, order, cards, filtered = false) {
   const focused = document.activeElement;
   const focusedCard = focused?.closest('[data-game-id]');
   const present = new Set(slate.games.map(game => game.id));
@@ -242,7 +246,7 @@ function drawSlate(root, slate, order, cards) {
     const content = section.querySelector('[data-scoreboard-games]');
     const placeholder = section.querySelector('.scoreboard-empty');
     placeholder.hidden = games.length > 0;
-    placeholder.textContent = empty;
+    placeholder.textContent = filtered ? 'No games match these filters.' : empty;
     games.forEach((game, index) => {
       let card = cards.get(game.id);
       if (!card) {
@@ -399,12 +403,13 @@ function mountCardDrag(list, move) {
   };
 }
 
-export function mountScoreboard(root, rankForTeam = () => undefined) {
+export function mountScoreboard(root, rankForTeam = () => undefined, { getTeams = () => new Map() } = {}) {
   root.innerHTML = `<p class="scoreboard-source">Kickoffs are shown in Mountain Time.</p>
   <div class="scoreboard-toolbar">
     <div><h2 data-scoreboard-slate>FBS schedule</h2><p data-scoreboard-checked>Checking the ESPN feed…</p></div>
     <button class="button light small" type="button" data-scoreboard-refresh>Refresh now</button>
   </div>
+  <div data-scoreboard-filters></div>
   <div class="scoreboard-order-help" data-scoreboard-order-help hidden>
     <p><span class="scoreboard-touch-tip">Touch and hold a game, then drag to move it.</span><span class="scoreboard-mouse-tip">Drag a game to move it.</span></p>
     <button class="button light small" type="button" data-scoreboard-reset hidden>Reset order</button>
@@ -412,7 +417,7 @@ export function mountScoreboard(root, rankForTeam = () => undefined) {
   <p id="scoreboard-keyboard-help" class="sr-only">Press Alt and the Up or Down arrow to move this game within its section.</p>
   <p class="sr-only" role="status" data-scoreboard-move-status></p>
   <p class="scoreboard-warning" role="status" hidden></p>
-  <div class="scoreboard-sections" hidden>${sections.map(([key, label]) => `<section data-scoreboard-section="${key}" aria-labelledby="scoreboard-${key}"><h2 id="scoreboard-${key}">${label}</h2><p class="scoreboard-empty"></p><div class="scoreboard-games" data-scoreboard-games></div></section>`).join('')}</div>`;
+  <div class="scoreboard-sections" hidden>${sections.map(([key, label]) => `<section data-scoreboard-section="${key}" aria-labelledby="scoreboard-${key}"><h2 id="scoreboard-${key}">${label}</h2>${key === 'final' ? '<button class="button light small scoreboard-collapse" type="button" data-scoreboard-collapse aria-expanded="true">Collapse completed games</button>' : ''}<p class="scoreboard-empty"></p><div class="scoreboard-games" data-scoreboard-games></div></section>`).join('')}</div>`;
 
   const refresh = root.querySelector('[data-scoreboard-refresh]');
   const reorderHelp = root.querySelector('[data-scoreboard-order-help]');
@@ -427,6 +432,46 @@ export function mountScoreboard(root, rankForTeam = () => undefined) {
   let controller;
   let timer;
   let closed = false;
+  let filters = { ...defaultGameFilters };
+  let filtersMarkup = '';
+  let savedGames = new Map();
+  let savedRequested = false;
+  let finalsCollapsed = false;
+  const filterRoot = root.querySelector('[data-scoreboard-filters]');
+
+  function normalizedGames() {
+    return previous.games.map(game => ({
+      ...savedGames.get(game.id), id: game.id,
+      home: game.teams[1].id, away: game.teams[0].id,
+      startDate: Number.isFinite(game.start) ? new Date(game.start).toISOString() : '',
+      startTimeTbd: game.timeTbd, status: game.state === 'upcoming' ? 'scheduled' : game.state,
+      homePoints: game.teams[1].score == null ? null : Number(game.teams[1].score),
+      awayPoints: game.teams[0].score == null ? null : Number(game.teams[0].score),
+    }));
+  }
+
+  function drawFilters(games, teams) {
+    const markup = gameFilterControls({ filters, games, teams, myTeamIds: getMyTeamIds(), idPrefix: 'scoreboard' });
+    if (markup === filtersMarkup) return;
+    const focused = filterRoot.contains(document.activeElement) ? document.activeElement.id : null;
+    filterRoot.innerHTML = markup;
+    filtersMarkup = markup;
+    if (focused) filterRoot.querySelector('#' + focused)?.focus({ preventScroll: true });
+  }
+
+  async function loadSavedGames() {
+    if (savedRequested) return;
+    savedRequested = true;
+    try {
+      const dataRoot = document.querySelector('meta[name="publication-data-root"]')?.content;
+      const response = await fetch(dataRoot ? dataRoot + '/weekly-picks.json' : '/weekly-picks');
+      if (!response.ok) return;
+      const data = await response.json();
+      if (String(data.season) !== previous?.year) return;
+      savedGames = new Map(data.games.map(game => [game.id, game]));
+      if (!closed) renderGames();
+    } catch { /* Close-game filtering remains available for scored games. */ }
+  }
 
   function updateRankings() {
     if (!previous) return;
@@ -438,7 +483,19 @@ export function mountScoreboard(root, rankForTeam = () => undefined) {
   }
 
   function renderGames() {
-    drawSlate(root, previous, order, cards);
+    if (!previous || closed) return;
+    const teams = getTeams();
+    const normalized = normalizedGames();
+    const eligible = new Set(filterGames(normalized, filters, { teams, myTeamIds: getMyTeamIds() }).map(game => game.id));
+    const games = previous.games.filter(game => eligible.has(game.id)).map(game => {
+      const saved = savedGames.get(game.id);
+      const predictionHref = saved && ['regular', 'postseason'].includes(saved.seasonType) && Number.isInteger(saved.week)
+        ? `#compare/weekly/${saved.seasonType}:${saved.week}/${game.id}` : '#compare/weekly';
+      return { ...game, predictionHref, teams: game.teams.map(team => ({ ...team, published: teams.has(team.id) })) };
+    });
+    drawSlate(root, { ...previous, games }, order, cards, Object.entries(filters).some(([key, value]) => value !== defaultGameFilters[key]));
+    drawFilters(normalized, teams);
+    root.querySelector('[data-scoreboard-section="final"] [data-scoreboard-games]').hidden = finalsCollapsed;
     updateRankings();
     const hasOrder = Object.keys(order.groups).length > 0;
     resetButton.hidden = !hasOrder;
@@ -447,19 +504,26 @@ export function mountScoreboard(root, rankForTeam = () => undefined) {
 
   function moveGame(card, to) {
     const group = card.dataset.state;
-    const games = sectionGames(previous, group, order);
+    const games = visibleSectionGames(group);
     const from = games.findIndex(game => game.id === card.dataset.gameId);
     if (from < 0 || to === from || !Number.isInteger(to) || to < 0 || to >= games.length) return;
     const [moved] = games.splice(from, 1);
     games.splice(to, 0, moved);
-    order.groups[group] = games.map(game => game.id);
+    const visibleIds = new Set(games.map(game => game.id));
+    const movedIds = games.map(game => game.id);
+    order.groups[group] = sectionGames(previous, group, order).map(game => visibleIds.has(game.id) ? movedIds.shift() : game.id);
     saveOrder(order);
     renderGames();
     moveStatus.textContent = `${gameName(moved)} moved to position ${to + 1} of ${games.length}.`;
   }
 
+  function visibleSectionGames(group) {
+    const included = new Set(filterGames(normalizedGames(), filters, { teams: getTeams(), myTeamIds: getMyTeamIds() }).map(game => game.id));
+    return sectionGames(previous, group, order).filter(game => included.has(game.id));
+  }
+
   const drag = mountCardDrag(sectionList, (card, target) => {
-    const games = sectionGames(previous, card.dataset.state, order);
+    const games = visibleSectionGames(card.dataset.state);
     moveGame(card, games.findIndex(game => game.id === target.dataset.gameId));
   });
 
@@ -503,6 +567,24 @@ export function mountScoreboard(root, rankForTeam = () => undefined) {
     else update();
   }
   refresh.addEventListener('click', update);
+  const onFilters = event => {
+    const next = readGameFilterChange(filters, event);
+    if (!next) return;
+    filters = next;
+    drag.cancel();
+    renderGames();
+    if (filters.close) void loadSavedGames();
+  };
+  filterRoot.addEventListener('change', onFilters);
+  const collapse = root.querySelector('[data-scoreboard-collapse]');
+  collapse.addEventListener('click', () => {
+    finalsCollapsed = !finalsCollapsed;
+    collapse.setAttribute('aria-expanded', String(!finalsCollapsed));
+    collapse.textContent = finalsCollapsed ? 'Show completed games' : 'Collapse completed games';
+    renderGames();
+  });
+  const stopFavorites = subscribeMyTeams(() => renderGames());
+  void loadMyTeams().then(() => renderGames()).catch(() => {});
   resetButton.addEventListener('click', () => {
     drag.cancel();
     order.groups = {};
@@ -515,7 +597,7 @@ export function mountScoreboard(root, rankForTeam = () => undefined) {
     const card = event.target;
     if (!event.altKey || !card.matches('[data-movable]') || !['ArrowUp', 'ArrowDown'].includes(event.key)) return;
     event.preventDefault();
-    const games = sectionGames(previous, card.dataset.state, order);
+    const games = visibleSectionGames(card.dataset.state);
     const index = games.findIndex(game => game.id === card.dataset.gameId);
     moveGame(card, index + (event.key === 'ArrowUp' ? -1 : 1));
     card.scrollIntoView({ block: 'nearest', inline: 'nearest' });
@@ -527,6 +609,7 @@ export function mountScoreboard(root, rankForTeam = () => undefined) {
     updateRankings,
     unmount() {
       closed = true;
+      stopFavorites();
       drag.unmount();
       clearTimeout(timer);
       controller?.abort();

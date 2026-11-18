@@ -1,4 +1,5 @@
 import { myTeamColors } from './my-team-colors.js?v=2026';
+import { plural } from './format.js?v=1';
 
 const missing = 'Not reported';
 const mountain = new Intl.DateTimeFormat('en-US', {
@@ -153,7 +154,12 @@ function statsMarkup(stats) {
 function groupSummary(stats) {
   const parts = statsGroups(stats).map(({ category, values, fields }) => {
     const reported = fields.filter(key => Number.isFinite(values[key]));
-    return `${escape(heading(category))} · ${reported.map(key => `${count(values[key])} ${escape(heading(key).toLowerCase())}`).join(', ')}`;
+    return `${escape(heading(category))} · ${reported.map(key => {
+      const label = heading(key).toLowerCase();
+      const singular = label === 'interceptions' ? 'interception' : label === 'touchdowns' ? 'touchdown'
+        : label === 'attempts' ? 'attempt' : label === 'completions' ? 'completion' : label === 'receptions' ? 'reception' : label === 'yards' ? 'yard' : label;
+      return `${count(values[key])} ${escape(plural(values[key], singular, label))}`;
+    }).join(', ')}`;
   });
   return parts.length ? `<ul class="player-log-stats">${parts.map(text => `<li>${text}</li>`).join('')}</ul>` : `<p class="compact-note">${missing}</p>`;
 }

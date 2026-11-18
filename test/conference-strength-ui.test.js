@@ -72,6 +72,23 @@ test('archived ratings use season-end language and show group membership from th
   assert.match(conferenceStrengthMarkup(archive,{ ...options, view:'records' }), /Group of Five vs\. Power Four/);
 });
 
+test('unavailable pregame ranks differ from no ranked opponent and explain score reference', () => {
+  const noCoverage = { ...dataset, games: dataset.games.map(game => ({ ...game, pregame: undefined })) };
+  const state = { ...options, view: 'quality', rankScope: 'pregame' };
+  const html = conferenceStrengthMarkup(noCoverage, state);
+  assert.match(html, /Opponent ranking reference/);
+  assert.match(html, /Experimental quality score uses Predictive Strength independently/);
+  assert.match(html, /value="pregame" selected disabled/);
+  assert.match(html, /Pregame opponent rankings are unavailable/);
+  assert.doesNotMatch(html, /No completed games match/);
+  const covered = conferenceStrengthMarkup(dataset, state);
+  assert.match(covered, /Pregame ranking coverage · 1 of 2 eligible games/);
+  assert.doesNotMatch(covered, /value="pregame" selected disabled/);
+  const all = conferenceStrengthMarkup(dataset, { ...state, rankScope: 'all' });
+  assert.match(all, /Wins vs\. .500 records/);
+  assert.match(all, /Wins with unavailable opponent record/);
+});
+
 test('mount requests only the selected season and reuses it across conference views', async context => {
   const requests = [];
   context.mock.method(globalThis, 'fetch', async url => {

@@ -1,6 +1,7 @@
 import {
-  CONFERENCE_QUALITY, conferenceGames, conferenceRecords, conferenceSummary,
+  CONFERENCE_QUALITY, conferenceGames, conferenceRecords, conferenceSummary, conferenceFilterCoverage,
 } from './conference-metrics.js?v=1';
+import { formatNumber, formatProbability, formatRecord } from './format.js?v=1';
 
 const views = [
   ['records', 'Conference Records'], ['quality', 'Quality Rankings'], ['compare', 'Compare Conferences'],
@@ -26,10 +27,9 @@ const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character =>
 }[character]));
 const dateFormatter = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', dateStyle: 'medium' });
 const plainDateFormatter = new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', dateStyle: 'medium' });
-const number = (value, digits = 1) => Number.isFinite(value) ? value.toFixed(digits) : '—';
-const percent = value => Number.isFinite(value) ? number(value * 100) + '%' : '—';
-const record = row => row && Number.isInteger(row.wins) && Number.isInteger(row.losses) ?
-  [row.wins, row.losses, ...(row.ties ? [row.ties] : [])].join('–') : '—';
+const number = (value, digits = 1) => formatNumber(value, digits);
+const percent = value => formatProbability(value, 1);
+const record = formatRecord;
 const requests = new Map();
 const preferences = new Map();
 let focusOnLoad;
@@ -44,9 +44,9 @@ function route({ view, season, a, b }) {
     .filter(value => value !== undefined && value !== '').map(encodeURIComponent).join('/');
 }
 
-function header({ view, season }) {
+function header({ view, season, a, b }) {
   return `<nav class="conference-view-nav" aria-label="Conference Strength views">${views.map(([key, label]) =>
-    `<a href="${route({ view: key, season })}"${view === key ? ' aria-current="page"' : ''}>${label}</a>`).join('')}</nav>`;
+    `<a href="${route({ view: key, season, a, b })}"${view === key ? ' aria-current="page"' : ''}>${label}</a>`).join('')}</nav>`;
 }
 
 function select(id, label, options, value) {
@@ -64,7 +64,30 @@ function qualityContext(data, state) {
   if (!selected?.available) return '<p class="compact-note">This ranking method is unavailable for the selected season.</p>';
   const label = methods.find(([id]) => id === state.method)?.[1];
   const timing = data.archived ? `season-end snapshot. Results through ${date(data.resultsThrough)}` : `snapshot · ${date(selected.asOf)}`;
-  return `<p class="compact-note">${escapeHtml(label)} ${timing}. Team records and ratings reflect the selected season. Pregame ranks use editions available before kickoff. A dash means unavailable or no eligible sample.</p>`;
+  const coverage = filterCoverage(data, state);
+  return `<p class="compact-note">${escapeHtml(label)} ${timing}. This reference determines opponent ranks and Top 25 counts. The Experimental quality score uses Predictive Strength independently.</p>
+    <p class="compact-note">Pregame ranking coverage · ${coverage.pregame} of ${coverage.games} eligible games. ${coverage.pregame ? 'Games without pregame ranks are excluded by the pregame filter.' : 'Pregame rank filtering is unavailable for this selection.'} Team records use the selected season’s snapshot.</p>`;
+}
+
+function filterCoverage(data, state) {
+  return conferenceFilterCoverage(data, {
+    method: state.method, opponents: state.opponents, result: state.result,
+    ...(state.view === 'compare' ? { conferenceA: state.a, conferenceB: state.b === 'FCS' ? undefined : state.b,
+      opponents: state.b === 'FCS' ? 'fcs' : state.opponents } : {}),
+  });
+}
+
+function emptyGames(data, state) {
+  const coverage = filterCoverage(data, state);
+  if (state.rankScope === 'pregame' && !coverage.pregame && coverage.games) {
+    return 'Pregame opponent rankings are unavailable for these games. Choose All opponents or another ranking reference.';
+  }
+  if (state.rankScope === 'current' && !coverage.current && coverage.games) {
+    return 'Opponent rankings are unavailable for these games and this reference.';
+  }
+  const uncovered = state.rankScope === 'pregame' ? coverage.games - coverage.pregame :
+    state.rankScope === 'current' ? coverage.games - coverage.current : 0;
+  return 'No completed games match these filters.' + (uncovered ? ` ${uncovered} games lack the selected ranking evidence and are excluded.` : '');
 }
 
 function controls(data, state) {
@@ -77,12 +100,16 @@ function controls(data, state) {
       <button type="button" class="button light small conference-swap" data-conference-swap ${b === 'FCS' ? 'disabled' : ''}>Swap conferences</button>` : '';
   const methodOptions = methods.map(([id, label]) => data.rankings?.[id]?.available ?
     [id, label] : [id, label + ' · unavailable', true]);
-  const rankOptions = data.archived ? rankingFilters.map(([id, name]) => [id, id === 'current' ? 'Season-end Top 25' : name]) : rankingFilters;
+  const coverage = filterCoverage(data, state);
+  const rankOptions = rankingFilters.map(([id, name]) => [
+    id, data.archived && id === 'current' ? 'Season-end Top 25' : name,
+    id === 'pregame' ? !coverage.pregame : id === 'current' ? !coverage.current : false,
+  ]);
   const sortOptions = data.archived ? qualitySorts.map(([id, name]) => [id, id === 'ranked' ? 'Season-end Top 25 wins' : name]) : qualitySorts;
   const opponentFilters = view === 'compare' && b === 'FCS' ? ''
     : select('opponents', 'Opponent group', targets, opponents) + select('rankScope', 'Opponent rank', rankOptions, rankScope);
   return `<section class="conference-filters panel panel-body" aria-label="Conference filters"><div class="conference-controls">
-    ${basic}${pair}${select('method', 'Ranking method', methodOptions, method)}
+    ${basic}${pair}${select('method', 'Opponent ranking reference', methodOptions, method)}
     ${opponentFilters}
     ${view === 'compare' ? select('result', 'Game result', resultFilters, result) + select('sort', 'Sort games', gameSorts, sort)
       : select('qualitySort', 'Sort conferences', sortOptions, qualitySort)}
@@ -148,6 +175,8 @@ function qualityDetails(row, archived) {
     ${stat('Avg. full-field opponent rank', number(row.averageOpponentRank))}
     ${stat('Wins vs. winning records', row.winningRecordWins)}
     ${stat('Wins vs. losing records', row.losingRecordWins)}
+    ${stat('Wins vs. .500 records', row.evenRecordWins)}
+    ${stat('Wins with unavailable opponent record', row.missingRecordWins)}
     ${stat((archived ? 'Season-end' : 'Current')+' Top 10 / 25 wins', row.currentRankCoverage ? row.currentTop10Wins+' / '+row.currentTop25Wins : '—')}
     ${stat('Pregame Top 10 / 25 wins', row.pregameRankCoverage ? row.pregameTop10Wins+' / '+row.pregameTop25Wins : '—')}
     ${stat('Predictive Top 25 / 50 wins', row.predictiveTop25Wins == null ? '—' : row.predictiveTop25Wins+' / '+row.predictiveTop50Wins)}
@@ -184,7 +213,7 @@ function qualityView(data, state) {
         <span><small>Opp. strength</small><b>${number(row.averageOpponentPredictiveRating)}</b></span>
         <span><small>Top 25 wins</small><b>${rankedCount(row.currentTop25Wins, row.currentRankCoverage)}</b></span>
       </summary>${qualityDetails(row,data.archived)}</details>`).join('')}</div>` :
-      '<p class="conference-empty" role="status">No completed interconference games match these filters.</p>'}
+      `<p class="conference-empty" role="status">${emptyGames(data,state)}</p>`}
     ${qualityMethod()}</section>`;
 }
 
@@ -229,6 +258,7 @@ function gameDetails(row, state) {
       </div>
       ${rankDate ? `<p class="compact-note">Pregame edition · ${date(rankDate)}</p>` :
         '<p class="compact-note">A dated pregame ranking is unavailable for this method and game.</p>'}
+      ${team.division === 'fbs' && opponent.division === 'fbs' && state.season === state.seasons[0] ? `<p class="compact-note"><a href="#sor-compare/fbs/${encodeURIComponent(team.id)}/${encodeURIComponent(opponent.id)}">Compare these teams’ earned SOR rankings</a></p>` : ''}
       ${Number.isFinite(row.qualityScore) ? `<p class="compact-note">${escapeHtml(team.name)} game quality · ${number(row.qualityScore,3)}</p>` : ''}
     </div></details>`;
 }
@@ -257,7 +287,7 @@ function compareView(data, state) {
     <section class="panel"><div class="panel-head"><h3>Game results</h3><span class="tag">${games.length} shown</span></div>
       ${games.length ? `<div class="panel-body"><p class="compact-note">Win and loss markers are from ${labelA}’s perspective.</p></div>` : ''}
       ${games.length ? `<div class="conference-games">${games.map(row => gameDetails(row,{ ...state, archived:data.archived })).join('')}</div>` :
-      '<p class="conference-empty" role="status">No completed games match this pairing and the selected filters.</p>'}</section>`;
+      `<p class="conference-empty" role="status">${emptyGames(data,state)}</p>`}</section>`;
 }
 
 function display(container, state, content) {
@@ -316,12 +346,16 @@ export function mountConferenceStrength(container, { view = 'records', season, a
       }
       if (!active || !container.isConnected) return;
       const ids = data.conferences.map(item => item.id);
-      state.a = ids.includes(a) ? a : ids.includes('SEC') ? 'SEC' : ids[0];
-      state.b = b === 'FCS' || ids.includes(b) && b !== state.a ? b :
-        ids.includes('Big Ten') && state.a !== 'Big Ten' ? 'Big Ten' : ids.find(id => id !== state.a);
       const preferred = preferences.get(state.season) ?? {};
+      const wantedA = a || preferred.a;
+      const wantedB = b || preferred.b;
+      state.a = ids.includes(wantedA) ? wantedA : ids.includes('SEC') ? 'SEC' : ids[0];
+      state.b = wantedB === 'FCS' || ids.includes(wantedB) && wantedB !== state.a ? wantedB :
+        ids.includes('Big Ten') && state.a !== 'Big Ten' ? 'Big Ten' : ids.find(id => id !== state.a);
+      preferences.set(state.season, { ...preferred, a:state.a, b:state.b });
       const firstAvailable = methods.find(([id]) => data.rankings?.[id]?.available)?.[0] ?? 'sor';
-      Object.assign(state, { opponents:'all',rankScope:'all',result:'all',sort:'newest',qualitySort:'score' }, preferred);
+      Object.assign(state, { opponents:'all',rankScope:'all',result:'all',sort:'newest',qualitySort:'score' },
+        Object.fromEntries(Object.entries(preferred).filter(([key]) => !['a','b'].includes(key))));
       state.method = data.rankings?.[preferred.method]?.available ? preferred.method : firstAvailable;
       render(focusOnLoad);
       focusOnLoad = undefined;
@@ -339,6 +373,7 @@ export function mountConferenceStrength(container, { view = 'records', season, a
     const value = event.target.value;
     if (['season','a','b'].includes(field)) {
       focusOnLoad = event.target.id;
+      if (field !== 'season') preferences.set(state.season, { ...preferences.get(state.season), [field]:value });
       navigate({ view:state.view,season:state.season,a:state.a,b:state.b,[field]:value });
       return;
     }

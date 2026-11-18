@@ -1,6 +1,7 @@
 import { loadAccountConfig, loadBracketClient } from './bracket-auth.js?v=header-account';
 import { myTeamColors } from './my-team-colors.js?v=2026';
 import { mountMyTeamUpdates } from './my-team-updates.js?v=1';
+import { loadMyTeams, setPrimaryMyTeam, removeMyTeam, subscribeMyTeams } from './my-teams-store.js?v=1';
 
 const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -17,25 +18,15 @@ function accountAdapter() {
   }
   return {
     async getPreference() {
-      const connection = await client();
-      const id = await userId(connection.auth);
-      preferenceUserId = id;
-      if (id === null) return { signedIn: false, teamId: null };
-      let { data, error } = await connection.from(preferences).select('team_id,seen_updates').eq('user_id', id).maybeSingle();
-      const updatesEnabled = !['42703', 'PGRST204'].includes(error?.code);
-      if (!updatesEnabled) ({ data, error } = await connection.from(preferences).select('team_id').eq('user_id', id).maybeSingle());
-      if (error) throw error;
-      return { signedIn: true, teamId: data?.team_id ?? null, seen: data?.seen_updates ?? null, updatesEnabled };
+      const result = await loadMyTeams();
+      preferenceUserId = result.userId;
+      return { ...result, teamId: result.primaryTeamId };
     },
     async savePreference(teamId) {
-      const expectedUserId = preferenceUserId;
-      const connection = await client();
-      const id = await userId(connection.auth);
-      if (!id || id !== expectedUserId) throw Error('The signed-in account changed');
-      const table = connection.from(preferences);
-      const { error } = await (teamId === null ? table.delete().eq('user_id', id)
-        : table.upsert({ user_id: id, team_id: teamId }, { onConflict: 'user_id' }));
-      if (error) throw error;
+      if (teamId === null) {
+        const current = await loadMyTeams();
+        if (current.primaryTeamId) await removeMyTeam(current.primaryTeamId);
+      } else await setPrimaryMyTeam(teamId);
     },
     async markUpdatesSeen(teamId, seen, previousRevision) {
       const expectedUserId = preferenceUserId;
@@ -49,17 +40,7 @@ function accountAdapter() {
       return data?.team_id === teamId;
     },
     subscribe(onChange) {
-      let active = true, subscription, notification;
-      void client().then(connection => {
-        if (!active) return;
-        subscription = connection.auth.onAuthStateChange((event, session) => {
-          if (!['SIGNED_IN', 'SIGNED_OUT'].includes(event) ||
-              (session?.user?.id ?? null) === preferenceUserId) return;
-          clearTimeout(notification);
-          notification = setTimeout(onChange, 0);
-        }).data.subscription;
-      }).catch(() => {});
-      return () => { active = false; clearTimeout(notification); subscription?.unsubscribe(); };
+      return subscribeMyTeams(onChange);
     },
   };
 }
@@ -102,7 +83,7 @@ export function mountMyTeam(root, { teams, renderTeam, chosenTeamId, adapter = a
     root.innerHTML = `<section class="panel my-team"${theme} aria-labelledby="my-team-title"><div class="panel-body">
       <div class="my-team-header"><div class="my-team-header-title"><h2 id="my-team-title">${showFavorite ? '<span class="my-team-star" aria-hidden="true">☆</span>' : ''}My Team</h2>
       ${showFavorite ? '<span data-my-team-update-badge></span>' : ''}</div>${showFavorite ? button('edit', 'Change team', '⇄') : ''}</div>
-      ${showFavorite ? '<div data-my-team-update-panel hidden></div>' : ''}${content}<p class="my-team-message compact-note" role="status">${escape(message)}</p></div></section>`;
+      ${showFavorite ? '<div data-my-team-update-panel hidden></div>' : ''}${content}<p class="my-team-message compact-note" role="status">${escape(message)}</p><a class="text-link" href="#my-teams">My Teams</a></div></section>`;
     if (showFavorite) {
       cleanupExtras = mountExtras?.(root, team);
       if (updatesEnabled && loadUpdateFacts && season) {

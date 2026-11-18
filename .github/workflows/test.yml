@@ -10,4 +10,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - run: npm test
+          cache: npm
+      - run: npm ci
+      - run: node scripts/prepare-static.js
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/browser-quality.mjs

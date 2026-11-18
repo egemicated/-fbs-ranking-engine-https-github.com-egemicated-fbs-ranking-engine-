@@ -62,6 +62,10 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     ['/conference-strength.js', ['conference-strength.js', 'text/javascript; charset=utf-8']],
     ['/conference-metrics.js', ['conference-metrics.js', 'text/javascript; charset=utf-8']],
     ['/conference-strength.css', ['conference-strength.css', 'text/css; charset=utf-8']],
+    ...['format', 'game-filters', 'my-teams-store', 'my-teams', 'model-report', 'sor-compare', 'page-routes', 'platform-info']
+      .map(name => [`/${name}.js`, [`${name}.js`, 'text/javascript; charset=utf-8']]),
+    ...['game-discovery', 'platform-info', 'intelligence-tools', 'my-teams']
+      .map(name => [`/${name}.css`, [`${name}.css`, 'text/css; charset=utf-8']]),
     ['/assets/stadium.png', ['assets/stadium.png', 'image/png']],
     ['/assets/stadium.webp', ['assets/stadium.webp', 'image/webp']],
     ['/assets/stadium-mobile.webp', ['assets/stadium-mobile.webp', 'image/webp']],

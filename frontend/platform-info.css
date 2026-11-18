@@ -1,0 +1,8 @@
+.platform-info { margin-bottom:18px; max-width:900px; }
+.platform-info h1 { font-size:clamp(27px,4vw,38px); }
+.platform-info p + p { margin-top:14px; }
+.platform-info a { color:#0758af; text-decoration:underline; text-underline-offset:3px; }
+.platform-info form { display:grid; gap:8px; margin-bottom:20px; }
+.platform-info select, .platform-info textarea { width:100%; min-height:44px; padding:10px; font:inherit; border:1px solid #bdcfe3; border-radius:7px; color:#132c4a; background:white; }
+.platform-info :focus-visible { outline:3px solid #00a9e9; outline-offset:3px; }
+.platform-info summary { min-height:44px; cursor:pointer; font-weight:600; padding:10px 0; }

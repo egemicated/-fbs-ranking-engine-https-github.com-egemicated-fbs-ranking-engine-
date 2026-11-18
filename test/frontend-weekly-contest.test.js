@@ -156,20 +156,20 @@ test('leaderboard names open game picks only for players with a public sharing I
   assert.match(html, /My name.*?data-contest-sharing-settings>Share picks/s);
 });
 
-test('server-published picks show verified grades and include future games', () => {
+test('public player picks show verified grades while suppressing future or TBD games', () => {
   const first = { ...final('first', { homeName: '<Home>' }), teamId: 'h-first' };
   const second = { ...final('second'), teamId: 'a-second' };
   const pending = { ...game('pending'), teamId: 'h-pending' };
   const later = { ...game('later', { startDate: '2026-11-15T20:00:00Z' }), teamId: 'h-later' };
   const voided = { ...game('voided', { voidReason: 'Removed game' }), teamId: 'h-voided' };
   const profile = { picks: [first, second, pending, later, voided] };
-  assert.match(renderContestPlayerPicks({ picks: [] }), /No shared picks for this selection yet/);
-  const html = renderContestPlayerPicks(profile);
+  assert.match(renderContestPlayerPicks({ picks: [] }), /Shared picks appear after each game kicks off/);
+  const html = renderContestPlayerPicks(profile, { now: Date.parse('2026-11-14T23:00:00Z') });
   assert.match(html, /Player pick.*?&lt;Home&gt;/s);
   assert.match(html, /Model pick/);
   assert.match(html, /is-correct">Correct/);
   assert.match(html, /is-wrong">Miss/);
   assert.match(html, />Pending<\/dd>/);
-  assert.match(html, /Away later at Home later/);
-  assert.doesNotMatch(html, /voided|<Home>/);
+  assert.doesNotMatch(html, /Away later at Home later|voided|<Home>/);
+  assert.doesNotMatch(renderContestPlayerPicks({ picks:[{ ...first, startTimeTbd:true }] }), /Player pick/);
 });

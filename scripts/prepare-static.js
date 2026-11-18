@@ -1,5 +1,7 @@
 import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 import { readPublicPerformance } from '../src/public-performance.js';
 import { readFcsWeeklyPicks } from '../src/weekly-fcs-publication.js';
 import { publishDivisionSnapshot, readPublicationPolicy } from '../src/publication.js';
@@ -15,6 +17,29 @@ import { copyPlayerPages } from '../src/player-publication.js';
 import { loadConferencePublications } from '../src/conference-publication.js';
 
 const root = resolve(import.meta.dirname, '..');
+// Render's existing build command invokes this file directly. Install the
+// lockfile's build dependencies when the platform has not installed them.
+try { await import('sharp'); }
+catch (error) {
+  if (error.code !== 'ERR_MODULE_NOT_FOUND') throw error;
+  console.log('Installing pinned static-build dependencies');
+  const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+  const { stdout } = await promisify(execFile)(npm, ['ci', '--omit=dev'], {
+    cwd: root, shell: process.platform === 'win32', timeout: 180_000, maxBuffer: 1024 * 1024,
+  });
+  console.log(stdout.trim());
+}
+const { prerenderPublicPages } = await import('./prerender-pages.js');
+console.log('Checking application and published-data integrity before building');
+try {
+  const { stdout } = await promisify(execFile)(process.execPath, ['--test'], {
+    cwd: root, timeout: 180_000, maxBuffer: 4 * 1024 * 1024,
+  });
+  console.log(stdout.trim().split('\n').slice(-8).join('\n'));
+} catch (error) {
+  console.error(error.stdout?.trim().split('\n').slice(-45).join('\n') ?? error.message);
+  throw Error('Application quality checks failed; static publication stopped');
+}
 const frontend = join(root, 'frontend');
 const published = join(root, 'published');
 const output = join(root, 'static-dist');
@@ -110,4 +135,8 @@ await Promise.all([
     return rm(picksFile, { force: true });
   }),
 ]);
+const publicPages = await prerenderPublicPages({ root, output, snapshot, teams: publicTeams,
+  html: html.replace(marker, '<meta name="publication-data-root" content="/data">'),
+  fbsPicks, fcsPicks, conferenceDatasets: (await conferencePublication).datasets });
+console.log(`Prerendered ${publicPages.pages} public pages and social previews`);
 console.log(`Ready: ${snapshot.season} static rankings for ${snapshot.fbsTeams} FBS and ${snapshot.fcsTeams ?? 0} FCS teams${performance ? ' with experimental Performance' : ''}`);
