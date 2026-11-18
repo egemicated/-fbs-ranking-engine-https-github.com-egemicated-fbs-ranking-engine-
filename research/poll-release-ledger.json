@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "verifiedOn": "2026-11-18",
+  "precisionPolicy": "These are independently corroborated publication dates, not inferred release instants. Use the end of the Eastern date as a conservative availability bound. Live-blog creation timestamps are not poll-release times.",
+  "seasons": {
+    "2025": {
+      "ap": [
+        ["2025-08-11", "https://apnews.com/article/c6a39b07f29a53451b4557008002969d", "preseason"],
+        ["2025-09-02", "https://apnews.com/article/6205d0af72f53f22a0f82d64170f6a0a"],
+        ["2025-09-07", "https://apnews.com/article/fe3d66cc1d04c530ef9df8cbf0443923"],
+        ["2025-09-14", "https://apnews.com/article/3a999e15bc7e42276779c852ee3fd71c"],
+        ["2025-09-21", "https://apnews.com/article/08b8bbda2d65d5175ea99102e57520da"],
+        ["2025-09-28", "https://apnews.com/article/ed3ef0ea44379b7d87396a1448e1540f"],
+        ["2025-10-05", "https://apnews.com/article/f9be6dff4d7aeda851fe803c1f8da83b"],
+        ["2025-10-12", "https://apnews.com/article/82d2bd6b8dee28b65dadc70c16e02745"],
+        ["2025-10-19", "https://apnews.com/article/47ce0f6019322adcebee6674241e0afd"],
+        ["2025-10-26", "https://apnews.com/article/a619bc14ba26892701c33f95ab4b3cf7"],
+        ["2025-11-02", "https://apnews.com/article/b22d5ac7c3197e27d91869abb478d1cf"],
+        ["2025-11-09", "https://apnews.com/article/b525b40878e88ee9640cbfb1d375dc03"],
+        ["2025-11-16", "https://apnews.com/article/0bd25e156d70b4dcb1d379771ba88d8f"],
+        ["2025-11-23", "https://apnews.com/article/fc23c61177142c895619497c0414a9d2"],
+        ["2025-11-30", "https://apnews.com/article/c8bf8a91d8168f000d5ddf0e121b3a41"],
+        ["2025-12-07", "https://apnews.com/article/d13577954ae8d80a3451e9dd543f14e4"],
+        ["2026-01-20", "https://apnews.com/article/d20d33aecbec2021a90e1f8ce8eead7c", "final"]
+      ],
+      "cfp": [
+        ["2025-11-04", "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025"],
+        ["2025-11-11", "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025"],
+        ["2025-11-18", "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025"],
+        ["2025-11-25", "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025"],
+        ["2025-12-02", "https://collegefootballplayoff.com/documents/download/2025/12/2/CFP_HISTORICAL_MEDIA_GUIDE_2025-1202.pdf"],
+        ["2025-12-07", "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025", "selection-final"]
+      ]
+    },
+    "2026": {
+      "ap": [
+        ["2026-08-17", "https://apnews.com/article/bd5dd1c058fab6047510f09e18b035f1", "preseason"],
+        ["2026-09-08", "https://apnews.com/article/11b750c72b3fd709a9eaa008f4b570eb"],
+        ["2026-09-13", "https://www.aol.com/articles/ap-top-25-set-crown-175640000.html"],
+        ["2026-09-20", "https://apnews.com/article/24005ba778fee95626d65d5deb5a18f8"],
+        ["2026-09-27", "https://www.click2houston.com/news/national/2026/09/27/florida-jumps-into-the-top-10-of-the-college-football-rankings-after-taking-down-ole-miss/"],
+        ["2026-10-04", "https://www.ap.org/news-highlights/spotlights/2026/missouri-makes-big-jump-to-no-14-in-ap-top-25-with-rout-of-gators-texas-no-1-for-4th-week-in-row/"],
+        ["2026-10-11", "https://www.atlantanewsfirst.com/2026/10/11/georgia-takes-over-no-1-spot-ap-top-25-college-football-poll/"],
+        ["2026-10-18", "https://apnews.com/article/337c6bb6c1c58e83c36ab7742d2b8d41"],
+        ["2026-10-25", "https://www.the-journal.com/articles/associated-press/live-updates-more-big-changes-in-the-ap-top-25/"],
+        ["2026-11-01", "https://www.wsfa.com/2026/11/01/ap-top-25-live-updates-ohio-state-falls-out-top-10-playoff-race-takes-shape/"],
+        ["2026-11-08", "https://apnews.com/article/0430adfdef48e3161f5bb8f60c7935c4"],
+        ["2026-11-16", "https://apnews.com/live/top-25-college-football-poll-11-16-2026"]
+      ],
+      "cfp": [
+        ["2026-11-03", "https://collegefootballplayoff.com/rankings"],
+        ["2026-11-10", "https://collegefootballplayoff.com/rankings"],
+        ["2026-11-17", "https://collegefootballplayoff.com/rankings"]
+      ]
+    }
+  },
+  "sourceDiscrepancies": [
+    {
+      "source": "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025",
+      "edition": "2025-12-02",
+      "issue": "Summary table lists both North Texas and James Madison at 24.",
+      "verifiedResolution": "Official December 2 media guide page 27 ranks North Texas 24 and James Madison 25. The original summary response is checksummed and is not altered.",
+      "evidence": "https://collegefootballplayoff.com/documents/download/2025/12/2/CFP_HISTORICAL_MEDIA_GUIDE_2025-1202.pdf"
+    }
+  ]
+}

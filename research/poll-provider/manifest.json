@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "requestId": "historical-polls-20261118-v1",
+  "fetchedAt": "2026-11-18T22:42:04.412Z",
+  "providerCalls": 2,
+  "remainingCalls": 934,
+  "provider": "CollegeFootballData",
+  "purpose": "Offline AP/CFP recovery; release times must be independently verified",
+  "seasons": [
+    {
+      "year": 2025,
+      "url": "https://api.collegefootballdata.com/rankings?year=2025&seasonType=both",
+      "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+      "normalizedSha256": "0d59e941433397b3b95f262046ca0fd933aaa6f52bc3c43bde0c1ce72e10418b",
+      "file": "2025-provider-editions.json",
+      "editionWeeks": 17
+    },
+    {
+      "year": 2026,
+      "url": "https://api.collegefootballdata.com/rankings?year=2026&seasonType=both",
+      "responseSha256": "fb53d70e5ec629e2a5041d1ca42865b891bc2f8a112d3ea599488cc7b44ad155",
+      "normalizedSha256": "7bfb0b57ecf469aa0b3d848c2cacc87459929330b376d216ae98dfb8ba91e889",
+      "file": "2026-provider-editions.json",
+      "editionWeeks": 12
+    }
+  ],
+  "status": "complete"
+}

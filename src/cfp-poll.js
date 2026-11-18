@@ -19,8 +19,9 @@ function dateOnly(value) {
 }
 
 function editionSeason({ week, gamesThrough, released }) {
-  if (!Number.isInteger(week) || week < 0 || !dateOnly(gamesThrough) || !dateOnly(released) ||
-      gamesThrough >= released || gamesThrough.slice(0, 4) !== released.slice(0, 4)) {
+  if (!Number.isInteger(week) || week < 0 || !dateOnly(released) ||
+      gamesThrough !== null && (!dateOnly(gamesThrough) || gamesThrough >= released ||
+        gamesThrough.slice(0, 4) !== released.slice(0, 4))) {
     throw new Error('Invalid CFP edition dates or week');
   }
   return Number(released.slice(0, 4));
@@ -37,6 +38,34 @@ function rankingsData(html, season) {
   const editions = payload[byYear?.[season]];
   if (!Array.isArray(editions)) throw new Error(`CFP rankings page is missing the ${season} archive`);
   return { payload, editions };
+}
+
+// Read the archive's actual edition dates. Promotional images can advertise a
+// later show and are deliberately ignored, as are week-to-date assumptions.
+export function parseCfpArchive(html, season, teamNames) {
+  const { payload, editions } = rankingsData(html, season);
+  const names = new Map(teamNames.map(name => [nameKey(name), name]));
+  return editions.map(index => {
+    const edition = payload[index];
+    const released = payload[edition?.releaseDate]?.slice(0, 10);
+    if (Number(payload[edition?.year]) !== season || !dateOnly(released)) throw Error('Invalid CFP archive season/date');
+    const refs = payload[edition.teams];
+    if (!Array.isArray(refs) || refs.length !== 25) throw Error('CFP edition must contain 25 teams');
+    const rows = refs.map(ref => {
+      const value = payload[ref];
+      const sourceName = payload[value?.team];
+      const rank = payload[value?.rank];
+      if (typeof sourceName !== 'string') throw Error('Invalid CFP team');
+      const key = nameKey(sourceName);
+      const team = names.get(key) ?? names.get(nameKey(aliases.get(key) ?? ''));
+      if (!team) throw Error(`Unrecognized CFP team: ${sourceName}`);
+      return { team, rank };
+    }).sort((a, b) => a.rank - b.rank);
+    if (rows.some(({ rank }, index) => rank !== index + 1) || new Set(rows.map(row => row.team)).size !== 25) {
+      throw Error('CFP edition must contain unique teams ranked 1–25');
+    }
+    return { released, kind: 'committee', url: rankingsUrl, publication: { precision: 'date', sourceUrl: rankingsUrl }, rows };
+  }).sort((a, b) => a.released.localeCompare(b.released));
 }
 
 export async function readCfpEdition({ week, gamesThrough, released }, teamNames, fetcher = fetch) {
@@ -97,7 +126,7 @@ export async function saveCfpEdition(path, edition) {
       throw new Error(`A different CFP edition is already stored for Week ${edition.week}`);
     }
     if (isDeepStrictEqual(current.rows, edition.rows)) return false;
-    editions[index] = { ...current, rows: edition.rows };
+    throw new Error(`Saved CFP edition ${edition.released} differs from the source; retain the original and reconcile the correction`);
   } else {
     editions.push(edition);
     editions.sort((a, b) => a.week - b.week);

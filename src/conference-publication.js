@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { rankSeason } from './engine.js';
 import { assertNoLogicalDuplicates } from './data-quality.js';
 import { performanceForSnapshot } from './performance-publication.js';
+import { attachPollHistory, normalizePollEditions, selectPregamePoll } from './poll-history.js';
 
 const powerFour = new Set(['ACC', 'Big Ten', 'Big 12', 'SEC']);
 const groupOfFive = new Set(['American Athletic', 'Conference USA', 'Mid-American', 'Mountain West', 'Sun Belt']);
@@ -36,23 +37,6 @@ function standingsMap(rows, field, fallback) {
     .map((row, index) => [row.id, index + 1]));
 }
 
-function pollEditions(editions, teamIdByName) {
-  if (!Array.isArray(editions)) return [];
-  return editions.flatMap(edition => {
-    if (!dateOnly(edition?.released) || !dateOnly(edition.gamesThrough) || edition.gamesThrough > edition.released ||
-        !Array.isArray(edition.rows) || edition.rows.length < 25) return [];
-    const rows = new Map();
-    for (const [index, row] of edition.rows.entries()) {
-      const id = teamIdByName.get(names(row.team));
-      const position = rank(row.rank ?? index + 1);
-      if (!id || rows.has(id) || !position || position > 25) return [];
-      rows.set(id, position);
-    }
-    return [{ ranks: rows, publishedDay: edition.released, asOf: edition.released, gamesThrough: edition.gamesThrough,
-      ...(typeof edition.url === 'string' ? { url: edition.url } : {}) }];
-  }).sort((a, b) => a.publishedDay.localeCompare(b.publishedDay));
-}
-
 function savedSorEditions(history, season, teamIds) {
   if (history?.season !== season || !Array.isArray(history.editions)) return [];
   return history.editions.flatMap(edition => {
@@ -72,7 +56,8 @@ function pregameRanks(game, histories, teams) {
   const kickoffDay = game.startTimeTbd === true ? [day(game.startDate), utcDay].sort()[0] : day(game.startDate);
   const pregame = {}, pregameAsOf = {};
   for (const [key, editions] of Object.entries(histories)) {
-    const edition = editions.findLast(item => item.publishedDay < kickoffDay);
+    const edition = key === 'ap' || key === 'cfp' ? selectPregamePoll(game, editions).edition :
+      editions.findLast(item => item.publishedDay < kickoffDay);
     if (!edition) continue;
     pregame[key] = [game.home, game.away].map(id => fbs(teams.get(id)) ? edition.ranks.get(id) ?? null : null);
     pregameAsOf[key] = edition.asOf;
@@ -125,8 +110,8 @@ function buildDataset({ season, asOf, archived, source, membership, ratings, gam
   });
   const performance = new Map(performanceRows.filter(row => rank(row.rank)).map(row => [row.id, row.rank]));
   // Poll releases are published independently of the game results refresh.
-  const ap = pollEditions(polls.ap, teamIdByName);
-  const cfp = pollEditions(polls.cfp, teamIdByName);
+  const ap = normalizePollEditions(polls.ap, membership);
+  const cfp = normalizePollEditions(polls.cfp, membership);
   const currentAp = ap.at(-1), currentCfp = cfp.at(-1);
   const histories = { sor: savedSorEditions(history, season, fbsIds), ap, cfp };
   const finals = completedFbsGames(games, teams, asOf);
@@ -271,6 +256,12 @@ export async function loadConferencePublications({ root, snapshot, fbsPicks, per
     if (current) datasets.push(current);
   } catch (error) {
     console.warn('Current conference results unavailable:', error.message);
+  }
+  // Archived result snapshots remain immutable. Add verified comparison-only
+  // poll history at read time, preserving games, memberships and model values.
+  for (let index = 0; index < datasets.length; index++) {
+    const history = await readOptionalJson(join(publicationDirectory, 'poll-history', `${datasets[index].season}.json`));
+    if (history) datasets[index] = attachPollHistory(datasets[index], history);
   }
   datasets.sort((a, b) => b.season - a.season);
   return { manifest: { schemaVersion: 1, seasons: datasets.map(row => row.season) }, datasets };

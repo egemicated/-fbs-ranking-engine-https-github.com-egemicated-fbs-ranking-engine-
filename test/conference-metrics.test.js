@@ -96,9 +96,9 @@ test('rank methods, cutoff and filters preserve genuinely unranked and missing r
   const unranked = cfpRows.find(row => row.id === 'later-ranked');
   assert.equal(unranked.opponentRank.current, 14);
   assert.deepEqual(unranked.opponentRank, { current: 14, pregame: null, currentAvailable: true, pregameAvailable: true,
-    pregameAsOf: '2026-11-10' });
+    pregameAsOf: '2026-11-10', pregameStatus: 'unranked' });
   assert.deepEqual(missing.opponentRank, { current: null, pregame: null, currentAvailable: true, pregameAvailable: false,
-    pregameAsOf: null });
+    pregameAsOf: null, pregameStatus: 'missing' });
   assert.deepEqual(conferenceGames(data, { conferenceA: 'SEC', method: 'cfp', rankScope: 'current' }).map(row => row.id), ['later-ranked']);
   assert.deepEqual(conferenceGames(data, { conferenceA: 'SEC', method: 'cfp', rankScope: 'pregame' }).map(row => row.id), ['earlier-ranked']);
   const cfp = conferenceSummary(data, 'SEC', cfpRows);
@@ -178,6 +178,19 @@ test('win record categories reconcile and pregame coverage precedes Top 25 filte
     summary.missingRecordWins], [1, 1, 1, 1]);
   assert.equal(summary.wins, summary.winningRecordWins + summary.losingRecordWins +
     summary.evenRecordWins + summary.missingRecordWins);
-  assert.deepEqual(conferenceFilterCoverage(data, options), { games: 4, current: 4, pregame: 1 });
+  assert.deepEqual(conferenceFilterCoverage(data, options), { games: 4, current: 4, pregame: 1,
+    noPollYet: 0, missing: 3, publicationTimeUncertain: 0, notApplicable: 0 });
   assert.equal(conferenceGames(data, { ...options, rankScope: 'pregame' }).length, 0);
+});
+
+test('poll coverage deduplicates both conference perspectives and separates nonexistent, missing, and uncertain editions', () => {
+  const data = fixture([
+    game('not-yet', 'a', 'c', 28, 7, { pregameStatus: { cfp: ['no-poll-yet', 'no-poll-yet'] } }),
+    game('uncertain', 'a', 'd', 28, 7, { pregameStatus: { cfp: ['publication-time-uncertain', 'publication-time-uncertain'] } }),
+    game('missing', 'a', 'e', 28, 7),
+    game('available', 'a', 'i', 28, 7, { pregame: { cfp: [1, null] }, pregameStatus: { cfp: ['ranked', 'unranked'] } }),
+  ]);
+  const coverage = conferenceFilterCoverage(data, { method: 'cfp' });
+  assert.deepEqual(coverage, { games: 4, current: 4, pregame: 1, noPollYet: 1, missing: 1,
+    publicationTimeUncertain: 1, notApplicable: 0 });
 });

@@ -3416,6 +3416,1248 @@
   "polls": {
     "ap": [
       {
+        "week": -1,
+        "gamesThrough": null,
+        "released": "2026-08-17",
+        "url": "https://apnews.com/article/bd5dd1c058fab6047510f09e18b035f1",
+        "kind": "preseason",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/bd5dd1c058fab6047510f09e18b035f1"
+        },
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 2
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 3
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 4
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 5
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 6
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 7
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 8
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 9
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 10
+          },
+          {
+            "id": "99",
+            "team": "LSU",
+            "rank": 11
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 12
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 13
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 14
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 14
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 16
+          },
+          {
+            "id": "264",
+            "team": "Washington",
+            "rank": 17
+          },
+          {
+            "id": "213",
+            "team": "Penn State",
+            "rank": 18
+          },
+          {
+            "id": "2567",
+            "team": "SMU",
+            "rank": 19
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 20
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 21
+          },
+          {
+            "id": "2294",
+            "team": "Iowa",
+            "rank": 22
+          },
+          {
+            "id": "248",
+            "team": "Houston",
+            "rank": 23
+          },
+          {
+            "id": "97",
+            "team": "Louisville",
+            "rank": 24
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 25
+          }
+        ]
+      },
+      {
+        "week": 1,
+        "gamesThrough": null,
+        "released": "2026-09-08",
+        "url": "https://apnews.com/article/11b750c72b3fd709a9eaa008f4b570eb",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/11b750c72b3fd709a9eaa008f4b570eb"
+        },
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 2
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 3
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 4
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 5
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 6
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 7
+          },
+          {
+            "id": "99",
+            "team": "LSU",
+            "rank": 8
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 9
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 10
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 11
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 12
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 13
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 14
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 15
+          },
+          {
+            "id": "213",
+            "team": "Penn State",
+            "rank": 16
+          },
+          {
+            "id": "2567",
+            "team": "SMU",
+            "rank": 17
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 18
+          },
+          {
+            "id": "264",
+            "team": "Washington",
+            "rank": 19
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 20
+          },
+          {
+            "id": "2294",
+            "team": "Iowa",
+            "rank": 21
+          },
+          {
+            "id": "248",
+            "team": "Houston",
+            "rank": 22
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 23
+          },
+          {
+            "id": "97",
+            "team": "Louisville",
+            "rank": 24
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 25
+          }
+        ]
+      },
+      {
+        "week": 2,
+        "gamesThrough": null,
+        "released": "2026-09-13",
+        "url": "https://www.aol.com/articles/ap-top-25-set-crown-175640000.html",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://www.aol.com/articles/ap-top-25-set-crown-175640000.html"
+        },
+        "rows": [
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 1
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 2
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 3
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 4
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 5
+          },
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 6
+          },
+          {
+            "id": "99",
+            "team": "LSU",
+            "rank": 7
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 8
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 9
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 10
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 11
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 12
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 13
+          },
+          {
+            "id": "213",
+            "team": "Penn State",
+            "rank": 14
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 15
+          },
+          {
+            "id": "2567",
+            "team": "SMU",
+            "rank": 16
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 17
+          },
+          {
+            "id": "2294",
+            "team": "Iowa",
+            "rank": 18
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 19
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 20
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 21
+          },
+          {
+            "id": "248",
+            "team": "Houston",
+            "rank": 22
+          },
+          {
+            "id": "97",
+            "team": "Louisville",
+            "rank": 23
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 24
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 25
+          }
+        ]
+      },
+      {
+        "week": 3,
+        "gamesThrough": null,
+        "released": "2026-09-20",
+        "url": "https://apnews.com/article/24005ba778fee95626d65d5deb5a18f8",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/24005ba778fee95626d65d5deb5a18f8"
+        },
+        "rows": [
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 1
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 2
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 3
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 4
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 5
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 6
+          },
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 7
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 8
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 9
+          },
+          {
+            "id": "99",
+            "team": "LSU",
+            "rank": 10
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 11
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 12
+          },
+          {
+            "id": "213",
+            "team": "Penn State",
+            "rank": 13
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 14
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 15
+          },
+          {
+            "id": "97",
+            "team": "Louisville",
+            "rank": 16
+          },
+          {
+            "id": "2294",
+            "team": "Iowa",
+            "rank": 17
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 18
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 19
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 20
+          },
+          {
+            "id": "57",
+            "team": "Florida",
+            "rank": 21
+          },
+          {
+            "id": "2567",
+            "team": "SMU",
+            "rank": 22
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 23
+          },
+          {
+            "id": "344",
+            "team": "Mississippi State",
+            "rank": 24
+          },
+          {
+            "id": "248",
+            "team": "Houston",
+            "rank": 25
+          }
+        ]
+      },
+      {
+        "week": 4,
+        "gamesThrough": null,
+        "released": "2026-09-27",
+        "url": "https://www.click2houston.com/news/national/2026/09/27/florida-jumps-into-the-top-10-of-the-college-football-rankings-after-taking-down-ole-miss/",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://www.click2houston.com/news/national/2026/09/27/florida-jumps-into-the-top-10-of-the-college-football-rankings-after-taking-down-ole-miss/"
+        },
+        "rows": [
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 1
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 2
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 3
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 4
+          },
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 5
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 6
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 7
+          },
+          {
+            "id": "57",
+            "team": "Florida",
+            "rank": 8
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 9
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 10
+          },
+          {
+            "id": "99",
+            "team": "LSU",
+            "rank": 11
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 12
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 13
+          },
+          {
+            "id": "2294",
+            "team": "Iowa",
+            "rank": 14
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 15
+          },
+          {
+            "id": "344",
+            "team": "Mississippi State",
+            "rank": 16
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 17
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 18
+          },
+          {
+            "id": "197",
+            "team": "Oklahoma State",
+            "rank": 19
+          },
+          {
+            "id": "248",
+            "team": "Houston",
+            "rank": 20
+          },
+          {
+            "id": "2567",
+            "team": "SMU",
+            "rank": 21
+          },
+          {
+            "id": "68",
+            "team": "Boise State",
+            "rank": 22
+          },
+          {
+            "id": "26",
+            "team": "UCLA",
+            "rank": 23
+          },
+          {
+            "id": "96",
+            "team": "Kentucky",
+            "rank": 24
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 25
+          }
+        ]
+      },
+      {
+        "week": 5,
+        "gamesThrough": null,
+        "released": "2026-10-04",
+        "url": "https://www.ap.org/news-highlights/spotlights/2026/missouri-makes-big-jump-to-no-14-in-ap-top-25-with-rout-of-gators-texas-no-1-for-4th-week-in-row/",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://www.ap.org/news-highlights/spotlights/2026/missouri-makes-big-jump-to-no-14-in-ap-top-25-with-rout-of-gators-texas-no-1-for-4th-week-in-row/"
+        },
+        "rows": [
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 1
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 2
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 3
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 4
+          },
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 5
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 6
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 7
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 8
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 9
+          },
+          {
+            "id": "99",
+            "team": "LSU",
+            "rank": 10
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 11
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 12
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 13
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 14
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 15
+          },
+          {
+            "id": "57",
+            "team": "Florida",
+            "rank": 16
+          },
+          {
+            "id": "344",
+            "team": "Mississippi State",
+            "rank": 17
+          },
+          {
+            "id": "197",
+            "team": "Oklahoma State",
+            "rank": 18
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 19
+          },
+          {
+            "id": "2294",
+            "team": "Iowa",
+            "rank": 20
+          },
+          {
+            "id": "26",
+            "team": "UCLA",
+            "rank": 21
+          },
+          {
+            "id": "248",
+            "team": "Houston",
+            "rank": 22
+          },
+          {
+            "id": "68",
+            "team": "Boise State",
+            "rank": 23
+          },
+          {
+            "id": "2567",
+            "team": "SMU",
+            "rank": 24
+          },
+          {
+            "id": "221",
+            "team": "Pittsburgh",
+            "rank": 25
+          }
+        ]
+      },
+      {
+        "week": 6,
+        "gamesThrough": null,
+        "released": "2026-10-11",
+        "url": "https://www.atlantanewsfirst.com/2026/10/11/georgia-takes-over-no-1-spot-ap-top-25-college-football-poll/",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://www.atlantanewsfirst.com/2026/10/11/georgia-takes-over-no-1-spot-ap-top-25-college-football-poll/"
+        },
+        "rows": [
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 1
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 2
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 3
+          },
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 4
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 5
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 6
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 7
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 8
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 9
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 10
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 11
+          },
+          {
+            "id": "26",
+            "team": "UCLA",
+            "rank": 12
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 13
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 14
+          },
+          {
+            "id": "96",
+            "team": "Kentucky",
+            "rank": 15
+          },
+          {
+            "id": "344",
+            "team": "Mississippi State",
+            "rank": 16
+          },
+          {
+            "id": "2294",
+            "team": "Iowa",
+            "rank": 17
+          },
+          {
+            "id": "197",
+            "team": "Oklahoma State",
+            "rank": 18
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 19
+          },
+          {
+            "id": "248",
+            "team": "Houston",
+            "rank": 20
+          },
+          {
+            "id": "154",
+            "team": "Wake Forest",
+            "rank": 21
+          },
+          {
+            "id": "99",
+            "team": "LSU",
+            "rank": 22
+          },
+          {
+            "id": "68",
+            "team": "Boise State",
+            "rank": 23
+          },
+          {
+            "id": "2567",
+            "team": "SMU",
+            "rank": 24
+          },
+          {
+            "id": "77",
+            "team": "Northwestern",
+            "rank": 25
+          }
+        ]
+      },
+      {
+        "week": 7,
+        "gamesThrough": null,
+        "released": "2026-10-18",
+        "url": "https://apnews.com/article/337c6bb6c1c58e83c36ab7742d2b8d41",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/337c6bb6c1c58e83c36ab7742d2b8d41"
+        },
+        "rows": [
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 1
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 2
+          },
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 3
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 4
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 5
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 6
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 7
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 8
+          },
+          {
+            "id": "26",
+            "team": "UCLA",
+            "rank": 9
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 10
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 11
+          },
+          {
+            "id": "96",
+            "team": "Kentucky",
+            "rank": 12
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 13
+          },
+          {
+            "id": "248",
+            "team": "Houston",
+            "rank": 14
+          },
+          {
+            "id": "2294",
+            "team": "Iowa",
+            "rank": 15
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 16
+          },
+          {
+            "id": "154",
+            "team": "Wake Forest",
+            "rank": 17
+          },
+          {
+            "id": "99",
+            "team": "LSU",
+            "rank": 18
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 19
+          },
+          {
+            "id": "57",
+            "team": "Florida",
+            "rank": 20
+          },
+          {
+            "id": "68",
+            "team": "Boise State",
+            "rank": 21
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 22
+          },
+          {
+            "id": "2567",
+            "team": "SMU",
+            "rank": 23
+          },
+          {
+            "id": "77",
+            "team": "Northwestern",
+            "rank": 24
+          },
+          {
+            "id": "12",
+            "team": "Arizona",
+            "rank": 25
+          }
+        ]
+      },
+      {
+        "week": 8,
+        "gamesThrough": null,
+        "released": "2026-10-25",
+        "url": "https://www.the-journal.com/articles/associated-press/live-updates-more-big-changes-in-the-ap-top-25/",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://www.the-journal.com/articles/associated-press/live-updates-more-big-changes-in-the-ap-top-25/"
+        },
+        "rows": [
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 1
+          },
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 2
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 3
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 4
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 5
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 6
+          },
+          {
+            "id": "26",
+            "team": "UCLA",
+            "rank": 7
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 8
+          },
+          {
+            "id": "96",
+            "team": "Kentucky",
+            "rank": 9
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 10
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 11
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 12
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 13
+          },
+          {
+            "id": "154",
+            "team": "Wake Forest",
+            "rank": 14
+          },
+          {
+            "id": "99",
+            "team": "LSU",
+            "rank": 15
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 16
+          },
+          {
+            "id": "57",
+            "team": "Florida",
+            "rank": 17
+          },
+          {
+            "id": "248",
+            "team": "Houston",
+            "rank": 18
+          },
+          {
+            "id": "2567",
+            "team": "SMU",
+            "rank": 19
+          },
+          {
+            "id": "68",
+            "team": "Boise State",
+            "rank": 20
+          },
+          {
+            "id": "77",
+            "team": "Northwestern",
+            "rank": 20
+          },
+          {
+            "id": "12",
+            "team": "Arizona",
+            "rank": 22
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 23
+          },
+          {
+            "id": "197",
+            "team": "Oklahoma State",
+            "rank": 24
+          },
+          {
+            "id": "275",
+            "team": "Wisconsin",
+            "rank": 25
+          }
+        ]
+      },
+      {
         "week": 9,
         "gamesThrough": "2026-10-31",
         "released": "2026-11-01",

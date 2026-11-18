@@ -65,8 +65,14 @@ function qualityContext(data, state) {
   const label = methods.find(([id]) => id === state.method)?.[1];
   const timing = data.archived ? `season-end snapshot. Results through ${date(data.resultsThrough)}` : `snapshot · ${date(selected.asOf)}`;
   const coverage = filterCoverage(data, state);
+  const coverageNotes = [
+    coverage.noPollYet ? `${coverage.noPollYet} games preceded the first poll release` : '',
+    coverage.publicationTimeUncertain ? `${coverage.publicationTimeUncertain} have an unverified release time` : '',
+    coverage.missing ? `${coverage.missing} have missing ranking evidence` : '',
+    coverage.notApplicable ? `${coverage.notApplicable} have opponents outside this poll’s subdivision` : '',
+  ].filter(Boolean).join(' · ');
   return `<p class="compact-note">${escapeHtml(label)} ${timing}. This reference determines opponent ranks and Top 25 counts. The Experimental quality score uses Predictive Strength independently.</p>
-    <p class="compact-note">Pregame ranking coverage · ${coverage.pregame} of ${coverage.games} eligible games. ${coverage.pregame ? 'Games without pregame ranks are excluded by the pregame filter.' : 'Pregame rank filtering is unavailable for this selection.'} Team records use the selected season’s snapshot.</p>`;
+    <p class="compact-note">Pregame ranking coverage · ${coverage.pregame} of ${coverage.games} eligible games. ${coverageNotes ? coverageNotes + '. ' : ''}${coverage.pregame ? 'Only covered games enter the pregame rank filter.' : 'Pregame rank filtering is unavailable for this selection.'} Team records use the selected season’s snapshot.</p>`;
 }
 
 function filterCoverage(data, state) {
@@ -80,12 +86,13 @@ function filterCoverage(data, state) {
 function emptyGames(data, state) {
   const coverage = filterCoverage(data, state);
   if (state.rankScope === 'pregame' && !coverage.pregame && coverage.games) {
+    if (coverage.noPollYet === coverage.games) return 'These games preceded the first poll release. A pregame ranking did not yet exist; this is not missing historical data.';
     return 'Pregame opponent rankings are unavailable for these games. Choose All opponents or another ranking reference.';
   }
   if (state.rankScope === 'current' && !coverage.current && coverage.games) {
     return 'Opponent rankings are unavailable for these games and this reference.';
   }
-  const uncovered = state.rankScope === 'pregame' ? coverage.games - coverage.pregame :
+  const uncovered = state.rankScope === 'pregame' ? (coverage.missing ?? coverage.games - coverage.pregame) + (coverage.publicationTimeUncertain ?? 0) :
     state.rankScope === 'current' ? coverage.games - coverage.current : 0;
   return 'No completed games match these filters.' + (uncovered ? ` ${uncovered} games lack the selected ranking evidence and are excluded.` : '');
 }
@@ -183,6 +190,9 @@ function qualityDetails(row, archived) {
     ${stat('Average win quality', number(row.averageWinQuality,3))}
     ${stat('Average loss quality', number(row.averageLossQuality,3))}
     ${stat('Ranking coverage', row.currentRankCoverage + ' snapshot · ' + row.pregameRankCoverage + ' pregame')}
+    ${row.pregameNoPollYet ? stat('Games before the first poll release', row.pregameNoPollYet) : ''}
+    ${row.pregamePublicationTimeUncertain ? stat('Unverified pregame release time', row.pregamePublicationTimeUncertain) : ''}
+    ${row.pregameMissing ? stat('Missing pregame ranking evidence', row.pregameMissing) : ''}
     ${stat('Opponent records measured', row.opponentRecordCoverage + ' of ' + row.games)}
   </dl>`;
 }
@@ -217,8 +227,11 @@ function qualityView(data, state) {
     ${qualityMethod()}</section>`;
 }
 
-function rankLabel(value, available, method) {
-  return Number.isInteger(value) && value > 0 ? '#' + value : available && ['ap', 'cfp'].includes(method) ? 'Unranked' : '—';
+function rankLabel(value, available, method, status) {
+  if (Number.isInteger(value) && value > 0) return '#' + value;
+  if (available && ['ap', 'cfp'].includes(method)) return 'Unranked';
+  return ({ 'no-poll-yet': 'Not yet released', 'publication-time-uncertain': 'Release time unverified',
+    'not-applicable': 'Not applicable', missing: 'Not reported' })[status] ?? '—';
 }
 
 function gameTeam(team, rank, points, venue, status, state) {
@@ -230,7 +243,7 @@ function gameTeam(team, rank, points, venue, status, state) {
       ${stat('Overall record', record(team))}
       ${team.conferenceRecord ? stat('Vs. own conference',record(team.conferenceRecord)) : ''}
       ${stat('Snapshot rank', rankLabel(rank.current, rank.currentAvailable, state.method))}
-      ${stat('Pregame rank', rankLabel(rank.pregame, rank.pregameAvailable, state.method))}
+      ${stat('Pregame rank', rankLabel(rank.pregame, rank.pregameAvailable, state.method, rank.pregameStatus))}
       ${stat('Pred. strength', Number.isFinite(team.strength) ? number(team.strength, 2) + ' pts' : '—')}
       ${stat('SOR rank', rankLabel(team.ranks?.sor, false, 'sor'))}
       ${stat('SOS rank', rankLabel(team.sosRank, false, 'sor'))}
@@ -257,7 +270,7 @@ function gameDetails(row, state) {
         ${gameTeam(opponent,row.opponentRank,opponentPoints,otherVenue,result === 'tie' ? 'Tie' : result === 'win' ? 'Loser' : 'Winner',state)}
       </div>
       ${rankDate ? `<p class="compact-note">Pregame edition · ${date(rankDate)}</p>` :
-        '<p class="compact-note">A dated pregame ranking is unavailable for this method and game.</p>'}
+        `<p class="compact-note">${row.rank.pregameStatus === 'no-poll-yet' ? 'This game preceded the first poll release; no pregame poll existed.' : row.rank.pregameStatus === 'publication-time-uncertain' ? 'The release time cannot be verified as preceding this kickoff.' : 'A dated pregame ranking is unavailable for this method and game.'}</p>`}
       ${team.division === 'fbs' && opponent.division === 'fbs' && state.season === state.seasons[0] ? `<p class="compact-note"><a href="#sor-compare/fbs/${encodeURIComponent(team.id)}/${encodeURIComponent(opponent.id)}">Compare these teams’ earned SOR rankings</a></p>` : ''}
       ${Number.isFinite(row.qualityScore) ? `<p class="compact-note">${escapeHtml(team.name)} game quality · ${number(row.qualityScore,3)}</p>` : ''}
     </div></details>`;

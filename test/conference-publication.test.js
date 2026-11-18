@@ -91,7 +91,7 @@ test('current dataset accepts only aligned sources and unique finalized results'
   assert.ok(Object.values(dataset.teams).every(team => team.ranks.performance === null));
 });
 
-test('2025 conference archive preserves memberships and restores recorded Strength only', async () => {
+test('2025 conference archive preserves results and model values while adding verified historical comparison polls', async () => {
   const input = await current;
   const { manifest, datasets } = await loadConferencePublications({ root, ...input });
   const archive = datasets.find(dataset => dataset.season === 2025);
@@ -108,9 +108,26 @@ test('2025 conference archive preserves memberships and restores recorded Streng
   assert.equal(archive.rankings.predictive.available, true);
   assert.equal(archive.rankings.predictive.fullField, true);
   assert.equal(archive.rankings.predictive.basis, 'season-end');
-  assert.equal(archive.rankings.cfp.available, false);
-  assert.equal(archive.teams['68'].ranks.cfp, null);
-  assert.ok(archive.games.every(game => !Object.keys(game.pregame).length));
+  assert.equal(archive.rankings.cfp.available, true);
+  assert.equal(archive.rankings.ap.historicalEditions, 17);
+  assert.equal(archive.rankings.cfp.historicalEditions, 6);
+  const original = await read('published/conference-archives/2025.json');
+  assert.equal(original.rankings.cfp.available, false, 'the original saved result publication remains unchanged');
+  for (const game of archive.games) {
+    const before = original.games.find(row => row.id === game.id);
+    for (const key of ['home', 'away', 'homePoints', 'awayPoints', 'startDate', 'neutral', 'seasonType']) {
+      assert.equal(game[key], before[key], `${game.id} ${key}`);
+    }
+    for (const edition of Object.values(game.pregameEdition)) {
+      assert.ok(Date.parse(edition.availableBefore) < Date.parse(game.startDate));
+      assert.notEqual(edition.kind, 'final', 'the final AP edition follows the last 2025 game');
+    }
+  }
+  for (const [id, team] of Object.entries(archive.teams)) {
+    assert.equal(team.strength, original.teams[id].strength);
+    assert.equal(team.sos, original.teams[id].sos);
+    assert.equal(team.conference, original.teams[id].conference);
+  }
 });
 
 test('every published conference matrix reconciles with every unique game and reverse perspective', async () => {

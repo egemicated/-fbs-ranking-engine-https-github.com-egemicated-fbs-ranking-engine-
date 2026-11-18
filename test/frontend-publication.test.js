@@ -43,7 +43,7 @@ async function browser(snapshot, detailResponse, now = Date.parse('2026-11-06T12
       return { ok: true, json: async () => snapshot };
     } };
   const source = await readFile('frontend/app.js', 'utf8');
-  vm.runInNewContext(source + '\nglobalThis.ui={state,render,renderHome,renderRankings,renderTeams,renderTeam,renderMethodology,renderCompare,rankingsContent,compareResult,compareOptions,selectMatchupTeam,ordered,sosRank,teamCenterContent};', context, { filename: 'frontend/app.js' });
+  vm.runInNewContext(source + '\nglobalThis.ui={state,render,renderHome,renderRankings,renderTeams,renderTeam,renderMethodology,renderCompare,renderPollComparison,rankingsContent,compareResult,compareOptions,selectMatchupTeam,ordered,sosRank,teamCenterContent};', context, { filename: 'frontend/app.js' });
   await new Promise(setImmediate);
   assert.deepEqual(errors, []);
   return { ...context, calls, html: () => node('#main').innerHTML,
@@ -95,6 +95,19 @@ test('home, national table and directory display published SOR ranks and scores 
   assert.match(ranking, /SOS · Colley/);
   assert.match(page.go('#teams'), /team-card-rank">#1<\/span>.*?<h3>Alpha<\/h3>.*?2\.3456 SOR/s);
   assert.equal(JSON.stringify(snapshot), before);
+});
+
+test('a recovered poll with unknown results cutoff never borrows a same-week SOR or Forge comparison', async () => {
+  const page = await browser(fixture());
+  const base = { week: 0, released: '2026-09-06', gamesThrough: '2026-09-05', rows: [{ team: 'Alpha', rank: 1, record: '1–0' }] };
+  const html = page.ui.renderPollComparison({ sor: [base], forge: [base], polls: {
+    ap: [{ ...base, gamesThrough: null, url: 'https://apnews.com/hub/ap-top-25-college-football-poll' }],
+    coaches: [], cfp: [],
+  } }, 'ap', '0');
+  assert.match(html, /exact game cutoff has not been verified/);
+  assert.match(html, /SOR comparison unavailable/);
+  assert.match(html, /AP Top 25 released/);
+  assert.doesNotMatch(html, /SOR published|Forge ballot reconstructed|Jan 1, 1970|Invalid Date/);
 });
 
 test('team, opponent evidence, conference and model sections distinguish SOR from retained Colley calculations', async () => {

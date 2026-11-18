@@ -1322,14 +1322,15 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
   const weekCheckpoints = checkpoints.filter(edition => edition.week === week);
   const latestSor = data.sor.at(-1);
   const weekForge = data.forge.find(edition => edition.week === week);
-  const gamesThrough = (poll ?? weekSor ?? weekReplay ?? weekCheckpoints.at(-1) ?? weekForge).gamesThrough;
-  const checkpoint = weekCheckpoints.find(edition => edition.gamesThrough === gamesThrough);
-  const official = weekSor?.gamesThrough === gamesThrough ? weekSor : checkpoint;
-  const replay = !official && weekReplay?.gamesThrough === gamesThrough ? weekReplay : undefined;
+  const candidateCutoff = (poll ?? weekSor ?? weekReplay ?? weekCheckpoints.at(-1) ?? weekForge)?.gamesThrough;
+  const gamesThrough = typeof candidateCutoff === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(candidateCutoff) ? candidateCutoff : null;
+  const checkpoint = gamesThrough ? weekCheckpoints.find(edition => edition.gamesThrough === gamesThrough) : undefined;
+  const official = gamesThrough && weekSor?.gamesThrough === gamesThrough ? weekSor : checkpoint;
+  const replay = gamesThrough && !official && weekReplay?.gamesThrough === gamesThrough ? weekReplay : undefined;
   const sor = official ?? replay;
   const savedCheckpoint = Boolean(official && official === checkpoint);
   const sorLabel = replay ? 'SOR replay' : savedCheckpoint ? 'SOR checkpoint' : 'SOR';
-  const forge = weekForge?.gamesThrough === gamesThrough ? weekForge : undefined;
+  const forge = gamesThrough && weekForge?.gamesThrough === gamesThrough ? weekForge : undefined;
   const teams = new Map(state.snapshot.rankings.map(team => [team.name, team]));
   const columns = [sor, forge, poll].map(edition => [...editionRankMap(edition).values()]
     .filter(row => Number.isInteger(row.rank) && row.rank >= 1 && row.rank <= 25));
@@ -1343,7 +1344,7 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
     poll && sor ? `${shared(columns[0], columns[2])} of 25 shared by ${sorLabel} and ${source.short}` : '',
     poll && forge ? `${shared(columns[1], columns[2])} of 25 shared by Forge and ${source.short}` : '',
     sor && forge && !poll ? `${shared(columns[0], columns[1])} of 25 shared by SOR and Forge` : '',
-    !sor ? 'No matching published SOR snapshot' : '',
+    !sor ? poll && !gamesThrough ? 'SOR comparison unavailable: this poll’s exact game cutoff is unverified' : 'No matching published SOR snapshot' : '',
     !poll ? `${source.name} edition unavailable for this week` : ''
   ].filter(Boolean);
   const rows = Array.from({ length: 25 }, (_, index) => {
@@ -1352,7 +1353,7 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
   }).join('');
   return `<section class="panel edition-panel"><div class="panel-body">
     ${tabs}<div class="edition-controls">${editionPicker(weeks, week)}${editionLink}</div>
-    <h2>${editionLabel(week)}</h2><p>Games through ${editionDate(gamesThrough)}.${poll ? ` ${source.name} released ${editionDate(poll.released)}.` : ''}${official ? ` SOR published ${editionDate(official.released)}.` : ''}${forge ? ` Forge ballot reconstructed ${editionDate(forge.released)}.` : ''}</p>
+    <h2>${editionLabel(week)}</h2><p>${gamesThrough ? `Games through ${editionDate(gamesThrough)}.` : 'The poll’s exact game cutoff has not been verified.'}${poll ? ` ${source.name} released ${editionDate(poll.released)}.` : ''}${official ? ` SOR published ${editionDate(official.released)}.` : ''}${forge ? ` Forge ballot reconstructed ${editionDate(forge.released)}.` : ''}</p>
     ${savedCheckpoint ? '<p class="compact-note edition-context">This saved SOR checkpoint covers games through the same date as the poll. The full week includes later games.</p>' : ''}
     ${replay ? `<p class="compact-note edition-context">SOR replay calculated ${editionDate(replay.released)} using the published SOR formula and ${replay.networkGames.toLocaleString()} confirmed games through this cutoff. That includes ${replay.fbsGames.toLocaleString()} games involving FBS teams.</p>` : ''}
     ${summary.length ? `<p class="edition-notice">${summary.join(' · ')}.</p>` : ''}

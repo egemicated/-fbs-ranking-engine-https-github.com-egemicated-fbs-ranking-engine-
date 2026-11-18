@@ -43,7 +43,7 @@ test('comparison makes the snapshot and dated pregame CFP ranks explicit', () =>
   assert.match(markup, /<dt>Snapshot rank<\/dt><dd>#14<\/dd>/);
   assert.match(markup, /<dt>Snapshot rank<\/dt><dd>Unranked<\/dd>/);
   assert.match(markup, /<dt>Pregame rank<\/dt><dd>#18<\/dd>/);
-  assert.match(markup, /<dt>Pregame rank<\/dt><dd>—<\/dd>/);
+  assert.match(markup, /<dt>Pregame rank<\/dt><dd>Not reported<\/dd>/);
   assert.match(markup, /<dt>Vs\. own conference<\/dt><dd>5–2<\/dd>/);
   assert.match(markup, /A &amp; B defeated Bears/);
   assert.doesNotMatch(markup, /#0|#null|#undefined/);

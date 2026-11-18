@@ -1,0 +1,3537 @@
+{
+  "schemaVersion": 1,
+  "season": 2025,
+  "verifiedOn": "2026-11-18",
+  "editions": {
+    "ap": [
+      {
+        "released": "2025-08-11",
+        "kind": "preseason",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/c6a39b07f29a53451b4557008002969d"
+        },
+        "url": "https://apnews.com/article/c6a39b07f29a53451b4557008002969d",
+        "rows": [
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 1
+          },
+          {
+            "id": "213",
+            "team": "Penn State",
+            "rank": 2
+          },
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 3
+          },
+          {
+            "id": "228",
+            "team": "Clemson",
+            "rank": 4
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 5
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 6
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 7
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 8
+          },
+          {
+            "id": "99",
+            "team": "LSU",
+            "rank": 9
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 10
+          },
+          {
+            "id": "9",
+            "team": "Arizona State",
+            "rank": 11
+          },
+          {
+            "id": "356",
+            "team": "Illinois",
+            "rank": 12
+          },
+          {
+            "id": "2579",
+            "team": "South Carolina",
+            "rank": 13
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 14
+          },
+          {
+            "id": "57",
+            "team": "Florida",
+            "rank": 15
+          },
+          {
+            "id": "2567",
+            "team": "SMU",
+            "rank": 16
+          },
+          {
+            "id": "2306",
+            "team": "Kansas State",
+            "rank": 17
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 18
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 19
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 20
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 21
+          },
+          {
+            "id": "66",
+            "team": "Iowa State",
+            "rank": 22
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 23
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 24
+          },
+          {
+            "id": "68",
+            "team": "Boise State",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 1,
+          "providerSeasonType": "regular",
+          "isFinal": null,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-09-02",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/6205d0af72f53f22a0f82d64170f6a0a"
+        },
+        "url": "https://apnews.com/article/6205d0af72f53f22a0f82d64170f6a0a",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "213",
+            "team": "Penn State",
+            "rank": 2
+          },
+          {
+            "id": "99",
+            "team": "LSU",
+            "rank": 3
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 4
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 5
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 6
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 7
+          },
+          {
+            "id": "228",
+            "team": "Clemson",
+            "rank": 8
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 9
+          },
+          {
+            "id": "2579",
+            "team": "South Carolina",
+            "rank": 10
+          },
+          {
+            "id": "356",
+            "team": "Illinois",
+            "rank": 11
+          },
+          {
+            "id": "9",
+            "team": "Arizona State",
+            "rank": 12
+          },
+          {
+            "id": "57",
+            "team": "Florida",
+            "rank": 13
+          },
+          {
+            "id": "52",
+            "team": "Florida State",
+            "rank": 14
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 15
+          },
+          {
+            "id": "66",
+            "team": "Iowa State",
+            "rank": 16
+          },
+          {
+            "id": "2567",
+            "team": "SMU",
+            "rank": 17
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 18
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 19
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 20
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 21
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 22
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 23
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 24
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 2,
+          "providerSeasonType": "regular",
+          "isFinal": null,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-09-07",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/fe3d66cc1d04c530ef9df8cbf0443923"
+        },
+        "url": "https://apnews.com/article/fe3d66cc1d04c530ef9df8cbf0443923",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "213",
+            "team": "Penn State",
+            "rank": 2
+          },
+          {
+            "id": "99",
+            "team": "LSU",
+            "rank": 3
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 4
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 5
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 6
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 7
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 8
+          },
+          {
+            "id": "356",
+            "team": "Illinois",
+            "rank": 9
+          },
+          {
+            "id": "52",
+            "team": "Florida State",
+            "rank": 10
+          },
+          {
+            "id": "2579",
+            "team": "South Carolina",
+            "rank": 11
+          },
+          {
+            "id": "228",
+            "team": "Clemson",
+            "rank": 12
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 13
+          },
+          {
+            "id": "66",
+            "team": "Iowa State",
+            "rank": 14
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 15
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 16
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 17
+          },
+          {
+            "id": "58",
+            "team": "South Florida",
+            "rank": 18
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 19
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 20
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 21
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 22
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 23
+          },
+          {
+            "id": "2",
+            "team": "Auburn",
+            "rank": 24
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 3,
+          "providerSeasonType": "regular",
+          "isFinal": null,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-09-14",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/3a999e15bc7e42276779c852ee3fd71c"
+        },
+        "url": "https://apnews.com/article/3a999e15bc7e42276779c852ee3fd71c",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "213",
+            "team": "Penn State",
+            "rank": 2
+          },
+          {
+            "id": "99",
+            "team": "LSU",
+            "rank": 3
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 4
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 5
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 6
+          },
+          {
+            "id": "52",
+            "team": "Florida State",
+            "rank": 7
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 8
+          },
+          {
+            "id": "356",
+            "team": "Illinois",
+            "rank": 9
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 10
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 11
+          },
+          {
+            "id": "66",
+            "team": "Iowa State",
+            "rank": 12
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 13
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 14
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 15
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 16
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 17
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 18
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 19
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 20
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 21
+          },
+          {
+            "id": "2",
+            "team": "Auburn",
+            "rank": 22
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 23
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 24
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 4,
+          "providerSeasonType": "regular",
+          "isFinal": null,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-09-21",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/08b8bbda2d65d5175ea99102e57520da"
+        },
+        "url": "https://apnews.com/article/08b8bbda2d65d5175ea99102e57520da",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 2
+          },
+          {
+            "id": "213",
+            "team": "Penn State",
+            "rank": 3
+          },
+          {
+            "id": "99",
+            "team": "LSU",
+            "rank": 4
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 5
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 6
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 7
+          },
+          {
+            "id": "52",
+            "team": "Florida State",
+            "rank": 8
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 9
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 10
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 11
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 12
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 13
+          },
+          {
+            "id": "66",
+            "team": "Iowa State",
+            "rank": 14
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 15
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 16
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 17
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 18
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 19
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 20
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 21
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 22
+          },
+          {
+            "id": "356",
+            "team": "Illinois",
+            "rank": 23
+          },
+          {
+            "id": "2628",
+            "team": "TCU",
+            "rank": 24
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 5,
+          "providerSeasonType": "regular",
+          "isFinal": null,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-09-28",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/ed3ef0ea44379b7d87396a1448e1540f"
+        },
+        "url": "https://apnews.com/article/ed3ef0ea44379b7d87396a1448e1540f",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 2
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 3
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 4
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 5
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 6
+          },
+          {
+            "id": "213",
+            "team": "Penn State",
+            "rank": 7
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 8
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 9
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 10
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 11
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 12
+          },
+          {
+            "id": "99",
+            "team": "LSU",
+            "rank": 13
+          },
+          {
+            "id": "66",
+            "team": "Iowa State",
+            "rank": 14
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 15
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 16
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 17
+          },
+          {
+            "id": "52",
+            "team": "Florida State",
+            "rank": 18
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 19
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 20
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 21
+          },
+          {
+            "id": "356",
+            "team": "Illinois",
+            "rank": 22
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 23
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 24
+          },
+          {
+            "id": "9",
+            "team": "Arizona State",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 6,
+          "providerSeasonType": "regular",
+          "isFinal": null,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-10-05",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/f9be6dff4d7aeda851fe803c1f8da83b"
+        },
+        "url": "https://apnews.com/article/f9be6dff4d7aeda851fe803c1f8da83b",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 2
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 3
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 4
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 5
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 6
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 7
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 8
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 9
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 10
+          },
+          {
+            "id": "99",
+            "team": "LSU",
+            "rank": 11
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 12
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 13
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 14
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 15
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 16
+          },
+          {
+            "id": "356",
+            "team": "Illinois",
+            "rank": 17
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 18
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 19
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 20
+          },
+          {
+            "id": "9",
+            "team": "Arizona State",
+            "rank": 21
+          },
+          {
+            "id": "66",
+            "team": "Iowa State",
+            "rank": 22
+          },
+          {
+            "id": "235",
+            "team": "Memphis",
+            "rank": 23
+          },
+          {
+            "id": "58",
+            "team": "South Florida",
+            "rank": 24
+          },
+          {
+            "id": "52",
+            "team": "Florida State",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 7,
+          "providerSeasonType": "regular",
+          "isFinal": null,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-10-12",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/82d2bd6b8dee28b65dadc70c16e02745"
+        },
+        "url": "https://apnews.com/article/82d2bd6b8dee28b65dadc70c16e02745",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 2
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 3
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 4
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 5
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 6
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 7
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 8
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 9
+          },
+          {
+            "id": "99",
+            "team": "LSU",
+            "rank": 10
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 11
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 12
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 13
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 14
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 15
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 16
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 17
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 18
+          },
+          {
+            "id": "58",
+            "team": "South Florida",
+            "rank": 19
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 20
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 21
+          },
+          {
+            "id": "235",
+            "team": "Memphis",
+            "rank": 22
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 23
+          },
+          {
+            "id": "2132",
+            "team": "Cincinnati",
+            "rank": 24
+          },
+          {
+            "id": "158",
+            "team": "Nebraska",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 8,
+          "providerSeasonType": "regular",
+          "isFinal": null,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-10-19",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/47ce0f6019322adcebee6674241e0afd"
+        },
+        "url": "https://apnews.com/article/47ce0f6019322adcebee6674241e0afd",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 2
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 3
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 4
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 5
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 6
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 7
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 8
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 9
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 10
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 11
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 12
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 13
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 14
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 15
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 16
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 17
+          },
+          {
+            "id": "58",
+            "team": "South Florida",
+            "rank": 18
+          },
+          {
+            "id": "97",
+            "team": "Louisville",
+            "rank": 19
+          },
+          {
+            "id": "99",
+            "team": "LSU",
+            "rank": 20
+          },
+          {
+            "id": "2132",
+            "team": "Cincinnati",
+            "rank": 21
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 22
+          },
+          {
+            "id": "356",
+            "team": "Illinois",
+            "rank": 23
+          },
+          {
+            "id": "9",
+            "team": "Arizona State",
+            "rank": 24
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 9,
+          "providerSeasonType": "regular",
+          "isFinal": null,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-10-26",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/a619bc14ba26892701c33f95ab4b3cf7"
+        },
+        "url": "https://apnews.com/article/a619bc14ba26892701c33f95ab4b3cf7",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 2
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 3
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 4
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 5
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 6
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 7
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 8
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 9
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 10
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 10
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 12
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 13
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 14
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 15
+          },
+          {
+            "id": "97",
+            "team": "Louisville",
+            "rank": 16
+          },
+          {
+            "id": "2132",
+            "team": "Cincinnati",
+            "rank": 17
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 18
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 19
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 20
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 21
+          },
+          {
+            "id": "248",
+            "team": "Houston",
+            "rank": 22
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 23
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 24
+          },
+          {
+            "id": "235",
+            "team": "Memphis",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 10,
+          "providerSeasonType": "regular",
+          "isFinal": null,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-11-02",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/b22d5ac7c3197e27d91869abb478d1cf"
+        },
+        "url": "https://apnews.com/article/b22d5ac7c3197e27d91869abb478d1cf",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 2
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 3
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 4
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 5
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 6
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 7
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 8
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 9
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 10
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 11
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 12
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 13
+          },
+          {
+            "id": "97",
+            "team": "Louisville",
+            "rank": 14
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 15
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 16
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 17
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 18
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 19
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 20
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 21
+          },
+          {
+            "id": "235",
+            "team": "Memphis",
+            "rank": 22
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 23
+          },
+          {
+            "id": "264",
+            "team": "Washington",
+            "rank": 24
+          },
+          {
+            "id": "2132",
+            "team": "Cincinnati",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 11,
+          "providerSeasonType": "regular",
+          "isFinal": null,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-11-09",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/b525b40878e88ee9640cbfb1d375dc03"
+        },
+        "url": "https://apnews.com/article/b525b40878e88ee9640cbfb1d375dc03",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 2
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 3
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 4
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 5
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 6
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 7
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 8
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 9
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 10
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 11
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 12
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 13
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 14
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 15
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 16
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 17
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 18
+          },
+          {
+            "id": "97",
+            "team": "Louisville",
+            "rank": 19
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 20
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 21
+          },
+          {
+            "id": "2132",
+            "team": "Cincinnati",
+            "rank": 22
+          },
+          {
+            "id": "221",
+            "team": "Pittsburgh",
+            "rank": 23
+          },
+          {
+            "id": "256",
+            "team": "James Madison",
+            "rank": 24
+          },
+          {
+            "id": "58",
+            "team": "South Florida",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 12,
+          "providerSeasonType": "regular",
+          "isFinal": null,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-11-16",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/0bd25e156d70b4dcb1d379771ba88d8f"
+        },
+        "url": "https://apnews.com/article/0bd25e156d70b4dcb1d379771ba88d8f",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 2
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 3
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 4
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 5
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 6
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 6
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 8
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 9
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 10
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 11
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 12
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 13
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 14
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 15
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 16
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 17
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 18
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 19
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 20
+          },
+          {
+            "id": "256",
+            "team": "James Madison",
+            "rank": 21
+          },
+          {
+            "id": "249",
+            "team": "North Texas",
+            "rank": 22
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 23
+          },
+          {
+            "id": "2655",
+            "team": "Tulane",
+            "rank": 24
+          },
+          {
+            "id": "248",
+            "team": "Houston",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 13,
+          "providerSeasonType": "regular",
+          "isFinal": null,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-11-23",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/fc23c61177142c895619497c0414a9d2"
+        },
+        "url": "https://apnews.com/article/fc23c61177142c895619497c0414a9d2",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 2
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 3
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 4
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 5
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 6
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 7
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 8
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 9
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 10
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 11
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 12
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 13
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 14
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 15
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 16
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 17
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 18
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 19
+          },
+          {
+            "id": "256",
+            "team": "James Madison",
+            "rank": 20
+          },
+          {
+            "id": "249",
+            "team": "North Texas",
+            "rank": 21
+          },
+          {
+            "id": "2655",
+            "team": "Tulane",
+            "rank": 22
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 23
+          },
+          {
+            "id": "221",
+            "team": "Pittsburgh",
+            "rank": 24
+          },
+          {
+            "id": "2567",
+            "team": "SMU",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 14,
+          "providerSeasonType": "regular",
+          "isFinal": null,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-11-30",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/c8bf8a91d8168f000d5ddf0e121b3a41"
+        },
+        "url": "https://apnews.com/article/c8bf8a91d8168f000d5ddf0e121b3a41",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 2
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 3
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 4
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 5
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 6
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 7
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 8
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 9
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 10
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 11
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 12
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 13
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 14
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 15
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 16
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 17
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 18
+          },
+          {
+            "id": "256",
+            "team": "James Madison",
+            "rank": 19
+          },
+          {
+            "id": "249",
+            "team": "North Texas",
+            "rank": 20
+          },
+          {
+            "id": "2655",
+            "team": "Tulane",
+            "rank": 21
+          },
+          {
+            "id": "12",
+            "team": "Arizona",
+            "rank": 22
+          },
+          {
+            "id": "2426",
+            "team": "Navy",
+            "rank": 23
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 24
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 15,
+          "providerSeasonType": "regular",
+          "isFinal": null,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-12-07",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/d13577954ae8d80a3451e9dd543f14e4"
+        },
+        "url": "https://apnews.com/article/d13577954ae8d80a3451e9dd543f14e4",
+        "rows": [
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 1
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 2
+          },
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 3
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 4
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 5
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 6
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 7
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 8
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 9
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 10
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 11
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 12
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 13
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 14
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 15
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 16
+          },
+          {
+            "id": "2655",
+            "team": "Tulane",
+            "rank": 17
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 18
+          },
+          {
+            "id": "256",
+            "team": "James Madison",
+            "rank": 19
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 20
+          },
+          {
+            "id": "12",
+            "team": "Arizona",
+            "rank": 21
+          },
+          {
+            "id": "2426",
+            "team": "Navy",
+            "rank": 22
+          },
+          {
+            "id": "249",
+            "team": "North Texas",
+            "rank": 23
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 24
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 16,
+          "providerSeasonType": "regular",
+          "isFinal": null,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2026-01-20",
+        "kind": "final",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/d20d33aecbec2021a90e1f8ce8eead7c"
+        },
+        "url": "https://apnews.com/article/d20d33aecbec2021a90e1f8ce8eead7c",
+        "rows": [
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 1
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 2
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 3
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 4
+          },
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 5
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 6
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 7
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 8
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 9
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 10
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 11
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 12
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 13
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 14
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 15
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 16
+          },
+          {
+            "id": "2294",
+            "team": "Iowa",
+            "rank": 17
+          },
+          {
+            "id": "2655",
+            "team": "Tulane",
+            "rank": 18
+          },
+          {
+            "id": "256",
+            "team": "James Madison",
+            "rank": 19
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 20
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 21
+          },
+          {
+            "id": "248",
+            "team": "Houston",
+            "rank": 22
+          },
+          {
+            "id": "2426",
+            "team": "Navy",
+            "rank": 23
+          },
+          {
+            "id": "249",
+            "team": "North Texas",
+            "rank": 24
+          },
+          {
+            "id": "2628",
+            "team": "TCU",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 1,
+          "providerSeasonType": "postseason",
+          "isFinal": null,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      }
+    ],
+    "cfp": [
+      {
+        "released": "2025-11-04",
+        "kind": "committee",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025"
+        },
+        "url": "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 2
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 3
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 4
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 5
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 6
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 7
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 8
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 9
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 10
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 11
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 12
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 13
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 14
+          },
+          {
+            "id": "97",
+            "team": "Louisville",
+            "rank": 15
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 16
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 17
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 18
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 19
+          },
+          {
+            "id": "2294",
+            "team": "Iowa",
+            "rank": 20
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 21
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 22
+          },
+          {
+            "id": "264",
+            "team": "Washington",
+            "rank": 23
+          },
+          {
+            "id": "221",
+            "team": "Pittsburgh",
+            "rank": 24
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 11,
+          "providerSeasonType": "regular",
+          "isFinal": false,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-11-11",
+        "kind": "committee",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025"
+        },
+        "url": "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 2
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 3
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 4
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 5
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 6
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 7
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 8
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 9
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 10
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 11
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 12
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 13
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 14
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 15
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 16
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 17
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 18
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 19
+          },
+          {
+            "id": "97",
+            "team": "Louisville",
+            "rank": 20
+          },
+          {
+            "id": "2294",
+            "team": "Iowa",
+            "rank": 21
+          },
+          {
+            "id": "221",
+            "team": "Pittsburgh",
+            "rank": 22
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 23
+          },
+          {
+            "id": "58",
+            "team": "South Florida",
+            "rank": 24
+          },
+          {
+            "id": "2132",
+            "team": "Cincinnati",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 12,
+          "providerSeasonType": "regular",
+          "isFinal": false,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-11-18",
+        "kind": "committee",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025"
+        },
+        "url": "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 2
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 3
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 4
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 5
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 6
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 7
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 8
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 9
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 10
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 11
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 12
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 13
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 14
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 15
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 16
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 17
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 18
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 19
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 20
+          },
+          {
+            "id": "356",
+            "team": "Illinois",
+            "rank": 21
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 22
+          },
+          {
+            "id": "248",
+            "team": "Houston",
+            "rank": 23
+          },
+          {
+            "id": "2655",
+            "team": "Tulane",
+            "rank": 24
+          },
+          {
+            "id": "9",
+            "team": "Arizona State",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 13,
+          "providerSeasonType": "regular",
+          "isFinal": false,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-11-25",
+        "kind": "committee",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025"
+        },
+        "url": "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 2
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 3
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 4
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 5
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 6
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 7
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 8
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 9
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 10
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 11
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 12
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 13
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 14
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 15
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 16
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 17
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 18
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 19
+          },
+          {
+            "id": "9",
+            "team": "Arizona State",
+            "rank": 20
+          },
+          {
+            "id": "2567",
+            "team": "SMU",
+            "rank": 21
+          },
+          {
+            "id": "221",
+            "team": "Pittsburgh",
+            "rank": 22
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 23
+          },
+          {
+            "id": "2655",
+            "team": "Tulane",
+            "rank": 24
+          },
+          {
+            "id": "12",
+            "team": "Arizona",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 14,
+          "providerSeasonType": "regular",
+          "isFinal": false,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-12-02",
+        "kind": "committee",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://collegefootballplayoff.com/documents/download/2025/12/2/CFP_HISTORICAL_MEDIA_GUIDE_2025-1202.pdf"
+        },
+        "url": "https://collegefootballplayoff.com/documents/download/2025/12/2/CFP_HISTORICAL_MEDIA_GUIDE_2025-1202.pdf",
+        "rows": [
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 1
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 2
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 3
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 4
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 5
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 6
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 7
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 8
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 9
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 10
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 11
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 12
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 13
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 14
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 15
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 16
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 17
+          },
+          {
+            "id": "12",
+            "team": "Arizona",
+            "rank": 18
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 19
+          },
+          {
+            "id": "2655",
+            "team": "Tulane",
+            "rank": 20
+          },
+          {
+            "id": "248",
+            "team": "Houston",
+            "rank": 21
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 22
+          },
+          {
+            "id": "2294",
+            "team": "Iowa",
+            "rank": 23
+          },
+          {
+            "id": "249",
+            "team": "North Texas",
+            "rank": 24
+          },
+          {
+            "id": "256",
+            "team": "James Madison",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 15,
+          "providerSeasonType": "regular",
+          "isFinal": false,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      },
+      {
+        "released": "2025-12-07",
+        "kind": "selection-final",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025"
+        },
+        "url": "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025",
+        "rows": [
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 1
+          },
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 2
+          },
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 3
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 4
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 5
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 6
+          },
+          {
+            "id": "245",
+            "team": "Texas A&M",
+            "rank": 7
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 8
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 9
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 10
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 11
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 12
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 13
+          },
+          {
+            "id": "238",
+            "team": "Vanderbilt",
+            "rank": 14
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 15
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 16
+          },
+          {
+            "id": "12",
+            "team": "Arizona",
+            "rank": 17
+          },
+          {
+            "id": "130",
+            "team": "Michigan",
+            "rank": 18
+          },
+          {
+            "id": "258",
+            "team": "Virginia",
+            "rank": 19
+          },
+          {
+            "id": "2655",
+            "team": "Tulane",
+            "rank": 20
+          },
+          {
+            "id": "248",
+            "team": "Houston",
+            "rank": 21
+          },
+          {
+            "id": "59",
+            "team": "Georgia Tech",
+            "rank": 22
+          },
+          {
+            "id": "2294",
+            "team": "Iowa",
+            "rank": 23
+          },
+          {
+            "id": "256",
+            "team": "James Madison",
+            "rank": 24
+          },
+          {
+            "id": "249",
+            "team": "North Texas",
+            "rank": 25
+          }
+        ],
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+          "providerWeek": 16,
+          "providerSeasonType": "regular",
+          "isFinal": true,
+          "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
+        }
+      }
+    ]
+  },
+  "releases": {
+    "ap": [
+      {
+        "released": "2025-08-11",
+        "kind": "preseason",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/c6a39b07f29a53451b4557008002969d"
+        }
+      },
+      {
+        "released": "2025-09-02",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/6205d0af72f53f22a0f82d64170f6a0a"
+        }
+      },
+      {
+        "released": "2025-09-07",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/fe3d66cc1d04c530ef9df8cbf0443923"
+        }
+      },
+      {
+        "released": "2025-09-14",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/3a999e15bc7e42276779c852ee3fd71c"
+        }
+      },
+      {
+        "released": "2025-09-21",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/08b8bbda2d65d5175ea99102e57520da"
+        }
+      },
+      {
+        "released": "2025-09-28",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/ed3ef0ea44379b7d87396a1448e1540f"
+        }
+      },
+      {
+        "released": "2025-10-05",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/f9be6dff4d7aeda851fe803c1f8da83b"
+        }
+      },
+      {
+        "released": "2025-10-12",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/82d2bd6b8dee28b65dadc70c16e02745"
+        }
+      },
+      {
+        "released": "2025-10-19",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/47ce0f6019322adcebee6674241e0afd"
+        }
+      },
+      {
+        "released": "2025-10-26",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/a619bc14ba26892701c33f95ab4b3cf7"
+        }
+      },
+      {
+        "released": "2025-11-02",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/b22d5ac7c3197e27d91869abb478d1cf"
+        }
+      },
+      {
+        "released": "2025-11-09",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/b525b40878e88ee9640cbfb1d375dc03"
+        }
+      },
+      {
+        "released": "2025-11-16",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/0bd25e156d70b4dcb1d379771ba88d8f"
+        }
+      },
+      {
+        "released": "2025-11-23",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/fc23c61177142c895619497c0414a9d2"
+        }
+      },
+      {
+        "released": "2025-11-30",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/c8bf8a91d8168f000d5ddf0e121b3a41"
+        }
+      },
+      {
+        "released": "2025-12-07",
+        "kind": "weekly",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/d13577954ae8d80a3451e9dd543f14e4"
+        }
+      },
+      {
+        "released": "2026-01-20",
+        "kind": "final",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://apnews.com/article/d20d33aecbec2021a90e1f8ce8eead7c"
+        }
+      }
+    ],
+    "cfp": [
+      {
+        "released": "2025-11-04",
+        "kind": "committee",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025"
+        }
+      },
+      {
+        "released": "2025-11-11",
+        "kind": "committee",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025"
+        }
+      },
+      {
+        "released": "2025-11-18",
+        "kind": "committee",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025"
+        }
+      },
+      {
+        "released": "2025-11-25",
+        "kind": "committee",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025"
+        }
+      },
+      {
+        "released": "2025-12-02",
+        "kind": "committee",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://collegefootballplayoff.com/documents/download/2025/12/2/CFP_HISTORICAL_MEDIA_GUIDE_2025-1202.pdf"
+        }
+      },
+      {
+        "released": "2025-12-07",
+        "kind": "selection-final",
+        "publication": {
+          "precision": "date",
+          "sourceUrl": "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025"
+        }
+      }
+    ]
+  },
+  "sourceHashes": [
+    {
+      "year": 2025,
+      "url": "https://api.collegefootballdata.com/rankings?year=2025&seasonType=both",
+      "responseSha256": "60bd55df5f50a719d7279a19a1d3ed70da39dd979d3e527c054f7c678a6d78fe",
+      "normalizedSha256": "0d59e941433397b3b95f262046ca0fd933aaa6f52bc3c43bde0c1ce72e10418b",
+      "file": "2025-provider-editions.json",
+      "editionWeeks": 17
+    },
+    {
+      "path": "research/poll-release-ledger.json",
+      "sha256": "8c49a878d6ccd1be9b53826543b8d4895c91f20a201d868926f3a9952be65efa"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/2025_NCAA_Division_I_FBS_football_rankings",
+      "sha256": "8092ea40facf6de5b00c9440f59fdf0f0955d27e3fad4f88cd8db9f0421bf154",
+      "role": "Secondary full-row corroboration; publication dates independently verified from AP material"
+    },
+    {
+      "provider": "College Football Playoff",
+      "url": "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025",
+      "sha256": "b4d4614084ab576f2ae521b51149973812798a414f46a08f858534bee6e7fd96"
+    }
+  ]
+}

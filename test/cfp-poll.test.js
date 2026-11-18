@@ -3,7 +3,7 @@ import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
-import { readCfpEdition, saveCfpEdition } from '../src/cfp-poll.js';
+import { parseCfpArchive, readCfpEdition, saveCfpEdition } from '../src/cfp-poll.js';
 
 const schedule = { week: 10, gamesThrough: '2026-11-07', released: '2026-11-10' };
 const teamNames = ['USC', ...Array.from({ length: 24 }, (_, index) => `Team ${index + 2}`)];
@@ -39,6 +39,30 @@ test('ignores a future promotion when the official archive still has the previou
   assert.equal(edition, null);
 });
 
+test('archive parsing trusts actual release dates and rejects an invalid full field', () => {
+  const [edition] = parseCfpArchive(officialPage(), 2026, teamNames);
+  assert.equal(edition.released, '2026-11-10');
+  assert.equal(edition.publication.precision, 'date');
+  assert.deepEqual(edition.rows.map(row => row.rank), Array.from({ length: 25 }, (_, i) => i + 1));
+  assert.throws(() => parseCfpArchive(officialPage(sourceRows.slice(1)), 2026, teamNames), /25 teams/);
+});
+
+test('an unverified CFP game cutoff remains null rather than a presumed previous Saturday', async () => {
+  const directory = await mkdtemp(join(tmpdir(), 'cfp-unknown-cutoff-'));
+  const path = join(directory, 'ranking-editions.json');
+  const unknown = { ...schedule, gamesThrough: null };
+  try {
+    const edition = await readCfpEdition(unknown, teamNames, async () => new Response(officialPage()));
+    assert.equal(edition.gamesThrough, null);
+    await writeFile(path, JSON.stringify({ season: 2026, polls: { cfp: [] } }));
+    assert.equal(await saveCfpEdition(path, edition), true);
+    assert.equal(JSON.parse(await readFile(path, 'utf8')).polls.cfp[0].gamesThrough, null);
+    const original = await readFile(path, 'utf8');
+    await assert.rejects(saveCfpEdition(path, { ...edition, gamesThrough: '2026-11-07' }), /different CFP edition/);
+    assert.equal(await readFile(path, 'utf8'), original);
+  } finally { await rm(directory, { recursive: true }); }
+});
+
 test('rejects failed requests and incomplete or ambiguous official results', async () => {
   await assert.rejects(readCfpEdition(schedule, teamNames, async () => new Response('', { status: 503 })), /HTTP 503/);
   await assert.rejects(readCfpEdition(schedule, teamNames, async () => new Response('<html>Unavailable</html>')), /structured data/);
@@ -59,6 +83,8 @@ test('publishes a new CFP edition, keeps the rest of the archive and skips ident
     const updated = await readFile(path, 'utf8');
     assert.deepEqual(JSON.parse(updated), { ...original, polls: { ...original.polls, cfp: [previous, edition] } });
     assert.equal(await saveCfpEdition(path, edition), false);
+    const correctedRows = structuredClone(edition); correctedRows.rows.reverse();
+    await assert.rejects(saveCfpEdition(path, correctedRows), /retain the original/);
     await assert.rejects(saveCfpEdition(path, { ...edition, released: '2026-11-11' }), /different CFP edition/);
     await assert.rejects(saveCfpEdition(path, { ...edition, released: '2027-11-10', gamesThrough: '2027-11-07' }), /does not match CFP season/);
     assert.equal(await readFile(path, 'utf8'), updated);

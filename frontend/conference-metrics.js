@@ -52,6 +52,8 @@ function rankContext(dataset, game, team, side, method) {
     currentAvailable,
     pregameAvailable,
     pregameAsOf: pregameAvailable ? game.pregameAsOf?.[method] ?? null : null,
+    pregameStatus: team.division !== 'fbs' ? 'not-applicable' : game.pregameStatus?.[method]?.[side] ??
+      (pregameAvailable ? isRank(pregameValue) ? 'ranked' : 'unranked' : 'missing'),
   };
 }
 
@@ -149,6 +151,9 @@ export function conferenceSummary(dataset, conference, rows = conferenceGames(da
   const method = rows[0]?.method ?? 'sor';
   const currentRankCoverage = rows.filter(row => row.opponentRank.currentAvailable).length;
   const pregameRankCoverage = rows.filter(row => row.opponentRank.pregameAvailable).length;
+  const pregameNoPollYet = rows.filter(row => row.opponentRank.pregameStatus === 'no-poll-yet').length;
+  const pregamePublicationTimeUncertain = rows.filter(row => row.opponentRank.pregameStatus === 'publication-time-uncertain').length;
+  const pregameMissing = rows.filter(row => row.opponentRank.pregameStatus === 'missing').length;
   const predictiveRankCoverage = dataset.rankings?.predictive?.available
     ? rows.filter(row => row.opponent.division === 'fbs' && isRank(row.opponent.ranks?.predictive)).length : 0;
   const rated = rows.filter(row => Number.isFinite(row.qualityScore));
@@ -162,6 +167,7 @@ export function conferenceSummary(dataset, conference, rows = conferenceGames(da
   return {
     ...record(rows),
     currentRankCoverage, pregameRankCoverage, predictiveRankCoverage,
+    pregameNoPollYet, pregamePublicationTimeUncertain, pregameMissing,
     currentTop10Wins: coveredWins(rows, 10, currentRankCoverage, row => row.opponentRank.current),
     currentTop25Wins: coveredWins(rows, 25, currentRankCoverage, row => row.opponentRank.current),
     pregameTop10Wins: coveredWins(rows, 10, pregameRankCoverage, row => row.opponentRank.pregame),
@@ -196,9 +202,10 @@ export function conferenceFilterCoverage(dataset, options = {}) {
   const byGame = new Map();
   for (const conferenceA of conferences) {
     for (const row of conferenceGames(dataset, { ...options, conferenceA, rankScope: 'all' })) {
-      const coverage = byGame.get(row.id) ?? { current: false, pregame: false };
+      const coverage = byGame.get(row.id) ?? { current: false, pregame: false, statuses: new Set() };
       coverage.current ||= row.opponentRank.currentAvailable;
       coverage.pregame ||= row.opponentRank.pregameAvailable;
+      coverage.statuses.add(row.opponentRank.pregameStatus);
       byGame.set(row.id, coverage);
     }
   }
@@ -207,6 +214,10 @@ export function conferenceFilterCoverage(dataset, options = {}) {
     games: games.length,
     current: games.filter(row => row.current).length,
     pregame: games.filter(row => row.pregame).length,
+    noPollYet: games.filter(row => !row.pregame && row.statuses.has('no-poll-yet')).length,
+    missing: games.filter(row => !row.pregame && row.statuses.has('missing')).length,
+    publicationTimeUncertain: games.filter(row => !row.pregame && row.statuses.has('publication-time-uncertain')).length,
+    notApplicable: games.filter(row => !row.pregame && row.statuses.has('not-applicable')).length,
   };
 }
 

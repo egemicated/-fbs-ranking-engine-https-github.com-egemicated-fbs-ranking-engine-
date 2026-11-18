@@ -1,0 +1,4050 @@
+{
+  "schemaVersion": 1,
+  "verifiedOn": "2026-11-18",
+  "seasons": {
+    "2025": {
+      "ap": [
+        {
+          "released": "2025-08-11",
+          "rows": [
+            {
+              "team": "Texas",
+              "rank": 1
+            },
+            {
+              "team": "Penn State",
+              "rank": 2
+            },
+            {
+              "team": "Ohio State",
+              "rank": 3
+            },
+            {
+              "team": "Clemson",
+              "rank": 4
+            },
+            {
+              "team": "Georgia",
+              "rank": 5
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 6
+            },
+            {
+              "team": "Oregon",
+              "rank": 7
+            },
+            {
+              "team": "Alabama",
+              "rank": 8
+            },
+            {
+              "team": "LSU",
+              "rank": 9
+            },
+            {
+              "team": "Miami",
+              "rank": 10
+            },
+            {
+              "team": "Arizona State",
+              "rank": 11
+            },
+            {
+              "team": "Illinois",
+              "rank": 12
+            },
+            {
+              "team": "South Carolina",
+              "rank": 13
+            },
+            {
+              "team": "Michigan",
+              "rank": 14
+            },
+            {
+              "team": "Florida",
+              "rank": 15
+            },
+            {
+              "team": "SMU",
+              "rank": 16
+            },
+            {
+              "team": "Kansas State",
+              "rank": 17
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 18
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 19
+            },
+            {
+              "team": "Indiana",
+              "rank": 20
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 21
+            },
+            {
+              "team": "Iowa State",
+              "rank": 22
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 23
+            },
+            {
+              "team": "Tennessee",
+              "rank": 24
+            },
+            {
+              "team": "Boise State",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-09-02",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Penn State",
+              "rank": 2
+            },
+            {
+              "team": "LSU",
+              "rank": 3
+            },
+            {
+              "team": "Georgia",
+              "rank": 4
+            },
+            {
+              "team": "Miami",
+              "rank": 5
+            },
+            {
+              "team": "Oregon",
+              "rank": 6
+            },
+            {
+              "team": "Texas",
+              "rank": 7
+            },
+            {
+              "team": "Clemson",
+              "rank": 8
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 9
+            },
+            {
+              "team": "South Carolina",
+              "rank": 10
+            },
+            {
+              "team": "Illinois",
+              "rank": 11
+            },
+            {
+              "team": "Arizona State",
+              "rank": 12
+            },
+            {
+              "team": "Florida",
+              "rank": 13
+            },
+            {
+              "team": "Florida State",
+              "rank": 14
+            },
+            {
+              "team": "Michigan",
+              "rank": 15
+            },
+            {
+              "team": "Iowa State",
+              "rank": 16
+            },
+            {
+              "team": "SMU",
+              "rank": 17
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 18
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 19
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 20
+            },
+            {
+              "team": "Alabama",
+              "rank": 21
+            },
+            {
+              "team": "Tennessee",
+              "rank": 22
+            },
+            {
+              "team": "Indiana",
+              "rank": 23
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 24
+            },
+            {
+              "team": "Utah",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-09-07",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Penn State",
+              "rank": 2
+            },
+            {
+              "team": "LSU",
+              "rank": 3
+            },
+            {
+              "team": "Oregon",
+              "rank": 4
+            },
+            {
+              "team": "Miami",
+              "rank": 5
+            },
+            {
+              "team": "Georgia",
+              "rank": 6
+            },
+            {
+              "team": "Texas",
+              "rank": 7
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 8
+            },
+            {
+              "team": "Illinois",
+              "rank": 9
+            },
+            {
+              "team": "Florida State",
+              "rank": 10
+            },
+            {
+              "team": "South Carolina",
+              "rank": 11
+            },
+            {
+              "team": "Clemson",
+              "rank": 12
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 13
+            },
+            {
+              "team": "Iowa State",
+              "rank": 14
+            },
+            {
+              "team": "Tennessee",
+              "rank": 15
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 16
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 17
+            },
+            {
+              "team": "South Florida",
+              "rank": 18
+            },
+            {
+              "team": "Alabama",
+              "rank": 19
+            },
+            {
+              "team": "Utah",
+              "rank": 20
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 21
+            },
+            {
+              "team": "Indiana",
+              "rank": 22
+            },
+            {
+              "team": "Michigan",
+              "rank": 23
+            },
+            {
+              "team": "Auburn",
+              "rank": 24
+            },
+            {
+              "team": "Missouri",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-09-14",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Penn State",
+              "rank": 2
+            },
+            {
+              "team": "LSU",
+              "rank": 3
+            },
+            {
+              "team": "Miami",
+              "rank": 4
+            },
+            {
+              "team": "Georgia",
+              "rank": 5
+            },
+            {
+              "team": "Oregon",
+              "rank": 6
+            },
+            {
+              "team": "Florida State",
+              "rank": 7
+            },
+            {
+              "team": "Texas",
+              "rank": 8
+            },
+            {
+              "team": "Illinois",
+              "rank": 9
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 10
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 11
+            },
+            {
+              "team": "Iowa State",
+              "rank": 12
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 13
+            },
+            {
+              "team": "Alabama",
+              "rank": 14
+            },
+            {
+              "team": "Tennessee",
+              "rank": 15
+            },
+            {
+              "team": "Utah",
+              "rank": 16
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 17
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 18
+            },
+            {
+              "team": "Indiana",
+              "rank": 19
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 20
+            },
+            {
+              "team": "Michigan",
+              "rank": 21
+            },
+            {
+              "team": "Auburn",
+              "rank": 22
+            },
+            {
+              "team": "Missouri",
+              "rank": 23
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 24
+            },
+            {
+              "team": "USC",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-09-21",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Miami",
+              "rank": 2
+            },
+            {
+              "team": "Penn State",
+              "rank": 3
+            },
+            {
+              "team": "LSU",
+              "rank": 4
+            },
+            {
+              "team": "Georgia",
+              "rank": 5
+            },
+            {
+              "team": "Oregon",
+              "rank": 6
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 7
+            },
+            {
+              "team": "Florida State",
+              "rank": 8
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 9
+            },
+            {
+              "team": "Texas",
+              "rank": 10
+            },
+            {
+              "team": "Indiana",
+              "rank": 11
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 12
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 13
+            },
+            {
+              "team": "Iowa State",
+              "rank": 14
+            },
+            {
+              "team": "Tennessee",
+              "rank": 15
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 16
+            },
+            {
+              "team": "Alabama",
+              "rank": 17
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 18
+            },
+            {
+              "team": "Michigan",
+              "rank": 19
+            },
+            {
+              "team": "Missouri",
+              "rank": 20
+            },
+            {
+              "team": "USC",
+              "rank": 21
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 22
+            },
+            {
+              "team": "Illinois",
+              "rank": 23
+            },
+            {
+              "team": "TCU",
+              "rank": 24
+            },
+            {
+              "team": "BYU",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-09-28",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Oregon",
+              "rank": 2
+            },
+            {
+              "team": "Miami",
+              "rank": 3
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 4
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 5
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 6
+            },
+            {
+              "team": "Penn State",
+              "rank": 7
+            },
+            {
+              "team": "Indiana",
+              "rank": 8
+            },
+            {
+              "team": "Texas",
+              "rank": 9
+            },
+            {
+              "team": "Alabama",
+              "rank": 10
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 11
+            },
+            {
+              "team": "Georgia",
+              "rank": 12
+            },
+            {
+              "team": "LSU",
+              "rank": 13
+            },
+            {
+              "team": "Iowa State",
+              "rank": 14
+            },
+            {
+              "team": "Tennessee",
+              "rank": 15
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 16
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 17
+            },
+            {
+              "team": "Florida State",
+              "rank": 18
+            },
+            {
+              "team": "Missouri",
+              "rank": 19
+            },
+            {
+              "team": "Michigan",
+              "rank": 20
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 21
+            },
+            {
+              "team": "Illinois",
+              "rank": 22
+            },
+            {
+              "team": "BYU",
+              "rank": 23
+            },
+            {
+              "team": "Virginia",
+              "rank": 24
+            },
+            {
+              "team": "Arizona State",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-10-05",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Miami",
+              "rank": 2
+            },
+            {
+              "team": "Oregon",
+              "rank": 3
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 4
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 5
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 6
+            },
+            {
+              "team": "Indiana",
+              "rank": 7
+            },
+            {
+              "team": "Alabama",
+              "rank": 8
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 9
+            },
+            {
+              "team": "Georgia",
+              "rank": 10
+            },
+            {
+              "team": "LSU",
+              "rank": 11
+            },
+            {
+              "team": "Tennessee",
+              "rank": 12
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 13
+            },
+            {
+              "team": "Missouri",
+              "rank": 14
+            },
+            {
+              "team": "Michigan",
+              "rank": 15
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 16
+            },
+            {
+              "team": "Illinois",
+              "rank": 17
+            },
+            {
+              "team": "BYU",
+              "rank": 18
+            },
+            {
+              "team": "Virginia",
+              "rank": 19
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 20
+            },
+            {
+              "team": "Arizona State",
+              "rank": 21
+            },
+            {
+              "team": "Iowa State",
+              "rank": 22
+            },
+            {
+              "team": "Memphis",
+              "rank": 23
+            },
+            {
+              "team": "South Florida",
+              "rank": 24
+            },
+            {
+              "team": "Florida State",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-10-12",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Miami",
+              "rank": 2
+            },
+            {
+              "team": "Indiana",
+              "rank": 3
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 4
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 5
+            },
+            {
+              "team": "Alabama",
+              "rank": 6
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 7
+            },
+            {
+              "team": "Oregon",
+              "rank": 8
+            },
+            {
+              "team": "Georgia",
+              "rank": 9
+            },
+            {
+              "team": "LSU",
+              "rank": 10
+            },
+            {
+              "team": "Tennessee",
+              "rank": 11
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 12
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 13
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 14
+            },
+            {
+              "team": "BYU",
+              "rank": 15
+            },
+            {
+              "team": "Missouri",
+              "rank": 16
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 17
+            },
+            {
+              "team": "Virginia",
+              "rank": 18
+            },
+            {
+              "team": "South Florida",
+              "rank": 19
+            },
+            {
+              "team": "USC",
+              "rank": 20
+            },
+            {
+              "team": "Texas",
+              "rank": 21
+            },
+            {
+              "team": "Memphis",
+              "rank": 22
+            },
+            {
+              "team": "Utah",
+              "rank": 23
+            },
+            {
+              "team": "Cincinnati",
+              "rank": 24
+            },
+            {
+              "team": "Nebraska",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-10-19",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Indiana",
+              "rank": 2
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 3
+            },
+            {
+              "team": "Alabama",
+              "rank": 4
+            },
+            {
+              "team": "Georgia",
+              "rank": 5
+            },
+            {
+              "team": "Oregon",
+              "rank": 6
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 7
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 8
+            },
+            {
+              "team": "Miami",
+              "rank": 9
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 10
+            },
+            {
+              "team": "BYU",
+              "rank": 11
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 12
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 13
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 14
+            },
+            {
+              "team": "Missouri",
+              "rank": 15
+            },
+            {
+              "team": "Virginia",
+              "rank": 16
+            },
+            {
+              "team": "Tennessee",
+              "rank": 17
+            },
+            {
+              "team": "South Florida",
+              "rank": 18
+            },
+            {
+              "team": "Louisville",
+              "rank": 19
+            },
+            {
+              "team": "LSU",
+              "rank": 20
+            },
+            {
+              "team": "Cincinnati",
+              "rank": 21
+            },
+            {
+              "team": "Texas",
+              "rank": 22
+            },
+            {
+              "team": "Illinois",
+              "rank": 23
+            },
+            {
+              "team": "Arizona State",
+              "rank": 24
+            },
+            {
+              "team": "Michigan",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-10-26",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Indiana",
+              "rank": 2
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 3
+            },
+            {
+              "team": "Alabama",
+              "rank": 4
+            },
+            {
+              "team": "Georgia",
+              "rank": 5
+            },
+            {
+              "team": "Oregon",
+              "rank": 6
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 7
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 8
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 9
+            },
+            {
+              "team": "BYU",
+              "rank": 10
+            },
+            {
+              "team": "Miami",
+              "rank": 10
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 12
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 13
+            },
+            {
+              "team": "Tennessee",
+              "rank": 14
+            },
+            {
+              "team": "Virginia",
+              "rank": 15
+            },
+            {
+              "team": "Louisville",
+              "rank": 16
+            },
+            {
+              "team": "Cincinnati",
+              "rank": 17
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 18
+            },
+            {
+              "team": "Missouri",
+              "rank": 19
+            },
+            {
+              "team": "Texas",
+              "rank": 20
+            },
+            {
+              "team": "Michigan",
+              "rank": 21
+            },
+            {
+              "team": "Houston",
+              "rank": 22
+            },
+            {
+              "team": "USC",
+              "rank": 23
+            },
+            {
+              "team": "Utah",
+              "rank": 24
+            },
+            {
+              "team": "Memphis",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-11-02",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Indiana",
+              "rank": 2
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 3
+            },
+            {
+              "team": "Alabama",
+              "rank": 4
+            },
+            {
+              "team": "Georgia",
+              "rank": 5
+            },
+            {
+              "team": "Oregon",
+              "rank": 6
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 7
+            },
+            {
+              "team": "BYU",
+              "rank": 8
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 9
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 10
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 11
+            },
+            {
+              "team": "Virginia",
+              "rank": 12
+            },
+            {
+              "team": "Texas",
+              "rank": 13
+            },
+            {
+              "team": "Louisville",
+              "rank": 14
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 15
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 16
+            },
+            {
+              "team": "Utah",
+              "rank": 17
+            },
+            {
+              "team": "Miami",
+              "rank": 18
+            },
+            {
+              "team": "Missouri",
+              "rank": 19
+            },
+            {
+              "team": "USC",
+              "rank": 20
+            },
+            {
+              "team": "Michigan",
+              "rank": 21
+            },
+            {
+              "team": "Memphis",
+              "rank": 22
+            },
+            {
+              "team": "Tennessee",
+              "rank": 23
+            },
+            {
+              "team": "Washington",
+              "rank": 24
+            },
+            {
+              "team": "Cincinnati",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-11-09",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Indiana",
+              "rank": 2
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 3
+            },
+            {
+              "team": "Alabama",
+              "rank": 4
+            },
+            {
+              "team": "Georgia",
+              "rank": 5
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 6
+            },
+            {
+              "team": "Oregon",
+              "rank": 7
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 8
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 9
+            },
+            {
+              "team": "Texas",
+              "rank": 10
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 11
+            },
+            {
+              "team": "BYU",
+              "rank": 12
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 13
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 14
+            },
+            {
+              "team": "Utah",
+              "rank": 15
+            },
+            {
+              "team": "Miami",
+              "rank": 16
+            },
+            {
+              "team": "USC",
+              "rank": 17
+            },
+            {
+              "team": "Michigan",
+              "rank": 18
+            },
+            {
+              "team": "Louisville",
+              "rank": 19
+            },
+            {
+              "team": "Virginia",
+              "rank": 20
+            },
+            {
+              "team": "Tennessee",
+              "rank": 21
+            },
+            {
+              "team": "Cincinnati",
+              "rank": 22
+            },
+            {
+              "team": "Pittsburgh",
+              "rank": 23
+            },
+            {
+              "team": "James Madison",
+              "rank": 24
+            },
+            {
+              "team": "South Florida",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-11-16",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Indiana",
+              "rank": 2
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 3
+            },
+            {
+              "team": "Georgia",
+              "rank": 4
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 5
+            },
+            {
+              "team": "Oregon",
+              "rank": 6
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 6
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 8
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 9
+            },
+            {
+              "team": "Alabama",
+              "rank": 10
+            },
+            {
+              "team": "BYU",
+              "rank": 11
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 12
+            },
+            {
+              "team": "Utah",
+              "rank": 13
+            },
+            {
+              "team": "Miami",
+              "rank": 14
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 15
+            },
+            {
+              "team": "USC",
+              "rank": 16
+            },
+            {
+              "team": "Texas",
+              "rank": 17
+            },
+            {
+              "team": "Michigan",
+              "rank": 18
+            },
+            {
+              "team": "Virginia",
+              "rank": 19
+            },
+            {
+              "team": "Tennessee",
+              "rank": 20
+            },
+            {
+              "team": "James Madison",
+              "rank": 21
+            },
+            {
+              "team": "North Texas",
+              "rank": 22
+            },
+            {
+              "team": "Missouri",
+              "rank": 23
+            },
+            {
+              "team": "Tulane",
+              "rank": 24
+            },
+            {
+              "team": "Houston",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-11-23",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Indiana",
+              "rank": 2
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 3
+            },
+            {
+              "team": "Georgia",
+              "rank": 4
+            },
+            {
+              "team": "Oregon",
+              "rank": 5
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 6
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 7
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 8
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 9
+            },
+            {
+              "team": "Alabama",
+              "rank": 10
+            },
+            {
+              "team": "BYU",
+              "rank": 11
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 12
+            },
+            {
+              "team": "Miami",
+              "rank": 13
+            },
+            {
+              "team": "Utah",
+              "rank": 14
+            },
+            {
+              "team": "Michigan",
+              "rank": 15
+            },
+            {
+              "team": "Texas",
+              "rank": 16
+            },
+            {
+              "team": "Virginia",
+              "rank": 17
+            },
+            {
+              "team": "Tennessee",
+              "rank": 18
+            },
+            {
+              "team": "USC",
+              "rank": 19
+            },
+            {
+              "team": "James Madison",
+              "rank": 20
+            },
+            {
+              "team": "North Texas",
+              "rank": 21
+            },
+            {
+              "team": "Tulane",
+              "rank": 22
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 23
+            },
+            {
+              "team": "Pittsburgh",
+              "rank": 24
+            },
+            {
+              "team": "SMU",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-11-30",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Indiana",
+              "rank": 2
+            },
+            {
+              "team": "Georgia",
+              "rank": 3
+            },
+            {
+              "team": "Oregon",
+              "rank": 4
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 5
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 6
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 7
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 8
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 9
+            },
+            {
+              "team": "Alabama",
+              "rank": 10
+            },
+            {
+              "team": "BYU",
+              "rank": 11
+            },
+            {
+              "team": "Miami",
+              "rank": 12
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 13
+            },
+            {
+              "team": "Texas",
+              "rank": 14
+            },
+            {
+              "team": "Utah",
+              "rank": 15
+            },
+            {
+              "team": "Virginia",
+              "rank": 16
+            },
+            {
+              "team": "USC",
+              "rank": 17
+            },
+            {
+              "team": "Michigan",
+              "rank": 18
+            },
+            {
+              "team": "James Madison",
+              "rank": 19
+            },
+            {
+              "team": "North Texas",
+              "rank": 20
+            },
+            {
+              "team": "Tulane",
+              "rank": 21
+            },
+            {
+              "team": "Arizona",
+              "rank": 22
+            },
+            {
+              "team": "Navy",
+              "rank": 23
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 24
+            },
+            {
+              "team": "Missouri",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-12-07",
+          "rows": [
+            {
+              "team": "Indiana",
+              "rank": 1
+            },
+            {
+              "team": "Georgia",
+              "rank": 2
+            },
+            {
+              "team": "Ohio State",
+              "rank": 3
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 4
+            },
+            {
+              "team": "Oregon",
+              "rank": 5
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 6
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 7
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 8
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 9
+            },
+            {
+              "team": "Miami",
+              "rank": 10
+            },
+            {
+              "team": "Alabama",
+              "rank": 11
+            },
+            {
+              "team": "BYU",
+              "rank": 12
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 13
+            },
+            {
+              "team": "Texas",
+              "rank": 14
+            },
+            {
+              "team": "Utah",
+              "rank": 15
+            },
+            {
+              "team": "USC",
+              "rank": 16
+            },
+            {
+              "team": "Tulane",
+              "rank": 17
+            },
+            {
+              "team": "Michigan",
+              "rank": 18
+            },
+            {
+              "team": "James Madison",
+              "rank": 19
+            },
+            {
+              "team": "Virginia",
+              "rank": 20
+            },
+            {
+              "team": "Arizona",
+              "rank": 21
+            },
+            {
+              "team": "Navy",
+              "rank": 22
+            },
+            {
+              "team": "North Texas",
+              "rank": 23
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 24
+            },
+            {
+              "team": "Missouri",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2026-01-20",
+          "rows": [
+            {
+              "team": "Indiana",
+              "rank": 1
+            },
+            {
+              "team": "Miami",
+              "rank": 2
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 3
+            },
+            {
+              "team": "Oregon",
+              "rank": 4
+            },
+            {
+              "team": "Ohio State",
+              "rank": 5
+            },
+            {
+              "team": "Georgia",
+              "rank": 6
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 7
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 8
+            },
+            {
+              "team": "Alabama",
+              "rank": 9
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 10
+            },
+            {
+              "team": "BYU",
+              "rank": 11
+            },
+            {
+              "team": "Texas",
+              "rank": 12
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 13
+            },
+            {
+              "team": "Utah",
+              "rank": 14
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 15
+            },
+            {
+              "team": "Virginia",
+              "rank": 16
+            },
+            {
+              "team": "Iowa",
+              "rank": 17
+            },
+            {
+              "team": "Tulane",
+              "rank": 18
+            },
+            {
+              "team": "James Madison",
+              "rank": 19
+            },
+            {
+              "team": "USC",
+              "rank": 20
+            },
+            {
+              "team": "Michigan",
+              "rank": 21
+            },
+            {
+              "team": "Houston",
+              "rank": 22
+            },
+            {
+              "team": "Navy",
+              "rank": 23
+            },
+            {
+              "team": "North Texas",
+              "rank": 24
+            },
+            {
+              "team": "TCU",
+              "rank": 25
+            }
+          ]
+        }
+      ],
+      "cfp": [
+        {
+          "released": "2025-11-04",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Indiana",
+              "rank": 2
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 3
+            },
+            {
+              "team": "Alabama",
+              "rank": 4
+            },
+            {
+              "team": "Georgia",
+              "rank": 5
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 6
+            },
+            {
+              "team": "BYU",
+              "rank": 7
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 8
+            },
+            {
+              "team": "Oregon",
+              "rank": 9
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 10
+            },
+            {
+              "team": "Texas",
+              "rank": 11
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 12
+            },
+            {
+              "team": "Utah",
+              "rank": 13
+            },
+            {
+              "team": "Virginia",
+              "rank": 14
+            },
+            {
+              "team": "Louisville",
+              "rank": 15
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 16
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 17
+            },
+            {
+              "team": "Miami",
+              "rank": 18
+            },
+            {
+              "team": "USC",
+              "rank": 19
+            },
+            {
+              "team": "Iowa",
+              "rank": 20
+            },
+            {
+              "team": "Michigan",
+              "rank": 21
+            },
+            {
+              "team": "Missouri",
+              "rank": 22
+            },
+            {
+              "team": "Washington",
+              "rank": 23
+            },
+            {
+              "team": "Pittsburgh",
+              "rank": 24
+            },
+            {
+              "team": "Tennessee",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-11-11",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Indiana",
+              "rank": 2
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 3
+            },
+            {
+              "team": "Alabama",
+              "rank": 4
+            },
+            {
+              "team": "Georgia",
+              "rank": 5
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 7
+            },
+            {
+              "team": "BYU",
+              "rank": 12
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 6
+            },
+            {
+              "team": "Oregon",
+              "rank": 8
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 9
+            },
+            {
+              "team": "Texas",
+              "rank": 10
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 11
+            },
+            {
+              "team": "Utah",
+              "rank": 13
+            },
+            {
+              "team": "Virginia",
+              "rank": 19
+            },
+            {
+              "team": "Louisville",
+              "rank": 20
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 14
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 16
+            },
+            {
+              "team": "Miami",
+              "rank": 15
+            },
+            {
+              "team": "USC",
+              "rank": 17
+            },
+            {
+              "team": "Iowa",
+              "rank": 21
+            },
+            {
+              "team": "Michigan",
+              "rank": 18
+            },
+            {
+              "team": "Pittsburgh",
+              "rank": 22
+            },
+            {
+              "team": "Tennessee",
+              "rank": 23
+            },
+            {
+              "team": "South Florida",
+              "rank": 24
+            },
+            {
+              "team": "Cincinnati",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-11-18",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Indiana",
+              "rank": 2
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 3
+            },
+            {
+              "team": "Alabama",
+              "rank": 10
+            },
+            {
+              "team": "Georgia",
+              "rank": 4
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 6
+            },
+            {
+              "team": "BYU",
+              "rank": 11
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 5
+            },
+            {
+              "team": "Oregon",
+              "rank": 7
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 9
+            },
+            {
+              "team": "Texas",
+              "rank": 17
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 8
+            },
+            {
+              "team": "Utah",
+              "rank": 12
+            },
+            {
+              "team": "Virginia",
+              "rank": 19
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 14
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 16
+            },
+            {
+              "team": "Miami",
+              "rank": 13
+            },
+            {
+              "team": "USC",
+              "rank": 15
+            },
+            {
+              "team": "Michigan",
+              "rank": 18
+            },
+            {
+              "team": "Missouri",
+              "rank": 22
+            },
+            {
+              "team": "Tennessee",
+              "rank": 20
+            },
+            {
+              "team": "Illinois",
+              "rank": 21
+            },
+            {
+              "team": "Houston",
+              "rank": 23
+            },
+            {
+              "team": "Tulane",
+              "rank": 24
+            },
+            {
+              "team": "Arizona State",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-11-25",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Indiana",
+              "rank": 2
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 3
+            },
+            {
+              "team": "Alabama",
+              "rank": 10
+            },
+            {
+              "team": "Georgia",
+              "rank": 4
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 7
+            },
+            {
+              "team": "BYU",
+              "rank": 11
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 5
+            },
+            {
+              "team": "Oregon",
+              "rank": 6
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 9
+            },
+            {
+              "team": "Texas",
+              "rank": 16
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 8
+            },
+            {
+              "team": "Utah",
+              "rank": 13
+            },
+            {
+              "team": "Virginia",
+              "rank": 18
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 14
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 23
+            },
+            {
+              "team": "Miami",
+              "rank": 12
+            },
+            {
+              "team": "USC",
+              "rank": 17
+            },
+            {
+              "team": "Michigan",
+              "rank": 15
+            },
+            {
+              "team": "Pittsburgh",
+              "rank": 22
+            },
+            {
+              "team": "Tennessee",
+              "rank": 19
+            },
+            {
+              "team": "Tulane",
+              "rank": 24
+            },
+            {
+              "team": "Arizona State",
+              "rank": 20
+            },
+            {
+              "team": "SMU",
+              "rank": 21
+            },
+            {
+              "team": "Arizona",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-12-02",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Indiana",
+              "rank": 2
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 7
+            },
+            {
+              "team": "Alabama",
+              "rank": 9
+            },
+            {
+              "team": "Georgia",
+              "rank": 3
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 6
+            },
+            {
+              "team": "BYU",
+              "rank": 11
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 4
+            },
+            {
+              "team": "Oregon",
+              "rank": 5
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 10
+            },
+            {
+              "team": "Texas",
+              "rank": 13
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 8
+            },
+            {
+              "team": "Utah",
+              "rank": 15
+            },
+            {
+              "team": "Virginia",
+              "rank": 17
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 14
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 22
+            },
+            {
+              "team": "Miami",
+              "rank": 12
+            },
+            {
+              "team": "USC",
+              "rank": 16
+            },
+            {
+              "team": "Iowa",
+              "rank": 23
+            },
+            {
+              "team": "Michigan",
+              "rank": 19
+            },
+            {
+              "team": "Houston",
+              "rank": 21
+            },
+            {
+              "team": "Tulane",
+              "rank": 20
+            },
+            {
+              "team": "Arizona",
+              "rank": 18
+            },
+            {
+              "team": "North Texas",
+              "rank": 24
+            },
+            {
+              "team": "James Madison",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2025-12-07",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 2
+            },
+            {
+              "team": "Indiana",
+              "rank": 1
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 7
+            },
+            {
+              "team": "Alabama",
+              "rank": 9
+            },
+            {
+              "team": "Georgia",
+              "rank": 3
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 6
+            },
+            {
+              "team": "BYU",
+              "rank": 12
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 4
+            },
+            {
+              "team": "Oregon",
+              "rank": 5
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 11
+            },
+            {
+              "team": "Texas",
+              "rank": 13
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 8
+            },
+            {
+              "team": "Utah",
+              "rank": 15
+            },
+            {
+              "team": "Virginia",
+              "rank": 19
+            },
+            {
+              "team": "Vanderbilt",
+              "rank": 14
+            },
+            {
+              "team": "Georgia Tech",
+              "rank": 22
+            },
+            {
+              "team": "Miami",
+              "rank": 10
+            },
+            {
+              "team": "USC",
+              "rank": 16
+            },
+            {
+              "team": "Iowa",
+              "rank": 23
+            },
+            {
+              "team": "Michigan",
+              "rank": 18
+            },
+            {
+              "team": "Houston",
+              "rank": 21
+            },
+            {
+              "team": "Tulane",
+              "rank": 20
+            },
+            {
+              "team": "Arizona",
+              "rank": 17
+            },
+            {
+              "team": "North Texas",
+              "rank": 25
+            },
+            {
+              "team": "James Madison",
+              "rank": 24
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2025_NCAA_Division_I_FBS_football_rankings",
+          "sha256": "8092ea40facf6de5b00c9440f59fdf0f0955d27e3fad4f88cd8db9f0421bf154",
+          "role": "Secondary full-row corroboration; publication dates independently verified from AP material"
+        },
+        {
+          "provider": "College Football Playoff",
+          "url": "https://collegefootballplayoff.com/sports/2025/11/4/wk-x-wk-rankings-2025",
+          "sha256": "b4d4614084ab576f2ae521b51149973812798a414f46a08f858534bee6e7fd96"
+        }
+      ]
+    },
+    "2026": {
+      "ap": [
+        {
+          "released": "2026-08-17",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Oregon",
+              "rank": 2
+            },
+            {
+              "team": "Georgia",
+              "rank": 3
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 4
+            },
+            {
+              "team": "Texas",
+              "rank": 5
+            },
+            {
+              "team": "Indiana",
+              "rank": 6
+            },
+            {
+              "team": "Miami",
+              "rank": 7
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 8
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 9
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 10
+            },
+            {
+              "team": "LSU",
+              "rank": 11
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 12
+            },
+            {
+              "team": "Alabama",
+              "rank": 13
+            },
+            {
+              "team": "BYU",
+              "rank": 14
+            },
+            {
+              "team": "USC",
+              "rank": 14
+            },
+            {
+              "team": "Michigan",
+              "rank": 16
+            },
+            {
+              "team": "Washington",
+              "rank": 17
+            },
+            {
+              "team": "Penn State",
+              "rank": 18
+            },
+            {
+              "team": "SMU",
+              "rank": 19
+            },
+            {
+              "team": "Tennessee",
+              "rank": 20
+            },
+            {
+              "team": "Utah",
+              "rank": 21
+            },
+            {
+              "team": "Iowa",
+              "rank": 22
+            },
+            {
+              "team": "Houston",
+              "rank": 23
+            },
+            {
+              "team": "Louisville",
+              "rank": 24
+            },
+            {
+              "team": "Missouri",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2026-09-08",
+          "rows": [
+            {
+              "team": "Ohio State",
+              "rank": 1
+            },
+            {
+              "team": "Georgia",
+              "rank": 2
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 3
+            },
+            {
+              "team": "Texas",
+              "rank": 4
+            },
+            {
+              "team": "Indiana",
+              "rank": 5
+            },
+            {
+              "team": "Oregon",
+              "rank": 6
+            },
+            {
+              "team": "Miami",
+              "rank": 7
+            },
+            {
+              "team": "LSU",
+              "rank": 8
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 9
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 10
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 11
+            },
+            {
+              "team": "Alabama",
+              "rank": 12
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 13
+            },
+            {
+              "team": "USC",
+              "rank": 14
+            },
+            {
+              "team": "BYU",
+              "rank": 15
+            },
+            {
+              "team": "Penn State",
+              "rank": 16
+            },
+            {
+              "team": "SMU",
+              "rank": 17
+            },
+            {
+              "team": "Tennessee",
+              "rank": 18
+            },
+            {
+              "team": "Washington",
+              "rank": 19
+            },
+            {
+              "team": "Utah",
+              "rank": 20
+            },
+            {
+              "team": "Iowa",
+              "rank": 21
+            },
+            {
+              "team": "Houston",
+              "rank": 22
+            },
+            {
+              "team": "Missouri",
+              "rank": 23
+            },
+            {
+              "team": "Louisville",
+              "rank": 24
+            },
+            {
+              "team": "Virginia",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2026-09-13",
+          "rows": [
+            {
+              "team": "Texas",
+              "rank": 1
+            },
+            {
+              "team": "Georgia",
+              "rank": 2
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 3
+            },
+            {
+              "team": "Indiana",
+              "rank": 4
+            },
+            {
+              "team": "Miami",
+              "rank": 5
+            },
+            {
+              "team": "Ohio State",
+              "rank": 6
+            },
+            {
+              "team": "LSU",
+              "rank": 7
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 8
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 9
+            },
+            {
+              "team": "Alabama",
+              "rank": 10
+            },
+            {
+              "team": "BYU",
+              "rank": 11
+            },
+            {
+              "team": "USC",
+              "rank": 12
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 13
+            },
+            {
+              "team": "Penn State",
+              "rank": 14
+            },
+            {
+              "team": "Tennessee",
+              "rank": 15
+            },
+            {
+              "team": "SMU",
+              "rank": 16
+            },
+            {
+              "team": "Utah",
+              "rank": 17
+            },
+            {
+              "team": "Iowa",
+              "rank": 18
+            },
+            {
+              "team": "Michigan",
+              "rank": 19
+            },
+            {
+              "team": "Missouri",
+              "rank": 20
+            },
+            {
+              "team": "Oregon",
+              "rank": 21
+            },
+            {
+              "team": "Houston",
+              "rank": 22
+            },
+            {
+              "team": "Louisville",
+              "rank": 23
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 24
+            },
+            {
+              "team": "Virginia",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2026-09-20",
+          "rows": [
+            {
+              "team": "Texas",
+              "rank": 1
+            },
+            {
+              "team": "Georgia",
+              "rank": 2
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 3
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 4
+            },
+            {
+              "team": "Indiana",
+              "rank": 5
+            },
+            {
+              "team": "Miami",
+              "rank": 6
+            },
+            {
+              "team": "Ohio State",
+              "rank": 7
+            },
+            {
+              "team": "Alabama",
+              "rank": 8
+            },
+            {
+              "team": "BYU",
+              "rank": 9
+            },
+            {
+              "team": "LSU",
+              "rank": 10
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 11
+            },
+            {
+              "team": "USC",
+              "rank": 12
+            },
+            {
+              "team": "Penn State",
+              "rank": 13
+            },
+            {
+              "team": "Tennessee",
+              "rank": 14
+            },
+            {
+              "team": "Utah",
+              "rank": 15
+            },
+            {
+              "team": "Louisville",
+              "rank": 16
+            },
+            {
+              "team": "Iowa",
+              "rank": 17
+            },
+            {
+              "team": "Michigan",
+              "rank": 18
+            },
+            {
+              "team": "Missouri",
+              "rank": 19
+            },
+            {
+              "team": "Oregon",
+              "rank": 20
+            },
+            {
+              "team": "Florida",
+              "rank": 21
+            },
+            {
+              "team": "SMU",
+              "rank": 22
+            },
+            {
+              "team": "Texas A&M",
+              "rank": 23
+            },
+            {
+              "team": "Mississippi State",
+              "rank": 24
+            },
+            {
+              "team": "Houston",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2026-09-27",
+          "rows": [
+            {
+              "team": "Texas",
+              "rank": 1
+            },
+            {
+              "team": "Georgia",
+              "rank": 2
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 3
+            },
+            {
+              "team": "Miami",
+              "rank": 4
+            },
+            {
+              "team": "Ohio State",
+              "rank": 5
+            },
+            {
+              "team": "Indiana",
+              "rank": 6
+            },
+            {
+              "team": "Alabama",
+              "rank": 7
+            },
+            {
+              "team": "Florida",
+              "rank": 8
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 9
+            },
+            {
+              "team": "BYU",
+              "rank": 10
+            },
+            {
+              "team": "LSU",
+              "rank": 11
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 12
+            },
+            {
+              "team": "Utah",
+              "rank": 13
+            },
+            {
+              "team": "Iowa",
+              "rank": 14
+            },
+            {
+              "team": "Oregon",
+              "rank": 15
+            },
+            {
+              "team": "Mississippi State",
+              "rank": 16
+            },
+            {
+              "team": "Tennessee",
+              "rank": 17
+            },
+            {
+              "team": "USC",
+              "rank": 18
+            },
+            {
+              "team": "Oklahoma State",
+              "rank": 19
+            },
+            {
+              "team": "Houston",
+              "rank": 20
+            },
+            {
+              "team": "SMU",
+              "rank": 21
+            },
+            {
+              "team": "Boise State",
+              "rank": 22
+            },
+            {
+              "team": "UCLA",
+              "rank": 23
+            },
+            {
+              "team": "Kentucky",
+              "rank": 24
+            },
+            {
+              "team": "Missouri",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2026-10-04",
+          "rows": [
+            {
+              "team": "Texas",
+              "rank": 1
+            },
+            {
+              "team": "Georgia",
+              "rank": 2
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 3
+            },
+            {
+              "team": "Miami",
+              "rank": 4
+            },
+            {
+              "team": "Ohio State",
+              "rank": 5
+            },
+            {
+              "team": "Alabama",
+              "rank": 6
+            },
+            {
+              "team": "Indiana",
+              "rank": 7
+            },
+            {
+              "team": "BYU",
+              "rank": 8
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 9
+            },
+            {
+              "team": "LSU",
+              "rank": 10
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 11
+            },
+            {
+              "team": "Utah",
+              "rank": 12
+            },
+            {
+              "team": "Oregon",
+              "rank": 13
+            },
+            {
+              "team": "Missouri",
+              "rank": 14
+            },
+            {
+              "team": "Tennessee",
+              "rank": 15
+            },
+            {
+              "team": "Florida",
+              "rank": 16
+            },
+            {
+              "team": "Mississippi State",
+              "rank": 17
+            },
+            {
+              "team": "Oklahoma State",
+              "rank": 18
+            },
+            {
+              "team": "USC",
+              "rank": 19
+            },
+            {
+              "team": "Iowa",
+              "rank": 20
+            },
+            {
+              "team": "UCLA",
+              "rank": 21
+            },
+            {
+              "team": "Houston",
+              "rank": 22
+            },
+            {
+              "team": "Boise State",
+              "rank": 23
+            },
+            {
+              "team": "SMU",
+              "rank": 24
+            },
+            {
+              "team": "Pittsburgh",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2026-10-11",
+          "rows": [
+            {
+              "team": "Georgia",
+              "rank": 1
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 2
+            },
+            {
+              "team": "Miami",
+              "rank": 3
+            },
+            {
+              "team": "Ohio State",
+              "rank": 4
+            },
+            {
+              "team": "Indiana",
+              "rank": 5
+            },
+            {
+              "team": "Alabama",
+              "rank": 6
+            },
+            {
+              "team": "Texas",
+              "rank": 7
+            },
+            {
+              "team": "BYU",
+              "rank": 8
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 9
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 10
+            },
+            {
+              "team": "Utah",
+              "rank": 11
+            },
+            {
+              "team": "UCLA",
+              "rank": 12
+            },
+            {
+              "team": "Missouri",
+              "rank": 13
+            },
+            {
+              "team": "Tennessee",
+              "rank": 14
+            },
+            {
+              "team": "Kentucky",
+              "rank": 15
+            },
+            {
+              "team": "Mississippi State",
+              "rank": 16
+            },
+            {
+              "team": "Iowa",
+              "rank": 17
+            },
+            {
+              "team": "Oklahoma State",
+              "rank": 18
+            },
+            {
+              "team": "USC",
+              "rank": 19
+            },
+            {
+              "team": "Houston",
+              "rank": 20
+            },
+            {
+              "team": "Wake Forest",
+              "rank": 21
+            },
+            {
+              "team": "LSU",
+              "rank": 22
+            },
+            {
+              "team": "Boise State",
+              "rank": 23
+            },
+            {
+              "team": "SMU",
+              "rank": 24
+            },
+            {
+              "team": "Northwestern",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2026-10-18",
+          "rows": [
+            {
+              "team": "Miami",
+              "rank": 1
+            },
+            {
+              "team": "BYU",
+              "rank": 2
+            },
+            {
+              "team": "Ohio State",
+              "rank": 3
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 4
+            },
+            {
+              "team": "Georgia",
+              "rank": 5
+            },
+            {
+              "team": "Indiana",
+              "rank": 6
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 7
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 8
+            },
+            {
+              "team": "UCLA",
+              "rank": 9
+            },
+            {
+              "team": "Utah",
+              "rank": 10
+            },
+            {
+              "team": "Tennessee",
+              "rank": 11
+            },
+            {
+              "team": "Kentucky",
+              "rank": 12
+            },
+            {
+              "team": "Alabama",
+              "rank": 13
+            },
+            {
+              "team": "Houston",
+              "rank": 14
+            },
+            {
+              "team": "Iowa",
+              "rank": 15
+            },
+            {
+              "team": "USC",
+              "rank": 16
+            },
+            {
+              "team": "Wake Forest",
+              "rank": 17
+            },
+            {
+              "team": "LSU",
+              "rank": 18
+            },
+            {
+              "team": "Texas",
+              "rank": 19
+            },
+            {
+              "team": "Florida",
+              "rank": 20
+            },
+            {
+              "team": "Boise State",
+              "rank": 21
+            },
+            {
+              "team": "Missouri",
+              "rank": 22
+            },
+            {
+              "team": "SMU",
+              "rank": 23
+            },
+            {
+              "team": "Northwestern",
+              "rank": 24
+            },
+            {
+              "team": "Arizona",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2026-10-25",
+          "rows": [
+            {
+              "team": "Miami",
+              "rank": 1
+            },
+            {
+              "team": "Ohio State",
+              "rank": 2
+            },
+            {
+              "team": "Georgia",
+              "rank": 3
+            },
+            {
+              "team": "Indiana",
+              "rank": 4
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 5
+            },
+            {
+              "team": "Utah",
+              "rank": 6
+            },
+            {
+              "team": "UCLA",
+              "rank": 7
+            },
+            {
+              "team": "BYU",
+              "rank": 8
+            },
+            {
+              "team": "Kentucky",
+              "rank": 9
+            },
+            {
+              "team": "Alabama",
+              "rank": 10
+            },
+            {
+              "team": "Texas",
+              "rank": 11
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 12
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 13
+            },
+            {
+              "team": "Wake Forest",
+              "rank": 14
+            },
+            {
+              "team": "LSU",
+              "rank": 15
+            },
+            {
+              "team": "Tennessee",
+              "rank": 16
+            },
+            {
+              "team": "Florida",
+              "rank": 17
+            },
+            {
+              "team": "Houston",
+              "rank": 18
+            },
+            {
+              "team": "SMU",
+              "rank": 19
+            },
+            {
+              "team": "Boise State",
+              "rank": 20
+            },
+            {
+              "team": "Northwestern",
+              "rank": 20
+            },
+            {
+              "team": "Arizona",
+              "rank": 22
+            },
+            {
+              "team": "Missouri",
+              "rank": 23
+            },
+            {
+              "team": "Oklahoma State",
+              "rank": 24
+            },
+            {
+              "team": "Wisconsin",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2026-11-01",
+          "rows": [
+            {
+              "team": "Miami",
+              "rank": 1
+            },
+            {
+              "team": "Georgia",
+              "rank": 2
+            },
+            {
+              "team": "Utah",
+              "rank": 3
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 4
+            },
+            {
+              "team": "UCLA",
+              "rank": 5
+            },
+            {
+              "team": "Indiana",
+              "rank": 6
+            },
+            {
+              "team": "BYU",
+              "rank": 7
+            },
+            {
+              "team": "Kentucky",
+              "rank": 8
+            },
+            {
+              "team": "Alabama",
+              "rank": 9
+            },
+            {
+              "team": "Texas",
+              "rank": 10
+            },
+            {
+              "team": "Ohio State",
+              "rank": 11
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 12
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 13
+            },
+            {
+              "team": "Wake Forest",
+              "rank": 14
+            },
+            {
+              "team": "LSU",
+              "rank": 15
+            },
+            {
+              "team": "Tennessee",
+              "rank": 16
+            },
+            {
+              "team": "Houston",
+              "rank": 17
+            },
+            {
+              "team": "USC",
+              "rank": 18
+            },
+            {
+              "team": "Missouri",
+              "rank": 19
+            },
+            {
+              "team": "Boise State",
+              "rank": 20
+            },
+            {
+              "team": "Iowa",
+              "rank": 21
+            },
+            {
+              "team": "New Mexico",
+              "rank": 22
+            },
+            {
+              "team": "South Carolina",
+              "rank": 23
+            },
+            {
+              "team": "Arizona",
+              "rank": 24
+            },
+            {
+              "team": "Florida",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2026-11-08",
+          "rows": [
+            {
+              "team": "Georgia",
+              "rank": 1
+            },
+            {
+              "team": "Utah",
+              "rank": 2
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 3
+            },
+            {
+              "team": "UCLA",
+              "rank": 4
+            },
+            {
+              "team": "Miami",
+              "rank": 5
+            },
+            {
+              "team": "Indiana",
+              "rank": 6
+            },
+            {
+              "team": "Alabama",
+              "rank": 7
+            },
+            {
+              "team": "Texas",
+              "rank": 8
+            },
+            {
+              "team": "Tennessee",
+              "rank": 9
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 10
+            },
+            {
+              "team": "Wake Forest",
+              "rank": 11
+            },
+            {
+              "team": "BYU",
+              "rank": 12
+            },
+            {
+              "team": "Kentucky",
+              "rank": 13
+            },
+            {
+              "team": "Houston",
+              "rank": 14
+            },
+            {
+              "team": "USC",
+              "rank": 15
+            },
+            {
+              "team": "Iowa",
+              "rank": 16
+            },
+            {
+              "team": "Boise State",
+              "rank": 17
+            },
+            {
+              "team": "Oregon",
+              "rank": 18
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 19
+            },
+            {
+              "team": "South Carolina",
+              "rank": 20
+            },
+            {
+              "team": "Ohio State",
+              "rank": 21
+            },
+            {
+              "team": "Arizona",
+              "rank": 22
+            },
+            {
+              "team": "New Mexico",
+              "rank": 23
+            },
+            {
+              "team": "LSU",
+              "rank": 24
+            },
+            {
+              "team": "SMU",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2026-11-16",
+          "rows": [
+            {
+              "team": "Georgia",
+              "rank": 1
+            },
+            {
+              "team": "Utah",
+              "rank": 2
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 3
+            },
+            {
+              "team": "UCLA",
+              "rank": 4
+            },
+            {
+              "team": "Miami",
+              "rank": 5
+            },
+            {
+              "team": "Indiana",
+              "rank": 6
+            },
+            {
+              "team": "Alabama",
+              "rank": 7
+            },
+            {
+              "team": "Texas",
+              "rank": 8
+            },
+            {
+              "team": "Tennessee",
+              "rank": 9
+            },
+            {
+              "team": "Wake Forest",
+              "rank": 10
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 11
+            },
+            {
+              "team": "BYU",
+              "rank": 12
+            },
+            {
+              "team": "Iowa",
+              "rank": 13
+            },
+            {
+              "team": "Oregon",
+              "rank": 14
+            },
+            {
+              "team": "Boise State",
+              "rank": 15
+            },
+            {
+              "team": "Ohio State",
+              "rank": 16
+            },
+            {
+              "team": "Kentucky",
+              "rank": 17
+            },
+            {
+              "team": "USC",
+              "rank": 18
+            },
+            {
+              "team": "Arizona",
+              "rank": 19
+            },
+            {
+              "team": "Houston",
+              "rank": 20
+            },
+            {
+              "team": "Louisville",
+              "rank": 21
+            },
+            {
+              "team": "Liberty",
+              "rank": 22
+            },
+            {
+              "team": "Florida",
+              "rank": 23
+            },
+            {
+              "team": "Memphis",
+              "rank": 24
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 25
+            }
+          ]
+        }
+      ],
+      "cfp": [
+        {
+          "released": "2026-11-03",
+          "kind": "committee",
+          "url": "https://collegefootballplayoff.com/rankings",
+          "publication": {
+            "precision": "date",
+            "sourceUrl": "https://collegefootballplayoff.com/rankings"
+          },
+          "rows": [
+            {
+              "team": "Miami",
+              "rank": 1
+            },
+            {
+              "team": "Georgia",
+              "rank": 2
+            },
+            {
+              "team": "Utah",
+              "rank": 3
+            },
+            {
+              "team": "Indiana",
+              "rank": 4
+            },
+            {
+              "team": "Alabama",
+              "rank": 5
+            },
+            {
+              "team": "Kentucky",
+              "rank": 6
+            },
+            {
+              "team": "Texas",
+              "rank": 7
+            },
+            {
+              "team": "UCLA",
+              "rank": 8
+            },
+            {
+              "team": "BYU",
+              "rank": 9
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 10
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 11
+            },
+            {
+              "team": "Ohio State",
+              "rank": 12
+            },
+            {
+              "team": "Tennessee",
+              "rank": 13
+            },
+            {
+              "team": "LSU",
+              "rank": 14
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 15
+            },
+            {
+              "team": "Wake Forest",
+              "rank": 16
+            },
+            {
+              "team": "Houston",
+              "rank": 17
+            },
+            {
+              "team": "Missouri",
+              "rank": 18
+            },
+            {
+              "team": "Iowa",
+              "rank": 19
+            },
+            {
+              "team": "USC",
+              "rank": 20
+            },
+            {
+              "team": "South Carolina",
+              "rank": 21
+            },
+            {
+              "team": "Arizona",
+              "rank": 22
+            },
+            {
+              "team": "Oregon",
+              "rank": 23
+            },
+            {
+              "team": "Florida",
+              "rank": 24
+            },
+            {
+              "team": "Boise State",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2026-11-10",
+          "kind": "committee",
+          "url": "https://collegefootballplayoff.com/rankings",
+          "publication": {
+            "precision": "date",
+            "sourceUrl": "https://collegefootballplayoff.com/rankings"
+          },
+          "rows": [
+            {
+              "team": "Georgia",
+              "rank": 1
+            },
+            {
+              "team": "Utah",
+              "rank": 2
+            },
+            {
+              "team": "Alabama",
+              "rank": 3
+            },
+            {
+              "team": "UCLA",
+              "rank": 4
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 5
+            },
+            {
+              "team": "Texas",
+              "rank": 6
+            },
+            {
+              "team": "Miami",
+              "rank": 7
+            },
+            {
+              "team": "Tennessee",
+              "rank": 8
+            },
+            {
+              "team": "Indiana",
+              "rank": 9
+            },
+            {
+              "team": "BYU",
+              "rank": 10
+            },
+            {
+              "team": "Kentucky",
+              "rank": 11
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 12
+            },
+            {
+              "team": "Wake Forest",
+              "rank": 13
+            },
+            {
+              "team": "Houston",
+              "rank": 14
+            },
+            {
+              "team": "Iowa",
+              "rank": 15
+            },
+            {
+              "team": "Oregon",
+              "rank": 16
+            },
+            {
+              "team": "South Carolina",
+              "rank": 17
+            },
+            {
+              "team": "USC",
+              "rank": 18
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 19
+            },
+            {
+              "team": "Ohio State",
+              "rank": 20
+            },
+            {
+              "team": "LSU",
+              "rank": 21
+            },
+            {
+              "team": "Missouri",
+              "rank": 22
+            },
+            {
+              "team": "Arizona",
+              "rank": 23
+            },
+            {
+              "team": "Boise State",
+              "rank": 24
+            },
+            {
+              "team": "Oklahoma State",
+              "rank": 25
+            }
+          ]
+        },
+        {
+          "released": "2026-11-17",
+          "kind": "committee",
+          "url": "https://collegefootballplayoff.com/rankings",
+          "publication": {
+            "precision": "date",
+            "sourceUrl": "https://collegefootballplayoff.com/rankings"
+          },
+          "rows": [
+            {
+              "team": "Georgia",
+              "rank": 1
+            },
+            {
+              "team": "Utah",
+              "rank": 2
+            },
+            {
+              "team": "Alabama",
+              "rank": 3
+            },
+            {
+              "team": "UCLA",
+              "rank": 4
+            },
+            {
+              "team": "Texas",
+              "rank": 5
+            },
+            {
+              "team": "Notre Dame",
+              "rank": 6
+            },
+            {
+              "team": "Miami",
+              "rank": 7
+            },
+            {
+              "team": "Indiana",
+              "rank": 8
+            },
+            {
+              "team": "Tennessee",
+              "rank": 9
+            },
+            {
+              "team": "BYU",
+              "rank": 10
+            },
+            {
+              "team": "Wake Forest",
+              "rank": 11
+            },
+            {
+              "team": "Texas Tech",
+              "rank": 12
+            },
+            {
+              "team": "Oregon",
+              "rank": 13
+            },
+            {
+              "team": "Ohio State",
+              "rank": 14
+            },
+            {
+              "team": "Iowa",
+              "rank": 15
+            },
+            {
+              "team": "Kentucky",
+              "rank": 16
+            },
+            {
+              "team": "Boise State",
+              "rank": 17
+            },
+            {
+              "team": "USC",
+              "rank": 18
+            },
+            {
+              "team": "Arizona",
+              "rank": 19
+            },
+            {
+              "team": "Houston",
+              "rank": 20
+            },
+            {
+              "team": "South Carolina",
+              "rank": 21
+            },
+            {
+              "team": "Oklahoma",
+              "rank": 22
+            },
+            {
+              "team": "Louisville",
+              "rank": 23
+            },
+            {
+              "team": "Florida",
+              "rank": 24
+            },
+            {
+              "team": "Ole Miss",
+              "rank": 25
+            }
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2026_NCAA_Division_I_FBS_football_rankings",
+          "sha256": "309be73bfde418c0c370b76000400fc80b643970aa3092dc16f459a66dd8b737",
+          "role": "Secondary full-row corroboration; publication dates independently verified from AP material"
+        },
+        {
+          "provider": "College Football Playoff",
+          "url": "https://collegefootballplayoff.com/rankings",
+          "sha256": "65632d4f4ec360aca2a762ae6b1a1a17639f6efbd038fae30ed9e44e7de20295"
+        }
+      ]
+    }
+  }
+}

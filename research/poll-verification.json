@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "providerCalls": 2,
+  "verifiedOn": "2026-11-18",
+  "seasons": [
+    {
+      "season": 2025,
+      "polls": {
+        "ap": {
+          "editions": 17,
+          "fullRankPairsMatched": 425
+        },
+        "cfp": {
+          "editions": 6,
+          "fullRankPairsMatched": 150
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "polls": {
+        "ap": {
+          "editions": 12,
+          "fullRankPairsMatched": 300
+        },
+        "cfp": {
+          "editions": 3,
+          "fullRankPairsMatched": 75
+        }
+      }
+    }
+  ]
+}

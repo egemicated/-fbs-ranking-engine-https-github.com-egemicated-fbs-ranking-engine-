@@ -1,0 +1,178 @@
+{
+  "before": [
+    {
+      "season": 2025,
+      "games": 371,
+      "coverage": {
+        "fbsInterconferenceGames": 245,
+        "fbsFcsGames": 126,
+        "excludedFbsGames": 0
+      },
+      "polls": {
+        "ap": {
+          "editions": 0,
+          "availableGames": 0,
+          "states": null,
+          "firstGame": "2025-08-23T20:00:00.000Z",
+          "lastGame": "2026-01-20T00:30:00.000Z"
+        },
+        "cfp": {
+          "editions": 0,
+          "availableGames": 0,
+          "states": null,
+          "firstGame": "2025-08-23T20:00:00.000Z",
+          "lastGame": "2026-01-20T00:30:00.000Z"
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "games": 302,
+      "coverage": {
+        "fbsInterconferenceGames": 179,
+        "fbsFcsGames": 123,
+        "excludedFbsGames": 0
+      },
+      "polls": {
+        "ap": {
+          "editions": 3,
+          "availableGames": 6,
+          "states": null,
+          "firstGame": "2026-08-29T16:00:00.000Z",
+          "lastGame": "2026-11-14T20:30:00.000Z"
+        },
+        "cfp": {
+          "editions": 3,
+          "availableGames": 6,
+          "states": null,
+          "firstGame": "2026-08-29T16:00:00.000Z",
+          "lastGame": "2026-11-14T20:30:00.000Z"
+        }
+      }
+    }
+  ],
+  "after": [
+    {
+      "season": 2026,
+      "games": 302,
+      "coverage": {
+        "fbsInterconferenceGames": 179,
+        "fbsFcsGames": 123,
+        "excludedFbsGames": 0
+      },
+      "polls": {
+        "ap": {
+          "editions": 12,
+          "availableGames": 302,
+          "states": {
+            "ranked": 74,
+            "unranked": 228,
+            "noPollYet": 0,
+            "missing": 0,
+            "publicationTimeUncertain": 0
+          },
+          "firstGame": "2026-08-29T16:00:00.000Z",
+          "lastGame": "2026-11-14T20:30:00.000Z"
+        },
+        "cfp": {
+          "editions": 3,
+          "availableGames": 6,
+          "states": {
+            "ranked": 3,
+            "unranked": 3,
+            "noPollYet": 296,
+            "missing": 0,
+            "publicationTimeUncertain": 0
+          },
+          "firstGame": "2026-08-29T16:00:00.000Z",
+          "lastGame": "2026-11-14T20:30:00.000Z"
+        }
+      }
+    },
+    {
+      "season": 2025,
+      "games": 371,
+      "coverage": {
+        "fbsInterconferenceGames": 245,
+        "fbsFcsGames": 126,
+        "excludedFbsGames": 0
+      },
+      "polls": {
+        "ap": {
+          "editions": 17,
+          "availableGames": 371,
+          "states": {
+            "ranked": 107,
+            "unranked": 264,
+            "noPollYet": 0,
+            "missing": 0,
+            "publicationTimeUncertain": 0
+          },
+          "firstGame": "2025-08-23T20:00:00.000Z",
+          "lastGame": "2026-01-20T00:30:00.000Z"
+        },
+        "cfp": {
+          "editions": 6,
+          "availableGames": 68,
+          "states": {
+            "ranked": 27,
+            "unranked": 41,
+            "noPollYet": 303,
+            "missing": 0,
+            "publicationTimeUncertain": 0
+          },
+          "firstGame": "2025-08-23T20:00:00.000Z",
+          "lastGame": "2026-01-20T00:30:00.000Z"
+        }
+      }
+    }
+  ],
+  "reconciliation": [
+    {
+      "season": 2026,
+      "qualityScoresUnchanged": true,
+      "polls": {
+        "ap": {
+          "fbsInterconferenceGames": 179,
+          "pregameCovered": 179,
+          "noPollYet": 0,
+          "top10Wins": 4,
+          "top25Wins": 7
+        },
+        "cfp": {
+          "fbsInterconferenceGames": 179,
+          "pregameCovered": 5,
+          "noPollYet": 174,
+          "top10Wins": 1,
+          "top25Wins": 1
+        }
+      }
+    },
+    {
+      "season": 2025,
+      "qualityScoresUnchanged": true,
+      "polls": {
+        "ap": {
+          "fbsInterconferenceGames": 245,
+          "pregameCovered": 245,
+          "noPollYet": 0,
+          "top10Wins": 10,
+          "top25Wins": 28
+        },
+        "cfp": {
+          "fbsInterconferenceGames": 245,
+          "pregameCovered": 62,
+          "noPollYet": 183,
+          "top10Wins": 6,
+          "top25Wins": 15
+        }
+      }
+    }
+  ],
+  "sourceFileHashes": {
+    "published/conference-archives/2025.json": "44e3f68752db5fe2fe890af2ab4772ee082beb717af7953ec06e14337540316d",
+    "published/latest.json": "452fd04b7e1e3bc2531dcb111efea5e3c97c16e88c6e34691979dd4e787597d7",
+    "published/prior-2025.json": "85485a24c7cee79b75f3e7b21dcf978a8f26265a82e5030d36c9c3feba262903",
+    "data/model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a"
+  }
+}
