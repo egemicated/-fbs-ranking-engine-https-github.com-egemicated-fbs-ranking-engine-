@@ -16,8 +16,10 @@ Render's existing service setting starts builds on commit. The connector cannot
 change that setting. Instead, the existing build command now invokes
 `require-release-checks.mjs` before installation or publication. On Render only,
 the guard checks the exact `RENDER_GIT_COMMIT` against the pinned repository,
-main branch and Engine checks workflow path. It uses the newest matching
-push/dispatch run, rejects a newer failure even when an older run succeeded,
+main branch and Engine checks workflow path. It also enforces conditional
+Performance research checks whenever that workflow is present for the same
+revision. It uses the newest matching run per allowlisted CI workflow, rejects
+a newer failure even when an older run succeeded,
 and fails closed on missing evidence, HTTP failure, malformed responses or an
 eight-minute wait timeout. An ordinary local/CI build does not recursively
 wait on itself. A real previously successful GitHub revision was checked before

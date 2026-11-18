@@ -1,4 +1,5 @@
 name: Performance research checks
+# Render also waits for this conditional check when it runs for a release.
 on:
   push:
     paths:

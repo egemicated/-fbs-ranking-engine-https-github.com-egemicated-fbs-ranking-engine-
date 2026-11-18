@@ -12,7 +12,7 @@ test('Render release gate requires exact-revision CI evidence and does not recur
   let calls = 0;
   assert.equal(await requireRenderReleaseChecks({}, { fetcher: () => { throw Error('Unexpected network'); } }), null);
   const result = await waitForReleaseChecks({ commit, log: () => {}, fetcher: async url => {
-    calls++; assert.match(url, /workflows\/test.yml\/runs\?head_sha=a{40}&branch=main/); return response([run()]);
+    calls++; assert.match(url, /actions\/runs\?head_sha=a{40}&branch=main/); return response([run()]);
   } });
   assert.equal(calls, 1); assert.equal(result.runId, 10);
   await assert.rejects(waitForReleaseChecks({ commit: 'main' }), /exact Git commit/);
@@ -38,4 +38,19 @@ test('pending CI is bounded and API errors fail closed without exposing response
   await assert.rejects(waitForReleaseChecks({ commit, fetcher: async () => ({ ok: false, status: 429 }) }), /HTTP 429/);
   await assert.rejects(waitForReleaseChecks({ commit, fetcher: async () => { throw Error('PRIVATE_BODY'); } }),
     error => !error.message.includes('PRIVATE_BODY') && /previous deployment retained/.test(error.message));
+});
+
+test('successful Engine checks cannot override failed or pending conditional Performance checks', async () => {
+  const performance = overrides => run({ id: 12, path: '.github/workflows/performance.yml', ...overrides });
+  for (const conclusion of ['failure', 'cancelled', 'timed_out', 'action_required']) {
+    await assert.rejects(waitForReleaseChecks({ commit, log: () => {},
+      fetcher: async () => response([run(), performance({ conclusion })]),
+    }), new RegExp(conclusion));
+  }
+  let calls = 0;
+  const result = await waitForReleaseChecks({ commit, log: () => {}, intervalMs: 1, sleep: async () => {},
+    fetcher: async () => response([run(), performance({ status: ++calls === 1 ? 'in_progress' : 'completed' })]),
+  });
+  assert.equal(calls, 2);
+  assert.equal(result.checkedWorkflows.length, 2);
 });
