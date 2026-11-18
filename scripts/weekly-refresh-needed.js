@@ -1,9 +1,9 @@
 import { readFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
-import { UPDATE_SCHEDULE } from '../src/weekly.js';
+import { UPDATE_SCHEDULE } from '../src/refresh-schedule.js';
 
 const dayMs = 24 * 60 * 60 * 1000;
-const midweekLookback = 7 * dayMs;
+const resultsLookback = 7 * dayMs;
 const minimumElapsed = 3 * 60 * 60 * 1000;
 const mountainClock = new Intl.DateTimeFormat('en-CA', {
   timeZone: UPDATE_SCHEDULE.timeZone, year: 'numeric', month: '2-digit', day: '2-digit',
@@ -23,20 +23,6 @@ function mountainDay(time) {
 function mountainSunday(time) {
   const today = mountainDay(time);
   return today - new Date(today).getUTCDay() * dayMs;
-}
-
-export function weeklyRefreshNeeded(snapshot, picks, now = new Date(), catchUp = false) {
-  const currentTime = new Date(now).getTime();
-  const sunday = mountainSunday(currentTime);
-  const fetchedAt = Date.parse(snapshot?.source?.fetchedAt);
-  if (snapshot?.source?.provider !== 'cfbd' || !Number.isFinite(fetchedAt) ||
-      fetchedAt > currentTime || mountainDay(fetchedAt) < sunday) return true;
-  if (!catchUp) return false;
-
-  if (!matchesSnapshot(picks, snapshot)) return true;
-
-  const saturday = sunday - dayMs;
-  return hasUnresolvedKickoff(snapshot, picks, kickoff => mountainDay(kickoff) === saturday);
 }
 
 function matchesSnapshot(picks, snapshot) {
@@ -63,16 +49,19 @@ function hasUnresolvedKickoff(snapshot, picks, inWindow) {
   });
 }
 
-export function midweekRefreshNeeded(snapshot, picks, now = new Date()) {
+export function dailyRefreshNeeded(snapshot, picks, now = new Date()) {
   const currentTime = new Date(now).getTime();
   const fetchedAt = Date.parse(snapshot?.source?.fetchedAt);
   if (snapshot?.source?.provider !== 'cfbd' || !Number.isFinite(fetchedAt) || fetchedAt > currentTime) return true;
   if (!matchesSnapshot(picks, snapshot)) return true;
-  if (mountainDay(fetchedAt) === mountainDay(currentTime)) return false;
+  const fetchedDay = mountainDay(fetchedAt);
+  // Refresh the upcoming weekly slate on Sunday, or on the next daily check if Sunday was missed.
+  if (fetchedDay < mountainSunday(currentTime)) return true;
+  if (fetchedDay === mountainDay(currentTime)) return false;
 
   // Include recent games still unconfirmed at an earlier refresh.
   return hasUnresolvedKickoff(snapshot, picks, kickoff =>
-    kickoff >= currentTime - midweekLookback && kickoff < currentTime - minimumElapsed);
+    kickoff >= currentTime - resultsLookback && kickoff < currentTime - minimumElapsed);
 }
 
 export function sundayNightRefreshNeeded(snapshot, picks, now = new Date()) {
@@ -96,13 +85,8 @@ async function readPublication(name) {
 }
 
 if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
-  const catchUp = process.argv.includes('--catch-up');
-  const midweek = process.argv.includes('--midweek');
   const sundayNight = process.argv.includes('--sunday-night');
-  const snapshot = await readPublication('latest');
-  const picks = catchUp || midweek || sundayNight ? await readPublication('weekly-picks') : null;
-  const now = new Date();
-  if (sundayNight) console.log(sundayNightRefreshNeeded(snapshot, picks, now));
-  else if (midweek) console.log(midweekRefreshNeeded(snapshot, picks, now));
-  else console.log(weeklyRefreshNeeded(snapshot, picks, now, catchUp));
+  const [snapshot, picks] = await Promise.all([readPublication('latest'), readPublication('weekly-picks')]);
+  const needsRefresh = sundayNight ? sundayNightRefreshNeeded : dailyRefreshNeeded;
+  console.log(needsRefresh(snapshot, picks));
 }

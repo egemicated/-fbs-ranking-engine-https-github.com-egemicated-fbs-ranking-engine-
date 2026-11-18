@@ -8,7 +8,7 @@ import { buildUpcomingTeamSchedule, publicRankings, publicTeamDetails } from '..
 import { matchupValidation, snapshotCoverage } from '../src/site-validation.js';
 import { readRankingMovement } from '../src/ranking-movement.js';
 import { buildHomeHighlights } from '../src/home-highlights.js';
-import { UPDATE_SCHEDULE } from '../src/weekly.js';
+import { UPDATE_SCHEDULE } from '../src/refresh-schedule.js';
 import { buildWeeklyTeamStats } from '../frontend/weekly-team-stats.js';
 import { browserSorSource, buildScenarioPublication } from '../src/scenario-publication.js';
 import { copyPlayerPages } from '../src/player-publication.js';

@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { importSeason, atomicJson } from '../src/ingest.js';
 import { buildWeeklySnapshot } from '../src/weekly.js';
+import { UPDATE_SCHEDULE } from '../src/refresh-schedule.js';
 import { saveEvidence } from '../src/evidence.js';
 import { readPublicationPolicy, publishDivisionSnapshot } from '../src/publication.js';
 import { saveSorHistory } from '../src/ranking-history.js';
@@ -21,7 +22,9 @@ try {
   const previousPicks = await readFile('published/weekly-picks.json', 'utf8').then(JSON.parse).catch(() => null);
   const season = await verifySeasonKickoffs(input, previousPicks);
   if (season !== input) await atomicJson(join('data', 'seasons', `${year}.json`), season);
-  snapshot = publishDivisionSnapshot(buildWeeklySnapshot(season, prior, config), publicationPolicy);
+  const weekly = buildWeeklySnapshot(season, prior, config);
+  weekly.update.schedule = UPDATE_SCHEDULE;
+  snapshot = publishDivisionSnapshot(weekly, publicationPolicy);
   let existing;
   try { existing = JSON.parse(await readFile('published/latest.json', 'utf8')); }
   catch (e) { if (e.code !== 'ENOENT') throw e; }

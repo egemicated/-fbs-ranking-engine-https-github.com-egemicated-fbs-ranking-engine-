@@ -2,7 +2,7 @@ import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 import { VERSION } from './engine.js';
-import { UPDATE_SCHEDULE } from './weekly.js';
+import { UPDATE_SCHEDULE } from './refresh-schedule.js';
 import publicationPolicy from '../data/publication-model.json' with { type: 'json' };
 import { readPublicPerformance } from './public-performance.js';
 import { readFcsWeeklyPicks } from './weekly-fcs-publication.js';

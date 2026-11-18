@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { buildWeeklySnapshot, UPDATE_SCHEDULE } from '../src/weekly.js';
+import { buildWeeklySnapshot } from '../src/weekly.js';
+import { UPDATE_SCHEDULE } from '../src/refresh-schedule.js';
 import { rankSeason } from '../src/engine.js';
 import { normalizeCfbd } from '../src/ingest.js';
 import { publicRankings } from '../src/site-publication.js';
@@ -51,12 +52,12 @@ test('weekly CFBD input saves only timed unresolved FCS kickoffs for the refresh
   assert.equal(Object.hasOwn(publicRankings(snapshot, '/teams'), 'pendingFcsKickoffs'), false);
   assert.equal(Object.hasOwn(publicRankings(snapshot, '/teams'), 'futureFixtures'), false);
 });
-test('schedule means 12:01 AM Mountain in both daylight and standard time', () => {
+test('schedule means 3:45 AM Mountain in both daylight and standard time', () => {
   const localTime = new Intl.DateTimeFormat('en-US', { timeZone: UPDATE_SCHEDULE.timeZone, weekday: 'long',
     hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
-  assert.equal(localTime.format(new Date('2026-10-25T06:01:00Z')), 'Sunday 00:01');
-  assert.equal(localTime.format(new Date('2026-11-08T07:01:00Z')), 'Sunday 00:01');
-  assert.equal(UPDATE_SCHEDULE.cron, '1 0 * * 0');
+  assert.equal(localTime.format(new Date('2026-10-25T09:45:00Z')), 'Sunday 03:45');
+  assert.equal(localTime.format(new Date('2026-11-09T10:45:00Z')), 'Monday 03:45');
+  assert.equal(UPDATE_SCHEDULE.cron, '45 3 * * *');
 });
 test('each achievement explanation exactly reconciles to its calculated score', () => {
   const snapshot = buildWeeklySnapshot(season, prior, config, new Date('2026-11-08T15:00:00Z'));

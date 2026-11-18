@@ -39,8 +39,8 @@ SIL Open Font License. The unbranded stadium illustration was generated with
 the built-in image tool; its production prompt is in
 `frontend/assets/ASSET-NOTES.txt`.
 
-The site checks CFBD for results Wednesday through Sunday through the existing
-GitHub workflow. Render promotes the committed snapshot using the pinned
+GitHub Actions checks for new results daily at 3:45 a.m. Mountain Time. Render
+promotes the committed snapshot using the pinned
 publication policy. Deployments use the committed data. Each snapshot is promoted
 before its source evidence and publication are saved. To reconstruct an archive cutoff use
 `npm run build -- --before 2025-10-01T00:00:00Z`.
@@ -123,13 +123,12 @@ The service serves the frontend and read-only JSON API. The free plan can sleep 
 
 ## Weekly CFBD publication
 
-`.github/workflows/weekly.yml` checks for new results **Wednesday through Saturday
-at 04:11 America/Denver**. The midweek check uses the saved schedule to skip a
-pull when there are no recent FBS games awaiting results. On **Sunday at 00:01**
-the main refresh runs, with a **04:11** backup if the overnight publication is
-missing or a Saturday FBS game remains unconfirmed. GitHub's schedule follows
-Mountain Time through daylight saving changes. GitHub scheduling and Render
-deployment can delay the actual publication.
+`.github/workflows/weekly.yml` checks for new FBS and FCS results **daily at 03:45
+America/Denver**. It uses the saved schedule to limit pulls to recent unresolved
+games and the weekly refresh of the upcoming slate. The **Sunday 20:11** backup
+checks for finals from Sunday games. GitHub's schedule follows Mountain Time
+through daylight saving changes. GitHub scheduling and Render deployment can
+delay the actual publication.
 
 Set the repository secret `CFBD_API_KEY` once. The workflow fetches the current
 season's games and FBS roster (two API calls for the existing models),
@@ -137,7 +136,8 @@ uses our stored prior-season strength from `published/prior-2025.json`, and
 commits the derived `published/latest.json`. The separate experimental Performance
 step fetches advanced game statistics once and commits
 `published/performance-latest.json`. A full refresh uses three CFBD calls. The
-schedule uses at most 84 calls in a calendar month if all scheduled checks pull,+before manual refreshes. Render automatically deploys
+schedule uses at most 108 calls in a calendar month if all scheduled checks pull,
+before separate player stats and manual requests. Render automatically deploys
 the commit. No paid cron service, database, or additional user login is required.
 Beat the Model grades saved picks after the results are committed. Set
 `CFP_SUPABASE_SECRET_KEY` to the project's server-side `sb_secret_` API key in

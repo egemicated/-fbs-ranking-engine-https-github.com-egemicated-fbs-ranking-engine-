@@ -1,13 +1,9 @@
 name: Weekly CFBD rankings
 on:
   schedule:
-    - cron: '1 0 * * 0'
-      timezone: 'America/Denver'
-    - cron: '11 4 * * 0'
+    - cron: '45 3 * * *'
       timezone: 'America/Denver'
     - cron: '11 20 * * 0'
-      timezone: 'America/Denver'
-    - cron: '11 4 * * 3-6'
       timezone: 'America/Denver'
   workflow_dispatch:
     inputs:
@@ -63,12 +59,8 @@ jobs:
             needed=false
           elif [[ "$EVENT_NAME" != schedule ]]; then
             needed=true
-          elif [[ "$CRON" == '11 4 * * 0' ]]; then
-            needed=$(node scripts/weekly-refresh-needed.js --catch-up)
           elif [[ "$CRON" == '11 20 * * 0' ]]; then
             needed=$(node scripts/weekly-refresh-needed.js --sunday-night)
-          elif [[ "$CRON" == '11 4 * * 3-6' ]]; then
-            needed=$(node scripts/weekly-refresh-needed.js --midweek)
           else
             needed=$(node scripts/weekly-refresh-needed.js)
           fi

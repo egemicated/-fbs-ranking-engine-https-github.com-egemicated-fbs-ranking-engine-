@@ -5,6 +5,7 @@ import { mkdtemp,readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { rankSeason } from '../src/engine.js';
+import { UPDATE_SCHEDULE } from '../src/refresh-schedule.js';
 import { atomicJson } from '../src/ingest.js';
 import { makeDivisionObservation,recordDivisionObservation,IMPLEMENTATION_PATHS } from '../scripts/record-division-comparison.js';
 import { evaluateForecasts } from '../research/evaluate_division_forecasts.mjs';
@@ -39,8 +40,11 @@ test('frozen evaluator pin and the shared weekly fetch are preserved',async()=>{
   const protocol=JSON.parse(await readFile('research/frozen-division-comparison-v2.json','utf8'));
   const path='research/evaluate_division_forecasts.mjs';assert.equal(protocol.evaluationImplementationSha256[path],sha(await readFile(path)));
   const workflow=await readFile('.github/workflows/weekly.yml','utf8');
-  assert.match(workflow,/cron: '1 0 \* \* 0'\s+timezone: 'America\/Denver'/);
-  assert.match(workflow,/cron: '11 4 \* \* 0'\s+timezone: 'America\/Denver'/);
+  const schedule = [...workflow.matchAll(/cron: '([^']+)'\s+timezone: '([^']+)'/g)].map(([, cron, zone]) => [cron, zone]);
+  assert.deepEqual(schedule, [
+    [UPDATE_SCHEDULE.cron, UPDATE_SCHEDULE.timeZone],
+    [UPDATE_SCHEDULE.sundayNight.cron, UPDATE_SCHEDULE.timeZone],
+  ]);
   assert.equal((workflow.match(/run: node scripts\/refresh-weekly.js/g)??[]).length,1);
   assert.match(workflow,/git add research\/division-observations\//);
 });
