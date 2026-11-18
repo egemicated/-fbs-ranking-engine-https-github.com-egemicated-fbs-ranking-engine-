@@ -1,0 +1,50 @@
+name: Bounded historical poll recovery
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['published/poll-archive-request.json']
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: bounded-historical-poll-recovery
+  cancel-in-progress: false
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Read recovery request identity
+        id: request
+        run: |
+          node --input-type=module -e '
+            import fs from "node:fs";
+            const r=JSON.parse(fs.readFileSync("published/poll-archive-request.json"));
+            if(r.schemaVersion!==1||JSON.stringify(r.seasons)!=="[2025,2026]"||!/^[a-zA-Z0-9-]{8,80}$/.test(r.id))throw Error("Invalid recovery request");
+            fs.appendFileSync(process.env.GITHUB_OUTPUT,`id=${r.id}\n`);
+          '
+      - name: Reuse an existing successful request without provider calls
+        id: prior
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REQUEST_ID: ${{ steps.request.outputs.id }}
+        run: |
+          count=$(gh api "repos/${GITHUB_REPOSITORY}/actions/artifacts?name=poll-recovery-${REQUEST_ID}&per_page=100" --jq '[.artifacts[] | select(.expired == false)] | length')
+          if [[ "$count" -gt 0 ]]; then echo 'exists=true' >> "$GITHUB_OUTPUT"; else echo 'exists=false' >> "$GITHUB_OUTPUT"; fi
+      - name: Recover only AP and CFP from two season responses
+        if: steps.prior.outputs.exists != 'true'
+        env:
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+        run: node scripts/recover-poll-provider.js
+      - uses: actions/upload-artifact@v7
+        if: steps.prior.outputs.exists != 'true' && always()
+        with:
+          name: poll-recovery-${{ steps.request.outputs.id }}
+          path: evidence/poll-recovery/*.json
+          retention-days: 14
+          if-no-files-found: error
