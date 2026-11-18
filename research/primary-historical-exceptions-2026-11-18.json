@@ -1,0 +1,41 @@
+{
+  "checkedAt": "2026-11-18",
+  "method": "Read primary school sources; retain exceptions as research evidence without inventing source IDs, kickoff times, venues or missing roster nodes",
+  "selectedInactivePrograms": [
+    {
+      "team": "Northeastern", "teamId": "111", "season": 2009, "expectedPlayedGames": 11,
+      "sourceUrl": "https://nuhuskies.com/sports/2013/7/18/GEN_0718133257.aspx",
+      "crossCheckUrl": "https://static.caasports.com/custompages/stats/FB/2009/nu.htm",
+      "games": [
+        {"date": "2009-09-05", "opponentId": "103", "opponent": "Boston College", "pointsFor": 0, "pointsAgainst": 54},
+        {"date": "2009-09-12", "opponentId": "311", "opponent": "Maine", "pointsFor": 7, "pointsAgainst": 17},
+        {"date": "2009-09-19", "opponentId": "2754", "opponent": "Youngstown State", "pointsFor": 21, "pointsAgainst": 38},
+        {"date": "2009-09-26", "opponentId": "222", "opponent": "Villanova", "pointsFor": 7, "pointsAgainst": 56},
+        {"date": "2009-10-03", "opponentId": "107", "opponent": "Holy Cross", "pointsFor": 21, "pointsAgainst": 42},
+        {"date": "2009-10-10", "opponentId": "2729", "opponent": "William & Mary", "pointsFor": 14, "pointsAgainst": 34},
+        {"date": "2009-10-24", "opponentId": "119", "opponent": "Towson", "pointsFor": 27, "pointsAgainst": 7},
+        {"date": "2009-10-31", "opponentId": "160", "opponent": "New Hampshire", "pointsFor": 21, "pointsAgainst": 48},
+        {"date": "2009-11-07", "opponentId": "113", "opponent": "UMass", "pointsFor": 7, "pointsAgainst": 37},
+        {"date": "2009-11-14", "opponentId": "2275", "opponent": "Hofstra", "pointsFor": 14, "pointsAgainst": 13},
+        {"date": "2009-11-21", "opponentId": "227", "opponent": "Rhode Island", "pointsFor": 33, "pointsAgainst": 27}
+      ]
+    },
+    {
+      "team": "Hofstra", "teamId": "2275", "season": 2009, "expectedPlayedGames": 11,
+      "expectedRecord": "5-6", "scope": "School's program-closure announcement confirms final season record; no complete score/identity verification claimed from record alone",
+      "sourceUrl": "https://gohofstra.com/news/2009/12/3/HOFSTRA_TO_END_INTERCOLLEGIATE_FOOTBALL_PROGRAM_TO_INVEST_IN_ACADEMIC_INITIATIVES.aspx"
+    }
+  ],
+  "season2020": {
+    "nonPlayingPrograms": [
+      {"team": "UConn", "scope": "All 2020-21 competition cancelled", "sourceUrl": "https://uconnhuskies.com/news/2020/8/5/uconn-football-announces-cancellation-of-2020-season-due-to-risks-associated-with-covid-19"},
+      {"team": "Old Dominion", "scope": "Fall 2020 competition cancelled; no completed game should be invented from adjacent-year membership", "sourceUrl": "https://odusports.com/news/2020/08/10/old-dominion-athletics-announces-cancellation-of-fall-sports-season"}
+    ],
+    "knownMissingGames": [
+      {"team": "New Mexico State", "opponent": "Tarleton State", "date": "2021-02-21", "pointsFor": 17, "pointsAgainst": 43},
+      {"team": "New Mexico State", "opponent": "Dixie State", "date": "2021-03-07", "pointsFor": 36, "pointsAgainst": 29}
+    ],
+    "missingGameSourceUrls": ["https://nmstatesports.com/schedule.aspx?path=football&season=2020-21", "https://nmstatesports.com/sports/football/stats/2020-21"],
+    "seasonBoundaryEvidence": "New Mexico State explicitly assigns these two spring 2021 games to its postponed 2020 season. They are not missing fall-2021 games. Parent season2020 omits the program, so the existing known-node supplement cannot restore them."
+  }
+}

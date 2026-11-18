@@ -1,0 +1,1424 @@
+{
+  "protocol": {
+    "id": "historical-foundation-audit-v1",
+    "declaredAt": "2026-11-18",
+    "purpose": "Describe archive coverage and isolate frozen input corrections; no model fitting, candidate selection, publication or provider fetch",
+    "historyStart": 2004,
+    "historyEnd": 2025,
+    "evaluationSeasons": [
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "previouslyReportedEvaluationSeasons": [
+      2023,
+      2024,
+      2025
+    ],
+    "holdoutStatus": "Previously inspected retrospective seasons; none is an untouched holdout. 2021-2022 helped select the original Strength settings. This audit was declared after earlier aggregate results were known.",
+    "accuracyTieCredit": 0.5,
+    "variants": [
+      "original",
+      "duplicate-only",
+      "historical-coverage-v1",
+      "fcs-coverage-v1",
+      "original-start-2014"
+    ],
+    "probabilityMappings": "Frozen production baseline scale 14 and existing division-specific calibrated scales; no fitting. FBS-FCS stays scale 14 because no approved cross-division calibration exists.",
+    "cutoff": "Freeze before earliest game in entire source competition week, using only earlier processed weeks whose kickoff plus 24 hours is no later than cutoff. Previous-season outcomes must also precede cutoff by 24 hours.",
+    "primaryComparison": "Same original target-game identities and outcomes. Report new target-game coverage separately. Conference slices include a game once for each participating conference and overlap across conferences.",
+    "uncertainty": {
+      "method": "Paired season/competition-week block bootstrap",
+      "replicates": 2000,
+      "seed": 20261118,
+      "interpretation": "95% resampling sensitivity intervals, not calibrated prospective significance; blocks share teams"
+    },
+    "deeperHistory": "No pre-2004 import or predictive claim without verified source records. Compare existing 2004 initialization against truncating the same archive at 2014 as a bounded history sensitivity only.",
+    "promotionDecision": "No production model or historical prior promotion from this audit"
+  },
+  "config": {
+    "ridge": 3,
+    "retention": 0.75,
+    "homeAdvantage": 2.5,
+    "marginCap": 28,
+    "probabilityScale": 14
+  },
+  "scales": {
+    "baseline": 14,
+    "FBS-FBS": 6.147406563247917,
+    "FCS-FCS": 6.74434303402901,
+    "FBS-FCS": 14
+  },
+  "comparison": {
+    "original": {
+      "ownTargetGames": 7749,
+      "additionalTargets": 0,
+      "divisionMetrics": {
+        "FBS-FBS": {
+          "baselineScale14": {
+            "original": {
+              "games": 3864,
+              "accuracy": 0.7093685300207039,
+              "brier": 0.19814467509830075,
+              "logLoss": 0.5832868582605675,
+              "marginMAE": 13.17965493834949,
+              "calibrationError10Bins": 0.09207054737987372,
+              "meanProbabilityError": -0.031186368178713862
+            },
+            "candidate": {
+              "games": 3864,
+              "accuracy": 0.7093685300207039,
+              "brier": 0.19814467509830075,
+              "logLoss": 0.5832868582605675,
+              "marginMAE": 13.17965493834949,
+              "calibrationError10Bins": 0.09207054737987372,
+              "meanProbabilityError": -0.031186368178713862
+            }
+          },
+          "frozenCalibrated": {
+            "original": {
+              "games": 3864,
+              "accuracy": 0.7093685300207039,
+              "brier": 0.18585633378139155,
+              "logLoss": 0.5491737365809596,
+              "marginMAE": 13.17965493834949,
+              "calibrationError10Bins": 0.024716688067406248,
+              "meanProbabilityError": 0.010741173783768257
+            },
+            "candidate": {
+              "games": 3864,
+              "accuracy": 0.7093685300207039,
+              "brier": 0.18585633378139155,
+              "logLoss": 0.5491737365809596,
+              "marginMAE": 13.17965493834949,
+              "calibrationError10Bins": 0.024716688067406248,
+              "meanProbabilityError": 0.010741173783768257
+            }
+          }
+        },
+        "FBS-FCS": {
+          "baselineScale14": {
+            "original": {
+              "games": 602,
+              "accuracy": 0.8837209302325582,
+              "brier": 0.1385911710926362,
+              "logLoss": 0.4544839655955948,
+              "marginMAE": 23.17845160746677,
+              "calibrationError10Bins": 0.29649306313523266,
+              "meanProbabilityError": -0.2964930631352324
+            },
+            "candidate": {
+              "games": 602,
+              "accuracy": 0.8837209302325582,
+              "brier": 0.1385911710926362,
+              "logLoss": 0.4544839655955948,
+              "marginMAE": 23.17845160746677,
+              "calibrationError10Bins": 0.29649306313523266,
+              "meanProbabilityError": -0.2964930631352324
+            }
+          },
+          "frozenCalibrated": {
+            "original": {
+              "games": 602,
+              "accuracy": 0.8837209302325582,
+              "brier": 0.1385911710926362,
+              "logLoss": 0.4544839655955948,
+              "marginMAE": 23.17845160746677,
+              "calibrationError10Bins": 0.29649306313523266,
+              "meanProbabilityError": -0.2964930631352324
+            },
+            "candidate": {
+              "games": 602,
+              "accuracy": 0.8837209302325582,
+              "brier": 0.1385911710926362,
+              "logLoss": 0.4544839655955948,
+              "marginMAE": 23.17845160746677,
+              "calibrationError10Bins": 0.29649306313523266,
+              "meanProbabilityError": -0.2964930631352324
+            }
+          }
+        },
+        "FCS-FCS": {
+          "baselineScale14": {
+            "original": {
+              "games": 3283,
+              "accuracy": 0.7065184282668291,
+              "brier": 0.19762979800335392,
+              "logLoss": 0.5823377014071521,
+              "marginMAE": 13.461718321624174,
+              "calibrationError10Bins": 0.08695899611517934,
+              "meanProbabilityError": -0.015773004030405262
+            },
+            "candidate": {
+              "games": 3283,
+              "accuracy": 0.7065184282668291,
+              "brier": 0.19762979800335392,
+              "logLoss": 0.5823377014071521,
+              "marginMAE": 13.461718321624174,
+              "calibrationError10Bins": 0.08695899611517934,
+              "meanProbabilityError": -0.015773004030405262
+            }
+          },
+          "frozenCalibrated": {
+            "original": {
+              "games": 3283,
+              "accuracy": 0.7065184282668291,
+              "brier": 0.18566987598129778,
+              "logLoss": 0.548054037910362,
+              "marginMAE": 13.461718321624174,
+              "calibrationError10Bins": 0.027437432901433863,
+              "meanProbabilityError": 0.017147894741735233
+            },
+            "candidate": {
+              "games": 3283,
+              "accuracy": 0.7065184282668291,
+              "brier": 0.18566987598129778,
+              "logLoss": 0.548054037910362,
+              "marginMAE": 13.461718321624174,
+              "calibrationError10Bins": 0.027437432901433863,
+              "meanProbabilityError": 0.017147894741735233
+            }
+          }
+        }
+      }
+    },
+    "duplicate-only": {
+      "ownTargetGames": 7749,
+      "additionalTargets": 0,
+      "divisionMetrics": {
+        "FBS-FBS": {
+          "baselineScale14": {
+            "original": {
+              "games": 3864,
+              "accuracy": 0.7093685300207039,
+              "brier": 0.19814467509830075,
+              "logLoss": 0.5832868582605675,
+              "marginMAE": 13.17965493834949,
+              "calibrationError10Bins": 0.09207054737987372,
+              "meanProbabilityError": -0.031186368178713862
+            },
+            "candidate": {
+              "games": 3864,
+              "accuracy": 0.7093685300207039,
+              "brier": 0.19814469311885516,
+              "logLoss": 0.5832868985930592,
+              "marginMAE": 13.179656174890072,
+              "calibrationError10Bins": 0.09207056977507438,
+              "meanProbabilityError": -0.03118638380519169
+            },
+            "pairedSensitivity": {
+              "blocks": 80,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0,
+                  "sensitivity95": [
+                    0,
+                    0
+                  ]
+                },
+                "brier": {
+                  "difference": 1.802055449191267e-8,
+                  "sensitivity95": [
+                    8.826181259006127e-9,
+                    3.050103411570632e-8
+                  ]
+                },
+                "logLoss": {
+                  "difference": 4.033249228399958e-8,
+                  "sensitivity95": [
+                    2.0650513339822142e-8,
+                    6.682640126307424e-8
+                  ]
+                }
+              }
+            }
+          },
+          "frozenCalibrated": {
+            "original": {
+              "games": 3864,
+              "accuracy": 0.7093685300207039,
+              "brier": 0.18585633378139155,
+              "logLoss": 0.5491737365809596,
+              "marginMAE": 13.17965493834949,
+              "calibrationError10Bins": 0.024716688067406248,
+              "meanProbabilityError": 0.010741173783768257
+            },
+            "candidate": {
+              "games": 3864,
+              "accuracy": 0.7093685300207039,
+              "brier": 0.18585635607383574,
+              "logLoss": 0.5491737968299992,
+              "marginMAE": 13.179656174890072,
+              "calibrationError10Bins": 0.024716675095793957,
+              "meanProbabilityError": 0.010741150863901879
+            },
+            "pairedSensitivity": {
+              "blocks": 80,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0,
+                  "sensitivity95": [
+                    0,
+                    0
+                  ]
+                },
+                "brier": {
+                  "difference": 2.2292444848432985e-8,
+                  "sensitivity95": [
+                    8.197732353783253e-9,
+                    4.0971323910723827e-8
+                  ]
+                },
+                "logLoss": {
+                  "difference": 6.024903818693954e-8,
+                  "sensitivity95": [
+                    2.4846800872451354e-8,
+                    1.0837053924966968e-7
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "FBS-FCS": {
+          "baselineScale14": {
+            "original": {
+              "games": 602,
+              "accuracy": 0.8837209302325582,
+              "brier": 0.1385911710926362,
+              "logLoss": 0.4544839655955948,
+              "marginMAE": 23.17845160746677,
+              "calibrationError10Bins": 0.29649306313523266,
+              "meanProbabilityError": -0.2964930631352324
+            },
+            "candidate": {
+              "games": 602,
+              "accuracy": 0.8837209302325582,
+              "brier": 0.13859181751609195,
+              "logLoss": 0.45448540540375637,
+              "marginMAE": 23.178503749419352,
+              "calibrationError10Bins": 0.29649413431485844,
+              "meanProbabilityError": -0.2964941343148585
+            },
+            "pairedSensitivity": {
+              "blocks": 48,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0,
+                  "sensitivity95": [
+                    0,
+                    0
+                  ]
+                },
+                "brier": {
+                  "difference": 6.464234555365679e-7,
+                  "sensitivity95": [
+                    4.0078807673932957e-7,
+                    9.375839188708015e-7
+                  ]
+                },
+                "logLoss": {
+                  "difference": 0.0000014398081616296223,
+                  "sensitivity95": [
+                    9.062842493667201e-7,
+                    0.000002076994640407181
+                  ]
+                }
+              }
+            }
+          },
+          "frozenCalibrated": {
+            "original": {
+              "games": 602,
+              "accuracy": 0.8837209302325582,
+              "brier": 0.1385911710926362,
+              "logLoss": 0.4544839655955948,
+              "marginMAE": 23.17845160746677,
+              "calibrationError10Bins": 0.29649306313523266,
+              "meanProbabilityError": -0.2964930631352324
+            },
+            "candidate": {
+              "games": 602,
+              "accuracy": 0.8837209302325582,
+              "brier": 0.13859181751609195,
+              "logLoss": 0.45448540540375637,
+              "marginMAE": 23.178503749419352,
+              "calibrationError10Bins": 0.29649413431485844,
+              "meanProbabilityError": -0.2964941343148585
+            },
+            "pairedSensitivity": {
+              "blocks": 48,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0,
+                  "sensitivity95": [
+                    0,
+                    0
+                  ]
+                },
+                "brier": {
+                  "difference": 6.464234555365679e-7,
+                  "sensitivity95": [
+                    4.0078807673932957e-7,
+                    9.375839188708015e-7
+                  ]
+                },
+                "logLoss": {
+                  "difference": 0.0000014398081616296223,
+                  "sensitivity95": [
+                    9.062842493667201e-7,
+                    0.000002076994640407181
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "FCS-FCS": {
+          "baselineScale14": {
+            "original": {
+              "games": 3283,
+              "accuracy": 0.7065184282668291,
+              "brier": 0.19762979800335392,
+              "logLoss": 0.5823377014071521,
+              "marginMAE": 13.461718321624174,
+              "calibrationError10Bins": 0.08695899611517934,
+              "meanProbabilityError": -0.015773004030405262
+            },
+            "candidate": {
+              "games": 3283,
+              "accuracy": 0.7065184282668291,
+              "brier": 0.19762981793720683,
+              "logLoss": 0.5823377428327366,
+              "marginMAE": 13.461720223898913,
+              "calibrationError10Bins": 0.08695896973950544,
+              "meanProbabilityError": -0.015773031014948972
+            },
+            "pairedSensitivity": {
+              "blocks": 81,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0,
+                  "sensitivity95": [
+                    0,
+                    0
+                  ]
+                },
+                "brier": {
+                  "difference": 1.993385328693179e-8,
+                  "sensitivity95": [
+                    8.672326903106933e-9,
+                    3.30173143991288e-8
+                  ]
+                },
+                "logLoss": {
+                  "difference": 4.142558347590355e-8,
+                  "sensitivity95": [
+                    1.8195147355241303e-8,
+                    6.866157680477905e-8
+                  ]
+                }
+              }
+            }
+          },
+          "frozenCalibrated": {
+            "original": {
+              "games": 3283,
+              "accuracy": 0.7065184282668291,
+              "brier": 0.18566987598129778,
+              "logLoss": 0.548054037910362,
+              "marginMAE": 13.461718321624174,
+              "calibrationError10Bins": 0.027437432901433863,
+              "meanProbabilityError": 0.017147894741735233
+            },
+            "candidate": {
+              "games": 3283,
+              "accuracy": 0.7065184282668291,
+              "brier": 0.1856699191777135,
+              "logLoss": 0.548054145811029,
+              "marginMAE": 13.461720223898913,
+              "calibrationError10Bins": 0.027437419573531904,
+              "meanProbabilityError": 0.017147842202561138
+            },
+            "pairedSensitivity": {
+              "blocks": 81,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0,
+                  "sensitivity95": [
+                    0,
+                    0
+                  ]
+                },
+                "brier": {
+                  "difference": 4.319641516648924e-8,
+                  "sensitivity95": [
+                    2.2697121789706108e-8,
+                    6.63750941998385e-8
+                  ]
+                },
+                "logLoss": {
+                  "difference": 1.0790066591941086e-7,
+                  "sensitivity95": [
+                    5.976374083252683e-8,
+                    1.6441481466604638e-7
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "historical-coverage-v1": {
+      "ownTargetGames": 7829,
+      "additionalTargets": 80,
+      "divisionMetrics": {
+        "FBS-FBS": {
+          "baselineScale14": {
+            "original": {
+              "games": 3864,
+              "accuracy": 0.7093685300207039,
+              "brier": 0.19814467509830075,
+              "logLoss": 0.5832868582605675,
+              "marginMAE": 13.17965493834949,
+              "calibrationError10Bins": 0.09207054737987372,
+              "meanProbabilityError": -0.031186368178713862
+            },
+            "candidate": {
+              "games": 3864,
+              "accuracy": 0.7096273291925466,
+              "brier": 0.1980258917545738,
+              "logLoss": 0.5830279448605286,
+              "marginMAE": 13.175025307741853,
+              "calibrationError10Bins": 0.09222121504915826,
+              "meanProbabilityError": -0.031151146281840337
+            },
+            "pairedSensitivity": {
+              "blocks": 80,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0.0002587991718426501,
+                  "sensitivity95": [
+                    -0.0030816640986132513,
+                    0.003899142188718482
+                  ]
+                },
+                "brier": {
+                  "difference": -0.00011878334372747593,
+                  "sensitivity95": [
+                    -0.00029209401836391294,
+                    0.00003012902209443295
+                  ]
+                },
+                "logLoss": {
+                  "difference": -0.0002589134000389532,
+                  "sensitivity95": [
+                    -0.0006175987347950902,
+                    0.0000526082935608063
+                  ]
+                }
+              }
+            }
+          },
+          "frozenCalibrated": {
+            "original": {
+              "games": 3864,
+              "accuracy": 0.7093685300207039,
+              "brier": 0.18585633378139155,
+              "logLoss": 0.5491737365809596,
+              "marginMAE": 13.17965493834949,
+              "calibrationError10Bins": 0.024716688067406248,
+              "meanProbabilityError": 0.010741173783768257
+            },
+            "candidate": {
+              "games": 3864,
+              "accuracy": 0.7096273291925466,
+              "brier": 0.18568183507870795,
+              "logLoss": 0.5487198842946994,
+              "marginMAE": 13.175025307741853,
+              "calibrationError10Bins": 0.02535421119119476,
+              "meanProbabilityError": 0.010810058148890108
+            },
+            "pairedSensitivity": {
+              "blocks": 80,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0.0002587991718426501,
+                  "sensitivity95": [
+                    -0.0030816640986132513,
+                    0.003899142188718482
+                  ]
+                },
+                "brier": {
+                  "difference": -0.00017449870268298762,
+                  "sensitivity95": [
+                    -0.0004958818981881539,
+                    0.00012027937528023097
+                  ]
+                },
+                "logLoss": {
+                  "difference": -0.0004538522862609384,
+                  "sensitivity95": [
+                    -0.0012216335003852542,
+                    0.00023414708178476693
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "FBS-FCS": {
+          "baselineScale14": {
+            "original": {
+              "games": 602,
+              "accuracy": 0.8837209302325582,
+              "brier": 0.1385911710926362,
+              "logLoss": 0.4544839655955948,
+              "marginMAE": 23.17845160746677,
+              "calibrationError10Bins": 0.29649306313523266,
+              "meanProbabilityError": -0.2964930631352324
+            },
+            "candidate": {
+              "games": 602,
+              "accuracy": 0.8853820598006644,
+              "brier": 0.13855966278312637,
+              "logLoss": 0.45439448014647704,
+              "marginMAE": 23.183172268341966,
+              "calibrationError10Bins": 0.2964454258092908,
+              "meanProbabilityError": -0.29644542580929073
+            },
+            "pairedSensitivity": {
+              "blocks": 48,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0.0016611295681063123,
+                  "sensitivity95": [
+                    0,
+                    0.005494505494505495
+                  ]
+                },
+                "brier": {
+                  "difference": -0.00003150830950995229,
+                  "sensitivity95": [
+                    -0.00026524227768101924,
+                    0.00019790618350268855
+                  ]
+                },
+                "logLoss": {
+                  "difference": -0.00008948544911835724,
+                  "sensitivity95": [
+                    -0.0006194692849795716,
+                    0.00043424619608836164
+                  ]
+                }
+              }
+            }
+          },
+          "frozenCalibrated": {
+            "original": {
+              "games": 602,
+              "accuracy": 0.8837209302325582,
+              "brier": 0.1385911710926362,
+              "logLoss": 0.4544839655955948,
+              "marginMAE": 23.17845160746677,
+              "calibrationError10Bins": 0.29649306313523266,
+              "meanProbabilityError": -0.2964930631352324
+            },
+            "candidate": {
+              "games": 602,
+              "accuracy": 0.8853820598006644,
+              "brier": 0.13855966278312637,
+              "logLoss": 0.45439448014647704,
+              "marginMAE": 23.183172268341966,
+              "calibrationError10Bins": 0.2964454258092908,
+              "meanProbabilityError": -0.29644542580929073
+            },
+            "pairedSensitivity": {
+              "blocks": 48,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0.0016611295681063123,
+                  "sensitivity95": [
+                    0,
+                    0.005494505494505495
+                  ]
+                },
+                "brier": {
+                  "difference": -0.00003150830950995229,
+                  "sensitivity95": [
+                    -0.00026524227768101924,
+                    0.00019790618350268855
+                  ]
+                },
+                "logLoss": {
+                  "difference": -0.00008948544911835724,
+                  "sensitivity95": [
+                    -0.0006194692849795716,
+                    0.00043424619608836164
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "FCS-FCS": {
+          "baselineScale14": {
+            "original": {
+              "games": 3283,
+              "accuracy": 0.7065184282668291,
+              "brier": 0.19762979800335392,
+              "logLoss": 0.5823377014071521,
+              "marginMAE": 13.461718321624174,
+              "calibrationError10Bins": 0.08695899611517934,
+              "meanProbabilityError": -0.015773004030405262
+            },
+            "candidate": {
+              "games": 3283,
+              "accuracy": 0.708041425525434,
+              "brier": 0.1976327764264839,
+              "logLoss": 0.5823416766797743,
+              "marginMAE": 13.461927416664652,
+              "calibrationError10Bins": 0.08848518140948088,
+              "meanProbabilityError": -0.015770252653938027
+            },
+            "pairedSensitivity": {
+              "blocks": 81,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0.0015229972586049345,
+                  "sensitivity95": [
+                    0,
+                    0.0031525851197982345
+                  ]
+                },
+                "brier": {
+                  "difference": 0.0000029784231304811757,
+                  "sensitivity95": [
+                    -0.000022140101624053016,
+                    0.00002658768160488329
+                  ]
+                },
+                "logLoss": {
+                  "difference": 0.000003975272622403166,
+                  "sensitivity95": [
+                    -0.00004860046575167166,
+                    0.00005354337185481496
+                  ]
+                }
+              }
+            }
+          },
+          "frozenCalibrated": {
+            "original": {
+              "games": 3283,
+              "accuracy": 0.7065184282668291,
+              "brier": 0.18566987598129778,
+              "logLoss": 0.548054037910362,
+              "marginMAE": 13.461718321624174,
+              "calibrationError10Bins": 0.027437432901433863,
+              "meanProbabilityError": 0.017147894741735233
+            },
+            "candidate": {
+              "games": 3283,
+              "accuracy": 0.708041425525434,
+              "brier": 0.18567840331231347,
+              "logLoss": 0.5480639431928086,
+              "marginMAE": 13.461927416664652,
+              "calibrationError10Bins": 0.025387891323997002,
+              "meanProbabilityError": 0.0171480393221928
+            },
+            "pairedSensitivity": {
+              "blocks": 81,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0.0015229972586049345,
+                  "sensitivity95": [
+                    0,
+                    0.0031525851197982345
+                  ]
+                },
+                "brier": {
+                  "difference": 0.00000852733101498539,
+                  "sensitivity95": [
+                    -0.00003404611960800075,
+                    0.00004918759374577469
+                  ]
+                },
+                "logLoss": {
+                  "difference": 0.000009905282445713007,
+                  "sensitivity95": [
+                    -0.00009034185117965388,
+                    0.0001068726675987133
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "fcs-coverage-v1": {
+      "ownTargetGames": 7839,
+      "additionalTargets": 90,
+      "divisionMetrics": {
+        "FBS-FBS": {
+          "baselineScale14": {
+            "original": {
+              "games": 3864,
+              "accuracy": 0.7093685300207039,
+              "brier": 0.19814467509830075,
+              "logLoss": 0.5832868582605675,
+              "marginMAE": 13.17965493834949,
+              "calibrationError10Bins": 0.09207054737987372,
+              "meanProbabilityError": -0.031186368178713862
+            },
+            "candidate": {
+              "games": 3864,
+              "accuracy": 0.7093685300207039,
+              "brier": 0.19801824972181514,
+              "logLoss": 0.5830118513259221,
+              "marginMAE": 13.174477633099782,
+              "calibrationError10Bins": 0.09194026281091221,
+              "meanProbabilityError": -0.031154496965918963
+            },
+            "pairedSensitivity": {
+              "blocks": 80,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0,
+                  "sensitivity95": [
+                    -0.003338469440164355,
+                    0.0036891293654697493
+                  ]
+                },
+                "brier": {
+                  "difference": -0.00012642537648548897,
+                  "sensitivity95": [
+                    -0.0002999988712014743,
+                    0.000027938766488702497
+                  ]
+                },
+                "logLoss": {
+                  "difference": -0.0002750069346477183,
+                  "sensitivity95": [
+                    -0.0006349475836409434,
+                    0.000044597165218793684
+                  ]
+                }
+              }
+            }
+          },
+          "frozenCalibrated": {
+            "original": {
+              "games": 3864,
+              "accuracy": 0.7093685300207039,
+              "brier": 0.18585633378139155,
+              "logLoss": 0.5491737365809596,
+              "marginMAE": 13.17965493834949,
+              "calibrationError10Bins": 0.024716688067406248,
+              "meanProbabilityError": 0.010741173783768257
+            },
+            "candidate": {
+              "games": 3864,
+              "accuracy": 0.7093685300207039,
+              "brier": 0.18567539435435168,
+              "logLoss": 0.5487156242107243,
+              "marginMAE": 13.174477633099782,
+              "calibrationError10Bins": 0.025423835951579855,
+              "meanProbabilityError": 0.010797032163067039
+            },
+            "pairedSensitivity": {
+              "blocks": 80,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0,
+                  "sensitivity95": [
+                    -0.003338469440164355,
+                    0.0036891293654697493
+                  ]
+                },
+                "brier": {
+                  "difference": -0.00018093942703935009,
+                  "sensitivity95": [
+                    -0.0005051169098560464,
+                    0.00011615519461418935
+                  ]
+                },
+                "logLoss": {
+                  "difference": -0.00045811237023570873,
+                  "sensitivity95": [
+                    -0.0012206235203999056,
+                    0.00023850070911489538
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "FBS-FCS": {
+          "baselineScale14": {
+            "original": {
+              "games": 602,
+              "accuracy": 0.8837209302325582,
+              "brier": 0.1385911710926362,
+              "logLoss": 0.4544839655955948,
+              "marginMAE": 23.17845160746677,
+              "calibrationError10Bins": 0.29649306313523266,
+              "meanProbabilityError": -0.2964930631352324
+            },
+            "candidate": {
+              "games": 602,
+              "accuracy": 0.8853820598006644,
+              "brier": 0.13852677629162766,
+              "logLoss": 0.45431724425198877,
+              "marginMAE": 23.179936214091864,
+              "calibrationError10Bins": 0.2963922578474588,
+              "meanProbabilityError": -0.2963922578474589
+            },
+            "pairedSensitivity": {
+              "blocks": 48,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0.0016611295681063123,
+                  "sensitivity95": [
+                    0,
+                    0.005494505494505495
+                  ]
+                },
+                "brier": {
+                  "difference": -0.00006439480100862691,
+                  "sensitivity95": [
+                    -0.00029510477840585586,
+                    0.0001624722546307721
+                  ]
+                },
+                "logLoss": {
+                  "difference": -0.00016672134360615586,
+                  "sensitivity95": [
+                    -0.0006837654427300796,
+                    0.00036379396396297786
+                  ]
+                }
+              }
+            }
+          },
+          "frozenCalibrated": {
+            "original": {
+              "games": 602,
+              "accuracy": 0.8837209302325582,
+              "brier": 0.1385911710926362,
+              "logLoss": 0.4544839655955948,
+              "marginMAE": 23.17845160746677,
+              "calibrationError10Bins": 0.29649306313523266,
+              "meanProbabilityError": -0.2964930631352324
+            },
+            "candidate": {
+              "games": 602,
+              "accuracy": 0.8853820598006644,
+              "brier": 0.13852677629162766,
+              "logLoss": 0.45431724425198877,
+              "marginMAE": 23.179936214091864,
+              "calibrationError10Bins": 0.2963922578474588,
+              "meanProbabilityError": -0.2963922578474589
+            },
+            "pairedSensitivity": {
+              "blocks": 48,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0.0016611295681063123,
+                  "sensitivity95": [
+                    0,
+                    0.005494505494505495
+                  ]
+                },
+                "brier": {
+                  "difference": -0.00006439480100862691,
+                  "sensitivity95": [
+                    -0.00029510477840585586,
+                    0.0001624722546307721
+                  ]
+                },
+                "logLoss": {
+                  "difference": -0.00016672134360615586,
+                  "sensitivity95": [
+                    -0.0006837654427300796,
+                    0.00036379396396297786
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "FCS-FCS": {
+          "baselineScale14": {
+            "original": {
+              "games": 3283,
+              "accuracy": 0.7065184282668291,
+              "brier": 0.19762979800335392,
+              "logLoss": 0.5823377014071521,
+              "marginMAE": 13.458976926558686,
+              "calibrationError10Bins": 0.08695899611517934,
+              "meanProbabilityError": -0.015773004030405262
+            },
+            "candidate": {
+              "games": 3283,
+              "accuracy": 0.708041425525434,
+              "brier": 0.1976345246409263,
+              "logLoss": 0.582348551832899,
+              "marginMAE": 13.460577793890367,
+              "calibrationError10Bins": 0.08851241622391919,
+              "meanProbabilityError": -0.015791754630057647
+            },
+            "pairedSensitivity": {
+              "blocks": 81,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0.0015229972586049345,
+                  "sensitivity95": [
+                    -0.0002945508100147275,
+                    0.0034129692832764505
+                  ]
+                },
+                "brier": {
+                  "difference": 0.000004726637572864675,
+                  "sensitivity95": [
+                    -0.0000362377977714694,
+                    0.000047302660375071685
+                  ]
+                },
+                "logLoss": {
+                  "difference": 0.000010850425745955024,
+                  "sensitivity95": [
+                    -0.00007590048876452832,
+                    0.00010420893384617402
+                  ]
+                }
+              }
+            }
+          },
+          "frozenCalibrated": {
+            "original": {
+              "games": 3283,
+              "accuracy": 0.7065184282668291,
+              "brier": 0.18566987598129778,
+              "logLoss": 0.548054037910362,
+              "marginMAE": 13.458976926558686,
+              "calibrationError10Bins": 0.027437432901433863,
+              "meanProbabilityError": 0.017147894741735233
+            },
+            "candidate": {
+              "games": 3283,
+              "accuracy": 0.708041425525434,
+              "brier": 0.18567178579997015,
+              "logLoss": 0.5480343203603992,
+              "marginMAE": 13.460577793890367,
+              "calibrationError10Bins": 0.025427231550724946,
+              "meanProbabilityError": 0.01712233226938433
+            },
+            "pairedSensitivity": {
+              "blocks": 81,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0.0015229972586049345,
+                  "sensitivity95": [
+                    -0.0002945508100147275,
+                    0.0034129692832764505
+                  ]
+                },
+                "brier": {
+                  "difference": 0.0000019098186719562176,
+                  "sensitivity95": [
+                    -0.00007453402069309566,
+                    0.00008281716292398568
+                  ]
+                },
+                "logLoss": {
+                  "difference": -0.000019717549962676763,
+                  "sensitivity95": [
+                    -0.0001983998314559282,
+                    0.00016443189919517742
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "original-start-2014": {
+      "ownTargetGames": 7749,
+      "additionalTargets": 0,
+      "divisionMetrics": {
+        "FBS-FBS": {
+          "baselineScale14": {
+            "original": {
+              "games": 3864,
+              "accuracy": 0.7093685300207039,
+              "brier": 0.19814467509830075,
+              "logLoss": 0.5832868582605675,
+              "marginMAE": 13.17965493834949,
+              "calibrationError10Bins": 0.09207054737987372,
+              "meanProbabilityError": -0.031186368178713862
+            },
+            "candidate": {
+              "games": 3864,
+              "accuracy": 0.7096273291925466,
+              "brier": 0.1981521851304341,
+              "logLoss": 0.5833035686264199,
+              "marginMAE": 13.180190460660054,
+              "calibrationError10Bins": 0.09233881493038117,
+              "meanProbabilityError": -0.03119403431163774
+            },
+            "pairedSensitivity": {
+              "blocks": 80,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0.0002587991718426501,
+                  "sensitivity95": [
+                    0,
+                    0.000832870627429206
+                  ]
+                },
+                "brier": {
+                  "difference": 0.0000075100321328854994,
+                  "sensitivity95": [
+                    0.000003856251456027719,
+                    0.000012575853011447771
+                  ]
+                },
+                "logLoss": {
+                  "difference": 0.000016710365851722606,
+                  "sensitivity95": [
+                    0.000008885186154053896,
+                    0.000027454036890242016
+                  ]
+                }
+              }
+            }
+          },
+          "frozenCalibrated": {
+            "original": {
+              "games": 3864,
+              "accuracy": 0.7093685300207039,
+              "brier": 0.18585633378139155,
+              "logLoss": 0.5491737365809596,
+              "marginMAE": 13.17965493834949,
+              "calibrationError10Bins": 0.024716688067406248,
+              "meanProbabilityError": 0.010741173783768257
+            },
+            "candidate": {
+              "games": 3864,
+              "accuracy": 0.7096273291925466,
+              "brier": 0.18586581827694196,
+              "logLoss": 0.5491987884554351,
+              "marginMAE": 13.180190460660054,
+              "calibrationError10Bins": 0.024398381491443598,
+              "meanProbabilityError": 0.010729464492882207
+            },
+            "pairedSensitivity": {
+              "blocks": 80,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0.0002587991718426501,
+                  "sensitivity95": [
+                    0,
+                    0.000832870627429206
+                  ]
+                },
+                "brier": {
+                  "difference": 0.000009484495550680163,
+                  "sensitivity95": [
+                    0.000004048828310200755,
+                    0.000017128345962564904
+                  ]
+                },
+                "logLoss": {
+                  "difference": 0.000025051874474941933,
+                  "sensitivity95": [
+                    0.000011513908221091156,
+                    0.00004374684063843394
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "FBS-FCS": {
+          "baselineScale14": {
+            "original": {
+              "games": 602,
+              "accuracy": 0.8837209302325582,
+              "brier": 0.1385911710926362,
+              "logLoss": 0.4544839655955948,
+              "marginMAE": 23.17845160746677,
+              "calibrationError10Bins": 0.29649306313523266,
+              "meanProbabilityError": -0.2964930631352324
+            },
+            "candidate": {
+              "games": 602,
+              "accuracy": 0.8820598006644518,
+              "brier": 0.13881229735606948,
+              "logLoss": 0.45497728251480374,
+              "marginMAE": 23.196372140244193,
+              "calibrationError10Bins": 0.29686183155449053,
+              "meanProbabilityError": -0.29686183155449025
+            },
+            "pairedSensitivity": {
+              "blocks": 48,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": -0.0016611295681063123,
+                  "sensitivity95": [
+                    -0.005474452554744526,
+                    0
+                  ]
+                },
+                "brier": {
+                  "difference": 0.00022112626343341024,
+                  "sensitivity95": [
+                    0.00013697431021273033,
+                    0.000321419391384988
+                  ]
+                },
+                "logLoss": {
+                  "difference": 0.0004933169192086186,
+                  "sensitivity95": [
+                    0.00031063278781902923,
+                    0.0007136133110498312
+                  ]
+                }
+              }
+            }
+          },
+          "frozenCalibrated": {
+            "original": {
+              "games": 602,
+              "accuracy": 0.8837209302325582,
+              "brier": 0.1385911710926362,
+              "logLoss": 0.4544839655955948,
+              "marginMAE": 23.17845160746677,
+              "calibrationError10Bins": 0.29649306313523266,
+              "meanProbabilityError": -0.2964930631352324
+            },
+            "candidate": {
+              "games": 602,
+              "accuracy": 0.8820598006644518,
+              "brier": 0.13881229735606948,
+              "logLoss": 0.45497728251480374,
+              "marginMAE": 23.196372140244193,
+              "calibrationError10Bins": 0.29686183155449053,
+              "meanProbabilityError": -0.29686183155449025
+            },
+            "pairedSensitivity": {
+              "blocks": 48,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": -0.0016611295681063123,
+                  "sensitivity95": [
+                    -0.005474452554744526,
+                    0
+                  ]
+                },
+                "brier": {
+                  "difference": 0.00022112626343341024,
+                  "sensitivity95": [
+                    0.00013697431021273033,
+                    0.000321419391384988
+                  ]
+                },
+                "logLoss": {
+                  "difference": 0.0004933169192086186,
+                  "sensitivity95": [
+                    0.00031063278781902923,
+                    0.0007136133110498312
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "FCS-FCS": {
+          "baselineScale14": {
+            "original": {
+              "games": 3283,
+              "accuracy": 0.7065184282668291,
+              "brier": 0.19762979800335392,
+              "logLoss": 0.5823377014071521,
+              "marginMAE": 13.461718321624174,
+              "calibrationError10Bins": 0.08695899611517934,
+              "meanProbabilityError": -0.015773004030405262
+            },
+            "candidate": {
+              "games": 3283,
+              "accuracy": 0.7068230277185501,
+              "brier": 0.19763537808083873,
+              "logLoss": 0.5823491510723061,
+              "marginMAE": 13.462240494500188,
+              "calibrationError10Bins": 0.08725498012158113,
+              "meanProbabilityError": -0.015780846410837986
+            },
+            "pairedSensitivity": {
+              "blocks": 81,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0.0003045994517209869,
+                  "sensitivity95": [
+                    0,
+                    0.0009560229445506692
+                  ]
+                },
+                "brier": {
+                  "difference": 0.000005580077485853393,
+                  "sensitivity95": [
+                    0.0000028314348117168104,
+                    0.00000886009779742674
+                  ]
+                },
+                "logLoss": {
+                  "difference": 0.000011449665151984808,
+                  "sensitivity95": [
+                    0.000005684837918546852,
+                    0.00001848593181849738
+                  ]
+                }
+              }
+            }
+          },
+          "frozenCalibrated": {
+            "original": {
+              "games": 3283,
+              "accuracy": 0.7065184282668291,
+              "brier": 0.18566987598129778,
+              "logLoss": 0.548054037910362,
+              "marginMAE": 13.461718321624174,
+              "calibrationError10Bins": 0.027437432901433863,
+              "meanProbabilityError": 0.017147894741735233
+            },
+            "candidate": {
+              "games": 3283,
+              "accuracy": 0.7068230277185501,
+              "brier": 0.18568273418515474,
+              "logLoss": 0.5480859838025783,
+              "marginMAE": 13.462240494500188,
+              "calibrationError10Bins": 0.026274248150330703,
+              "meanProbabilityError": 0.017132505458294842
+            },
+            "pairedSensitivity": {
+              "blocks": 81,
+              "replicates": 2000,
+              "seed": 20261118,
+              "candidateMinusOriginal": {
+                "accuracy": {
+                  "difference": 0.0003045994517209869,
+                  "sensitivity95": [
+                    0,
+                    0.0009560229445506692
+                  ]
+                },
+                "brier": {
+                  "difference": 0.000012858203856582366,
+                  "sensitivity95": [
+                    0.000007731525997298524,
+                    0.00001867660196162839
+                  ]
+                },
+                "logLoss": {
+                  "difference": 0.00003194589221720207,
+                  "sensitivity95": [
+                    0.00001980290293756389,
+                    0.00004662594954264138
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "allSeasonMissingTotal": null,
+  "currentSensitivity": {
+    "asOf": "2026-11-18T12:30:14.250Z",
+    "snapshotHash": "a36df50d7f94c050e03b2d5df03cba802067d8dd2a1732f715a3ea3cc57dc4c1",
+    "maximumFbsStrengthChange": 0.005245471010986891,
+    "predictivePositionsChanged": 4,
+    "changed": [
+      {
+        "team": "UCLA",
+        "originalRank": 19,
+        "sensitivityRank": 18,
+        "strengthChange": 0.00014662939924843914
+      },
+      {
+        "team": "Arizona",
+        "originalRank": 18,
+        "sensitivityRank": 19,
+        "strengthChange": -0.004969133322566845
+      },
+      {
+        "team": "Baylor",
+        "originalRank": 27,
+        "sensitivityRank": 28,
+        "strengthChange": -0.0042111103060971785
+      },
+      {
+        "team": "Penn State",
+        "originalRank": 28,
+        "sensitivityRank": 27,
+        "strengthChange": 0.0017536498472464793
+      }
+    ],
+    "sorDependsOnHistoricalPrior": false
+  },
+  "productionChanges": false,
+  "cfbdCalls": 0
+}

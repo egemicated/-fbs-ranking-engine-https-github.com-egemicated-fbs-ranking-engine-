@@ -1,0 +1,364 @@
+TAP version 13
+# Subtest: same-week and future outcomes cannot alter earlier checkpoints
+ok 1 - same-week and future outcomes cannot alter earlier checkpoints
+  ---
+  duration_ms: 11.4935
+  type: 'test'
+  ...
+# Subtest: 24-hour cutoff uses timezone-aware actual kickoff, completion and seen identity
+ok 2 - 24-hour cutoff uses timezone-aware actual kickoff, completion and seen identity
+  ---
+  duration_ms: 0.6181
+  type: 'test'
+  ...
+# Subtest: rescheduled earlier-week game stays unavailable until its actual date
+ok 3 - rescheduled earlier-week game stays unavailable until its actual date
+  ---
+  duration_ms: 0.5844
+  type: 'test'
+  ...
+# Subtest: prior-season game later than next-season checkpoint is rejected
+ok 4 - prior-season game later than next-season checkpoint is rejected
+  ---
+  duration_ms: 0.8805
+  type: 'test'
+  ...
+# Subtest: all requested populations use stable season-specific teams
+ok 5 - all requested populations use stable season-specific teams
+  ---
+  duration_ms: 0.4349
+  type: 'test'
+  ...
+# Subtest: duplicate identity flag preserves rematches and normalizes UTC date
+ok 6 - duplicate identity flag preserves rematches and normalizes UTC date
+  ---
+  duration_ms: 0.2536
+  type: 'test'
+  ...
+# Subtest: primary school aliases resolve by explicit stable ID instead of creating false missing games
+ok 7 - primary school aliases resolve by explicit stable ID instead of creating false missing games
+  ---
+  duration_ms: 0.1562
+  type: 'test'
+  ...
+# Subtest: source addition validation refuses inconsistent winners and unavailable calendar identities
+ok 8 - source addition validation refuses inconsistent winners and unavailable calendar identities
+  ---
+  duration_ms: 5.6753
+  type: 'test'
+  ...
+# Subtest: same-game comparisons reject lost targets and changed winners; score corrections share a target
+ok 9 - same-game comparisons reject lost targets and changed winners; score corrections share a target
+  ---
+  duration_ms: 1.2877
+  type: 'test'
+  ...
+# Subtest: probability and calibration metrics respect empty support and bin counts
+ok 10 - probability and calibration metrics respect empty support and bin counts
+  ---
+  duration_ms: 1.7422
+  type: 'test'
+  ...
+# Subtest: paired week-block resampling is deterministic and identity comparison is exactly zero
+ok 11 - paired week-block resampling is deterministic and identity comparison is exactly zero
+  ---
+  duration_ms: 1.2454
+  type: 'test'
+  ...
+# Subtest: division SOR agrees with complete excluded-game refits and enumerated record tails
+ok 12 - division SOR agrees with complete excluded-game refits and enumerated record tails
+  ---
+  duration_ms: 2.8135
+  type: 'test'
+  ...
+# Subtest: zero gap exactly reproduces frozen v1 without changing its implementation
+ok 13 - zero gap exactly reproduces frozen v1 without changing its implementation
+  ---
+  duration_ms: 1.3337
+  type: 'test'
+  ...
+# Subtest: orientation, order, names and polls cannot change numeric evidence
+ok 14 - orientation, order, names and polls cannot change numeric evidence
+  ---
+  duration_ms: 0.6355
+  type: 'test'
+  ...
+# Subtest: context ties are retained, FBS ties and unknown direct opponent divisions are rejected
+ok 15 - context ties are retained, FBS ties and unknown direct opponent divisions are rejected
+  ---
+  duration_ms: 0.6779
+  type: 'test'
+  ...
+# Subtest: parameters are explicit finite numbers with no fitted sign restrictions
+ok 16 - parameters are explicit finite numbers with no fitted sign restrictions
+  ---
+  duration_ms: 0.4078
+  type: 'test'
+  ...
+# Subtest: prospective probabilities use full current ratings, signed division gap and venue
+ok 17 - prospective probabilities use full current ratings, signed division gap and venue
+  ---
+  duration_ms: 0.5235
+  type: 'test'
+  ...
+# Subtest: forecast division gap leaves fixed-coefficient FBS-FBS probabilities unchanged
+ok 18 - forecast division gap leaves fixed-coefficient FBS-FBS probabilities unchanged
+  ---
+  duration_ms: 0.3111
+  type: 'test'
+  ...
+# Subtest: exact LOO SOR matches complete refits and exhaustive outcome probabilities, including rematches
+ok 19 - exact LOO SOR matches complete refits and exhaustive outcome probabilities, including rematches
+  ---
+  duration_ms: 3.0756
+  type: 'test'
+  ...
+# Subtest: opposite edge orientation preserves scores and venue effects
+ok 20 - opposite edge orientation preserves scores and venue effects
+  ---
+  duration_ms: 0.7491
+  type: 'test'
+  ...
+# Subtest: input order, conference labels, team names and extraneous poll/margin fields do not affect numeric results
+ok 21 - input order, conference labels, team names and extraneous poll/margin fields do not affect numeric results
+  ---
+  duration_ms: 1.1219
+  type: 'test'
+  ...
+# Subtest: idle FBS teams are included in the reference population and remain unranked
+ok 22 - idle FBS teams are included in the reference population and remain unranked
+  ---
+  duration_ms: 0.3678
+  type: 'test'
+  ...
+# Subtest: equal evidence shares rank and lower-division teams are modeled but not published
+ok 23 - equal evidence shares rank and lower-division teams are modeled but not published
+  ---
+  duration_ms: 0.3364
+  type: 'test'
+  ...
+# Subtest: neutral and custom zero-home effects agree with brute force; function does not mutate inputs
+ok 24 - neutral and custom zero-home effects agree with brute force; function does not mutate inputs
+  ---
+  duration_ms: 0.3865
+  type: 'test'
+  ...
+# Subtest: non-FBS zero-outcome context edges contribute to the Laplacian without inventing FBS ties
+ok 25 - non-FBS zero-outcome context edges contribute to the Laplacian without inventing FBS ties
+  ---
+  duration_ms: 0.5478
+  type: 'test'
+  ...
+# Subtest: rejects bad identities, duplicate occurrences, ties and invalid venues
+ok 26 - rejects bad identities, duplicate occurrences, ties and invalid venues
+  ---
+  duration_ms: 0.5571
+  type: 'test'
+  ...
+# Subtest: rejects nonfinite, negative or unrecognized parameters
+ok 27 - rejects nonfinite, negative or unrecognized parameters
+  ---
+  duration_ms: 0.5716
+  type: 'test'
+  ...
+# Subtest: confirmed canceled zero-zero slots are quarantined while ties, rematches and uncertain records survive
+ok 28 - confirmed canceled zero-zero slots are quarantined while ties, rematches and uncertain records survive
+  ---
+  duration_ms: 1.8783
+  type: 'test'
+  ...
+# Subtest: CFBD ingestion records the narrow cancellation correction in its source audit
+ok 29 - CFBD ingestion records the narrow cancellation correction in its source audit
+  ---
+  duration_ms: 0.5548
+  type: 'test'
+  ...
+# Subtest: logical duplicate detection ignores provider IDs, kickoff offsets and home/away encoding
+ok 30 - logical duplicate detection ignores provider IDs, kickoff offsets and home/away encoding
+  ---
+  duration_ms: 1.7099
+  type: 'test'
+  ...
+# Subtest: conflicting duplicate scores and venues require review; rematches on later dates survive
+ok 31 - conflicting duplicate scores and venues require review; rematches on later dates survive
+  ---
+  duration_ms: 1.0282
+  type: 'test'
+  ...
+# Subtest: CFBD normalizer blocks ambiguous duplicates before they can reach a ranking
+ok 32 - CFBD normalizer blocks ambiguous duplicates before they can reach a ranking
+  ---
+  duration_ms: 0.3658
+  type: 'test'
+  ...
+# Subtest: historical CSV audit exposes timestamp-shifted duplicates without silently adjudicating venue
+ok 33 - historical CSV audit exposes timestamp-shifted duplicates without silently adjudicating venue
+  ---
+  duration_ms: 0.6766
+  type: 'test'
+  ...
+# Subtest: evidence contains only allowlisted responses, hashes and data; failed attempts clear stale snapshots
+ok 34 - evidence contains only allowlisted responses, hashes and data; failed attempts clear stale snapshots
+  ---
+  duration_ms: 19.8043
+  type: 'test'
+  ...
+# Subtest: an older cached response is not attributed to a new failed fetch
+ok 35 - an older cached response is not attributed to a new failed fetch
+  ---
+  duration_ms: 2.9226
+  type: 'test'
+  ...
+# Subtest: rejected refresh preserves published bytes and captures source evidence using two mocked calls
+ok 36 - rejected refresh preserves published bytes and captures source evidence using two mocked calls
+  ---
+  duration_ms: 100.0707
+  type: 'test'
+  ...
+# Subtest: successful refresh captures reproducible evidence without extra provider requests
+ok 37 - successful refresh captures reproducible evidence without extra provider requests
+  ---
+  duration_ms: 114.0652
+  type: 'test'
+  ...
+# Subtest: single win has analytically correct Colley scores; idle teams stay unranked
+ok 38 - single win has analytically correct Colley scores; idle teams stay unranked
+  ---
+  duration_ms: 9.9068
+  type: 'test'
+  ...
+# Subtest: team names, conferences, input order and score margins do not change earned scores
+ok 39 - team names, conferences, input order and score margins do not change earned scores
+  ---
+  duration_ms: 1.0865
+  type: 'test'
+  ...
+# Subtest: historical ratings influence strength only and identical inputs are deterministic
+ok 40 - historical ratings influence strength only and identical inputs are deterministic
+  ---
+  duration_ms: 0.8124
+  type: 'test'
+  ...
+# Subtest: stronger opponents earn more schedule-adjusted achievement
+ok 41 - stronger opponents earn more schedule-adjusted achievement
+  ---
+  duration_ms: 0.2927
+  type: 'test'
+  ...
+# Subtest: cutoff excludes future results and requires a completed score
+ok 42 - cutoff excludes future results and requires a completed score
+  ---
+  duration_ms: 0.3585
+  type: 'test'
+  ...
+# Subtest: home advantage reverses correctly and neutral games are symmetric
+ok 43 - home advantage reverses correctly and neutral games are symmetric
+  ---
+  duration_ms: 0.2114
+  type: 'test'
+  ...
+# Subtest: backtest freezes all games in a week and holds out future scores
+ok 44 - backtest freezes all games in a week and holds out future scores
+  ---
+  duration_ms: 0.9416
+  type: 'test'
+  ...
+# Subtest: duplicate games and invalid parameters fail instead of corrupting rankings
+ok 45 - duplicate games and invalid parameters fail instead of corrupting rankings
+  ---
+  duration_ms: 0.1536
+  type: 'test'
+  ...
+# Subtest: CSV parser handles commas, escaped quotes and multiline fields
+ok 46 - CSV parser handles commas, escaped quotes and multiline fields
+  ---
+  duration_ms: 0.2685
+  type: 'test'
+  ...
+# Subtest: CSV ingest deliberately strips third-party ratings
+ok 47 - CSV ingest deliberately strips third-party ratings
+  ---
+  duration_ms: 1.2738
+  type: 'test'
+  ...
+# Subtest: CFBD ingest recognizes overtime from tied regulation period totals
+ok 48 - CFBD ingest recognizes overtime from tied regulation period totals
+  ---
+  duration_ms: 0.5538
+  type: 'test'
+  ...
+# Subtest: CFBD opponents with absent classifications remain modeled but are not labeled FBS
+ok 49 - CFBD opponents with absent classifications remain modeled but are not labeled FBS
+  ---
+  duration_ms: 0.2424
+  type: 'test'
+  ...
+# Subtest: CFBD complete flags without valid final scores are quarantined and audited
+ok 50 - CFBD complete flags without valid final scores are quarantined and audited
+  ---
+  duration_ms: 0.1549
+  type: 'test'
+  ...
+# Subtest: historical priors decay across missing seasons and new teams start neutral
+ok 51 - historical priors decay across missing seasons and new teams start neutral
+  ---
+  duration_ms: 0.1994
+  type: 'test'
+  ...
+# Subtest: CSV audit excludes duplicated fixtures and incomplete finals
+ok 52 - CSV audit excludes duplicated fixtures and incomplete finals
+  ---
+  duration_ms: 0.2959
+  type: 'test'
+  ...
+# Subtest: stores only saved SOR with the correct Mountain date, byes, zero-game teams, and current opponent evidence
+ok 53 - stores only saved SOR with the correct Mountain date, byes, zero-game teams, and current opponent evidence
+  ---
+  duration_ms: 5.9719
+  type: 'test'
+  ...
+# Subtest: a midweek or unfinished Saturday is provisional and never backfills an earlier week with later results
+ok 54 - a midweek or unfinished Saturday is provisional and never backfills an earlier week with later results
+  ---
+  duration_ms: 1.4502
+  type: 'test'
+  ...
+# Subtest: a completed postseason edition does not reuse a regular-season week number
+ok 55 - a completed postseason edition does not reuse a regular-season week number
+  ---
+  duration_ms: 0.5021
+  type: 'test'
+  ...
+# Subtest: confirmed canceled slots do not keep a completed week provisional
+ok 56 - confirmed canceled slots do not keep a completed week provisional
+  ---
+  duration_ms: 0.4866
+  type: 'test'
+  ...
+# Subtest: rejects legacy Colley, stale or mismatched schedule, wrong finals, and future outcomes
+ok 57 - rejects legacy Colley, stale or mismatched schedule, wrong finals, and future outcomes
+  ---
+  duration_ms: 1.1103
+  type: 'test'
+  ...
+# Subtest: idempotent recaptures retain the original edition date and stale writes cannot erase a newer week
+ok 58 - idempotent recaptures retain the original edition date and stale writes cannot erase a newer week
+  ---
+  duration_ms: 1.789
+  type: 'test'
+  ...
+# Subtest: archive publication preserves polls, Forge, replay labels, and legacy metadata, and repairs a retry after either write
+ok 59 - archive publication preserves polls, Forge, replay labels, and legacy metadata, and repairs a retry after either write
+  ---
+  duration_ms: 25.0058
+  type: 'test'
+  ...
+1..59
+# tests 59
+# suites 0
+# pass 59
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 342.9642

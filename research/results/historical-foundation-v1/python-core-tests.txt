@@ -1,0 +1,37 @@
+test_case_game_values_reconcile_with_season_model (test_audit.AuditChecks.test_case_game_values_reconcile_with_season_model) ... ok
+test_conflicting_scores_are_not_silently_resolved (test_audit.AuditChecks.test_conflicting_scores_are_not_silently_resolved) ... ok
+test_different_ids_and_times_flag_same_game (test_audit.AuditChecks.test_different_ids_and_times_flag_same_game) ... ok
+test_known_eight_duplicates_are_detected (test_audit.AuditChecks.test_known_eight_duplicates_are_detected) ... ok
+test_orientation_and_offset_normalization (test_audit.AuditChecks.test_orientation_and_offset_normalization) ... ok
+test_real_rematches_are_preserved (test_audit.AuditChecks.test_real_rematches_are_preserved) ... ok
+test_both_extra_2013_provider_ids_are_excluded (test_repairs.RepairChecks.test_both_extra_2013_provider_ids_are_excluded) ... ok
+test_cancelled_wrong_year_and_inconsistent_winner_are_excluded (test_repairs.RepairChecks.test_cancelled_wrong_year_and_inconsistent_winner_are_excluded) ... ok
+test_incomplete_identity_or_venue_is_never_invented (test_repairs.RepairChecks.test_incomplete_identity_or_venue_is_never_invented) ... ok
+test_repaired_version_retains_original_records_except_explicit_drops (test_repairs.RepairChecks.test_repaired_version_retains_original_records_except_explicit_drops) ... ok
+test_result_whitelist_excludes_supplied_polls (test_repairs.RepairChecks.test_result_whitelist_excludes_supplied_polls) ... ok
+test_additions_cannot_overwrite_existing_id (test_fcs_repairs.FcsRepairTests.test_additions_cannot_overwrite_existing_id) ... ok
+test_ambiguous_scores_winner_venue_dates_rejected (test_fcs_repairs.FcsRepairTests.test_ambiguous_scores_winner_venue_dates_rejected) ... ok
+test_frozen_release_reconstructs_outputs_and_preserves_parent_games (test_fcs_repairs.FcsRepairTests.test_frozen_release_reconstructs_outputs_and_preserves_parent_games) ... ok
+test_future_wrong_season_unknown_node_and_fbs_rejected (test_fcs_repairs.FcsRepairTests.test_future_wrong_season_unknown_node_and_fbs_rejected) ... ok
+test_known_season_completed_fcs_match_qualifies (test_fcs_repairs.FcsRepairTests.test_known_season_completed_fcs_match_qualifies) ... ok
+test_regular_label_preserved_for_fcs_playoff (test_fcs_repairs.FcsRepairTests.test_regular_label_preserved_for_fcs_playoff) ... ok
+test_same_scores_reversed_orientation_is_still_material_conflict (test_fcs_repairs.FcsRepairTests.test_same_scores_reversed_orientation_is_still_material_conflict) ... ok
+test_score_correction_requires_exact_parent_and_cannot_change_other_fields (test_fcs_repairs.FcsRepairTests.test_score_correction_requires_exact_parent_and_cannot_change_other_fields) ... ok
+test_spring_types_require_season2020_and_spring2021_dates (test_fcs_repairs.FcsRepairTests.test_spring_types_require_season2020_and_spring2021_dates) ... ok
+test_bad_source_data_fails_explicitly (test_research.ResearchChecks.test_bad_source_data_fails_explicitly) ... ok
+test_colley_matches_the_production_implementation (test_research.ResearchChecks.test_colley_matches_the_production_implementation) ... ok
+test_cutoff_boundary_and_completion (test_research.ResearchChecks.test_cutoff_boundary_and_completion) ... ok
+test_equal_results_share_ranks (test_research.ResearchChecks.test_equal_results_share_ranks) ... ok
+test_exact_loo_and_probability_math (test_research.ResearchChecks.test_exact_loo_and_probability_math) ... ok
+test_fixed_schedule_more_wins_improves_sor (test_research.ResearchChecks.test_fixed_schedule_more_wins_improves_sor) ... ok
+test_later_outcomes_cannot_change_past_rankings (test_research.ResearchChecks.test_later_outcomes_cannot_change_past_rankings) ... ok
+test_margin_does_not_change_achievement (test_research.ResearchChecks.test_margin_does_not_change_achievement) ... ok
+test_neutral_game_reversal_is_symmetric (test_research.ResearchChecks.test_neutral_game_reversal_is_symmetric) ... ok
+test_renaming_and_input_order_do_not_change_scores (test_research.ResearchChecks.test_renaming_and_input_order_do_not_change_scores) ... ok
+test_season_type_disambiguates_week_numbers (test_research.ResearchChecks.test_season_type_disambiguates_week_numbers) ... ok
+test_unknown_division_is_not_published_as_fbs (test_research.ResearchChecks.test_unknown_division_is_not_published_as_fbs) ... ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 1.103s
+
+OK

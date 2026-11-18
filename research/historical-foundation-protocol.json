@@ -1,0 +1,18 @@
+{
+  "id": "historical-foundation-audit-v1",
+  "declaredAt": "2026-11-18",
+  "purpose": "Describe archive coverage and isolate frozen input corrections; no model fitting, candidate selection, publication or provider fetch",
+  "historyStart": 2004,
+  "historyEnd": 2025,
+  "evaluationSeasons": [2021, 2022, 2023, 2024, 2025],
+  "previouslyReportedEvaluationSeasons": [2023, 2024, 2025],
+  "holdoutStatus": "Previously inspected retrospective seasons; none is an untouched holdout. 2021-2022 helped select the original Strength settings. This audit was declared after earlier aggregate results were known.",
+  "accuracyTieCredit": 0.5,
+  "variants": ["original", "duplicate-only", "historical-coverage-v1", "fcs-coverage-v1", "original-start-2014"],
+  "probabilityMappings": "Frozen production baseline scale 14 and existing division-specific calibrated scales; no fitting. FBS-FCS stays scale 14 because no approved cross-division calibration exists.",
+  "cutoff": "Freeze before earliest game in entire source competition week, using only earlier processed weeks whose kickoff plus 24 hours is no later than cutoff. Previous-season outcomes must also precede cutoff by 24 hours.",
+  "primaryComparison": "Same original target-game identities and outcomes. Report new target-game coverage separately. Conference slices include a game once for each participating conference and overlap across conferences.",
+  "uncertainty": {"method": "Paired season/competition-week block bootstrap", "replicates": 2000, "seed": 20261118, "interpretation": "95% resampling sensitivity intervals, not calibrated prospective significance; blocks share teams"},
+  "deeperHistory": "No pre-2004 import or predictive claim without verified source records. Compare existing 2004 initialization against truncating the same archive at 2014 as a bounded history sensitivity only.",
+  "promotionDecision": "No production model or historical prior promotion from this audit"
+}
