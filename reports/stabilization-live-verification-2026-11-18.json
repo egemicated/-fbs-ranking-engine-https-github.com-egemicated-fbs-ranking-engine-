@@ -1,0 +1,1818 @@
+{
+  "checkedAt": "2026-11-18T23:31:30.504Z",
+  "site": "https://fbs-intelligence.onrender.com/",
+  "source": {
+    "asOf": "2026-11-18T12:30:14.250Z",
+    "snapshotHash": "a36df50d7f94c050e03b2d5df03cba802067d8dd2a1732f715a3ea3cc57dc4c1",
+    "publicationHash": "d5776b1cd844fd30a70099a7a9693bd3adf924b39013aeb39155e72f378db77c",
+    "fbsTeams": 138,
+    "fcsTeams": 128,
+    "cacheControl": "public, max-age=0, s-maxage=300",
+    "equalTestedBuild": true
+  },
+  "conferences": [
+    {
+      "season": 2025,
+      "games": 371,
+      "interconference": 245,
+      "coverage": {
+        "ap": {
+          "editions": 17,
+          "available": 371,
+          "noPollYet": 0,
+          "missing": 0,
+          "uncertain": 0
+        },
+        "cfp": {
+          "editions": 6,
+          "available": 68,
+          "noPollYet": 303,
+          "missing": 0,
+          "uncertain": 0
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "games": 302,
+      "interconference": 179,
+      "coverage": {
+        "ap": {
+          "editions": 12,
+          "available": 302,
+          "noPollYet": 0,
+          "missing": 0,
+          "uncertain": 0
+        },
+        "cfp": {
+          "editions": 3,
+          "available": 6,
+          "noPollYet": 296,
+          "missing": 0,
+          "uncertain": 0
+        }
+      }
+    }
+  ],
+  "pages": [
+    {
+      "url": "https://fbs-intelligence.onrender.com/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/matchup-lab/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/conference-strength/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/rankings/fbs/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/sor-compare/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/teams/fbs/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/rankings/fcs/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/teams/fcs/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/methodology/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/model-reports/fbs/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/support/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/254/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/privacy/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/about/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/model-reports/fcs/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/terms/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/61/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2641/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/87/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/26/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/154/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/333/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2390/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/251/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/252/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/84/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/96/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2633/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/194/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2294/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/68/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2483/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/248/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/57/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2636/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/145/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/12/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/201/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/235/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/30/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/99/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/150/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2335/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2449/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2005/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/97/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2348/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/167/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/356/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2579/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/249/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/197/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/142/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/239/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2711/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/77/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2649/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/213/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/256/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/326/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2567/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/275/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/66/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/9/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2084/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2439/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/158/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2132/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/153/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/228/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2751/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/264/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/52/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/195/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/221/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/309/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/130/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/55/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/24/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/135/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/349/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2116/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/193/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/259/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/290/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/344/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2226/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/8/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/202/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/183/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/245/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/58/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/5/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/277/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/38/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/278/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2628/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/238/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2026/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/258/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/21/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/151/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/204/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2655/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/6/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/127/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/103/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2117/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/120/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/41/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2305/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/152/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2393/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2509/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/48/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/328/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2306/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/276/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/25/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/23/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/36/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2440/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2426/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/59/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2229/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/113/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2247/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/189/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/98/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2032/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/324/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/295/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/338/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2199/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2653/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2309/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2572/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2050/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/164/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/166/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2623/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/265/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/62/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/218/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2433/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2006/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/242/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2534/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2429/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/16/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2638/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2627/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2617/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2320/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2382/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/108/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2459/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2571/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/147/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2635/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2287/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2329/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2464/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2000/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2086/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2754/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/233/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/163/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/149/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2168/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/155/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2692/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2097/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2405/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2046/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/302/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/399/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/225/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2569/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2916/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2803/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2504/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2453/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2010/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/107/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2900/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2717/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2142/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/43/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2546/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2011/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/70/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/304/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2710/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/236/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2296/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/159/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2193/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/172/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/222/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/257/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2115/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/301/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/253/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2545/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/79/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2029/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2582/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/219/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2460/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/110242/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/171/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2016/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2277/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2771/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2619/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2377/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2065/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/47/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/292/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2815/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2415/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2755/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2448/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/227/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2523/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2747/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2630/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2447/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2535/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2210/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/331/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2428/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2198/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2184/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/160/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2169/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/322/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2640/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2110/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2230/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2837/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/284/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2341/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/13/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2674/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2181/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/46/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2127/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2241/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2643/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2529/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2506/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2368/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2729/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/231/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2634/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2458/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2400/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2502/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/119/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2197/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/93/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2450/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/282/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2413/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2681/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2166/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/50/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/311/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2441/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2698/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2385/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2083/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2130/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2678/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2261/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/2466/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/3101/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    },
+    {
+      "url": "https://fbs-intelligence.onrender.com/team/56/",
+      "status": 200,
+      "canonical": true,
+      "social": true
+    }
+  ],
+  "api": [
+    {
+      "file": "weekly-picks.json",
+      "aligned": true,
+      "season": 2026,
+      "asOf": "2026-11-18T12:30:15.702Z"
+    },
+    {
+      "file": "weekly-fcs-picks.json",
+      "aligned": true,
+      "season": 2026,
+      "asOf": "2026-11-18T12:30:16.270Z"
+    },
+    {
+      "file": "performance.json",
+      "aligned": true,
+      "season": 2026,
+      "asOf": "2026-11-18T12:30:14.250Z"
+    }
+  ],
+  "pregameAssociationsVerified": 747,
+  "socialPreview": {
+    "team": "BYU",
+    "width": 1200,
+    "height": 630,
+    "verified": true
+  },
+  "robots": true,
+  "status": "passed",
+  "release": {
+    "commit": "7d096d4dbad922973f71734915d700685f6f422f",
+    "renderDeploy": "dep-dbv39bavcj2c73c1uieg",
+    "liveAt": "2026-11-18T23:30:57Z",
+    "engineChecksRun": 44421082930,
+    "performanceChecksRun": 44421082965,
+    "requiredChecksPassed": true
+  },
+  "validation": {
+    "nodePassed": 356,
+    "nodeFailed": 0,
+    "sqlMigrations": 12,
+    "sqlSuitesPassed": 11,
+    "sqlFailed": 0,
+    "pythonResearchPassed": 135,
+    "pythonResearchFailed": 0,
+    "hostedPerformancePassed": 75,
+    "hostedPerformanceSkipped": 1,
+    "automatedBrowserRoutes": 72,
+    "expandedLocalRouteChecks": 208,
+    "expandedLocalInteractionGroups": 34
+  },
+  "privacy": {
+    "savedPicks": 134,
+    "baselinePickDigestUnchanged": true,
+    "baselinePlayerDigestUnchanged": true,
+    "futurePublicPicks": 0,
+    "pendingPublicPicks": 0,
+    "realOAuthUnverified": true
+  },
+  "protectedFileSha256": {
+    "src/engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+    "src/history.js": "c67231cf9374eaaeb173d4215cd15bd434c4ce45f37cde40eb80c4ed1ffd8f67",
+    "data/model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+    "data/publication-model.json": "177ef4d5248bc56f133944edd80bf6db76a304f5662b5e9c741672ddaa331bc9",
+    "data/matchup-validation.json": "6e202565e2abd362d6b5c5a681e7bc7568ff2303c70d79b13a431926ccd7595b",
+    "data/fcs-matchup-validation.json": "2a4aa54a4eab6075bea70e685490e6667419d2c5a7785af0764692089965b14f",
+    "published/latest.json": "452fd04b7e1e3bc2531dcb111efea5e3c97c16e88c6e34691979dd4e787597d7",
+    "published/prior-2025.json": "85485a24c7cee79b75f3e7b21dcf978a8f26265a82e5030d36c9c3feba262903",
+    "published/weekly-picks.json": "d430f9d8ad2fddf8feff5bde02156f342e0868277dc51f067d02e709fffe589c",
+    "published/weekly-fcs-picks.json": "79be58722c945eb6bff28058f6acbf01ed3f0de53a465c5f42dde9b9179f65c5",
+    "published/performance-latest.json": "782e6e9d283c0ddabe02b6375e400a08fe187f12d59a775ef4e7c52b992159eb",
+    "published/conference-archives/2025.json": "44e3f68752db5fe2fe890af2ab4772ee082beb717af7953ec06e14337540316d"
+  }
+}

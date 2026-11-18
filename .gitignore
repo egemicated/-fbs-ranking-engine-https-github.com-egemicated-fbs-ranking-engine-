@@ -13,3 +13,7 @@ evidence/weekly/
 research/cache/
 research/datasets/
 __pycache__/
+
+# Local browser audit evidence is retained separately from shipped code.
+/reports/.tmp-*-audit.mjs
+/reports/browser-audit-*/
