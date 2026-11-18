@@ -466,7 +466,7 @@ function renderHome() {
   closeFavorite?.();
   closeFavorite = null;
   const top = topTwentyFive(state.snapshot.rankings, 'achievement');
-  const title = usesSor() ? 'OFFICIAL TOP 25' : 'HISTORICAL TOP 25';
+  const title = usesSor() ? 'FBS Intelligence Top 25' : 'HISTORICAL TOP 25';
   const summary = usesSor() ? 'The FBS Intelligence ranking weighs each team’s wins against the opponents it faced and where it played.' : 'This historical snapshot ranks teams by their results and the opponents they faced.';
   main.innerHTML = `<div class="wrap home-favorite" data-my-team></div><section class="hero home-hero"><div class="wrap hero-layout"><div><div class="eyebrow">${state.snapshot.season} FBS season · ${achievementName()}</div><h1>THE FBS<em>TOP 25.</em></h1><p class="hero-copy">${summary} Select a team to see how it earned its rank.</p><div class="hero-actions"><a class="button" href="${rankingHash('achievement', true)}">${icon('chart')}View all ${state.snapshot.fbsTeams} teams ${icon('chevron')}</a><a class="button outline" href="#methodology">${icon('layers')}Inside the engine</a></div></div><aside class="top-five"><div class="top-five-title">${icon('trophy')}<h2>${usesSor() ? "SOR TOP FIVE" : "TOP FIVE"}</h2><small>${snapshotDate()} SNAPSHOT</small></div>${top.slice(0,5).map(t=>`<a class="top-five-row" href="#team/${t.id}"><span class="rank-chip">${nationalRank(t)}</span>${logo(t)}<strong>${esc(t.name)}</strong><span>${record(t)}</span></a>`).join('')}<a class="top-five-footer" href="#rankings">Explore the Top 25 ${icon('chevron')}</a></aside></div></section><div class="wrap home-body">${thisWeekPanel()}<div class="two-column"><section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<div><h2>${title}</h2><p>${achievementName()} rankings · ${state.snapshot.season} season · ${snapshotDate()} publication</p>${movementNote()}</div></div></div>${top.length?rankingTable(top,'achievement',true):'<div class="empty">No ranked teams in this snapshot.</div>'}</section><aside class="stack">${coveragePanel()}${companionPanel()}${schedulePanel()}</aside></div>${pipeline()}</div>`;
   mountHomeFavorite();
@@ -685,7 +685,7 @@ function breakdown(t, explain = false) {
   ];
   const colleyRank = t.colleyRank ?? t.rank;
   const colleyNote = explain
-    ? `These three pieces add up to the team’s Colley rating${colleyRank ? `, ranked <strong>${rank(colleyRank)}</strong> nationally by Colley` : ''}. Averaging the opponents’ Colley ratings gives the schedule strength shown on the team page.${official ? ' The official national and conference rankings use Strength of Record.' : ' This season’s national and conference rankings use Colley.'}`
+    ? `These three pieces add up to the team’s Colley rating${colleyRank ? `, ranked <strong>${rank(colleyRank)}</strong> nationally by Colley` : ''}. Averaging the opponents’ Colley ratings gives the schedule strength shown on the team page.${official ? ' FBS Intelligence’s national and conference rankings use Strength of Record.' : ' This season’s national and conference rankings use Colley.'}`
     : official ? `These terms reconcile to the Colley baseline (${rank(colleyRank)}), not the SOR score. Colley supplies the opponent network and displayed SOS; national and conference ranks use SOR.`
       : 'These terms reconcile to the Colley score. Opponent effects are part of the jointly solved network.';
   return `<div class="${block}">${sor}<h3>${official ? 'COLLEY BASELINE, EXPLAINED' : 'THE SCORE, EXPLAINED'}</h3>
@@ -1343,7 +1343,7 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
     poll && sor ? `${shared(columns[0], columns[2])} of 25 shared by ${sorLabel} and ${source.short}` : '',
     poll && forge ? `${shared(columns[1], columns[2])} of 25 shared by Forge and ${source.short}` : '',
     sor && forge && !poll ? `${shared(columns[0], columns[1])} of 25 shared by SOR and Forge` : '',
-    !sor ? 'No matching official SOR snapshot' : '',
+    !sor ? 'No matching published SOR snapshot' : '',
     !poll ? `${source.name} edition unavailable for this week` : ''
   ].filter(Boolean);
   const rows = Array.from({ length: 25 }, (_, index) => {
@@ -1354,7 +1354,7 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
     ${tabs}<div class="edition-controls">${editionPicker(weeks, week)}${editionLink}</div>
     <h2>${editionLabel(week)}</h2><p>Games through ${editionDate(gamesThrough)}.${poll ? ` ${source.name} released ${editionDate(poll.released)}.` : ''}${official ? ` SOR published ${editionDate(official.released)}.` : ''}${forge ? ` Forge ballot reconstructed ${editionDate(forge.released)}.` : ''}</p>
     ${savedCheckpoint ? '<p class="compact-note edition-context">This saved SOR checkpoint covers games through the same date as the poll. The full week includes later games.</p>' : ''}
-    ${replay ? `<p class="compact-note edition-context">SOR replay calculated ${editionDate(replay.released)} using the official formula and ${replay.networkGames.toLocaleString()} confirmed games through this cutoff. That includes ${replay.fbsGames.toLocaleString()} games involving FBS teams.</p>` : ''}
+    ${replay ? `<p class="compact-note edition-context">SOR replay calculated ${editionDate(replay.released)} using the published SOR formula and ${replay.networkGames.toLocaleString()} confirmed games through this cutoff. That includes ${replay.fbsGames.toLocaleString()} games involving FBS teams.</p>` : ''}
     ${summary.length ? `<p class="edition-notice">${summary.join(' · ')}.</p>` : ''}
     ${!poll && latestSource ? `<a class="text-link" href="#polls/${key}/${latestSource.week}">View the ${editionDate(latestSource.released)} edition ${icon('arrow')}</a>` : ''}
     ${!sor && latestSor && latestSor.week !== week ? `<a class="text-link" href="#polls/${key}/${latestSor.week}">Compare SOR and Forge after Week ${latestSor.week} ${icon('arrow')}</a>` : ''}
