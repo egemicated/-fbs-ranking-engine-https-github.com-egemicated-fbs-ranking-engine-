@@ -179,7 +179,7 @@ test('win record categories reconcile and pregame coverage precedes Top 25 filte
   assert.equal(summary.wins, summary.winningRecordWins + summary.losingRecordWins +
     summary.evenRecordWins + summary.missingRecordWins);
   assert.deepEqual(conferenceFilterCoverage(data, options), { games: 4, current: 4, pregame: 1,
-    noPollYet: 0, missing: 3, publicationTimeUncertain: 0, notApplicable: 0 });
+    noPollYet: 0, beforeArchive: 0, missing: 3, publicationTimeUncertain: 0, notApplicable: 0 });
   assert.equal(conferenceGames(data, { ...options, rankScope: 'pregame' }).length, 0);
 });
 
@@ -191,6 +191,6 @@ test('poll coverage deduplicates both conference perspectives and separates none
     game('available', 'a', 'i', 28, 7, { pregame: { cfp: [1, null] }, pregameStatus: { cfp: ['ranked', 'unranked'] } }),
   ]);
   const coverage = conferenceFilterCoverage(data, { method: 'cfp' });
-  assert.deepEqual(coverage, { games: 4, current: 4, pregame: 1, noPollYet: 1, missing: 1,
+  assert.deepEqual(coverage, { games: 4, current: 4, pregame: 1, noPollYet: 1, beforeArchive: 0, missing: 1,
     publicationTimeUncertain: 1, notApplicable: 0 });
 });

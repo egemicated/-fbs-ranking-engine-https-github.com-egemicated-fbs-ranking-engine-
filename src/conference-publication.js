@@ -4,6 +4,7 @@ import { rankSeason } from './engine.js';
 import { assertNoLogicalDuplicates } from './data-quality.js';
 import { performanceForSnapshot } from './performance-publication.js';
 import { attachPollHistory, normalizePollEditions, selectPregamePoll } from './poll-history.js';
+import { validateSorPublications, sorPublicationAvailability } from './sor-history-publications.js';
 
 const powerFour = new Set(['ACC', 'Big Ten', 'Big 12', 'SEC']);
 const groupOfFive = new Set(['American Athletic', 'Conference USA', 'Mid-American', 'Mountain West', 'Sun Belt']);
@@ -39,14 +40,27 @@ function standingsMap(rows, field, fallback) {
 
 function savedSorEditions(history, season, teamIds) {
   if (history?.season !== season || !Array.isArray(history.editions)) return [];
-  return history.editions.flatMap(edition => {
+  const observations = validateSorPublications(history.publications);
+  if (observations.some(edition => edition.rows.length !== teamIds.size || edition.rows.some(row => !teamIds.has(row.id))))
+    throw Error('Saved SOR archive membership differs from the season');
+  const observed = new Set(observations.map(row => row.publicationHash));
+  const weekly = history.editions.flatMap(edition => {
     if (edition.kind !== 'saved' || !dateOnly(edition.released) || !day(edition.asOf) ||
         !Array.isArray(edition.rows) || edition.rows.length !== teamIds.size ||
         edition.rows.some(row => !teamIds.has(row.id)) ||
         new Set(edition.rows.map(row => row.id)).size !== teamIds.size) return [];
-    return [{ ranks: new Map(edition.rows.map(row => [row.id, rank(row.rank)])),
-      publishedDay: [edition.released, day(edition.asOf)].sort().at(-1), asOf: edition.asOf }];
-  }).sort((a, b) => a.publishedDay.localeCompare(b.publishedDay) || Date.parse(a.asOf) - Date.parse(b.asOf));
+    if (observed.has(edition.publicationHash)) return [];
+    const publishedDay = [edition.released, day(edition.asOf)].sort().at(-1);
+    // Legacy weekly captures did not retain a separate observation timestamp.
+    // Preserve their existing whole-day conservative publication convention.
+    return [{ ...edition, recordedAt:edition.asOf,
+      availableBefore:sorPublicationAvailability(`${publishedDay}T19:00:00Z`),
+      source:{basis:'saved weekly edition'} }];
+  });
+  return [...observations, ...weekly].map(edition => ({...edition,
+    ranks:new Map(edition.rows.map(row => [row.id, rank(row.rank)])),
+    publishedDay:day(edition.recordedAt),
+  })).sort((a,b) => Date.parse(a.availableBefore) - Date.parse(b.availableBefore) || Date.parse(a.recordedAt) - Date.parse(b.recordedAt));
 }
 
 function pregameRanks(game, histories, teams) {
@@ -54,15 +68,25 @@ function pregameRanks(game, histories, teams) {
   // have been published before the game's calendar day or uncertain date boundary.
   const utcDay = new Date(game.startDate).toISOString().slice(0, 10);
   const kickoffDay = game.startTimeTbd === true ? [day(game.startDate), utcDay].sort()[0] : day(game.startDate);
-  const pregame = {}, pregameAsOf = {};
+  const pregame = {}, pregameAsOf = {}, pregameStatus = {}, pregameEdition = {};
   for (const [key, editions] of Object.entries(histories)) {
     const edition = key === 'ap' || key === 'cfp' ? selectPregamePoll(game, editions).edition :
-      editions.findLast(item => item.publishedDay < kickoffDay);
-    if (!edition) continue;
+      editions.findLast(item => Date.parse(item.availableBefore) < (game.startTimeTbd === true ? Date.parse(`${kickoffDay}T00:00:00Z`) : Date.parse(game.startDate)));
+    if (!edition) {
+      if (key === 'sor' && editions.length) pregameStatus.sor = [game.home,game.away].map(id => !fbs(teams.get(id)) ? 'not-applicable' :
+        kickoffDay < editions[0].publishedDay ? 'before-archive' : 'publication-time-uncertain');
+      continue;
+    }
     pregame[key] = [game.home, game.away].map(id => fbs(teams.get(id)) ? edition.ranks.get(id) ?? null : null);
     pregameAsOf[key] = edition.asOf;
+    if (key === 'sor') {
+      pregameStatus.sor = [game.home,game.away].map(id => !fbs(teams.get(id)) ? 'not-applicable' : rank(edition.ranks.get(id)) ? 'ranked' : 'missing');
+      pregameEdition.sor = {kind:'saved', availableBefore:edition.availableBefore,
+        provenance:edition.source?.basis, sourceUrl:edition.source?.url ?? null,
+        snapshotHash:edition.snapshotHash, publicationHash:edition.publicationHash};
+    }
   }
-  return { pregame, pregameAsOf };
+  return { pregame, pregameAsOf, pregameStatus, pregameEdition };
 }
 
 function completedFbsGames(games, teams, asOf) {
@@ -160,7 +184,8 @@ function buildDataset({ season, asOf, archived, source, membership, ratings, gam
     }];
   });
   const methods = {
-    sor: method(sor, source.rankingsAsOf ?? asOf, true, 'published', { historicalEditions: histories.sor.length }),
+    sor: method(sor, source.rankingsAsOf ?? asOf, true, 'published', { historicalEditions: histories.sor.length,
+      firstSavedAt:histories.sor[0]?.recordedAt ?? null, historyBasis:'Saved snapshots only; retrospective replays are excluded.' }),
     predictive: method(predictive, source.rankingsAsOf ?? asOf, true, archived ? 'season-end' : 'published', { historicalEditions: 0 }),
     performance: method(performance, performanceAsOf, performance.size === fbsIds.size, 'experimental', { historicalEditions: 0 }),
     ap: method(currentAp?.ranks ?? new Map(), currentAp?.asOf, false, 'poll',

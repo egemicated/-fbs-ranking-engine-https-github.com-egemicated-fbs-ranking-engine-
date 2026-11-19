@@ -75,6 +75,14 @@ test('a late account preference does not render after unmount', async () => {
   assert.equal(ui.root.onchange, null);
 });
 
+test('an account without a favorite starts with a compact prompt and opens selection only on request', async()=>{
+  const saved=[];
+  const ui=fixture({getPreference:async()=>({signedIn:true,userId:'empty',teamId:null,teamIds:[]}),savePreference:async id=>saved.push(id)});
+  await flush();assert.match(ui.root.innerHTML,/data-my-team-compact="true"/);assert.match(ui.root.innerHTML,/Choose team/);
+  assert.doesNotMatch(ui.root.innerHTML,/data-my-team-form/);ui.click('edit');
+  assert.match(ui.root.innerHTML,/data-my-team-form/);assert.deepEqual(saved,[]);ui.unmount();
+});
+
 test('followed-team carousel wraps in both directions without saving or changing the primary team', async () => {
   const saved = [];
   const ui = fixture({ getPreference: async () => ({ signedIn: true, userId: 'owner', teamId: '26', teamIds: ['26', '147'] }),

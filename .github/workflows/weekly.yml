@@ -7,6 +7,10 @@ on:
       timezone: 'America/Denver'
   workflow_dispatch:
     inputs:
+      recover_missing_daily:
+        description: Recover a missing daily check using the normal same-day source guard
+        type: boolean
+        default: false
       contest_sync_only:
         description: Grade Beat the Model from the saved finals without pulling CFBD
         type: boolean
@@ -45,6 +49,8 @@ jobs:
           PUSH_REVISION: ${{ github.sha }}
           CONTEST_SYNC_ONLY: ${{ inputs.contest_sync_only }}
           KICKOFF_SYNC_ONLY: ${{ inputs.kickoff_sync_only }}
+          RECOVER_MISSING_DAILY: ${{ inputs.recover_missing_daily }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           if [[ "$EVENT_NAME" == push ]]; then
             git cat-file -e "$PUSH_REVISION^{commit}" 2>/dev/null || git fetch --no-tags --depth=1 origin "$PUSH_REVISION"
@@ -58,6 +64,11 @@ jobs:
           fi
           if [[ "$CONTEST_SYNC_ONLY" == true || "$KICKOFF_SYNC_ONLY" == true ]]; then
             needed=false
+          elif [[ "$EVENT_NAME" == workflow_dispatch && "$RECOVER_MISSING_DAILY" == true ]]; then
+            needed=$(node scripts/weekly-refresh-needed.js)
+            if [[ "$needed" == true ]]; then
+              needed=$(node scripts/daily-refresh-watchdog.mjs --authorize-recovery)
+            fi
           elif [[ "$EVENT_NAME" != schedule ]]; then
             needed=true
           elif [[ "$CRON" == '11 20 * * 0' ]]; then

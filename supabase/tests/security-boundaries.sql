@@ -41,7 +41,8 @@ do $$ begin
   assert public.submit_account_request('deletion','Private deletion text')->>'status'='pending';
   perform public.submit_account_request('support','Duplicate private text');
   assert jsonb_array_length(public.my_account_requests())=3;
-  assert not (public.my_account_requests() @> '[{"message":"Private support text"}]'::jsonb), 'Messages stay out of public RPC output';
+  assert public.my_account_requests() @> '[{"message":"Private support text"}]'::jsonb, 'An authenticated owner can review their original private request';
+  assert not exists(select from jsonb_array_elements(public.my_account_requests()) r where r ? 'adminNote'), 'Internal notes remain administrator-only';
   begin perform public.submit_account_request('invalid','message'); raise exception 'Invalid kind accepted'; exception when invalid_parameter_value then null; end;
   begin perform public.submit_account_request('support',repeat('x',2001)); raise exception 'Oversized message accepted'; exception when invalid_parameter_value then null; end;
   begin update public.my_team_preferences set team_ids=array['252',null]; raise exception 'Null team accepted'; exception when invalid_parameter_value then null; end;

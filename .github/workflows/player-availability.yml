@@ -29,6 +29,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
+      - name: Check for a missed daily results refresh
+        if: github.event_name == 'schedule'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/daily-refresh-watchdog.mjs
       - name: Check official conference reports
         env:
           EVENT_CRON: ${{ github.event.schedule }}

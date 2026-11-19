@@ -49,6 +49,17 @@ test('comparison makes the snapshot and dated pregame CFP ranks explicit', () =>
   assert.doesNotMatch(markup, /#0|#null|#undefined/);
 });
 
+test('SOR pre-archive gaps are explained separately from missing data or a known unranked opponent',()=>{
+  const data=structuredClone(dataset);
+  data.rankings.sor.firstSavedAt='2026-11-08T15:51:52Z';
+  for(const game of data.games)game.pregameStatus={sor:['before-archive','before-archive']};
+  const markup=conferenceStrengthMarkup(data,{...options,method:'sor',rankScope:'pregame'});
+  assert.match(markup,/2 predate the first retained saved snapshot/);
+  assert.match(markup,/Saved SOR evidence begins Nov 8, 2026; retrospective replays are excluded/);
+  assert.match(markup,/These games predate the first retained saved SOR snapshot/);
+  assert.doesNotMatch(markup,/2 have missing ranking evidence/);
+});
+
 test('the matrix links both conference orientations and keeps FCS separate', () => {
   const markup = conferenceStrengthMarkup(dataset,{ ...options, view:'records' });
   assert.match(markup, /#conference-strength\/compare\/2026\/SEC\/Big%20Ten/);

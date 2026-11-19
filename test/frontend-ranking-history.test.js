@@ -25,6 +25,9 @@ test('weekly movement preserves replay provenance and unknown score changes', ()
   const html = rankingHistoryMarkup(comparison);
   assert.match(html, /After Week 9 replay/);
   assert.match(html, /SOR score changes become available between saved editions/);
+  assert.match(html, /About this ranking archive/);
+  assert.match(html, /1 saved weekly edition, beginning Nov 8, 2026; 1 retrospective replay/);
+  assert.match(html, /Earlier game archives used for model research are not weekly rankings published at the time/);
   assert.match(html, /Beat #12 &lt;Opponent&gt; by 7/);
   assert.doesNotMatch(html, /<Opponent>/);
 });

@@ -113,7 +113,7 @@ export function conferenceGames(dataset, {
     if ((rankScope === 'current' && !isTop(opponentRank.current, 25)) ||
         (rankScope === 'pregame' && !isTop(opponentRank.pregame, 25))) continue;
     rows.push({
-      ...row, method, rank, opponentRank,
+      ...row, method, rank, opponentRank, pregameEdition:game.pregameEdition?.[method] ?? null,
       qualityScore: gameQuality(dataset, row.opponent, meanStrength, row.margin, row.venue),
     });
   }
@@ -152,6 +152,7 @@ export function conferenceSummary(dataset, conference, rows = conferenceGames(da
   const currentRankCoverage = rows.filter(row => row.opponentRank.currentAvailable).length;
   const pregameRankCoverage = rows.filter(row => row.opponentRank.pregameAvailable).length;
   const pregameNoPollYet = rows.filter(row => row.opponentRank.pregameStatus === 'no-poll-yet').length;
+  const pregameBeforeArchive = rows.filter(row => row.opponentRank.pregameStatus === 'before-archive').length;
   const pregamePublicationTimeUncertain = rows.filter(row => row.opponentRank.pregameStatus === 'publication-time-uncertain').length;
   const pregameMissing = rows.filter(row => row.opponentRank.pregameStatus === 'missing').length;
   const predictiveRankCoverage = dataset.rankings?.predictive?.available
@@ -167,7 +168,7 @@ export function conferenceSummary(dataset, conference, rows = conferenceGames(da
   return {
     ...record(rows),
     currentRankCoverage, pregameRankCoverage, predictiveRankCoverage,
-    pregameNoPollYet, pregamePublicationTimeUncertain, pregameMissing,
+    pregameNoPollYet, pregameBeforeArchive, pregamePublicationTimeUncertain, pregameMissing,
     currentTop10Wins: coveredWins(rows, 10, currentRankCoverage, row => row.opponentRank.current),
     currentTop25Wins: coveredWins(rows, 25, currentRankCoverage, row => row.opponentRank.current),
     pregameTop10Wins: coveredWins(rows, 10, pregameRankCoverage, row => row.opponentRank.pregame),
@@ -215,6 +216,7 @@ export function conferenceFilterCoverage(dataset, options = {}) {
     current: games.filter(row => row.current).length,
     pregame: games.filter(row => row.pregame).length,
     noPollYet: games.filter(row => !row.pregame && row.statuses.has('no-poll-yet')).length,
+    beforeArchive: games.filter(row => !row.pregame && row.statuses.has('before-archive')).length,
     missing: games.filter(row => !row.pregame && row.statuses.has('missing')).length,
     publicationTimeUncertain: games.filter(row => !row.pregame && row.statuses.has('publication-time-uncertain')).length,
     notApplicable: games.filter(row => !row.pregame && row.statuses.has('not-applicable')).length,

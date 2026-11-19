@@ -1,13 +1,59 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { accountCapabilities, validateNewPassword, accountCallbackUrl, cleanAccountCallbackUrl, updateAccountPassword, secondFactorRequired, authFormMarkup, authMessage } from '../frontend/account-auth.js';
-import { accountCenterMarkup, qrDataUrl, supportRequestMarkup, mountAccountCenter } from '../frontend/account-center.js';
-import { administrationMarkup, mountAdministration, failedNotificationRetryMarkup, notificationRequeueNotice, requeueFailedNotification, adminUserPageState, registeredUsersMarkup, ADMIN_USERS_PAGE_SIZE } from '../frontend/account-administration.js';
-import { notifySupportIfReady } from '../frontend/account-support.js';
+import { accountCenterMarkup, qrDataUrl, supportRequestMarkup, mountAccountCenter, authenticatorLabel } from '../frontend/account-center.js';
+import { administrationMarkup, mountAdministration, failedNotificationRetryMarkup, notificationRequeueNotice, requeueFailedNotification, adminUserPageState, registeredUsersMarkup, ADMIN_USERS_PAGE_SIZE, adminAuditMarkup } from '../frontend/account-administration.js';
+import { notifySupportIfReady, supportSubmission, supportResponseMarkup, supportResultNotice, restoreSupportDraft } from '../frontend/account-support.js';
 import { accountCallbackMode, initialAccountReturnUrl, safeAccountReturnHash, accountCallbackErrorNotice } from '../frontend/bracket-auth.js?v=header-account';
 
 const strong='A long test passphrase 42';
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
+
+test('shared support forms hide deletion acknowledgement until deletion and validate its submission separately',()=>{
+  const markup=supportRequestMarkup([]);
+  assert.match(markup,/data-support-deletion hidden/);assert.match(markup,/name="deletionConfirmed" disabled/);
+  assert.match(markup,/data-account-support data-account-request/);
+  const values=new FormData();values.set('category','general');values.set('message','A support question');
+  assert.deepEqual(supportSubmission(values),{p_category:'general',p_message:'A support question'});
+  values.set('category','deletion');assert.throws(()=>supportSubmission(values),/acknowledgment/);
+  values.set('deletionConfirmed','on');assert.equal(supportSubmission(values).p_category,'deletion');
+  values.set('category','forged');assert.throws(()=>supportSubmission(values),/request type/);
+});
+
+test('private support responses escape text and omit internal notes and administrator identity',()=>{
+  const row={status:'in_review',message:'Original <b>private question</b>',adminNote:'PRIVATE INTERNAL',responses:[{message:'<script>bad</script>',requiresAction:true,createdAt:'2026-11-19T12:00:00Z',authorId:'PRIVATE AUTHOR'}]};
+  const markup=supportResponseMarkup(row);
+  assert.match(markup,/Action requested/);assert.match(markup,/&lt;script&gt;/);
+  assert.doesNotMatch(markup,/<script>|PRIVATE INTERNAL|PRIVATE AUTHOR/);
+  assert.match(markup,/Your original details/);assert.match(markup,/Original &lt;b&gt;private question&lt;\/b&gt;/);
+  assert.match(supportRequestMarkup([{...row,id:'request',category:'general'}]),/Responses from FBS Intelligence/);
+});
+
+test('an existing open support request preserves the unsent draft and never claims it was newly saved',()=>{
+  const values=new FormData();values.set('category','deletion');values.set('message','Keep this unsent draft');values.set('deletionConfirmed','on');
+  const fields={category:{value:'general'},message:{value:''},deletionConfirmed:{disabled:true,checked:false},deletion:{hidden:true}};
+  const form={querySelector:selector=>selector==='[data-support-deletion]'?fields.deletion:fields[selector.match(/name="([^"]+)"/)?.[1]]};
+  restoreSupportDraft(form,values);
+  assert.equal(fields.message.value,'Keep this unsent draft');assert.equal(fields.category.value,'deletion');
+  assert.equal(fields.deletion.hidden,false);assert.equal(fields.deletionConfirmed.checked,true);
+  const notice=supportResultNotice({id:'existing',alreadyOpen:true});
+  assert.match(notice,/Your new details were not sent/);assert.doesNotMatch(notice,/is saved for review/);
+});
+
+test('administrator status counts, due alerts, and audit labels distinguish records and completed changes',()=>{
+  const markup=administrationMarkup({requestTotal:0,requestStatusCounts:{pending:0,in_review:1,resolved:2,closed:0},notificationCounts:{due:0,failed:1},notificationsEnabled:true});
+  assert.match(markup,/0 pending/);assert.match(markup,/<dt>Resolved<\/dt><dd>2<\/dd>/);
+  assert.match(markup,/data-admin-notify disabled/);assert.match(markup,/1 failed alert needs/);
+  const audit=adminAuditMarkup([{action:'support_status',actorLabel:'Owner <admin>',targetLabel:'Fan',details:{from:'pending',to:'resolved'}}]);
+  assert.match(audit,/Support request status changed/);assert.match(audit,/Pending → Resolved/);assert.match(audit,/Owner &lt;admin&gt;/);
+  assert.doesNotMatch(audit,/support_status|Administrative operation recorded/);
+});
+
+test('generated authenticator names use readable Mountain dates without changing custom labels',()=>{
+  assert.match(authenticatorLabel({friendly_name:'FBS Intelligence 2026-11-19T04:04:38'}),/FBS Intelligence authenticator · Added Nov 18, 2026/);
+  assert.equal(authenticatorLabel({friendly_name:'My backup phone'}),'My backup phone');
+  assert.doesNotMatch(authenticatorLabel({friendly_name:'FBS Intelligence 2026-11-19T04:04:38'}),/T04:04/);
+});
 
 test('admin directory pages are bounded to ten accounts and a compact number window at large totals',()=>{
   assert.equal(ADMIN_USERS_PAGE_SIZE,10);
@@ -24,16 +70,15 @@ test('compact directory shows page ranges, disabled boundaries and expandable ac
   const users=Array.from({length:3},(_,i)=>({userId:`u${i}`,email:`user${i}@example.test`,nickname:`User ${i}`,status:'active',role:'user'}));
   const first=registeredUsersMarkup({users,userTotal:3});
   assert.match(first,/Showing 1–3 of 3 accounts · 10 per page/);
-  assert.match(first,/data-admin-users-page="0" disabled/);
-  assert.match(first,/data-admin-users-page="2" disabled/);
-  assert.match(first,/aria-label="Registered user pages"/);
+  assert.doesNotMatch(first,/aria-label="Registered user pages"/);
+  assert.match(registeredUsersMarkup({users,userTotal:23}),/data-admin-users-page="0" disabled/);
   assert.doesNotMatch(first,/<details[^>]* open/);
   assert.match(first,/data-admin-user-status="u0"/);
   const final=registeredUsersMarkup({users,userTotal:23,userPage:3});
   assert.match(final,/Showing 21–23 of 23 accounts/);
   assert.match(final,/data-admin-users-page="3" aria-current="page"/);
   const empty=registeredUsersMarkup({search:'<not found>'});
-  assert.match(empty,/Showing 0–0 of 0 matching accounts/);
+  assert.doesNotMatch(empty,/Showing 0–0|data-admin-users-page/);
   assert.match(empty,/No accounts match this search/);
   assert.doesNotMatch(empty,/<not found>/);
 });

@@ -67,12 +67,13 @@ function qualityContext(data, state) {
   const coverage = filterCoverage(data, state);
   const coverageNotes = [
     coverage.noPollYet ? `${coverage.noPollYet} games preceded the first poll release` : '',
+    coverage.beforeArchive ? `${coverage.beforeArchive} predate the first retained saved snapshot` : '',
     coverage.publicationTimeUncertain ? `${coverage.publicationTimeUncertain} have an unverified release time` : '',
     coverage.missing ? `${coverage.missing} have missing ranking evidence` : '',
     coverage.notApplicable ? `${coverage.notApplicable} have opponents outside this poll’s subdivision` : '',
   ].filter(Boolean).join(' · ');
   return `<p class="compact-note">${escapeHtml(label)} ${timing}. This reference determines opponent ranks and Top 25 counts. The Experimental quality score uses Predictive Strength independently.</p>
-    <p class="compact-note">Pregame ranking coverage · ${coverage.pregame} of ${coverage.games} eligible games. ${coverageNotes ? coverageNotes + '. ' : ''}${coverage.pregame ? 'Only covered games enter the pregame rank filter.' : 'Pregame rank filtering is unavailable for this selection.'} Team records use the selected season’s snapshot.</p>`;
+    <p class="compact-note">Pregame ranking coverage · ${coverage.pregame} of ${coverage.games} eligible games. ${coverageNotes ? coverageNotes + '. ' : ''}${coverage.pregame ? 'Only covered games enter the pregame rank filter.' : 'Pregame rank filtering is unavailable for this selection.'}${state.method === 'sor' && selected.firstSavedAt ? ` Saved SOR evidence begins ${date(selected.firstSavedAt)}; retrospective replays are excluded.` : ''} Team records use the selected season’s snapshot.</p>`;
 }
 
 function filterCoverage(data, state) {
@@ -87,12 +88,13 @@ function emptyGames(data, state) {
   const coverage = filterCoverage(data, state);
   if (state.rankScope === 'pregame' && !coverage.pregame && coverage.games) {
     if (coverage.noPollYet === coverage.games) return 'These games preceded the first poll release. A pregame ranking did not yet exist; this is not missing historical data.';
+    if (coverage.beforeArchive === coverage.games) return 'These games predate the first retained saved SOR snapshot. Earlier pregame ranks are unavailable; retrospective replays cannot stand in for rankings saved before kickoff.';
     return 'Pregame opponent rankings are unavailable for these games. Choose All opponents or another ranking reference.';
   }
   if (state.rankScope === 'current' && !coverage.current && coverage.games) {
     return 'Opponent rankings are unavailable for these games and this reference.';
   }
-  const uncovered = state.rankScope === 'pregame' ? (coverage.missing ?? coverage.games - coverage.pregame) + (coverage.publicationTimeUncertain ?? 0) :
+  const uncovered = state.rankScope === 'pregame' ? (coverage.missing ?? coverage.games - coverage.pregame) + (coverage.beforeArchive ?? 0) + (coverage.publicationTimeUncertain ?? 0) :
     state.rankScope === 'current' ? coverage.games - coverage.current : 0;
   return 'No completed games match these filters.' + (uncovered ? ` ${uncovered} games lack the selected ranking evidence and are excluded.` : '');
 }
@@ -191,6 +193,7 @@ function qualityDetails(row, archived) {
     ${stat('Average loss quality', number(row.averageLossQuality,3))}
     ${stat('Ranking coverage', row.currentRankCoverage + ' snapshot · ' + row.pregameRankCoverage + ' pregame')}
     ${row.pregameNoPollYet ? stat('Games before the first poll release', row.pregameNoPollYet) : ''}
+    ${row.pregameBeforeArchive ? stat('Games before the saved ranking archive', row.pregameBeforeArchive) : ''}
     ${row.pregamePublicationTimeUncertain ? stat('Unverified pregame release time', row.pregamePublicationTimeUncertain) : ''}
     ${row.pregameMissing ? stat('Missing pregame ranking evidence', row.pregameMissing) : ''}
     ${stat('Opponent records measured', row.opponentRecordCoverage + ' of ' + row.games)}
@@ -231,6 +234,7 @@ function rankLabel(value, available, method, status) {
   if (Number.isInteger(value) && value > 0) return '#' + value;
   if (available && ['ap', 'cfp'].includes(method)) return 'Unranked';
   return ({ 'no-poll-yet': 'Not yet released', 'publication-time-uncertain': 'Release time unverified',
+    'before-archive': 'Before saved archive',
     'not-applicable': 'Not applicable', missing: 'Not reported' })[status] ?? '—';
 }
 
@@ -269,7 +273,7 @@ function gameDetails(row, state) {
         ${gameTeam(team,row.rank,teamPoints,venue,result === 'tie' ? 'Tie' : result === 'win' ? 'Winner' : 'Loser',state)}
         ${gameTeam(opponent,row.opponentRank,opponentPoints,otherVenue,result === 'tie' ? 'Tie' : result === 'win' ? 'Loser' : 'Winner',state)}
       </div>
-      ${rankDate ? `<p class="compact-note">Pregame edition · ${date(rankDate)}</p>` :
+      ${rankDate ? `<p class="compact-note">Pregame edition · ${date(rankDate)}${row.pregameEdition?.provenance === 'repository-recorded snapshot' ? '. Retained repository snapshot, used only after the record’s Mountain calendar day ended.' : ''}${row.pregameEdition?.sourceUrl && row.pregameEdition?.provenance === 'repository-recorded snapshot' ? ` <a href="${escapeHtml(row.pregameEdition.sourceUrl)}">Saved source</a>` : ''}</p>` :
         `<p class="compact-note">${row.rank.pregameStatus === 'no-poll-yet' ? 'This game preceded the first poll release; no pregame poll existed.' : row.rank.pregameStatus === 'publication-time-uncertain' ? 'The release time cannot be verified as preceding this kickoff.' : 'A dated pregame ranking is unavailable for this method and game.'}</p>`}
       ${team.division === 'fbs' && opponent.division === 'fbs' && state.season === state.seasons[0] ? `<p class="compact-note"><a href="#sor-compare/fbs/${encodeURIComponent(team.id)}/${encodeURIComponent(opponent.id)}">Compare these teams’ earned SOR rankings</a></p>` : ''}
       ${Number.isFinite(row.qualityScore) ? `<p class="compact-note">${escapeHtml(team.name)} game quality · ${number(row.qualityScore,3)}</p>` : ''}

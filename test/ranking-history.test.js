@@ -131,6 +131,8 @@ test('archive publication preserves polls, Forge, replay labels, and legacy meta
     const finished = JSON.parse(await readFile(historyPath, 'utf8'));
     assert.equal(finished.editions.length, 2);
     assert.equal(finished.editions[1].complete, true);
+    assert.equal(finished.publications.length, 3, 'earlier within-week saved ranks survive the weekly display replacement');
+    assert.equal(new Set(finished.publications.map(row => row.publicationHash)).size, 3);
     assert.equal(JSON.parse(await readFile(comparisonPath, 'utf8')).sor.length, 2);
   } finally {
     await rm(directory, { recursive: true });

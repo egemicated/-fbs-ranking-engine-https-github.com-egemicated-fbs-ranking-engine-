@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { isDeepStrictEqual } from 'node:util';
 import { atomicJson } from './ingest.js';
+import { addSorPublication, compactSorPublication } from './sor-history-publications.js';
 
 const hash = value => typeof value === 'string' && /^[a-f0-9]{64}$/.test(value);
 const date = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Denver', year: 'numeric', month: '2-digit', day: '2-digit' });
@@ -158,7 +159,7 @@ function comparisonArchive(archive, edition, season) {
 }
 
 export async function saveSorHistory(snapshot, schedule, {
-  historyPath = 'frontend/ranking-history.json', comparisonPath = 'frontend/ranking-editions.json'
+  historyPath = 'frontend/ranking-history.json', comparisonPath = 'frontend/ranking-editions.json', recordedAt = new Date().toISOString()
 } = {}) {
   const edition = buildSorHistoryEdition(snapshot, schedule);
   if (!edition) return false;
@@ -167,6 +168,9 @@ export async function saveSorHistory(snapshot, schedule, {
   catch (error) { if (error.code !== 'ENOENT') throw error; history = { schemaVersion: 1, season: snapshot.season, editions: [] }; }
   const comparisons = JSON.parse(await readFile(comparisonPath, 'utf8'));
   const updated = addSorHistoryEdition(history, edition, snapshot.season);
+  updated.publications = addSorPublication(history.publications, compactSorPublication(edition, {
+    recordedAt, source:{ basis:'pipeline-recorded snapshot', path:'frontend/ranking-history.json' },
+  }));
   const retained = updated.editions.find(item => key(item) === key(edition));
   const nextComparisons = comparisonArchive(comparisons, retained, snapshot.season);
   const historyChanged = !isDeepStrictEqual(history, updated), comparisonChanged = !isDeepStrictEqual(comparisons, nextComparisons);

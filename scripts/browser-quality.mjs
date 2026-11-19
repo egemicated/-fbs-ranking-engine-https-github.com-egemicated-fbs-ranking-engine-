@@ -27,12 +27,12 @@ const routes = [
   ['sor-compare','[data-sor-evidence] .intelligence-panel'], ['model-report/fbs','.model-report'],
   ['model-report/fcs','.model-report'], ['my-teams','.my-teams-page'],
   ['bracket/demo','[data-bracket-action="sample"]'], ['cfp-scenarios','[data-scenario-action="fill"]'],
-  ['privacy','.platform-info'], ['support','.platform-info'],
+  ['about','.platform-info'], ['privacy','.platform-info'], ['terms','.platform-info'], ['support','.platform-info'],
   ['conference-strength/compare/2025/SEC/Big%20Ten','.conference-game'],
 ];
 let checks=0;
 try {
-  for (const width of [320,390,768,1440]) {
+    for (const width of [320,375,390,768,1024,1440]) {
     const context=await browser.newContext({viewport:{width,height:960},reducedMotion:'reduce'});
     const page=await context.newPage();
     const errors=[];
@@ -40,6 +40,7 @@ try {
     for (const [hash,selector] of routes) {
       await page.goto(base+'#'+hash,{waitUntil:'domcontentloaded'});
       await page.locator(selector).first().waitFor({timeout:15000});
+      assert.equal(await page.locator('main h1').count(),1,hash+' primary heading');
       const dimensions=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
       assert.equal(dimensions.scroll,dimensions.width,hash+' overflow at '+width);
       const missingLabels=await page.locator('main').evaluate(main=>[...main.querySelectorAll('select,textarea,input:not([type="hidden"]):not([type="submit"])')].filter(control=>!control.labels?.length&&!control.getAttribute('aria-label')&&!control.getAttribute('aria-labelledby')).map(control=>control.id));
@@ -115,8 +116,8 @@ try {
   await page.locator('#support-test [data-account-request]').waitFor();
   await page.locator('#support-test textarea').fill('Please check my account settings.');
   await page.locator('#support-test button[type="submit"]').click();
-  await page.getByText(/Your request is saved for owner review/).waitFor();
-  assert.equal(await page.evaluate(()=>window.supportCalls.filter(call=>call.name==='submit_account_request').length),1);
+  await page.getByText(/Request test-request is saved for review/).waitFor();
+  assert.equal(await page.evaluate(()=>window.supportCalls.filter(call=>call.name==='submit_support_request').length),1);
   await page.evaluate(async()=>{
     const {mountMyTeams}=await import('/my-teams.js');
     const snapshot=await fetch('/data/rankings.json').then(response=>response.json());

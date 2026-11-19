@@ -1,4 +1,5 @@
 .home-favorite:not(:empty) { padding-block: clamp(16px, 2.1vw, 27px); }
+.my-team[data-my-team-compact]>.panel-body{display:flex;align-items:center;flex-wrap:wrap;gap:8px 20px;padding:12px 16px}.my-team[data-my-team-compact] .my-team-header{margin:0}.my-team[data-my-team-compact] .my-team-header-controls:empty,.my-team-message:empty{display:none}.my-team[data-my-team-compact] p{margin:0}.my-team[data-my-team-compact]>.panel-body>.text-link{margin-left:auto}.my-team[data-my-team-compact] .my-team-prompt{gap:8px 14px}.my-team[data-my-team-compact] h2{font-size:20px}
 .my-team > .panel-body { padding: 12px 16px 15px; }
 .my-team-header, .my-team-prompt {
   display: flex;

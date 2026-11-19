@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-11-19T14:16:36.753Z",
+  "anonymousReply": {
+    "status": 401,
+    "code": "42501",
+    "denied": true
+  },
+  "anonymousOwnedHistory": {
+    "status": 401,
+    "code": "42501",
+    "protected": true
+  },
+  "scope": "Unauthenticated negative requests only; no account, request, reply, pick or email created",
+  "passed": true,
+  "note": "The existing public owner-read guard denies anonymous history access; the inner private compatibility function returning an empty array is not itself exposed."
+}

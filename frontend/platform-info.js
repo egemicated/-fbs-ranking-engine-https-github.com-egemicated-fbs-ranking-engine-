@@ -1,5 +1,6 @@
 import { loadAccountConfig, loadBracketClient } from './bracket-auth.js?v=header-account';
-import { notifySupportIfReady } from './account-support.js';
+import { notifySupportIfReady, supportRequestMarkup, updateSupportCategory, supportSubmission, restoreSupportDraft, supportResultNotice } from './account-support.js';
+import { secondFactorRequired, openAccountDialog } from './account-auth.js';
 
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -15,10 +16,13 @@ const pages = {
 
 export function platformInfoMarkup(page) {
   const [title, body] = pages[page] ?? pages.about;
-  return `<section class="panel platform-info"><div class="panel-head"><h1>${title}</h1></div><div class="panel-body">${body}</div></section>`;
+  const headings={privacy:['Your account and sign-in','Your teams and public activity','Data sources and service providers','Account controls and private support','Account-deletion review'],terms:['Rankings and forecasts','Contest picks and deadlines','Playoff scenarios and sources','Report a problem'],support:['Report a football-data discrepancy','Private account help']};
+  const paragraphs=body.match(/<p>[\s\S]*?<\/p>/g)??[];
+  const content=headings[page]?.length===paragraphs.length?paragraphs.map((paragraph,index)=>`<section><h2>${headings[page][index]}</h2>${paragraph}</section>`).join(''):body;
+  return `<section class="panel platform-info"><div class="panel-head"><h1>${title}</h1></div><div class="panel-body">${content}${page==='support'?'<p>GitHub is optional. You can also report a football-data discrepancy through the public support email below. Signed-in users can use the private form and read responses in their request history.</p>':''}</div></section>`;
 }
 
-export function mountPlatformInfo(container, { page = 'about', previewClient } = {}) {
+export function mountPlatformInfo(container, { page = 'about', previewClient, previewConfig } = {}) {
   container.innerHTML = platformInfoMarkup(page);
   if (!['account', 'support'].includes(page)) return () => {};
   const formRoot = document.createElement('section');
@@ -31,16 +35,16 @@ export function mountPlatformInfo(container, { page = 'about', previewClient } =
     const request = ++generation;
     const current = () => active && request === generation;
     try {
-      config = previewClient ? {} : await loadAccountConfig();
-      client = previewClient ?? await loadBracketClient(config);
+      config = previewConfig ?? (previewClient ? {} : await loadAccountConfig());
       if (page === 'support' && typeof config.supportEmail === 'string' && /^[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+$/.test(config.supportEmail) && !container.querySelector('[data-public-support-contact]')) {
         const contact = document.createElement('p');
         contact.dataset.publicSupportContact = '';
         contact.innerHTML = `Cannot sign in? Email <a href="mailto:${encodeURIComponent(config.supportEmail)}">${escapeHtml(config.supportEmail)}</a>. Do not send passwords or authenticator codes.`;
         container.querySelector('.platform-info .panel-body')?.append(contact);
       }
+      client = previewClient ?? await loadBracketClient(config);
       if (!subscription && client.auth.onAuthStateChange) subscription = client.auth.onAuthStateChange(event => {
-        if (!['SIGNED_IN', 'SIGNED_OUT'].includes(event)) return;
+        if (!['SIGNED_IN', 'SIGNED_OUT', 'MFA_CHALLENGE_VERIFIED', 'TOKEN_REFRESHED'].includes(event)) return;
         ++generation;
         if (active) formRoot.innerHTML = '<div class="panel-body"><p role="status">Checking your account…</p></div>';
         clearTimeout(noticeTimer);
@@ -52,39 +56,50 @@ export function mountPlatformInfo(container, { page = 'about', previewClient } =
         formRoot.innerHTML = '<div class="panel-body"><p>Sign in from the header to send a private request.</p></div>';
         return;
       }
+      const factor=await secondFactorRequired(client);
+      if(!current())return;
+      if(factor){formRoot.innerHTML='<div class="panel-body account-section"><p>Verify your authenticator to read private support requests.</p><button type="button" class="button light small" data-support-verify>Verify authenticator</button></div>';return;}
       const history = await client.rpc('my_account_requests');
       if (history.error) throw history.error;
       if (!current()) return;
-      formRoot.innerHTML = `<div class="panel-head"><h2>Private account request</h2></div><div class="panel-body"><form data-account-request>
-        <label for="account-request-kind">Request type</label><select id="account-request-kind" name="kind">${page === 'support' ? '<option value="general">General support</option><option value="access">Account access</option><option value="teams">Saved teams</option><option value="contest">Contest issue</option><option value="profile">Nickname or visibility</option><option value="data">Data discrepancy</option><option value="deletion">Account deletion</option>' : '<option value="support">Account support</option><option value="data">Data correction</option><option value="deletion">Account deletion</option>'}</select>
-        <label for="account-request-message">Details</label><textarea id="account-request-message" name="message" rows="4" minlength="5" maxlength="2000" required></textarea>
-        <button class="button" type="submit">Send private request</button><p role="status" data-account-request-status></p></form>
-        <details><summary>Your previous requests</summary>${Array.isArray(history.data) && history.data.length ? `<ul>${history.data.map(row => `<li>${escapeHtml(row.category ?? row.kind)} · ${escapeHtml(row.status)} · ${escapeHtml(new Date(row.createdAt).toLocaleDateString('en-US', {timeZone:'America/Denver'}))} · Request ${escapeHtml(row.id)}</li>`).join('')}</ul>` : '<p>No previous requests.</p>'}</details></div>`;
+      formRoot.innerHTML = `<div class="panel-body">${supportRequestMarkup(Array.isArray(history.data)?history.data:[],{idPrefix:'support'})}</div>`;
     } catch {
       if (current()) formRoot.innerHTML = '<div class="panel-body"><p role="status">Account requests could not load.</p><button type="button" class="button light small" data-account-request-retry>Try again</button></div>';
     }
   }
-  const onClick = event => { if (event.target.closest('[data-account-request-retry]')) void connect(); };
+  const onClick = async event => {
+    if(event.target.closest('[data-account-request-retry]'))return void connect();
+    if(event.target.closest('[data-support-verify]')){
+      try{const factor=await secondFactorRequired(client);if(factor&&active)openAccountDialog({client,config,mode:'mfa',mfaFactorId:factor,onSignedIn:()=>void connect()});else await connect();}catch{if(active)formRoot.innerHTML='<div class="panel-body"><p role="status">Verify your authenticator from Account settings, then reload support.</p><a href="#account">Account security</a></div>';}
+    }
+  };
+  const onChange=event=>{if(event.target.matches('[data-account-support] [name="category"]'))updateSupportCategory(event.target.form);};
   const onSubmit = async event => {
-    if (!event.target.matches('[data-account-request]')) return;
+    if (!event.target.matches('[data-account-support]')) return;
     event.preventDefault();
     if (busy || !client) return;
     busy = true;
+    const requestGeneration=generation,current=()=>active&&generation===requestGeneration;
     const form = event.target;
     const button = form.querySelector('button[type="submit"]');
     const status = form.querySelector('[data-account-request-status]');
     button.disabled = true;
     try {
       const values = new FormData(form);
-      const { data, error } = await client.rpc(page === 'support' ? 'submit_support_request' : 'submit_account_request', page === 'support' ? { p_category: values.get('kind'), p_message: values.get('message') } : { p_kind: values.get('kind'), p_message: values.get('message') });
+      const { data, error } = await client.rpc('submit_support_request', supportSubmission(values));
       if (error || !data?.id) throw error ?? Error('Request not saved');
-      await notifySupportIfReady(client,config);
-      if (active) { status.textContent = `Your request is saved for owner review. Request ${data.id}. You can find its status in Your previous requests after reloading.`; form.querySelector('textarea').value = ''; }
-    } catch { if (active) status.textContent = 'Your request could not be saved. Please try again.'; }
+      if(!current())return;
+      if(data.alreadyOpen!==true)await notifySupportIfReady(client,config);
+      if(!current())return;
+      let requests;
+      try{const history=await client.rpc('my_account_requests');if(history.error)throw history.error;requests=Array.isArray(history.data)?history.data:[data];}catch{requests=[data];}
+      if(current()){formRoot.innerHTML=`<div class="panel-body">${supportRequestMarkup(requests,{idPrefix:'support'})}</div>`;const nextForm=formRoot.querySelector('[data-account-support]');if(data.alreadyOpen===true){restoreSupportDraft(nextForm,values);const history=formRoot.querySelector('.support-request-history');if(history)history.open=true;}nextForm.querySelector('[data-form-status]').textContent=supportResultNotice(data);}
+    } catch(error) { if(current()&&status.isConnected)status.textContent=error.message==='Confirm the deletion-request acknowledgment before submitting.'?error.message:'Your request could not be saved. Please check its details and try again.'; }
     finally { busy = false; if (active) button.disabled = false; }
   };
   container.addEventListener('submit', onSubmit);
   container.addEventListener('click', onClick);
+  container.addEventListener('change',onChange);
   void connect();
-  return () => { active = false; ++generation; clearTimeout(noticeTimer); subscription?.unsubscribe(); container.removeEventListener('submit', onSubmit); container.removeEventListener('click', onClick); };
+  return () => { active = false; ++generation; clearTimeout(noticeTimer); subscription?.unsubscribe(); container.removeEventListener('submit', onSubmit); container.removeEventListener('click', onClick); container.removeEventListener('change',onChange); };
 }

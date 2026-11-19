@@ -53,7 +53,8 @@ do $$declare v jsonb;begin
   perform set_config('account_test.request',v->>'id',true);
   assert public.submit_support_request('teams','Duplicate request')->>'id'=v->>'id';
   assert jsonb_array_length(public.my_account_requests())=1;
-  assert not(public.my_account_requests()->0 ? 'message');
+  assert public.my_account_requests()->0->>'message'='Keep this private support detail';
+  assert not(public.my_account_requests()->0 ? 'adminNote');
   -- The still-live older frontend uses this legacy public RPC. It must route
   -- deletion to the protected category rather than a generic request.
   v:=public.submit_account_request('deletion','Please review account deletion');

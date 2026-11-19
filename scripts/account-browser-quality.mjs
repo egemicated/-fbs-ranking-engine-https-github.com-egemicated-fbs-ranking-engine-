@@ -89,7 +89,7 @@ async function assertPageFits(page,label){
   assert.equal(dimensions.scroll,dimensions.client,label+(diagnostics?' '+diagnostics:''));
 }
 try{
-  for(const width of [320,390,768,1440]){
+  for(const width of [320,375,390,768,1024,1440]){
     const page=await browser.newPage({viewport:{width,height:1050},reducedMotion:'reduce'});
     const errors=[];page.on('pageerror',error=>errors.push(error.message));
     await page.route('https://cdn.jsdelivr.net/npm/@supabase/**',route=>route.abort());
@@ -100,7 +100,7 @@ try{
       container.innerHTML='<div class="wrap page-content" id="account-test"></div>';
       const profile={userId:'test-account',email:'fan@example.test',role:'user',status:'active',nickname:'Test fan',publicLeaderboard:false,sharePicks:false};
       const user={id:'test-account',email:profile.email};
-      const requests=[];let factor=null,level='aal1';window.accountCalls=[];
+      const requests=[];let factor=null,level='aal1';window.accountCalls=[];window.accountNotifications=[];
       window.accountClient={auth:{
         getUser:async()=>({data:{user}}),getSession:async()=>({data:{session:{user}}}),
         onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}}),
@@ -112,14 +112,17 @@ try{
           enroll:async()=>{factor={id:'test-factor',status:'unverified',friendly_name:'Test authenticator'};return{data:{...factor,totp:{qr_code:'data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="white"/></svg>',secret:'TESTONLY'}}};},
           challengeAndVerify:async args=>{window.accountCalls.push({name:'auth.mfa.challengeAndVerify',factorId:args.factorId});factor={...factor,status:'verified'};level='aal2';return{data:{}};},
           unenroll:async args=>{window.accountCalls.push({name:'auth.mfa.unenroll',factorId:args.factorId});factor=null;level='aal1';return{data:{}};}}},
+        functions:{invoke:async(name,args)=>{window.accountNotifications.push({name,args});return{data:{accepted:true,delivery:'processed'}};}},
         rpc:async(name,args)=>{window.accountCalls.push({name,args});if(name==='account_context')return{data:{...profile}};if(name==='my_account_requests')return{data:[...requests]};
           if(name==='save_account_profile'){Object.assign(profile,{nickname:args.p_nickname,publicLeaderboard:args.p_public,sharePicks:args.p_share_picks});return{data:{...profile}};}
-          if(name==='submit_support_request'){const request={id:'test-request-id',category:args.p_category,status:'pending',createdAt:'2026-11-18T12:00:00Z'};requests.unshift(request);return{data:request};}
+          if(name==='submit_support_request'){const existing=requests.find(row=>row.category===args.p_category&&['pending','in_review'].includes(row.status));if(existing)return{data:{...existing,alreadyOpen:true}};const request={id:'test-request-id',category:args.p_category,message:args.p_message,status:'pending',createdAt:'2026-11-18T12:00:00Z'};requests.unshift(request);return{data:{...request,alreadyOpen:false}};}
           throw Error('Unexpected RPC '+name);}};
       const {mountAccountCenter}=await import('/account-center.js');
-      window.closeAccountTest=mountAccountCenter(document.querySelector('#account-test'),{previewClient:window.accountClient,previewConfig:{emailAuthEnabled:true}});
+      window.closeAccountTest=mountAccountCenter(document.querySelector('#account-test'),{previewClient:window.accountClient,previewConfig:{emailAuthEnabled:true,supportNotificationsEnabled:true}});
     });
     await page.locator('#account-nickname').waitFor();
+    assert.equal(await page.locator('[data-account-support] [data-support-deletion]').isVisible(),false);
+    assert.equal(await page.locator('[data-account-support] [name="deletionConfirmed"]').isDisabled(),true);
     await page.locator('#account-nickname').fill('A safer nickname');
     await page.locator('[data-account-profile] input[name="public"]').check();
     await page.locator('[data-account-profile] input[name="share"]').check();
@@ -133,10 +136,22 @@ try{
     assert.equal(await page.evaluate(()=>window.accountCalls.find(call=>call.name==='auth.updateUser').identity),'test-account');
     assert.equal(await page.locator('#account-new-password').inputValue(),'');
     await page.locator('#account-category').selectOption('deletion');
+    assert.equal(await page.locator('[data-account-support] [data-support-deletion]').isVisible(),true);
     await page.locator('#account-details').fill('Please review this disposable test request.');
     await page.locator('[data-account-support] input[name="deletionConfirmed"]').check();
     await page.locator('[data-account-support] [type="submit"]').click();
     await page.getByText(/Request test-request-id is saved for review/).waitFor();
+    assert.equal(await page.evaluate(()=>window.accountNotifications.length),1);
+    await page.locator('#account-category').selectOption('deletion');
+    await page.locator('#account-details').fill('This is a new unsent draft for my existing request.');
+    await page.locator('[data-account-support] input[name="deletionConfirmed"]').check();
+    await page.locator('[data-account-support] [type="submit"]').click();
+    await page.getByText(/An open request already exists in this category/).waitFor();
+    assert.equal(await page.locator('#account-details').inputValue(),'This is a new unsent draft for my existing request.');
+    assert.equal(await page.locator('[data-account-support] [name="deletionConfirmed"]').isChecked(),true);
+    assert.equal(await page.evaluate(()=>window.accountNotifications.length),1);
+    await page.locator('.support-original > summary').click();
+    await page.locator('.support-original p').filter({hasText:'Please review this disposable test request.'}).waitFor();
     await page.locator('[data-mfa-enroll]').click();
     await page.locator('.account-enrollment img').waitFor();
     assert.match(await page.locator('.account-enrollment img').getAttribute('src'),/^data:image\/svg\+xml/);
@@ -146,6 +161,33 @@ try{
     await page.locator('[data-mfa-remove]').click();
     await page.getByText(/No verified authenticator yet/).waitFor();
     assert.equal(await page.evaluate(()=>window.accountCalls.filter(call=>call.name==='auth.refreshSession').length),1);
+    const accountCategories=await page.locator('#account-category option').allTextContents();
+    await page.evaluate(async()=>{
+      const root=document.createElement('div');root.id='shared-support-test';document.querySelector('main').append(root);
+      const {mountPlatformInfo}=await import('/platform-info.js');
+      window.sharedSupportEmails=0;
+      const request={id:'private-response-request',category:'general',message:'My original private question.',status:'in_review',responses:[{message:'Your private response is ready.',requiresAction:true,createdAt:'2026-11-19T12:00:00Z'}]};
+      window.closeSharedSupport=mountPlatformInfo(root,{page:'support',previewConfig:{supportEmail:'support@example.test',supportNotificationsEnabled:true},previewClient:{auth:{getUser:async()=>({data:{user:{id:'shared-support-owner'}}})},functions:{invoke:async()=>{window.sharedSupportEmails++;return{data:{accepted:true}};}},rpc:async name=>({data:name==='my_account_requests'?[request]:{...request,alreadyOpen:true}})}});
+    });
+    await page.locator('#shared-support-test [data-account-support]').waitFor();
+    assert.deepEqual(await page.locator('#support-category option').allTextContents(),accountCategories);
+    assert.equal(await page.locator('#shared-support-test [data-support-deletion]').isVisible(),false);
+    await page.locator('#support-category').selectOption('deletion');
+    assert.equal(await page.locator('#shared-support-test [data-support-deletion]').isVisible(),true);
+    await page.locator('#shared-support-test [name="deletionConfirmed"]').check();
+    await page.locator('#support-category').selectOption('general');
+    assert.equal(await page.locator('#shared-support-test [data-support-deletion]').isVisible(),false);
+    assert.equal(await page.locator('#shared-support-test [name="deletionConfirmed"]').isChecked(),false);
+    await page.locator('#support-details').fill('A new draft that should remain unsent.');
+    await page.locator('#shared-support-test [data-account-support] [type="submit"]').click();
+    await page.locator('#shared-support-test [data-form-status]').filter({hasText:'Your new details were not sent.'}).waitFor();
+    assert.equal(await page.locator('#support-details').inputValue(),'A new draft that should remain unsent.');
+    assert.equal(await page.evaluate(()=>window.sharedSupportEmails),0);
+    await page.getByText('Your private response is ready.',{exact:true}).waitFor();
+    await page.locator('#shared-support-test .support-original > summary').click();
+    await page.getByText('My original private question.',{exact:true}).waitFor();
+    await assertPageFits(page,'Shared private support overflow at '+width);
+    await page.evaluate(()=>{window.closeSharedSupport();document.querySelector('#shared-support-test').remove();});
     await page.evaluate(async()=>{
       const {mountHeaderAccount}=await import('/bracket-auth.js?v=header-account');
       mountHeaderAccount(document.querySelector('[data-header-account]'),{previewClient:window.accountClient});
@@ -189,7 +231,7 @@ try{
     assert.deepEqual(await page.evaluate(()=>window.authCalls.map(call=>call.name)),['google','signup','resend','recovery','signin']);
     await page.evaluate(async()=>{
       const {mountAdministration}=await import('/account-administration.js');
-      const requests=[{id:'test-request',email:'fan@example.test',category:'general',message:'A private test support request.',status:'pending',notificationStatus:'pending'},
+      const requests=[{id:'test-request',userId:'test-user',email:'fan@example.test',category:'general',message:'A private test support request.',status:'pending',notificationStatus:'pending',responses:[]},
         {id:'test-failed-alert',email:'fan@example.test',category:'general',message:'A saved request with exhausted delivery attempts.',status:'pending',notificationStatus:'failed'},
         {id:'test-failed-alert-sent',email:'fan@example.test',category:'general',message:'A saved request whose retry will be accepted by the provider.',status:'pending',notificationStatus:'failed'}];
       const users=Array.from({length:23},(_,index)=>({userId:index===0?'test-user':`test-user-${index+1}`,
@@ -205,9 +247,13 @@ try{
             const matching=users.filter(user=>!search||user.email.toLowerCase().includes(search)||user.nickname.toLowerCase().includes(search));
             return{data:{users:matching.slice(args.p_offset,args.p_offset+args.p_limit),total:matching.length}};
           }
-          if(name==='admin_support_requests')return{data:{requests,total:requests.length}};
+          if(name==='admin_support_requests'){
+            const matching=requests.filter(row=>!args.p_status||row.status===args.p_status);
+            return{data:{requests:matching,total:matching.length,statusCounts:Object.fromEntries(['pending','in_review','resolved','closed'].map(status=>[status,requests.filter(row=>row.status===status).length])),notifications:{due:requests.filter(row=>row.notificationStatus==='pending').length,failed:requests.filter(row=>row.notificationStatus==='failed').length}}};
+          }
           if(name==='admin_action_history')return{data:{actions,total:actions.length}};
           if(name==='admin_update_request'){const row=requests.find(row=>row.id===args.p_request_id);row.status=args.p_status;row.adminNote=args.p_note;return{data:row};}
+          if(name==='admin_reply_request'){const row=requests.find(row=>row.id===args.p_request_id);row.responses.push({id:args.p_reply_id,message:args.p_message,requiresAction:args.p_requires_action,createdAt:'2026-11-19T12:00:00Z'});return{data:{id:args.p_reply_id,requestId:row.id}};}
           if(name==='admin_set_account_status'){users.find(row=>row.userId===args.p_user_id).status=args.p_status;return{data:{}};}
           if(name==='admin_requeue_support_notification'){const row=requests.find(row=>row.id===args.p_request_id);if(row.notificationStatus!=='failed')throw Error('Only failed notifications can be requeued');row.notificationStatus='pending';lastRequeue=row.id;actions.unshift({action:'support_notification_requeue',details:{reason:args.p_reason}});return{data:{requestId:row.id,notificationStatus:'pending'}};}
           throw Error('Unexpected admin RPC '+name);
@@ -215,6 +261,7 @@ try{
       mountAdministration(document.querySelector('#account-test'),{previewClient:client,previewConfig:{supportNotificationsEnabled:true}});
     });
     await page.locator('.admin-user').first().waitFor();
+    assert.match(await page.locator('.admin-support-totals').innerText(),/Pending\s+3/);
     const userPages=page.locator('nav[aria-label="Registered user pages"]');
     const checkUserPage=async(number,count,range)=>{
       await userPages.locator(`[data-admin-users-page="${number}"][aria-current="page"]`).waitFor();
@@ -241,12 +288,25 @@ try{
     await page.locator('[data-admin-search] [type="submit"]').click();
     await page.locator('[data-admin-users-range]').filter({hasText:'Showing 1–1 of 1 matching account ·'}).waitFor();
     assert.equal(await page.locator('.admin-user').count(),1);
+    assert.equal(await page.locator('nav[aria-label="Registered user pages"]').count(),0);
     assert.deepEqual(await page.evaluate(()=>window.adminCalls.filter(call=>call.name==='admin_users').at(-1).args),{p_search:'fan@example.test',p_limit:10,p_offset:0});
     await assertPageFits(page,`Admin filtered users overflow at ${width}`);
+    await page.locator('[data-admin-search] input').fill('no-such-user@example.test');
+    await page.locator('[data-admin-search] [type="submit"]').click();
+    await page.locator('[data-admin-users-range]').filter({hasText:'No accounts match this search.'}).waitFor();
+    assert.equal(await page.locator('.admin-user').count(),0);
+    assert.equal(await page.locator('nav[aria-label="Registered user pages"]').count(),0);
     await page.locator('[data-admin-search] input').fill('');
     await page.locator('[data-admin-search] [type="submit"]').click();
     await checkUserPage(1,10,'Showing 1–10 of 23 accounts');
     await page.locator('.admin-request > summary').first().click();
+    await page.locator('[data-admin-reply="test-request"] textarea').fill('Please check your saved team after reloading.');
+    await page.locator('[data-admin-reply="test-request"] [name="requiresAction"]').check();
+    await page.locator('[data-admin-reply="test-request"] [type="submit"]').click();
+    await page.locator('[data-admin-result]').filter({hasText:'Private response saved in the user’s request history.'}).waitFor();
+    await page.locator('#support-request-test-request > summary').click();
+    await page.locator('#support-request-test-request .support-response').filter({hasText:'Please check your saved team'}).waitFor();
+    await assertPageFits(page,'Admin response overflow at '+width);
     await page.locator('[data-admin-request="test-request"] select').selectOption('in_review');await page.locator('[data-admin-request="test-request"] textarea').fill('Disposable review note');await page.locator('[data-admin-request="test-request"] [type="submit"]').click();
     await page.waitForFunction(()=>window.adminCalls.some(call=>call.name==='admin_update_request'));
     assert.equal(await page.locator('[data-admin-notification-requeue]').count(),2);
@@ -270,7 +330,7 @@ try{
     await assertPageFits(page,'Admin overflow at '+width);
     const adminLabels=await page.locator('#account-test input,#account-test select,#account-test textarea').evaluateAll(controls=>controls.filter(control=>!control.labels?.length&&!control.getAttribute('aria-label')).map(control=>control.id));assert.deepEqual(adminLabels,[]);
     assert.equal(await page.locator('#account-test input[type="password"]').count(),0);
-    assert.deepEqual(errors,[]);results.push({width,account:true,registrationMock:true,recoveryMock:true,googleMigrationMock:true,mfaMock:true,adminMock:true,adminPaginationMock:true,failedNotificationRequeueMock:true,overflow:false,labels:true});await page.close();
+    assert.deepEqual(errors,[]);results.push({width,account:true,registrationMock:true,recoveryMock:true,googleMigrationMock:true,mfaMock:true,adminMock:true,adminPaginationMock:true,privateSupportReplyMock:true,failedNotificationRequeueMock:true,overflow:false,labels:true});await page.close();
   }
   const callbacks=[];for(const fixture of callbackCases)callbacks.push(await checkCallbackRouting(fixture));
   console.log(JSON.stringify({status:'passed',providerFlows:'Browser-only SDK/RPC doubles; no real email or OAuth delivery claimed',checks:results,callbacks},null,2));

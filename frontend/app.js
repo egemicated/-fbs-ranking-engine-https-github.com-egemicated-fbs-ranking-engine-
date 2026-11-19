@@ -1201,7 +1201,7 @@ function renderWeeklyPicks(picks) {
   if (status === 'ready') {
     const cutoff = Number.isFinite(picksTime(data.source?.scheduleAsOf)) ? data.source.scheduleAsOf : data.asOf;
     const provider = data.source?.provider === 'cfbd' ? 'CollegeFootballData' : data.source?.provider === 'sportsdataverse' ? 'sportsdataverse' : '';
-    body = `<p class="compact-note">Schedule and results${provider ? ` from ${provider}` : ''} as of <time datetime="${esc(cutoff)}">${picksTimestamp.format(picksTime(cutoff))} MT</time>.${data.source?.extraScoreProvider === 'ESPN' ? ' Some final scores are from ESPN.' : ''}</p>
+    body = `<p class="compact-note">Published schedule and results${provider ? ` from ${provider}` : ''} as of <time datetime="${esc(cutoff)}">${picksTimestamp.format(picksTime(cutoff))} MT</time>.${data.source?.extraScoreProvider === 'ESPN' ? ' Some final scores are from ESPN.' : ''} <a href="#scoreboard">Live Scoreboard</a> may be newer; this page grades saved picks after published results refresh.</p>
       <p class="compact-note">${fcs
         ? 'Predictive Strength picks cover games between two FCS teams. The record grades picks saved before kickoff. Historical replays appear separately.'
         : 'Predictive Strength picks cover FBS–FBS and FBS–FCS games. FBS–FCS win chances are uncalibrated estimates. Each refresh can save picks up to seven days ahead. The record grades picks saved before kickoff. Historical replays and preview odds are separate.'}</p>
@@ -1490,7 +1490,7 @@ function renderConnectedFeature(page, id, scope) {
     admin: ['Administration', 'Secure account and support management.', 'account-administration.js', 'mountAdministration'],
   };
   const [title,description,file,mountName] = features[page];
-  main.innerHTML = `${['account','admin'].includes(page)?'':banner('FBS Intelligence',title,description)}<div class="wrap page-content" data-connected-feature><p role="status">Loading ${esc(title)}…</p></div>`;
+  main.innerHTML = `${['account','admin','about','privacy','terms','support'].includes(page)?'':banner('FBS Intelligence',title,description)}<div class="wrap page-content" data-connected-feature><p role="status">Loading ${esc(title)}…</p></div>`;
   const target = main.querySelector('[data-connected-feature]');
   if (!target?.isConnected) return;
   const lifecycle = { target, close: null };
@@ -1543,7 +1543,7 @@ function renderScoreboardPage() {
       if (String(rankingEditions.data?.season) !== season || String(state.snapshot?.season) !== season) return;
       const team = state.byId.get(teamId);
       return rankingEditions.cfpRanks.get(team?.name)?.rank;
-    }, { getTeams: () => new Map([...state.byId,...state.byFcsId]) });
+    }, { getTeams: () => new Map([...state.byId,...state.byFcsId]), getPublication: () => state.snapshot });
   }).catch(error => {
     if (target.isConnected) target.innerHTML = '<p role="status">The scoreboard could not load. Please reload this page to try again.</p>';
     console.error(error);
@@ -1625,7 +1625,7 @@ function render() {
   }
   if(page==='home')renderHome();else if(page==='rankings')renderRankings();else if(page==='teams')renderTeams();else if(page==='team')renderTeam(id);else if(page==='methodology')renderMethodology();else if(page==='compare')renderCompare();else if (page === 'polls' || page === 'forge-top-25') renderRankingEditions(page,id,scope);else if (page === 'conference-strength') renderConferenceStrengthPage();else if (['my-teams','sor-compare','model-report','about','privacy','terms','support','account','admin'].includes(page)) renderConnectedFeature(page,id,scope);else if (page === 'bracket') renderBracketPage();else if (page === 'cfp-scenarios') renderScenarioPage();else if (page === 'beat-the-model') renderContestPage();else if (page === 'ranking-history') renderHistoryPage(id);else renderHome();
   const compareTitle = id === 'weekly' ? scope === 'fcs' ? 'FCS Weekly Picks' : 'Weekly picks' : 'Matchup lab';
-  const team=rankedTeam(id);document.title=page==='home'?'The FBS Intelligence Top 25':`${page==='team'&&team?team.name:({rankings:`${state.division.toUpperCase()} rankings`,teams:`${state.division.toUpperCase()} team directory`,compare:compareTitle,methodology:'Methodology',polls:'Compare Rankings','forge-top-25':'Forge’s Top 25','conference-strength':'Conference Strength','my-teams':'My Teams','sor-compare':'Compare earned SOR','model-report':'Model Report Card',about:'About FBS Intelligence',privacy:'Privacy and accounts',terms:'Terms of use',support:'Support',account:'Account settings',bracket:'Playoff Bracket','cfp-scenarios':'CFP Scenario Builder','beat-the-model':'Beat the Model','ranking-history':'Weekly SOR movement'}[page]||'Home')} · ${BRAND}`;
+  const team=rankedTeam(id);document.title=page==='home'?'The FBS Intelligence Top 25':`${page==='team'&&team?team.name:({rankings:`${state.division.toUpperCase()} rankings`,teams:`${state.division.toUpperCase()} team directory`,compare:compareTitle,methodology:'Methodology',polls:'Compare Rankings','forge-top-25':'Forge’s Top 25','conference-strength':'Conference Strength','my-teams':'My Teams','sor-compare':'Compare earned SOR','model-report':'Model Report Card',about:'About FBS Intelligence',privacy:'Privacy and accounts',terms:'Terms of use',support:'Support',account:'Account settings',admin:'Administration',bracket:'Playoff Bracket','cfp-scenarios':'CFP Scenario Builder','beat-the-model':'Beat the Model','ranking-history':'Weekly SOR movement'}[page]||'Home')} · ${BRAND}`;
   document.querySelector('#announce').textContent=document.title;
 }
 document.addEventListener('error', event => {
@@ -1802,3 +1802,4 @@ if(signInReturn!==location.href)history.replaceState(history.state,'',signInRetu
 if (route()[0] === 'scoreboard') render();
 else renderHeader();
 load();
+void import('./searchable-team-select.js?v=1').then(({enhanceTeamSelectors})=>enhanceTeamSelectors(main)).catch(()=>{});

@@ -37,7 +37,7 @@ export function compareRankingHistory(data, selectedWeek) {
   const currentIds = new Set(rows.filter(row => numericRank(row.rank) && row.rank <= 25).map(row => row.id));
   const previousIds = new Set((previous?.rows ?? []).filter(row => numericRank(row.rank) && row.rank <= 25).map(row => row.id));
   const relevant = rows.filter(row => currentIds.has(row.id) || previousIds.has(row.id));
-  return { editions, current, previous, rows,
+  return { editions, current, previous, rows, publicationCount:Array.isArray(data.publications) ? data.publications.length : 0,
     arrivals: previous ? rows.filter(row => currentIds.has(row.id) && !previousIds.has(row.id)) : [],
     departures: previous ? rows.filter(row => previousIds.has(row.id) && !currentIds.has(row.id)) : [],
     risers: relevant.filter(row => row.movement > 0).sort((left, right) => right.movement - left.movement).slice(0, 5),
@@ -72,16 +72,20 @@ function movementCard(title, rows, emptyText) {
 }
 
 export function rankingHistoryMarkup(comparison, search = '') {
-  const { editions, current, previous, rows, arrivals, departures, risers, fallers } = comparison;
+  const { editions, current, previous, rows, arrivals, departures, risers, fallers, publicationCount=0 } = comparison;
   if (!current) return '<div class="wrap page-content"><section class="panel history-card"><h2>Weekly SOR history</h2><p>The first saved weekly edition will appear after publication.</p></section></div>';
   const date = value => new Intl.DateTimeFormat('en-US', { timeZone: 'UTC', dateStyle: 'medium' }).format(new Date(value));
   const replay = current.kind === 'replay';
+  const savedEditions = editions.filter(edition => edition.kind === 'saved');
+  const replayEditions = editions.filter(edition => edition.kind === 'replay');
+  const firstSaved = savedEditions.map(edition => edition.released ?? edition.asOf).sort()[0];
   const previousLabel = previous ? `${editionLabel(previous)}${previous.kind === 'replay' ? ' replay' : ''}` : '';
   const filtered = rows.filter(row => row.team.toLowerCase().includes(search.toLowerCase()));
   const membership = (title, members, text) => `<section class="panel history-card"><h2>${title}</h2>${members.length ? `<ul class="history-members">${members.map(row => `<li>${teamName(row)}<span>${rankLabel(row.previousRank)} → ${rankLabel(row.rank)}</span></li>`).join('')}</ul>` : `<p class="compact-note">${text}</p>`}</section>`;
   return `<section class="hero page-banner"><div class="wrap"><div class="eyebrow">${String(current.gamesThrough).slice(0, 4)} · Weekly SOR</div><h1>WHAT CHANGED?</h1><p>Follow the rankings, the teams entering the Top 25, and the game results behind each week.</p></div></section>
     <div class="wrap page-content history-page">
       <section class="panel history-card history-toolbar"><label for="history-week">View edition</label><select id="history-week">${[...editions].reverse().map(edition => `<option value="${editionKey(edition)}" ${editionKey(edition) === editionKey(current) ? 'selected' : ''}>${editionLabel(edition)}${edition.kind === 'replay' ? ' · replay' : ''}${edition.complete === false ? ' · partial' : ''}</option>`).join('')}</select><a class="text-link" href="#rankings">Current rankings →</a></section>
+      <details class="panel history-card history-archive-note"><summary>About this ranking archive</summary><p>${savedEditions.length} saved weekly ${savedEditions.length === 1 ? 'edition' : 'editions'}${firstSaved ? `, beginning ${date(firstSaved)}` : ''}; ${replayEditions.length} retrospective ${replayEditions.length === 1 ? 'replay' : 'replays'}.${publicationCount ? ` ${publicationCount} saved observations are retained separately for pregame evidence; this view shows the latest edition per week.` : ''} Earlier game archives used for model research are not weekly rankings published at the time. Replays stay separate from saved pregame evidence. Previous-season game and poll comparisons are available in <a href="#conference-strength">Conference Strength</a>.</p></details>
       <div class="history-context"><h2>${editionLabel(current)}</h2><p>Games through ${date(current.gamesThrough)}. ${replay ? 'Historical replay calculated' : 'Snapshot saved'} ${date(current.released ?? current.asOf)}.</p>
         ${previous ? `<p>Movement compared with ${escapeHtml(previousLabel)}. ${previous.kind === 'replay' ? 'The comparison week was reconstructed from its historical game cutoff. SOR score changes become available between saved editions.' : ''}</p>` : '<p>This is the first available edition for this calculation method.</p>'}
         ${current.complete === false ? '<p class="history-alert">This week is still awaiting final results. Movement is provisional.</p>' : ''}

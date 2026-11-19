@@ -1,0 +1,42 @@
+{
+  "project": "FBS Intelligence",
+  "appliedMigration": "20261119140050_support_responses_and_review",
+  "scope": "Read-only aggregate checkpoint after additive support migration. No account, preference, pick or request content mutation.",
+  "checks": {
+    "checked_at": "2026-11-19 14:01:22.777206+00",
+    "response_table_exists": true,
+    "responses_rls": true,
+    "responses": 0,
+    "saved_picks": 134,
+    "picks_digest": "5dfea904ed227a2eba0070bce9fbea73",
+    "profiles_digest": "87ae74ad10643f11ac2ac189221cfe37",
+    "preferences_without_seen_digest": "a3f2864da419ad871eb8f9502b0a08c3",
+    "accounts": 3,
+    "anonymous_reply_execute": false,
+    "authenticated_guarded_reply_execute": true,
+    "direct_response_client_grants": 0
+  },
+  "preserved": {
+    "original134Picks": true,
+    "originalProfile": true,
+    "preferencesExcludingSeen": true,
+    "accounts": true
+  },
+  "advisors": [
+    {
+      "name": "rls_enabled_no_policy",
+      "level": "INFO",
+      "count": 12,
+      "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy"
+    },
+    {
+      "name": "auth_leaked_password_protection",
+      "level": "WARN",
+      "count": 1,
+      "remediation": "https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection"
+    }
+  ],
+  "paidServicesActivated": false,
+  "credentialOrFactorChanges": false,
+  "permanentDeletionEnabled": false
+}

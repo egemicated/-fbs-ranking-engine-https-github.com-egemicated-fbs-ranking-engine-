@@ -1,0 +1,36 @@
+{
+  "capturedAt": "2026-11-19T13:28:41.987781Z",
+  "productionCommit": "9405d07841070cdea9203d7442df83fadba164c1",
+  "renderDeploy": "dep-dbve6lrrjlhs73ef9500",
+  "lastVerifiedEngineTests": 450,
+  "published": {
+    "asOf": "2026-11-18T12:30:14.250Z",
+    "sourceFetchedAt": "2026-11-18T12:30:09.923Z",
+    "snapshotHash": "a36df50d7f94c050e03b2d5df03cba802067d8dd2a1732f715a3ea3cc57dc4c1"
+  },
+  "hashes": {
+    "data/model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+    "data/publication-model.json": "177ef4d5248bc56f133944edd80bf6db76a304f5662b5e9c741672ddaa331bc9",
+    "data/performance-model.json": "f768d939f97ee5cad5bbcafb90f38df4188afc3f588ab3f59fb15efba1afea35",
+    "src/engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+    "published/latest.json": "452fd04b7e1e3bc2531dcb111efea5e3c97c16e88c6e34691979dd4e787597d7",
+    "published/weekly-picks.json": "d430f9d8ad2fddf8feff5bde02156f342e0868277dc51f067d02e709fffe589c",
+    "published/weekly-fcs-picks.json": "79be58722c945eb6bff28058f6acbf01ed3f0de53a465c5f42dde9b9179f65c5",
+    "published/performance-latest.json": "782e6e9d283c0ddabe02b6375e400a08fe187f12d59a775ef4e7c52b992159eb",
+    "frontend/ranking-history.json": "bf98dca73e4b154f215431b2be07a77a75f187c6505239825b63b85cf16b7b5d"
+  },
+  "accounts": {
+    "users": 3,
+    "originalSavedPicks": 134,
+    "picksNewlineJsonDigest": "5dfea904ed227a2eba0070bce9fbea73",
+    "profilesDigest": "87ae74ad10643f11ac2ac189221cfe37",
+    "preferencesWithoutSeenDigest": "a3f2864da419ad871eb8f9502b0a08c3",
+    "administrators": 1,
+    "verifiedMfaFactors": 1,
+    "supportRequests": 2,
+    "auditEntries": 5
+  },
+  "rollback": "Revert frontend to the baseline application commit while retaining additive migrations and new legitimate user activity. The previously approved encrypted application backup and successful isolated restore remain available outside the repository. No destructive data rollback or permanent deletion is authorized.",
+  "scheduleObservation": "Weekly results workflow active, but no November 19 scheduled run appeared by 13:28 UTC. Official availability jobs succeeded. This does not establish why GitHub did not create a results run.",
+  "privacy": "Aggregate counts/checksums only. No credentials, action links, user IDs, private request contents or future picks exported."
+}

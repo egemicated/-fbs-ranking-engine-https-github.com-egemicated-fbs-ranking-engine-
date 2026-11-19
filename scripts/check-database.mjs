@@ -81,7 +81,8 @@ try {
         (select count(*) from weekly_private.picks)+(select count(*) from public.my_team_preferences)+
         (select count(*) from support_private.account_requests)+(select count(*) from support_private.notification_outbox)+
         (select count(*) from account_private.memberships)+(select count(*) from account_private.entitlements)+
-        (select count(*) from account_private.audit_log)+(select count(*) from auth.sessions)+(select count(*) from auth.mfa_factors)`]);
+        (select count(*) from account_private.audit_log)+(select count(*) from auth.sessions)+(select count(*) from auth.mfa_factors)+
+        (select count(*) from support_private.request_responses)`]);
       if (count !== '0') throw new Error('SQL fixture did not roll back');
       console.log(`PASS ${name}`);
     } catch (error) {

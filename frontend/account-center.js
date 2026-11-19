@@ -1,19 +1,16 @@
 import { loadAccountConfig, loadBracketClient, hasPasswordRecoverySession, finishPasswordRecovery, getAccountCallbackNotice } from './bracket-auth.js?v=header-account';
 import { accountCapabilities, authMessage, updateAccountPassword, secondFactorRequired, openAccountDialog, PasswordValidationError } from './account-auth.js';
-import { notifySupportIfReady } from './account-support.js';
+import { notifySupportIfReady, supportRequestMarkup, updateSupportCategory, supportSubmission, restoreSupportDraft, supportResultNotice } from './account-support.js';
+export { supportRequestMarkup, SUPPORT_CATEGORIES } from './account-support.js';
 
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 const date = value => value && Number.isFinite(Date.parse(value)) ? new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'America/Denver'}).format(new Date(value)) : 'Not reported';
 const statusLabel = value => ({pending:'Pending',in_review:'In review',resolved:'Resolved',closed:'Closed',active:'Active',suspended:'Suspended',deletion_pending:'Deletion requested'}[value] ?? 'Not reported');
-export const SUPPORT_CATEGORIES = [['general','General support'],['access','Account access'],['teams','Saved teams'],['contest','Contest picks'],['profile','Nickname or visibility'],['data','Data discrepancy'],['deletion','Account deletion']];
-
-export function supportRequestMarkup(requests = []) {
-  return `<section class="account-section"><h2>Private support</h2><p class="compact-note">Send an account question or request a correction. Never include passwords or recovery codes.</p><form class="account-form" data-account-support>
-    <label for="account-category">Request type</label><select id="account-category" name="category">${SUPPORT_CATEGORIES.map(([value,label])=>`<option value="${value}">${label}</option>`).join('')}</select>
-    <label for="account-details">Details</label><textarea id="account-details" name="message" rows="3" minlength="5" maxlength="2000" required></textarea>
-    <label class="account-check"><input type="checkbox" name="deletionConfirmed"> If requesting deletion, I understand this submits a review request and does not delete my Google account.</label>
-    <button class="button" type="submit">Send private request</button><p role="status" data-form-status></p></form>
-    <details><summary>Your requests${requests.length ? ` · ${requests.length}` : ''}</summary>${requests.length ? `<ul class="account-request-list">${requests.map(row=>`<li><div><strong>${escapeHtml(row.category ?? row.kind)}</strong><span class="account-status">${statusLabel(row.status)}</span></div><p class="compact-note">${date(row.createdAt)} · Request ${escapeHtml(row.id)}</p>${row.updatedAt && row.updatedAt !== row.createdAt ? `<p class="compact-note">Updated ${date(row.updatedAt)}</p>` : ''}</li>`).join('')}</ul>` : '<p class="compact-note">No previous requests.</p>'}</details></section>`;
+export function authenticatorLabel(factor={}) {
+  const friendly=String(factor.friendly_name??'');
+  const generated=/^FBS Intelligence (\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:Z)?$/.exec(friendly);
+  const created=factor.created_at??(generated?generated[1]+'Z':null);
+  return `${generated||!friendly?'FBS Intelligence authenticator':friendly}${created&&Number.isFinite(Date.parse(created))?' · Added '+date(created):''}`;
 }
 
 export function accountCenterMarkup(context, { config = {}, requests = [], mfa, recovering = false, callbackNotice = '' } = {}) {
@@ -33,7 +30,7 @@ export function accountCenterMarkup(context, { config = {}, requests = [], mfa, 
     <section class="panel"><div class="panel-body account-section"><h2>Authenticator security</h2><p class="compact-note">An authenticator app adds a second check when you sign in. ${admin ? 'It is required for all administrator operations.' : 'It is optional for a regular account.'}</p>${mfa?.unavailable ? '<p class="compact-note">Authenticator settings could not load. Reload to try again.</p>' : `<p class="compact-note">${verified.length ? `${verified.length} verified authenticator${verified.length===1?'':'s'}.` : 'No verified authenticator yet.'} ${mfa?.currentLevel === 'aal2' ? 'This session has passed the second check.' : ''}</p>
       ${mfa?.enrollment ? `<div class="account-enrollment"><img src="${escapeHtml(qrDataUrl(mfa.enrollment.totp?.qr_code) ?? '')}" alt="Scan this QR code with your authenticator app"><details><summary>Enter setup key manually</summary><code>${escapeHtml(mfa.enrollment.totp?.secret ?? '')}</code></details><p class="compact-note">Keep this key private. We will not show it again.</p></div>` : '<button class="button light small" type="button" data-mfa-enroll>Add authenticator</button>'}
       ${mfa?.enrollment || verified.length && mfa.currentLevel !== 'aal2' ? `<form class="account-form" data-mfa-verify><label for="account-mfa-code">Authenticator code</label><input id="account-mfa-code" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button class="button" type="submit">Verify code</button><p role="status" data-form-status></p></form>` : ''}
-      ${mfa?.factors?.length ? `<ul class="account-factor-list">${mfa.factors.map(factor=>`<li><span>${escapeHtml(factor.friendly_name || 'Authenticator')} · ${factor.status==='verified'?'Verified':'Setup incomplete'}</span>${admin && factor.status==='verified' && verified.length<2 ? '<small>Add another authenticator before removing this one.</small>' : `<button type="button" class="text-button" data-mfa-remove="${escapeHtml(factor.id)}">Remove</button>`}</li>`).join('')}</ul>` : ''}`}<p role="status" data-mfa-status></p></div></section>
+      ${mfa?.factors?.length ? `<ul class="account-factor-list">${mfa.factors.map(factor=>`<li><span>${escapeHtml(authenticatorLabel(factor))} · ${factor.status==='verified'?'Verified':'Setup incomplete'}</span>${admin && factor.status==='verified' && verified.length<2 ? '<small>Add another authenticator before removing this one.</small>' : `<button type="button" class="text-button" data-mfa-remove="${escapeHtml(factor.id)}">Remove</button>`}</li>`).join('')}</ul>` : ''}`}<p role="status" data-mfa-status></p></div></section>
     <section class="panel"><div class="panel-body">${supportRequestMarkup(requests)}</div></section></div></div>`;
 }
 
@@ -101,16 +98,14 @@ export function mountAccountCenter(container, { previewClient, previewConfig } =
         if(!current())return;
         finishPasswordRecovery();form.reset();if(active)status.textContent='Password saved for this same account. Your saved teams and picks are unchanged. Keep Google available until you have tested password sign-in.';
       } else if(form.matches('[data-account-support]')){
-        const category=String(values.get('category'));
-        if(category==='deletion'&&values.get('deletionConfirmed')!=='on')throw Error('Confirm the deletion-request acknowledgment before submitting.');
-        const request=await rpc('submit_support_request',{p_category:category,p_message:String(values.get('message')??'')});
+        const request=await rpc('submit_support_request',supportSubmission(values));
         if(!request?.id)throw Error('Request not saved');
         if(!current())return;
-        await notifySupportIfReady(client,config);
+        if(request.alreadyOpen!==true)await notifySupportIfReady(client,config);
         if(!current())return;
         let nextRequests;
         try{nextRequests=await rpc('my_account_requests');}catch{nextRequests=[request,...requests.filter(row=>row.id!==request.id)];}
-        if(current()){form.reset();requests=nextRequests;draw();container.querySelector('[data-account-support] [data-form-status]').textContent=`Request ${request.id} is saved for review. Its status appears below.`;}
+        if(current()){requests=nextRequests;draw();const nextForm=container.querySelector('[data-account-support]');if(request.alreadyOpen===true){restoreSupportDraft(nextForm,values);const history=container.querySelector('.support-request-history');if(history)history.open=true;}nextForm.querySelector('[data-form-status]').textContent=supportResultNotice(request);}
       } else if(form.matches('[data-mfa-verify]')){
         const factorId=mfa?.enrollment?.id??mfa?.factors?.find(factor=>factor.status==='verified')?.id;
         if(!factorId)throw Error('Add an authenticator first.');
@@ -123,6 +118,7 @@ export function mountAccountCenter(container, { previewClient, previewConfig } =
     finally{busy=false;if(active&&button.isConnected)button.disabled=false;if(active&&reloadAfterBusy){reloadAfterBusy=false;void load();}}
   };
   const onChange=event=>{
+    if(event.target.matches('[data-account-support] [name="category"]')){updateSupportCategory(event.target.form);return;}
     if(!event.target.matches('[data-account-profile] [name="public"]'))return;
     const sharing=event.target.form?.querySelector('[name="share"]');
     if(sharing){sharing.disabled=!event.target.checked;if(!event.target.checked)sharing.checked=false;}

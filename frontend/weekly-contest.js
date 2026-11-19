@@ -398,7 +398,7 @@ export async function renderWeeklyContest(main, options = {}) {
         ${weeks.map(key => `<option value="${escape(key)}"${key === week ? ' selected' : ''}>${escape(contestWeekLabel(key))}</option>`).join('')}</select>
         <button type="button" class="button light" data-contest-action="refresh"${busy ? ' disabled' : ''}>Refresh results</button>
         <a class="button light" href="#compare/weekly">Model picks and results</a></div>
-        <p class="compact-note">${contest.observedAt ? `Contest updated ${escape(date(contest.observedAt))}. ` : ''}${open} ${open === 1 ? 'game open' : 'games open'} for this week. Game times are Mountain Time.</p>
+        <p class="compact-note">${contest.observedAt ? `Contest result snapshot ${escape(date(contest.observedAt))}. ` : 'Contest result cutoff not reported. '}${open} ${open === 1 ? 'game open' : 'games open'} for this week. Game times are Mountain Time. Live scores and published rankings can have different cutoffs.</p>
         ${week ? renderContestScores(games, entry.picks, week) : '<p class="contest-empty">The contest will open when an eligible upcoming model forecast is saved.</p>'}
         <p class="contest-message${messageError ? ' is-error' : ''}" role="status" aria-live="polite">${escape(message)}</p></div></section>
         <nav class="matchup-views contest-tabs" aria-label="Weekly contest views"><button type="button" class="button${view === 'picks' ? '' : ' light'}" data-contest-view="picks" aria-pressed="${view === 'picks'}">My picks</button>

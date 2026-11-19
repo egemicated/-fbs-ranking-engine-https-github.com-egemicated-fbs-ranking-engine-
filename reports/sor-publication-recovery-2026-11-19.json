@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "checkedAt": "2026-11-19T13:34:51.615Z",
+  "source": "Local committed Git objects; no API requests",
+  "sourceCaptures": [
+    {
+      "commit": "d7456d6a1131a5e7528c88a4a540c703e3d2a962",
+      "recordedAt": "2026-11-08T15:51:52Z",
+      "asOf": "2026-11-08T15:51:32.834Z",
+      "publicationHash": "7f16a93d77c5cd85a164718615c089b95edc5c392542205eeb111953fd26d34b",
+      "rows": 138
+    },
+    {
+      "commit": "b35c8fe65603543bd5d5ae893c0ad5cf078f5f56",
+      "recordedAt": "2026-11-08T19:17:30Z",
+      "asOf": "2026-11-08T19:16:55.258Z",
+      "publicationHash": "7f16a93d77c5cd85a164718615c089b95edc5c392542205eeb111953fd26d34b",
+      "rows": 138
+    },
+    {
+      "commit": "b70cd035d7ff95bf891872f3200e7aa7ac8e72dc",
+      "recordedAt": "2026-11-12T15:43:10Z",
+      "asOf": "2026-11-12T15:42:47.454Z",
+      "publicationHash": "7fb1ccfa0827a92db12547b5919680662cb5caccacdeb79e15e8af7c86170f68",
+      "rows": 138
+    },
+    {
+      "commit": "d5a34d6325942145dd101e5d32e0d3ecae385918",
+      "recordedAt": "2026-11-13T18:31:20Z",
+      "asOf": "2026-11-13T18:30:36.573Z",
+      "publicationHash": "5da014f94a7b4435496b539d66bf3ee81a1ce984bc3872f63d6cc9e3f4c4f444",
+      "rows": 138
+    },
+    {
+      "commit": "9977161a1e70ee729a7d8590601b8b34e486bdc4",
+      "recordedAt": "2026-11-14T17:03:16Z",
+      "asOf": "2026-11-14T17:02:39.519Z",
+      "publicationHash": "ff36175de9326f5921d96e2e15883b6568bf33988b1def1b1b9f8afbbf8b47f7",
+      "rows": 138
+    },
+    {
+      "commit": "c0abca6fcb09e96bb8beb863b0719b9f015ed99c",
+      "recordedAt": "2026-11-15T14:39:36Z",
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "publicationHash": "69b36143ff20a34a222bd86661f0dd51636f2cd72384f8e903eb6f6eced02e6e",
+      "rows": 138
+    },
+    {
+      "commit": "4a5b84f500a77761b9cdb648b657a45fd81a3da2",
+      "recordedAt": "2026-11-15T18:05:13Z",
+      "asOf": "2026-11-15T18:04:41.489Z",
+      "publicationHash": "d426fef019fea59139a9e48f1536fa75e4db05b6fa7f430156c8104ebc433ec2",
+      "rows": 138
+    },
+    {
+      "commit": "28dc2a0a404b1ceab4872a2907a4133811927569",
+      "recordedAt": "2026-11-16T00:07:37Z",
+      "asOf": "2026-11-15T18:04:41.489Z",
+      "publicationHash": "d426fef019fea59139a9e48f1536fa75e4db05b6fa7f430156c8104ebc433ec2",
+      "rows": 138
+    },
+    {
+      "commit": "2fe3061cb95bdab89ff95e8928f2602dab04386e",
+      "recordedAt": "2026-11-16T11:05:49Z",
+      "asOf": "2026-11-16T11:04:56.531Z",
+      "publicationHash": "fb2408fd26f357b390cfd79ee23218312e0516383075f6ad3721014d8872ff1f",
+      "rows": 138
+    },
+    {
+      "commit": "444f541fbf03ce8f9f75f019db650910e85a47db",
+      "recordedAt": "2026-11-18T12:30:46Z",
+      "asOf": "2026-11-18T12:30:14.250Z",
+      "publicationHash": "d5776b1cd844fd30a70099a7a9693bd3adf924b39013aeb39155e72f378db77c",
+      "rows": 138
+    }
+  ],
+  "excluded": [
+    {
+      "commit": "ae4c9a371ac25efcbbc7f5e2991db74d025151d4",
+      "reason": "Not a retained SOR publication for this season"
+    }
+  ],
+  "uniquePublications": 8,
+  "weeklySavedEditions": 3,
+  "replayEditions": 1,
+  "weeklyEditionsHashBefore": "28acb58df5c8c6d5d75774afad7542c2de02bd2a11c60c3c072f12bdb6f6b634",
+  "weeklyEditionsHashAfter": "28acb58df5c8c6d5d75774afad7542c2de02bd2a11c60c3c072f12bdb6f6b634",
+  "protectedHashes": {
+    "published/latest.json": "452fd04b7e1e3bc2531dcb111efea5e3c97c16e88c6e34691979dd4e787597d7",
+    "published/weekly-picks.json": "d430f9d8ad2fddf8feff5bde02156f342e0868277dc51f067d02e709fffe589c",
+    "published/performance-latest.json": "782e6e9d283c0ddabe02b6375e400a08fe187f12d59a775ef4e7c52b992159eb",
+    "data/model.json": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+    "data/publication-model.json": "177ef4d5248bc56f133944edd80bf6db76a304f5662b5e9c741672ddaa331bc9",
+    "published/conference-archives/2025.json": "44e3f68752db5fe2fe890af2ab4772ee082beb717af7953ec06e14337540316d"
+  },
+  "availability": "After the whole Mountain day of the repository record. Repository-recorded is not an asserted website deployment instant.",
+  "originalHistoryFileSha256": "bf98dca73e4b154f215431b2be07a77a75f187c6505239825b63b85cf16b7b5d",
+  "modified": true
+}

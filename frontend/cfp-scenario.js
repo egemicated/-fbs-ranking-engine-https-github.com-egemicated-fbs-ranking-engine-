@@ -89,7 +89,7 @@ function baseMarkup(input, teams, baseline) {
   const weeks = new Map(input.fixtures.map(game => [fixtureWeekKey(game), fixtureWeekLabel(game)]));
   const options = teamOptions(teams);
   return `<section class="panel scenario-summary"><div class="panel-body">
-    <h2>Set your outcomes</h2><p>Choose winners for any remaining game. Games without a pick stay out of the scenario.</p>
+    <h2>Set your outcomes</h2><p>Choose hypothetical winners for games without a published final result. Games without a pick stay out of the scenario.</p>
     <div class="scenario-actions"><button class="button" type="button" data-scenario-action="fill">Fill remaining games with model favorites</button>
     <button class="button light" type="button" data-scenario-action="reset">Reset scenario</button>
     <button class="button light" type="button" data-scenario-action="projection">View projection</button></div>
@@ -97,7 +97,7 @@ function baseMarkup(input, teams, baseline) {
     <div class="scenario-layout"><div class="scenario-editor">
     <section class="panel" aria-labelledby="scenario-games-title"><div class="panel-body">
       <h2 id="scenario-games-title" tabindex="-1">Remaining games</h2>
-      <p class="compact-note">These games had no final result in the ${escape(displayDate(input.asOf))} snapshot. Win chances use the published model.</p>
+      <p class="compact-note">These games had no final result in the published ${escape(displayDate(input.asOf))} snapshot. This list is not live; a game may already have finished. Check the <a href="#scoreboard">Live Scoreboard</a> for newer results. Win chances use the published model.</p>
       <div class="scenario-filter"><label for="scenario-week">Week<select id="scenario-week">
         ${[...weeks].map(([key, label]) => `<option value="${escape(key)}">${escape(label)}</option>`).join('')}<option value="all">All weeks</option></select></label>
       <label for="scenario-team">Filter by team<select id="scenario-team"><option value="">All teams</option>${options}</select></label></div>
