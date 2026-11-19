@@ -4,6 +4,96 @@
   "teamId": "259",
   "reports": [
     {
+      "gameId": "401858302",
+      "kickoff": "2026-11-22T00:00:00.000Z",
+      "opponentId": "2390",
+      "opponentName": "Miami",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.466Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5158951",
+          "name": "Davion Brown",
+          "position": "WR",
+          "jersey": 11,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5150880",
+          "name": "George Ballance",
+          "position": "LB",
+          "jersey": 25,
+          "status": "Out"
+        },
+        {
+          "playerId": "5158250",
+          "name": "Justin Terry",
+          "position": "OL",
+          "jersey": 72,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5079755",
+          "name": "Kenny Woseley Jr.",
+          "position": "CB",
+          "jersey": 22,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5192898",
+          "name": "Lucas Austin",
+          "position": "OL",
+          "jersey": 57,
+          "status": "Out"
+        },
+        {
+          "playerId": "5229094",
+          "name": "Luke Stuewe",
+          "position": "WR",
+          "jersey": 83,
+          "status": "Questionable"
+        },
+        {
+          "playerId": null,
+          "name": "Marcellous Hawkins",
+          "position": "RB",
+          "jersey": 27,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5271187",
+          "name": "Marlen Bright",
+          "position": "OL",
+          "jersey": 74,
+          "status": "Out"
+        },
+        {
+          "playerId": "4710774",
+          "name": "Montavious Cunningham",
+          "position": "OL",
+          "jersey": 66,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5214476",
+          "name": "Nathaniel Wright",
+          "position": "OL",
+          "jersey": 50,
+          "status": "Out"
+        },
+        {
+          "playerId": "4921118",
+          "name": "Thomas Williams",
+          "position": "CB",
+          "jersey": 23,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401858299",
       "kickoff": "2026-11-15T00:30:00.000Z",
       "opponentId": "24",

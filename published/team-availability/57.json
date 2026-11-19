@@ -4,6 +4,75 @@
   "teamId": "57",
   "reports": [
     {
+      "gameId": "401856748",
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "opponentId": "238",
+      "opponentName": "Vanderbilt",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-19T01:10:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.431Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5125593",
+          "name": "Bailey Stockton",
+          "position": "WR",
+          "jersey": 3,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4870995",
+          "name": "Bryce Thornton",
+          "position": "S",
+          "jersey": 1,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4899671",
+          "name": "Dijon Johnson",
+          "position": "CB",
+          "jersey": 27,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5159672",
+          "name": "DJ Coleman",
+          "position": "S",
+          "jersey": 33,
+          "status": "Out"
+        },
+        {
+          "playerId": "5205004",
+          "name": "Emeka Ugorji",
+          "position": "OL",
+          "jersey": 66,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870978",
+          "name": "Jaden Robinson",
+          "position": "ILB",
+          "jersey": 29,
+          "status": "Out"
+        },
+        {
+          "playerId": "5121998",
+          "name": "Lacota Dippre",
+          "position": "TE",
+          "jersey": 17,
+          "status": "Out"
+        },
+        {
+          "playerId": "5295811",
+          "name": "Vernell Brown III",
+          "position": "WR",
+          "jersey": 1,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856884",
       "kickoff": "2026-11-14T23:15:00.000Z",
       "opponentId": "96",

@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "season": 2026,
+  "teamId": "103",
+  "reports": [
+    {
+      "gameId": "401858309",
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "opponentId": "183",
+      "opponentName": "Syracuse",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.466Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5156200",
+          "name": "Amir Johnson",
+          "position": "OL",
+          "jersey": 51,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5145122",
+          "name": "Bodie Kahoun",
+          "position": "LB",
+          "jersey": 36,
+          "status": "Out"
+        },
+        {
+          "playerId": "5222698",
+          "name": "Cameron McGee",
+          "position": "DL",
+          "jersey": 88,
+          "status": "Out"
+        },
+        {
+          "playerId": "5076122",
+          "name": "Evan Dickens",
+          "position": "RB",
+          "jersey": 23,
+          "status": "Out"
+        },
+        {
+          "playerId": "5281458",
+          "name": "Gavin Neil",
+          "position": "DL",
+          "jersey": 93,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4917124",
+          "name": "Isaiah Farris",
+          "position": "DB",
+          "jersey": 16,
+          "status": "Out"
+        },
+        {
+          "playerId": "4702789",
+          "name": "Justin Medlock",
+          "position": "LB",
+          "jersey": 20,
+          "status": "Out"
+        },
+        {
+          "playerId": "5250264",
+          "name": "Kaelan Chudzinski",
+          "position": "TE",
+          "jersey": 85,
+          "status": "Out"
+        },
+        {
+          "playerId": "5146821",
+          "name": "Kemori Dixon",
+          "position": "LB",
+          "jersey": 42,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4910229",
+          "name": "Michael Crounse",
+          "position": "OL",
+          "jersey": 77,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5157579",
+          "name": "Onye Nwosisi",
+          "position": "DL",
+          "jersey": 8,
+          "status": "Out"
+        },
+        {
+          "playerId": "5152600",
+          "name": "Reed Swanson",
+          "position": "WR",
+          "jersey": 80,
+          "status": "Out"
+        },
+        {
+          "playerId": "5290548",
+          "name": "Sedric Addison",
+          "position": "RB",
+          "jersey": 26,
+          "status": "Out"
+        },
+        {
+          "playerId": "5095828",
+          "name": "Trevon Humphrey",
+          "position": "OL",
+          "jersey": 53,
+          "status": "Out"
+        }
+      ]
+    }
+  ]
+}

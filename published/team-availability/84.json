@@ -4,6 +4,75 @@
   "teamId": "84",
   "reports": [
     {
+      "gameId": "401858535",
+      "kickoff": "2026-11-21T20:30:00.000Z",
+      "opponentId": "264",
+      "opponentName": "Washington",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.155Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4870721",
+          "name": "A.J. Harris",
+          "position": "DB",
+          "jersey": 4,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5218920",
+          "name": "Clayton Allen",
+          "position": "LB",
+          "jersey": 52,
+          "status": "Out"
+        },
+        {
+          "playerId": null,
+          "name": "Drew Clausen",
+          "position": "LS",
+          "jersey": 49,
+          "status": "Out"
+        },
+        {
+          "playerId": "5199277",
+          "name": "Garrett Reese",
+          "position": "DB",
+          "jersey": 33,
+          "status": "Out"
+        },
+        {
+          "playerId": "4685276",
+          "name": "Joe Brunner",
+          "position": "OL",
+          "jersey": 56,
+          "status": "Out"
+        },
+        {
+          "playerId": "4695703",
+          "name": "Kellan Wyatt",
+          "position": "DL",
+          "jersey": 18,
+          "status": "Out"
+        },
+        {
+          "playerId": "5212941",
+          "name": "Rolijah Hardy",
+          "position": "LB",
+          "jersey": 5,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5146724",
+          "name": "Turbo Richard",
+          "position": "RB",
+          "jersey": 1,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858518",
       "kickoff": "2026-11-14T20:30:00.000Z",
       "opponentId": "30",

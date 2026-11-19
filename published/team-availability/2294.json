@@ -4,6 +4,89 @@
   "teamId": "2294",
   "reports": [
     {
+      "gameId": "401858527",
+      "kickoff": "2026-11-21T19:30:00.000Z",
+      "opponentId": "356",
+      "opponentName": "Illinois",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.155Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5272774",
+          "name": "Brody Schaffer",
+          "position": "WR",
+          "jersey": 11,
+          "status": "Out"
+        },
+        {
+          "playerId": "5177825",
+          "name": "Burke Gautcher",
+          "position": "LB",
+          "jersey": 10,
+          "status": "Out"
+        },
+        {
+          "playerId": "5077405",
+          "name": "Cannon Leonard",
+          "position": "OL",
+          "jersey": 75,
+          "status": "Out"
+        },
+        {
+          "playerId": "5178088",
+          "name": "Jacob Wallace",
+          "position": "DB",
+          "jersey": 11,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5093886",
+          "name": "Kamari Moulton",
+          "position": "RB",
+          "jersey": 28,
+          "status": "Out"
+        },
+        {
+          "playerId": "5218925",
+          "name": "Kyler Gerardy",
+          "position": "DB",
+          "jersey": 19,
+          "status": "Out"
+        },
+        {
+          "playerId": "5300856",
+          "name": "Tony Diaz",
+          "position": "WR",
+          "jersey": 14,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5193099",
+          "name": "Tyler Brown",
+          "position": "DB",
+          "jersey": 2,
+          "status": "Out"
+        },
+        {
+          "playerId": "5227168",
+          "name": "Xavier Styles",
+          "position": "DB",
+          "jersey": 18,
+          "status": "Out"
+        },
+        {
+          "playerId": "5067875",
+          "name": "Zach Lutmer",
+          "position": "DB",
+          "jersey": 6,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401858519",
       "kickoff": "2026-11-15T00:30:00.000Z",
       "opponentId": "2509",

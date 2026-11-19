@@ -4,6 +4,61 @@
   "teamId": "8",
   "reports": [
     {
+      "gameId": "401856755",
+      "kickoff": "2026-11-21T20:30:00.000Z",
+      "opponentId": "251",
+      "opponentName": "Texas",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-19T01:10:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.431Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5079493",
+          "name": "Braydon Lee",
+          "position": "DB",
+          "jersey": 3,
+          "status": "Out"
+        },
+        {
+          "playerId": "4868811",
+          "name": "Bryant Williams",
+          "position": "OL",
+          "jersey": 64,
+          "status": "Out"
+        },
+        {
+          "playerId": "4905593",
+          "name": "Brylan Green",
+          "position": "DB",
+          "jersey": 34,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5236182",
+          "name": "Gavin Garretson",
+          "position": "TE",
+          "jersey": 89,
+          "status": "Out"
+        },
+        {
+          "playerId": "5150266",
+          "name": "Maddox Lassiter",
+          "position": "TE",
+          "jersey": 47,
+          "status": "Out"
+        },
+        {
+          "playerId": "4918136",
+          "name": "Quincy Rhodes Jr.",
+          "position": "DL",
+          "jersey": 97,
+          "status": "Probable"
+        }
+      ]
+    },
+    {
       "gameId": "401856882",
       "kickoff": "2026-11-15T00:45:00.000Z",
       "opponentId": "2579",

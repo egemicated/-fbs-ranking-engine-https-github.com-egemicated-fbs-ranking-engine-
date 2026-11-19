@@ -4,6 +4,47 @@
   "teamId": "2509",
   "reports": [
     {
+      "gameId": "401858533",
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "opponentId": "275",
+      "opponentName": "Wisconsin",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.155Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5075912",
+          "name": "George Burhenn",
+          "position": "TE",
+          "jersey": 81,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5079462",
+          "name": "Kylan Fox",
+          "position": "TE",
+          "jersey": 16,
+          "status": "Out"
+        },
+        {
+          "playerId": "5274360",
+          "name": "Raderrion Daniels",
+          "position": "DB",
+          "jersey": 24,
+          "status": "Out"
+        },
+        {
+          "playerId": "5077897",
+          "name": "Rodney Lora",
+          "position": "DL",
+          "jersey": 94,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858519",
       "kickoff": "2026-11-15T00:30:00.000Z",
       "opponentId": "2294",

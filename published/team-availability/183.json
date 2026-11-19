@@ -4,6 +4,82 @@
   "teamId": "183",
   "reports": [
     {
+      "gameId": "401858309",
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "opponentId": "103",
+      "opponentName": "Boston College",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.466Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5153782",
+          "name": "Amari Odom",
+          "position": "QB",
+          "jersey": 12,
+          "status": "Out"
+        },
+        {
+          "playerId": "5206061",
+          "name": "Darien Williams",
+          "position": "WR",
+          "jersey": 7,
+          "status": "Out"
+        },
+        {
+          "playerId": "5297034",
+          "name": "Jackson Iak",
+          "position": "OL",
+          "jersey": 62,
+          "status": "Out"
+        },
+        {
+          "playerId": "4923256",
+          "name": "Jai Eugene Jr.",
+          "position": "DB",
+          "jersey": 9,
+          "status": "Out"
+        },
+        {
+          "playerId": "5211914",
+          "name": "Jayden Mann",
+          "position": "OL",
+          "jersey": 71,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079537",
+          "name": "Ju'Juan Johnson",
+          "position": "RB",
+          "jersey": 4,
+          "status": "Out"
+        },
+        {
+          "playerId": "5289321",
+          "name": "Shavane Anderson Jr.",
+          "position": "RB",
+          "jersey": 23,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5210060",
+          "name": "Terrell Wilfong",
+          "position": "WR",
+          "jersey": 88,
+          "status": "Out"
+        },
+        {
+          "playerId": "5085876",
+          "name": "Trevion Mack",
+          "position": "OL",
+          "jersey": 75,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401858300",
       "kickoff": "2026-11-14T17:00:00.000Z",
       "opponentId": "152",

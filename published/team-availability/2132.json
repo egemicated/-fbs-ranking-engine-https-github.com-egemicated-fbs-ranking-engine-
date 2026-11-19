@@ -4,6 +4,61 @@
   "teamId": "2132",
   "reports": [
     {
+      "gameId": "401856867",
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "opponentId": "38",
+      "opponentName": "Colorado",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-19T03:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.336Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5149057",
+          "name": "Chidera Otutu",
+          "position": "DL",
+          "jersey": 11,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5107875",
+          "name": "Cole Tabb",
+          "position": "RB",
+          "jersey": 3,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5151511",
+          "name": "Filip Maciorowski",
+          "position": "ILB",
+          "jersey": 12,
+          "status": "Out"
+        },
+        {
+          "playerId": "4685509",
+          "name": "Gi'Bran Payne",
+          "position": "RB",
+          "jersey": 6,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4912182",
+          "name": "Jacob Finley",
+          "position": "CB",
+          "jersey": 0,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5152045",
+          "name": "Malachi Henry",
+          "position": "WR",
+          "jersey": 9,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856859",
       "kickoff": "2026-11-14T17:00:00.000Z",
       "opponentId": "66",

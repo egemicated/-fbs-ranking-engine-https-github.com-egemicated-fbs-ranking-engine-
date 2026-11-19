@@ -10,8 +10,8 @@
       "opponentName": "UCF",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-18T03:00:00.000Z",
-      "checkedAt": "2026-11-18T11:56:32.280Z",
+      "reportAt": "2026-11-19T03:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.336Z",
       "final": false,
       "players": [
         {
@@ -47,14 +47,14 @@
           "name": "Maasai King",
           "position": "OL",
           "jersey": 51,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5290954",
           "name": "Malcolm Watkins",
           "position": "WR",
           "jersey": 80,
-          "status": "Questionable"
+          "status": "Out"
         }
       ]
     },

@@ -10,8 +10,8 @@
       "opponentName": "Duke",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-18T01:00:00.000Z",
-      "checkedAt": "2026-11-18T11:56:32.739Z",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.466Z",
       "final": false,
       "players": [
         {
@@ -68,6 +68,13 @@
           "name": "Easton Ware",
           "position": "OL",
           "jersey": 63,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4871026",
+          "name": "Elliot Washington II",
+          "position": "CB",
+          "jersey": 3,
           "status": "Questionable"
         },
         {

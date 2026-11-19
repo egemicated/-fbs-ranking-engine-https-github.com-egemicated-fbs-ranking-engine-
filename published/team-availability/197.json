@@ -4,6 +4,75 @@
   "teamId": "197",
   "reports": [
     {
+      "gameId": "401856870",
+      "kickoff": "2026-11-22T03:15:00.000Z",
+      "opponentId": "9",
+      "opponentName": "Arizona State",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-19T03:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.336Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5228041",
+          "name": "Carson Kolb",
+          "position": "TE",
+          "jersey": 44,
+          "status": "Out"
+        },
+        {
+          "playerId": "5334131",
+          "name": "Dayvon Standard",
+          "position": "WR",
+          "jersey": 19,
+          "status": "Out"
+        },
+        {
+          "playerId": "5123842",
+          "name": "Desmond Magiya",
+          "position": "OL",
+          "jersey": 76,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5219834",
+          "name": "Drew Mestemaker",
+          "position": "QB",
+          "jersey": 17,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4912301",
+          "name": "Ethan Wesloski",
+          "position": "LB",
+          "jersey": 32,
+          "status": "Probable"
+        },
+        {
+          "playerId": "4715344",
+          "name": "Landon Dean",
+          "position": "DT",
+          "jersey": 88,
+          "status": "Out"
+        },
+        {
+          "playerId": "5083966",
+          "name": "Morgan McPhaul",
+          "position": "TE",
+          "jersey": 45,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5092199",
+          "name": "Tate Romney",
+          "position": "LB",
+          "jersey": 3,
+          "status": "Doubtful"
+        }
+      ]
+    },
+    {
       "gameId": "401856863",
       "kickoff": "2026-11-15T02:30:00.000Z",
       "opponentId": "2641",

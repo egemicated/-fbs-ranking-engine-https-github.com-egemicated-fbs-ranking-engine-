@@ -4,6 +4,68 @@
   "teamId": "251",
   "reports": [
     {
+      "gameId": "401856755",
+      "kickoff": "2026-11-21T20:30:00.000Z",
+      "opponentId": "8",
+      "opponentName": "Arkansas",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-19T01:10:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.431Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5079689",
+          "name": "Colin Simmons",
+          "position": "EDG",
+          "jersey": 1,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4868356",
+          "name": "Hero Kanu",
+          "position": "DL",
+          "jersey": 93,
+          "status": "Out"
+        },
+        {
+          "playerId": "4871053",
+          "name": "Hollywood Smothers",
+          "position": "RB",
+          "jersey": 2,
+          "status": "Out"
+        },
+        {
+          "playerId": "5195299",
+          "name": "Nick Townsend",
+          "position": "TE",
+          "jersey": 81,
+          "status": "Out"
+        },
+        {
+          "playerId": "5273266",
+          "name": "Richard Wesley",
+          "position": "EDG",
+          "jersey": 99,
+          "status": "Out"
+        },
+        {
+          "playerId": "4918430",
+          "name": "Trevor Goosby",
+          "position": "OL",
+          "jersey": 74,
+          "status": "Out"
+        },
+        {
+          "playerId": "4950398",
+          "name": "Warren Roberson",
+          "position": "DB",
+          "jersey": 24,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401856885",
       "kickoff": "2026-11-15T00:30:00.000Z",
       "opponentId": "99",

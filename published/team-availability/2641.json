@@ -4,6 +4,103 @@
   "teamId": "2641",
   "reports": [
     {
+      "gameId": "401856871",
+      "kickoff": "2026-11-21T20:30:00.000Z",
+      "opponentId": "239",
+      "opponentName": "Baylor",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-19T03:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.336Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4918133",
+          "name": "Ansel Nedore",
+          "position": "OLB",
+          "jersey": 33,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4870867",
+          "name": "Brenden Jordan",
+          "position": "S",
+          "jersey": 7,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4916941",
+          "name": "Coy Eakin",
+          "position": "WR",
+          "jersey": 3,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5227057",
+          "name": "Jalen Jones",
+          "position": "WR",
+          "jersey": 6,
+          "status": "Out"
+        },
+        {
+          "playerId": "4923295",
+          "name": "Kenny Johnson",
+          "position": "WR",
+          "jersey": 2,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5280093",
+          "name": "LaDamion Guyton",
+          "position": "OLB",
+          "jersey": 32,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5186738",
+          "name": "Leyton Stone",
+          "position": "WR",
+          "jersey": 17,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5079492",
+          "name": "Micah Hudson",
+          "position": "WR",
+          "jersey": 1,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5077501",
+          "name": "Miquel Dingle Jr.",
+          "position": "S",
+          "jersey": 21,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5110451",
+          "name": "Peyton Morgan",
+          "position": "S",
+          "jersey": 3,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4917949",
+          "name": "Quinten Joyner",
+          "position": "RB",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "4773919",
+          "name": "Thomas Castellanos",
+          "position": "QB",
+          "jersey": 4,
+          "status": "Probable"
+        }
+      ]
+    },
+    {
       "gameId": "401856863",
       "kickoff": "2026-11-15T02:30:00.000Z",
       "opponentId": "197",

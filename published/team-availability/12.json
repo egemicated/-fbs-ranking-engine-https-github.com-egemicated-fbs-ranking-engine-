@@ -4,6 +4,89 @@
   "teamId": "12",
   "reports": [
     {
+      "gameId": "401856865",
+      "kickoff": "2026-11-22T00:00:00.000Z",
+      "opponentId": "2306",
+      "opponentName": "Kansas State",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-19T03:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.336Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5229997",
+          "name": "Cam Chapa",
+          "position": "S",
+          "jersey": 13,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5166910",
+          "name": "Dajon Hinton",
+          "position": "S",
+          "jersey": 20,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4870618",
+          "name": "Dwight Bootle II",
+          "position": "CB",
+          "jersey": 12,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5084798",
+          "name": "Ismail Mahdi",
+          "position": "RB",
+          "jersey": 21,
+          "status": "Out"
+        },
+        {
+          "playerId": "5377779",
+          "name": "Kevin Moorer Jr.",
+          "position": "DL",
+          "jersey": 38,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5162731",
+          "name": "Keytrin Harris",
+          "position": "DL",
+          "jersey": 27,
+          "status": "Out"
+        },
+        {
+          "playerId": "4910223",
+          "name": "Malcolm Hartzog Jr.",
+          "position": "S",
+          "jersey": 15,
+          "status": "Questionable"
+        },
+        {
+          "playerId": null,
+          "name": "Max Harris",
+          "position": "LB",
+          "jersey": 5,
+          "status": "Out"
+        },
+        {
+          "playerId": "5183931",
+          "name": "Swayde Griffin",
+          "position": "CB",
+          "jersey": 28,
+          "status": "Probable"
+        },
+        {
+          "playerId": "4613119",
+          "name": "Tre Smith",
+          "position": "DL",
+          "jersey": 3,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401856864",
       "kickoff": "2026-11-15T03:30:00.000Z",
       "opponentId": "254",

@@ -4,6 +4,54 @@
   "teamId": "142",
   "reports": [
     {
+      "gameId": "401856751",
+      "kickoff": "2026-11-22T00:30:00.000Z",
+      "opponentId": "96",
+      "opponentName": "Kentucky",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-19T01:10:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.431Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5149008",
+          "name": "Gavin Hoffman",
+          "position": "TE",
+          "jersey": 88,
+          "status": "Out"
+        },
+        {
+          "playerId": "4880351",
+          "name": "Jahlil Florence",
+          "position": "CB",
+          "jersey": 21,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4612621",
+          "name": "Josh Atkins",
+          "position": "OL",
+          "jersey": 54,
+          "status": "Out"
+        },
+        {
+          "playerId": "5260012",
+          "name": "Langden Kitchen",
+          "position": "EDG",
+          "jersey": 11,
+          "status": "Out"
+        },
+        {
+          "playerId": "5225213",
+          "name": "Malae Fonoti",
+          "position": "RB",
+          "jersey": 21,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856883",
       "kickoff": "2026-11-14T20:30:00.000Z",
       "opponentId": "61",

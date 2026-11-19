@@ -4,6 +4,54 @@
   "teamId": "252",
   "reports": [
     {
+      "gameId": "401856866",
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "opponentId": "2305",
+      "opponentName": "Kansas",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-19T03:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.336Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4917351",
+          "name": "Evan Johnson",
+          "position": "CB",
+          "jersey": 0,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5080697",
+          "name": "Isaiah Glasker",
+          "position": "LB",
+          "jersey": 16,
+          "status": "Out"
+        },
+        {
+          "playerId": "5130407",
+          "name": "Roger Saleapaga II",
+          "position": "TE",
+          "jersey": 2,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5219689",
+          "name": "Sione Moa",
+          "position": "RB",
+          "jersey": 30,
+          "status": "Out"
+        },
+        {
+          "playerId": "5219646",
+          "name": "Will Zundel",
+          "position": "TE",
+          "jersey": 83,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856858",
       "kickoff": "2026-11-15T00:00:00.000Z",
       "opponentId": "239",

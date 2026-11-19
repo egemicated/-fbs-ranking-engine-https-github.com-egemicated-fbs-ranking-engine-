@@ -4,6 +4,96 @@
   "teamId": "158",
   "reports": [
     {
+      "gameId": "401858531",
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "opponentId": "194",
+      "opponentName": "Ohio State",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.155Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": null,
+          "name": "Andrew Marshall",
+          "position": "DB",
+          "jersey": 7,
+          "status": "Out"
+        },
+        {
+          "playerId": null,
+          "name": "Anthony Jones Jr.",
+          "position": "DL",
+          "jersey": 5,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5092567",
+          "name": "Gabe Moore",
+          "position": "DL",
+          "jersey": 95,
+          "status": "Out"
+        },
+        {
+          "playerId": "5159495",
+          "name": "Jacob Bower",
+          "position": "LB",
+          "jersey": 54,
+          "status": "Out"
+        },
+        {
+          "playerId": null,
+          "name": "Jahsear Whittington",
+          "position": "DL",
+          "jersey": 1,
+          "status": "Out"
+        },
+        {
+          "playerId": "5281138",
+          "name": "Jase Reynolds",
+          "position": "LB",
+          "jersey": 52,
+          "status": "Out"
+        },
+        {
+          "playerId": "5110456",
+          "name": "Kahmir Prescott",
+          "position": "DB",
+          "jersey": 19,
+          "status": "Out"
+        },
+        {
+          "playerId": "5272709",
+          "name": "Larry Miles",
+          "position": "WR",
+          "jersey": 17,
+          "status": "Out"
+        },
+        {
+          "playerId": null,
+          "name": "Owen Chambliss",
+          "position": "LB",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "4941017",
+          "name": "Paul Mubenga",
+          "position": "OL",
+          "jersey": 65,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5087700",
+          "name": "Vincent Genatone",
+          "position": "RB",
+          "jersey": 30,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858525",
       "kickoff": "2026-11-14T17:30:00.000Z",
       "opponentId": "164",

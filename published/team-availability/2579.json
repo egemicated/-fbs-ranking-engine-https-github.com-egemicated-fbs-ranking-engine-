@@ -4,6 +4,110 @@
   "teamId": "2579",
   "reports": [
     {
+      "gameId": "401856753",
+      "kickoff": "2026-11-22T00:30:00.000Z",
+      "opponentId": "61",
+      "opponentName": "Georgia",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-19T01:10:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.431Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5209681",
+          "name": "Anthony Addison",
+          "position": "EDG",
+          "jersey": 40,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5120838",
+          "name": "Dayne Arnett",
+          "position": "OL",
+          "jersey": 75,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079709",
+          "name": "Dylan Stewart",
+          "position": "EDG",
+          "jersey": 6,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5079703",
+          "name": "Jalewis Solomon",
+          "position": "DB",
+          "jersey": 16,
+          "status": "Out"
+        },
+        {
+          "playerId": "5179622",
+          "name": "Jayden Sellers",
+          "position": "WR",
+          "jersey": 17,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079724",
+          "name": "Josiah Thompson",
+          "position": "OL",
+          "jersey": 74,
+          "status": "Out"
+        },
+        {
+          "playerId": "5077110",
+          "name": "Judge Collier",
+          "position": "DB",
+          "jersey": 8,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5167710",
+          "name": "Kobby Sakyi-Prah",
+          "position": "EDG",
+          "jersey": 41,
+          "status": "Out"
+        },
+        {
+          "playerId": "5145737",
+          "name": "Matt Fuller",
+          "position": "RB",
+          "jersey": 28,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079329",
+          "name": "Mazeo Bennett Jr.",
+          "position": "WR",
+          "jersey": 3,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5130792",
+          "name": "Nitro Tuggle",
+          "position": "WR",
+          "jersey": 1,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870745",
+          "name": "Nyck Harbor",
+          "position": "WR",
+          "jersey": 8,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4876261",
+          "name": "Seth Smith",
+          "position": "OL",
+          "jersey": 78,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856882",
       "kickoff": "2026-11-15T00:45:00.000Z",
       "opponentId": "8",

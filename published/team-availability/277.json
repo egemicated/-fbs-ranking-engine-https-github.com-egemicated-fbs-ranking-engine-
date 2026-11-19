@@ -4,6 +4,68 @@
   "teamId": "277",
   "reports": [
     {
+      "gameId": "401856868",
+      "kickoff": "2026-11-21T18:00:00.000Z",
+      "opponentId": "248",
+      "opponentName": "Houston",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-19T03:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.336Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5184023",
+          "name": "Amare Grayson",
+          "position": "OL",
+          "jersey": 54,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5197058",
+          "name": "Andre Devine",
+          "position": "RB",
+          "jersey": 26,
+          "status": "Out"
+        },
+        {
+          "playerId": "4890881",
+          "name": "Cam Ball",
+          "position": "TE",
+          "jersey": 10,
+          "status": "Out"
+        },
+        {
+          "playerId": "5384829",
+          "name": "Darius Wiley",
+          "position": "DL",
+          "jersey": 91,
+          "status": "Out"
+        },
+        {
+          "playerId": "5278550",
+          "name": "Emory Snyder",
+          "position": "N/S",
+          "jersey": 23,
+          "status": "Out"
+        },
+        {
+          "playerId": "4683719",
+          "name": "Jaden Bray",
+          "position": "WR",
+          "jersey": 5,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079465",
+          "name": "Michael Hawkins Jr.",
+          "position": "QB",
+          "jersey": 3,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401856861",
       "kickoff": "2026-11-14T20:30:00.000Z",
       "opponentId": "2305",

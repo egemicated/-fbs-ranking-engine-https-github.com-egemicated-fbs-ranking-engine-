@@ -4,6 +4,82 @@
   "teamId": "38",
   "reports": [
     {
+      "gameId": "401856867",
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "opponentId": "2132",
+      "opponentName": "Cincinnati",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-19T03:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.336Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5281120",
+          "name": "Braylon Edwards",
+          "position": "DB",
+          "jersey": 26,
+          "status": "Out"
+        },
+        {
+          "playerId": "5210723",
+          "name": "Corbin Laisure",
+          "position": "TE",
+          "jersey": 88,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5148610",
+          "name": "Cree Thomas",
+          "position": "DB",
+          "jersey": 20,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5152815",
+          "name": "Danny Scudero",
+          "position": "WR",
+          "jersey": 18,
+          "status": "Out"
+        },
+        {
+          "playerId": "5224360",
+          "name": "Dylan Manuel",
+          "position": "DL",
+          "jersey": 99,
+          "status": "Questionable"
+        },
+        {
+          "playerId": null,
+          "name": "Elliot Arnold",
+          "position": "K",
+          "jersey": 46,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5157068",
+          "name": "Kaleb Mathis",
+          "position": "WR",
+          "jersey": 13,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5078018",
+          "name": "Naeten Mitchell",
+          "position": "DB",
+          "jersey": 4,
+          "status": "Out"
+        },
+        {
+          "playerId": "5092432",
+          "name": "Sam Gadie",
+          "position": "DE",
+          "jersey": 92,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856860",
       "kickoff": "2026-11-14T03:15:00.000Z",
       "opponentId": "248",

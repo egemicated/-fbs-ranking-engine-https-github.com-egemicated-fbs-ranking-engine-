@@ -4,6 +4,40 @@
   "teamId": "9",
   "reports": [
     {
+      "gameId": "401856870",
+      "kickoff": "2026-11-22T03:15:00.000Z",
+      "opponentId": "197",
+      "opponentName": "Oklahoma State",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-19T03:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.336Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5254915",
+          "name": "Harry Hassmann",
+          "position": "WR",
+          "jersey": 89,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870850",
+          "name": "Omarion Miller",
+          "position": "WR",
+          "jersey": 4,
+          "status": "Out"
+        },
+        {
+          "playerId": "5146774",
+          "name": "Wade Helton",
+          "position": "OL",
+          "jersey": 64,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401856857",
       "kickoff": "2026-11-14T22:30:00.000Z",
       "opponentId": "2116",

@@ -4,6 +4,54 @@
   "teamId": "248",
   "reports": [
     {
+      "gameId": "401856868",
+      "kickoff": "2026-11-21T18:00:00.000Z",
+      "opponentId": "277",
+      "opponentName": "West Virginia",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-19T03:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.336Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5265300",
+          "name": "Aaron Wolford",
+          "position": "OL",
+          "jersey": 50,
+          "status": "Out"
+        },
+        {
+          "playerId": "4918458",
+          "name": "De'Marion Thomas",
+          "position": "DL",
+          "jersey": 90,
+          "status": "Probable"
+        },
+        {
+          "playerId": "4918436",
+          "name": "Jamaal Shaw",
+          "position": "DB",
+          "jersey": 26,
+          "status": "Out"
+        },
+        {
+          "playerId": "4685524",
+          "name": "JD Rhym",
+          "position": "DB",
+          "jersey": 3,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5093979",
+          "name": "McKenzie Agnello",
+          "position": "OL",
+          "jersey": 66,
+          "status": "Probable"
+        }
+      ]
+    },
+    {
       "gameId": "401856860",
       "kickoff": "2026-11-14T03:15:00.000Z",
       "opponentId": "38",

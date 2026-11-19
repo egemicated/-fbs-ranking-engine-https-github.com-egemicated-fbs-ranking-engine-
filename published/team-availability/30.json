@@ -4,6 +4,117 @@
   "teamId": "30",
   "reports": [
     {
+      "gameId": "401858534",
+      "kickoff": "2026-11-21T23:15:00.000Z",
+      "opponentId": "120",
+      "opponentName": "Maryland",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.155Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4870993",
+          "name": "Braylan Shelby",
+          "position": "DE",
+          "jersey": 10,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5148664",
+          "name": "Corey Simms",
+          "position": "WR",
+          "jersey": 10,
+          "status": "Out"
+        },
+        {
+          "playerId": "5152637",
+          "name": "GianCarlo Rufo",
+          "position": "LB",
+          "jersey": 58,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5146426",
+          "name": "Hayden Treter",
+          "position": "OL",
+          "jersey": 68,
+          "status": "Out"
+        },
+        {
+          "playerId": "5161013",
+          "name": "Kayden Dixon-Wyatt",
+          "position": "WR",
+          "jersey": 17,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5141644",
+          "name": "Kendarius Reddick",
+          "position": "S",
+          "jersey": 23,
+          "status": "Out"
+        },
+        {
+          "playerId": "5085032",
+          "name": "Kilian O'Connor",
+          "position": "OL",
+          "jersey": 67,
+          "status": "Out"
+        },
+        {
+          "playerId": "5264686",
+          "name": "Mark Bowman",
+          "position": "TE",
+          "jersey": 19,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5160501",
+          "name": "RJ Sermons",
+          "position": "CB",
+          "jersey": 21,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5085031",
+          "name": "Roman Marchetti",
+          "position": "LB",
+          "jersey": 57,
+          "status": "Out"
+        },
+        {
+          "playerId": null,
+          "name": "Taylor \"Taybo\" Johnson",
+          "position": "LB",
+          "jersey": 50,
+          "status": "Out"
+        },
+        {
+          "playerId": "5084658",
+          "name": "Terrell Anderson",
+          "position": "WR",
+          "jersey": 9,
+          "status": "Out"
+        },
+        {
+          "playerId": "5166804",
+          "name": "Trestin Castro",
+          "position": "S",
+          "jersey": 37,
+          "status": "Out"
+        },
+        {
+          "playerId": "5146757",
+          "name": "Zacharyus Williams",
+          "position": "WR",
+          "jersey": 0,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401858518",
       "kickoff": "2026-11-14T20:30:00.000Z",
       "opponentId": "84",

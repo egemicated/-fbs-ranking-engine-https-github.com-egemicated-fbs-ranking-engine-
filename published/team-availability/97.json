@@ -4,6 +4,96 @@
   "teamId": "97",
   "reports": [
     {
+      "gameId": "401858306",
+      "kickoff": "2026-11-22T00:30:00.000Z",
+      "opponentId": "221",
+      "opponentName": "Pittsburgh",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.466Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4838276",
+          "name": "Antonio Watts",
+          "position": "DB",
+          "jersey": 9,
+          "status": "Out"
+        },
+        {
+          "playerId": "4921265",
+          "name": "Anwar O'neal",
+          "position": "OL",
+          "jersey": 70,
+          "status": "Out"
+        },
+        {
+          "playerId": "5280615",
+          "name": "Bryten Close",
+          "position": "OT",
+          "jersey": 63,
+          "status": "Out"
+        },
+        {
+          "playerId": "4838533",
+          "name": "Cason Henry",
+          "position": "OL",
+          "jersey": 71,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5226577",
+          "name": "Hamilton Atkins",
+          "position": "TE",
+          "jersey": 90,
+          "status": "Out"
+        },
+        {
+          "playerId": "4917353",
+          "name": "Jabari Mack",
+          "position": "DB",
+          "jersey": 1,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5153258",
+          "name": "Jacob Baker",
+          "position": "P",
+          "jersey": 48,
+          "status": "Out"
+        },
+        {
+          "playerId": "4923046",
+          "name": "Keyjuan Brown",
+          "position": "RB",
+          "jersey": 5,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5160483",
+          "name": "Payton Cook",
+          "position": "WR",
+          "jersey": 84,
+          "status": "Out"
+        },
+        {
+          "playerId": "5263946",
+          "name": "Sam Dawson",
+          "position": "DL",
+          "jersey": 98,
+          "status": "Out"
+        },
+        {
+          "playerId": "5151017",
+          "name": "Travis Egan",
+          "position": "TE",
+          "jersey": 44,
+          "status": "Probable"
+        }
+      ]
+    },
+    {
       "gameId": "401858298",
       "kickoff": "2026-11-15T00:00:00.000Z",
       "opponentId": "153",

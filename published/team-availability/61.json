@@ -4,6 +4,33 @@
   "teamId": "61",
   "reports": [
     {
+      "gameId": "401856753",
+      "kickoff": "2026-11-22T00:30:00.000Z",
+      "opponentId": "2579",
+      "opponentName": "South Carolina",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-19T01:10:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.431Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5139139",
+          "name": "Amaris Williams",
+          "position": "OLB",
+          "jersey": 17,
+          "status": "Out"
+        },
+        {
+          "playerId": "4896304",
+          "name": "Drew Bobo",
+          "position": "OL",
+          "jersey": 74,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401856883",
       "kickoff": "2026-11-14T20:30:00.000Z",
       "opponentId": "142",

@@ -4,6 +4,103 @@
   "teamId": "221",
   "reports": [
     {
+      "gameId": "401858306",
+      "kickoff": "2026-11-22T00:30:00.000Z",
+      "opponentId": "97",
+      "opponentName": "Louisville",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.466Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5146366",
+          "name": "Allen Bryant",
+          "position": "DB",
+          "jersey": 26,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079579",
+          "name": "Cameron Lindsey",
+          "position": "LB",
+          "jersey": 24,
+          "status": "Out"
+        },
+        {
+          "playerId": "5296040",
+          "name": "Elijah Lagg",
+          "position": "TE",
+          "jersey": 17,
+          "status": "Out"
+        },
+        {
+          "playerId": "5122153",
+          "name": "Eliyt Nairne",
+          "position": "DL",
+          "jersey": 16,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4714300",
+          "name": "Holden Geriner",
+          "position": "QB",
+          "jersey": 15,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5269870",
+          "name": "Isaac Patterson",
+          "position": "DB",
+          "jersey": 41,
+          "status": "Out"
+        },
+        {
+          "playerId": "4683234",
+          "name": "La’Vell Wright",
+          "position": "RB",
+          "jersey": 11,
+          "status": "Out"
+        },
+        {
+          "playerId": "5208095",
+          "name": "Mason Heintschel",
+          "position": "QB",
+          "jersey": 6,
+          "status": "Out"
+        },
+        {
+          "playerId": "5222252",
+          "name": "Max Hunt",
+          "position": "TE",
+          "jersey": 18,
+          "status": "Out"
+        },
+        {
+          "playerId": "5379963",
+          "name": "Rodney Dunbar",
+          "position": "WR",
+          "jersey": 81,
+          "status": "Out"
+        },
+        {
+          "playerId": "4806851",
+          "name": "Sean FitzSimmons",
+          "position": "DL",
+          "jersey": 55,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5196024",
+          "name": "Tyreek Robinson",
+          "position": "WR",
+          "jersey": 24,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858293",
       "kickoff": "2026-11-14T00:00:00.000Z",
       "opponentId": "52",

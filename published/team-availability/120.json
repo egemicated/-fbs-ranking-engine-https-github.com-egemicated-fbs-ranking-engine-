@@ -4,6 +4,96 @@
   "teamId": "120",
   "reports": [
     {
+      "gameId": "401858534",
+      "kickoff": "2026-11-21T23:15:00.000Z",
+      "opponentId": "30",
+      "opponentName": "USC",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.155Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5193298",
+          "name": "Chris Durr Jr.",
+          "position": "WR",
+          "jersey": 13,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5295550",
+          "name": "DeJuan Williams",
+          "position": "RB",
+          "jersey": 0,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4950548",
+          "name": "DJ Samuels",
+          "position": "RB",
+          "jersey": 20,
+          "status": "Out"
+        },
+        {
+          "playerId": null,
+          "name": "Dontay Joyner",
+          "position": "DB",
+          "jersey": 29,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141419",
+          "name": "Harry Dalton III",
+          "position": "RB",
+          "jersey": 25,
+          "status": "Out"
+        },
+        {
+          "playerId": "5290200",
+          "name": "Javonte Williams",
+          "position": "TE",
+          "jersey": 81,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5327246",
+          "name": "Josiah Teasley",
+          "position": "WR",
+          "jersey": 18,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141695",
+          "name": "Malik Washington",
+          "position": "QB",
+          "jersey": 7,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5146786",
+          "name": "Ryan Howerton",
+          "position": "OL",
+          "jersey": 71,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5146851",
+          "name": "Trevor Szymanski",
+          "position": "OL",
+          "jersey": 50,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141583",
+          "name": "Zahir Mathis",
+          "position": "LB",
+          "jersey": 9,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858520",
       "kickoff": "2026-11-14T17:00:00.000Z",
       "opponentId": "275",

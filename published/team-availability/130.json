@@ -4,6 +4,124 @@
   "teamId": "130",
   "reports": [
     {
+      "gameId": "401858528",
+      "kickoff": "2026-11-21T20:30:00.000Z",
+      "opponentId": "26",
+      "opponentName": "UCLA",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.155Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5391402",
+          "name": "Ace Hamilton",
+          "position": "OL",
+          "jersey": 52,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141572",
+          "name": "Andrew Marsh",
+          "position": "WR",
+          "jersey": 3,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5079729",
+          "name": "Andrew Sprague",
+          "position": "OL",
+          "jersey": 54,
+          "status": "Out"
+        },
+        {
+          "playerId": "5110462",
+          "name": "Blake Frazier",
+          "position": "OL",
+          "jersey": 77,
+          "status": "Out"
+        },
+        {
+          "playerId": "5152089",
+          "name": "Brady Norton",
+          "position": "OL",
+          "jersey": 70,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5224470",
+          "name": "Braydon Alford",
+          "position": "WR",
+          "jersey": 22,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079417",
+          "name": "Channing Goodwin",
+          "position": "WR",
+          "jersey": 9,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5156349",
+          "name": "Jalen Hoffman",
+          "position": "TE",
+          "jersey": 42,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5209416",
+          "name": "Jaylen Pile",
+          "position": "WR",
+          "jersey": 20,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5214557",
+          "name": "JJ Buchanan",
+          "position": "WR",
+          "jersey": 6,
+          "status": "Out"
+        },
+        {
+          "playerId": "5160962",
+          "name": "John Henry Daley",
+          "position": "DE",
+          "jersey": 90,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5199856",
+          "name": "Julius Holly",
+          "position": "DE",
+          "jersey": 37,
+          "status": "Out"
+        },
+        {
+          "playerId": "5108220",
+          "name": "Kendrick Bell",
+          "position": "WR",
+          "jersey": 0,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5079546",
+          "name": "Micah Ka'apana",
+          "position": "RB",
+          "jersey": 25,
+          "status": "Out"
+        },
+        {
+          "playerId": null,
+          "name": "Rod Moore",
+          "position": "S",
+          "jersey": 1,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401858523",
       "kickoff": "2026-11-14T20:30:00.000Z",
       "opponentId": "2483",

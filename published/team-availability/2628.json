@@ -4,6 +4,54 @@
   "teamId": "2628",
   "reports": [
     {
+      "gameId": "401856872",
+      "kickoff": "2026-11-22T02:00:00.000Z",
+      "opponentId": "254",
+      "opponentName": "Utah",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-19T03:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.336Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5101112",
+          "name": "Ansel Din-Mbuh",
+          "position": "DT",
+          "jersey": 92,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5140254",
+          "name": "Cheta Ofili",
+          "position": "EDG",
+          "jersey": 36,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5280795",
+          "name": "G'Ivori Graham",
+          "position": "RB",
+          "jersey": 20,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5083569",
+          "name": "Jaden Craig",
+          "position": "QB",
+          "jersey": 1,
+          "status": "Probable"
+        },
+        {
+          "playerId": "4870670",
+          "name": "Markis Deal",
+          "position": "DT",
+          "jersey": 95,
+          "status": "Probable"
+        }
+      ]
+    },
+    {
       "gameId": "401856862",
       "kickoff": "2026-11-14T19:00:00.000Z",
       "opponentId": "2306",

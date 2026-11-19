@@ -4,6 +4,82 @@
   "teamId": "154",
   "reports": [
     {
+      "gameId": "401858310",
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "opponentId": "59",
+      "opponentName": "Georgia Tech",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.466Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5291731",
+          "name": "Dalton DeBoer",
+          "position": "OL",
+          "jersey": 69,
+          "status": "Out"
+        },
+        {
+          "playerId": "5139525",
+          "name": "Devin Cook",
+          "position": "DB",
+          "jersey": 15,
+          "status": "Out"
+        },
+        {
+          "playerId": "5151274",
+          "name": "Drayden Dickmann",
+          "position": "WR",
+          "jersey": 18,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5325681",
+          "name": "Dylan Durbin",
+          "position": "OL",
+          "jersey": 77,
+          "status": "Out"
+        },
+        {
+          "playerId": "5291183",
+          "name": "Elijah Otieno",
+          "position": "WR",
+          "jersey": 20,
+          "status": "Out"
+        },
+        {
+          "playerId": "4920227",
+          "name": "Gio Lopez",
+          "position": "QB",
+          "jersey": 3,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4683306",
+          "name": "Landon Morris",
+          "position": "TE",
+          "jersey": 81,
+          "status": "Out"
+        },
+        {
+          "playerId": "5088234",
+          "name": "Tolu Olajide",
+          "position": "OL",
+          "jersey": 55,
+          "status": "Out"
+        },
+        {
+          "playerId": "5382530",
+          "name": "Trey Warren III",
+          "position": "DB",
+          "jersey": 37,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858301",
       "kickoff": "2026-11-14T17:00:00.000Z",
       "opponentId": "2567",

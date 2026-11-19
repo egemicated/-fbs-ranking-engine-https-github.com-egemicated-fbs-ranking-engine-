@@ -4,6 +4,82 @@
   "teamId": "99",
   "reports": [
     {
+      "gameId": "401856754",
+      "kickoff": "2026-11-21T20:30:00.000Z",
+      "opponentId": "2633",
+      "opponentName": "Tennessee",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-19T01:10:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.431Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5201881",
+          "name": "Charles Ross II",
+          "position": "LB",
+          "jersey": 26,
+          "status": "Out"
+        },
+        {
+          "playerId": "5218723",
+          "name": "Dashawn Spears",
+          "position": "S",
+          "jersey": 10,
+          "status": "Out"
+        },
+        {
+          "playerId": "5114311",
+          "name": "Jackson Harris",
+          "position": "WR",
+          "jersey": 4,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5209113",
+          "name": "Jhase Thomas",
+          "position": "S",
+          "jersey": 28,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5149484",
+          "name": "Phillip Wright III",
+          "position": "WR",
+          "jersey": 15,
+          "status": "Out"
+        },
+        {
+          "playerId": "5161801",
+          "name": "Richard Anderson",
+          "position": "DT",
+          "jersey": 88,
+          "status": "Out"
+        },
+        {
+          "playerId": "5210474",
+          "name": "Trenton Henderson",
+          "position": "DE",
+          "jersey": 91,
+          "status": "Out"
+        },
+        {
+          "playerId": "4871034",
+          "name": "Whit Weeks",
+          "position": "LB",
+          "jersey": 7,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5141697",
+          "name": "Winston Watkins Jr.",
+          "position": "WR",
+          "jersey": 6,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401856885",
       "kickoff": "2026-11-15T00:30:00.000Z",
       "opponentId": "251",

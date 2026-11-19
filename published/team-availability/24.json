@@ -4,6 +4,152 @@
   "teamId": "24",
   "reports": [
     {
+      "gameId": "401858308",
+      "kickoff": "2026-11-22T00:30:00.000Z",
+      "opponentId": "25",
+      "opponentName": "California",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-19T04:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.466Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5083579",
+          "name": "Aidan Kilstrom",
+          "position": "OL",
+          "jersey": 52,
+          "status": "Out"
+        },
+        {
+          "playerId": "5084299",
+          "name": "Brandon Nicholson",
+          "position": "CB",
+          "jersey": 9,
+          "status": "Out"
+        },
+        {
+          "playerId": "5219247",
+          "name": "Brendan Delaney",
+          "position": "DL",
+          "jersey": 58,
+          "status": "Out"
+        },
+        {
+          "playerId": "5227532",
+          "name": "Breylan Thompson",
+          "position": "CB",
+          "jersey": 27,
+          "status": "Out"
+        },
+        {
+          "playerId": "5257984",
+          "name": "Chris Garland",
+          "position": "CB",
+          "jersey": 26,
+          "status": "Out"
+        },
+        {
+          "playerId": "5381553",
+          "name": "Daniel Ogiozee",
+          "position": "DL",
+          "jersey": 94,
+          "status": "Out"
+        },
+        {
+          "playerId": "5160502",
+          "name": "Daylen Sharper",
+          "position": "WR",
+          "jersey": 22,
+          "status": "Out"
+        },
+        {
+          "playerId": "4685308",
+          "name": "Ernest Cooper",
+          "position": "OLB",
+          "jersey": 44,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5209298",
+          "name": "Langdon Horace",
+          "position": "WR",
+          "jersey": 18,
+          "status": "Out"
+        },
+        {
+          "playerId": "5255254",
+          "name": "London Bironas",
+          "position": "K",
+          "jersey": 19,
+          "status": "Out"
+        },
+        {
+          "playerId": "4819256",
+          "name": "Matt Rose",
+          "position": "ILB",
+          "jersey": 35,
+          "status": "Out"
+        },
+        {
+          "playerId": "5276936",
+          "name": "Max Meier",
+          "position": "DL",
+          "jersey": 98,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "4709052",
+          "name": "Nathan Mejia",
+          "position": "OL",
+          "jersey": 53,
+          "status": "Out"
+        },
+        {
+          "playerId": "5094032",
+          "name": "Nico Brown",
+          "position": "WR",
+          "jersey": 23,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5081566",
+          "name": "Peyton Warford",
+          "position": "LS",
+          "jersey": 93,
+          "status": "Out"
+        },
+        {
+          "playerId": "5219246",
+          "name": "Preston Jernegan",
+          "position": "ILB",
+          "jersey": 54,
+          "status": "Out"
+        },
+        {
+          "playerId": "5214452",
+          "name": "Reiman Zebert",
+          "position": "TE",
+          "jersey": 83,
+          "status": "Out"
+        },
+        {
+          "playerId": "5140699",
+          "name": "Sam Neely III",
+          "position": "CB",
+          "jersey": 28,
+          "status": "Out"
+        },
+        {
+          "playerId": "5245507",
+          "name": "Zaiden McDonald",
+          "position": "DB",
+          "jersey": 22,
+          "status": "Doubtful"
+        }
+      ]
+    },
+    {
       "gameId": "401858299",
       "kickoff": "2026-11-15T00:30:00.000Z",
       "opponentId": "259",

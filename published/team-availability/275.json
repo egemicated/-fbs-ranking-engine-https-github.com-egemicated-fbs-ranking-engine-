@@ -4,6 +4,110 @@
   "teamId": "275",
   "reports": [
     {
+      "gameId": "401858533",
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "opponentId": "2509",
+      "opponentName": "Purdue",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.155Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4869243",
+          "name": "Barrett Nelson",
+          "position": "OL",
+          "jersey": 70,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5084664",
+          "name": "Cai Bates",
+          "position": "CB",
+          "jersey": 3,
+          "status": "Out"
+        },
+        {
+          "playerId": "5146814",
+          "name": "Carson Van Dinter",
+          "position": "S",
+          "jersey": 11,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5146771",
+          "name": "Emerson Mandell",
+          "position": "OL",
+          "jersey": 75,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5212589",
+          "name": "Emmett Bork",
+          "position": "TE",
+          "jersey": 82,
+          "status": "Out"
+        },
+        {
+          "playerId": "5148631",
+          "name": "Jai'mier Scott",
+          "position": "CB",
+          "jersey": 6,
+          "status": "Probable"
+        },
+        {
+          "playerId": "4896318",
+          "name": "Javan Robinson",
+          "position": "CB",
+          "jersey": 2,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5110459",
+          "name": "Kevin Heywood",
+          "position": "OL",
+          "jersey": 55,
+          "status": "Out"
+        },
+        {
+          "playerId": "5260561",
+          "name": "Matthew Jung",
+          "position": "S",
+          "jersey": 29,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079552",
+          "name": "Nate Palmer",
+          "position": "RB",
+          "jersey": 15,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5210475",
+          "name": "Ryan Hopkins",
+          "position": "QB",
+          "jersey": 10,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4685314",
+          "name": "Sebastian Cheeks",
+          "position": "OLB",
+          "jersey": 15,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5140697",
+          "name": "Thomas Heiberger",
+          "position": "LB",
+          "jersey": 19,
+          "status": "Probable"
+        }
+      ]
+    },
+    {
       "gameId": "401858520",
       "kickoff": "2026-11-14T17:00:00.000Z",
       "opponentId": "120",

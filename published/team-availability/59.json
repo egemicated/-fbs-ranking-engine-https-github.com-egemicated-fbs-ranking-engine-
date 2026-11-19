@@ -4,6 +4,152 @@
   "teamId": "59",
   "reports": [
     {
+      "gameId": "401858310",
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "opponentId": "154",
+      "opponentName": "Wake Forest",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.466Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4870781",
+          "name": "A.J. Hoffler",
+          "position": "DE",
+          "jersey": 88,
+          "status": "Out"
+        },
+        {
+          "playerId": "5125580",
+          "name": "Chad Alexander",
+          "position": "RB",
+          "jersey": 11,
+          "status": "Out"
+        },
+        {
+          "playerId": "5159888",
+          "name": "Chris Elko",
+          "position": "WR",
+          "jersey": 89,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5289797",
+          "name": "Darnell Collins",
+          "position": "WR",
+          "jersey": 21,
+          "status": "Out"
+        },
+        {
+          "playerId": "4921259",
+          "name": "Ethan Mackenny",
+          "position": "OL",
+          "jersey": 78,
+          "status": "Out"
+        },
+        {
+          "playerId": "5215212",
+          "name": "Fenix Felton",
+          "position": "S",
+          "jersey": 31,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079515",
+          "name": "Jaylen Mbakwe",
+          "position": "CB",
+          "jersey": 3,
+          "status": "Out"
+        },
+        {
+          "playerId": "5127028",
+          "name": "Jordan Boyd",
+          "position": "DE",
+          "jersey": 8,
+          "status": "Out"
+        },
+        {
+          "playerId": "5155744",
+          "name": "Kelvin Hill",
+          "position": "CB",
+          "jersey": 6,
+          "status": "Out"
+        },
+        {
+          "playerId": "5209922",
+          "name": "Kentrell Davis",
+          "position": "WR",
+          "jersey": 82,
+          "status": "Out"
+        },
+        {
+          "playerId": "5212663",
+          "name": "Kevin Peay, Jr.",
+          "position": "OL",
+          "jersey": 52,
+          "status": "Out"
+        },
+        {
+          "playerId": "5215629",
+          "name": "Kevin Roche, Jr.",
+          "position": "TE",
+          "jersey": 86,
+          "status": "Out"
+        },
+        {
+          "playerId": "4838514",
+          "name": "Kyle Efford",
+          "position": "LB",
+          "jersey": 44,
+          "status": "Out"
+        },
+        {
+          "playerId": "5155366",
+          "name": "Malachi Hosley",
+          "position": "RB",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "4570736",
+          "name": "Markell Samuel",
+          "position": "OL",
+          "jersey": 71,
+          "status": "Out"
+        },
+        {
+          "playerId": "4871101",
+          "name": "Savion Riley",
+          "position": "S",
+          "jersey": 13,
+          "status": "Out"
+        },
+        {
+          "playerId": "5075806",
+          "name": "Shymeik Jones",
+          "position": "DT",
+          "jersey": 96,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5276054",
+          "name": "Trae Stevenson, Jr.",
+          "position": "CB",
+          "jersey": 23,
+          "status": "Out"
+        },
+        {
+          "playerId": "5159878",
+          "name": "Will Kiker",
+          "position": "S",
+          "jersey": 39,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858297",
       "kickoff": "2026-11-14T17:30:00.000Z",
       "opponentId": "228",

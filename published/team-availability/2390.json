@@ -4,6 +4,75 @@
   "teamId": "2390",
   "reports": [
     {
+      "gameId": "401858302",
+      "kickoff": "2026-11-22T00:00:00.000Z",
+      "opponentId": "259",
+      "opponentName": "Virginia Tech",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.466Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5156998",
+          "name": "CharMar Brown",
+          "position": "RB",
+          "jersey": 6,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141368",
+          "name": "Ja'Boree Antoine",
+          "position": "DB",
+          "jersey": 16,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141593",
+          "name": "Joshua Moore",
+          "position": "WR",
+          "jersey": 3,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141467",
+          "name": "Luka Gilbert",
+          "position": "TE",
+          "jersey": 88,
+          "status": "Out"
+        },
+        {
+          "playerId": "5159175",
+          "name": "Malachi Toney",
+          "position": "WR",
+          "jersey": 1,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141389",
+          "name": "Max Buchanan",
+          "position": "OL",
+          "jersey": 66,
+          "status": "Out"
+        },
+        {
+          "playerId": null,
+          "name": "Romanas \"OJ\" Frederique Jr.",
+          "position": "DB",
+          "jersey": 29,
+          "status": "Out"
+        },
+        {
+          "playerId": "5150903",
+          "name": "Zechariah Poyser",
+          "position": "DB",
+          "jersey": 7,
+          "status": "Probable"
+        }
+      ]
+    },
+    {
       "gameId": "401858296",
       "kickoff": "2026-11-14T17:00:00.000Z",
       "opponentId": "150",

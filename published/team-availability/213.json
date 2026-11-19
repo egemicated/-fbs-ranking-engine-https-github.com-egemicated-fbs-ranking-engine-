@@ -4,6 +4,89 @@
   "teamId": "213",
   "reports": [
     {
+      "gameId": "401858532",
+      "kickoff": "2026-11-21T20:30:00.000Z",
+      "opponentId": "164",
+      "opponentName": "Rutgers",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.155Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5195702",
+          "name": "Alex Tatsch",
+          "position": "LB",
+          "jersey": 25,
+          "status": "Out"
+        },
+        {
+          "playerId": "5167309",
+          "name": "Alijah Carnell",
+          "position": "DT",
+          "jersey": 56,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5081877",
+          "name": "Caleb Bacon",
+          "position": "DE",
+          "jersey": 10,
+          "status": "Out"
+        },
+        {
+          "playerId": "5077502",
+          "name": "Carson Hansen",
+          "position": "RB",
+          "jersey": 21,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5079496",
+          "name": "Donnie Harbour",
+          "position": "OL",
+          "jersey": 79,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5141548",
+          "name": "Jahmir Joseph",
+          "position": "CB",
+          "jersey": 0,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5141525",
+          "name": "Koby Howard",
+          "position": "WR",
+          "jersey": 6,
+          "status": "Out"
+        },
+        {
+          "playerId": "5291142",
+          "name": "Lucas Tenbrock",
+          "position": "P",
+          "jersey": 96,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5141483",
+          "name": "Max Granville",
+          "position": "DE",
+          "jersey": 18,
+          "status": "Out"
+        },
+        {
+          "playerId": "5230372",
+          "name": "Tyler Armstead",
+          "position": "CB",
+          "jersey": 35,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401858524",
       "kickoff": "2026-11-15T00:00:00.000Z",
       "opponentId": "135",

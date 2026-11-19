@@ -4,6 +4,61 @@
   "teamId": "254",
   "reports": [
     {
+      "gameId": "401856872",
+      "kickoff": "2026-11-22T02:00:00.000Z",
+      "opponentId": "2628",
+      "opponentName": "TCU",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-19T03:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.336Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5167750",
+          "name": "Karson Kaufusi",
+          "position": "DT",
+          "jersey": 51,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5084830",
+          "name": "Logan Castor",
+          "position": "LS",
+          "jersey": 65,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5294259",
+          "name": "Mana Carvalho",
+          "position": "WR",
+          "jersey": 8,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5155562",
+          "name": "Marcus Wimberly",
+          "position": "S",
+          "jersey": 24,
+          "status": "Out"
+        },
+        {
+          "playerId": "5221211",
+          "name": "Semi Taulanga",
+          "position": "TE",
+          "jersey": 99,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5173431",
+          "name": "Wayshawn Parker",
+          "position": "RB",
+          "jersey": 1,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401856864",
       "kickoff": "2026-11-15T03:30:00.000Z",
       "opponentId": "12",

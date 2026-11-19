@@ -4,6 +4,117 @@
   "teamId": "258",
   "reports": [
     {
+      "gameId": "401858305",
+      "kickoff": "2026-11-21T17:30:00.000Z",
+      "opponentId": "153",
+      "opponentName": "North Carolina",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.466Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5283059",
+          "name": "Alex Dunn",
+          "position": "DB",
+          "jersey": 27,
+          "status": "Out"
+        },
+        {
+          "playerId": "5290674",
+          "name": "Bull Richardson",
+          "position": "DT",
+          "jersey": 96,
+          "status": "Out"
+        },
+        {
+          "playerId": "5146780",
+          "name": "Chase Morrison",
+          "position": "DT",
+          "jersey": 46,
+          "status": "Out"
+        },
+        {
+          "playerId": "5195479",
+          "name": "Corey Costner",
+          "position": "S",
+          "jersey": 4,
+          "status": "Out"
+        },
+        {
+          "playerId": "5139094",
+          "name": "Devon Baxter",
+          "position": "DE",
+          "jersey": 99,
+          "status": "Out"
+        },
+        {
+          "playerId": "4430420",
+          "name": "Drake Metcalf",
+          "position": "OL",
+          "jersey": 60,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5146637",
+          "name": "Grant Ellinger",
+          "position": "OL",
+          "jersey": 65,
+          "status": "Out"
+        },
+        {
+          "playerId": "5181214",
+          "name": "Isaiah Reese",
+          "position": "LB",
+          "jersey": 42,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870783",
+          "name": "Jason Hammond",
+          "position": "DT",
+          "jersey": 91,
+          "status": "Out"
+        },
+        {
+          "playerId": "5106061",
+          "name": "Landon Danley",
+          "position": "LB",
+          "jersey": 32,
+          "status": "Out"
+        },
+        {
+          "playerId": "5153257",
+          "name": "Maddox Marcellus",
+          "position": "LB",
+          "jersey": 11,
+          "status": "Out"
+        },
+        {
+          "playerId": "5081207",
+          "name": "Noah Hartsoe",
+          "position": "OL",
+          "jersey": 58,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079295",
+          "name": "Omillio Agard",
+          "position": "CB",
+          "jersey": 20,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870713",
+          "name": "Rico Flores Jr.",
+          "position": "WR",
+          "jersey": 11,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858295",
       "kickoff": "2026-11-14T20:30:00.000Z",
       "opponentId": "25",

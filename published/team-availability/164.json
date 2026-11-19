@@ -4,6 +4,124 @@
   "teamId": "164",
   "reports": [
     {
+      "gameId": "401858532",
+      "kickoff": "2026-11-21T20:30:00.000Z",
+      "opponentId": "213",
+      "opponentName": "Penn State",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.155Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5076084",
+          "name": "Abram Wright",
+          "position": "LB",
+          "jersey": 6,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5079717",
+          "name": "AJ Surace",
+          "position": "QB",
+          "jersey": 10,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5092802",
+          "name": "Chris Joines",
+          "position": "DB",
+          "jersey": 20,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870900",
+          "name": "Dylan Lonergan",
+          "position": "QB",
+          "jersey": 12,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5158988",
+          "name": "Dyzier Carter",
+          "position": "WR",
+          "jersey": 0,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5273551",
+          "name": "Joey Kopec",
+          "position": "LB",
+          "jersey": 38,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079671",
+          "name": "Kaj Sanders",
+          "position": "DB",
+          "jersey": 1,
+          "status": "Out"
+        },
+        {
+          "playerId": "4596665",
+          "name": "Keshon Griffin",
+          "position": "DL",
+          "jersey": 96,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5084771",
+          "name": "KJ Duff",
+          "position": "WR",
+          "jersey": 8,
+          "status": "Out"
+        },
+        {
+          "playerId": "4714999",
+          "name": "Kwabena Asamoah",
+          "position": "OL",
+          "jersey": 69,
+          "status": "Out"
+        },
+        {
+          "playerId": "5160746",
+          "name": "Sage Clawges",
+          "position": "DB",
+          "jersey": 27,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5172031",
+          "name": "Sean Ashenfelder",
+          "position": "QB",
+          "jersey": 6,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141510",
+          "name": "Tariq Hayer",
+          "position": "DB",
+          "jersey": 44,
+          "status": "Out (1st Half)"
+        },
+        {
+          "playerId": "4683918",
+          "name": "Tyler Needham",
+          "position": "OL",
+          "jersey": 56,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5154001",
+          "name": "Zahmir Dawud",
+          "position": "DB",
+          "jersey": 12,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858525",
       "kickoff": "2026-11-14T17:30:00.000Z",
       "opponentId": "158",

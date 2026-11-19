@@ -10,8 +10,8 @@
       "opponentName": "Clemson",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-18T01:00:00.000Z",
-      "checkedAt": "2026-11-18T11:56:32.739Z",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.466Z",
       "final": false,
       "players": [
         {
@@ -19,7 +19,7 @@
           "name": "Bryce Davis",
           "position": "DE",
           "jersey": 12,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5214461",
@@ -61,14 +61,14 @@
           "name": "Evan Smith",
           "position": "CB",
           "jersey": 4,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5372139",
           "name": "Jack Gaskins",
           "position": "TE",
           "jersey": 84,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5208403",
@@ -96,14 +96,14 @@
           "name": "Kevin O'Connor",
           "position": "DE",
           "jersey": 15,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5077406",
           "name": "Kimari Robinson",
           "position": "CB",
           "jersey": 5,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5225215",

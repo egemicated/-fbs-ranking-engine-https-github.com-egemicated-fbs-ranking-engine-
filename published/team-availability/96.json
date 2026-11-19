@@ -4,6 +4,61 @@
   "teamId": "96",
   "reports": [
     {
+      "gameId": "401856751",
+      "kickoff": "2026-11-22T00:30:00.000Z",
+      "opponentId": "142",
+      "opponentName": "Missouri",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-19T01:10:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.431Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": null,
+          "name": "Alex Afari Jr.",
+          "position": "ILB",
+          "jersey": 9,
+          "status": "Out"
+        },
+        {
+          "playerId": "5147047",
+          "name": "Antwan Smith",
+          "position": "ILB",
+          "jersey": 4,
+          "status": "Out"
+        },
+        {
+          "playerId": "5156389",
+          "name": "Grant Grayton",
+          "position": "DB",
+          "jersey": 30,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5147089",
+          "name": "Jaden Smith",
+          "position": "DB",
+          "jersey": 24,
+          "status": "Out"
+        },
+        {
+          "playerId": "4699866",
+          "name": "Nic Anderson",
+          "position": "WR",
+          "jersey": 4,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5196862",
+          "name": "Quintavion Norman",
+          "position": "ILB",
+          "jersey": 31,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856884",
       "kickoff": "2026-11-14T23:15:00.000Z",
       "opponentId": "57",

@@ -4,6 +4,159 @@
   "teamId": "52",
   "reports": [
     {
+      "gameId": "401858304",
+      "kickoff": "2026-11-21T20:30:00.000Z",
+      "opponentId": "152",
+      "opponentName": "NC State",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-19T01:00:00.000Z",
+      "checkedAt": "2026-11-19T11:53:43.466Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5372196",
+          "name": "Amari Thomas",
+          "position": "RB",
+          "jersey": 24,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870817",
+          "name": "Bradyn Welch-Joiner",
+          "position": "OL",
+          "jersey": 55,
+          "status": "Out"
+        },
+        {
+          "playerId": "4921255",
+          "name": "Caleb LaVallee",
+          "position": "LB",
+          "jersey": 29,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5145824",
+          "name": "Chavez Thompson",
+          "position": "OL",
+          "jersey": 52,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5332530",
+          "name": "Conor McAneney",
+          "position": "K",
+          "jersey": 93,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5271218",
+          "name": "Daylen Green",
+          "position": "LB",
+          "jersey": 38,
+          "status": "Out"
+        },
+        {
+          "playerId": "4837247",
+          "name": "Deante McCray",
+          "position": "DL",
+          "jersey": 8,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4870922",
+          "name": "Duce Robinson",
+          "position": "WR",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "5186904",
+          "name": "Izayia Williams",
+          "position": "LB",
+          "jersey": 30,
+          "status": "Out"
+        },
+        {
+          "playerId": "5085388",
+          "name": "Ja’Bril Rawls",
+          "position": "DB",
+          "jersey": 6,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5079488",
+          "name": "Jamari Howard",
+          "position": "DB",
+          "jersey": 18,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5085107",
+          "name": "Karson Hobbs",
+          "position": "DB",
+          "jersey": 16,
+          "status": "Out"
+        },
+        {
+          "playerId": "5155173",
+          "name": "Kevin Wynn",
+          "position": "DL",
+          "jersey": 55,
+          "status": "Out"
+        },
+        {
+          "playerId": "5144685",
+          "name": "Ma'Khi Jones",
+          "position": "DB",
+          "jersey": 14,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5291010",
+          "name": "Noah LaVallee",
+          "position": "LB",
+          "jersey": 45,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141560",
+          "name": "Ousmane Kromah",
+          "position": "RB",
+          "jersey": 32,
+          "status": "Out"
+        },
+        {
+          "playerId": "5075960",
+          "name": "Quindarrius Jones",
+          "position": "DB",
+          "jersey": 0,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "4871076",
+          "name": "Quintrevion Wisner",
+          "position": "RB",
+          "jersey": 5,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5116973",
+          "name": "Rylan Kennedy",
+          "position": "DL",
+          "jersey": 15,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "4870955",
+          "name": "Samuel Singleton Jr.",
+          "position": "RB",
+          "jersey": 3,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858293",
       "kickoff": "2026-11-14T00:00:00.000Z",
       "opponentId": "221",
