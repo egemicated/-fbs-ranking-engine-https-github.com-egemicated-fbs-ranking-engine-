@@ -1,0 +1,43 @@
+✔ email registration and recovery fail closed until delivery readiness is explicitly enabled (1.4129ms)
+✔ password entry handles passphrases, confirmation, length and UTF-8 bcrypt byte limits (0.3379ms)
+✔ callbacks preserve origin and remove authorization credentials and provider errors from history (0.452ms)
+✔ adding a password updates the current Google identity and never signs up or edits saved application data (0.2212ms)
+✔ password changes preserve MFA session and use server current-password validation without signing in again (0.4896ms)
+✔ MFA completes only an existing verified TOTP factor and distinguishes aal1 from aal2 (0.8031ms)
+✔ public form output escapes arbitrary account and request text without exposing hidden operations (14.0591ms)
+✔ guest and regular-user administration views never request privileged records (3.8373ms)
+✔ administrator UI requires aal2 before listing users, support or audit history (0.4319ms)
+✔ an unmounted administration view cannot render late private data (0.3557ms)
+✔ authentication errors are generic and do not echo credentials or provider diagnostic strings (0.1389ms)
+✔ support email notifications remain gated and delivery failures never throw away a saved request (0.2155ms)
+✔ an enrolled aal1 account can reopen verification without fetching protected account data (0.9453ms)
+✔ deletion review does not present a resolved action and notification controls follow readiness (0.1773ms)
+✔ sign-out immediately clears rendered private account details before the next async request (20.7316ms)
+✔ static policy allows only the pinned SDK and required existing network hosts (4.3781ms)
+✔ policy rejects injected, arbitrary, insecure or credential-bearing Auth origins (0.5967ms)
+✔ security metadata precedes scripts, preserves content and is safely idempotent (0.6888ms)
+✔ real response-header policy adds anti-framing and device-permission restrictions (0.1356ms)
+✔ unconfigured retry performs no network request (0.6766ms)
+✔ retry secret can only be sent to the fixed existing project endpoint (0.4046ms)
+✔ retry preserves service acknowledgement and never returns credentials (19.4008ms)
+✔ support dispatch rejects unauthorized callers before accessing private queue (23.6585ms)
+✔ notification delivery is disabled without complete configuration and consumes no lease (0.742ms)
+✔ notification uses provider idempotency and contains no private message or submitting email (3.083ms)
+✔ provider failure records an allowlisted retry code without response details (0.9388ms)
+✔ a forged or expired user token cannot process notifications (0.4472ms)
+✔ a verified signed-in caller can trigger delivery but receives no private queue rows (0.7836ms)
+✔ public guest intake fails closed unless abuse controls are explicitly configured (0.7096ms)
+✔ verified guest intake stores a salted client hash and acknowledges storage despite pending email setup (5.5242ms)
+✔ CORS, method and oversized payload checks run before privileged operations (0.8165ms)
+✔ message construction rejects invalid trusted queue fields rather than reflecting arbitrary content (0.5356ms)
+✔ oversized streamed bodies are canceled before JSON parsing or privileged work (1.01ms)
+✔ Brevo uses its own API contract and opaque message ID instead of a Resend UUID (0.7606ms)
+✔ Brevo explicit idempotency acknowledgement does not become a misleading delivery failure (0.6612ms)
+ℹ tests 35
+ℹ suites 0
+ℹ pass 35
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 133.3561

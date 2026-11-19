@@ -1,0 +1,50 @@
+{
+  "checkedAt": "2026-11-19T01:48:08.117Z",
+  "result": [
+    {
+      "schema": "weekly_private",
+      "status": 406,
+      "errorCode": "PGRST106"
+    },
+    {
+      "schema": "cfp_private",
+      "status": 406,
+      "errorCode": "PGRST106"
+    },
+    {
+      "schema": "support_private",
+      "status": 406,
+      "errorCode": "PGRST106"
+    },
+    {
+      "schema": "account_private",
+      "status": 406,
+      "errorCode": "PGRST106"
+    },
+    {
+      "anonymousRpc": "admin_users",
+      "status": 401,
+      "errorCode": "42501"
+    },
+    {
+      "anonymousRpc": "admin_support_requests",
+      "status": 401,
+      "errorCode": "42501"
+    },
+    {
+      "anonymousRpc": "admin_action_history",
+      "status": 401,
+      "errorCode": "42501"
+    },
+    {
+      "anonymousRpc": "account_context",
+      "status": 401,
+      "errorCode": "42501"
+    },
+    {
+      "anonymousRpc": "service_claim_support_notifications",
+      "status": 401,
+      "errorCode": "42501"
+    }
+  ]
+}

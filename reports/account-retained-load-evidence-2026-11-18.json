@@ -1,0 +1,36 @@
+{
+  "id": "retained-local-mixed-load-evidence-v1",
+  "reviewedAt": "2026-11-19T01:15:44.715Z",
+  "source": "Retained pre-account-project synthetic local SQL stress logs; source database already removed",
+  "files": {
+    "board-logs.22416": {
+      "sha256": "91d0403835efc4bf020e831fc6bc8f41613fe64481e573a25af7d62516dabe62",
+      "bytes": 21654
+    },
+    "board-logs.22416.1": {
+      "sha256": "a1aeb422c91483e03f1384e8967ef9674692b27894afdb92a874be2f6d9bbbe7",
+      "bytes": 21803
+    },
+    "save-logs.26836": {
+      "sha256": "300ae5054504ba6e7603708c6ee436a3c5ccdd397d105b9b9707bbf56449783e",
+      "bytes": 94029
+    },
+    "save-logs.26836.1": {
+      "sha256": "e1c445feaa7ea3b5d53705ac782747d07174ca4b5031bcbd2e98f39302ace81b",
+      "bytes": 94038
+    },
+    "save-logs.26836.2": {
+      "sha256": "d83c5ce0845eeab49bf8e8f750630c6d5bb0be53f7db968c874c2b92456b0920",
+      "bytes": 96479
+    },
+    "save-logs.26836.3": {
+      "sha256": "0bbe0aa46df3be5347b73063853e9b387e9fa8798efd8581c8130879abae3d54",
+      "bytes": 96450
+    }
+  },
+  "sourceLimitations": [
+    "Original test-launch command, exact database build, host-resource profile and complete server logs are not retained with this compact evidence.",
+    "These summaries are not a current Supabase capacity benchmark, new managed-Auth test, or hosted HTTP concurrency test."
+  ],
+  "summaryScriptSha256": "11d0768d26f623b9c93258285fc367eb2e269280fb0e2d978bfa9373100b5f43"
+}

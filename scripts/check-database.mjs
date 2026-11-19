@@ -43,7 +43,12 @@ try {
   created = true;
   psql(database, [], `
     create schema auth;
-    create table auth.users(id uuid primary key);
+    create table auth.users(id uuid primary key, email text, created_at timestamptz not null default clock_timestamp(),
+      last_sign_in_at timestamptz, email_confirmed_at timestamptz);
+    create table auth.sessions(id uuid primary key, user_id uuid not null references auth.users(id) on delete cascade,
+      aal text default 'aal1', not_after timestamptz);
+    create table auth.mfa_factors(id uuid primary key, user_id uuid not null references auth.users(id) on delete cascade,
+      status text not null, factor_type text not null default 'totp');
     create function auth.uid() returns uuid language sql stable set search_path='' as $$
       select coalesce(nullif(current_setting('request.jwt.claim.sub',true),''),
         nullif(current_setting('request.jwt.claims',true),'')::jsonb->>'sub')::uuid
@@ -52,7 +57,16 @@ try {
     grant execute on function auth.uid() to anon,authenticated,service_role;
   `);
   const migrations = readdirSync(resolve(root, 'supabase/migrations')).filter(name => name.endsWith('.sql')).sort();
-  for (const name of migrations) psql(database, ['-f', resolve(root, 'supabase/migrations', name)]);
+  for (const name of migrations) {
+    if (name === '20261119014527_account_administration_foundation.sql') {
+      psql(database, ['-f', resolve(root, 'supabase/migration-tests/account-before.sql')]);
+    }
+    psql(database, ['-f', resolve(root, 'supabase/migrations', name)]);
+    if (name === '20261119014527_account_administration_foundation.sql') {
+      psql(database, ['-f', resolve(root, 'supabase/migration-tests/account-after.sql')]);
+      console.log('PASS account migration preserves existing identities, preferences, requests and locked picks');
+    }
+  }
   console.log(`Applied ${migrations.length} migrations to a fresh disposable database`);
   const tests = readdirSync(resolve(root, 'supabase/tests')).filter(name => name.endsWith('.sql')).sort();
   if (!tests.length) throw new Error('No SQL tests found');
@@ -65,7 +79,9 @@ try {
         (select count(*) from cfp_private.entries)+(select count(*) from weekly_private.publications)+
         (select count(*) from weekly_private.games)+(select count(*) from weekly_private.players)+
         (select count(*) from weekly_private.picks)+(select count(*) from public.my_team_preferences)+
-        (select count(*) from support_private.account_requests)`]);
+        (select count(*) from support_private.account_requests)+(select count(*) from support_private.notification_outbox)+
+        (select count(*) from account_private.memberships)+(select count(*) from account_private.entitlements)+
+        (select count(*) from account_private.audit_log)+(select count(*) from auth.sessions)+(select count(*) from auth.mfa_factors)`]);
       if (count !== '0') throw new Error('SQL fixture did not roll back');
       console.log(`PASS ${name}`);
     } catch (error) {

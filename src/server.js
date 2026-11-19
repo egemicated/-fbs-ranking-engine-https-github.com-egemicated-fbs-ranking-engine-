@@ -14,6 +14,7 @@ import { buildWeeklyTeamStats } from '../frontend/weekly-team-stats.js';
 import { browserSorSource, buildScenarioPublication } from './scenario-publication.js';
 import { readTeamPage } from './player-publication.js';
 import { loadConferencePublications } from './conference-publication.js';
+import { applySecurityMetadata, securityResponseHeaders } from './security-policy.js';
 
 const root = resolve(import.meta.dirname, '..');
 const directory = resolve(process.env.DATA_DIR || 'data', 'snapshots');
@@ -62,9 +63,10 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     ['/conference-strength.js', ['conference-strength.js', 'text/javascript; charset=utf-8']],
     ['/conference-metrics.js', ['conference-metrics.js', 'text/javascript; charset=utf-8']],
     ['/conference-strength.css', ['conference-strength.css', 'text/css; charset=utf-8']],
-    ...['format', 'game-filters', 'my-teams-store', 'my-teams', 'model-report', 'sor-compare', 'page-routes', 'platform-info']
+    ...['format', 'game-filters', 'my-teams-store', 'my-teams', 'model-report', 'sor-compare', 'page-routes', 'platform-info',
+      'account-auth', 'account-center', 'account-administration', 'account-support']
       .map(name => [`/${name}.js`, [`${name}.js`, 'text/javascript; charset=utf-8']]),
-    ...['game-discovery', 'platform-info', 'intelligence-tools', 'my-teams']
+    ...['game-discovery', 'platform-info', 'intelligence-tools', 'my-teams', 'account-center']
       .map(name => [`/${name}.css`, [`${name}.css`, 'text/css; charset=utf-8']]),
     ['/assets/stadium.png', ['assets/stadium.png', 'image/png']],
     ['/assets/stadium.webp', ['assets/stadium.webp', 'image/webp']],
@@ -86,7 +88,12 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     if (staticFiles.has(path)) {
       const [file, type] = staticFiles.get(path);
       try {
-        const body = await readFile(join(frontendDirectory, file));
+        let body = await readFile(join(frontendDirectory, file));
+        if (type.startsWith('text/html')) {
+          const config = JSON.parse(await readFile(join(frontendDirectory, 'bracket-config.json'), 'utf8'));
+          for (const [name, value] of Object.entries(securityResponseHeaders({ authUrl: config.url }))) res.setHeader(name, value);
+          body = applySecurityMetadata(body.toString('utf8'), { authUrl: config.url });
+        }
         res.setHeader('Content-Type', type);
         res.setHeader('Cache-Control', path.startsWith('/fonts/') || path.startsWith('/assets/') ? 'public, max-age=3600' : 'no-cache');
         res.writeHead(200); res.end(req.method === 'HEAD' ? undefined : body); return;

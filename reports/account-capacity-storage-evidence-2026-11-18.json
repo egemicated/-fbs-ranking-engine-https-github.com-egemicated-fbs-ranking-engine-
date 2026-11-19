@@ -1,0 +1,77 @@
+{
+  "id": "local-contest-storage-probe-v1",
+  "capturedAt": "2026-11-19T01:13:50.839Z",
+  "source": "Synthetic rows in a newly created loopback-only disposable database; retained production-schema baseline",
+  "migrationCutoff": "20261118192613_platform_preferences_and_pick_privacy.sql",
+  "migrationHashes": {
+    "20261109031430_cfp_bracket_contest.sql": "04f2b38723b2ed7d54511783b3cc405df5eb5e3cfd620e2701f7c0efff029655",
+    "20261111032141_weekly_pick_contest.sql": "9652c25b73e55fcfd7ea1a04ea2bcc80e87c35aa4e54c6500de3ab29fdc9c612",
+    "20261111041331_weekly_public_player_picks.sql": "adbc5af77d451746ff5c82cb737dfb5fcc2e25b95085ccbfa0274d601b45d8bc",
+    "20261111044000_weekly_pick_deadlines.sql": "af367c648f75d23f2e3f8a42a26693e032ec095c5ce567b354130f6b453bc9b8",
+    "20261111045000_weekly_pick_kickoff_lock.sql": "ac14146ae21dcd94b7ccb4035b8974579d4f11937aba30ca32214e9892f43aed",
+    "20261112225210_weekly_pick_schedule_corrections.sql": "d1502f431cabf14925a763de96e4b76e86e197da68c3b06bc40cc3924f279919",
+    "20261115231530_my_team_preferences.sql": "363151077061ba42446cf17858b91e7ee36834ec57ca85012ae660a4649f1d3f",
+    "20261115231755_weekly_pick_kickoff_availability.sql": "ded07a0ac14e5850daf6f67b1c2256ca533f2893adc78e7f7e777a5d7b98b811",
+    "20261116044621_weekly_community_picks.sql": "e6e8bfa8f27c35fa42ea1f547ccc4b4650e5d46743bbb04448a5deef11b5449c",
+    "20261116044646_my_team_seen_updates.sql": "5884ef3be341bfed8367f1b21f041ef12b2b6c23bc8540831b55a4338db8686f",
+    "20261118192613_platform_preferences_and_pick_privacy.sql": "818b125a56f09a5adb24ecc63eac6245e4c9d5b8281a729daa3c0e63cc451a9c"
+  },
+  "measured": {
+    "picks": 64000,
+    "users": 1000,
+    "picksHeapBytes": 5357568,
+    "gamesTotalBytes": 65536,
+    "picksIndexBytes": 5242880,
+    "picksTotalBytes": 10633216,
+    "postgresVersion": "PostgreSQL 18.6 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit",
+    "playersTotalBytes": 245760,
+    "rawPickRowMeanBytes": 78.874953125,
+    "bytesPerPick": 166.144
+  },
+  "scenarios": [
+    {
+      "users": 100,
+      "assumptions": {
+        "picksPerUserPerWeek": 64,
+        "activeWeeks": 15,
+        "activeParticipationFraction": 1
+      },
+      "weeklyPicks": 6400,
+      "seasonPicks": 96000,
+      "seasonPickBytesAtMeasuredDensity": 15949824,
+      "seasonPickBytesWith50PercentGrowthAllowance": 23924736
+    },
+    {
+      "users": 1000,
+      "assumptions": {
+        "picksPerUserPerWeek": 64,
+        "activeWeeks": 15,
+        "activeParticipationFraction": 1
+      },
+      "weeklyPicks": 64000,
+      "seasonPicks": 960000,
+      "seasonPickBytesAtMeasuredDensity": 159498240,
+      "seasonPickBytesWith50PercentGrowthAllowance": 239247360
+    },
+    {
+      "users": 10000,
+      "assumptions": {
+        "picksPerUserPerWeek": 64,
+        "activeWeeks": 15,
+        "activeParticipationFraction": 1
+      },
+      "weeklyPicks": 640000,
+      "seasonPicks": 9600000,
+      "seasonPickBytesAtMeasuredDensity": 1594982400,
+      "seasonPickBytesWith50PercentGrowthAllowance": 2392473600
+    }
+  ],
+  "limits": [
+    "This is a local row-storage measurement, not a hosted throughput or concurrency benchmark.",
+    "It excludes managed Auth internals, new account/admin tables, WAL, backups, temporary work space, future schema changes and bloat beyond the allowance.",
+    "Every user picking every game is an explicit upper participation assumption, not predicted adoption.",
+    "No production database, existing local database, user account, game or saved pick was altered."
+  ],
+  "productionWrites": 0,
+  "providerCalls": 0
+}

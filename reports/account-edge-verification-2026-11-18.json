@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-11-19T02:34:44.104Z",
+  "edgeVersion": 2,
+  "scope": "Unauthenticated negative probes only; no account/request/email created",
+  "passed": true,
+  "checks": [
+    {
+      "action": "notify",
+      "foreignOrigin": false,
+      "status": 401,
+      "expected": 401,
+      "passed": true
+    },
+    {
+      "action": "dispatch",
+      "foreignOrigin": false,
+      "status": 401,
+      "expected": 401,
+      "passed": true
+    },
+    {
+      "action": "request",
+      "foreignOrigin": false,
+      "status": 503,
+      "expected": 503,
+      "passed": true
+    },
+    {
+      "action": "notify",
+      "foreignOrigin": true,
+      "status": 403,
+      "expected": 403,
+      "passed": true
+    },
+    {
+      "anonymousRpc": "admin_requeue_support_notification",
+      "status": 401,
+      "expected": 401,
+      "passed": true
+    }
+  ]
+}

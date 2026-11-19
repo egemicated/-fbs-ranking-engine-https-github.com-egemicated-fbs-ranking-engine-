@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-11-19T02:21:13.175Z",
+  "designatedEmail": "fbsintel@yahoo.com",
+  "ownerConfirmed": true,
+  "provider": "Brevo Free",
+  "senderVerified": true,
+  "ownDomain": false,
+  "familyDomainAuthorized": false,
+  "smtpCredentialCreated": true,
+  "supportApiCredentialCreated": true,
+  "supportApiScope": "Restricted: transactional email only; all other resources None",
+  "privateSupabaseCredentialsConfigured": false,
+  "externalMailTested": false,
+  "publicRegistrationEnabled": false,
+  "passwordRecoveryEnabled": false,
+  "blocker": "Awaiting dashboard sign-in to Work Projects / FBS Intelligence; current dashboard session shows a different organization",
+  "credentialsInSource": false
+}

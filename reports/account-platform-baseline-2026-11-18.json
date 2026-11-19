@@ -1,0 +1,34 @@
+{
+  "capturedAt": "2026-11-19T01:16:40.823Z",
+  "productionCommit": "7d096d4dbad922973f71734915d700685f6f422f",
+  "repositoryBaseline": "c7301ff89ad2d4cee997109dcd5caa461a79c710",
+  "accounts": 1,
+  "providers": {
+    "google": 1
+  },
+  "passwordAccounts": 0,
+  "verifiedMfaFactors": 0,
+  "recordCounts": {
+    "weeklyPicks": 134,
+    "weeklyPlayers": 1,
+    "weeklyGames": 888,
+    "preferences": 1,
+    "cfpEntries": 0,
+    "accountRequests": 0
+  },
+  "tableDigests": {
+    "weeklyPicks": "60b6da87473f3159dc76fd7caa93406f",
+    "cfpEntries": "d41d8cd98f00b204e9800998ecf8427e",
+    "preferences": "14c8b3dd7c6b49508398a07e5ae2f82e"
+  },
+  "databaseBytes": 12457651,
+  "authSettings": {
+    "email": true,
+    "google": true,
+    "emailVerificationRequired": true,
+    "publicSignupProviderEnabled": true
+  },
+  "migrations": 12,
+  "edgeFunctions": 0,
+  "modelChanges": false
+}

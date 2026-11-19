@@ -210,6 +210,12 @@ jobs:
         env:
           CFP_SUPABASE_SECRET_KEY: ${{ secrets.CFP_SUPABASE_SECRET_KEY }}
         run: node scripts/sync-cfp-bracket.js
+      - name: Retry configured support-request notifications
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        env:
+          SUPPORT_DISPATCH_SECRET: ${{ secrets.SUPPORT_DISPATCH_SECRET }}
+        run: node scripts/dispatch-support-notifications.mjs
       - name: Update Beat the Model games and grade saved picks
         # Re-try the committed slate even on a later no-change check. The RPC treats an already synced observation as stale.
         if: >-

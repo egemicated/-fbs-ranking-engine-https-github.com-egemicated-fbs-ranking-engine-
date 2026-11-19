@@ -1,0 +1,16 @@
+PASS account migration preserves existing identities, preferences, requests and locked picks
+Applied 13 migrations to a fresh disposable database
+PASS account-administration.sql
+PASS cfp-bracket.sql
+PASS my-team-preferences.sql
+PASS my-team-seen-updates.sql
+PASS platform-preferences-and-privacy.sql
+PASS security-boundaries.sql
+PASS weekly-community-picks.sql
+PASS weekly-contest.sql
+PASS weekly-immediate-sharing.sql
+PASS weekly-kickoff-availability.sql
+PASS weekly-public-player-picks.sql
+PASS weekly-schedule-corrections.sql
+SQL suites: 12 passed, 0 failed
+Removed disposable integration database

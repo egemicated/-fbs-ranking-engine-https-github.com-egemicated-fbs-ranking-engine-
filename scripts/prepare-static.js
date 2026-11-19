@@ -17,6 +17,7 @@ import { copyPlayerPages } from '../src/player-publication.js';
 import { loadConferencePublications } from '../src/conference-publication.js';
 import { requireRenderReleaseChecks } from './require-release-checks.mjs';
 import { assertPublicationBundle } from '../src/publication-integrity.js';
+import { applySecurityMetadata } from '../src/security-policy.js';
 
 const root = resolve(import.meta.dirname, '..');
 await requireRenderReleaseChecks();
@@ -51,11 +52,13 @@ const teamDirectory = join(data, 'teams');
 const legacyHero = join(frontend, 'assets', 'stadium.png');
 
 // Build from committed results and use the same publication rules as the API.
-const [policy, source, html] = await Promise.all([
+const [policy, source, rawHtml, accountConfig] = await Promise.all([
   readPublicationPolicy(),
   readFile(join(published, 'latest.json'), 'utf8'),
   readFile(join(frontend, 'index.html'), 'utf8'),
+  readFile(join(frontend, 'bracket-config.json'), 'utf8').then(JSON.parse),
 ]);
+const html = applySecurityMetadata(rawHtml, { authUrl: accountConfig.url });
 const marker = '<meta name="publication-data-root" content="">';
 if (!html.includes(marker)) throw new Error('Missing publication data root in frontend/index.html');
 const input = JSON.parse(source);

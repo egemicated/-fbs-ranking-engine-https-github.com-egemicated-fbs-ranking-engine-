@@ -1,0 +1,75 @@
+{
+  "purpose": "Sanitized production preservation check after account foundation and failed-notification retry migrations",
+  "checkedAt": "2026-11-19T02:30:13.455706+00:00",
+  "preferenceProjectionCheckedAt": "2026-11-19 02:31:11.399544+00",
+  "source": "Read-only aggregate SQL; no user rows, emails, requests, picks, passwords or tokens exported",
+  "counts": {
+    "authUsers": 1,
+    "cfpEntries": 0,
+    "cfpContests": 0,
+    "memberships": 1,
+    "weeklyGames": 888,
+    "weeklyPicks": 134,
+    "auditActions": 0,
+    "entitlements": 0,
+    "weeklyPlayers": 1,
+    "administrators": 0,
+    "supportRequests": 0,
+    "teamPreferences": 1,
+    "suspendedAccounts": 0,
+    "notificationOutbox": 0,
+    "weeklyPublications": 1
+  },
+  "digests": {
+    "players": "87ae74ad10643f11ac2ac189221cfe37",
+    "preferences": "119f6abe186eeb5ea5c9116a9b36592f",
+    "picksNewline": "5dfea904ed227a2eba0070bce9fbea73",
+    "picksNoSeparator": "60b6da87473f3159dc76fd7caa93406f"
+  },
+  "baselineComparison": {
+    "baselineCapturedAt": "2026-11-19T01:31:30.544285Z",
+    "picksNoSeparatorExpected": "60b6da87473f3159dc76fd7caa93406f",
+    "picksNewlineExpected": "5dfea904ed227a2eba0070bce9fbea73",
+    "playersExpected": "87ae74ad10643f11ac2ac189221cfe37",
+    "fullPreferencesExpected": "14c8b3dd7c6b49508398a07e5ae2f82e",
+    "preferencesWithoutSeenExpected": "45763b2b8bcfa2ea9b4b7e870ae7f850",
+    "preferencesSeenExpected": "3aa00a1c35e389ed924f01b7809a25a5",
+    "preferencesWithoutSeenActual": "45763b2b8bcfa2ea9b4b7e870ae7f850",
+    "preferencesSeenActual": "df20e21954b6efe900a5c7ecbbbefa76",
+    "picksPreserved": true,
+    "playerProfilePreserved": true,
+    "favoriteSelectionAndAllOtherPreferenceFieldsPreserved": true,
+    "fullPreferenceRowUnchanged": false,
+    "difference": "Only the seen_updates projection differs from the encrypted pre-account backup; every other preference field matches. This check does not attribute that update to a particular actor. No overwrite or rollback was performed."
+  },
+  "digestMethods": {
+    "picksNoSeparator": "md5(coalesce(string_agg(to_jsonb(p)::text,'' order by p.season,p.game_id,p.user_id),'')) from weekly_private.picks p",
+    "picksNewline": "md5(coalesce(string_agg(to_jsonb(p)::text,E'\\n' order by to_jsonb(p)::text),'')) from weekly_private.picks p",
+    "players": "md5(coalesce(string_agg(to_jsonb(p)::text,E'\\n' order by to_jsonb(p)::text),'')) from weekly_private.players p",
+    "preferences": "md5(coalesce(string_agg(to_jsonb(p)::text,'' order by p.user_id),'')) from public.my_team_preferences p",
+    "preferencesWithoutSeen": "md5(coalesce(string_agg((to_jsonb(p)-'seen_updates')::text,'' order by p.user_id),'')) from public.my_team_preferences p",
+    "preferencesSeen": "md5(coalesce(string_agg((to_jsonb(p)->'seen_updates')::text,'' order by p.user_id),'')) from public.my_team_preferences p"
+  },
+  "requeuePrivileges": {
+    "serviceExecute": false,
+    "anonymousExecute": false,
+    "authenticatedExecute": true
+  },
+  "appliedMigrationVersions": [
+    "20261109031430",
+    "20261111033318",
+    "20261111041755",
+    "20261111043125",
+    "20261111044800",
+    "20261112225446",
+    "20261116000157",
+    "20261116000211",
+    "20261116051409",
+    "20261116051428",
+    "20261118193518",
+    "20261118224511",
+    "20261119014527",
+    "20261119022909"
+  ],
+  "destructiveProductionOperations": false
+}

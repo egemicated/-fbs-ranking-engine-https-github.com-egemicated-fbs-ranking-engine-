@@ -1,0 +1,24 @@
+{
+  "checkedAt": "2026-11-19T01:34:24.371Z",
+  "tests": [
+    {
+      "schema": "weekly_private",
+      "status": 401
+    },
+    {
+      "schema": "cfp_private",
+      "status": 401
+    },
+    {
+      "schema": "support_private",
+      "status": 401
+    },
+    {
+      "schema": "account_private",
+      "status": 401
+    },
+    {
+      "anonymousPreferenceRead": 401
+    }
+  ]
+}

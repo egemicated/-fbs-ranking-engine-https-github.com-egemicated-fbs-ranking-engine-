@@ -1,5 +1,11 @@
 {
   "enabled": true,
   "url": "https://egxyfyorggwnrnmirrax.supabase.co",
-  "publishableKey": "sb_publishable_-Cs8pWDSJ5u40l4wshAlgA_mSmpe-3F"
+  "publishableKey": "sb_publishable_-Cs8pWDSJ5u40l4wshAlgA_mSmpe-3F",
+  "emailAuthEnabled": true,
+  "emailRegistrationEnabled": false,
+  "passwordRecoveryEnabled": false,
+  "accountAdministrationEnabled": true,
+  "supportNotificationsEnabled": false,
+  "supportEmail": "fbsintel@yahoo.com"
 }
