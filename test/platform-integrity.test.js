@@ -26,8 +26,8 @@ test('published division rankings keep unique identities, records, and ordered S
 
 test('shared matchup URLs reject identical IDs and team cards use crawlable profiles', () => {
   assert.equal(publicFootballPageUrl('#compare/matchup/254/254/home'), null);
-  assert.equal(publicFootballPageUrl('#compare/matchup/254/252/away'), 'https://fbs-intelligence.onrender.com/#compare/matchup/254/252/away');
-  assert.equal(publicFootballPageUrl('#team/252'), 'https://fbs-intelligence.onrender.com/team/252/');
+  assert.equal(publicFootballPageUrl('#compare/matchup/254/252/away'), 'https://www.thegamesdecide.com/#compare/matchup/254/252/away');
+  assert.equal(publicFootballPageUrl('#team/252'), 'https://www.thegamesdecide.com/team/252/');
 });
 
 test('shared game filters preserve zero/missing distinctions and Mountain day boundaries', () => {

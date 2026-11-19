@@ -5,8 +5,8 @@ import { myTeamColors } from '../frontend/my-team-colors.js';
 import { platformInfoMarkup } from '../frontend/platform-info.js';
 import { buildModelReport } from '../frontend/model-report.js';
 import { conferenceRecords } from '../frontend/conference-metrics.js';
+import { PUBLIC_SITE_ORIGIN as origin } from '../frontend/page-routes.js';
 
-const origin = 'https://fbs-intelligence.onrender.com';
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
 }[character]));

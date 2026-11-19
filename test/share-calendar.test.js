@@ -18,7 +18,7 @@ test('calendar represents a confirmed zoned kickoff and a stable game identity',
   assert.match(original, /\r\nDTSTAMP:20261116T010138Z\r\n/);
   assert.match(original, /\r\nPRODID:-\/\/The Games Decide\/\/College Football Schedule\/\/EN\r\n/);
   assert.match(original, /\r\nSUMMARY:Illinois at Ohio State\r\n/);
-  assert.match(original, /\r\nURL:https:\/\/fbs-intelligence\.onrender\.com\/#compare\/weekly\/12\r\n/);
+  assert.match(original, /\r\nURL:https:\/\/www\.thegamesdecide\.com\/#compare\/weekly\/12\r\n/);
   assert.match(original, /\r\nUID:college-football-401866465@fbs-intelligence\.onrender\.com\r\n/);
   assert.equal(original.match(/UID:[^\r]+/)[0], shifted.match(/UID:[^\r]+/)[0]);
   assert.match(original, /Downloaded events do not automatically follow schedule changes\./);
@@ -52,7 +52,8 @@ test('card payload is restricted to display fields and uses a canonical public l
   const result = publicShareCard(source);
   assert.equal(result.teams[0].division, 'FBS');
   assert.deepEqual(publicShareCard(result), result);
-  assert.equal(result.href, 'https://fbs-intelligence.onrender.com/team/254/');
+  assert.equal(result.href, 'https://www.thegamesdecide.com/team/254/');
+  assert.equal(publicFootballPageUrl('https://fbs-intelligence.onrender.com/team/254/'), result.href);
   assert.doesNotMatch(shareCardButton(source), /private-owner|private=|private@example/);
   assert.match(shareCardButton(source), /aria-label="Share Utah &amp; Friends card"/);
   assert.equal(publicShareCard({ ...source, href: 'https://external.example/#team/254' }), null);
@@ -71,8 +72,8 @@ test('matchup card preserves actual zero and one probabilities without inventing
 test('weekly game deeplinks preserve the kickoff in FBS and FCS calendar and share links', () => {
   const fbs = '#compare/weekly/regular:12/401856866';
   const fcs = '#compare/weekly/fcs/postseason:2/401856865';
-  assert.equal(publicFootballPageUrl(fbs), 'https://fbs-intelligence.onrender.com/' + fbs);
-  assert.equal(publicFootballPageUrl(fcs), 'https://fbs-intelligence.onrender.com/' + fcs);
+  assert.equal(publicFootballPageUrl(fbs), 'https://www.thegamesdecide.com/' + fbs);
+  assert.equal(publicFootballPageUrl(fcs), 'https://www.thegamesdecide.com/' + fcs);
   assert.match(unfold(kickoffEvent({ ...fixtureGame, href: fcs })), /\/weekly\/fcs\/postseason:2\/401856865/);
   const teams = [{ id: '254', name: 'Utah' }, { id: '26', name: 'UCLA' }];
   assert.ok(shareCardButton({ teams, href: '#compare/matchup/254/26/neutral' }));

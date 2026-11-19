@@ -40,7 +40,7 @@ export function activatePageRoute() {
   history.replaceState(history.state, '', '/' + location.search + '#' + initial);
 }
 
-const origin = 'https://fbs-intelligence.onrender.com';
+export const PUBLIC_SITE_ORIGIN = 'https://www.thegamesdecide.com';
 const titles = {home:'The Games Decide Top 25',rankings:'FBS and FCS rankings',teams:'Team directory',team:'Team profile',
   methodology:'Ranking methodology',scoreboard:'Live Scoreboard','beat-the-model':'Beat the Model',compare:'Matchup Lab',
   'model-report':'Weekly model report','sor-compare':'Compare earned SOR','conference-strength':'Conference Strength',
@@ -52,9 +52,9 @@ export function pageMetadata(hash, registry = {}) {
   const route = String(hash ?? '').replace(/^#/, '') || 'home', path = canonicalPath(hash);
   const key = Object.hasOwn(titles, route.split('/')[0]) ? route.split('/')[0] : 'home';
   const saved = path && registry[path];
-  return {canonical:path ? origin + path : null, title:saved?.title ?? `${titles[key]}${key === 'home' ? '' : ' · The Games Decide'}`,
+  return {canonical:path ? PUBLIC_SITE_ORIGIN + path : null, title:saved?.title ?? `${titles[key]}${key === 'home' ? '' : ' · The Games Decide'}`,
     description:saved?.description ?? `${titles[key]} on The Games Decide. Inspect independent rankings, game evidence and clearly labeled model estimates.`,
-    image:origin + (typeof saved?.image === 'string' && /^\/social\/[\w.-]+\.png$/.test(saved.image) ? saved.image : '/social/platform.png'),
+    image:PUBLIC_SITE_ORIGIN + (typeof saved?.image === 'string' && /^\/social\/[\w.-]+\.png$/.test(saved.image) ? saved.image : '/social/platform.png'),
     noindex:['account','admin','my-teams'].includes(key)};
 }
 
@@ -72,7 +72,7 @@ function applyMetadata(value) {
     tag.content=content;
   };
   set('name','description',value.description);
-  for (const [key,content] of Object.entries({title:value.title,description:value.description,url:value.canonical ?? origin+'/',image:value.image})) set('property','og:'+key,content);
+  for (const [key,content] of Object.entries({title:value.title,description:value.description,url:value.canonical ?? PUBLIC_SITE_ORIGIN+'/',image:value.image})) set('property','og:'+key,content);
   for (const [key,content] of Object.entries({card:'summary_large_image',title:value.title,description:value.description,image:value.image})) set('name','twitter:'+key,content);
   let robots=document.querySelector('meta[data-account-robots]');
   if(value.noindex){if(!robots){robots=document.createElement('meta');robots.name='robots';robots.dataset.accountRobots='true';document.head.append(robots);}robots.content='noindex, nofollow';}

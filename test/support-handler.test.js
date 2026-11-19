@@ -47,7 +47,8 @@ test('notification uses provider idempotency and contains no private message or 
   const send = network.calls.find(call => call.url === 'https://api.resend.com/emails');
   assert.equal(send.headers['Idempotency-Key'], `fbs-support-${id}`);
   const mail = JSON.parse(send.body); assert.deepEqual(mail.to, [env.SUPPORT_ADMIN_EMAIL]);
-  assert.equal(mail.from, `FBS Intelligence <${env.SUPPORT_FROM}>`); assert.equal(mail.reply_to, env.SUPPORT_ADMIN_EMAIL);
+  assert.equal(mail.from, `The Games Decide <${env.SUPPORT_FROM}>`); assert.equal(mail.reply_to, env.SUPPORT_ADMIN_EMAIL);
+  assert.equal(mail.subject, 'The Games Decide: new support request');
   assert.ok(mail.text.includes(ticket) && mail.text.includes('https://fbs.example/#admin'));
   assert.ok(!send.body.includes('lease') && !send.body.includes('server-test-key'));
   const completed = JSON.parse(network.calls.find(call => call.url.endsWith('/service_complete_support_notification')).body);
@@ -103,6 +104,43 @@ test('CORS, method and oversized payload checks run before privileged operations
   assert.equal(network.calls.length, 0);
 });
 
+test('support accepts both deployed browser origins and rejects lookalikes', async () => {
+  const siteUrl = 'https://fbs-intelligence.onrender.com';
+  const customOrigin = 'https://www.thegamesdecide.com';
+  const network = transport(), handler = createSupportHandler({ ...env, SITE_URL: siteUrl }, network);
+  const preflight = origin => handler(new Request('https://project.supabase.co/functions/v1/account-support', {
+    method: 'OPTIONS', headers: { Origin: origin, 'Access-Control-Request-Method': 'POST' },
+  }));
+  for (const origin of [siteUrl, customOrigin]) {
+    const result = await preflight(origin);
+    assert.equal(result.status, 204);
+    assert.equal(result.headers.get('Access-Control-Allow-Origin'), origin);
+    assert.equal(result.headers.get('Vary'), 'Origin');
+  }
+  for (const origin of ['https://thegamesdecide.com', 'http://www.thegamesdecide.com', `${customOrigin}.example`, 'null']) {
+    const result = await preflight(origin);
+    assert.equal(result.status, 403);
+    assert.equal(result.headers.get('Access-Control-Allow-Origin'), null);
+  }
+  assert.equal((await handler(request({ action: 'notify' }, { Origin: customOrigin }))).status, 401);
+  assert.equal(network.calls.length, 0);
+  const signedIn = await handler(request({ action: 'notify' }, { Origin: customOrigin, Authorization: 'Bearer current-token' }));
+  assert.equal(signedIn.status, 202);
+  assert.equal(signedIn.headers.get('Access-Control-Allow-Origin'), customOrigin);
+  assert.deepEqual(await signedIn.json(), { accepted: true, delivery: 'processed' });
+});
+
+test('guest intake binds the CAPTCHA result to the requesting first-party hostname', async () => {
+  const network = transport();
+  const handler = createSupportHandler({ ...env, SUPPORT_GUEST_ENABLED: 'true', TURNSTILE_SECRET_KEY: 'captcha-server-secret',
+    SUPPORT_CLIENT_HASH_SECRET: 'private-salt-at-least-32-characters' }, network);
+  const result = await handler(request({ action: 'request', email: 'guest@fbs.example', category: 'access',
+    message: 'I cannot access my account.', captchaToken: 'verified-token' }, { Origin: 'https://www.thegamesdecide.com', 'x-forwarded-for': '192.0.2.10' }));
+  assert.equal(result.status, 400);
+  assert.equal(network.calls.length, 1);
+  assert.match(network.calls[0].url, /challenges\.cloudflare\.com/);
+});
+
 test('message construction rejects invalid trusted queue fields rather than reflecting arbitrary content', () => {
   assert.throws(() => notificationMessage({ ...row, category: '<script>' }, env.SITE_URL));
   const mail = notificationMessage({ ...row, message: 'private details', email: 'private@fbs.example' }, env.SITE_URL);
@@ -134,7 +172,9 @@ test('Brevo uses its own API contract and opaque message ID instead of a Resend 
   const sent = JSON.parse(calls[0].body);
   assert.equal(calls[0].headers['api-key'], 'brevo-server-test');
   assert.equal(sent.headers.idempotencyKey, id);
-  assert.equal(sent.sender.email, env.SUPPORT_FROM); assert.equal(sent.replyTo.email, env.SUPPORT_ADMIN_EMAIL);
+  assert.deepEqual(sent.sender, { name: 'The Games Decide', email: env.SUPPORT_FROM });
+  assert.deepEqual(sent.replyTo, { name: 'The Games Decide', email: env.SUPPORT_ADMIN_EMAIL });
+  assert.equal(sent.subject, 'The Games Decide: new support request');
   assert.ok(sent.textContent.includes(ticket));
   const completed = JSON.parse(network.calls.find(call => call.url.endsWith('/service_complete_support_notification')).body);
   assert.equal(completed.p_provider_id, '<receipt@smtp-relay.mailin.fr>');

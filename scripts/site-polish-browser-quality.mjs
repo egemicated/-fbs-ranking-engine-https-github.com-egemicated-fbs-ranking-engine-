@@ -37,7 +37,7 @@ try{
     }
     await page.goto(base+'#methodology');await page.locator('.method-grid').first().waitFor();
     await page.locator('a[href="#beat-the-model"]').first().click();
-    await page.waitForFunction(()=>document.querySelector('link[rel="canonical"]')?.href==='https://fbs-intelligence.onrender.com/beat-the-model/');
+    await page.waitForFunction(()=>document.querySelector('link[rel="canonical"]')?.href==='https://www.thegamesdecide.com/beat-the-model/');
     await page.waitForFunction(()=>document.querySelector('meta[property="og:title"]')?.content.includes('Beat the Model'));
     await page.goto(base+'#team/252');await page.locator('.team-narrative').waitFor();
     await page.waitForFunction(()=>document.querySelector('meta[property="og:image"]')?.content.endsWith('/social/team-252.png'));
@@ -70,7 +70,7 @@ try{
     assert.deepEqual(errors,[]);checks.push({width,nativeTeamSearch:true,noSelectionOnSearch:true,duplicateRejected:true,keyboard:true,singlePublicHeading:true,metadataTransitions:true,noOverflow:true});await context.close();
   }
   for(const path of ['beat-the-model/','scoreboard/','weekly-picks/fbs/','weekly-picks/fcs/','ranking-history/']){
-    const response=await fetch(base+path);assert.equal(response.status,200);const html=await response.text();assert.ok(html.includes(`rel="canonical" href="https://fbs-intelligence.onrender.com/${path}"`));assert.match(html,/<meta property="og:title"/);
+    const response=await fetch(base+path);assert.equal(response.status,200);const html=await response.text();assert.ok(html.includes(`rel="canonical" href="https://www.thegamesdecide.com/${path}"`));assert.match(html,/<meta property="og:title"/);
   }
   console.log(JSON.stringify({passed:true,scope:'Real local browser; guest state and public publication. No accounts, picks, mail or CFBD requests.',checks},null,2));
 }finally{await browser.close();await new Promise(done=>server.close(done));}

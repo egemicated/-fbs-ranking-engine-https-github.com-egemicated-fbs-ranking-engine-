@@ -57,8 +57,8 @@ try {
     await context.close();
   }
   const clean=await (await fetch(base+'team/252/')).text();
-  assert.match(clean,/<link rel="canonical" href="https:\/\/fbs-intelligence.onrender.com\/team\/252\/">/);
-  assert.match(clean,/<meta property="og:image" content="https:\/\/fbs-intelligence.onrender.com\/social\/team-252.png">/);
+  assert.match(clean,/<link rel="canonical" href="https:\/\/www\.thegamesdecide\.com\/team\/252\/">/);
+  assert.match(clean,/<meta property="og:image" content="https:\/\/www\.thegamesdecide\.com\/social\/team-252\.png">/);
   assert.match(clean,/<title>BYU/);
   const png=await fetch(base+'social/team-252.png');
   assert.equal(png.status,200);

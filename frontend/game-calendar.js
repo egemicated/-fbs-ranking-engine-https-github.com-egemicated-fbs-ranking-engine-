@@ -1,6 +1,6 @@
-import { canonicalPath } from './page-routes.js';
+import { canonicalPath, PUBLIC_SITE_ORIGIN } from './page-routes.js';
 
-const liveOrigin = 'https://fbs-intelligence.onrender.com';
+const legacyOrigin = 'https://fbs-intelligence.onrender.com';
 const previewHosts = new Set(['localhost', '127.0.0.1', '[::1]']);
 const publicPath = /^#(?:team(?:\/[\w-]+)*|scoreboard(?:\/[\w-]+)*|compare(?:\/matchup(?:\/\d+){2}\/(?:neutral|home|away)|\/weekly(?:\/fcs)?(?:\/(?:(?:regular|postseason):)?\d+)?(?:\/\d+)?)?)$/;
 const scheduleNote = 'Downloaded events do not automatically follow schedule changes.';
@@ -21,18 +21,20 @@ function calendarText(value) {
 
 export function publicFootballPageUrl(href) {
   try {
-    const base = new URL('/', globalThis.location?.origin ?? liveOrigin);
+    const browserOrigin = globalThis.location?.origin;
+    const base = new URL('/', browserOrigin ?? PUBLIC_SITE_ORIGIN);
     const page = new URL(href, base);
-    const preview = previewHosts.has(base.hostname);
-    const allowedOrigin = page.origin === base.origin || (preview && page.origin === liveOrigin);
+    const usePublicOrigin = !browserOrigin || previewHosts.has(base.hostname);
+    const allowedOrigin = page.origin === base.origin || (usePublicOrigin && [PUBLIC_SITE_ORIGIN, legacyOrigin].includes(page.origin));
+    const linkOrigin = usePublicOrigin ? PUBLIC_SITE_ORIGIN : base.origin;
     const matchup = /^#compare\/matchup\/(\d+)\/(\d+)\//.exec(page.hash);
     if (matchup && matchup[1] === matchup[2]) return null;
-    if (allowedOrigin && /^\/team\/\d{1,24}\/$/.test(page.pathname) && !page.hash) return (preview ? liveOrigin : base.origin) + page.pathname;
+    if (allowedOrigin && /^\/team\/\d{1,24}\/$/.test(page.pathname) && !page.hash) return linkOrigin + page.pathname;
     if (allowedOrigin && page.pathname === '/' && /^#team\/\d{1,24}$/.test(page.hash)) {
-      return (preview ? liveOrigin : base.origin) + canonicalPath(page.hash);
+      return linkOrigin + canonicalPath(page.hash);
     }
     return allowedOrigin && page.pathname === '/' && publicPath.test(page.hash)
-      ? (preview ? liveOrigin : base.origin) + '/' + page.hash : null;
+      ? linkOrigin + '/' + page.hash : null;
   } catch {
     return null;
   }

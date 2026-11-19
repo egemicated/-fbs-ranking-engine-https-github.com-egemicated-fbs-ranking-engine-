@@ -3,6 +3,8 @@ export const SUPPORT_CATEGORY_LABELS = { general: 'General support', access: 'Ac
   contest: 'Contest issue', profile: 'Nickname or visibility', data: 'Data discrepancy', deletion: 'Account deletion' };
 const categories = new Set(Object.keys(SUPPORT_CATEGORY_LABELS));
 const guestCategories = new Set([...categories].filter(category => category !== 'deletion'));
+const siteName = 'The Games Decide';
+const customOrigin = 'https://www.thegamesdecide.com';
 const validEmail = value => typeof value === 'string' && value.length <= 254 && /^[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+$/.test(value);
 const escape = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const safeId = value => typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
@@ -31,7 +33,7 @@ export function notificationMessage(row, siteUrl) {
   const url = new URL('/#admin', siteUrl).href;
   const category = SUPPORT_CATEGORY_LABELS[row.category];
   const summary = `Request ${row.requestId}\nCategory: ${category}\nReceived: ${new Date(row.createdAt).toISOString()}\nReview: ${url}`;
-  return { subject: 'FBS Intelligence: new support request', text: summary,
+  return { subject: `${siteName}: new support request`, text: summary,
     html: `<p>A support request is ready for review.</p><p>${escape(row.requestId)}<br>${escape(category)}<br>${escape(new Date(row.createdAt).toISOString())}</p><p><a href="${escape(url)}">Open secure administration</a></p>` };
 }
 
@@ -39,6 +41,7 @@ export function createSupportHandler(env, { fetcher = fetch } = {}) {
   const site = new URL(env.SITE_URL || 'https://fbs-intelligence.onrender.com');
   const project = new URL(env.SUPABASE_URL || 'https://invalid.supabase.co');
   if (site.protocol !== 'https:' || project.protocol !== 'https:') throw Error('https_required');
+  const allowedOrigins = new Set([site.origin, customOrigin]);
   const provider = env.SUPPORT_EMAIL_PROVIDER || (env.BREVO_API_KEY ? 'brevo' : 'resend');
   const configured = () => Boolean(['brevo', 'resend'].includes(provider) &&
     (provider === 'brevo' ? env.BREVO_API_KEY : env.RESEND_API_KEY) &&
@@ -66,11 +69,11 @@ export function createSupportHandler(env, { fetcher = fetch } = {}) {
         const response = await fetcher(brevo ? 'https://api.brevo.com/v3/smtp/email' : 'https://api.resend.com/emails', { method: 'POST',
           headers: brevo ? { 'api-key': env.BREVO_API_KEY, 'Content-Type': 'application/json' } :
             { Authorization: `Bearer ${env.RESEND_API_KEY}`, 'Content-Type': 'application/json', 'Idempotency-Key': deduplicationKey },
-          body: JSON.stringify(brevo ? { sender: { name: 'FBS Intelligence', email: env.SUPPORT_FROM },
-            to: [{ email: env.SUPPORT_ADMIN_EMAIL }], replyTo: { email: env.SUPPORT_ADMIN_EMAIL, name: 'FBS Intelligence' },
+          body: JSON.stringify(brevo ? { sender: { name: siteName, email: env.SUPPORT_FROM },
+            to: [{ email: env.SUPPORT_ADMIN_EMAIL }], replyTo: { email: env.SUPPORT_ADMIN_EMAIL, name: siteName },
             subject: message.subject, textContent: message.text, htmlContent: message.html,
             headers: { idempotencyKey: row.id }, tags: ['account-support'] } :
-            { from: `FBS Intelligence <${env.SUPPORT_FROM}>`, to: [env.SUPPORT_ADMIN_EMAIL], reply_to: env.SUPPORT_ADMIN_EMAIL, ...message }), signal: AbortSignal.timeout(8000) });
+            { from: `${siteName} <${env.SUPPORT_FROM}>`, to: [env.SUPPORT_ADMIN_EMAIL], reply_to: env.SUPPORT_ADMIN_EMAIL, ...message }), signal: AbortSignal.timeout(8000) });
         if (response.ok) {
           const result = await response.json();
           const receipt = brevo ? result.messageId : result.id;
@@ -95,7 +98,7 @@ export function createSupportHandler(env, { fetcher = fetch } = {}) {
   return async request => {
     const origin = request.headers.get('origin');
     const headers = { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', Vary: 'Origin' };
-    if (origin && origin !== site.origin) return new Response(JSON.stringify({ error: 'Origin not permitted.' }), { status: 403, headers });
+    if (origin !== null && !allowedOrigins.has(origin)) return new Response(JSON.stringify({ error: 'Origin not permitted.' }), { status: 403, headers });
     if (origin) headers['Access-Control-Allow-Origin'] = origin;
     const respond = (status, body) => new Response(JSON.stringify(body), { status, headers });
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: { ...headers,
@@ -126,7 +129,8 @@ export function createSupportHandler(env, { fetcher = fetch } = {}) {
       const verified = await fetcher('https://challenges.cloudflare.com/turnstile/v0/siteverify', { method: 'POST',
         body: new URLSearchParams({ secret: env.TURNSTILE_SECRET_KEY, response: body.captchaToken }), signal: AbortSignal.timeout(8000) });
       const challenge = verified.ok ? await verified.json() : null;
-      if (challenge?.success !== true || challenge.hostname !== site.hostname || challenge.action !== 'support') return respond(400, { error: 'Verification failed. Please try again.' });
+      const expectedHostname = origin ? new URL(origin).hostname : site.hostname;
+      if (challenge?.success !== true || challenge.hostname !== expectedHostname || challenge.action !== 'support') return respond(400, { error: 'Verification failed. Please try again.' });
       const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
       if (!ip || ip.length > 128) return respond(503, { error: 'Support intake is temporarily unavailable.' });
       const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(env.SUPPORT_CLIENT_HASH_SECRET), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
