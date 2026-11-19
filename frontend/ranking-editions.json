@@ -7181,5 +7181,152 @@
         }
       ]
     }
+  ],
+  "forgeCheckpoints": [
+    {
+      "week": 11,
+      "gamesThrough": "2026-11-14",
+      "released": "2026-11-19",
+      "rows": [
+        {
+          "team": "Utah",
+          "record": "10–0",
+          "game": "W 40–39 at Arizona"
+        },
+        {
+          "team": "UCLA",
+          "record": "10–0",
+          "game": "W 22–14 vs Illinois"
+        },
+        {
+          "team": "Georgia",
+          "record": "9–1",
+          "game": "W 48–21 vs Missouri"
+        },
+        {
+          "team": "Notre Dame",
+          "record": "9–1",
+          "game": "W 41–7 vs Boston College"
+        },
+        {
+          "team": "Miami",
+          "record": "9–1",
+          "game": "W 36–25 vs Duke"
+        },
+        {
+          "team": "Indiana",
+          "record": "9–1",
+          "game": "W 27–13 vs USC"
+        },
+        {
+          "team": "Texas",
+          "record": "8–2",
+          "game": "W 22–21 at LSU"
+        },
+        {
+          "team": "Texas Tech",
+          "record": "9–1",
+          "game": "W 52–27 at Oklahoma State"
+        },
+        {
+          "team": "Alabama",
+          "record": "8–2",
+          "game": "W 21–6 at Vanderbilt"
+        },
+        {
+          "team": "Wake Forest",
+          "record": "9–1",
+          "game": "W 49–7 at SMU"
+        },
+        {
+          "team": "Tennessee",
+          "record": "8–2",
+          "game": "W 22–7 at Texas A&M"
+        },
+        {
+          "team": "BYU",
+          "record": "8–2",
+          "game": "W 28–7 vs Baylor"
+        },
+        {
+          "team": "Oregon",
+          "record": "7–3",
+          "game": "W 31–7 vs Michigan"
+        },
+        {
+          "team": "Ohio State",
+          "record": "7–3",
+          "game": "W 28–19 vs Northwestern"
+        },
+        {
+          "team": "Boise State",
+          "record": "9–1",
+          "game": "W 46–41 vs Oregon State"
+        },
+        {
+          "team": "Iowa",
+          "record": "8–2",
+          "game": "W 28–7 vs Purdue"
+        },
+        {
+          "team": "Arizona",
+          "record": "7–3",
+          "game": "L 39–40 vs Utah"
+        },
+        {
+          "team": "Florida",
+          "record": "6–4",
+          "game": "W 21–14 at Kentucky"
+        },
+        {
+          "team": "Ole Miss",
+          "record": "6–3",
+          "game": "No game through Nov 14"
+        },
+        {
+          "team": "Kentucky",
+          "record": "7–3",
+          "game": "L 14–21 vs Florida"
+        },
+        {
+          "team": "USC",
+          "record": "7–3",
+          "game": "L 13–27 at Indiana"
+        },
+        {
+          "team": "Louisville",
+          "record": "7–3",
+          "game": "W 16–14 at North Carolina"
+        },
+        {
+          "team": "UTSA",
+          "record": "8–2",
+          "game": "W 35–16 vs North Texas"
+        },
+        {
+          "team": "Memphis",
+          "record": "8–2",
+          "game": "W 52–41 at South Florida"
+        },
+        {
+          "team": "Auburn",
+          "record": "6–4",
+          "game": "W 41–9 at Mississippi State"
+        }
+      ],
+      "notes": [
+        "Utah and UCLA remained unbeaten. Utah’s 40–39 road win at Arizona kept it No. 1. Georgia led the one-loss teams after beating Missouri 48–21, and Notre Dame stayed ahead of Miami after winning their head-to-head game.",
+        "Wake Forest rose to No. 10 after winning 49–7 at SMU. Florida climbed into the ballot at No. 18 after beating Kentucky, adding to its wins over Texas and Ole Miss.",
+        "Ole Miss was 6–3 through Saturday and ranks No. 19 here. Auburn took the final spot after winning 41–9 at Mississippi State, with its earlier win over Georgia breaking the tie among the teams at the bottom of the ballot. Sunday’s Oklahoma–Ole Miss game falls outside this cutoff."
+      ],
+      "evidence": {
+        "sourceCommit": "a96ee9707a014fb3a100b4aa400d2d2917be8f93",
+        "snapshotHash": "acdeb4ce794a5c5c202d3ebacae7128c9e5964f000fbe20349e79daf8c7e5ef2",
+        "publicationHash": "d426fef019fea59139a9e48f1536fa75e4db05b6fa7f430156c8104ebc433ec2",
+        "checkpointPublishedAt": "2026-11-15T18:04:41.489Z",
+        "completedWeekGames": 66,
+        "timeZone": "America/Denver"
+      }
+    }
   ]
 }

@@ -1306,6 +1306,9 @@ function editionTeamLink(name, teams) {
   const team = teams.get(name);
   return team ? teamLink(team) : esc(name);
 }
+function forgeBallotHref(week, through) {
+  return routeHref(`forge-top-25/${week}${through ? `/${through}` : ''}`);
+}
 function pollRankCell(column, position, teams) {
   const ranked = column.filter(row => row.rank === position);
   return `<td>${ranked.map(row =>
@@ -1341,7 +1344,10 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
   const sor = official ?? replay;
   const savedCheckpoint = Boolean(official && official === checkpoint);
   const sorLabel = replay ? 'SOR replay' : savedCheckpoint ? 'SOR checkpoint' : 'SOR';
-  const forge = gamesThrough && weekForge?.gamesThrough === gamesThrough ? weekForge : undefined;
+  const matchingForgeCheckpoint = key === 'coaches' && poll && gamesThrough
+    ? data.forgeCheckpoints?.find(edition => edition.week === week && edition.gamesThrough === gamesThrough) : undefined;
+  const forge = gamesThrough && weekForge?.gamesThrough === gamesThrough ? weekForge : matchingForgeCheckpoint;
+  const usesForgeCheckpoint = Boolean(forge && forge === matchingForgeCheckpoint);
   const separateForgeBallot = weekForge && !forge && typeof weekForge.gamesThrough === 'string';
   const teams = new Map(state.snapshot.rankings.map(team => [team.name, team]));
   const columns = [sor, forge, poll].map(edition => [...editionRankMap(edition).values()]
@@ -1366,8 +1372,9 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
   return `<section class="panel edition-panel"><div class="panel-body">
     ${tabs}<div class="edition-controls">${editionPicker(weeks, week)}${editionLink}</div>
     <h2>${editionLabel(week)}</h2><p>${gamesThrough ? `Games through ${editionDate(gamesThrough)}.` : 'The poll’s exact game cutoff has not been verified.'}${poll ? ` ${source.name} released ${editionDate(poll.released)}.` : ''}${official ? ` SOR published ${editionDate(official.released)}.` : ''}${forge ? ` Forge ballot reconstructed ${editionDate(forge.released)}.` : ''}</p>
-    ${separateForgeBallot ? `<p class="compact-note edition-context">Forge’s ballot covers games through ${editionDate(weekForge.gamesThrough)}. ${poll && gamesThrough ? `The ${source.name} covers games through ${editionDate(gamesThrough)}. ` : ''}The table only compares editions with matching cutoffs. <a class="text-link" href="${routeHref(`forge-top-25/${week}`)}">View Forge’s ballot for this week ${icon('arrow')}</a></p>` : ''}
+    ${separateForgeBallot ? `<p class="compact-note edition-context">Forge’s ballot covers games through ${editionDate(weekForge.gamesThrough)}. ${poll && gamesThrough ? `The ${source.name} covers games through ${editionDate(gamesThrough)}. ` : ''}The table only compares editions with matching cutoffs. <a class="text-link" href="${forgeBallotHref(week)}">View Forge’s ballot for this week ${icon('arrow')}</a></p>` : ''}
     ${savedCheckpoint ? '<p class="compact-note edition-context">This saved SOR checkpoint covers games through the same date as the poll. The full week includes later games.</p>' : ''}
+    ${usesForgeCheckpoint ? '<p class="compact-note edition-context">Forge’s cutoff ballot was reconstructed using only games through the Coaches Poll cutoff shown above.</p>' : ''}
     ${replay ? `<p class="compact-note edition-context">SOR replay calculated ${editionDate(replay.released)} using the published SOR formula and ${replay.networkGames.toLocaleString()} confirmed games through this cutoff. That includes ${replay.fbsGames.toLocaleString()} games involving FBS teams.</p>` : ''}
     ${summary.length ? `<p class="edition-notice">${summary.join(' · ')}.</p>` : ''}
     ${!poll && latestSource ? `<a class="text-link" href="${routeHref(`polls/${key}/${latestSource.week}`)}">View the ${editionDate(latestSource.released)} edition ${icon('arrow')}</a>` : ''}
@@ -1375,11 +1382,26 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
     </div><div class="table-scroll"><table class="edition-table poll-rank-table">
     <caption class="sr-only">Ranking comparison for ${editionLabel(week)}</caption>
     <thead><tr><th scope="col">Rank</th><th scope="col">${sorLabel}</th><th scope="col">Forge</th><th scope="col">${source.short}</th></tr></thead><tbody>${rows}</tbody></table></div>
-    <div class="panel-body"><p class="compact-note">Tied teams share a cell. A dash marks a skipped rank or an unavailable edition.</p>${forge ? `<a class="text-link edition-ballot-link" href="${routeHref(`forge-top-25/${week}`)}">Forge’s full ballot for this week ${icon('arrow')}</a>` : ''}</div>
+    <div class="panel-body"><p class="compact-note">Tied teams share a cell. A dash marks a skipped rank or an unavailable edition.</p>${forge ? `<a class="text-link edition-ballot-link" href="${forgeBallotHref(week, usesForgeCheckpoint ? forge.gamesThrough : undefined)}">${usesForgeCheckpoint ? 'View Forge’s cutoff ballot' : 'Forge’s full ballot for this week'} ${icon('arrow')}</a>` : ''}</div>
     </section>`;
 }
-function renderForgeBallot(data, requestedWeek) {
-  const edition = data.forge.find(item => item.week === Number(requestedWeek)) ?? data.forge.at(-1);
+function renderForgeBallot(data, requestedWeek, through) {
+  const week = Number(requestedWeek);
+  const weekBallot = data.forge.find(item => item.week === week);
+  const savedCutoff = through && data.forgeCheckpoints?.find(item => item.week === week && item.gamesThrough === through);
+  const edition = through ? (weekBallot?.gamesThrough === through ? weekBallot : savedCutoff) : weekBallot ?? data.forge.at(-1);
+  const weeks = data.forge.map(item => item.week).reverse();
+  if (!edition) return `<section class="panel edition-panel"><div class="panel-body">
+    <div class="edition-controls">${editionPicker(weeks, week)}</div>
+    <p role="status">No Forge ballot is available for this game cutoff.</p>
+    ${weekBallot ? `<a class="text-link" href="${forgeBallotHref(week)}">View the full weekly ballot ${icon('arrow')}</a>` : ''}</div></section>`;
+  const cutoffBallot = Boolean(savedCutoff && edition === savedCutoff);
+  const alternateBallots = (data.forgeCheckpoints ?? []).filter(item => item.week === edition.week && item.gamesThrough !== edition.gamesThrough);
+  const editionTitle = cutoffBallot ? `Week ${edition.week} cutoff ballot` : editionLabel(edition.week);
+  const editionLinks = [
+    cutoffBallot && weekBallot ? `<a class="text-link" href="${forgeBallotHref(edition.week)}">View the full weekly ballot ${icon('arrow')}</a>` : '',
+    ...alternateBallots.map(item => `<a class="text-link" href="${forgeBallotHref(item.week, item.gamesThrough)}">View ballot through ${editionDate(item.gamesThrough)} ${icon('arrow')}</a>`),
+  ].join('');
   const previous = editionRankMap(data.forge.find(item => item.week === edition.week - 1));
   const teams = new Map(state.snapshot.rankings.map(team => [team.name, team]));
   const rows = edition.rows.map((row, index) => {
@@ -1391,12 +1413,13 @@ function renderForgeBallot(data, requestedWeek) {
     return `<tr><td class="num">${position}</td><td>${editionTeamLink(row.team, teams)}${row.game ? `<small>${esc(row.game)}</small>` : ''}</td><td class="num">${esc(row.record)}</td>${edition.week >= 0 ? `<td class="num" aria-label="${detail}">${movement}</td>` : ''}</tr>`;
   }).join('');
   return `<section class="panel edition-panel"><div class="panel-body">
-    <div class="edition-controls">${editionPicker(data.forge.map(item => item.week).reverse(), edition.week)}</div>
-    <h2>${editionLabel(edition.week)}</h2><p>${edition.week < 0 ? 'Preseason context as of' : 'Games through'} ${editionDate(edition.gamesThrough)}. Retrospective ballot reconstructed ${editionDate(edition.released)}.</p>
+    <div class="edition-controls">${editionPicker(weeks, edition.week)}${editionLinks}</div>
+    <h2>${editionTitle}</h2><p>${edition.week < 0 ? 'Preseason context as of' : 'Games through'} ${editionDate(edition.gamesThrough)}. Retrospective ballot reconstructed ${editionDate(edition.released)}.</p>
+    ${cutoffBallot ? '<p class="compact-note edition-context">This ballot uses only games through the date shown. Rank movement is measured from the previous week’s full ballot.</p>' : ''}
     ${edition.week === -1 ? '<p class="compact-note edition-context">Forge used 2025 results, roster and coaching context, and preseason AP and Coaches polls as background.</p>' : ''}
     ${edition.notes?.length ? `<ul class="edition-notice">${edition.notes.map(note => `<li>${esc(note)}</li>`).join('')}</ul>` : ''}
     </div><div class="table-scroll"><table class="edition-table">
-    <caption class="sr-only">Forge’s Top 25 for ${editionLabel(edition.week)}</caption><thead><tr><th scope="col">Rank</th><th scope="col">Team</th><th scope="col">${edition.week === -1 ? '2025 record' : 'Record'}</th>${edition.week >= 0 ? '<th scope="col">Move</th>' : ''}</tr></thead>
+    <caption class="sr-only">Forge’s Top 25 for ${editionTitle}</caption><thead><tr><th scope="col">Rank</th><th scope="col">Team</th><th scope="col">${edition.week === -1 ? '2025 record' : 'Record'}</th>${edition.week >= 0 ? '<th scope="col">Move</th>' : ''}</tr></thead>
     <tbody>${rows}</tbody></table></div></section>`;
 }
 async function loadRankingEditions() {
@@ -1422,7 +1445,7 @@ function renderRankingEditions(page, id, scope) {
     : ['Forge’s Top 25', 'An AI-authored FBS ballot based on game results, opponent quality, scoring margins, and venue.'];
   const heading = `<div class="rankings-view-heading"><h2>${title}</h2><p>${description}</p></div>`;
   const { data, failed } = rankingEditions;
-  const content = data ? (comparing ? renderPollComparison(data, id, scope) : renderForgeBallot(data, id))
+  const content = data ? (comparing ? renderPollComparison(data, id, scope) : renderForgeBallot(data, id, scope))
     : `<section class="panel"><div class="panel-body"><p role="status">${failed ? 'The ranking archive is unavailable.' : 'Loading ranking editions…'}</p>${failed ? '<button class="button light small" data-action="retry-editions">Try again</button>' : ''}</div></section>`;
   renderRankingsHub(page, [page, id, scope].join('/'), heading + content);
   if (!data && !failed) rankingEditions.request ??= loadRankingEditions();

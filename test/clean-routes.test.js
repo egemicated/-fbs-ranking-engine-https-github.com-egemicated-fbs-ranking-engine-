@@ -46,6 +46,7 @@ test('links preserve comparison, division, edition, season, player, and event se
     ['ranking-history/regular:12', '/ranking-history/?week=regular%3A12'],
     ['polls/ap/-1', '/polls/ap/?week=-1'], ['polls/coaches/12', '/polls/coaches/?week=12'],
     ['forge-top-25/-1', '/forge-rankings/?week=-1'],
+    ['forge-top-25/11/2026-11-14', '/forge-rankings/?week=11&through=2026-11-14'],
     ['bracket/demo', '/playoff-bracket/?view=demo'], ['bracket/leaderboard', '/playoff-bracket/?view=leaderboard'],
     ['sor-compare/fcs/2509/2199', '/sor-compare/?division=fcs&a=2509&b=2199'],
     ['sor-compare/fbs//252', '/sor-compare/?division=fbs&b=252'],
@@ -91,7 +92,8 @@ test('unrecognized routes, non-app anchors, malformed state and authentication f
   assert.equal(routeFromUrl('https://fbs-intelligence.onrender.com/#admin'), 'home');
   for (const path of ['/unknown', 'https://www.thegamesdecide.com//', '/team/unregistered-id/', '/team/252/?game=401', '/team/252/?view=players&game=401',
     '/rankings?model=unknown', '/matchup-lab?a=252&a=2305', '/weekly-picks?game=401', '/weekly-picks?week=private',
-    '/conference-strength/?view=compare&a=Big+Ten&b=SEC', 'javascript:invalid']) {
+    '/conference-strength/?view=compare&a=Big+Ten&b=SEC', '/forge-rankings/?through=2026-11-14',
+    '/forge-rankings/?week=11&through=2026-02-30', 'javascript:invalid']) {
     assert.equal(routeFromUrl(path), null, path);
   }
 });

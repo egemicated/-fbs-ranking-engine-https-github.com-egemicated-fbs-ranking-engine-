@@ -6,6 +6,7 @@ const weekNumber = /^(?:-1|\d{1,3})$/;
 const season = /^\d{4}$/;
 const weekKey = /^(?:regular|postseason):\d{1,3}$/;
 const historyWeek = /^(?:-1|(?:(?:regular|postseason):)?\d{1,3})$/;
+const cutoffDate = /^\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])$/;
 const conference = /^[\p{L}\p{N}][\p{L}\p{N} .&'’_-]{0,79}$/u;
 const tab = /^(?:overview|results|players|availability|model)$/;
 const venue = /^(?:home|away|neutral)$/;
@@ -29,7 +30,7 @@ const routes = [
   { route: 'polls/ap', path: '/polls/ap/', fields: fields(['week', weekNumber]) },
   { route: 'polls/coaches', path: '/polls/coaches/', fields: fields(['week', weekNumber]) },
   { route: 'polls/cfp', path: '/polls/cfp/', fields: fields(['week', weekNumber]) },
-  { route: 'forge-top-25', path: '/forge-rankings/', fields: fields(['week', weekNumber]) },
+  { route: 'forge-top-25', path: '/forge-rankings/', fields: fields(['week', weekNumber], ['through', cutoffDate]) },
   { route: 'ranking-history', path: '/ranking-history/', fields: fields(['week', historyWeek]) },
   { route: 'beat-the-model', path: '/beat-the-model/', fields: weeksAndGame },
   { route: 'conference-strength', path: '/conference-strength/', fields: fields(['view', conferenceView], ['season', season], ['a', conference], ['b', conference]) },
@@ -121,6 +122,10 @@ function describe(definition, values) {
   }
   if ((route.startsWith('compare/weekly') || route === 'beat-the-model') && values[1] && !values[0]) return null;
   if (route === 'conference-strength' && (values[2] || values[3]) && (!values[1] || values[0] !== 'compare' || !values[2] || !values[3])) return null;
+  if (route === 'forge-top-25' && values[1]) {
+    const utc = new Date(`${values[1]}T00:00:00Z`);
+    if (!values[0] || utc.toISOString().slice(0, 10) !== values[1]) return null;
+  }
   const active = [...values];
   if (route === 'sor-compare' && !active[0] && (active[1] || active[2])) active[0] = 'fbs';
   if (route === 'bracket' && active[0] === 'entry') active[0] = '';

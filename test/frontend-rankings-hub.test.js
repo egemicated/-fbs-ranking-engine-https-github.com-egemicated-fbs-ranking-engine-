@@ -38,7 +38,7 @@ function fixture() {
   return { snapshot, performance };
 }
 
-async function browser({ snapshot, performance, initialRoute = '#rankings', performanceGate, reducedMotion }) {
+async function browser({ snapshot, performance, archive = editions, initialRoute = '#rankings', performanceGate, reducedMotion }) {
   const nodes = new Map(), calls = [], errors = [], inputs = new Map();
   const animations = [];
   const node = id => {
@@ -47,14 +47,14 @@ async function browser({ snapshot, performance, initialRoute = '#rankings', perf
   };
   const context = {
     document: { querySelector: node, addEventListener: (name, callback) => inputs.set(name, callback), title: '' },
-    location: { hash: initialRoute },
+    location: initialRoute.startsWith('#') ? { hash: initialRoute } : { href: initialRoute },
     window: { scrollTo() {} },
     HTMLImageElement: class {}, URL,
     console: { error: error => errors.push(error) },
     fetch: async path => {
       calls.push(path);
       if (path === '/rankings') return { ok: true, json: async () => snapshot };
-      if (path === '/ranking-editions.json') return { ok: true, json: async () => editions };
+      if (path === '/ranking-editions.json') return { ok: true, json: async () => archive };
       assert.equal(path, '/performance');
       if (performanceGate) await performanceGate;
       return { ok: Boolean(performance), json: async () => performance };
@@ -281,7 +281,7 @@ test('Compare and Forge remain accessible through the hub and retain dated editi
 });
 
 test('same-week Coaches and AP polls use their own archived SOR cutoff', async () => {
-  const page = await browser({ ...fixture(), initialRoute: '#polls/coaches/11' });
+  const page = await browser({ ...fixture(), archive: { ...editions, forgeCheckpoints: [] }, initialRoute: '#polls/coaches/11' });
   const coaches = page.html();
   assert.match(coaches, /Games through Nov 14, 2026/);
   assert.match(coaches, /saved SOR checkpoint/i);
@@ -296,6 +296,60 @@ test('same-week Coaches and AP polls use their own archived SOR cutoff', async (
   assert.doesNotMatch(ap, /saved SOR checkpoint/i);
   assert.doesNotMatch(ap, /The table only compares editions with matching cutoffs/);
   assert.match(ap, /Forge ballot reconstructed Nov 16, 2026/);
+});
+
+test('Coaches uses the exact Forge cutoff ballot and the weekly ballot remains canonical', async () => {
+  const cutoff = { week: 11, gamesThrough: '2026-11-14', released: '2026-11-19',
+    rows: [{ team: 'Alpha State', record: '9–1', game: 'W 21–7' }] };
+  const archive = { ...editions, forgeCheckpoints: [
+    { ...cutoff, week: 10, rows: [{ team: 'Incorrect week', record: '8–1' }] },
+    { ...cutoff, gamesThrough: '2026-11-13', rows: [{ team: 'Incorrect date', record: '8–1' }] },
+    cutoff,
+  ] };
+  const page = await browser({ ...fixture(), archive, initialRoute: '/polls/coaches/?week=11' });
+  const coaches = page.html();
+  assert.match(coaches, /Games through Nov 14, 2026/);
+  assert.match(coaches, /Forge’s cutoff ballot was reconstructed using only games through the Coaches Poll cutoff/);
+  assert.match(rankingTable(coaches), /<th scope="row">1<\/th><td>.*?Utah.*?<\/td><td>.*?Alpha State.*?9–1.*?<\/td><td>.*?Georgia/);
+  assert.doesNotMatch(rankingTable(coaches), /Incorrect week|Incorrect date/);
+  const link = coaches.match(/href="([^"]+)">View Forge’s cutoff ballot/)?.[1];
+  assert.equal(link, '/forge-rankings/?week=11&through=2026-11-14');
+  const checkpoint = await page.go(link);
+  assert.match(checkpoint, /Week 11 cutoff ballot/);
+  assert.match(checkpoint, /Games through Nov 14, 2026\. Retrospective ballot reconstructed Nov 19, 2026/);
+  assert.match(checkpoint, /Rank movement is measured from the previous week’s full ballot/);
+  assert.match(checkpoint, /href="\/forge-rankings\/\?week=11">View the full weekly ballot/);
+  assert.match(rankingTable(checkpoint), /Alpha State.*?W 21–7.*?9–1/);
+
+  page.context.history.back();
+  assert.match(await page.settle(), /View Forge’s cutoff ballot/);
+  const full = await page.go('/forge-rankings/?week=11');
+  assert.match(full, /After Week 11.*?Games through Nov 15, 2026/s);
+  assert.doesNotMatch(rankingTable(full), /Alpha State/);
+  assert.match(full, /View ballot through Nov 14, 2026/);
+  const missing = await page.go('/forge-rankings/?week=11&through=2026-11-12');
+  assert.match(missing, /No Forge ballot is available for this game cutoff/);
+  assert.equal(rankingTable(missing), '');
+
+  for (const poll of ['ap', 'cfp']) {
+    const comparison = await page.go(`/polls/${poll}/?week=11`);
+    assert.match(comparison, /Games through Nov 15, 2026/);
+    assert.match(comparison, /href="\/forge-rankings\/\?week=11">Forge’s full ballot for this week/);
+    assert.doesNotMatch(rankingTable(comparison), /Alpha State/);
+  }
+});
+
+test('published Week 11 Coaches comparison uses the stored November 14 ballot', async () => {
+  const page = await browser({ ...fixture(), initialRoute: '/polls/coaches/?week=11' });
+  const coaches = page.html();
+  assert.match(coaches, /22 of 25 shared by Forge and Coaches/);
+  const checkpoint = await page.go('/forge-rankings/?week=11&through=2026-11-14');
+  assert.match(rankingTable(checkpoint), /<td class="num">19<\/td><td>Ole Miss.*?<\/td><td class="num">6–3<\/td>/);
+  assert.match(rankingTable(checkpoint), /<td class="num">25<\/td><td>Auburn/);
+  assert.doesNotMatch(rankingTable(checkpoint), />Oklahoma<small>/);
+  const full = await page.go('/forge-rankings/?week=11');
+  assert.match(full, /Games through Nov 15, 2026/);
+  assert.match(rankingTable(full), />Oklahoma<small>/);
 });
 
 test('the rankings stylesheet disables animation and transitions for reduced motion', async () => {
