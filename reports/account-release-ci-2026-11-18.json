@@ -1,10 +1,10 @@
 {
-  "checkedAt": "2026-11-19T02:48:35.979Z",
-  "commit": "16c0be0787f54aa86e895fed43f6726dc0ca7b7d",
-  "runId": 44446209050,
+  "checkedAt": "2026-11-19T04:34:23.254Z",
+  "commit": "85cb73ce3668d48555502152fd1177dfdf437ed1",
+  "runId": 44458353227,
   "jobs": [
     {
-      "id": 135298860431,
+      "id": 135338804032,
       "status": "completed",
       "conclusion": "success",
       "steps": [
@@ -79,5 +79,5 @@
       ]
     }
   ],
-  "scope": "GitHub Actions release evidence; production email and signed-in journeys remain separate gates"
+  "scope": "GitHub Actions exact release-commit verification. Hosted email and signed-in production checks are documented separately."
 }

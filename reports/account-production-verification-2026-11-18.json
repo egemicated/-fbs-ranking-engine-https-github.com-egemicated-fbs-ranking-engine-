@@ -1,18 +1,18 @@
 {
-  "checkedAt": "2026-11-19T02:44:49.657Z",
-  "deployment": "dep-dbv63ueq1p3s7382tjp0",
-  "commit": "16c0be0787f54aa86e895fed43f6726dc0ca7b7d",
+  "checkedAt": "2026-11-19T04:30:10.042Z",
+  "deployment": "dep-dbv7kv61egvs73et4lp0",
+  "commit": "85cb73ce3668d48555502152fd1177dfdf437ed1",
   "checks": [
     {
       "path": "/account-auth.js",
       "status": 200,
-      "sha256": "d290a3f0676584a8d0881307213e3c32d75c3a3e0e1c137e21f6ee88efcbfe57",
+      "sha256": "c8c5beb7c9ee563ea67d0c1bfd0c1d13db665900b2463da11bb2cbd69a5be96b",
       "matchesLocal": true
     },
     {
       "path": "/account-center.js",
       "status": 200,
-      "sha256": "b73e3d40e3272dc5afadb80a0e9bdb8c36426fe98c258b2d1f83154b2206bd30",
+      "sha256": "70ab7348eaf943ece0d7baf556ff13245ae7e707564454d42f22f5ecc9a1e372",
       "matchesLocal": true
     },
     {
@@ -36,19 +36,19 @@
     {
       "path": "/bracket-auth.js",
       "status": 200,
-      "sha256": "a9ca4ab185ef76da8888d14f42c388bc71c23ad240e7c3a5a703aa2ff980253c",
+      "sha256": "6cdf8c0d92651d604e25f38cb8ff8a78f23201c44176577b772a37d69c496059",
       "matchesLocal": true
     },
     {
       "path": "/bracket-config.json",
       "status": 200,
-      "sha256": "faeb632d57200cac7043a961160bc499977b5ad8faf1be65d81d50df3f58dc94",
+      "sha256": "ca90dffeb9b19eb4116e7903265c74cf5e33997a0f7029ba654b5628e870a69e",
       "matchesLocal": true
     },
     {
       "path": "/app.js",
       "status": 200,
-      "sha256": "4770c15ea62d2ce339e7f864ec8243620137d718471bb174ab8ca9f27135244b",
+      "sha256": "e79b12868ba74e86eba6fa0807eb2fa6e319a9738c6820bdedf2911123e07b81",
       "matchesLocal": true
     },
     {
@@ -63,18 +63,18 @@
     "metaCsp": true,
     "noReferrerMetadata": true,
     "headers": {
-      "content-security-policy": null,
-      "x-frame-options": null,
-      "referrer-policy": null,
+      "content-security-policy": "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0/dist/umd/supabase.js; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' https://a.espncdn.com data: blob:; connect-src 'self' https://egxyfyorggwnrnmirrax.supabase.co wss://egxyfyorggwnrnmirrax.supabase.co https://site.api.espn.com; worker-src 'self'; object-src 'none'; base-uri 'none'; frame-src 'none'; form-action 'self'; frame-ancestors 'none'",
+      "x-frame-options": "DENY",
+      "referrer-policy": "no-referrer",
       "x-content-type-options": "nosniff",
       "strict-transport-security": "max-age=315360000; includeSubdomains; preload",
-      "permissions-policy": null
+      "permissions-policy": "camera=(), microphone=(), geolocation=()"
     }
   },
   "gates": {
-    "emailRegistrationUi": false,
-    "passwordRecoveryUi": false,
-    "supportNotificationUi": false
+    "emailRegistrationUi": true,
+    "passwordRecoveryUi": true,
+    "supportNotificationUi": true
   },
   "scope": "Public GET requests and exact static-asset/publication byte comparison. No signed-in user, email, support request or CFBD pull.",
   "passed": true

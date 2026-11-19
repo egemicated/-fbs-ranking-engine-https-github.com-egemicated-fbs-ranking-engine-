@@ -1,7 +1,7 @@
 {
   "initialConfigurationObservedAt": "2026-11-19T03:24:50.6881741Z",
-  "evidenceCompiledAt": "2026-11-19T04:23:53Z",
-  "evidenceScope": "Sanitized release-coordinator observations of approved provider settings, actual hosted Auth/admin interactions through an approved loopback preview, owner recovery reports, and the manual notification workflow. This is not a final static-deployment verification.",
+  "evidenceCompiledAt": "2026-11-19T04:37:08.453Z",
+  "evidenceScope": "Sanitized release-coordinator observations of approved provider settings, actual hosted Auth/signup/verification/recovery, preview and real production administrator/account interactions, manual and automatic support delivery, successful final CI, and the deployed public assets/headers. Owner-reported password rejection is distinguished from browser-observed authentication.",
   "project": "FBS Intelligence",
   "projectRef": "egxyfyorggwnrnmirrax",
   "organization": "Work Projects",
@@ -31,14 +31,17 @@
   "callbacks": {
     "site": "https://fbs-intelligence.onrender.com",
     "productionCount": 5,
-    "temporaryTestCount": 2,
-    "temporaryTestOrigin": "http://127.0.0.1:41873",
+    "temporaryTestCount": 0,
     "testCallbacksApproved": true,
-    "removalRequiredAfterTesting": true,
-    "finalTemporaryCallbackCleanupVerified": false,
+    "removalRequiredAfterTesting": false,
+    "finalTemporaryCallbackCleanupVerified": true,
     "recoveryRouterBugReproduced": true,
     "routerFixLocallyTested": true,
-    "routerFixFinalDeploymentVerified": false
+    "routerFixFinalDeploymentVerified": true,
+    "formerTemporaryTestOrigin": "http://127.0.0.1:41873",
+    "allRemainingCallbacksProduction": true,
+    "temporaryPreviewListenerStopped": true,
+    "freshRecoveryEmailRoundtripAfterFinalDeployTested": false
   },
   "privateFunctionSettingsSaved": [
     "SUPPORT_EMAIL_PROVIDER",
@@ -51,14 +54,14 @@
   "githubDispatchSecretSaved": true,
   "credentialWorkingCopiesCleared": true,
   "credentialsOrActionLinksExported": false,
-  "registrationUiPublic": false,
-  "recoveryUiPublic": false,
-  "supportNotificationUiPublic": false,
+  "registrationUiPublic": true,
+  "recoveryUiPublic": true,
+  "supportNotificationUiPublic": true,
   "localFlagsPrepared": {
     "emailRegistrationEnabled": true,
     "passwordRecoveryEnabled": true,
     "supportNotificationsEnabled": true,
-    "finalCiAndDeploymentPending": true
+    "finalCiAndDeploymentPending": false
   },
   "controlledTest": {
     "previewBoundToLoopback": true,
@@ -85,29 +88,44 @@
     "liveAal2SessionObserved": true,
     "protectedProvisioningSucceeded": true,
     "administratorCount": 1,
-    "liveBackendUiTestOrigin": "Approved loopback frontend preview",
     "directoryAccountsObserved": 3,
     "passwordFieldsObserved": 0,
     "suspensionTestTarget": "Owner-controlled disposable account only",
     "suspensionAndReactivationCompleted": true,
     "testTargetEndedActive": true,
     "controlledGeneralRequestResolved": true,
-    "auditEntriesObserved": 4,
+    "auditEntriesObserved": 5,
     "realNicknameModerationTested": false,
-    "otherParticipantProtectedFuturePicksReadOrEdited": false
+    "otherParticipantProtectedFuturePicksReadOrEdited": false,
+    "initialLiveBackendUiTestOrigin": "Approved loopback frontend preview",
+    "realProductionSigninObserved": true,
+    "ownerPasswordAndMfaEnteredPrivately": true,
+    "productionAdministrationReloadPassed": true,
+    "productionAccountVerifiedAuthenticatorAal2Observed": true,
+    "resolvedControlledRequests": 2,
+    "pendingRequests": 0
   },
   "supportNotification": {
     "manualWorkflowRun": "44452436735",
     "manualWorkflowSucceeded": true,
-    "controlledRequestCount": 1,
-    "providerAcceptedCount": 1,
-    "attemptCount": 1,
+    "controlledRequestCount": 2,
+    "providerAcceptedCount": 2,
     "providerReceiptPersisted": true,
     "ownerFollowedEmailAdministrationLink": true,
     "fullReceivedEmailBodyInspected": false,
     "receivedAuthenticationHeadersInspected": false,
     "footballRefreshTriggered": false,
-    "exhaustedRetryHostedTestCompleted": false
+    "exhaustedRetryHostedTestCompleted": false,
+    "providerReceiptsPersisted": 2,
+    "attemptsPerNotification": [
+      1,
+      1
+    ],
+    "automaticPublicFrontendNotificationObserved": true,
+    "automaticNotificationRequiredManualDispatch": false,
+    "secondRequestResolvedThroughProductionAdminUi": true,
+    "secondNotificationMailboxReceiptConfirmed": false,
+    "pendingRequests": 0
   },
   "preservation": {
     "initialAccounts": 1,
@@ -115,24 +133,82 @@
     "existingWeeklyPicks": 134,
     "existingWeeklyPickDigestMatchesBaseline": true,
     "productionIdentityDeleted": false,
-    "lockedPickChanged": false
+    "lockedPickChanged": false,
+    "finalPreferenceProjectionReconciliationPending": false,
+    "originalPublicProfileDigestMatchesBaseline": true,
+    "originalPreferenceOwnerAndPrimaryFavoriteRetained": true,
+    "baselineFavoriteCount": 1,
+    "finalFavoriteCount": 2,
+    "exactFinalPreferencesUnchanged": false,
+    "addedFavoriteActorAttributed": false,
+    "preferenceRollbackPerformed": false,
+    "finalBackendEvidence": "account-final-backend-verification-2026-11-18.json"
   },
   "permanentDeletionEnabled": false,
   "historicalRetentionPolicyApproved": false,
   "publicGuestSupportIntakeEnabled": false,
-  "finalRenderAntiFramingHeadersVerified": false,
+  "finalRenderAntiFramingHeadersVerified": true,
   "liveSubscriptionsEnabled": false,
   "familyDomainUsed": false,
   "paidServiceActivated": false,
   "cfbdPulls": 0,
   "remainingLimitations": [
-    "Final callback-fix push, CI, static deployment and public activation checks remain pending.",
-    "The two approved loopback callbacks still require removal and final verification.",
-    "Actual hosted Google OAuth-to-password migration is unverified; the seeded local Auth fixture is separate evidence.",
-    "Cross-device/mail-client coverage, received headers and all hosted token-expiry/replay cases are not fully certified.",
-    "Live nickname moderation and additional-participant future-pick checks rely on isolated regression evidence rather than this hosted UI exercise.",
+    "Actual hosted Google OAuth-to-password migration remains unverified; the seeded local Auth fixture is separate evidence.",
+    "Cross-device/mail-client coverage, received authentication headers and all hosted token-expiry/replay cases are not fully certified.",
+    "A fresh recovery-mail roundtrip after the final deployment was not separately repeated; deployed callback code and seven browser cases passed.",
+    "Live nickname moderation, additional-participant future-pick checks and exhausted notification retries rely on isolated regressions rather than forced hosted tests.",
     "Permanent deletion/anonymization and contest-record retention policy remain disabled or unapproved.",
-    "Final host-level anti-framing headers and broad hosted capacity have not been verified.",
-    "Payments and subscriptions remain disabled."
-  ]
+    "Public guest CAPTCHA intake, payments and subscriptions remain disabled.",
+    "Broad hosted capacity and long-term no-domain email deliverability are not guaranteed."
+  ],
+  "productionHttpSecurity": {
+    "publicGetVerified": true,
+    "dashboardRulesSaved": 5,
+    "cspMatchesSharedSecurityResponseHeaders": true,
+    "frameAncestorsNone": true,
+    "xFrameOptions": "DENY",
+    "referrerPolicy": "no-referrer",
+    "xContentTypeOptions": "nosniff",
+    "permissionsPolicyCameraMicrophoneGeolocationDisabled": true
+  },
+  "publicAdminSigninObservationPending": false,
+  "release": {
+    "commit": "85cb73ce3668d48555502152fd1177dfdf437ed1",
+    "ciRun": "44458353227",
+    "ciJob": "135338804032",
+    "ciStatus": "success",
+    "nodeTestsPassed": 442,
+    "migrationsAppliedInChecks": 14,
+    "sqlSuitesPassed": 13,
+    "officialLinuxAuthGroupsPassed": 13,
+    "generalBrowserRoutesPassed": 72,
+    "accountBrowserWidths": [
+      320,
+      390,
+      768,
+      1440
+    ],
+    "callbackCasesPassed": 7,
+    "cspBrowserCheckPassed": true,
+    "renderDeploy": "dep-dbv7kv61egvs73et4lp0",
+    "renderStatus": "live",
+    "renderLiveAt": "2026-11-19T04:29:15.580747Z",
+    "publicAssetCheckedAt": "2026-11-19T04:30:10.042Z",
+    "verifiedAssets": 9,
+    "allVerifiedAssetsHttp200AndMatchLocal": true,
+    "productionGuestBrowserCheckedAt": "2026-11-19T04:30:13Z",
+    "productionGuestBrowserWidths": [
+      320,
+      1440
+    ],
+    "productionGuestRoutesPassed": 6,
+    "finalPublicApplicationVerificationCompleted": true
+  },
+  "readiness": {
+    "currentAccountsAdministrationAndSupportReady": true,
+    "genuineGooglePasswordMigrationFullyVerified": false,
+    "permanentDeletionEnabled": false,
+    "liveSubscriptionsEnabled": false,
+    "broadHostedCapacityCertified": false
+  }
 }

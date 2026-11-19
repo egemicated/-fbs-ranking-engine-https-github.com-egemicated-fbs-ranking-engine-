@@ -1,0 +1,209 @@
+{
+  "project": "egxyfyorggwnrnmirrax",
+  "checkedAt": "2026-11-19T04:27:05.045243+00:00",
+  "scope": "Read-only production aggregate preservation/security checkpoint. No DDL, role changes, account changes, row exports, pick edits or provider pulls.",
+  "counts": {
+    "authUsers": 3,
+    "memberships": 3,
+    "weeklyGames": 888,
+    "weeklyPicks": 134,
+    "auditActions": 4,
+    "entitlements": 0,
+    "weeklyPlayers": 1,
+    "supportRequests": 1,
+    "teamPreferences": 1,
+    "originalProfiles": 1,
+    "sentNotifications": 1,
+    "failedNotifications": 0,
+    "originalPreferences": 1,
+    "activeAdministrators": 1,
+    "resolvedSupportRequests": 1,
+    "sentNotificationsWithReceipt": 1
+  },
+  "preservation": {
+    "originalPicksExpected": 134,
+    "originalPicksDigestExpected": "60b6da87473f3159dc76fd7caa93406f",
+    "originalPicksDigestActual": "60b6da87473f3159dc76fd7caa93406f",
+    "originalPicksPreserved": true,
+    "originalProfileDigestExpected": "87ae74ad10643f11ac2ac189221cfe37",
+    "originalProfileDigestActual": "87ae74ad10643f11ac2ac189221cfe37",
+    "originalProfilePreserved": true,
+    "earlierNonSeenPreferenceDigest": "45763b2b8bcfa2ea9b4b7e870ae7f850",
+    "currentNonSeenPreferenceDigest": "f73155becc1d0293d13af24f84668799",
+    "exactNonSeenPreferenceEquality": false,
+    "preferenceComparisonMethod": "Compared identical PostgreSQL jsonb-minus-seen_updates projection against the approved encrypted backup. Schema has only user_id, team_id, team_ids and seen_updates; there is no updated_at field. Separately compared hashes of the owner, primary team and ordered/unordered favorites in memory without exporting their values.",
+    "preferenceComparison": {
+      "sameOwner": true,
+      "samePrimary": true,
+      "baselinePrimaryMatchesFirstFavorite": true,
+      "baselinePrimaryIsOnlyFavorite": true,
+      "sameOrderedFavorites": false,
+      "sameUnorderedFavorites": false,
+      "baselineFavoriteCount": 1,
+      "currentFavoriteCount": 2,
+      "primaryMatchesFirstFavorite": true
+    },
+    "originalPrimaryFavoriteRetained": true,
+    "note": "All original picks and the original public profile remain exact. The preference owner and primary team remain the same, with favorite count increasing from one to two since the backup; this is not merely a seen-marker or ordering change. The original primary favorite remains selected. This checkpoint does not attribute the added favorite to a particular actor and performed no rollback. The exact migration-preservation and earlier matching checkpoints remain valid as-of their recorded times."
+  },
+  "adminSecurity": {
+    "requeueServiceExecute": false,
+    "requeueAnonymousExecute": false,
+    "requeueAuthenticatedExecute": true,
+    "administratorsWithVerifiedTotp": 1,
+    "administratorsWithVerifiedTotpAndLiveAal2": 1
+  },
+  "databaseSecurity": {
+    "applicationTablesWithoutRls": 0,
+    "privateTablesWithClientGrants": 0,
+    "applicationPublicSecurityDefiners": 0,
+    "applicationFunctionsWithDefaultPublicExecute": 0
+  },
+  "auditActionCounts": {
+    "account_status": 2,
+    "support_status": 1,
+    "protected_admin_provision": 1
+  },
+  "securityAdvisors": {
+    "lints": [
+      {
+        "name": "rls_enabled_no_policy",
+        "title": "RLS Enabled No Policy",
+        "level": "INFO",
+        "count": 11,
+        "remediationUrl": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy",
+        "entities": [
+          {
+            "schema": "account_private",
+            "name": "audit_log"
+          },
+          {
+            "schema": "account_private",
+            "name": "entitlements"
+          },
+          {
+            "schema": "account_private",
+            "name": "memberships"
+          },
+          {
+            "schema": "cfp_private",
+            "name": "contests"
+          },
+          {
+            "schema": "cfp_private",
+            "name": "entries"
+          },
+          {
+            "schema": "support_private",
+            "name": "account_requests"
+          },
+          {
+            "schema": "support_private",
+            "name": "notification_outbox"
+          },
+          {
+            "schema": "weekly_private",
+            "name": "games"
+          },
+          {
+            "schema": "weekly_private",
+            "name": "picks"
+          },
+          {
+            "schema": "weekly_private",
+            "name": "players"
+          },
+          {
+            "schema": "weekly_private",
+            "name": "publications"
+          }
+        ]
+      },
+      {
+        "name": "auth_leaked_password_protection",
+        "title": "Leaked Password Protection Disabled",
+        "level": "WARN",
+        "count": 1,
+        "remediationUrl": "https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection",
+        "entities": [
+          {
+            "name": "Auth"
+          }
+        ]
+      }
+    ],
+    "interpretation": [
+      "Eleven INFO notices describe deliberately policy-free private RPC-only tables. RLS is enabled and anonymous/authenticated roles have no direct table privileges; access is through scoped private implementations and invoker-only public wrappers. Adding permissive raw-table policies would weaken this design.",
+      "One WARN remains: Supabase leaked-password protection is disabled. Do not describe this as resolved. Availability and any paid-plan requirement must be addressed before wider public email-registration launch without activating paid services automatically.",
+      "This checkpoint checked metadata and aggregates, not a new complete live end-to-end permission test."
+    ]
+  },
+  "performanceAdvisors": {
+    "lints": [
+      {
+        "name": "unused_index",
+        "title": "Unused Index",
+        "level": "INFO",
+        "count": 1,
+        "remediationUrl": "https://supabase.com/docs/guides/database/database-linter?lint=0005_unused_index",
+        "entities": [
+          {
+            "schema": "support_private",
+            "name": "account_requests"
+          }
+        ]
+      }
+    ],
+    "interpretation": [
+      "One INFO notice identifies the unused account_requests_client_created guest-rate-limiter index. It supports the guest request timestamp/hash filter and is new with little traffic; retain it pending representative usage rather than remove a protective path based only on this observation."
+    ]
+  },
+  "appliedMigrationVersions": [
+    "20261109031430",
+    "20261111033318",
+    "20261111041755",
+    "20261111043125",
+    "20261111044800",
+    "20261112225446",
+    "20261116000157",
+    "20261116000211",
+    "20261116051409",
+    "20261116051428",
+    "20261118193518",
+    "20261118224511",
+    "20261119014527",
+    "20261119022909"
+  ],
+  "sanitized": true,
+  "excludedFromReport": [
+    "Private email addresses",
+    "User and session identifiers",
+    "Tokens and credentials",
+    "Support message contents",
+    "Provider receipt identifiers",
+    "Actual contest choices",
+    "Favorite team identifiers"
+  ],
+  "productionMutationsPerformed": false,
+  "postProductionBrowserCheck": {
+    "checkedAt": "2026-11-19T04:34:52.167Z",
+    "accounts": 3,
+    "activeAdministrators": 1,
+    "supportRequests": 2,
+    "resolvedRequests": 2,
+    "acceptedAlertsWithReceipts": 2,
+    "auditEntries": 5,
+    "weeklyPicks": 134,
+    "automaticProductionNotification": {
+      "createdThroughPublicAccountPage": true,
+      "providerAccepted": true,
+      "attempts": 1,
+      "receiptPersisted": true,
+      "manualDispatcherInvoked": false,
+      "resolvedThroughPublicAdminUi": true
+    },
+    "publicAdministratorDirectoryObserved": true,
+    "publicAccountVerifiedAuthenticatorObserved": true,
+    "previewListenerStopped": true
+  }
+}
