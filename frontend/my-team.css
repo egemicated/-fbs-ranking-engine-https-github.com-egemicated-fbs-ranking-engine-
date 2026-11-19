@@ -11,6 +11,17 @@
 .my-team-header h2 { margin: 0; font-size: 21px; }
 .my-team-header-title { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 .my-team-header-title > span:empty { display: none; }
+.my-team-header-controls { display:flex; align-items:center; flex-wrap:wrap; justify-content:flex-end; gap:8px 14px; }
+.my-team-carousel-nav { display:flex; align-items:center; gap:5px; }
+.my-team-cycle { display:grid; place-items:center; width:44px; min-height:44px; padding:0; border:1px solid #68a9d7; border-radius:7px; background:#0b2343; color:#e5f7ff; font:700 17px/1 system-ui,sans-serif; cursor:pointer; }
+.my-team-cycle:hover { background:#17517a; color:#86e4fa; }
+.my-team-carousel-position { min-width:45px; text-align:center; color:var(--my-team-copy,#c4d5eb); font:700 12px/1.2 "Segoe UI",sans-serif; white-space:nowrap; font-variant-numeric:tabular-nums; }
+.my-team-carousel-slide { min-width:0; touch-action:pan-y pinch-zoom; }
+.my-team-carousel-slide[data-slide-direction="next"] { animation:my-team-wheel-next 220ms ease-out; }
+.my-team-carousel-slide[data-slide-direction="previous"] { animation:my-team-wheel-previous 220ms ease-out; }
+@keyframes my-team-wheel-next { from { opacity:.3; transform:perspective(900px) translateX(16px) rotateY(5deg); } to { opacity:1; transform:perspective(900px) translateX(0) rotateY(0); } }
+@keyframes my-team-wheel-previous { from { opacity:.3; transform:perspective(900px) translateX(-16px) rotateY(-5deg); } to { opacity:1; transform:perspective(900px) translateX(0) rotateY(0); } }
+@media (prefers-reduced-motion:reduce) { .my-team-carousel-slide[data-slide-direction] { animation:none; } }
 .my-team-update-badge, .my-team-mark-read {
   display: inline-flex;
   align-items: center;
@@ -210,6 +221,11 @@
   .my-team[data-favorite-team] .my-team-header { min-height: 53px; gap: 4px 8px; }
   .my-team[data-favorite-team] .my-team-header h2 { gap: 5px; font-size: 23px; }
   .my-team .my-team-change { min-height: 40px; padding-inline: 8px; font-size: 15px; }
+  .my-team[data-favorite-team][aria-roledescription="carousel"] .my-team-header { display:grid; grid-template-columns:minmax(0,1fr) auto; grid-template-areas:'title change' 'carousel carousel'; padding-bottom:7px; }
+  .my-team[aria-roledescription="carousel"] .my-team-header-title { grid-area:title; }
+  .my-team[aria-roledescription="carousel"] .my-team-header-controls { display:contents; }
+  .my-team[aria-roledescription="carousel"] .my-team-change { grid-area:change; }
+  .my-team[aria-roledescription="carousel"] .my-team-carousel-nav { grid-area:carousel; justify-content:center; }
   .my-team-summary { grid-template-areas: 'identity identity' 'stats stats' 'movement movement' 'next next'; gap: 13px 0; padding-top: 13px; }
   .my-team-identity { padding-left: 6px; }
   .my-team-emblem .logo { width: 79px; height: 73px; }

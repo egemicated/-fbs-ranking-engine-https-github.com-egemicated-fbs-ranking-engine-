@@ -56,5 +56,7 @@ jobs:
       - run: node scripts/browser-quality.mjs
       - name: Account and administration browser regressions
         run: node scripts/account-browser-quality.mjs
+      - name: Followed-team carousel browser regressions
+        run: node scripts/my-team-carousel-browser-quality.mjs
       - name: Browser security policy enforcement
         run: node scripts/check-security-policy-browser.mjs

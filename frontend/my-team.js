@@ -22,10 +22,11 @@ function accountAdapter() {
       preferenceUserId = result.userId;
       return { ...result, teamId: result.primaryTeamId };
     },
-    async savePreference(teamId) {
+    async savePreference(teamId, { removeTeamId } = {}) {
       if (teamId === null) {
         const current = await loadMyTeams();
-        if (current.primaryTeamId) await removeMyTeam(current.primaryTeamId);
+        const removed = removeTeamId ?? current.primaryTeamId;
+        if (removed) await removeMyTeam(removed);
       } else await setPrimaryMyTeam(teamId);
     },
     async markUpdatesSeen(teamId, seen, previousRevision) {
@@ -58,6 +59,7 @@ function options(teams, selected) {
 export function mountMyTeam(root, { teams, renderTeam, chosenTeamId, adapter = accountAdapter(), loadUpdateFacts, season, mountExtras }) {
   let active = true, version = 0, signedIn = false, loaded = false, failure = false, editing = false, busy = false;
   let favorite = null, draft = '', message = '';
+  let primaryFavorite = null, followed = [], preferenceUserId = null, slideDirection = '', touchStart = null;
   let seen = null, updatesEnabled = true, cleanupUpdates, cleanupExtras;
   const current = request => active && root.isConnected && request === version;
 
@@ -69,6 +71,8 @@ export function mountMyTeam(root, { teams, renderTeam, chosenTeamId, adapter = a
     const disabled = busy ? ' disabled' : '';
     const button = (action, label, symbol) => `<button type="button" class="button ${symbol ? 'my-team-change' : 'light small'}" data-my-team-action="${action}"${disabled}>${symbol ? `<span aria-hidden="true">${symbol}</span>` : ''}${label}</button>`;
     const showFavorite = loaded && signedIn && team && !editing;
+    const carousel = showFavorite && followed.length > 1;
+    const position = followed.indexOf(favorite);
     let content;
     if (!loaded) content = failure ? `<div class="my-team-prompt"><p>My Team could not load.</p>${button('retry', 'Try again')}</div>` : '<p role="status">Loading My Team…</p>';
     else if (!signedIn) content = '<p>Sign in from the header to follow your favorite team.</p>';
@@ -77,16 +81,18 @@ export function mountMyTeam(root, { teams, renderTeam, chosenTeamId, adapter = a
       <select id="my-team-select" name="team" required${disabled}>${options(teams, draft)}</select></div>
       <button type="submit" class="button small"${disabled}>Save team</button>
       ${team ? button('cancel', 'Cancel') : ''}${favorite ? button('clear', 'Remove team') : ''}</form>`;
-    else content = renderTeam(team);
+    else content = `<div class="my-team-carousel-slide" data-my-team-slide${carousel ? ` role="group" aria-roledescription="slide" aria-label="${position + 1} of ${followed.length}: ${escape(team.name)}"` : ''}${slideDirection ? ` data-slide-direction="${slideDirection}"` : ''}>${renderTeam(team)}</div>`;
     const teamColor = showFavorite ? myTeamColors[team.id] : null;
     const theme = showFavorite ? ` data-favorite-team="${escape(team.id)}"${teamColor ? ` style="--my-team-color:${teamColor}"` : ''}` : '';
-    root.innerHTML = `<section class="panel my-team"${theme} aria-labelledby="my-team-title"><div class="panel-body">
+    root.innerHTML = `<section class="panel my-team"${theme} aria-labelledby="my-team-title"${carousel ? ' aria-roledescription="carousel"' : ''}><div class="panel-body">
       <div class="my-team-header"><div class="my-team-header-title"><h2 id="my-team-title">${showFavorite ? '<span class="my-team-star" aria-hidden="true">☆</span>' : ''}My Team</h2>
-      ${showFavorite ? '<span data-my-team-update-badge></span>' : ''}</div>${showFavorite ? button('edit', 'Change team', '⇄') : ''}</div>
+      ${showFavorite ? '<span data-my-team-update-badge></span>' : ''}</div><div class="my-team-header-controls">${carousel ? `<nav class="my-team-carousel-nav" aria-label="Followed teams" data-my-team-carousel><button type="button" class="my-team-cycle" data-my-team-action="previous" aria-label="Previous followed team"><span aria-hidden="true">◀</span></button><span class="my-team-carousel-position" role="status" aria-live="polite" aria-atomic="true"><span class="sr-only">Team </span>${position + 1} of ${followed.length}<span class="sr-only">: ${escape(team.name)}</span></span><button type="button" class="my-team-cycle" data-my-team-action="next" aria-label="Next followed team"><span aria-hidden="true">▶</span></button></nav>` : ''}${showFavorite ? button('edit', 'Change team', '⇄') : ''}</div></div>
       ${showFavorite ? '<div data-my-team-update-panel hidden></div>' : ''}${content}<p class="my-team-message compact-note" role="status">${escape(message)}</p><a class="text-link" href="#my-teams">My Teams</a></div></section>`;
     if (showFavorite) {
       cleanupExtras = mountExtras?.(root, team);
-      if (updatesEnabled && loadUpdateFacts && season) {
+      // The existing seen marker belongs to the saved primary team. Browsing
+      // another card must not compare or overwrite that team's update history.
+      if (favorite === primaryFavorite && updatesEnabled && loadUpdateFacts && season) {
         cleanupUpdates = mountMyTeamUpdates(root.querySelector('[data-my-team-update-badge]'), root.querySelector('[data-my-team-update-panel]'), {
           team, season, previous: seen, adapter, loadFacts: () => loadUpdateFacts(team),
           onSaved: value => { seen = value; }, onConflict: read,
@@ -98,14 +104,18 @@ export function mountMyTeam(root, { teams, renderTeam, chosenTeamId, adapter = a
 
   async function read() {
     const request = ++version;
-    loaded = false; failure = false; message = ''; draw();
+    loaded = false; failure = false; message = ''; slideDirection = ''; touchStart = null; draw();
     try {
       const preference = await adapter.getPreference();
       if (!current(request)) return;
+      const sameAccount = preference.userId != null && preference.userId === preferenceUserId;
       signedIn = preference.signedIn === true;
+      preferenceUserId = signedIn ? preference.userId ?? null : null;
       seen = preference.seen ?? null;
       updatesEnabled = preference.updatesEnabled !== false;
-      favorite = signedIn && typeof preference.teamId === 'string' ? preference.teamId : null;
+      primaryFavorite = signedIn && typeof preference.teamId === 'string' ? preference.teamId : null;
+      followed = signedIn ? [...new Set([primaryFavorite, ...(Array.isArray(preference.teamIds) ? preference.teamIds : [])])].filter(id => teams.has(id)) : [];
+      favorite = sameAccount && followed.includes(favorite) ? favorite : followed[0] ?? primaryFavorite;
       editing = signedIn && teams.has(chosenTeamId) && chosenTeamId !== favorite;
       draft = editing ? chosenTeamId : teams.has(favorite) ? favorite : '';
       loaded = true;
@@ -121,11 +131,15 @@ export function mountMyTeam(root, { teams, renderTeam, chosenTeamId, adapter = a
     const request = ++version;
     busy = true; message = ''; draw();
     try {
-      await adapter.savePreference(teamId);
+      const removedTeamId = favorite;
+      await adapter.savePreference(teamId, { removeTeamId: removedTeamId });
       if (!current(request)) return;
-      if (favorite !== teamId) seen = null;
-      favorite = teamId;
-      draft = teamId ?? '';
+      const previousPrimary = primaryFavorite;
+      followed = teamId ? [teamId, ...followed.filter(id => id !== teamId)] : followed.filter(id => id !== removedTeamId);
+      if (teamId || removedTeamId === primaryFavorite) primaryFavorite = teamId ?? followed[0] ?? null;
+      if (primaryFavorite !== previousPrimary) seen = null;
+      favorite = teamId ?? followed[0] ?? null;
+      draft = favorite ?? '';
       editing = false;
       message = teamId ? 'Team saved to your account.' : 'Team removed from your account.';
     } catch {
@@ -134,6 +148,16 @@ export function mountMyTeam(root, { teams, renderTeam, chosenTeamId, adapter = a
     }
     busy = false;
     draw(editing || !favorite ? '#my-team-select' : '[data-my-team-action="edit"]');
+  }
+
+  function cycle(direction, focus) {
+    if (!loaded || !signedIn || editing || busy || followed.length < 2) return;
+    const position = followed.indexOf(favorite);
+    favorite = followed[(position + direction + followed.length) % followed.length];
+    draft = favorite;
+    message = '';
+    slideDirection = direction > 0 ? 'next' : 'previous';
+    draw(focus);
   }
 
   root.onchange = event => {
@@ -147,11 +171,30 @@ export function mountMyTeam(root, { teams, renderTeam, chosenTeamId, adapter = a
   root.onclick = event => {
     const action = event.target.closest('[data-my-team-action]')?.dataset.myTeamAction;
     if (!action || busy) return;
+    if (action === 'previous' || action === 'next') return cycle(action === 'next' ? 1 : -1, `[data-my-team-action="${action}"]`);
     if (action === 'retry') return read();
     if (action === 'edit') { editing = true; message = ''; draw('#my-team-select'); }
     if (action === 'cancel') { editing = false; draft = favorite; message = ''; draw('[data-my-team-action="edit"]'); }
     if (action === 'clear') return save(null);
   };
+  root.onkeydown = event => {
+    if (!event.target.closest('[data-my-team-carousel]') || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    event.preventDefault();
+    const direction = event.key === 'ArrowRight' ? 1 : -1;
+    cycle(direction, `[data-my-team-action="${direction > 0 ? 'next' : 'previous'}"]`);
+  };
+  root.onpointerdown = event => {
+    touchStart = null;
+    if (event.pointerType !== 'touch' || !event.target.closest('[data-my-team-slide]') || event.target.closest('a,button,input,select,textarea,summary')) return;
+    touchStart = { id: event.pointerId, x: event.clientX, y: event.clientY };
+  };
+  root.onpointerup = event => {
+    const start = touchStart; touchStart = null;
+    if (!start || start.id !== event.pointerId) return;
+    const horizontal = event.clientX - start.x, vertical = event.clientY - start.y;
+    if (Math.abs(horizontal) >= 40 && Math.abs(horizontal) > Math.abs(vertical) * 1.4) cycle(horizontal < 0 ? 1 : -1);
+  };
+  root.onpointercancel = () => { touchStart = null; };
   void read();
   const unsubscribe = adapter.subscribe?.(read);
   return () => {
@@ -160,5 +203,6 @@ export function mountMyTeam(root, { teams, renderTeam, chosenTeamId, adapter = a
     cleanupExtras?.();
     unsubscribe?.();
     root.onclick = root.onchange = root.onsubmit = null;
+    root.onkeydown = root.onpointerdown = root.onpointerup = root.onpointercancel = null;
   };
 }

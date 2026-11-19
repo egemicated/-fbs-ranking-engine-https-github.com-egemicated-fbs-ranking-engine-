@@ -74,3 +74,73 @@ test('a late account preference does not render after unmount', async () => {
   assert.doesNotMatch(ui.root.innerHTML, /data-favorite=/);
   assert.equal(ui.root.onchange, null);
 });
+
+test('followed-team carousel wraps in both directions without saving or changing the primary team', async () => {
+  const saved = [];
+  const ui = fixture({ getPreference: async () => ({ signedIn: true, userId: 'owner', teamId: '26', teamIds: ['26', '147'] }),
+    savePreference: (...args) => saved.push(args) });
+  await flush();
+  assert.match(ui.root.innerHTML, /aria-roledescription="carousel"/);
+  assert.match(ui.root.innerHTML, /aria-label="1 of 2: UCLA"/);
+  ui.click('previous');
+  assert.match(ui.root.innerHTML, /data-favorite="147"/);
+  assert.match(ui.root.innerHTML, /aria-label="2 of 2: Montana &lt;State&gt;"/);
+  ui.click('next');
+  assert.match(ui.root.innerHTML, /data-favorite="26"/);
+  ui.click('next');
+  assert.match(ui.root.innerHTML, /data-favorite="147"/);
+  assert.deepEqual(saved, []);
+  ui.unmount();
+});
+
+test('a carousel preserves the viewed card on same-account refresh and resets across account changes or sign-out', async () => {
+  let onChange;
+  let preference = { signedIn: true, userId: 'first', teamId: '26', teamIds: ['26', '147'] };
+  const ui = fixture({ getPreference: async () => preference, subscribe: callback => { onChange = callback; } });
+  await flush(); ui.click('next');
+  onChange(); await flush(); assert.match(ui.root.innerHTML, /data-favorite="147"/);
+  preference = { ...preference, userId: 'second' };
+  onChange(); await flush(); assert.match(ui.root.innerHTML, /data-favorite="26"/);
+  preference = { signedIn: false, userId: null, teamId: null, teamIds: [] };
+  onChange(); assert.doesNotMatch(ui.root.innerHTML, /data-favorite=/);
+  await flush(); assert.doesNotMatch(ui.root.innerHTML, /data-my-team-carousel/);
+  ui.unmount();
+});
+
+test('only distinct available saved teams appear, and single-team accounts have no carousel controls', async () => {
+  const ui = fixture({ getPreference: async () => ({ signedIn: true, userId: 'owner', teamId: '26', teamIds: ['26', '26', 'unavailable'] }) });
+  await flush();
+  assert.match(ui.root.innerHTML, /data-favorite="26"/);
+  assert.doesNotMatch(ui.root.innerHTML, /data-my-team-carousel/);
+  ui.click('next'); assert.match(ui.root.innerHTML, /data-favorite="26"/);
+  ui.unmount();
+});
+
+test('keyboard arrows and horizontal touch gestures cycle while vertical gestures do not', async () => {
+  const ui = fixture({ getPreference: async () => ({ signedIn: true, userId: 'owner', teamId: '26', teamIds: ['26', '147'] }) });
+  await flush();
+  let prevented = false;
+  ui.root.onkeydown({ target: { closest: () => ({}) }, key: 'ArrowRight', preventDefault: () => { prevented = true; } });
+  assert.equal(prevented, true); assert.match(ui.root.innerHTML, /data-favorite="147"/);
+  const target = { closest: selector => selector === '[data-my-team-slide]' ? {} : null };
+  ui.root.onpointerdown({ pointerType: 'touch', pointerId: 1, clientX: 180, clientY: 100, target });
+  ui.root.onpointerup({ pointerId: 1, clientX: 80, clientY: 110 });
+  assert.match(ui.root.innerHTML, /data-favorite="26"/);
+  ui.root.onpointerdown({ pointerType: 'touch', pointerId: 2, clientX: 180, clientY: 100, target });
+  ui.root.onpointerup({ pointerId: 2, clientX: 130, clientY: 210 });
+  assert.match(ui.root.innerHTML, /data-favorite="26"/);
+  ui.unmount();
+  assert.equal(ui.root.onkeydown, null); assert.equal(ui.root.onpointerdown, null);
+});
+
+test('removing a browsed secondary team targets that team and retains the primary favorite', async () => {
+  const saved = [];
+  const ui = fixture({ getPreference: async () => ({ signedIn: true, userId: 'owner', teamId: '26', teamIds: ['26', '147'] }),
+    savePreference: async (...args) => saved.push(args) });
+  await flush(); ui.click('next'); ui.click('edit');
+  await ui.click('clear'); await flush();
+  assert.deepEqual(saved, [[null, { removeTeamId: '147' }]]);
+  assert.match(ui.root.innerHTML, /data-favorite="26"/);
+  assert.doesNotMatch(ui.root.innerHTML, /data-my-team-carousel/);
+  ui.unmount();
+});

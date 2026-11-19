@@ -192,13 +192,19 @@ try{
       const requests=[{id:'test-request',email:'fan@example.test',category:'general',message:'A private test support request.',status:'pending',notificationStatus:'pending'},
         {id:'test-failed-alert',email:'fan@example.test',category:'general',message:'A saved request with exhausted delivery attempts.',status:'pending',notificationStatus:'failed'},
         {id:'test-failed-alert-sent',email:'fan@example.test',category:'general',message:'A saved request whose retry will be accepted by the provider.',status:'pending',notificationStatus:'failed'}];
-      const users=[{userId:'test-user',email:'fan@example.test',nickname:'Fan',role:'user',status:'active',emailConfirmed:true}],actions=[];let lastRequeue;
+      const users=Array.from({length:23},(_,index)=>({userId:index===0?'test-user':`test-user-${index+1}`,
+        email:index===0?'fan@example.test':`fan${String(index+1).padStart(2,'0')}@example.test`,
+        nickname:index===0?'Fan':`Fan ${index+1}`,role:'user',status:'active',emailConfirmed:true})),actions=[];let lastRequeue;
       window.adminCalls=[];
       const client={auth:{getUser:async()=>({data:{user:{id:'test-admin'}}}),mfa:{getAuthenticatorAssuranceLevel:async()=>({data:{currentLevel:'aal2'}})}},
         functions:{invoke:async()=>{if(lastRequeue==='test-failed-alert-sent'){requests.find(row=>row.id===lastRequeue).notificationStatus='sent';return{data:{accepted:true,delivery:'processed'}};}throw Error('Disposable email delivery outage');}},
         rpc:async(name,args)=>{window.adminCalls.push({name,args});
           if(name==='account_context')return{data:{role:'admin'}};
-          if(name==='admin_users')return{data:{users,total:users.length}};
+          if(name==='admin_users'){
+            const search=String(args.p_search??'').trim().toLowerCase();
+            const matching=users.filter(user=>!search||user.email.toLowerCase().includes(search)||user.nickname.toLowerCase().includes(search));
+            return{data:{users:matching.slice(args.p_offset,args.p_offset+args.p_limit),total:matching.length}};
+          }
           if(name==='admin_support_requests')return{data:{requests,total:requests.length}};
           if(name==='admin_action_history')return{data:{actions,total:actions.length}};
           if(name==='admin_update_request'){const row=requests.find(row=>row.id===args.p_request_id);row.status=args.p_status;row.adminNote=args.p_note;return{data:row};}
@@ -208,7 +214,38 @@ try{
         }};
       mountAdministration(document.querySelector('#account-test'),{previewClient:client,previewConfig:{supportNotificationsEnabled:true}});
     });
-    await page.locator('.admin-user').waitFor();
+    await page.locator('.admin-user').first().waitFor();
+    const userPages=page.locator('nav[aria-label="Registered user pages"]');
+    const checkUserPage=async(number,count,range)=>{
+      await userPages.locator(`[data-admin-users-page="${number}"][aria-current="page"]`).waitFor();
+      await page.locator('[data-admin-users-range]').filter({hasText:range}).waitFor();
+      assert.equal(await page.locator('[data-admin-users-range]').innerText(),`${range} · 10 per page`);
+      assert.equal(await page.locator('.admin-user').count(),count);
+      const call=await page.evaluate(()=>window.adminCalls.filter(call=>call.name==='admin_users').at(-1));
+      assert.equal(call.args.p_limit,10);assert.equal(call.args.p_offset,(number-1)*10);
+      await assertPageFits(page,`Admin page ${number} overflow at ${width}`);
+    };
+    await checkUserPage(1,10,'Showing 1–10 of 23 accounts');
+    assert.equal(await page.locator('.admin-user details[open]').count(),0);
+    assert.equal(await userPages.getByRole('button',{name:'Previous',exact:true}).isDisabled(),true);
+    await userPages.locator('[data-admin-users-page="2"]').first().click();
+    await checkUserPage(2,10,'Showing 11–20 of 23 accounts');
+    assert.match(await page.locator('.admin-user').first().innerText(),/fan11@example\.test/);
+    await userPages.locator('[data-admin-users-page="3"]').first().click();
+    await checkUserPage(3,3,'Showing 21–23 of 23 accounts');
+    assert.equal(await userPages.getByRole('button',{name:'Next',exact:true}).isDisabled(),true);
+    assert.match(await page.locator('.admin-user').first().innerText(),/fan21@example\.test/);
+    await userPages.locator('[data-admin-users-page="2"]').first().click();
+    await checkUserPage(2,10,'Showing 11–20 of 23 accounts');
+    await page.locator('[data-admin-search] input').fill('fan@example.test');
+    await page.locator('[data-admin-search] [type="submit"]').click();
+    await page.locator('[data-admin-users-range]').filter({hasText:'Showing 1–1 of 1 matching account ·'}).waitFor();
+    assert.equal(await page.locator('.admin-user').count(),1);
+    assert.deepEqual(await page.evaluate(()=>window.adminCalls.filter(call=>call.name==='admin_users').at(-1).args),{p_search:'fan@example.test',p_limit:10,p_offset:0});
+    await assertPageFits(page,`Admin filtered users overflow at ${width}`);
+    await page.locator('[data-admin-search] input').fill('');
+    await page.locator('[data-admin-search] [type="submit"]').click();
+    await checkUserPage(1,10,'Showing 1–10 of 23 accounts');
     await page.locator('.admin-request > summary').first().click();
     await page.locator('[data-admin-request="test-request"] select').selectOption('in_review');await page.locator('[data-admin-request="test-request"] textarea').fill('Disposable review note');await page.locator('[data-admin-request="test-request"] [type="submit"]').click();
     await page.waitForFunction(()=>window.adminCalls.some(call=>call.name==='admin_update_request'));
@@ -225,11 +262,15 @@ try{
       assert.equal(await page.locator(`[data-admin-notification-requeue="${id}"]`).count(),0);
       assert.match(await page.locator('[data-admin-result]').innerText(),/support request remains saved/);
     }
-    await page.locator('.admin-user summary').click();await page.locator('[data-admin-user-status] select').selectOption('suspended');await page.locator('[data-admin-user-status] input[name="reason"]').fill('Disposable moderation test');await page.locator('[data-admin-user-status] [type="submit"]').click();await page.waitForFunction(()=>window.adminCalls.some(call=>call.name==='admin_set_account_status'));
+    const managedUser=page.locator('.admin-user').filter({has:page.locator('[data-admin-user-status="test-user"]')});
+    await managedUser.locator('summary').first().click();
+    assert.equal(await managedUser.locator('details[open]').count(),1);
+    await assertPageFits(page,'Expanded admin user overflow at '+width);
+    await managedUser.locator('[data-admin-user-status] select').selectOption('suspended');await managedUser.locator('[data-admin-user-status] input[name="reason"]').fill('Disposable moderation test');await managedUser.locator('[data-admin-user-status] [type="submit"]').click();await page.waitForFunction(()=>window.adminCalls.some(call=>call.name==='admin_set_account_status'));
     await assertPageFits(page,'Admin overflow at '+width);
     const adminLabels=await page.locator('#account-test input,#account-test select,#account-test textarea').evaluateAll(controls=>controls.filter(control=>!control.labels?.length&&!control.getAttribute('aria-label')).map(control=>control.id));assert.deepEqual(adminLabels,[]);
     assert.equal(await page.locator('#account-test input[type="password"]').count(),0);
-    assert.deepEqual(errors,[]);results.push({width,account:true,registrationMock:true,recoveryMock:true,googleMigrationMock:true,mfaMock:true,adminMock:true,failedNotificationRequeueMock:true,overflow:false,labels:true});await page.close();
+    assert.deepEqual(errors,[]);results.push({width,account:true,registrationMock:true,recoveryMock:true,googleMigrationMock:true,mfaMock:true,adminMock:true,adminPaginationMock:true,failedNotificationRequeueMock:true,overflow:false,labels:true});await page.close();
   }
   const callbacks=[];for(const fixture of callbackCases)callbacks.push(await checkCallbackRouting(fixture));
   console.log(JSON.stringify({status:'passed',providerFlows:'Browser-only SDK/RPC doubles; no real email or OAuth delivery claimed',checks:results,callbacks},null,2));
