@@ -3,9 +3,9 @@
   "url": "https://egxyfyorggwnrnmirrax.supabase.co",
   "publishableKey": "sb_publishable_-Cs8pWDSJ5u40l4wshAlgA_mSmpe-3F",
   "emailAuthEnabled": true,
-  "emailRegistrationEnabled": false,
-  "passwordRecoveryEnabled": false,
+  "emailRegistrationEnabled": true,
+  "passwordRecoveryEnabled": true,
   "accountAdministrationEnabled": true,
-  "supportNotificationsEnabled": false,
+  "supportNotificationsEnabled": true,
   "supportEmail": "fbsintel@yahoo.com"
 }

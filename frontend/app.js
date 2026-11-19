@@ -1,3 +1,5 @@
+import { ACCOUNT_ROUTE_EVENT, accountCallbackMode, initialAccountReturnUrl, safeAccountReturnHash } from './bracket-auth.js?v=header-account';
+
 const BRAND = 'FBS Intelligence';
 const main = document.querySelector('#main');
 let shareCardButton = () => '';
@@ -192,7 +194,7 @@ function snapshotDate(options = {}) {
   const value = state.snapshot.asOf || state.snapshot.source?.fetchedAt || state.snapshot.before;
   return new Intl.DateTimeFormat('en-US', { timeZone:'America/Denver', month:'short', day:'numeric', ...options }).format(new Date(value));
 }
-function route() { return (location.hash.slice(1) || 'home').split('/'); }
+function route() { return (accountCallbackMode(location.href)?'account':location.hash.slice(1) || 'home').split('/'); }
 function isRankingsHub(page) { return ['rankings', 'polls', 'forge-top-25', 'conference-strength'].includes(page); }
 function rankingsRoute() {
   const [, first, second, third] = route();
@@ -264,7 +266,7 @@ function renderHeader() {
   else if (slot?.isConnected) void import('./bracket-auth.js?v=header-account').then(({ mountHeaderAccount }) => {
     mountHeaderAccount(slot, { icon: icon('teams'), previewClient: localPreview?.contest?.client,
       rememberPage() {
-        try { window.sessionStorage.setItem(accountReturnKey, location.hash || '#home'); } catch {}
+        try { window.sessionStorage.setItem(accountReturnKey, safeAccountReturnHash(location.hash || '#home')); } catch {}
       },
     });
   }).catch(() => { slot.innerHTML = '<span class="header-account-message" role="status">Sign-in is unavailable.</span>'; });
@@ -1744,6 +1746,7 @@ window.addEventListener('hashchange', event => {
   const from = event.oldURL ? new URL(event.oldURL).hash.slice(1).split('/')[0] : '';
   if (!isRankingsHub(from) || !isRankingsHub(route()[0])) window.scrollTo({ top: 0, behavior: 'instant' });
 });
+window.addEventListener(ACCOUNT_ROUTE_EVENT,()=>{render();});
 function loadFootballHelpers() {
   footballFormatRequest ??= Promise.all([
     import('./format.js?v=1').then(module => { footballFormat = module; }),
@@ -1787,20 +1790,15 @@ async function load(){
   }
 }
 const authReturn = location.search && new URLSearchParams(location.search);
-const authMarkers = ['cfp', 'weekly', 'myteam'];
 let savedAccountPage;
-if (authReturn && (authReturn.get('myteam') === '1' || authReturn.has('code'))) {
+if ((authReturn && (authReturn.get('myteam') === '1' || authReturn.has('code'))) || accountCallbackMode(location.href)) {
   try {
     savedAccountPage = window.sessionStorage.getItem(accountReturnKey);
     window.sessionStorage.removeItem(accountReturnKey);
   } catch {}
 }
-if (authReturn && (savedAccountPage || authMarkers.some(key => authReturn.get(key) === '1'))) {
-  const signInReturn = new URL(location.href);
-  signInReturn.hash = authReturn.get('weekly') === '1' ? 'beat-the-model' : authReturn.get('cfp') === '1' ? 'bracket' : savedAccountPage || 'home';
-  for (const marker of authMarkers) signInReturn.searchParams.delete(marker);
-  history.replaceState(history.state, '', signInReturn);
-}
+const signInReturn=initialAccountReturnUrl(location.href,savedAccountPage);
+if(signInReturn!==location.href)history.replaceState(history.state,'',signInReturn);
 if (route()[0] === 'scoreboard') render();
 else renderHeader();
 load();

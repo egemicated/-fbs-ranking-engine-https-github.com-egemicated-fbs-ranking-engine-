@@ -4,6 +4,7 @@ import { accountCapabilities, validateNewPassword, accountCallbackUrl, cleanAcco
 import { accountCenterMarkup, qrDataUrl, supportRequestMarkup, mountAccountCenter } from '../frontend/account-center.js';
 import { administrationMarkup, mountAdministration, failedNotificationRetryMarkup, notificationRequeueNotice, requeueFailedNotification } from '../frontend/account-administration.js';
 import { notifySupportIfReady } from '../frontend/account-support.js';
+import { accountCallbackMode, initialAccountReturnUrl, safeAccountReturnHash, accountCallbackErrorNotice } from '../frontend/bracket-auth.js?v=header-account';
 
 const strong='A long test passphrase 42';
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
@@ -150,4 +151,29 @@ test('requeue feedback separates queued alerts, provider acceptance and actual i
   assert.match(notificationRequeueNotice('sent'),/provider accepted/);assert.match(notificationRequeueNotice('sent'),/Inbox receipt is not confirmed/);
   assert.match(notificationRequeueNotice('failed'),/another review/);assert.match(notificationRequeueNotice(undefined),/has not been confirmed/);
   for(const state of ['pending','processing','sent','failed',undefined])assert.match(notificationRequeueNotice(state),/support request remains saved/);
+});
+
+test('email callbacks override stale OAuth destinations without consuming pending managed credentials',()=>{
+  for(const mode of ['recovery','verification']){
+    const before=`https://example.test/?account=${mode}&code=synthetic#account`;
+    const planned=new URL(initialAccountReturnUrl(before,'#home'));
+    assert.equal(planned.hash,'#account');assert.equal(planned.searchParams.get('code'),'synthetic');assert.equal(accountCallbackMode(planned.href),mode);
+  }
+  const implicit='https://example.test/?account=recovery#access_token=synthetic&refresh_token=synthetic&type=recovery';
+  assert.equal(new URL(initialAccountReturnUrl(implicit,'#home')).hash,new URL(implicit).hash);
+  assert.equal(accountCallbackMode(implicit),'recovery');
+});
+
+test('ordinary Google PKCE callbacks retain remembered pages and never store credential fragments as navigation',()=>{
+  assert.equal(new URL(initialAccountReturnUrl('https://example.test/?code=synthetic#home','#teams/fcs')).hash,'#teams/fcs');
+  assert.equal(new URL(initialAccountReturnUrl('https://example.test/?weekly=1&code=synthetic','#home')).hash,'#beat-the-model');
+  assert.equal(safeAccountReturnHash('#access_token=synthetic&refresh_token=synthetic'),'#account');
+});
+
+test('callback errors use fixed guidance for expired or mismatched links without reflecting provider diagnostics',()=>{
+  assert.equal(accountCallbackErrorNotice(null),'');
+  assert.match(accountCallbackErrorNotice({code:'otp_expired'}),/expired or is no longer available/);
+  assert.match(accountCallbackErrorNotice({code:'flow_state_not_found'}),/use it once/);
+  for(const error of [{code:'bad_code_verifier'},{name:'AuthPKCECodeVerifierMissingError'}])assert.match(accountCallbackErrorNotice(error),/matched to this browser/);
+  assert.doesNotMatch(accountCallbackErrorNotice({message:'private provider detail with token'}),/private provider|token/);
 });

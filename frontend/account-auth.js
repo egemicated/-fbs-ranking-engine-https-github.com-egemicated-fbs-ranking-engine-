@@ -32,7 +32,7 @@ export function cleanAccountCallbackUrl(value) {
   for (const key of ['code', 'access_token', 'refresh_token', 'token_hash', 'error', 'error_code', 'error_description', 'account']) url.searchParams.delete(key);
   // Implicit credentials should never be retained in navigation/history, even
   // if a legacy link reaches this PKCE client. Managed Auth processes them first.
-  if (/(?:^#|[&#])(?:access_token|refresh_token|error)=/.test(url.hash)) url.hash = 'account';
+  if (/(?:^#|[&#])(?:access_token|refresh_token|token_hash|error)=/.test(url.hash)) url.hash = 'account';
   return url.href;
 }
 

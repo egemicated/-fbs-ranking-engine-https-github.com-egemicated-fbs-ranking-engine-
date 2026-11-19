@@ -19,6 +19,63 @@ await new Promise(done=>server.listen(0,'127.0.0.1',done));
 const base=`http://127.0.0.1:${server.address().port}/`;
 const browser=await chromium.launch({headless:true,...(process.env.QUALITY_BROWSER?{executablePath:process.env.QUALITY_BROWSER}:{}),args:['--no-sandbox']});
 const results=[];
+const callbackCases=[
+  {name:'recovery-pkce',query:'?account=recovery&code=synthetic',hash:'#account',remembered:'#home',mode:'recovery',expected:'#account'},
+  {name:'verification-pkce',query:'?account=verification&code=synthetic',hash:'#account',remembered:'#teams/fcs',mode:'verification',expected:'#account'},
+  {name:'recovery-fragment-cleanup',query:'?account=recovery',hash:'#access_token=synthetic&refresh_token=synthetic&type=recovery',remembered:'#home',mode:'recovery',expected:'#account'},
+  {name:'recovery-fragment-without-marker',query:'',hash:'#access_token=synthetic&refresh_token=synthetic&type=recovery',remembered:'#home',mode:'recovery',expected:'#account'},
+  {name:'google-pkce-remembered-route',query:'?code=synthetic',hash:'#home',remembered:'#teams/fcs',mode:'signin',expected:'#teams/fcs'},
+  {name:'expired-recovery-link',query:'?account=recovery',hash:'#error=access_denied&error_code=otp_expired&error_description=synthetic',remembered:'#home',mode:'expired',expected:'#account',notice:'This email link has expired or is no longer available.'},
+  {name:'missing-pkce-verifier',query:'?account=recovery&code=synthetic',hash:'#account',remembered:'#home',mode:'missing-verifier',expected:'#account',notice:'This link could not be matched to this browser.'},
+];
+
+async function checkCallbackRouting(fixture){
+  const page=await browser.newPage({viewport:{width:390,height:1050}});
+  await page.route('https://egxyfyorggwnrnmirrax.supabase.co/**',route=>route.abort());
+  await page.route('**/auth/v1/settings',route=>route.fulfill({json:{external:{google:true}}}));
+  await page.route('**/app.js*',async route=>route.fulfill({contentType:'text/javascript',body:await readFile('frontend/app.js','utf8')}));
+  await page.route('**/account-auth.js*',async route=>route.fulfill({contentType:'text/javascript',body:await readFile('frontend/account-auth.js','utf8')}));
+  await page.route('**/account-center.js*',async route=>route.fulfill({contentType:'text/javascript',body:await readFile('frontend/account-center.js','utf8')}));
+  await page.route('**/bracket-auth.js*',async route=>{
+    const source=await readFile('frontend/bracket-auth.js','utf8');
+    // Replace only the managed SDK boundary in this disposable context. The
+    // production callback/routing/observation logic remains byte-identical.
+    const boundary='export function loadBracketClient({ url, publishableKey }) {';
+    assert.equal(source.split(boundary).length,2);
+    await route.fulfill({contentType:'text/javascript',body:source.replace(boundary,boundary+'\nreturn Promise.resolve(window.callbackClientFixture);')});
+  });
+  await page.addInitScript(({mode,remembered})=>{
+    sessionStorage.setItem('fbs-account-return',remembered);
+    const user={id:'callback-fixture',email:'routing@example.test'},session={user},listeners=new Set();
+    let complete;
+    const initialized=new Promise(resolve=>{complete=resolve;});
+    const error=mode==='expired'?{code:'otp_expired',message:'synthetic provider diagnostic'}:mode==='missing-verifier'?{name:'AuthPKCECodeVerifierMissingError',message:'synthetic provider diagnostic'}:null;
+    window.callbackClientFixture={auth:{getSession:async()=>{await initialized;return error?{data:{session:null},error}:{data:{session}};},getUser:async()=>{await initialized;return{data:{user:mode==='expired'?null:user}};},
+      onAuthStateChange:callback=>{listeners.add(callback);return{data:{subscription:{unsubscribe:()=>listeners.delete(callback)}}};},
+      mfa:{getAuthenticatorAssuranceLevel:async()=>({data:{currentLevel:'aal1',nextLevel:'aal1'}}),listFactors:async()=>({data:{totp:[]}})}},
+      rpc:async name=>({data:name==='account_context'?{userId:user.id,email:user.email,role:'user',status:'active',nickname:'Routing fixture',publicLeaderboard:false,sharePicks:false}:[]})};
+    window.completeCallbackFixture=()=>{
+      const url=new URL(location.href);url.searchParams.delete('code');
+      if(/access_token=|refresh_token=/.test(url.hash))url.hash='';
+      history.replaceState(history.state,'',url);
+      if(!error)for(const callback of [...listeners])callback(mode==='recovery'?'PASSWORD_RECOVERY':'SIGNED_IN',session);
+      complete();
+    };
+  },fixture);
+  await page.goto(base+fixture.query+fixture.hash,{waitUntil:'domcontentloaded'});
+  await page.locator(fixture.expected==='#account'?'[data-connected-feature]':'.team-grid').waitFor();
+  assert.equal(await page.locator('.home-hero').count(),0,fixture.name+' before managed Auth finishes');
+  await page.evaluate(()=>window.completeCallbackFixture());
+  if(fixture.notice)await page.locator('main').getByText(fixture.notice,{exact:false}).waitFor();
+  else await page.locator(fixture.expected==='#account'?'.account-center':'.team-grid').waitFor();
+  const outcome=await page.evaluate(async()=>({hash:location.hash,query:location.search,home:!!document.querySelector('.home-hero'),
+    recovering:(await import('/bracket-auth.js?v=header-account')).hasPasswordRecoverySession(),remembered:sessionStorage.getItem('fbs-account-return')}));
+  assert.equal(outcome.hash,fixture.expected,fixture.name+' after credential cleanup');assert.equal(outcome.home,false);
+  assert.equal(outcome.query,'');assert.equal(outcome.remembered,null);assert.equal(outcome.recovering,fixture.mode==='recovery');
+  assert.doesNotMatch(await page.locator('body').innerText(),/synthetic provider diagnostic/);
+  if(fixture.mode==='recovery'){assert.equal(await page.locator('#account-new-password').count(),1);assert.equal(await page.locator('#account-current-password').count(),0);}
+  await page.close();return{name:fixture.name,passed:true};
+}
 async function assertPageFits(page,label){
   const dimensions=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
   let diagnostics='';
@@ -174,5 +231,6 @@ try{
     assert.equal(await page.locator('#account-test input[type="password"]').count(),0);
     assert.deepEqual(errors,[]);results.push({width,account:true,registrationMock:true,recoveryMock:true,googleMigrationMock:true,mfaMock:true,adminMock:true,failedNotificationRequeueMock:true,overflow:false,labels:true});await page.close();
   }
-  console.log(JSON.stringify({status:'passed',providerFlows:'Browser-only SDK/RPC doubles; no real email or OAuth delivery claimed',checks:results},null,2));
+  const callbacks=[];for(const fixture of callbackCases)callbacks.push(await checkCallbackRouting(fixture));
+  console.log(JSON.stringify({status:'passed',providerFlows:'Browser-only SDK/RPC doubles; no real email or OAuth delivery claimed',checks:results,callbacks},null,2));
 }finally{await browser.close();await new Promise(done=>server.close(done));}

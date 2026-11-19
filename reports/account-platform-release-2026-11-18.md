@@ -2,7 +2,9 @@
 
 Prepared November 18, 2026, Mountain Time. This report covers the account, administration, support, security and subscription-foundation assignment. It distinguishes implemented code, deployed backend changes, local verification and features deliberately awaiting configuration. It is not a claim that every requested production journey is complete.
 
-**Release status:** the account-settings foundation is live on Render at commit `16c0be0787f54aa86e895fed43f6726dc0ca7b7d`, after the complete required GitHub checks passed. Both additive database migrations and support Edge Function version 2 are installed. Google remains available. Public email registration, recovery and support-email notifications remain gated until private configuration and real delivery tests pass. Administrator provisioning and permanent deletion are incomplete and disabled. No payments are enabled. This is a controlled foundation release, not completion of the entire account rollout.
+**Release status:** the account-settings foundation is live on Render at commit `16c0be0787f54aa86e895fed43f6726dc0ca7b7d`. The later main commit `ad2efe5327d74357d29824fb48cdb6ffb4c29655` passed its required GitHub checks. Both additive database migrations and support Edge Function version 2 are installed. Brevo SMTP/private function configuration and the GitHub dispatcher secret are saved. Actual owner-controlled signup, verification, recovery, TOTP, protected admin provisioning and a support-alert dispatch have now been exercised. Google remains available and no payments are enabled.
+
+An actual recovery-link return exposed a routing problem, which is fixed and tested locally. The latest callback fix and local registration/recovery/notification enablement still await their final push, CI and static deployment at this checkpoint. Do not confuse local enabled flags with public activation. The release coordinator must finalize section I with the exact deployed commit and live verification. Permanent deletion remains disabled pending retention policy and protected execution.
 
 ## A. User accounts
 
@@ -13,7 +15,7 @@ Prepared November 18, 2026, Mountain Time. This report covers the account, admin
 - Account settings for public nickname, leaderboard visibility and consent to share picks only after each game's confirmed kickoff. My Teams links to the existing shared preferences instead of introducing another account-specific favorite store.
 - Optional TOTP enrollment, challenge and removal for regular users, with backend enforcement once a verified factor exists. Administrative operations require verified MFA.
 - Global sign-out, callback-token cleanup, generic provider errors and guards against stale private responses rendering after sign-out or an identity change.
-- Password entry uses 12–64 characters and respects the managed bcrypt byte bound. The live provider's minimum-password configuration still needs verification; a frontend rule is not a provider policy.
+- Password entry uses 12–64 characters and respects the managed bcrypt byte bound. Live managed Auth now has minimum length 12, email confirmation, current-password validation, 3,600-second email-link expiry and conservative email rates configured. Email-nonce reauthentication remains off because the current form does not implement that additional flow.
 
 Passwords, password hashes, recovery tokens and Google credentials are not stored in application profile tables or returned to administrators. Existing Google users add password access through authenticated managed `updateUser`, retaining the same UID; migration never calls registration or unlinks Google.
 
@@ -23,9 +25,19 @@ The real local Supabase Auth v2.198.0 server passed 13 grouped checks, including
 
 This is not a genuine Google OAuth handshake or a production migration. The synthetic saved-pick marker in that Auth fixture is not proof of real locked-pick migration; separate SQL/preservation tests cover application rows. No production Google identity was converted, unlinked or deleted.
 
-The actual Brevo sender `fbsintel@yahoo.com` is verified, and private SMTP/API credentials have been created in the provider. They are not configured in Supabase at this checkpoint. No real verification/recovery email has been sent or received as a release test. Registration/recovery UI flags are false. **The underlying Auth baseline already allowed provider signup; no backend signup disablement has been claimed.** Owner-facing readiness flags do not replace backend Auth configuration.
+The verified Brevo sender `fbsintel@yahoo.com`, SMTP configuration and six private function settings are saved in the correct **Work Projects / FBS Intelligence** project. The separate GitHub dispatcher secret is also saved. Key working copies were cleared after storage and actual functional proof; credential values are absent from source, public JSON and reports. The daughter's/family website domain was never used.
 
-Evidence: [interface verification](account-interface-validation-2026-11-18.md), [real Auth report](isolated-auth-api-validation-2026-11-18.md), [machine-readable Auth run](account-real-auth-validation-2026-11-18.json), [email readiness](account-email-readiness-2026-11-18.json).
+Controlled hosted checks now include:
+
+- A new owner-controlled email signup, actual unverified-sign-in rejection and completed email verification.
+- Actual owner-completed recovery. The owner reported the old password was rejected; the new password's sign-in was observed in the in-app browser. Sanitized UID/hash matching confirmed the same identity, and its support request remained intact.
+- A recovery callback routing error reproduced from the owner's screenshot and corrected locally. The final production callback rollout remains pending; successful owner recovery does not alone prove every public return-path variant.
+
+Published registration/recovery/notification flags remain false at this checkpoint. All three local flags are now **true**, prepared for activation after the callback fix's final CI/deployment. **The underlying Auth baseline already allowed provider signup; no backend signup disablement has been claimed.** Frontend readiness flags do not replace managed Auth settings.
+
+Real sender headers, every email-client/browser combination, token expiry/reuse in a hosted inbox and a genuine Google-to-password OAuth migration were not all certified by these checks. The local Auth suite covers token mechanics; it must not be relabeled as those additional hosted tests.
+
+Evidence: [interface verification](account-interface-validation-2026-11-18.md), [real Auth report](isolated-auth-api-validation-2026-11-18.md), [machine-readable Auth run](account-real-auth-validation-2026-11-18.json), [email configuration and hosted test record](account-email-configuration-2026-11-18.json). The hosted test record distinguishes coordinator-observed browser/backend results from the owner's password-reset report and contains no disposable email, private account ID, credential or action link. The earlier [readiness checkpoint](account-email-readiness-2026-11-18.json) records the pre-configuration state; it is not the final delivery result.
 
 ## B. Administration
 
@@ -42,11 +54,13 @@ The compact administration interface supports:
 - Notification status and deliberate recovery of eligible exhausted notifications.
 - Append-only administrative action history.
 
-Role provisioning is a protected operator process requiring an existing confirmed identity and verified TOTP. No public registration field, frontend action, hardcoded password or editable metadata can provision an administrator. `fbsintel@yahoo.com` is the designated administrative address, but **no production administrator has been provisioned yet**.
+Role provisioning is a protected operator process requiring an existing confirmed identity and verified TOTP. No public registration field, frontend action, hardcoded password or editable metadata can provision an administrator. The designated `fbsintel@yahoo.com` identity completed email confirmation and TOTP verification, a live AAL2 session was observed, and protected provisioning succeeded. There is now **one administrator**.
 
 Administrator access does not provide passwords, another user's protected future picks, a locked-pick editor, ranking overrides, game-result editing or silent historical evidence changes. Suspension guards existing profile/preference/contest write paths while preserving owned reads and support access, subject to any enrolled MFA.
 
-The UI is implemented and locally checked; its production availability awaits frontend deployment. No real production administrator session or hosted administrator browser journey has been exercised.
+An actual administrator session used the local preview against the live backend: the directory showed three users and no password fields. Suspension and reactivation were exercised only on the owner-controlled disposable test account, which ended active. The controlled General support request was resolved through the interface. Four audit entries were observed. This is real backend/UI evidence through a local preview, distinct from verification of the final public deployed assets.
+
+Live nickname moderation and another participant's protected future-pick visibility were not independently exercised in this session; the isolated SQL/browser suites cover their permissions. No protected selections were read or edited for the administrator test.
 
 Evidence: [database permissions and migration review](account-database-foundation-2026-11-18.md), [public API denials](account-public-api-verification-2026-11-18.json).
 
@@ -60,7 +74,9 @@ Each request queues a private notification. A server-only worker claims bounded 
 
 Notification mail contains request ID/category/time and a secure review link, not private request text, submitting-user details or contest choices. Provider acceptance is labeled honestly and does not claim inbox receipt. Provider idempotency is time-limited; ambiguous delivery failures can still produce a duplicate after that window. This is not an exactly-once delivery guarantee.
 
-Edge Function **version 2 is active**, and anonymous notification/dispatch attempts and foreign origins were rejected in hosted checks. Guest form intake fails closed until abuse controls are configured. The function's public gateway setting does not authorize callers: the handler independently validates managed sessions, a private dispatcher secret or a configured verified CAPTCHA. Real notification delivery remains disabled until private configuration and mailbox tests succeed.
+Edge Function **version 2 is active**, and anonymous notification/dispatch attempts and foreign origins were rejected in hosted checks. Guest form intake fails closed until abuse controls are configured. The function's public gateway setting does not authorize callers: the handler independently validates managed sessions, a private dispatcher secret or a configured verified CAPTCHA.
+
+The dedicated manual-only [support dispatch workflow run 44452436735](https://github.com/egemicated/-fbs-ranking-engine-https-github.com-egemicated-fbs-ranking-engine-/actions/runs/44452436735) succeeded without triggering a football refresh. Its controlled request has one provider-accepted notification, one attempt and a persisted receipt. The owner subsequently followed the email's administration link. These observations support successful sending/receipt of that alert; they do not certify that its full email body or authentication headers were inspected. Public automatic-notification enablement still awaits the callback/frontend release; the manual dispatcher is functional.
 
 ### Deletion is deliberately incomplete
 
@@ -115,20 +131,24 @@ Evidence: [frozen division research](division-calibration-research-2026-11-18.md
 
 | Check | Actual result and scope |
 |---|---|
-| Complete Node suite | **435/435 passed**, zero failures/skips, locally and in the successful Linux release workflow |
+| Latest complete Node suite | **442/442 passed**, zero failures/skips, locally after the recovery callback correction; its final remote run is pending |
+| Published main CI checkpoint | Main `ad2efe5327d74357d29824fb48cdb6ffb4c29655`: workflow **44451691291** succeeded with **437 Node tests**, 14 migrations/13 SQL suites and 13 real Auth groups |
 | Migrations and SQL suites | **14 migrations / 13 SQL suites passed** in disposable PostgreSQL 18 locally and 17 in CI; transactional fixtures and empty-table checks; databases removed |
 | Real local Auth API | **13/13 grouped checks passed** using pinned Auth v2.198.0, actual locally issued sessions/TOTP/email tokens; database/listeners removed |
 | Official Linux Auth API | **13/13 grouped checks passed** using the checksum-verified, unmodified v2.198.0 release and PostgreSQL 17 in CI; three loopback SMTP messages, no external mail |
-| Existing browser quality | **72 responsive routes passed** locally and in the successful Linux release workflow |
+| Existing browser quality | **72 responsive routes passed** in the prior Linux release and again locally after the latest recovery correction |
 | New account/admin browser flows | Passed at **320, 390, 768 and 1440** widths, with explicit disposable SDK/RPC doubles; no unlabeled controls, horizontal overflow or uncaught errors reported |
+| Recovery/callback browser regressions | **Seven callback cases passed** locally after reproducing the owner's return-path bug; these complement the four-width account and CSP checks |
 | CSP enforcement browser harness | Passed with real Chromium and intercepted external transport; inline scripts/handlers/eval/unapproved hosts blocked; approved SDK/API/worker/image paths worked |
 | Public hosted database API | Private schemas rejected as unexposed; anonymous account/admin/service RPC calls denied |
-| Hosted support Edge boundaries | Unauthorized notify/dispatch denied; foreign origin denied; unconfigured guest intake unavailable; no mail sent |
+| Hosted support Edge boundaries | Unauthorized notify/dispatch denied; foreign origin denied; public guest intake remains unavailable |
+| Manual support delivery | Workflow **44452436735** succeeded; one controlled notification accepted on attempt one with a persisted receipt; owner followed its email link |
+| Hosted account/admin exercise | Actual owner signup/verification/recovery and AAL2/provisioning; live-backend preview directory and disposable suspension/reactivation/support review; limits stated in A–C |
 | Application rollback restore | Encrypted source roundtrip and isolated typed-row restore equality passed for all eight original application tables |
 | Production guest browser | Account, Support, Admin denial, My Teams, Rankings and Home passed at **320 and 1440**; real public SDK/sign-in dialog, no credential/form submission |
 | Production static publication | Nine live assets/public rankings matched the tested local build byte-for-byte; CSP/referrer metadata and disabled email-readiness flags confirmed |
 
-These rows describe different layers of evidence. Browser SDK/RPC doubles do not become real Auth tests; loopback SMTP is not inbox deliverability; direct authenticated SQL is not hosted PostgREST. Production guest checks do not prove signed-in or administrator production journeys. Exact CI/deployment evidence is in section I.
+These rows describe different layers of evidence. Browser SDK/RPC doubles do not become real Auth tests; loopback SMTP is not inbox deliverability; direct authenticated SQL is not hosted PostgREST. Earlier production guest checks did not prove signed-in/admin journeys; the later live-backend preview tests add those specific observations without certifying the pending public callback release. Exact CI/deployment evidence is in section I.
 
 ### Protections implemented or retained
 
@@ -136,16 +156,17 @@ Private schemas remain unexposed through the Data API. Sensitive tables have RLS
 
 The shared security policy permits the exact integrity-pinned Supabase SDK, first-party scripts/workers/fonts and known Supabase/ESPN hosts. Inline JavaScript/eval are blocked. Existing inline styles remain allowed for team colors/metric bars. Every generated HTML page gets CSP/referrer metadata, and the optional Node server supplies actual security response headers. The Render static site's anti-framing response headers still require host-level configuration/verification: a meta CSP cannot enforce `frame-ancestors` or `X-Frame-Options`.
 
-Independent review corrected a final notification-lease trap, MFA-downgrading password reauthentication, missing recovery from a dismissed MFA dialog, producer/SQL receipt-length mismatch and a weak static-JWT-only MFA test. The notification handler also bounds streamed input before private work and records allowlisted errors without provider response bodies.
+Independent review corrected a final notification-lease trap, MFA-downgrading password reauthentication, missing recovery from a dismissed MFA dialog, producer/SQL receipt-length mismatch and a weak static-JWT-only MFA test. Actual owner testing also exposed the recovery callback routing problem now corrected locally. The notification handler bounds streamed input before private work and records allowlisted errors without provider response bodies.
 
 ### Not yet verified or enabled
 
-- Actual hosted registration, mail receipt/verification, recovery, same-UID Google browser migration and cross-device sessions.
-- Production administrator provisioning and a real hosted AAL2 admin browser journey.
-- Actual notification delivery/retry after private credentials are configured.
+- Final public deployment/verification of the callback correction and registration/recovery/notification enablement.
+- Genuine Google OAuth-to-password migration with an owner-controlled disposable identity; only the seeded local Google fixture has been exercised.
+- Broad cross-device/email-client coverage, actual received authentication headers, and all hosted token-expiry/replay edge cases.
+- Live nickname moderation, additional-participant future-pick privacy checks and exhausted-provider-retry/requeue behavior beyond the isolated suites.
 - Permanent deletion/anonymization, which remains disabled pending policy and execution design.
 - Trusted-gateway client-IP behavior and CAPTCHA setup for any future public guest form; that intake remains disabled.
-- Host-level anti-framing/Permissions-Policy configuration. Live response checks show HSTS and `nosniff`, with CSP/referrer enforcement supplied through HTML metadata; `X-Frame-Options` and HTTP CSP are absent. The Render dashboard requires sign-in and its connector does not expose these header settings.
+- Host-level anti-framing/Permissions-Policy configuration. The last live response check showed HSTS and `nosniff`, with CSP/referrer supplied through HTML metadata; `X-Frame-Options` and HTTP CSP were absent. The release coordinator must append any later successful configuration and header verification.
 
 The final hosted advisors reported eleven intentional private RPC-only RLS/no-policy INFO findings and the disabled leaked-password-protection warning. Performance advisors reported four unused indexes on newly empty support/audit tables; those purpose-built indexes remain pending measured use. No ERROR/CRITICAL advisor finding was returned. Leaked-password checking is a paid-plan capability and was not silently purchased. Preserve explicit privilege controls rather than adding permissive policies to silence informational notices. [Hosted advisor evidence](account-hosted-advisors-2026-11-18.json)
 
@@ -167,7 +188,7 @@ Current documented Supabase Free allowances include 50,000 monthly active users,
 
 Render's current Hobby allowance is 5 GB/month outbound traffic; the actual workspace allowance/legacy terms must be checked. A planning example of 1,000 users × 10 fresh visits × 0.5 MB is roughly 5 GB; caching/compression materially change it. Overage can cost money with a payment method, or interrupt service without one. Do not silently enable paid overage. [Render outbound bandwidth](https://render.com/docs/outbound-bandwidth).
 
-Brevo Free is the chosen conditional email pilot, with 300/day shared across authentication SMTP and notification API. The Yahoo sender is verified, but temporary provider-domain rewriting is not a permanent delivery guarantee. **Using the daughter's/family website domain is expressly prohibited.** The Render URL is not a sending domain whose DNS we control. No purchase is authorized. [Email setup and tests](free-email-setup-2026-11-18.md).
+Brevo Free is the configured email pilot, with 300/day shared across authentication SMTP and notification API. Actual signup/recovery and a support notification have been exercised. Temporary provider-domain rewriting is still not a permanent delivery guarantee or a certification of inbox placement/headers for every recipient. **Using the daughter's/family website domain is expressly prohibited and it was never used.** The Render URL is not a sending domain whose DNS we control. No purchase or provider upgrade was made. [Email setup and tests](free-email-setup-2026-11-18.md).
 
 Before promotion, measure database growth, leaderboard query p95, egress, Auth throttling, actual email use and recovery success. Cache stable public aggregates, avoid rapid polling and per-user result-sync loops, and reassess near 70–80% of hard allowances. Existing retained synthetic load logs are local engineering evidence only, not a hosted free-tier promise. Free-plan backups require owner-managed exports and restore drills; application backups do not include complete managed-Auth recovery state.
 
@@ -180,12 +201,16 @@ Evidence: [capacity analysis](account-security-capacity-2026-11-18.md), [measure
 - Baseline: one Google identity, no password identity or verified MFA factor; 134 saved weekly picks, one contest profile, 888 games, one saved preference, zero CFP entries and zero support requests. Baseline identifying/private records are not reproduced here.
 - Foundation migration applied as **20261119014527**. Its SQL was first tested locally; the local filename matches hosted history without altering its body.
 - Notification-requeue follow-up applied as **20261119022909**. It is additive and does not edit game data, picks or model artifacts.
-- Support Edge Function **version 2** active; hosted unauthorized-call checks passed. Private SMTP/provider environment remains unconfigured and no external email has been sent by the release process.
-- The designated Yahoo sender is verified and private Brevo SMTP/API keys were created securely. Those secrets remain outside source/public configuration. Correct **Work Projects / FBS Intelligence** dashboard access is still awaiting the owner; a different organization must not receive this configuration.
+- Support Edge Function **version 2** active; hosted unauthorized-call checks passed. Brevo SMTP, all six private function settings and the GitHub dispatcher secret are now saved. The manual dispatcher successfully processed one controlled notification.
+- The designated Yahoo sender is verified and private credentials were configured in the correct **Work Projects / FBS Intelligence** project. Key working copies were cleared afterward; no credential values or action links were exported to source/reports. No other organization or family domain was used.
+- Managed Auth is configured for confirmation, minimum password length 12, current-password validation, 3,600-second links, ten email messages/hour and a minimum sixty-second email interval. Google stays enabled and email-nonce reauthentication stays off.
+- Two approved temporary callback entries on `http://127.0.0.1:41873` support the controlled tests. They must be removed at the end, leaving the five production entries. Do not claim that cleanup complete until the coordinator verifies it.
 
-The final read-only preservation check retained **134 picks** and the exact saved-pick/profile digests, plus the original favorite selection and all other preference fields except `seen_updates`. The full preference-row digest changed solely in that seen-marker projection; no actor is attributed, and no overwrite or rollback was performed. It would be incorrect to claim the entire live preference row stayed byte-identical. Counts remain one identity/profile/preference, 888 games and no support requests; the new foundation has one ordinary membership, no administrator, no suspension, no entitlement and no audit action. [Sanitized post-migration evidence](account-postmigration-preservation-2026-11-18.json)
+The initial post-migration read-only check retained **134 picks** and the exact saved-pick/profile digests, plus the original favorite selection and all other preference fields except `seen_updates`. The full preference-row digest changed solely in that seen-marker projection; no actor is attributed, and no overwrite or rollback was performed. It would be incorrect to claim the entire live preference row stayed byte-identical. That checkpoint preceded the controlled signup/admin/support exercises and recorded one identity with no admin or requests. [Sanitized post-migration evidence](account-postmigration-preservation-2026-11-18.json)
 
-### Verified frontend rollout
+Later controlled testing legitimately increased the directory to **three accounts**, with **one administrator**, one General support request and four audit entries. The disposable suspension target was returned to active, and the request was resolved. The same-UID recovery proof retained that account's support request. Existing weekly picks remain **134 with the original digest**; these added accounts/requests are documented test activity, not unexplained identity duplication or lost historical records. No production identity was deleted and no locked pick was changed.
+
+### Verified foundation rollout and pending activation update
 
 The deployed application commit is **`16c0be0787f54aa86e895fed43f6726dc0ca7b7d`**, including foundation commit `3261cb8`. [Required GitHub workflow 44446209050](https://github.com/egemicated/-fbs-ranking-engine-https-github.com-egemicated-fbs-ranking-engine-/actions/runs/44446209050), job `135298860431`, completed successfully: Node, isolated SQL, official Linux Auth, static build, general browser, account/admin and CSP checks all passed.
 
@@ -195,7 +220,11 @@ Render static service `srv-dbn9jqc9v7es73c4ql2g` automatically deployed **`dep-d
 
 An actual production browser then checked Account, Support, guest Admin denial, My Teams, Rankings and Home at 320 and 1440 pixels. The live managed SDK loaded, the native sign-in dialog exposed email/password and the retained Google option, gated registration/recovery controls were absent, and all twelve route/width combinations had no horizontal overflow or uncaught page errors. No credentials, forms or mail requests were submitted. [Guest browser evidence](account-production-guest-browser-2026-11-18.json)
 
-Production: **https://fbs-intelligence.onrender.com/**. Account settings use **https://fbs-intelligence.onrender.com/#account**; `/#admin` correctly denies a guest and remains unusable until protected provisioning. Google remains enabled; a new real Google OAuth handshake was not performed as a release test. Do not advertise administrator access or public email registration as active.
+The later main commit **`ad2efe5327d74357d29824fb48cdb6ffb4c29655`** passed [GitHub checks 44451691291](https://github.com/egemicated/-fbs-ranking-engine-https-github.com-egemicated-fbs-ranking-engine-/actions/runs/44451691291), including 437 Node tests, all 14 migrations/13 SQL suites and 13 real Auth groups. The dedicated manual notification workflow then passed [run 44452436735](https://github.com/egemicated/-fbs-ranking-engine-https-github.com-egemicated-fbs-ranking-engine-/actions/runs/44452436735). Neither fact proves that the latest local recovery fix has reached Render.
+
+**Coordinator finalization pending:** the recovery callback correction and activation flags now pass 442 local Node tests, 72 routes, the four-width account suite, seven callback cases and CSP verification. Record their final pushed commit, remote CI, Render deploy and live callback/flag checks here after rollout. Public registration/recovery/notification flags were still false on the last verified served release; enabled local configuration is not public activation. Remove and recheck the two temporary loopback callbacks, and record the outcome of host-level security-header configuration.
+
+Production: **https://fbs-intelligence.onrender.com/**. Account settings use **https://fbs-intelligence.onrender.com/#account**. `/#admin` correctly denies guests; protected provisioning is now complete, and the actual administrator has used the live backend through the controlled preview. A fresh genuine Google OAuth migration remains untested. Keep Google enabled throughout the final rollout.
 
 ### Rollback readiness and data preservation
 
@@ -203,14 +232,14 @@ Before production DDL, Bryan explicitly approved an encrypted application backup
 
 This is a tested application-data recovery artifact, not a complete Auth credential/provider backup. Keep access to the original owner context and private restore instructions. Prefer reverting frontend assets or disabling readiness flags while retaining additive schemas and the existing contest-privacy protections. Do not roll production user tables backward over newer legitimate activity, drop account schemas, or reverse the earlier privacy correction as a routine rollback. Unexpected production data changes require an explicit reviewed recovery plan.
 
-### Remaining owner/configuration work
+### Remaining rollout and owner work
 
-1. Sign into the correct **Work Projects / FBS Intelligence** Supabase dashboard and securely enter the verified Brevo SMTP/private function configuration. Do not send keys in chat or touch another organization/domain.
-2. Confirm managed password, verification, OTP lifetime, callback and rate-limit settings; keep Google available.
-3. Complete actual mailbox verification/recovery and disposable same-UID migration tests, then deliberately activate the corresponding backend/UI flows.
-4. Confirm administrator identity, enroll/verify TOTP, and run protected provisioning; test the real administrator session and support review/notification delivery.
+1. Publish the tested callback correction and deliberately enable the prepared email/notification UI flags only through successful final CI/Render rollout. Verify the actual served return paths and settings afterward.
+2. Remove the two approved loopback callbacks after testing and verify that only the five production callbacks remain. Keep Google available.
+3. Finish any owner-controlled disposable Google OAuth/password-migration and cross-device tests; do not relabel the seeded local fixture as a real Google handshake.
+4. Verify host-level anti-framing/security response headers and document any remaining platform limitation. Received email headers and broader inbox/client coverage remain additional checks rather than completed claims.
 5. Approve the contest-history retention/deletion policy before a permanent removal process is built/enabled.
-6. Confirm actual hosting/email allowances and host-level anti-framing settings before broad promotion. No upgrade or live billing without separate approval.
+6. Monitor actual hosting/email allowances before broad promotion. No upgrade, family-domain reuse or live billing without separate approval.
 
 ## Technical change map
 
@@ -219,7 +248,7 @@ This is a tested application-data recovery artifact, not a complete Auth credent
 | Native account experience | `frontend/account-auth.js`, `account-center.js`, `account-center.css`, existing `bracket-auth.js` and `app.js` |
 | Admin/support UI | `frontend/account-administration.js`, `account-support.js`, `platform-info.js`, `bracket-config.json` |
 | Database/RLS/RPC foundation | `supabase/migrations/20261119014527_account_administration_foundation.sql`, `20261119022909_support_notification_requeue.sql` |
-| Support backend | `supabase/functions/account-support/index.ts`, `_shared/support-handler.mjs`, `scripts/dispatch-support-notifications.mjs` |
+| Support backend | `supabase/functions/account-support/index.ts`, `_shared/support-handler.mjs`, `scripts/dispatch-support-notifications.mjs`, manual-only `.github/workflows/support-notifications.yml` |
 | Browser security | `src/security-policy.js`, `scripts/prepare-static.js`, `src/server.js` |
 | Regression gates | `.github/workflows/test.yml`, `scripts/check-database.mjs`, `check-auth-api.mjs`, `lib/auth-api-flows.mjs`, `account-browser-quality.mjs`, `check-security-policy-browser.mjs`, associated Node/SQL suites |
 | Existing scheduled workflow | `.github/workflows/weekly.yml` adds a bounded optional support retry using existing runs; no new sports-data schedule or CFBD call |

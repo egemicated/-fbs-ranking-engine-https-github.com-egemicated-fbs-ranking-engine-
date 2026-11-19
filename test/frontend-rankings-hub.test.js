@@ -3,8 +3,9 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import vm from 'node:vm';
 import { rankSeason } from '../src/engine.js';
+import { appVmSource, installAppVmContext } from '../test-support/app-vm.mjs';
 
-const source = await readFile(new URL('../frontend/app.js', import.meta.url), 'utf8');
+const source = appVmSource(await readFile(new URL('../frontend/app.js', import.meta.url), 'utf8'));
 const editions = JSON.parse(await readFile(new URL('../frontend/ranking-editions.json', import.meta.url), 'utf8'));
 
 function fixture() {
@@ -74,6 +75,7 @@ async function browser({ snapshot, performance, initialRoute = '#rankings', perf
       },
     });
   }
+  installAppVmContext(context);
   vm.runInNewContext(source, context, { filename: 'frontend/app.js' });
   const html = () => node('#main').innerHTML;
   const settle = async () => {

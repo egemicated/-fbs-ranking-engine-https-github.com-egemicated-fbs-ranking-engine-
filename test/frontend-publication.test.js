@@ -4,6 +4,7 @@ import vm from 'node:vm';
 import { readFile } from 'node:fs/promises';
 import { rankSeason } from '../src/engine.js';
 import { matchupValidation } from '../src/site-validation.js';
+import { appVmSource, installAppVmContext } from '../test-support/app-vm.mjs';
 import matchupEvidence from '../data/matchup-validation.json' with { type: 'json' };
 
 function fixture(sor = true) {
@@ -42,7 +43,8 @@ async function browser(snapshot, detailResponse, now = Date.parse('2026-11-06T12
       if (path !== '/rankings' && detailResponse) return detailResponse(path);
       return { ok: true, json: async () => snapshot };
     } };
-  const source = await readFile('frontend/app.js', 'utf8');
+  const source = appVmSource(await readFile('frontend/app.js', 'utf8'));
+  installAppVmContext(context);
   vm.runInNewContext(source + '\nglobalThis.ui={state,render,renderHome,renderRankings,renderTeams,renderTeam,renderMethodology,renderCompare,renderPollComparison,rankingsContent,compareResult,compareOptions,selectMatchupTeam,ordered,sosRank,teamCenterContent};', context, { filename: 'frontend/app.js' });
   await new Promise(setImmediate);
   assert.deepEqual(errors, []);

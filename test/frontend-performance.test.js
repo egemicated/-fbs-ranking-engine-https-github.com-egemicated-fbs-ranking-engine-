@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import { readFile } from 'node:fs/promises';
 import { rankSeason } from '../src/engine.js';
+import { appVmSource, installAppVmContext } from '../test-support/app-vm.mjs';
 
 function fixture(advertise = true) {
   const teams = [{ id: 'a', name: 'Alpha', division: 'fbs', conference: 'East' },
@@ -47,7 +48,8 @@ async function browser({ snapshot, performance, performanceStatus = 200, rejectP
       if (rejectPerformance) throw new Error('Optional snapshot offline');
       return { ok: performanceStatus === 200, status: performanceStatus, json: async () => performance };
     } };
-  const source = await readFile('frontend/app.js', 'utf8');
+  const source = appVmSource(await readFile('frontend/app.js', 'utf8'));
+  installAppVmContext(context);
   vm.runInNewContext(source + '\nglobalThis.ui={state,render,renderRankings,renderTeam,renderMethodology,rankingsContent,ordered,compareResult,acceptPerformance,hasPerformance};', context);
   await new Promise(setImmediate); await new Promise(setImmediate);
   assert.deepEqual(errors, []);

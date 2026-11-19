@@ -4,9 +4,10 @@ import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
 import { rankSeason } from '../src/engine.js';
+import { appVmSource, installAppVmContext } from '../test-support/app-vm.mjs';
 
 const appPath = new URL('../frontend/app.js', import.meta.url);
-const source = await readFile(appPath, 'utf8');
+const source = appVmSource(await readFile(appPath, 'utf8'));
 const asOf = '2026-11-15T15:00:00Z';
 const fetchedAt = '2026-11-15T14:59:00Z';
 const teams = [
@@ -71,6 +72,7 @@ async function browser({ hash = '#compare/weekly', missingFcs, fcsData = fcs, fc
       return { ok: true, json: async () => fcsData };
     },
   };
+  installAppVmContext(context);
   vm.runInNewContext(source + '\nglobalThis.testWeeklyPicks={weeklyPickTabs,predictabilityContent};', context, {
     filename: fileURLToPath(appPath), importModuleDynamically: vm.constants.USE_MAIN_CONTEXT_DEFAULT_LOADER,
   });
