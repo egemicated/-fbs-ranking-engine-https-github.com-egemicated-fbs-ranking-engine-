@@ -352,6 +352,47 @@ test('published Week 11 Coaches comparison uses the stored November 14 ballot', 
   assert.match(rankingTable(full), />Oklahoma<small>/);
 });
 
+test('Coaches and full Forge ballots keep separate links when their cutoff dates are identical', async () => {
+  const through = editions.forge.find(edition => edition.week === 11).gamesThrough;
+  const checkpointPath = `/forge-rankings/?week=11&through=${through}`;
+  const coachesEditions = editions.polls.coaches.map(edition => edition.week === 11 ? { ...edition, gamesThrough: through } : edition);
+  const archive = { ...editions, polls: { ...editions.polls, coaches: coachesEditions }, forgeCheckpoints: [
+    { week: 11, gamesThrough: through, released: '2026-11-19', rows: [{ team: 'Alpha State', record: '9–1' }] },
+  ] };
+  const page = await browser({ ...fixture(), archive, initialRoute: '/polls/coaches/?week=11' });
+  assert.match(rankingTable(page.html()), /Alpha State/);
+  assert.ok(page.html().includes(`href="${checkpointPath}">View Forge’s cutoff ballot`));
+
+  const checkpoint = await page.go(checkpointPath);
+  assert.match(checkpoint, /Week 11 cutoff ballot/);
+  assert.match(rankingTable(checkpoint), /Alpha State/);
+  assert.match(checkpoint, /href="\/forge-rankings\/\?week=11">View the full weekly ballot/);
+  const full = await page.go('/forge-rankings/?week=11');
+  assert.match(rankingTable(full), /After Week 11/);
+  assert.doesNotMatch(rankingTable(full), /Alpha State/);
+  assert.ok(full.includes(`href="${checkpointPath}">View cutoff ballot through`));
+
+  for (const poll of ['ap', 'cfp']) {
+    const comparison = await page.go(`/polls/${poll}/?week=11`);
+    assert.doesNotMatch(rankingTable(comparison), /Alpha State/);
+    assert.match(comparison, /href="\/forge-rankings\/\?week=11">Forge’s full ballot for this week/);
+  }
+});
+
+test('a published Coaches cutoff is available while the same week’s full ballot is pending', async () => {
+  const archive = { ...editions, forgeCheckpoints: [...editions.forgeCheckpoints, {
+    week: 12, gamesThrough: '2026-11-21', released: '2026-11-22', rows: [{ team: 'Alpha State', record: '10–1' }],
+  }] };
+  const page = await browser({ ...fixture(), archive, initialRoute: '/forge-rankings/?week=12&through=2026-11-21' });
+  assert.match(page.html(), /<option value="12" selected>After Week 12<\/option>/);
+  assert.match(rankingTable(page.html()), /Week 12 cutoff ballot/);
+  const pending = await page.go('/forge-rankings/?week=12');
+  assert.match(pending, /No full-week Forge ballot is available for this week yet/);
+  assert.match(pending, /href="\/forge-rankings\/\?week=12&through=2026-11-21"/);
+  assert.equal(rankingTable(pending), '');
+  assert.match(rankingTable(await page.go('/forge-rankings/')), /After Week 11/);
+});
+
 test('the rankings stylesheet disables animation and transitions for reduced motion', async () => {
   const css = await readFile(new URL('../frontend/styles.css', import.meta.url), 'utf8');
   assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*?animation:\s*none[\s\S]*?transition:\s*none/);

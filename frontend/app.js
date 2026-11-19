@@ -1346,7 +1346,7 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
   const sorLabel = replay ? 'SOR replay' : savedCheckpoint ? 'SOR checkpoint' : 'SOR';
   const matchingForgeCheckpoint = key === 'coaches' && poll && gamesThrough
     ? data.forgeCheckpoints?.find(edition => edition.week === week && edition.gamesThrough === gamesThrough) : undefined;
-  const forge = gamesThrough && weekForge?.gamesThrough === gamesThrough ? weekForge : matchingForgeCheckpoint;
+  const forge = matchingForgeCheckpoint ?? (gamesThrough && weekForge?.gamesThrough === gamesThrough ? weekForge : undefined);
   const usesForgeCheckpoint = Boolean(forge && forge === matchingForgeCheckpoint);
   const separateForgeBallot = weekForge && !forge && typeof weekForge.gamesThrough === 'string';
   const teams = new Map(state.snapshot.rankings.map(team => [team.name, team]));
@@ -1387,21 +1387,23 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
 }
 function renderForgeBallot(data, requestedWeek, through) {
   const week = Number(requestedWeek);
+  const checkpoints = data.forgeCheckpoints ?? [];
   const weekBallot = data.forge.find(item => item.week === week);
-  const savedCutoff = through && data.forgeCheckpoints?.find(item => item.week === week && item.gamesThrough === through);
-  const edition = through ? (weekBallot?.gamesThrough === through ? weekBallot : savedCutoff) : weekBallot ?? data.forge.at(-1);
-  const weeks = data.forge.map(item => item.week).reverse();
-  if (!edition) return `<section class="panel edition-panel"><div class="panel-body">
-    <div class="edition-controls">${editionPicker(weeks, week)}</div>
-    <p role="status">No Forge ballot is available for this game cutoff.</p>
-    ${weekBallot ? `<a class="text-link" href="${forgeBallotHref(week)}">View the full weekly ballot ${icon('arrow')}</a>` : ''}</div></section>`;
+  const savedCutoff = through && checkpoints.find(item => item.week === week && item.gamesThrough === through);
+  const edition = through ? savedCutoff ?? (weekBallot?.gamesThrough === through ? weekBallot : undefined)
+    : requestedWeek === undefined ? data.forge.at(-1) : weekBallot;
+  const weeks = [...new Set([...data.forge, ...checkpoints].map(item => item.week))].sort((a, b) => b - a);
   const cutoffBallot = Boolean(savedCutoff && edition === savedCutoff);
-  const alternateBallots = (data.forgeCheckpoints ?? []).filter(item => item.week === edition.week && item.gamesThrough !== edition.gamesThrough);
-  const editionTitle = cutoffBallot ? `Week ${edition.week} cutoff ballot` : editionLabel(edition.week);
+  const activeWeek = edition?.week ?? week;
+  const alternateBallots = checkpoints.filter(item => item.week === activeWeek && item !== edition);
   const editionLinks = [
-    cutoffBallot && weekBallot ? `<a class="text-link" href="${forgeBallotHref(edition.week)}">View the full weekly ballot ${icon('arrow')}</a>` : '',
-    ...alternateBallots.map(item => `<a class="text-link" href="${forgeBallotHref(item.week, item.gamesThrough)}">View ballot through ${editionDate(item.gamesThrough)} ${icon('arrow')}</a>`),
+    through && weekBallot && edition !== weekBallot ? `<a class="text-link" href="${forgeBallotHref(activeWeek)}">View the full weekly ballot ${icon('arrow')}</a>` : '',
+    ...alternateBallots.map(item => `<a class="text-link" href="${forgeBallotHref(item.week, item.gamesThrough)}">View ${item.gamesThrough === weekBallot?.gamesThrough ? 'cutoff ballot' : 'ballot'} through ${editionDate(item.gamesThrough)} ${icon('arrow')}</a>`),
   ].join('');
+  if (!edition) return `<section class="panel edition-panel"><div class="panel-body">
+    <div class="edition-controls">${editionPicker(weeks, activeWeek)}${editionLinks}</div>
+    <p role="status">${through ? 'No Forge ballot is available for this game cutoff.' : 'No full-week Forge ballot is available for this week yet.'}</p></div></section>`;
+  const editionTitle = cutoffBallot ? `Week ${edition.week} cutoff ballot` : editionLabel(edition.week);
   const previous = editionRankMap(data.forge.find(item => item.week === edition.week - 1));
   const teams = new Map(state.snapshot.rankings.map(team => [team.name, team]));
   const rows = edition.rows.map((row, index) => {
