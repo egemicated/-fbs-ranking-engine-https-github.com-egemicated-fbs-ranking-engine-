@@ -1,0 +1,40 @@
+{
+  "checkedAt": "2026-11-19T02:37:40.647Z",
+  "scope": "Hosted advisors after both additive account migrations",
+  "groups": [
+    {
+      "type": "security",
+      "findings": [
+        {
+          "name": "rls_enabled_no_policy",
+          "level": "INFO",
+          "count": 11,
+          "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy"
+        },
+        {
+          "name": "auth_leaked_password_protection",
+          "level": "WARN",
+          "count": 1,
+          "remediation": "https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection"
+        }
+      ]
+    },
+    {
+      "type": "performance",
+      "findings": [
+        {
+          "name": "unused_index",
+          "level": "INFO",
+          "count": 4,
+          "remediation": "https://supabase.com/docs/guides/database/database-linter?lint=0005_unused_index"
+        }
+      ]
+    }
+  ],
+  "dispositions": {
+    "rls_enabled_no_policy": "Private RPC-only tables deliberately deny direct client grants; no permissive policy added.",
+    "auth_leaked_password_protection": "Disabled on current free tier; paid upgrade not authorized. Provider password minimum still awaits dashboard verification.",
+    "unused_index": "New empty support/audit tables have not served traffic; retain purpose-built queue/search indexes pending measured use."
+  },
+  "criticalOrErrorFindings": false
+}

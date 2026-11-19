@@ -11,8 +11,10 @@
   "supportApiScope": "Restricted: transactional email only; all other resources None",
   "privateSupabaseCredentialsConfigured": false,
   "externalMailTested": false,
-  "publicRegistrationEnabled": false,
-  "passwordRecoveryEnabled": false,
+  "registrationUiEnabled": false,
+  "passwordRecoveryUiEnabled": false,
+  "providerSignupPreviouslyEnabled": true,
+  "providerSignupConfigurationChanged": false,
   "blocker": "Awaiting dashboard sign-in to Work Projects / FBS Intelligence; current dashboard session shows a different organization",
   "credentialsInSource": false
 }

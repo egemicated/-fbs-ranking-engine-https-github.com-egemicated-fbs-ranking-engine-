@@ -19,6 +19,18 @@ await new Promise(done=>server.listen(0,'127.0.0.1',done));
 const base=`http://127.0.0.1:${server.address().port}/`;
 const browser=await chromium.launch({headless:true,...(process.env.QUALITY_BROWSER?{executablePath:process.env.QUALITY_BROWSER}:{}),args:['--no-sandbox']});
 const results=[];
+async function assertPageFits(page,label){
+  const dimensions=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
+  let diagnostics='';
+  if(dimensions.scroll!==dimensions.client){
+    diagnostics=await page.evaluate(()=>JSON.stringify([...document.querySelectorAll('body *')].flatMap(element=>{
+      const rect=element.getBoundingClientRect(),style=getComputedStyle(element),width=document.documentElement.clientWidth;
+      return rect.width>0&&(rect.right>width+.1||rect.left<-.1)?[{tag:element.tagName,id:element.id,class:element.className,
+        left:rect.left,right:rect.right,width:rect.width,minWidth:style.minWidth,font:style.font,flex:style.flex}]:[];
+    }).slice(0,20)));
+  }
+  assert.equal(dimensions.scroll,dimensions.client,label+(diagnostics?' '+diagnostics:''));
+}
 try{
   for(const width of [320,390,768,1440]){
     const page=await browser.newPage({viewport:{width,height:1050},reducedMotion:'reduce'});
@@ -82,8 +94,14 @@ try{
       mountHeaderAccount(document.querySelector('[data-header-account]'),{previewClient:window.accountClient});
     });
     await page.locator('[data-header-account] .header-account-settings').waitFor();
-    let dimensions=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
-    assert.equal(dimensions.scroll,dimensions.client,'Account overflow at '+width);
+    await assertPageFits(page,'Account overflow at '+width);
+    if(width===320){
+      // Exercise wider fallback metrics without depending on the host OS font
+      // inventory. The logo may yield space; signed-in actions stay readable.
+      const widerFont=await page.addStyleTag({content:'.header-account .header-account-button{font-family:serif!important;font-size:15px!important}'});
+      await assertPageFits(page,'Signed-in header with wider font metrics at '+width);
+      await widerFont.evaluate(element=>element.remove());
+    }
     const accountLabels=await page.locator('#account-test input,#account-test select,#account-test textarea').evaluateAll(controls=>controls.filter(control=>!control.labels?.length&&!control.getAttribute('aria-label')).map(control=>control.id));assert.deepEqual(accountLabels,[]);
     if(process.env.ACCOUNT_QA_SCREENSHOTS){await mkdir(process.env.ACCOUNT_QA_SCREENSHOTS,{recursive:true});await page.locator('#account-test').screenshot({path:resolve(process.env.ACCOUNT_QA_SCREENSHOTS,`account-${width}.png`)});}
     await page.evaluate(async()=>{
@@ -151,7 +169,7 @@ try{
       assert.match(await page.locator('[data-admin-result]').innerText(),/support request remains saved/);
     }
     await page.locator('.admin-user summary').click();await page.locator('[data-admin-user-status] select').selectOption('suspended');await page.locator('[data-admin-user-status] input[name="reason"]').fill('Disposable moderation test');await page.locator('[data-admin-user-status] [type="submit"]').click();await page.waitForFunction(()=>window.adminCalls.some(call=>call.name==='admin_set_account_status'));
-    dimensions=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));assert.equal(dimensions.scroll,dimensions.client,'Admin overflow at '+width);
+    await assertPageFits(page,'Admin overflow at '+width);
     const adminLabels=await page.locator('#account-test input,#account-test select,#account-test textarea').evaluateAll(controls=>controls.filter(control=>!control.labels?.length&&!control.getAttribute('aria-label')).map(control=>control.id));assert.deepEqual(adminLabels,[]);
     assert.equal(await page.locator('#account-test input[type="password"]').count(),0);
     assert.deepEqual(errors,[]);results.push({width,account:true,registrationMock:true,recoveryMock:true,googleMigrationMock:true,mfaMock:true,adminMock:true,failedNotificationRequeueMock:true,overflow:false,labels:true});await page.close();
