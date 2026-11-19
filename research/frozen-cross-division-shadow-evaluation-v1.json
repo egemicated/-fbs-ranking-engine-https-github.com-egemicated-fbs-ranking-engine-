@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "cross-division-calibration-shadow-evaluation-v1",
+  "frozenAt": "2026-11-19T00:23:53.157Z",
+  "frozenManifestSha256": "a0ca4661ef41d8e014afad1fee760bd85d5ddb1bb4d6e5d440cd716659bd231f",
+  "implementationSha256": {
+    "research/evaluate-cross-division-shadow.mjs": "11451a4a95492d67b46a66e284a66317f5c300e12990d6ce55b915389dd9d5dc"
+  },
+  "operations": {
+    "enabledAt": "2026-11-19T00:23:53.158Z",
+    "workflow": ".github/workflows/weekly.yml",
+    "workflowSha256": "802c90a3033c4989b9bbaf28c8510f8ebf6a3d5bfa146ab14af7449486ba8c0a",
+    "mode": "Optional continue-on-error capture and grading after existing successful weekly-pick publication; preserve only separate research observations and evaluations",
+    "scheduleChanges": false,
+    "additionalCfbdCalls": 0,
+    "publicModelChanges": false,
+    "initialCapture": "The original frozen manifest records the initial manual capture. This companion records subsequent automatic research integration without modifying that coefficient freeze.",
+    "verification": "Local capture, grading and tests passed before activation. First scheduled execution is future operational evidence; failures must remain visible as research warnings and do not imply a validated result."
+  }
+}

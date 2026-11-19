@@ -1,0 +1,9 @@
+{
+  "compressedSha256": "7b9e56f3b9e9f3135b6d3305f76288c12229a9048d7c08ddb5e692e28791ce3f",
+  "uncompressedSha256": "22dc0aae32cdc64f60b3a019dfa1fee25f8b3b189347771e6b32d8b3e83754cc",
+  "compressedBytes": 593426,
+  "uncompressedBytes": 7868643,
+  "protocolSha256": "d155cd2829f73752281e9d0cf6ed5d891c612084ea62cb193978d6d4467c7790",
+  "productionUnchanged": true,
+  "cfbdCalls": 0
+}

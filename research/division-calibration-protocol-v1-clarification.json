@@ -1,0 +1,8 @@
+{
+  "id": "division-calibration-v1-clarification-1",
+  "declaredAt": "2026-11-18",
+  "originalProtocolSha256": "d155cd2829f73752281e9d0cf6ed5d891c612084ea62cb193978d6d4467c7790",
+  "reason": "Independent review identified ambiguous English concerning the previous-season buffer. Clarify it before new fitting; the existing replay implementation already uses the rule below.",
+  "rule": "For every current-season and previous-season result used in a forecast: result kickoff + 24 hours <= forecast cutoff. The result must not merely precede cutoff + 24 hours.",
+  "changes": "No change to data, candidate families, fit windows, penalty, selection, metrics, live parameters or existing replay mathematics. Retain the original protocol unchanged."
+}

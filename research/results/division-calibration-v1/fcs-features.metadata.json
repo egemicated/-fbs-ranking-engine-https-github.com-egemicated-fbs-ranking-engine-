@@ -1,0 +1,133 @@
+{
+  "fixtureSha256": "e4b97774b2614ad0930266d88da3988e4fe860602035474f8ba22c928a760dcf",
+  "uncompressedSha256": "b12373aa5c825e111c5093ca8f2c197153f44e81d496299707686f68382496fb",
+  "bytes": 5435473,
+  "compressedBytes": 415825,
+  "rows": {
+    "prior-week-only": 8371,
+    "excluded-game-final-network": 8371
+  },
+  "verification": {
+    "2014": {
+      "prior-week-only": {
+        "rows": 748,
+        "maxAbsoluteFeatureError": 8.326672684688674e-16
+      },
+      "excluded-game-final-network": {
+        "rows": 748,
+        "maxAbsoluteFeatureError": 1.6653345369377348e-16
+      }
+    },
+    "2015": {
+      "prior-week-only": {
+        "rows": 716,
+        "maxAbsoluteFeatureError": 6.661338147750939e-16
+      },
+      "excluded-game-final-network": {
+        "rows": 716,
+        "maxAbsoluteFeatureError": 1.6653345369377348e-16
+      }
+    },
+    "2016": {
+      "prior-week-only": {
+        "rows": 733,
+        "maxAbsoluteFeatureError": 7.216449660063518e-16
+      },
+      "excluded-game-final-network": {
+        "rows": 733,
+        "maxAbsoluteFeatureError": 1.1102230246251565e-16
+      }
+    },
+    "2017": {
+      "prior-week-only": {
+        "rows": 727,
+        "maxAbsoluteFeatureError": 8.881784197001252e-16
+      },
+      "excluded-game-final-network": {
+        "rows": 727,
+        "maxAbsoluteFeatureError": 1.1102230246251565e-16
+      }
+    },
+    "2018": {
+      "prior-week-only": {
+        "rows": 723,
+        "maxAbsoluteFeatureError": 8.881784197001252e-16
+      },
+      "excluded-game-final-network": {
+        "rows": 723,
+        "maxAbsoluteFeatureError": 1.6653345369377348e-16
+      }
+    },
+    "2019": {
+      "prior-week-only": {
+        "rows": 780,
+        "maxAbsoluteFeatureError": 7.216449660063518e-16
+      },
+      "excluded-game-final-network": {
+        "rows": 780,
+        "maxAbsoluteFeatureError": 1.1102230246251565e-16
+      }
+    },
+    "2020": {
+      "prior-week-only": {
+        "rows": 49,
+        "maxAbsoluteFeatureError": 3.3306690738754696e-16
+      },
+      "excluded-game-final-network": {
+        "rows": 49,
+        "maxAbsoluteFeatureError": 1.6653345369377348e-16
+      }
+    },
+    "2021": {
+      "prior-week-only": {
+        "rows": 752,
+        "maxAbsoluteFeatureError": 8.881784197001252e-16
+      },
+      "excluded-game-final-network": {
+        "rows": 752,
+        "maxAbsoluteFeatureError": 1.6653345369377348e-16
+      }
+    },
+    "2022": {
+      "prior-week-only": {
+        "rows": 764,
+        "maxAbsoluteFeatureError": 8.881784197001252e-16
+      },
+      "excluded-game-final-network": {
+        "rows": 764,
+        "maxAbsoluteFeatureError": 1.1102230246251565e-16
+      }
+    },
+    "2023": {
+      "prior-week-only": {
+        "rows": 752,
+        "maxAbsoluteFeatureError": 8.326672684688674e-16
+      },
+      "excluded-game-final-network": {
+        "rows": 752,
+        "maxAbsoluteFeatureError": 1.6653345369377348e-16
+      }
+    },
+    "2024": {
+      "prior-week-only": {
+        "rows": 810,
+        "maxAbsoluteFeatureError": 7.771561172376096e-16
+      },
+      "excluded-game-final-network": {
+        "rows": 810,
+        "maxAbsoluteFeatureError": 1.1102230246251565e-16
+      }
+    },
+    "2025": {
+      "prior-week-only": {
+        "rows": 817,
+        "maxAbsoluteFeatureError": 1.1102230246251565e-15
+      },
+      "excluded-game-final-network": {
+        "rows": 817,
+        "maxAbsoluteFeatureError": 2.220446049250313e-16
+      }
+    }
+  },
+  "cfbdCalls": 0
+}

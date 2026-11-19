@@ -1,0 +1,75 @@
+{
+  "id": "division-calibration-v1",
+  "declaredAt": "2026-11-18",
+  "status": "Offline research only; frozen before new candidate fits",
+  "questions": [
+    "Can a small calibration mapping improve the existing Strength engine's FBS-FCS probabilities?",
+    "Do FCS-specific result-network coefficients support better descriptive schedule-difficulty probabilities than transferring the production FBS fit?"
+  ],
+  "historicalEvidenceStatus": "All evaluation seasons were previously inspected. This split prevents new fitting on the evaluation outcomes, but is not an untouched historical holdout. Seasons 2021-2022 influenced the original Strength engine selection. Corrected retrospective source data are not proof of historical as-published availability.",
+  "fitYears": [2014, 2015, 2016, 2017],
+  "selectionYears": [2018, 2019],
+  "refitYears": [2014, 2015, 2016, 2017, 2018, 2019],
+  "evaluationYears": [2021, 2022, 2023, 2024, 2025],
+  "stressYear": 2020,
+  "selection": {
+    "criterion": "Lowest pooled 2018-2019 natural-log loss; do not use evaluation outcomes to select a candidate",
+    "tieTolerance": 0.000001,
+    "tieBreak": "Fewest fitted coefficients, then the candidate order listed below",
+    "baselineEligible": true,
+    "refit": "After selecting a family, refit that family on 2014-2019. Lock it before evaluating 2021-2025.",
+    "penalty": 0.01,
+    "objective": "Sum of Bernoulli negative log likelihood plus 0.5 * penalty * sum of squared fitted coefficients; fixed coefficients are not penalized",
+    "validity": "Finite converged coefficients; any fitted strength/Colley slope must be positive. Reject invalid fits rather than changing the model family or penalty."
+  },
+  "crossDivision": {
+    "primarySource": "Original source seasons and recursively rebuilt original priors, initialized in 2004; exact input and source-code hashes retained",
+    "population": "Completed untied games with exactly one explicitly source-designated FBS team and one FCS team; each game once",
+    "baseLogit": "Existing preweek home Strength margin / 14; fixed existing 2.5-point venue term remains inside that margin",
+    "signedDivision": "+1 for FBS home, -1 for FCS home; flipping side and venue reverses the entire logit",
+    "candidatesInTieOrder": ["baseline", "temperature", "divisionOffset", "temperatureDivision"],
+    "formulas": {
+      "baseline": "sigmoid(baseLogit)",
+      "temperature": "sigmoid(a * baseLogit)",
+      "divisionOffset": "sigmoid(baseLogit + d * signedDivision)",
+      "temperatureDivision": "sigmoid(a * baseLogit + d * signedDivision)"
+    },
+    "cutoff": "Freeze before earliest kickoff in each entire source competition week. Include only earlier processed-week games whose kickoff plus 24 hours is no later than cutoff. Previous-season results must also precede cutoff plus the same buffer. Never include target-week outcomes.",
+    "venuePolicy": "No separate home-effect estimate: mostly FBS-home cross-division games cannot identify an independent causal division-versus-venue effect",
+    "diagnostic": "An older-season FBS win-rate-only comparator may be shown as a diagnostic, not selected as a new candidate. Calibration changes no Strength points or predicted margin."
+  },
+  "fcsSor": {
+    "primarySource": "Existing frozen fcs-coverage-v1 full source network; verify original parents, release metadata and feature-cache lineage before use",
+    "population": "Completed untied known-D1 games involving at least one FCS team: FCS-FCS plus FBS-FCS; one row per game",
+    "features": "Colley rating difference, signed venue, signed FBS-versus-FCS indicator; no intercept, margin, preseason prior, poll or conference term",
+    "transferredCoefficients": {
+      "slope": 5.159563190867806,
+      "homeLogOdds": 0.3809700209732449,
+      "divisionLogOdds": 2.401314541603099
+    },
+    "candidatesInTieOrder": ["transferred", "fcsSlopeHome", "fcsAll"],
+    "formulas": {
+      "transferred": "Existing fixed three coefficients",
+      "fcsSlopeHome": "Fit slope and home coefficient on FCS-involving games; retain transferred division coefficient",
+      "fcsAll": "Fit all three coefficients on FCS-involving games"
+    },
+    "primaryContext": "Exact final-network leave-one-game-out features. This measures descriptive outcome-link assumptions using all other season results, including later games. It is never a pregame forecast or live accuracy record.",
+    "separateDiagnosticContext": "Fit and evaluate the same finite family separately on prior-week-only features with the frozen chronology rules. Do not transfer fitted coefficients between these contexts or use diagnostic results to reselect the primary family.",
+    "rankImpact": "Reproduce the current production FCS SOR baseline before comparing selected primary coefficients using the same current graph, excluded-game reference, team population, records and tie handling. Current season ranks are illustrations only, not fitting or selection targets.",
+    "interpretation": "A better per-game probability link does not establish a uniquely correct or fairer SOR achievement ordering. Keep FCS SOR Experimental; assess sensitivity, reference probabilities, subdivision coverage and rank changes separately."
+  },
+  "evaluation": {
+    "metrics": ["Natural-log loss", "Brier loss", "Winner accuracy with half credit at exactly 50%", "Ten fixed-width reliability bins with counts", "Mean forecast versus observed rate"],
+    "slices": ["Each evaluation season", "FCS-FCS versus FBS-FCS separately", "FBS home versus FCS home versus neutral cross-division games", "Early versus later season where supported"],
+    "uncertainty": "2000 deterministic paired season/competition-week block resamples, seed 20261118. Report candidate-minus-baseline sensitivity intervals; shared teams, prior inspection and limited seasons prevent treating these as definitive prospective confidence intervals.",
+    "stability": "Leave one refit season out; report coefficients and finite/convergence checks. Do not select new candidates using this diagnostic.",
+    "nulls": "Missing or unknown divisions, unavailable context and unsupported venue subgroups remain explicit; never impute a team label, zero score or sample."
+  },
+  "integrity": {
+    "protected": ["Production engine and SOR source files", "data/model.json", "data/publication-model.json", "Existing calibration policies", "published snapshots and priors", "Saved predictions and observations"],
+    "apiCalls": 0,
+    "publicationChanges": false,
+    "promotion": "No automatic promotion. Report improvement or failure honestly; require independent review and Bryan's approval before any material production math change. Genuine future evidence must be frozen before kickoff and preserved separately from these retrospective results.",
+    "amendments": "Any later protocol correction must be dated, explain why, and retain the original protocol hash. No silent candidate, split, penalty or metric changes after fitting."
+  }
+}

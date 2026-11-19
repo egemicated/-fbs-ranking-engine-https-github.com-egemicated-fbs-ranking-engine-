@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 1,
+  "protocolId": "cross-division-calibration-shadow-v1",
+  "frozenManifestSha256": "a0ca4661ef41d8e014afad1fee760bd85d5ddb1bb4d6e5d440cd716659bd231f",
+  "frozenAt": "2026-11-19T00:17:44.341Z",
+  "season": 2026,
+  "evaluatedAt": "2026-11-19T00:23:54.106Z",
+  "asOf": "2026-11-18T12:30:14.250Z",
+  "resultScheduleAsOf": "2026-11-18T12:30:09.923Z",
+  "resultSourceHash": "caf17786cbac28cbf5b90dabc621c845e89561152a3b5038fd3d136e9cfad8bb",
+  "resultSnapshotHash": "a36df50d7f94c050e03b2d5df03cba802067d8dd2a1732f715a3ea3cc57dc4c1",
+  "status": "awaiting-first-scored-game",
+  "observationsRead": 1,
+  "otherSeasonObservations": 0,
+  "selectedForecasts": 4,
+  "duplicateCheckpoints": 0,
+  "pending": [
+    {
+      "gameId": "401856746",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401856747",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401856749",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401856750",
+      "reason": "awaiting-confirmed-final"
+    }
+  ],
+  "excluded": [],
+  "selectionRule": "First valid immutable capture per current-season game, selected independently of outcomes. Subsequent identity or eligibility failures exclude that first capture; later captures do not replace it.",
+  "scores": {
+    "games": 0,
+    "baseline": {
+      "correct": 0,
+      "incorrect": 0,
+      "probabilityTies": 0,
+      "accuracy": null,
+      "brier": null,
+      "logLoss": null,
+      "meanFbsWinProbability": null,
+      "observedFbsWinRate": null,
+      "reliability": [
+        {
+          "lower": 0,
+          "upper": 0.1,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        },
+        {
+          "lower": 0.1,
+          "upper": 0.2,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        },
+        {
+          "lower": 0.2,
+          "upper": 0.3,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        },
+        {
+          "lower": 0.3,
+          "upper": 0.4,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        },
+        {
+          "lower": 0.4,
+          "upper": 0.5,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        },
+        {
+          "lower": 0.5,
+          "upper": 0.6,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        },
+        {
+          "lower": 0.6,
+          "upper": 0.7,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        },
+        {
+          "lower": 0.7,
+          "upper": 0.8,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        },
+        {
+          "lower": 0.8,
+          "upper": 0.9,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        },
+        {
+          "lower": 0.9,
+          "upper": 1,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        }
+      ]
+    },
+    "candidate": {
+      "correct": 0,
+      "incorrect": 0,
+      "probabilityTies": 0,
+      "accuracy": null,
+      "brier": null,
+      "logLoss": null,
+      "meanFbsWinProbability": null,
+      "observedFbsWinRate": null,
+      "reliability": [
+        {
+          "lower": 0,
+          "upper": 0.1,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        },
+        {
+          "lower": 0.1,
+          "upper": 0.2,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        },
+        {
+          "lower": 0.2,
+          "upper": 0.3,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        },
+        {
+          "lower": 0.3,
+          "upper": 0.4,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        },
+        {
+          "lower": 0.4,
+          "upper": 0.5,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        },
+        {
+          "lower": 0.5,
+          "upper": 0.6,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        },
+        {
+          "lower": 0.6,
+          "upper": 0.7,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        },
+        {
+          "lower": 0.7,
+          "upper": 0.8,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        },
+        {
+          "lower": 0.8,
+          "upper": 0.9,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        },
+        {
+          "lower": 0.9,
+          "upper": 1,
+          "games": 0,
+          "probabilitySum": 0,
+          "fbsWins": 0,
+          "meanFbsProbability": null,
+          "observedFbsWinRate": null
+        }
+      ]
+    },
+    "changedFavorites": 0,
+    "candidateMinusBaseline": {
+      "accuracy": null,
+      "brier": null,
+      "logLoss": null
+    }
+  },
+  "evaluated": [],
+  "interpretation": "Only confirmed decisive finals with matching identity, subdivision, venue and a corrected kickoff strictly after capture within seven days are graded. Both models retain the same captured Strength graph. No graded games means evidence is pending, not success. Saved public picks and retrospective replays are not included; no automatic promotion.",
+  "reportSha256": "9288a9cb994fc31b902e771a1aa4064d4852ad7dae2e42ee500f97064cb7acfa",
+  "inputSha256": {
+    "snapshot": "452fd04b7e1e3bc2531dcb111efea5e3c97c16e88c6e34691979dd4e787597d7",
+    "weekly": "d430f9d8ad2fddf8feff5bde02156f342e0868277dc51f067d02e709fffe589c",
+    "evaluatorManifest": "544d400bc96ad715603b39c7bcc7f9285f79541b7f2dafe8a60adc2764e10bc8"
+  }
+}

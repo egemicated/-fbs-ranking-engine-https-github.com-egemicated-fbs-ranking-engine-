@@ -79,6 +79,14 @@ jobs:
         id: weekly-picks
         if: steps.primary-publish.outcome == 'success'
         run: node scripts/publish-weekly-picks.js --season "data/seasons/${RANKING_SEASON}.json" --snapshot published/latest.json --output published/weekly-picks.json
+      - name: Save paired cross-division research forecasts
+        if: steps.weekly-picks.outcome == 'success'
+        continue-on-error: true
+        run: node research/capture-cross-division-shadow.mjs
+      - name: Grade saved cross-division research forecasts
+        if: steps.weekly-picks.outcome == 'success'
+        continue-on-error: true
+        run: node research/evaluate-cross-division-shadow.mjs
       - name: Record paired pregame forecasts for the recent-form trial
         if: steps.weekly-picks.outcome == 'success'
         continue-on-error: true
@@ -187,6 +195,8 @@ jobs:
           git add research/blend-evaluations/
           git add research/recent-form-observations/
           if test -f research/recent-form-evaluations/latest.json; then git add research/recent-form-evaluations/latest.json; fi
+          git add research/cross-division-calibration-observations/
+          if test -f research/cross-division-calibration-evaluations/latest.json; then git add research/cross-division-calibration-evaluations/latest.json; fi
           if git diff --cached --quiet; then exit 0; fi
           git commit -m 'Publish weekly CFBD rankings'
           git pull --rebase origin main

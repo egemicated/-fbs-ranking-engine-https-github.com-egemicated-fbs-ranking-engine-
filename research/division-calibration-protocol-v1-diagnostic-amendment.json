@@ -1,0 +1,10 @@
+{
+  "id": "division-calibration-v1-diagnostic-amendment-1",
+  "declaredAt": "2026-11-19T00:19:34Z",
+  "originalProtocolSha256": "d155cd2829f73752281e9d0cf6ed5d891c612084ea62cb193978d6d4467c7790",
+  "timing": "Declared after the primary selection and evaluation results were inspected. This is an explicit post-selection diagnostic, not preregistered confirmation or a fresh holdout.",
+  "reason": "Independent review identified unequal training exposure in the SOR selection window. Production transferred coefficients were originally fitted on FBS-involving 2014-2019 games. Of 1503 FCS-involving selection games in 2018-2019, 226 FBS-FCS outcomes directly entered that original fit, while 1277 FCS-FCS games contributed graph context. New FCS candidates only used 2014-2017 outcomes before selection. This favors the existing baseline and prevents treating the primary baseline selection as independent proof of superiority.",
+  "diagnostic": "For each already declared SOR context, fit every existing family (transferred, fcsSlopeHome, fcsAll) on the same declared 2014-2019 refit data, and report each on 2021-2025. Use identical target identities, frozen penalty and metrics. Report paired week-block sensitivity versus transferred. No additional families, penalties, weighting, source changes or searches.",
+  "decisionPolicy": "Retain the primary selected family and original results unchanged. Do not reselect a model or promote any production change using this diagnostic. It describes candidate sensitivity; an equal-training-cutoff control study and new prospective evidence would be needed to justify a stronger comparative claim.",
+  "productionChanges": false
+}

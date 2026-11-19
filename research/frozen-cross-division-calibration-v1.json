@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "cross-division-calibration-shadow-v1",
+  "status": "Research only; no public probability or ranking changes",
+  "frozenAt": "2026-11-19T00:17:44.341Z",
+  "horizonDays": 7,
+  "modelVersion": "0.2.0",
+  "strengthConfig": {
+    "ridge": 3,
+    "retention": 0.75,
+    "homeAdvantage": 2.5,
+    "marginCap": 28,
+    "probabilityScale": 14
+  },
+  "model": {
+    "family": "temperatureDivision",
+    "coefficients": [
+      2.329814851971762,
+      1.869996947261027
+    ]
+  },
+  "researchProtocolSha256": "d155cd2829f73752281e9d0cf6ed5d891c612084ea62cb193978d6d4467c7790",
+  "researchSummarySha256": "c95a8d05b1cdfefffaea58145f13ef758e73efede32c6c51c98f29df3fbea723",
+  "implementationSha256": {
+    "research/capture-cross-division-shadow.mjs": "61c331246097d89955157100a3851ca1bdfaacf04cc5c56969cf392b2155a4bb",
+    "research/cross-division-calibration.mjs": "fb059965c93708309ecabc2f4c3bf265437920effb08516a418d844b073025be",
+    "research/historical_foundation.mjs": "7628e192967c24d323020ef460448aecced5419e18001cdcaa76214eb159eefa",
+    "src/engine.js": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+    "src/ingest.js": "1b34822bd75044720ef4c87b21bee8e43e7b08214de6b48755688c937165d4db"
+  },
+  "selection": "Family selected on 2018-2019 after fitting 2014-2017; refit 2014-2019. All 2021-2025 seasons were previously inspected retrospective evidence.",
+  "capture": "Use the existing public cached snapshot and confirmed weekly fixtures. Actual research capture must follow this freeze and precede kickoff. Compare both models at the SAME cached checkpoint; preserve earlier public saved picks. No CFBD calls.",
+  "interpretation": "The selected candidate picked FBS in every retrospective evaluation game and missed all 34 FCS upsets. Its added retrospective evidence is better probability scoring, not superiority to always choosing FBS on winner accuracy.",
+  "futureEvaluation": "First eligible immutable capture per game; verify final identity, venue and corrected kickoff after capture and within seven days; canceled, postponed, tied, unresolved and changed-identity games reported separately. No automatic promotion or retuning based on a few new games.",
+  "scheduling": "Manual offline research capture prepared; not added to scheduled workflows."
+}
