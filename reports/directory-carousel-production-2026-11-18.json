@@ -1,0 +1,51 @@
+{
+  "checkedAt": "2026-11-19T04:54:51.119Z",
+  "commit": "aac4b224a3d43586cfeeacf0332d30038620e249",
+  "ciRun": 44460942604,
+  "ciPassed": true,
+  "renderDeploy": "dep-dbv7vnbm8hqs73apgcg0",
+  "renderLiveAt": "2026-11-19T04:51:43.805839Z",
+  "checks": [
+    {
+      "path": "/account-administration.js",
+      "status": 200,
+      "matchesTestedBuild": true,
+      "sha256": "c39410d55bb10ca8677b2ef88b79b3d26d07b8d2964de268376f5e99addf860d"
+    },
+    {
+      "path": "/account-center.css",
+      "status": 200,
+      "matchesTestedBuild": true,
+      "sha256": "67c46b0f88393b26ab039cef9fb23842a63ca3116cefe765acf5f52a9f413ea4"
+    },
+    {
+      "path": "/my-team.js",
+      "status": 200,
+      "matchesTestedBuild": true,
+      "sha256": "c958ed732dc4e39dd6d1b7e948facdd194a9b000b3a2a4a7090cfc57dfc5a450"
+    },
+    {
+      "path": "/my-team.css",
+      "status": 200,
+      "matchesTestedBuild": true,
+      "sha256": "3615674df46f4532f73f89a54d2e791ee23b5e434bece429f6e00a24a5848f3a"
+    },
+    {
+      "path": "/data/rankings.json",
+      "status": 200,
+      "matchesTestedBuild": true,
+      "sha256": "1c23e9d2335217f67f9da49535c9169a50cb5a43e455bfe4a0f5a1bde4f934e4"
+    }
+  ],
+  "liveSignedInHomepage": {
+    "carouselVisible": true,
+    "forwardWrapVerified": true,
+    "backwardWrapVerified": true,
+    "viewReturnedToOriginalPrimary": true,
+    "noOverflow": true
+  },
+  "adminDirectoryLiveInteraction": "Covered by isolated browser fixtures; exact public asset bytes verified. No real account moderation or signup for this release.",
+  "passed": true,
+  "cfbdPulls": 0,
+  "databaseMigrations": 0
+}
