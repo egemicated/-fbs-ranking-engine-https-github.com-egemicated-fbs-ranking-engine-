@@ -69,7 +69,7 @@ function recommendationMarkup(row, team, names, gameHref) {
   const favoredHome = winner === game.home;
   const matchup = `${awayName} ${game.neutral ? 'vs.' : 'at'} ${homeName}`;
   const href = gameHref?.(game);
-  const detailsLink = typeof href === 'string' && href.startsWith('#') ? `<a href="${escape(href)}">See matchup</a>` : '';
+  const detailsLink = href ? `<a href="${escape(href)}">See matchup</a>` : '';
   const past = row.pastOpponents.map(id => names.get(id)).filter(Boolean);
   const reason = past.length === 1 ? `${team.name} already played ${past[0]}. Their result changes the opponent network used for SOR.`
     : past.length > 1 ? `${team.name} already played both teams. Their result changes the opponent network used for SOR.`
@@ -115,7 +115,7 @@ export function mountRootingGuide(root, { team, snapshot, inputUrl, gameHref, no
     body.innerHTML = `<p class="rooting-guide-note">Model scenarios · Confirmed games over the next seven days. Each comparison adds just that game to the published results.</p>
       <ul class="rooting-list">${upcoming.map(row => recommendationMarkup(row, team, names, gameHref)).join('')}</ul>
       <p class="rooting-guide-note">${hasField ? 'The same four current conference SOR leaders are assumed champions in both outcomes. Other bids follow the scenario rankings. ' : ''}
-      <a href="#cfp-scenarios">CFP Scenario Builder</a></p>`;
+      <a href="/cfp-scenarios/">CFP Scenario Builder</a></p>`;
   }
   async function load() {
     if (!isCurrent() || calculating) return;

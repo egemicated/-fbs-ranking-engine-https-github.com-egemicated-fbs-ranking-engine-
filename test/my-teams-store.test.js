@@ -36,6 +36,6 @@ test('My Teams summaries distinguish saved forecasts, missing availability, and 
   const html=myTeamSummary(team,details,null,{teams:new Map([[team.id,team]]),primary:true});
   assert.match(html,/75\.0% saved pregame win chance/);
   assert.match(html,/Availability not reported/);
-  assert.match(html,/#compare\/matchup\/2305\/252\/home/);
+  assert.match(html,/href="\/matchup-lab\?a=2305&b=252&venue=home"/);
   assert.match(html,/Predictive rank<\/dt><dd>Not reported/);
 });

@@ -1,3 +1,5 @@
+import { navigateApp } from './clean-navigation.js';
+import { routeHref } from './clean-routes.js';
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
 }[character]));
@@ -62,7 +64,7 @@ function evidence(row) {
 }
 
 function teamName(row) {
-  return `<a href="#team/${encodeURIComponent(row.id)}">${escapeHtml(row.team)}</a>`;
+  return `<a href="${routeHref(`team/${encodeURIComponent(row.id)}`)}">${escapeHtml(row.team)}</a>`;
 }
 
 function movementCard(title, rows, emptyText) {
@@ -84,8 +86,8 @@ export function rankingHistoryMarkup(comparison, search = '') {
   const membership = (title, members, text) => `<section class="panel history-card"><h2>${title}</h2>${members.length ? `<ul class="history-members">${members.map(row => `<li>${teamName(row)}<span>${rankLabel(row.previousRank)} → ${rankLabel(row.rank)}</span></li>`).join('')}</ul>` : `<p class="compact-note">${text}</p>`}</section>`;
   return `<section class="hero page-banner"><div class="wrap"><div class="eyebrow">${String(current.gamesThrough).slice(0, 4)} · Weekly SOR</div><h1>WHAT CHANGED?</h1><p>Follow the rankings, the teams entering the Top 25, and the game results behind each week.</p></div></section>
     <div class="wrap page-content history-page">
-      <section class="panel history-card history-toolbar"><label for="history-week">View edition</label><select id="history-week">${[...editions].reverse().map(edition => `<option value="${editionKey(edition)}" ${editionKey(edition) === editionKey(current) ? 'selected' : ''}>${editionLabel(edition)}${edition.kind === 'replay' ? ' · replay' : ''}${edition.complete === false ? ' · partial' : ''}</option>`).join('')}</select><a class="text-link" href="#rankings">Current rankings →</a></section>
-      <details class="panel history-card history-archive-note"><summary>About this ranking archive</summary><p>${savedEditions.length} saved weekly ${savedEditions.length === 1 ? 'edition' : 'editions'}${firstSaved ? `, beginning ${date(firstSaved)}` : ''}; ${replayEditions.length} retrospective ${replayEditions.length === 1 ? 'replay' : 'replays'}.${publicationCount ? ` ${publicationCount} saved observations are retained separately for pregame evidence; this view shows the latest edition per week.` : ''} Earlier game archives used for model research are not weekly rankings published at the time. Replays stay separate from saved pregame evidence. Previous-season game and poll comparisons are available in <a href="#conference-strength">Conference Strength</a>.</p></details>
+      <section class="panel history-card history-toolbar"><label for="history-week">View edition</label><select id="history-week">${[...editions].reverse().map(edition => `<option value="${editionKey(edition)}" ${editionKey(edition) === editionKey(current) ? 'selected' : ''}>${editionLabel(edition)}${edition.kind === 'replay' ? ' · replay' : ''}${edition.complete === false ? ' · partial' : ''}</option>`).join('')}</select><a class="text-link" href="/rankings">Current rankings →</a></section>
+      <details class="panel history-card history-archive-note"><summary>About this ranking archive</summary><p>${savedEditions.length} saved weekly ${savedEditions.length === 1 ? 'edition' : 'editions'}${firstSaved ? `, beginning ${date(firstSaved)}` : ''}; ${replayEditions.length} retrospective ${replayEditions.length === 1 ? 'replay' : 'replays'}.${publicationCount ? ` ${publicationCount} saved observations are retained separately for pregame evidence; this view shows the latest edition per week.` : ''} Earlier game archives used for model research are not weekly rankings published at the time. Replays stay separate from saved pregame evidence. Previous-season game and poll comparisons are available in <a href="/conference-strength/">Conference Strength</a>.</p></details>
       <div class="history-context"><h2>${editionLabel(current)}</h2><p>Games through ${date(current.gamesThrough)}. ${replay ? 'Historical replay calculated' : 'Snapshot saved'} ${date(current.released ?? current.asOf)}.</p>
         ${previous ? `<p>Movement compared with ${escapeHtml(previousLabel)}. ${previous.kind === 'replay' ? 'The comparison week was reconstructed from its historical game cutoff. SOR score changes become available between saved editions.' : ''}</p>` : '<p>This is the first available edition for this calculation method.</p>'}
         ${current.complete === false ? '<p class="history-alert">This week is still awaiting final results. Movement is provisional.</p>' : ''}
@@ -93,7 +95,7 @@ export function rankingHistoryMarkup(comparison, search = '') {
       ${previous ? `<div class="history-grid">${movementCard('Moving up', risers, 'No Top 25 teams moved up in this comparison.')}${movementCard('Moving down', fallers, 'No Top 25 teams moved down in this comparison.')}${membership('Entering the Top 25', arrivals, 'The Top 25 has no new arrivals.')}${membership('Leaving the Top 25', departures, 'Every team from the previous Top 25 remains in it.')}</div>` : ''}
       <section class="panel"><div class="panel-head"><div class="panel-head-title"><h2>All ${rows.length} FBS teams</h2></div></div><div class="panel-body history-search"><label for="history-search">Find a team</label><input id="history-search" type="search" placeholder="Search teams" value="${escapeHtml(search)}"></div>
         <div class="table-scroll"><table class="history-table"><caption class="sr-only">${editionLabel(current)} Strength of Record history</caption><thead><tr><th>Rank</th><th>Team</th><th>Record</th><th>Move</th><th>SOR</th><th class="history-score-change">SOR change</th></tr></thead><tbody>${filtered.map(row => `<tr><td class="table-rank">${row.rank ?? '—'}</td><td>${teamName(row)}</td><td>${escapeHtml(row.record ?? `${row.wins}–${row.losses}`)}</td><td><span class="history-move ${row.movement > 0 ? 'up' : row.movement < 0 ? 'down' : ''}">${movementLabel(row)}</span></td><td>${score(row.sor)}</td><td class="history-score-change">${Number.isFinite(row.scoreChange) ? signed(row.scoreChange) : '—'}</td></tr>`).join('')}</tbody></table></div>
-        <div class="panel-body"><p class="compact-note">Game results and changes across the opponent network both affect SOR. Scores use the formula published in our <a href="#methodology">methodology</a>.</p></div>
+        <div class="panel-body"><p class="compact-note">Game results and changes across the opponent network both affect SOR. Scores use the formula published in our <a href="/methodology/">methodology</a>.</p></div>
       </section>
     </div>`;
 }
@@ -119,6 +121,7 @@ export async function renderRankingHistory(container, { url = '/ranking-history.
       container.innerHTML = rankingHistoryMarkup(compareRankingHistory(data, selectedWeek), search);
       container.querySelector('#history-week')?.addEventListener('change', event => {
         selectedWeek = event.target.value;
+        navigateApp(`ranking-history/${selectedWeek}`, { replace: true, render: false });
         search = '';
         draw();
       });
@@ -133,7 +136,7 @@ export async function renderRankingHistory(container, { url = '/ranking-history.
     };
     draw();
   } catch (error) {
-    if (active) container.innerHTML = '<div class="wrap page-content"><section class="panel history-card"><h2>Weekly history is unavailable</h2><p>Please reload this page to try again.</p><a class="text-link" href="#rankings">View current rankings →</a></section></div>';
+    if (active) container.innerHTML = '<div class="wrap page-content"><section class="panel history-card"><h2>Weekly history is unavailable</h2><p>Please reload this page to try again.</p><a class="text-link" href="/rankings">View current rankings →</a></section></div>';
     console.error(error);
   }
 }

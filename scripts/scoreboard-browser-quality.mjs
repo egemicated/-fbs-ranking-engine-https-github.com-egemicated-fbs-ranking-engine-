@@ -10,7 +10,7 @@ const directory=resolve('static-dist');
 const types={'.js':'text/javascript','.json':'application/json','.css':'text/css','.html':'text/html','.svg':'image/svg+xml','.woff2':'font/woff2','.png':'image/png','.webp':'image/webp'};
 const server=createServer(async(req,res)=>{
   const path=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
-  let file=resolve(directory,'.'+path);if(path.endsWith('/'))file=resolve(file,'index.html');
+  let file=resolve(directory,'.'+path);if(!extname(path))file=resolve(file,'index.html');
   if(!file.startsWith(directory+sep))return res.writeHead(404).end();
   try{res.writeHead(200,{'Content-Type':types[extname(file)]??'application/octet-stream'}).end(await readFile(file));}
   catch{res.writeHead(404).end();}
@@ -31,11 +31,12 @@ try{
   for(const width of [320,375,390,768,1024,1440]){
     const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'}),page=await context.newPage(),errors=[];
     page.on('pageerror',error=>errors.push(error.message));
+    await context.route('**/*',route=>route.request().url().startsWith(base)?route.continue():route.abort());
     await page.clock.install({time:new Date('2026-11-19T13:00:00Z')});
     let mode='scheduled';
     await page.route('https://site.api.espn.com/**/scoreboard?*',route=>route.fulfill(mode==='failure'?{status:503,body:'Unavailable'}:{json:mode==='empty'?{...fixture(false),events:[]}:fixture(mode==='final')}));
     for(const name of ['scoreboard.js','scoreboard.css'])await page.route(`**/${name}*`,async route=>route.fulfill({contentType:types[extname(name)],body:await readFile(resolve('frontend',name))}));
-    await page.goto(base+'#scoreboard',{waitUntil:'domcontentloaded'});
+    await page.goto(base+'scoreboard',{waitUntil:'domcontentloaded'});
     await page.locator('[data-game-id]').first().waitFor();
     await page.locator('.scoreboard-warning').filter({hasText:'still marked Scheduled'}).waitFor();
     await page.getByText('Data times and coverage',{exact:true}).click();
@@ -44,7 +45,8 @@ try{
     await page.locator('[data-scoreboard-time="schedule"]').filter({hasNotText:'Not reported'}).waitFor();
     const link=page.locator(`[data-game-id="${samples[0].id}"] a`).filter({hasText:'Saved prediction'});
     await link.waitFor();
-    assert.equal(await link.getAttribute('href'),`#compare/weekly/regular:12/${samples[0].id}`);
+    const savedPrediction=`/weekly-picks?week=regular%3A12&game=${samples[0].id}`;
+    assert.equal(await link.getAttribute('href'),savedPrediction);
     mode='final';await page.locator('[data-scoreboard-refresh]').click();
     await page.locator('[data-game-id][data-state="final"]').first().waitFor();
     assert.equal(await page.locator('[data-game-id][data-state="final"]').count(),2);
@@ -64,7 +66,7 @@ try{
     // Follow the actual existing deep link into its retained weekly snapshot.
     await page.locator(`[data-game-id="${samples[0].id}"] a`).filter({hasText:'Saved prediction'}).click();
     await page.locator(`#weekly-game-${samples[0].id}`).waitFor();
-    assert.match(page.url(),new RegExp(`#compare/weekly/regular:12/${samples[0].id}$`));
+    assert.equal(page.url(),new URL(savedPrediction,base).href);
     assert.equal(await page.locator('#weekly-week').inputValue(),'regular:12');
     assert.equal(await page.locator(`#weekly-game-${samples[0].id}`).getAttribute('id'),`weekly-game-${samples[0].id}`);
     assert.deepEqual(errors,[]);

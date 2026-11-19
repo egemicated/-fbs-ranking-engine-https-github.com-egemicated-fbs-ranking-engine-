@@ -28,9 +28,9 @@ const equalSecret = (a, b) => {
   for (let i = 0; i < Math.max(a.length, b.length); i++) delta |= (a.charCodeAt(i) || 0) ^ (b.charCodeAt(i) || 0);
   return delta === 0;
 };
-export function notificationMessage(row, siteUrl) {
+export function notificationMessage(row) {
   if (!safeId(row.id) || !safeId(row.requestId) || !categories.has(row.category) || !Number.isFinite(Date.parse(row.createdAt))) throw Error('invalid_notification');
-  const url = new URL('/#admin', siteUrl).href;
+  const url = new URL('/admin', customOrigin).href;
   const category = SUPPORT_CATEGORY_LABELS[row.category];
   const summary = `Request ${row.requestId}\nCategory: ${category}\nReceived: ${new Date(row.createdAt).toISOString()}\nReview: ${url}`;
   return { subject: `${siteName}: new support request`, text: summary,
@@ -63,7 +63,7 @@ export function createSupportHandler(env, { fetcher = fetch } = {}) {
     for (const row of rows) {
       let ok = false, providerId = null, failure = 'provider_unavailable';
       try {
-        const message = notificationMessage(row, site);
+        const message = notificationMessage(row);
         const deduplicationKey = `fbs-support-${row.id}`;
         const brevo = provider === 'brevo';
         const response = await fetcher(brevo ? 'https://api.brevo.com/v3/smtp/email' : 'https://api.resend.com/emails', { method: 'POST',

@@ -1,4 +1,5 @@
-import { cleanAccountCallbackUrl } from './account-auth.js';
+import { ACCOUNT_CALLBACK_MODES, accountCallbackFragment, hasAccountCallbackParameters, cleanAccountCallbackUrl } from './account-auth.js';
+import { legacyRouteFromHash, routeFromUrl, routeHref } from './clean-routes.js';
 
 const libraryUrl = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0/dist/umd/supabase.js';
 const libraryIntegrity = 'sha384-uteMfOloLDGt042uDz+xHGF3ym63/WQ6rFq7murQRG8Ih7QrXGEGNtWd8688sb4O';
@@ -8,19 +9,28 @@ let recoverySession = false;
 let callbackNotice = '';
 const observedClients = new WeakSet();
 export const ACCOUNT_ROUTE_EVENT = 'fbs-account-route';
+const accountReturnKey = 'fbs-account-return';
+const legacyContestReturns = [['weekly', 'beat-the-model'], ['cfp', 'bracket']];
+const legacyReturnMarkers = [...legacyContestReturns.map(([marker]) => marker), 'myteam'];
 export const hasPasswordRecoverySession = () => recoverySession;
 export const finishPasswordRecovery = () => { recoverySession = false; };
 export const getAccountCallbackNotice = () => callbackNotice;
 
-const credentialFragment = hash => /(?:^#|[&#])(?:access_token|refresh_token|token_hash|error)=/.test(hash);
+const credentialFragment = hash => hasAccountCallbackParameters(accountCallbackFragment(hash));
 
 export function accountCallbackMode(value) {
-  const url=new URL(value), explicit=url.searchParams.get('account');
-  if(['recovery','verification','signin'].includes(explicit))return explicit;
-  if(url.searchParams.has('error')||url.searchParams.has('error_code'))return 'signin';
-  if(!credentialFragment(url.hash))return null;
-  const type=new URLSearchParams(url.hash.slice(1)).get('type');
-  return type==='recovery'?'recovery':'signin';
+  const url = new URL(value);
+  const explicit = url.searchParams.get('account');
+  if (ACCOUNT_CALLBACK_MODES.includes(explicit)) return explicit;
+  if (url.searchParams.has('error') || url.searchParams.has('error_code')) return 'signin';
+  if (!credentialFragment(url.hash)) return null;
+  return accountCallbackFragment(url.hash).get('type') === 'recovery' ? 'recovery' : 'signin';
+}
+
+export function isAccountCallbackUrl(value) {
+  const url = new URL(value);
+  return Boolean(accountCallbackMode(url)) || hasAccountCallbackParameters(url.searchParams) ||
+    legacyReturnMarkers.some(marker => url.pathname === '/' && url.searchParams.get(marker) === '1');
 }
 
 export function accountCallbackErrorNotice(error) {
@@ -32,44 +42,62 @@ export function accountCallbackErrorNotice(error) {
 }
 
 function callbackErrorFromUrl(value) {
-  const url=new URL(value),fragment=new URLSearchParams(url.hash.slice(1));
+  const url=new URL(value),fragment=accountCallbackFragment(url.hash);
   if(!url.searchParams.has('error')&&!url.searchParams.has('error_code')&&!fragment.has('error')&&!fragment.has('error_code'))return null;
   return {code:url.searchParams.get('error_code')??fragment.get('error_code')??'callback_error'};
 }
 
-export function safeAccountReturnHash(value) {
-  if(typeof value!=='string'||!value.startsWith('#')||value.length>1000)return '#home';
-  return credentialFragment(value)?'#account':value;
+export function safeAccountReturnPath(value) {
+  if (typeof value !== 'string' || value.length > 1000 || /[\\\u0000-\u001f\u007f]/.test(value)) return '/';
+  if (value.startsWith('#')) {
+    if (credentialFragment(value)) return '/account';
+    return routeHref(legacyRouteFromHash(value)) ?? '/';
+  }
+  if (!value.startsWith('/') || value.startsWith('//')) return '/';
+  const url = new URL(value, 'https://return.example');
+  if (url.origin !== 'https://return.example') return '/';
+  if (hasAccountCallbackParameters(url.searchParams) || credentialFragment(url.hash)) return '/account';
+  return routeHref(routeFromUrl(url)) ?? '/';
 }
 
-// Restore ordinary OAuth navigation, but never let an old destination override
-// a new email callback. Leave token fragments untouched until managed Auth has
-// consumed them; the app can render Account independently of the raw fragment.
-export function initialAccountReturnUrl(value,remembered) {
-  const url=new URL(value),mode=accountCallbackMode(value);
-  const markers=['cfp','weekly','myteam'];
-  if(mode){if(!credentialFragment(url.hash))url.hash='account';}
-  else if((remembered&&url.searchParams.has('code'))||markers.some(key=>url.searchParams.get(key)==='1')){
-    url.hash=url.searchParams.get('weekly')==='1'?'beat-the-model':url.searchParams.get('cfp')==='1'?'bracket':remembered?safeAccountReturnHash(remembered):'home';
-  }else return url.href;
-  for(const key of markers)url.searchParams.delete(key);
-  return url.href;
+// Select the visible page while managed Auth processes the original callback.
+// This reads the URL without moving, cleaning or copying its credentials.
+export function pendingAccountRoute(value, remembered) {
+  if (!isAccountCallbackUrl(value)) return null;
+  if (accountCallbackMode(value)) return 'account';
+  const url = new URL(value);
+  if (routeFromUrl(url) === 'account') return 'account';
+  for (const [marker, route] of legacyContestReturns) {
+    if (url.pathname === '/' && url.searchParams.get(marker) === '1') return route;
+  }
+  return routeFromUrl(new URL(safeAccountReturnPath(remembered), url.origin)) ?? 'home';
 }
 
-function finishAccountCallbackRouting(mode) {
-  const url=new URL(cleanAccountCallbackUrl(location.href));
-  if(mode)url.hash='account';
-  history.replaceState(history.state,'',url);
-  // replaceState never fires hashchange. Notify the router even when the hash
-  // was already Account, so a verified recovery session gets its password form.
+function finishAccountCallbackRouting(route, initialUrl = location.href) {
+  const current = new URL(location.href);
+  const initial = new URL(initialUrl);
+  const destination = new URL(routeHref(route) ?? '/account', current.origin);
+  // If the visitor left the callback page while Auth was initializing, don't
+  // send them back. The SDK may already have removed the code or fragment.
+  if (current.pathname === initial.pathname && current.href !== destination.href) {
+    const cleaned = new URL(cleanAccountCallbackUrl(current));
+    cleaned.pathname = destination.pathname;
+    cleaned.search = destination.search;
+    cleaned.hash = '';
+    history.replaceState(history.state, '', cleaned);
+  }
+  try { window.sessionStorage.removeItem(accountReturnKey); } catch {}
+  // replaceState does not emit an event. A completed recovery also needs to
+  // notify the account view if its path was already /account.
   window.dispatchEvent(new Event(ACCOUNT_ROUTE_EVENT));
 }
 
 function observeAccountCallbacks(client) {
   if(observedClients.has(client))return;
   observedClients.add(client);
+  const initialUrl = location.href;
   client.auth.onAuthStateChange(event=>{
-    if(event==='PASSWORD_RECOVERY'){callbackNotice='';recoverySession=true;finishAccountCallbackRouting('recovery');}
+    if(event==='PASSWORD_RECOVERY'){callbackNotice='';recoverySession=true;finishAccountCallbackRouting('account', initialUrl);}
     if(event==='SIGNED_IN')callbackNotice='';
     if(event==='SIGNED_OUT')recoverySession=false;
   });
@@ -127,14 +155,18 @@ export function mountHeaderAccount(root, { previewClient, rememberPage, icon = '
     const action = !ready && !checking ? 'retry' : session ? 'signout' : 'signin';
     const label = action === 'retry' ? 'Retry sign-in' : session ? 'Sign out' : 'Sign in';
     const unavailable = action === 'signin' && !checking && !providerEnabled && config.emailAuthEnabled !== true;
-    root.innerHTML = `${session ? '<a class="header-account-button header-account-settings" href="#account" aria-label="Your account at The Games Decide">Account</a>' : ''}<button class="header-account-button" type="button" data-account-action="${action}"${checking || busy || unavailable ? ' disabled' : ''}>
+    root.innerHTML = `${session ? '<a class="header-account-button header-account-settings" href="/account" aria-label="Your account at The Games Decide">Account</a>' : ''}<button class="header-account-button" type="button" data-account-action="${action}"${checking || busy || unavailable ? ' disabled' : ''}>
       ${icon}<span>${unavailable ? 'Sign-in unavailable' : label}</span></button><span class="header-account-message" role="status">${message}</span>`;
     if (focus) root.querySelector('[data-account-action]')?.focus();
   }
 
   async function connect() {
-    const initialUrl=location.href,callbackMode=accountCallbackMode(initialUrl);
-    const callbackPending=Boolean(callbackMode||new URL(initialUrl).searchParams.has('code'));
+    const initialUrl = location.href;
+    let remembered;
+    try { remembered = window.sessionStorage.getItem(accountReturnKey); } catch {}
+    const callbackRoute = pendingAccountRoute(initialUrl, remembered);
+    const callbackPending = callbackRoute !== null;
+    let callbackProcessed = false;
     const callbackError=callbackErrorFromUrl(initialUrl);
     if(callbackError){recoverySession=false;callbackNotice=accountCallbackErrorNotice(callbackError);}
     checking = true;
@@ -145,6 +177,7 @@ export function mountHeaderAccount(root, { previewClient, rememberPage, icon = '
       client = previewClient ?? await loadBracketClient(config);
       observeAccountCallbacks(client);
       const { data, error } = await client.auth.getSession();
+      callbackProcessed = true;
       if (error) {if(callbackPending){recoverySession=false;callbackNotice=accountCallbackErrorNotice(error);}throw error;}
       session = data.session;
       // Register once the client is ready. The listener never calls an auth method.
@@ -164,7 +197,7 @@ export function mountHeaderAccount(root, { previewClient, rememberPage, icon = '
       if(callbackPending&&!callbackNotice){recoverySession=false;callbackNotice=accountCallbackErrorNotice(error);}
       message = callbackNotice || 'Account controls could not load.';
     }
-    if(callbackPending)finishAccountCallbackRouting(callbackMode);
+    if (callbackPending && callbackProcessed) finishAccountCallbackRouting(callbackRoute, initialUrl);
     checking = false;
     draw();
   }

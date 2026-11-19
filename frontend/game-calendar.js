@@ -1,8 +1,10 @@
-import { canonicalPath, PUBLIC_SITE_ORIGIN } from './page-routes.js';
+import { legacyRouteFromHash, routeFromUrl, routeHref } from './clean-routes.js';
+import { PUBLIC_SITE_ORIGIN } from './page-routes.js';
 
 const legacyOrigin = 'https://fbs-intelligence.onrender.com';
 const previewHosts = new Set(['localhost', '127.0.0.1', '[::1]']);
-const publicPath = /^#(?:team(?:\/[\w-]+)*|scoreboard(?:\/[\w-]+)*|compare(?:\/matchup(?:\/\d+){2}\/(?:neutral|home|away)|\/weekly(?:\/fcs)?(?:\/(?:(?:regular|postseason):)?\d+)?(?:\/\d+)?)?)$/;
+const publicOrigins = new Set([PUBLIC_SITE_ORIGIN, 'https://thegamesdecide.com', legacyOrigin]);
+const footballPages = new Set(['team', 'scoreboard', 'compare']);
 const scheduleNote = 'Downloaded events do not automatically follow schedule changes.';
 const textEncoder = new TextEncoder();
 const escapeHtml = value => String(value).replace(/[&<>"']/g, character => ({
@@ -20,21 +22,17 @@ function calendarText(value) {
 }
 
 export function publicFootballPageUrl(href) {
+  if (typeof href !== 'string' || !href) return null;
   try {
-    const browserOrigin = globalThis.location?.origin;
-    const base = new URL('/', browserOrigin ?? PUBLIC_SITE_ORIGIN);
+    const base = new URL('/', globalThis.location?.origin ?? PUBLIC_SITE_ORIGIN);
     const page = new URL(href, base);
-    const usePublicOrigin = !browserOrigin || previewHosts.has(base.hostname);
-    const allowedOrigin = page.origin === base.origin || (usePublicOrigin && [PUBLIC_SITE_ORIGIN, legacyOrigin].includes(page.origin));
-    const linkOrigin = usePublicOrigin ? PUBLIC_SITE_ORIGIN : base.origin;
-    const matchup = /^#compare\/matchup\/(\d+)\/(\d+)\//.exec(page.hash);
-    if (matchup && matchup[1] === matchup[2]) return null;
-    if (allowedOrigin && /^\/team\/\d{1,24}\/$/.test(page.pathname) && !page.hash) return linkOrigin + page.pathname;
-    if (allowedOrigin && page.pathname === '/' && /^#team\/\d{1,24}$/.test(page.hash)) {
-      return linkOrigin + canonicalPath(page.hash);
-    }
-    return allowedOrigin && page.pathname === '/' && publicPath.test(page.hash)
-      ? linkOrigin + '/' + page.hash : null;
+    const preview = ['http:', 'https:'].includes(base.protocol) && previewHosts.has(base.hostname) && page.origin === base.origin;
+    if ((!preview && !publicOrigins.has(page.origin)) || page.username || page.password) return null;
+    const route = page.hash && page.pathname === '/' ? legacyRouteFromHash(page.hash) : routeFromUrl(page);
+    const [section, view, a, b] = route?.split('/') ?? [];
+    if (!footballPages.has(section) || (view === 'matchup' && (!a || !b || a === b))) return null;
+    const path = routeHref(route);
+    return path ? PUBLIC_SITE_ORIGIN + path : null;
   } catch {
     return null;
   }

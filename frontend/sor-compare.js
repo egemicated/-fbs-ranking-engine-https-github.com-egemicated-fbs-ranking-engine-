@@ -1,3 +1,5 @@
+import { navigateApp } from './clean-navigation.js';
+import { routeHref } from './clean-routes.js';
 import { formatNumber, formatProbability, formatRecord } from './format.js?v=1';
 
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
@@ -58,7 +60,7 @@ function stat(label,value) { return `<div><dt>${label}</dt><dd>${value}</dd></di
 function evidenceRow(row) {
   const opponentRank=position(row.opponent);
   const rank=row.opponent?.division ? row.opponent.division.toUpperCase()+' '+rankLabel(opponentRank) : 'Rank unavailable';
-  return `<li><a href="#team/${encodeURIComponent(row.opponentId)}">${escapeHtml(row.opponentName)}</a>
+  return `<li><a href="${routeHref(`team/${encodeURIComponent(row.opponentId)}`)}">${escapeHtml(row.opponentName)}</a>
     · ${row.result==='W'?'Won':row.result==='L'?'Lost':'Tied'}${row.finalMargin ? ' by '+Math.abs(row.finalMargin) : ''}
     · ${row.venue ? row.venue==='neutral'?'Neutral site':row.venue : 'Venue not reported'}
     <small>${rank} · Opponent record ${escapeHtml(row.opponentRecord??'Not reported')}</small></li>`;
@@ -69,7 +71,7 @@ function resultList(title,rows) {
 }
 function teamCard(team,details,best,losses,sosRanks) {
   return `<section class="panel intelligence-panel intelligence-compare-team">
-    <h3><a href="#team/${encodeURIComponent(team.id)}">${escapeHtml(team.name)}</a></h3><p class="compact-note">${escapeHtml(team.conference)} · ${team.division.toUpperCase()}</p>
+    <h3><a href="${routeHref(`team/${encodeURIComponent(team.id)}`)}">${escapeHtml(team.name)}</a></h3><p class="compact-note">${escapeHtml(team.conference)} · ${team.division.toUpperCase()}</p>
     <dl class="intelligence-stat-grid">
       ${stat('Published SOR rank',rankLabel(position(team)))}${stat('SOR score',formatNumber(team.sor,4))}
       ${stat('Overall record',formatRecord(team))}${stat('SOS rank',rankLabel(sosRanks.get(team.id)))}
@@ -77,7 +79,7 @@ function teamCard(team,details,best,losses,sosRanks) {
       ${stat('Expected reference wins',formatNumber(details?.sorExpectedWins,2))}
     </dl>
     ${resultList('Best wins by opponent Colley rating',best)}${resultList('Losses',losses)}
-    <a class="intelligence-team-link" href="#team/${encodeURIComponent(team.id)}/model">Team calculation details →</a>
+    <a class="intelligence-team-link" href="${routeHref(`team/${encodeURIComponent(team.id)}/model`)}">Team calculation details →</a>
     </section>`;
 }
 export function sorComparisonMarkup(comparison) {
@@ -87,8 +89,8 @@ export function sorComparisonMarkup(comparison) {
     <p>${escapeHtml(comparison.narrative)}</p>
     <p class="compact-note">SOR evaluates achieved results and the difficulty of matching each record. The reference team and schedule probabilities use this subdivision’s published method. Current opponent ranks are shown as supporting context.</p>
     ${a.division==='fcs'?'<p class="intelligence-note">FCS SOR remains Experimental. Its reference population is FCS and its probability coefficients transfer from the FBS calibration.</p>':''}
-    ${a.division==='fbs'?`<a class="text-link" href="#compare/matchup/${encodeURIComponent(a.id)}/${encodeURIComponent(b.id)}/neutral">Explore a future matchup →</a>`:
-      '<a class="text-link" href="#compare/weekly/fcs">FCS weekly predictions →</a>'}
+    ${a.division==='fbs'?`<a class="text-link" href="${routeHref(`compare/matchup/${encodeURIComponent(a.id)}/${encodeURIComponent(b.id)}/neutral`)}">Explore a future matchup →</a>`:
+      '<a class="text-link" href="/weekly-picks/fcs/">FCS weekly predictions →</a>'}
     </section>
     <div class="intelligence-compare-grid">
     ${teamCard(a,comparison.detailsA,comparison.bestA,comparison.lossesA,comparison.sosRanks)}
@@ -145,7 +147,7 @@ export function mountSorComparison(container,{snapshot,dataRoot='',division='fbs
     if(field==='division') {delete next.a;delete next.b;}
     if(next.a && next.a===next.b)return;
     if(onNavigate)onNavigate(next);
-    else location.hash=['sor-compare',next.division,next.a,next.b].filter(Boolean).map(encodeURIComponent).join('/');
+    else navigateApp(`sor-compare/${next.division}/${next.a ?? ''}/${next.b ?? ''}`);
   }
   container.addEventListener('change',change);
   void render();

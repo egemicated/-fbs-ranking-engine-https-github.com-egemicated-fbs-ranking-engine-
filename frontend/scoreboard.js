@@ -1,3 +1,4 @@
+import { routeHref } from './clean-routes.js';
 import { defaultGameFilters, filterGames, gameFilterControls, readGameFilterChange } from './game-filters.js?v=1';
 import { loadMyTeams, subscribeMyTeams, getMyTeamIds } from './my-teams-store.js?v=1';
 
@@ -190,7 +191,7 @@ function gameDetails(game) {
   return `<div class="scoreboard-game-top"><strong>${escapeHtml(detail)}</strong><small>${escapeHtml(game.networks)}</small></div>
     <div class="scoreboard-teams">${game.teams.map((team, index) => teamLine(team, game, game.state === 'final' && team.score != null && game.teams[1 - index].score != null && Number(team.score) > Number(game.teams[1 - index].score))).join('')}</div>
     <div class="scoreboard-game-bottom"><span>${escapeHtml(note)}</span><a href="https://www.espn.com/college-football/game/_/gameId/${game.id}" target="_blank" rel="noopener">Gamecast<span class="sr-only"> for ${escapeHtml(gameName(game))}</span></a></div>
-    <div class="scoreboard-game-links">${game.teams.filter(team => team.published).map(team => `<a href="#team/${team.id}">${escapeHtml(team.name)}</a>`).join('')}${game.teams.every(team => team.published) ? `<a href="#compare/matchup/${game.teams[1].id}/${game.teams[0].id}/home">Matchup Lab</a><a href="${game.predictionHref ?? '#compare/weekly'}">${game.hasSavedPrediction?'Saved prediction':'Weekly picks'}</a>` : ''}<a href="#beat-the-model">Make picks</a></div>`;
+    <div class="scoreboard-game-links">${game.teams.filter(team => team.published).map(team => `<a href="${routeHref(`team/${team.id}`)}">${escapeHtml(team.name)}</a>`).join('')}${game.teams.every(team => team.published) ? `<a href="${routeHref(`compare/matchup/${game.teams[1].id}/${game.teams[0].id}/home`)}">Matchup Lab</a><a href="${game.predictionHref ?? '/weekly-picks'}">${game.hasSavedPrediction?'Saved prediction':'Weekly picks'}</a>` : ''}<a href="/beat-the-model/">Make picks</a></div>`;
 }
 
 function readOrder() {
@@ -453,7 +454,7 @@ export function mountScoreboard(root, rankForTeam = () => undefined, { getTeams 
     <div><dt>Published schedule and results</dt><dd data-scoreboard-time="schedule">Not reported</dd></div>
     <div><dt>Saved prediction publication</dt><dd data-scoreboard-time="picks">Not reported</dd></div>
     <div><dt>Feed coverage</dt><dd data-scoreboard-time="coverage">Waiting for data</dd></div>
-  </dl><p>Receiving a response does not prove ESPN has updated every result. <a href="#compare/weekly">Weekly Picks</a> grades the published results; <a href="#beat-the-model">Beat the Model</a> shows its separate contest-update time. A live final does not rewrite a saved prediction.</p></details>
+  </dl><p>Receiving a response does not prove ESPN has updated every result. <a href="/weekly-picks">Weekly Picks</a> grades the published results; <a href="/beat-the-model/">Beat the Model</a> shows its separate contest-update time. A live final does not rewrite a saved prediction.</p></details>
   <div data-scoreboard-filters></div>
   <div class="scoreboard-order-help" data-scoreboard-order-help hidden>
     <p><span class="scoreboard-touch-tip">Touch and hold a game, then drag to move it.</span><span class="scoreboard-mouse-tip">Drag a game to move it.</span></p>
@@ -568,7 +569,7 @@ export function mountScoreboard(root, rankForTeam = () => undefined, { getTeams 
     const games = previous.games.filter(game => eligible.has(game.id)).map(game => {
       const saved = savedGames.get(game.id);
       const predictionHref = saved && ['regular', 'postseason'].includes(saved.seasonType) && Number.isInteger(saved.week)
-        ? `#compare/weekly/${saved.seasonType}:${saved.week}/${game.id}` : '#compare/weekly';
+        ? routeHref(`compare/weekly/${saved.seasonType}:${saved.week}/${game.id}`) : '/weekly-picks';
       return { ...game, predictionHref, hasSavedPrediction:!!saved?.pick, teams: game.teams.map(team => ({ ...team, published: teams.has(team.id) })) };
     });
     drawSlate(root, { ...previous, games }, order, cards, Object.entries(filters).some(([key, value]) => value !== defaultGameFilters[key]));

@@ -1,3 +1,4 @@
+import { routeHref } from './clean-routes.js';
 import { myTeamColors } from './my-team-colors.js?v=2026';
 import { plural } from './format.js?v=1';
 
@@ -19,7 +20,7 @@ const escape = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;
 const safeText = value => (typeof value === 'string' && value.trim() ? escape(value) : missing);
 const count = value => Number.isFinite(value) ? counts.format(value) : missing;
 const heading = key => key.replace(/([a-z])([A-Z])/g, '$1 $2').replaceAll('_', ' ').replace(/^./, char => char.toUpperCase());
-const playerRoute = (team, view = 'players') => `#team/${encodeURIComponent(team.id)}/${view}`;
+const playerRoute = (team, view = 'players', player = '') => routeHref(`team/${encodeURIComponent(team.id)}/${view}/${encodeURIComponent(player)}`);
 const color = team => myTeamColors[team.id] || '#27bddf';
 const isQb = player => /^(qb|quarterback)$/i.test(String(player.position).trim());
 const logsOf = player => Array.isArray(player.gameLogs) ? player.gameLogs : [];
@@ -331,10 +332,10 @@ function matchupTile(team, opponent, data, availability) {
     .sort((a, b) => b.stats.passing.attempts - a.stats.passing.attempts || a.name.localeCompare(b.name))[0];
   return `<section class="matchup-player-team" style="--team-player-accent:${escape(color(team))}">
     <h3>${escape(team.name)}</h3><ul class="matchup-player-leaders">${teamLeaders(players).map(({ category, label, player, yards }) =>
-      `<li><span>${label}</span>${player ? `<a class="text-link" href="${playerRoute(team)}/${encodeURIComponent(player.id)}">${escape(player.name)}</a>
+      `<li><span>${label}</span>${player ? `<a class="text-link" href="${playerRoute(team, 'players', player.id)}">${escape(player.name)}</a>
       <small>${count(yards)} ${category} yards</small>` : `<strong>${missing}</strong>`}</li>`).join('')}</ul>
     <div class="matchup-qb-rating">${quarterback ? `<p class="matchup-qb-player"><span>Most recorded QB attempts</span>
-      <a class="text-link" href="${playerRoute(team)}/${encodeURIComponent(quarterback.id)}">${escape(quarterback.name)}</a></p>
+      <a class="text-link" href="${playerRoute(team, 'players', quarterback.id)}">${escape(quarterback.name)}</a></p>
       ${ratingMarkup(quarterback, team, data?.ratingMethod)}` : `<p class="compact-note">QB rating · ${missing}</p>`}</div>
     <h4>Reported absences</h4>${report ? `<p class="compact-note">${reportMeta(report)}</p>${absences?.length
       ? `<ul class="matchup-player-absences">${absences.map(row => `<li><strong>${safeText(row.name)}</strong>${availabilityStatus(row.status)}</li>`).join('')}</ul>`

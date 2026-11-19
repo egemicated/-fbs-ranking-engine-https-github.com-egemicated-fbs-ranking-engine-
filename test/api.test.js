@@ -51,7 +51,48 @@ test('API serves ratings without login, rejects writes, and keeps paths constrai
     assert.match(page.headers.get('content-type'), /text\/html/);
     assert.match(await page.text(), /The Games Decide/);
     assert.equal((await fetch(base + '/app.js')).status, 200);
+    assert.equal((await fetch(base + '/clean-routes.js')).status, 200);
+    assert.equal((await fetch(base + '/page-routes.js')).status, 200);
     assert.equal((await fetch(base + '/src/engine.js')).status, 404);
     assert.equal((await fetch(base + '/published/latest.json')).status, 404);
   } finally { await new Promise(resolve => server.close(resolve)); await rm(dir, { recursive: true }); }
+});
+
+test('clean website routes keep direct visits working alongside the preview API', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'fbs-preview-routes-'));
+  await writeFile(join(dir, 'latest.json'), JSON.stringify({ season: 2026, rankings: [{ id: '252' }], fcsRankings: [{ id: '149' }] }));
+  const server = createApi(dir);
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  const base = `http://127.0.0.1:${server.address().port}`;
+  const open = path => fetch(base + path, { headers: { Accept: 'text/html,application/xhtml+xml' } });
+  try {
+    for (const [path, canonical] of [
+      ['/rankings?model=performance', '/rankings'], ['/rankings/fbs/', '/rankings'],
+      ['/weekly-picks?week=regular%3A12&game=401', '/weekly-picks'],
+      ['/weekly-picks/fbs/', '/weekly-picks'], ['/scoreboard/', '/scoreboard'],
+      ['/team/252?view=results', '/team/252/'], ['/team/149/', '/team/149/'],
+    ]) {
+      const response = await open(path);
+      assert.equal(response.status, 200, path);
+      assert.match(response.headers.get('content-type'), /text\/html/);
+      assert.ok((await response.text()).includes(`rel="canonical" href="https://www.thegamesdecide.com${canonical}"`));
+    }
+    const jsonRankings = await fetch(base + '/rankings', { headers: { Accept: 'application/json' } });
+    assert.equal(jsonRankings.headers.get('vary'), 'Accept');
+    assert.equal((await jsonRankings.json()).rankings[0].id, '252');
+    for (const path of ['/account', '/admin', '/my-teams?team=252']) {
+      const response = await open(path);
+      assert.equal(response.status, 200);
+      assert.equal(response.headers.get('cache-control'), 'no-store');
+      const html = await response.text();
+      assert.match(html, /name="robots" content="noindex, nofollow"/);
+      assert.doesNotMatch(html, /rel="canonical"|property="og:/);
+    }
+    for (const path of ['/unknown', '/team/999/', '/account/unregistered']) {
+      assert.equal((await open(path)).status, 404, path);
+    }
+  } finally {
+    await new Promise(resolve => server.close(resolve));
+    await rm(dir, { recursive: true, force: true });
+  }
 });

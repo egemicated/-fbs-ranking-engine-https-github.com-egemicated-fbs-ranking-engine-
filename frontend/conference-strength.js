@@ -1,3 +1,4 @@
+import { routeHref } from './clean-routes.js';
 import {
   CONFERENCE_QUALITY, conferenceGames, conferenceRecords, conferenceSummary, conferenceFilterCoverage,
 } from './conference-metrics.js?v=accuracy-20261118';
@@ -40,8 +41,8 @@ function date(value) {
 }
 
 function route({ view, season, a, b }) {
-  return '#conference-strength/' + [view, season, ...(view === 'compare' ? [a, b] : [])]
-    .filter(value => value !== undefined && value !== '').map(encodeURIComponent).join('/');
+  const pair = view === 'compare' && a && b ? [a, b] : [];
+  return routeHref(['conference-strength', view, season ?? '', ...pair].map(encodeURIComponent).join('/'));
 }
 
 function header({ view, season, a, b }) {
@@ -240,7 +241,7 @@ function rankLabel(value, available, method, status) {
 
 function gameTeam(team, rank, points, venue, status, state) {
   const link = team.id && ['fbs','fcs'].includes(team.division) && !state.archived && state.season === state.seasons[0] ?
-    `<a href="#team/${encodeURIComponent(team.id)}">${escapeHtml(team.name)}</a>` : escapeHtml(team.name);
+    `<a href="${routeHref(`team/${encodeURIComponent(team.id)}`)}">${escapeHtml(team.name)}</a>` : escapeHtml(team.name);
   return `<div class="conference-game-team"><h4>${link} <span>${points}</span></h4>
     <p>${escapeHtml(team.conference || team.division?.toUpperCase() || 'Conference unavailable')} · ${venue} · ${status}</p>
     <dl class="conference-stats">
@@ -275,7 +276,7 @@ function gameDetails(row, state) {
       </div>
       ${rankDate ? `<p class="compact-note">Pregame edition · ${date(rankDate)}${row.pregameEdition?.provenance === 'repository-recorded snapshot' ? '. Retained repository snapshot, used only after the record’s Mountain calendar day ended.' : ''}${row.pregameEdition?.sourceUrl && row.pregameEdition?.provenance === 'repository-recorded snapshot' ? ` <a href="${escapeHtml(row.pregameEdition.sourceUrl)}">Saved source</a>` : ''}</p>` :
         `<p class="compact-note">${row.rank.pregameStatus === 'no-poll-yet' ? 'This game preceded the first poll release; no pregame poll existed.' : row.rank.pregameStatus === 'publication-time-uncertain' ? 'The release time cannot be verified as preceding this kickoff.' : 'A dated pregame ranking is unavailable for this method and game.'}</p>`}
-      ${team.division === 'fbs' && opponent.division === 'fbs' && state.season === state.seasons[0] ? `<p class="compact-note"><a href="#sor-compare/fbs/${encodeURIComponent(team.id)}/${encodeURIComponent(opponent.id)}">Compare these teams’ earned SOR rankings</a></p>` : ''}
+      ${team.division === 'fbs' && opponent.division === 'fbs' && state.season === state.seasons[0] ? `<p class="compact-note"><a href="${routeHref(`sor-compare/fbs/${encodeURIComponent(team.id)}/${encodeURIComponent(opponent.id)}`)}">Compare these teams’ earned SOR rankings</a></p>` : ''}
       ${Number.isFinite(row.qualityScore) ? `<p class="compact-note">${escapeHtml(team.name)} game quality · ${number(row.qualityScore,3)}</p>` : ''}
     </div></details>`;
 }

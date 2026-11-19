@@ -6,6 +6,7 @@ import { randomBytes, createHmac, createHash } from 'node:crypto';
 import { writeFile, readFile, readdir, mkdir } from 'node:fs/promises';
 import { once } from 'node:events';
 import { resolve, join } from 'node:path';
+import { ACCOUNT_CALLBACK_MODES, accountCallbackUrl } from '../frontend/account-auth.js';
 
 // Only task-local processes and a random disposable loopback database are permitted.
 const appRoot = resolve(import.meta.dirname, '..');
@@ -78,7 +79,7 @@ Object.assign(env, {
   DATABASE_URL: connection.href, GOTRUE_DB_DATABASE_URL: connection.href,
   GOTRUE_DB_DRIVER: 'postgres', DB_NAMESPACE: 'auth', GOTRUE_DB_NAMESPACE: 'auth',
   API_EXTERNAL_URL: base, GOTRUE_API_HOST: '127.0.0.1', GOTRUE_API_PORT: String(authPort), PORT: String(authPort),
-  GOTRUE_SITE_URL: siteUrl, GOTRUE_URI_ALLOW_LIST: siteUrl + '/**',
+  GOTRUE_SITE_URL: siteUrl, GOTRUE_URI_ALLOW_LIST: ACCOUNT_CALLBACK_MODES.map(mode => accountCallbackUrl(siteUrl, mode)).join(','),
   GOTRUE_JWT_SECRET: jwtSecret, GOTRUE_JWT_EXP: '3600', GOTRUE_JWT_AUD: 'authenticated',
   GOTRUE_JWT_DEFAULT_GROUP_NAME: 'authenticated', GOTRUE_JWT_ADMIN_ROLES: 'service_role',
   GOTRUE_EXTERNAL_EMAIL_ENABLED: 'true', GOTRUE_EXTERNAL_PHONE_ENABLED: 'false',
@@ -130,7 +131,7 @@ try {
   const health = await (await fetch(base + '/health')).json();
   assert.equal(health.version, 'v2.198.0', 'Exact source release version label');
   const { runAuthFlowTests } = await import('./lib/auth-api-flows.mjs');
-  const checks = await runAuthFlowTests({ base, mailbox, adminJWT, sql });
+  const checks = await runAuthFlowTests({ base, siteUrl, mailbox, adminJWT, sql });
   const result = { startedAt, completedAt: new Date().toISOString(), passed: true, auth: health, checks,
     localMessagesCaptured: mailbox.length, productionRequests: 0, externalEmails: 0,
     authPolicy: { passwordMinLength: 12, requireEmailConfirmation: true,

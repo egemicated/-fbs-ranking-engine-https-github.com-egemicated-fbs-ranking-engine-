@@ -1,3 +1,4 @@
+import { routeHref } from './clean-routes.js';
 const dates = new Intl.DateTimeFormat('en-US', {
   timeZone: 'America/Denver', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZoneName: 'short',
 });
@@ -23,7 +24,7 @@ export function compareTeamUpdates(previous, { team, season, rank, method, asOf,
   const baseline = same ? previous : {};
   const next = { teamId: team.id, season };
   const updates = [];
-  const teamUrl = `#team/${team.id}`;
+  const teamRoute = `team/${team.id}`;
   const published = instant(asOf);
   if (baseline.rank) next.rank = baseline.rank;
   if (Number.isFinite(published) && (rank === null || Number.isInteger(rank) && rank > 0) &&
@@ -32,7 +33,7 @@ export function compareTeamUpdates(previous, { team, season, rank, method, asOf,
     next.rank = { asOf, method, value: rank };
     if (same && oldRank && oldRank.method === method && oldRank.value !== rank) {
       const label = value => value === null ? 'unranked' : `#${value}`;
-      updates.push({ title: `${method} ${label(oldRank.value)} → ${label(rank)}`, asOf, href: teamUrl, action: 'Team ranking' });
+      updates.push({ title: `${method} ${label(oldRank.value)} → ${label(rank)}`, asOf, href: routeHref(teamRoute), action: 'Team ranking' });
     }
   }
   if (baseline.games) next.games = baseline.games;
@@ -49,7 +50,7 @@ export function compareTeamUpdates(previous, { team, season, rank, method, asOf,
         const result = game.result === 'W' ? 'Win over' : game.result === 'L' ? 'Loss to' : 'Tie with';
         const margin = game.finalMargin ? ` by ${Math.abs(game.finalMargin)}` : '';
         updates.push({ title: `${previousResult ? 'Corrected result · ' : ''}${result} ${game.opponentName || 'opponent'}${margin}`,
-          asOf, href: `${teamUrl}/results`, action: 'Game results' });
+          asOf, href: routeHref(`${teamRoute}/results`), action: 'Game results' });
       }
     }
   }
@@ -74,7 +75,7 @@ export function compareTeamUpdates(previous, { team, season, rank, method, asOf,
       const matchup = report.opponentName ? ` vs. ${report.opponentName}` : '';
       const title = changes.length === 1 ? `${first.name} · ${first.status}${matchup}` :
         `${changes.length} player statuses reported${matchup}`;
-      updates.push({ title, asOf: report.reportAt, href: `${teamUrl}/availability`, action: 'Availability report' });
+      updates.push({ title, asOf: report.reportAt, href: routeHref(`${teamRoute}/availability`), action: 'Availability report' });
     }
     next.reports = [...oldReports.values()].sort((a, b) => instant(b.asOf) - instant(a.asOf)).slice(0, 4);
   }

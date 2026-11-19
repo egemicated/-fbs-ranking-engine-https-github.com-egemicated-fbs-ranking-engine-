@@ -1,4 +1,6 @@
-import { ACCOUNT_ROUTE_EVENT, accountCallbackMode, initialAccountReturnUrl, safeAccountReturnHash } from './bracket-auth.js?v=header-account';
+import { ACCOUNT_ROUTE_EVENT, isAccountCallbackUrl, pendingAccountRoute, safeAccountReturnPath } from './bracket-auth.js?v=clean-routes';
+import { routeFromUrl, routeHref } from './clean-routes.js';
+import { APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl } from './clean-navigation.js';
 
 const BRAND = 'The Games Decide';
 const main = document.querySelector('#main');
@@ -54,9 +56,9 @@ let focusedGameLink;
 const accountReturnKey = 'fbs-account-return';
 const localPreview = ['localhost', '127.0.0.1', '[::1]'].includes(window.location?.hostname) && window.fbsReviewPreview;
 const rankingsHubTabs = [
-  ['fbs', '#rankings', 'FBS'], ['fcs', '#rankings/fcs/sor', 'FCS'],
-  ['polls', '#polls', 'Compare Rankings'], ['forge-top-25', '#forge-top-25', 'Forge’s Rankings'],
-  ['conference-strength', '#conference-strength/records', 'Conference Strength'],
+  ['fbs', '/rankings', 'FBS'], ['fcs', '/rankings/fcs/', 'FCS'],
+  ['polls', '/polls/ap/', 'Compare Rankings'], ['forge-top-25', '/forge-rankings/', 'Forge’s Rankings'],
+  ['conference-strength', '/conference-strength/', 'Conference Strength'],
 ];
 const pollSources = {
   ap: { name: 'AP Top 25', short: 'AP', url: 'https://apnews.com/hub/ap-top-25-college-football-poll' },
@@ -128,7 +130,7 @@ function shareTeamData(team) {
 }
 function shareTeamButton(team) {
   return shareCardButton({ teams: [shareTeamData(team)], asOf: state.snapshot.asOf,
-    href: `#team/${encodeURIComponent(team.id)}` });
+    href: routeHref(`team/${encodeURIComponent(team.id)}`) });
 }
 function performancePublished() { return state.snapshot?.performanceEndpoint === publicationPath('performance'); }
 function hasPerformance() { return Boolean(state.performance && state.performance.status === 'experimental' && state.performance.season === state.snapshot?.season && state.performance.asOf === state.snapshot.asOf && state.performance.baseSnapshotHash && state.performance.baseSnapshotHash === state.snapshot.snapshotHash); }
@@ -194,7 +196,14 @@ function snapshotDate(options = {}) {
   const value = state.snapshot.asOf || state.snapshot.source?.fetchedAt || state.snapshot.before;
   return new Intl.DateTimeFormat('en-US', { timeZone:'America/Denver', month:'short', day:'numeric', ...options }).format(new Date(value));
 }
-function route() { return (accountCallbackMode(location.href)?'account':location.hash.slice(1) || 'home').split('/'); }
+function route() {
+  let remembered;
+  if (isAccountCallbackUrl(location.href)) {
+    try { remembered = window.sessionStorage.getItem(accountReturnKey); } catch {}
+  }
+  return (pendingAccountRoute(location.href, remembered) ?? routeFromUrl(location.href) ?? 'not-found').split('/');
+}
+function navigate(routeToken, options) { return navigateApp(routeToken, options, window); }
 function isRankingsHub(page) { return ['rankings', 'polls', 'forge-top-25', 'conference-strength'].includes(page); }
 function rankingsRoute() {
   const [, first, second, third] = route();
@@ -205,11 +214,12 @@ function rankingsRoute() {
     : view === 'performance' ? 'performance' : 'achievement';
   return { division, model, all: view === 'all' || (explicit ? third : second) === 'all' };
 }
-function rankingHash(model = 'achievement', all = false, division = 'fbs') {
-  if (division === 'fcs') return `#rankings/fcs/${{ achievement: 'sor', strength: 'predictive', performance: 'performance' }[model]}${all ? '/all' : ''}`;
+function rankingRouteToken(model = 'achievement', all = false, division = 'fbs') {
+  if (division === 'fcs') return `rankings/fcs/${{ achievement: 'sor', strength: 'predictive', performance: 'performance' }[model]}${all ? '/all' : ''}`;
   const view = model === 'achievement' ? '' : `/${model}`;
-  return `#rankings${view}${all ? '/all' : ''}`;
+  return `rankings${view}${all ? '/all' : ''}`;
 }
+function rankingHref(...options) { return routeHref(rankingRouteToken(...options)); }
 function divisionTeams(division) {
   return division === 'fcs' ? state.snapshot.fcsRankings ?? [] : state.snapshot.rankings;
 }
@@ -236,8 +246,8 @@ function topTwentyFive(teams, model) {
 }
 function strengthRank(t) { return Object.hasOwn(t, 'strengthRank') ? t.strengthRank : ordered('strength', t.division).findIndex(x => x.id === t.id) + 1; }
 function sosRank(t) { return Object.hasOwn(t, 'sosRank') ? t.sosRank : [...divisionTeams(t.division)].sort((a,b) => (b.achievementScheduleStrength ?? -1) - (a.achievementScheduleStrength ?? -1)).findIndex(x => x.id === t.id) + 1; }
-function teamLink(t) { return `<a href="#team/${encodeURIComponent(t.id)}">${esc(t.name)}</a>`; }
-function brand() { return `<a class="brand" href="#home" aria-label="${BRAND} home"><img class="brand-logo" src="/assets/the-games-decide-logo.webp" width="780" height="260" alt="${BRAND}" fetchpriority="high"></a>`; }
+function teamLink(t) { return `<a href="${routeHref(`team/${encodeURIComponent(t.id)}`)}">${esc(t.name)}</a>`; }
+function brand() { return `<a class="brand" href="/" aria-label="${BRAND} home"><img class="brand-logo" src="/assets/the-games-decide-logo.webp" width="780" height="260" alt="${BRAND}" fetchpriority="high"></a>`; }
 function renderHeader() {
   const page = route()[0];
   if (renderedHeader?.snapshot === state.snapshot && renderedHeader.page === page) return;
@@ -246,7 +256,7 @@ function renderHeader() {
   const primaryPages = ['home', 'rankings', 'beat-the-model'];
   const desktopPages = ['scoreboard', 'teams', 'compare'];
   const activePage = page === 'team' ? 'teams' : isRankingsHub(page) ? 'rankings' : page;
-  const link = ([id, glyph, label], placement = '') => `<a href="#${id}" class="${placement}${activePage === id ? ' active' : ''}" ${page === id || (isRankingsHub(page) && id === 'rankings') ? 'aria-current="page"' : ''}>${icon(glyph)}${label}</a>`;
+  const link = ([id, glyph, label], placement = '') => `<a href="${routeHref(`${id}`)}" class="${placement}${activePage === id ? ' active' : ''}" ${page === id || (isRankingsHub(page) && id === 'rankings') ? 'aria-current="page"' : ''}>${icon(glyph)}${label}</a>`;
   const mainLinks = navs.filter(([id]) => primaryPages.includes(id) || desktopPages.includes(id));
   const moreLinks = navs.filter(([id]) => !primaryPages.includes(id));
   const moreActive = moreLinks.some(([id]) => id === activePage) ? (desktopPages.includes(activePage) ? ' active-on-mobile' : ' active') : '';
@@ -263,17 +273,17 @@ function renderHeader() {
     </div></nav>`;
   const slot = header.querySelector?.('[data-header-account]');
   if (account && slot?.isConnected) slot.replaceWith(account);
-  else if (slot?.isConnected) void import('./bracket-auth.js?v=header-account').then(({ mountHeaderAccount }) => {
+  else if (slot?.isConnected) void import('./bracket-auth.js?v=clean-routes').then(({ mountHeaderAccount }) => {
     mountHeaderAccount(slot, { icon: icon('teams'), previewClient: localPreview?.contest?.client,
       rememberPage() {
-        try { window.sessionStorage.setItem(accountReturnKey, safeAccountReturnHash(location.hash || '#home')); } catch {}
+        try { window.sessionStorage.setItem(accountReturnKey, safeAccountReturnPath(location.pathname + location.search)); } catch {}
       },
     });
   }).catch(() => { slot.innerHTML = '<span class="header-account-message" role="status">Sign-in is unavailable.</span>'; });
-  document.querySelector('#footer').innerHTML = `<div class="footer"><div class="wrap footer-inner"><div><div class="footer-brand">${BRAND.toUpperCase()}</div><p>Independent FBS and FCS rankings calculated from game data.</p></div><div class="footer-links"><a href="#methodology">${icon('layers')}Model methodology</a><a href="#about">About</a><a href="#privacy">Privacy and accounts</a><a href="#terms">Terms of use</a><a href="#support">Support and data discrepancies</a><a href="#account">Account settings</a><a href="${esc(publicationPath('rankings'))}" target="_blank" rel="noopener">${icon('database')}Published data</a>${state.snapshot ? `<span>Ranking engine · v${esc(state.snapshot.modelVersion)}</span>` : ''}</div></div></div>`;
+  document.querySelector('#footer').innerHTML = `<div class="footer"><div class="wrap footer-inner"><div><div class="footer-brand">${BRAND.toUpperCase()}</div><p>Independent FBS and FCS rankings calculated from game data.</p></div><div class="footer-links"><a href="/methodology/">${icon('layers')}Model methodology</a><a href="/about/">About</a><a href="/privacy/">Privacy and accounts</a><a href="/terms/">Terms of use</a><a href="/support">Support and data discrepancies</a><a href="/account">Account settings</a><a href="${esc(publicationPath('rankings'))}" target="_blank" rel="noopener">${icon('database')}Published data</a>${state.snapshot ? `<span>Ranking engine · v${esc(state.snapshot.modelVersion)}</span>` : ''}</div></div></div>`;
 }
 function schedulePanel() { return `<section class="panel schedule-card"><div class="panel-head"><div class="panel-head-title">${icon('calendar')}<h2>Results updates</h2></div></div><div class="panel-body"><div class="section-label">Mountain Time</div><div class="schedule-title">DAILY</div><p>FBS and FCS results are checked at <strong>3:45 a.m.</strong> daily, with an <strong>8:11 p.m.</strong> Sunday backup for Sunday games.</p><p style="margin-top:12px">Last publication <strong>${snapshotDate({ hour:'numeric', minute:'2-digit' })} MT</strong></p></div></section>`; }
-function coveragePanel() { return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('shield')}<h2>Behind the rankings</h2></div><span class="tag green">CFBD</span></div><div class="panel-body"><p>${usesSor()?'A team climbs when its record is harder to match against the same opponents at the same venues.':'The Colley model links results across the opponent network.'}</p><div class="fact-list"><div class="fact-row"><span>FBS teams in this snapshot</span><strong>${state.snapshot.fbsTeams}</strong></div><div class="fact-row"><span>Game records modeled</span><strong>${state.snapshot.gamesUsed.toLocaleString()}</strong></div><div class="fact-row"><span>Human poll inputs</span><strong>Zero</strong></div></div></div><a class="method-link" href="#methodology">See how we calculate each rank ${icon('arrow')}</a></section>`; }
+function coveragePanel() { return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('shield')}<h2>Behind the rankings</h2></div><span class="tag green">CFBD</span></div><div class="panel-body"><p>${usesSor()?'A team climbs when its record is harder to match against the same opponents at the same venues.':'The Colley model links results across the opponent network.'}</p><div class="fact-list"><div class="fact-row"><span>FBS teams in this snapshot</span><strong>${state.snapshot.fbsTeams}</strong></div><div class="fact-row"><span>Game records modeled</span><strong>${state.snapshot.gamesUsed.toLocaleString()}</strong></div><div class="fact-row"><span>Human poll inputs</span><strong>Zero</strong></div></div></div><a class="method-link" href="/methodology/">See how we calculate each rank ${icon('arrow')}</a></section>`; }
 function movementWeek(type, week) {
   return type === 'postseason' ? `Postseason Week ${week}` : `Week ${week}`;
 }
@@ -303,7 +313,7 @@ function tableRows(teams, model = state.model, compact = false) {
     const position = model === 'achievement' ? nationalRank(t) : strengthRank(t);
     const sos = sosRank(t);
     const score = position ? number(model === 'achievement' ? achievementScore(t) : t.strength, model === 'achievement' ? 4 : 1) : '—';
-    return `<tr><td><span class="rank-with-movement"><span class="table-rank ${(position || Infinity) <= 3 ? 'top' : ''}">${position ?? '—'}</span>${model === 'achievement' && position ? movementIndicator(t) : ''}</span></td><td><div class="team-cell">${logo(t)}<div>${teamLink(t)}${compact?'':`<small>${esc(t.conference)}</small>`}</div></div></td><td class="num">${record(t)}</td><td class="hide-mobile">${sos ? rank(sos) : '—'}</td><td class="rating num">${score}</td><td class="hide-mobile"><a class="text-link" href="#team/${encodeURIComponent(t.id)}" aria-label="Explore ${esc(t.name)}">${icon('arrow')}</a></td></tr>`;
+    return `<tr><td><span class="rank-with-movement"><span class="table-rank ${(position || Infinity) <= 3 ? 'top' : ''}">${position ?? '—'}</span>${model === 'achievement' && position ? movementIndicator(t) : ''}</span></td><td><div class="team-cell">${logo(t)}<div>${teamLink(t)}${compact?'':`<small>${esc(t.conference)}</small>`}</div></div></td><td class="num">${record(t)}</td><td class="hide-mobile">${sos ? rank(sos) : '—'}</td><td class="rating num">${score}</td><td class="hide-mobile"><a class="text-link" href="${routeHref(`team/${encodeURIComponent(t.id)}`)}" aria-label="Explore ${esc(t.name)}">${icon('arrow')}</a></td></tr>`;
   }).join('');
 }
 function rankingTable(teams, model = state.model, compact = false) {
@@ -314,7 +324,7 @@ function rankingTable(teams, model = state.model, compact = false) {
 function performanceTable(teams) {
   return `<div class="table-scroll"><table class="performance-table"><caption class="sr-only">Experimental Performance · Scrimmage consistency rankings</caption><thead><tr><th scope="col">Rank</th><th scope="col">Team</th><th scope="col" title="Opponent-adjusted net success rate relative to the measured ${state.division.toUpperCase()} average, in percentage points">Performance · pp</th><th scope="col" class="hide-mobile">Offense success</th><th scope="col" class="hide-mobile">Defense allowed</th><th scope="col">Games measured</th><th class="hide-mobile"><span class="sr-only">Details</span></th></tr></thead><tbody>${teams.map(t => {
     const p = performanceRow(t);
-    return `<tr><td><span class="table-rank ${(p.rank||999)<=3?'top':''}">${p.rank??'—'}</span></td><td><div class="team-cell">${logo(t)}<div>${teamLink(t)}<small>${esc(t.conference)}</small></div></div></td><td class="rating num">${performanceScore(p.score)}</td><td class="num hide-mobile">${probability(p.offensiveSuccessRate)}</td><td class="num hide-mobile">${probability(p.defensiveSuccessRateAllowed)}</td><td class="num performance-coverage">${esc(p.measuredGames)} / ${esc(p.expectedGames)}${p.provisional?' · provisional':''}</td><td class="hide-mobile"><a class="text-link" href="#team/${encodeURIComponent(t.id)}" aria-label="Explore ${esc(t.name)} Performance evidence">${icon('arrow')}</a></td></tr>`;
+    return `<tr><td><span class="table-rank ${(p.rank||999)<=3?'top':''}">${p.rank??'—'}</span></td><td><div class="team-cell">${logo(t)}<div>${teamLink(t)}<small>${esc(t.conference)}</small></div></div></td><td class="rating num">${performanceScore(p.score)}</td><td class="num hide-mobile">${probability(p.offensiveSuccessRate)}</td><td class="num hide-mobile">${probability(p.defensiveSuccessRateAllowed)}</td><td class="num performance-coverage">${esc(p.measuredGames)} / ${esc(p.expectedGames)}${p.provisional?' · provisional':''}</td><td class="hide-mobile"><a class="text-link" href="${routeHref(`team/${encodeURIComponent(t.id)}`)}" aria-label="Explore ${esc(t.name)} Performance evidence">${icon('arrow')}</a></td></tr>`;
   }).join('')}</tbody></table></div>`;
 }
 function performanceNotice(division = 'fbs') {
@@ -341,7 +351,7 @@ function performanceTeamPanel(t) {
   const p = performanceRow(t);
   const evidence = p ? `<div class="section-label">Scrimmage consistency</div><div class="model-rank-label"><strong>${rank(p.rank)}</strong><strong>${performanceScore(p.score)}</strong></div><p class="compact-note">Opponent-adjusted net success rate relative to the measured ${fcs ? 'FCS' : 'FBS'} average.</p><div class="fact-list"><div class="fact-row"><span>Offense success rate</span><strong>${probability(p.offensiveSuccessRate)}</strong></div><div class="fact-row"><span>Opponent success allowed</span><strong>${probability(p.defensiveSuccessRateAllowed)}</strong></div><div class="fact-row"><span>Games measured</span><strong>${esc(p.measuredGames)} / ${esc(p.expectedGames)}</strong></div></div><p class="compact-note">${p.measuredGames ? `${esc(t.name)} succeeded on ${probability(p.offensiveSuccessRate)} of measured offensive plays; opponents succeeded on ${probability(p.defensiveSuccessRateAllowed)}. The score also accounts for the opponents faced and game location.` : 'There are no measured games for this team.'}${p.provisional && p.measuredGames ? fcs ? ' Coverage is provisional.' : ' Fewer than four measured games: provisional.' : ''}</p>${performanceBreakdown(p, fcs)}<p class="compact-note">Historical FBS–FCS forecasting checks remain under review.</p>`
     : fcs && hasPerformance() ? '<p>FCS Performance is unavailable for this snapshot.</p>' : performanceStatus();
-  return `<section class="panel" id="team-performance"><div class="panel-head"><div class="panel-head-title">${icon('chart')}<h2>Performance</h2></div><span class="tag">EXPERIMENTAL</span></div><div class="panel-body">${evidence}</div><a class="method-link" href="${rankingHash('performance', false, t.division)}">Explore Performance rankings ${icon('arrow')}</a></section>`;
+  return `<section class="panel" id="team-performance"><div class="panel-head"><div class="panel-head-title">${icon('chart')}<h2>Performance</h2></div><span class="tag">EXPERIMENTAL</span></div><div class="panel-body">${evidence}</div><a class="method-link" href="${rankingHref('performance', false, t.division)}">Explore Performance rankings ${icon('arrow')}</a></section>`;
 }
 function updateTeamPerformance(id) {
   const panel = main.querySelector('#team-performance');
@@ -354,12 +364,12 @@ function performanceMethodology() {
 }
 function pipeline() { return `<section class="pipeline" aria-label="How the engine works"><div class="pipeline-title"><h2>HOW IT<br>COMES TOGETHER.</h2><p>TRANSPARENT BY DESIGN</p></div>${[['Acquire the data','Completed games and season-specific FBS membership.'],['Validate the results','Incomplete scores stay out. Every source is recorded.'],['Solve the network','Every opponent’s results connect to the bigger picture.'],['Explain the rank','A reproducible score, with evidence you can inspect.']].map(([title,desc],i)=>`<div class="pipeline-step"><span class="step-num">0${i+1}</span><div><h3>${title}</h3><p>${desc}</p></div></div>`).join('')}</section>`; }
 function companionPanel() {
-  const views = [[rankingHash('strength'), 'Predictive Strength', 'Estimates team strength from score margins, opponents, venue, and our own historical ratings.']];
-  if (performancePublished()) views.push([rankingHash('performance'), 'Performance · Experimental', 'Measures how consistently teams succeeded on covered scrimmage plays, adjusted for opponents and venue.']);
-  views.push(['#ranking-history', 'What changed this week?', 'See SOR movers, Top 25 arrivals and departures, and saved weekly editions.'],
-    ['#beat-the-model', 'Beat the Model', 'Save your game picks before kickoff and compare your results with our predictions.'],
-    ['#polls', 'Compare Rankings', 'Compare our rankings with dated AP, Coaches, and CFP editions.'],
-    ['#forge-top-25', 'Forge’s Top 25', 'An AI-authored editorial ballot grounded in game results.']);
+  const views = [[rankingHref('strength'), 'Predictive Strength', 'Estimates team strength from score margins, opponents, venue, and our own historical ratings.']];
+  if (performancePublished()) views.push([rankingHref('performance'), 'Performance · Experimental', 'Measures how consistently teams succeeded on covered scrimmage plays, adjusted for opponents and venue.']);
+  views.push(['/ranking-history/', 'What changed this week?', 'See SOR movers, Top 25 arrivals and departures, and saved weekly editions.'],
+    ['/beat-the-model/', 'Beat the Model', 'Save your game picks before kickoff and compare your results with our predictions.'],
+    ['/polls/ap/', 'Compare Rankings', 'Compare our rankings with dated AP, Coaches, and CFP editions.'],
+    ['/forge-rankings/', 'Forge’s Top 25', 'An AI-authored editorial ballot grounded in game results.']);
   return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('layers')}<h2>Companion views</h2></div></div><div class="panel-body companion-views">${views.map(([url,label,description])=>`<div><a class="text-link" href="${url}">${label} ${icon('arrow')}</a><p>${description}</p></div>`).join('')}<p class="compact-note">These views run separately from the national ranking.</p></div></section>`;
 }
 function favoriteNext(team) {
@@ -398,8 +408,8 @@ function favoriteCard(team) {
     </dl>
     ${movement ? `<p class="my-team-movement">${esc(movementComparison())}</p>` : ''}
     <div class="my-team-next"><h3>Next game</h3><div class="my-team-next-content" data-my-team-schedule="${esc(team.id)}">${favoriteNext(team)}</div></div>
-  </div><div class="my-team-player-links" aria-label="My Team shortcuts"><a href="#team/${encodeURIComponent(team.id)}/players">Players</a>
-  <a href="#team/${encodeURIComponent(team.id)}/availability">Availability</a>${shareTeamButton(team)}</div><div data-rooting-guide></div>`;
+  </div><div class="my-team-player-links" aria-label="My Team shortcuts"><a href="${routeHref(`team/${encodeURIComponent(team.id)}/players`)}">Players</a>
+  <a href="${routeHref(`team/${encodeURIComponent(team.id)}/availability`)}">Availability</a>${shareTeamButton(team)}</div><div data-rooting-guide></div>`;
 }
 async function loadFavoriteUpdateFacts(team) {
   const snapshot = state.snapshot;
@@ -449,16 +459,16 @@ function thisWeekPanel() {
   const mover = movement?.risers?.[0] ?? movement?.fallers?.[0];
   const { closeGame, predictionRecord } = state.snapshot.weekHighlights ?? {};
   const links = [];
-  if (mover) links.push([`#ranking-history/${movement.week}`, 'Ranking movement',
+  if (mover) links.push([routeHref(`ranking-history/${movement.week}`), 'Ranking movement',
     `${mover.team} ${mover.movement > 0 ? 'rose' : 'fell'} ${Math.abs(mover.movement)} to #${mover.rank}`,
     movementComparison()]);
   if (closeGame && Date.parse(closeGame.startDate) > (localPreview?.now ?? Date.now())) {
     const p = closeGame.homeWinProbability;
     const favorite = p > .5 ? closeGame.home : closeGame.away;
-    links.push([`#compare/weekly/${closeGame.seasonType}:${closeGame.week}`, 'Close matchup',
+    links.push([routeHref(`compare/weekly/${closeGame.seasonType}:${closeGame.week}`), 'Close matchup',
       `${closeGame.away} at ${closeGame.home}`, p === .5 ? '50.0% each' : `${favorite} ${number(Math.max(p, 1 - p) * 100, 1)}%`]);
   }
-  if (predictionRecord) links.push([`#compare/weekly/${predictionRecord.seasonType}:${predictionRecord.week}`, 'Model picks',
+  if (predictionRecord) links.push([routeHref(`compare/weekly/${predictionRecord.seasonType}:${predictionRecord.week}`), 'Model picks',
     `${predictionRecord.correct} of ${predictionRecord.graded} right`, `${movementWeek(predictionRecord.seasonType, predictionRecord.week)} · Saved picks`]);
   return links.length ? `<section class="panel home-week"><div class="panel-head"><h2>This Week</h2></div>
     <div class="home-week-links">${links.map(([url, label, result, note]) => `<a href="${esc(url)}"><span>${label}</span>
@@ -470,7 +480,7 @@ function renderHome() {
   const top = topTwentyFive(state.snapshot.rankings, 'achievement');
   const title = usesSor() ? 'The Games Decide Top 25' : 'HISTORICAL TOP 25';
   const summary = usesSor() ? 'Our Strength of Record rankings weigh each team’s wins against the opponents it faced and where it played.' : 'This historical snapshot ranks teams by their results and the opponents they faced.';
-  main.innerHTML = `<div class="wrap home-favorite" data-my-team></div><section class="hero home-hero"><div class="wrap hero-layout"><div><div class="eyebrow">${state.snapshot.season} FBS season · ${achievementName()}</div><h1>The Games Decide <em>Top 25</em></h1><p class="hero-copy">${summary} Select a team to see how it earned its rank.</p><div class="hero-actions"><a class="button" href="${rankingHash('achievement', true)}">${icon('chart')}View all ${state.snapshot.fbsTeams} teams ${icon('chevron')}</a><a class="button outline" href="#methodology">${icon('layers')}Inside the engine</a></div></div><aside class="top-five"><div class="top-five-title">${icon('trophy')}<h2>${usesSor() ? "SOR TOP FIVE" : "TOP FIVE"}</h2><small>${snapshotDate()} SNAPSHOT</small></div>${top.slice(0,5).map(t=>`<a class="top-five-row" href="#team/${t.id}"><span class="rank-chip">${nationalRank(t)}</span>${logo(t)}<strong>${esc(t.name)}</strong><span>${record(t)}</span></a>`).join('')}<a class="top-five-footer" href="#rankings">Explore the Top 25 ${icon('chevron')}</a></aside></div></section><div class="wrap home-body">${thisWeekPanel()}<div class="two-column"><section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<div><h2>${title}</h2><p>${achievementName()} rankings · ${state.snapshot.season} season · ${snapshotDate()} publication</p>${movementNote()}</div></div></div>${top.length?rankingTable(top,'achievement',true):'<div class="empty">No ranked teams in this snapshot.</div>'}</section><aside class="stack">${coveragePanel()}${companionPanel()}${schedulePanel()}</aside></div>${pipeline()}</div>`;
+  main.innerHTML = `<div class="wrap home-favorite" data-my-team></div><section class="hero home-hero"><div class="wrap hero-layout"><div><div class="eyebrow">${state.snapshot.season} FBS season · ${achievementName()}</div><h1>The Games Decide <em>Top 25</em></h1><p class="hero-copy">${summary} Select a team to see how it earned its rank.</p><div class="hero-actions"><a class="button" href="${rankingHref('achievement', true)}">${icon('chart')}View all ${state.snapshot.fbsTeams} teams ${icon('chevron')}</a><a class="button outline" href="/methodology/">${icon('layers')}Inside the engine</a></div></div><aside class="top-five"><div class="top-five-title">${icon('trophy')}<h2>${usesSor() ? "SOR TOP FIVE" : "TOP FIVE"}</h2><small>${snapshotDate()} SNAPSHOT</small></div>${top.slice(0,5).map(t=>`<a class="top-five-row" href="${routeHref(`team/${t.id}`)}"><span class="rank-chip">${nationalRank(t)}</span>${logo(t)}<strong>${esc(t.name)}</strong><span>${record(t)}</span></a>`).join('')}<a class="top-five-footer" href="/rankings">Explore the Top 25 ${icon('chevron')}</a></aside></div></section><div class="wrap home-body">${thisWeekPanel()}<div class="two-column"><section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<div><h2>${title}</h2><p>${achievementName()} rankings · ${state.snapshot.season} season · ${snapshotDate()} publication</p>${movementNote()}</div></div></div>${top.length?rankingTable(top,'achievement',true):'<div class="empty">No ranked teams in this snapshot.</div>'}</section><aside class="stack">${coveragePanel()}${companionPanel()}${schedulePanel()}</aside></div>${pipeline()}</div>`;
   mountHomeFavorite();
 }
 function banner(kicker, title, description) { return `<section class="hero page-banner"><div class="wrap"><div class="eyebrow">${kicker}</div><h1>${title}</h1><p>${description}</p></div></section>`; }
@@ -585,7 +595,7 @@ function renderConferenceStrengthPage() {
       if (cancelled || !target.isConnected) return;
       unmount = module.mountConferenceStrength(target, {
         view, season, a, b, dataRoot,
-        onNavigate(destination) { location.hash = conferenceHash(destination); },
+        onNavigate(destination) { navigate(conferenceHash(destination)); },
       });
     }).catch(() => {
       if (cancelled || !target.isConnected) return;
@@ -619,21 +629,21 @@ function renderRankings() {
   } else {
     const context = model === 'performance' ? performanceNotice(division)
       : fcs ? `<div class="notice"><strong>FCS coverage</strong><p>${divisionTeams(division).length} FCS teams identified by CollegeFootballData in this snapshot. ${model === 'achievement' ? 'The displayed record includes all covered games. SOR scores decisive results against FCS and FBS opponents. Other results still inform the opponent network and SOS.' : 'These teams have been ranked by their ratings in the same opponent network as FBS. FCS matchup forecasts are still experimental.'}</p></div>`
-      : model === 'achievement' ? coveragePanel() : `<section class="panel"><div class="panel-body"><h3>Matchup lab</h3><p>Predictive Strength powers the matchup lab. ${state.snapshot.matchupValidation ? 'Win probabilities are calibrated on historical results.' : 'Its game probabilities are uncalibrated estimates.'}</p></div><a class="method-link" href="#compare">Open matchup lab ${icon('arrow')}</a></section>`;
+      : model === 'achievement' ? coveragePanel() : `<section class="panel"><div class="panel-body"><h3>Matchup lab</h3><p>Predictive Strength powers the matchup lab. ${state.snapshot.matchupValidation ? 'Win probabilities are calibrated on historical results.' : 'Its game probabilities are uncalibrated estimates.'}</p></div><a class="method-link" href="/matchup-lab">Open matchup lab ${icon('arrow')}</a></section>`;
     body = `<div class="two-column"><div>${filterControls(true, division)}<section class="panel" id="ranking-results">${rankingsContent()}</section></div><aside class="stack">${context}${schedulePanel()}</aside></div>`;
   }
-  const comparison = model === 'achievement' ? `<p class="rankings-comparison-link"><a class="text-link" href="#sor-compare/${division}">Why does one team rank above another? ${icon('arrow')}</a></p>` : '';
+  const comparison = model === 'achievement' ? `<p class="rankings-comparison-link"><a class="text-link" href="${routeHref(`sor-compare/${division}`)}">Why does one team rank above another? ${icon('arrow')}</a></p>` : '';
   renderRankingsHub(division, `${division}/${model}`, heading + comparison + body);
 }
 function teamsContent() {
   const pool = divisionTeams(state.division);
   const teams = filtered(pool);
   const favorites = new Set(myTeamsStore?.getMyTeamIds() ?? []);
-  return `${teams.length ? `<div class="team-grid">${teams.map(t => `<a class="panel team-card" href="#team/${encodeURIComponent(t.id)}"><span class="team-card-rank">${rank(nationalRank(t))}</span>${logo(t)}<div><h3>${esc(t.name)}${favorites.has(t.id) ? ' <span class="team-saved-indicator" aria-label="Saved in My Teams">★</span>' : ''}</h3><p>${esc(t.conference)}</p><small>${record(t)} · ${number(achievementScore(t))} ${usesSor(t) ? 'SOR' : 'Colley'}</small></div></a>`).join('')}</div>` : '<div class="panel empty">No teams match these filters.</div>'}<p class="results-count">${teams.length} of ${pool.length} ${state.division.toUpperCase()} teams</p>`;
+  return `${teams.length ? `<div class="team-grid">${teams.map(t => `<a class="panel team-card" href="${routeHref(`team/${encodeURIComponent(t.id)}`)}"><span class="team-card-rank">${rank(nationalRank(t))}</span>${logo(t)}<div><h3>${esc(t.name)}${favorites.has(t.id) ? ' <span class="team-saved-indicator" aria-label="Saved in My Teams">★</span>' : ''}</h3><p>${esc(t.conference)}</p><small>${record(t)} · ${number(achievementScore(t))} ${usesSor(t) ? 'SOR' : 'Colley'}</small></div></a>`).join('')}</div>` : '<div class="panel empty">No teams match these filters.</div>'}<p class="results-count">${teams.length} of ${pool.length} ${state.division.toUpperCase()} teams</p>`;
 }
 function directoryDivisionNav() {
-  return `<nav class="matchup-views" aria-label="Team directory division">${[['fbs','#teams'],['fcs','#teams/fcs']].map(([division,href]) =>
-    `<a href="${href}"${state.division === division ? ' aria-current="page"' : ''}>${division.toUpperCase()}</a>`).join('')}<a href="#my-teams">My Teams</a></nav>`;
+  return `<nav class="matchup-views" aria-label="Team directory division">${[['fbs','/teams/fbs/'],['fcs','/teams/fcs/']].map(([division,href]) =>
+    `<a href="${href}"${state.division === division ? ' aria-current="page"' : ''}>${division.toUpperCase()}</a>`).join('')}<a href="/my-teams">My Teams</a></nav>`;
 }
 function renderTeams() {
   main.innerHTML = `${banner('The team directory','EVERY TEAM HAS A STORY.','Choose a team to inspect its results, opponent strength, and the exact calculation behind its rank.')}<div class="wrap page-content">${directoryDivisionNav()}${filterControls(false,state.division)}<div id="team-results">${teamsContent()}</div></div>`;
@@ -708,7 +718,7 @@ function teamCalculation(t) {
         <div class="fact-row"><div><span>Current predictive strength</span><p class="compact-note">The rating updates with how much teams win or lose by, who they played, and where. The model limits how much a blowout counts.</p></div><strong>${number(t.strength, 2)} pts</strong></div>
         <div class="fact-row"><div><span>Preseason strength prior</span><p class="compact-note">The model’s starting rating. It carries over part of last season’s rating when one is available.</p></div><strong>${number(t.preseasonStrength, 2)} pts</strong></div>
       </div>
-    </div></div><a class="method-link" href="#methodology">Read the full methodology ${icon('arrow')}</a></section>`;
+    </div></div><a class="method-link" href="/methodology/">Read the full methodology ${icon('arrow')}</a></section>`;
 }
 function resultsTable(t) { return `<div class="table-scroll"><table class="evidence-table"><caption class="sr-only">${esc(t.name)} completed results</caption><thead><tr><th>Result</th><th>Opponent</th><th>Record</th><th>Margin</th></tr></thead><tbody>${t.contributions.map(g=>{
   const team = rankedTeam(g.opponentId);
@@ -738,7 +748,7 @@ function teamFixtureHref(team, game) {
     return weeklyGameHref({ ...game, id: game.gameId }, divisions.every(division => division === 'fcs') ? 'fcs' : 'fbs');
   }
   const gameSuffix = /^\d+$/.test(game.gameId ?? '') ? `/${game.gameId}` : '';
-  return `#team/${encodeURIComponent(team.id)}/results${gameSuffix}`;
+  return routeHref(`team/${encodeURIComponent(team.id)}/results${gameSuffix}`);
 }
 function teamFixtureCalendar(game, href) {
   return kickoffCalendar({ id: game.gameId, startDate: game.startDate, startTimeTbd: game.startTimeTbd, href,
@@ -819,7 +829,7 @@ async function populateTeamDetails(summary, detail, snapshot) {
 }
 function renderTeam(id) {
   const summary = rankedTeam(id);
-  if(!summary){main.innerHTML=`<div class="wrap page-content"><section class="panel empty"><h2>Team not found</h2><a class="button" style="margin-top:15px" href="#rankings">Explore rankings</a></section></div>`;return;}
+  if(!summary){main.innerHTML=`<div class="wrap page-content"><section class="panel empty"><h2>Team not found</h2><a class="button" style="margin-top:15px" href="/rankings">Explore rankings</a></section></div>`;return;}
   const detail = state.snapshot.teamDetailsPath ? teamDetails.get(id) : null;
   const t = detail?.team ?? summary;
   const playerTab = playerTabs.has(state.teamTab) ? state.teamTab : null;
@@ -829,7 +839,7 @@ function renderTeam(id) {
     ${detail?.failed ? '<button type="button" class="button light small" data-action="retry-team-details">Try again</button>' : ''}</section>` : teamCenterContent(t);
   const tier = t.division?.toUpperCase() || 'FBS';
   const matchup = `<section class="panel"><div class="panel-body"><h3>Matchup lab</h3><p class="compact-note">Use the strength model to explore a matchup on a neutral field.</p><button class="button small full-width" style="margin-top:15px" data-action="compare-team" data-value="${esc(t.id)}">${icon('compare')}Open matchup lab</button></div></section>`;
-  main.innerHTML=`<section class="hero team-banner"><div class="wrap"><a class="breadcrumb" href="${rankingHash('achievement', false, t.division)}">${icon('back')}Back to ${tier} rankings</a><div class="team-banner-content">${logo(t,'large')}<div><div class="eyebrow">${tier} · ${esc(t.conference)} · ${state.snapshot.season} season</div><h1>${esc(t.name.toUpperCase())}</h1><div class="team-meta"><span><b>${rank(nationalRank(t))}</b> ${achievementName(t)}</span><span>${record(t)} overall</span><span>${rank(conferenceRank(t))} in conference</span></div><div class="team-banner-actions"><button type="button" class="button outline small team-favorite-action" data-action="choose-my-team" data-value="${esc(t.id)}">Add to My Teams</button>${shareTeamButton(t)}<a class="button outline small" href="#sor-compare/${t.division}/${encodeURIComponent(t.id)}">Compare earned SOR</a><a class="button outline small" href="#my-teams">My Teams</a></div></div><div class="team-banner-score"><strong>${number(t.division === 'fcs' ? t.sor : achievementScore(t))}</strong><span>${achievementName(t)==='Strength of Record'?'SOR score':'Colley rating'}</span></div></div></div></section><div class="wrap page-content"><div class="team-layout"><aside class="panel rank-rail"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<h2>${tier} TOP 25</h2></div></div><div class="rail-list">${topTwentyFive(divisionTeams(t.division), 'achievement').map(o=>`<a href="#team/${encodeURIComponent(o.id)}" class="rail-row ${o.id===t.id?'selected':''}" ${o.id===t.id?'aria-current="page"':''}><span>${nationalRank(o)}</span>${logo(o)}<b>${esc(o.name)}</b><small>${record(o)}</small></a>`).join('')}</div><a class="method-link" href="${rankingHash('achievement', true, t.division)}">All ${tier} rankings ${icon('arrow')}</a></aside><div class="team-center"><div class="tabs team-section-tabs" aria-label="Team sections">${[['overview','Overview'],['results','Results'],['players','Players'],['availability','Availability'],['model','Model details']].map(([value,label])=>`<button data-action="team-tab" data-value="${value}" class="${state.teamTab===value?'active':''}" aria-pressed="${state.teamTab===value}">${label}</button>`).join('')}</div><div id="team-center-content">${content}</div></div><aside class="stack team-right">${modelRanks(t)}${performanceTeamPanel(t)}${qualityPanel(t.division)}${matchup}</aside></div></div>`;
+  main.innerHTML=`<section class="hero team-banner"><div class="wrap"><a class="breadcrumb" href="${rankingHref('achievement', false, t.division)}">${icon('back')}Back to ${tier} rankings</a><div class="team-banner-content">${logo(t,'large')}<div><div class="eyebrow">${tier} · ${esc(t.conference)} · ${state.snapshot.season} season</div><h1>${esc(t.name.toUpperCase())}</h1><div class="team-meta"><span><b>${rank(nationalRank(t))}</b> ${achievementName(t)}</span><span>${record(t)} overall</span><span>${rank(conferenceRank(t))} in conference</span></div><div class="team-banner-actions"><button type="button" class="button outline small team-favorite-action" data-action="choose-my-team" data-value="${esc(t.id)}">Add to My Teams</button>${shareTeamButton(t)}<a class="button outline small" href="${routeHref(`sor-compare/${t.division}/${encodeURIComponent(t.id)}`)}">Compare earned SOR</a><a class="button outline small" href="/my-teams">My Teams</a></div></div><div class="team-banner-score"><strong>${number(t.division === 'fcs' ? t.sor : achievementScore(t))}</strong><span>${achievementName(t)==='Strength of Record'?'SOR score':'Colley rating'}</span></div></div></div></section><div class="wrap page-content"><div class="team-layout"><aside class="panel rank-rail"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<h2>${tier} TOP 25</h2></div></div><div class="rail-list">${topTwentyFive(divisionTeams(t.division), 'achievement').map(o=>`<a href="${routeHref(`team/${encodeURIComponent(o.id)}`)}" class="rail-row ${o.id===t.id?'selected':''}" ${o.id===t.id?'aria-current="page"':''}><span>${nationalRank(o)}</span>${logo(o)}<b>${esc(o.name)}</b><small>${record(o)}</small></a>`).join('')}</div><a class="method-link" href="${rankingHref('achievement', true, t.division)}">All ${tier} rankings ${icon('arrow')}</a></aside><div class="team-center"><div class="tabs team-section-tabs" aria-label="Team sections">${[['overview','Overview'],['results','Results'],['players','Players'],['availability','Availability'],['model','Model details']].map(([value,label])=>`<button data-action="team-tab" data-value="${value}" class="${state.teamTab===value?'active':''}" aria-pressed="${state.teamTab===value}">${label}</button>`).join('')}</div><div id="team-center-content">${content}</div></div><aside class="stack team-right">${modelRanks(t)}${performanceTeamPanel(t)}${qualityPanel(t.division)}${matchup}</aside></div></div>`;
   if (needsDetails && !detail) void loadTeamDetails(summary);
   if (!needsDetails && state.teamTab === 'results') focusLinkedGame('team-game-', route()[3]);
   if (playerTab) {
@@ -901,12 +911,12 @@ function matchupMarginRange(a, b, edge) {
 }
 function matchupNav(active) {
   return `<nav class="matchup-views" aria-label="Matchup Lab views">
-    <a href="#compare"${active === 'compare' ? ' aria-current="page"' : ''}>Compare teams</a>
-    <a href="#compare/weekly"${active === 'weekly' ? ' aria-current="page"' : ''}>Weekly picks</a>
-    <a href="#beat-the-model">Beat the Model</a>
-    <a href="#model-report/fbs">Model Report Card</a>
-    <a href="#sor-compare/fbs">Compare earned SOR</a>
-    <a href="#my-teams">My Teams</a>
+    <a href="/matchup-lab"${active === 'compare' ? ' aria-current="page"' : ''}>Compare teams</a>
+    <a href="/weekly-picks"${active === 'weekly' ? ' aria-current="page"' : ''}>Weekly picks</a>
+    <a href="/beat-the-model/">Beat the Model</a>
+    <a href="/model-reports/fbs/">Model Report Card</a>
+    <a href="/sor-compare/">Compare earned SOR</a>
+    <a href="/my-teams">My Teams</a>
   </nav>`;
 }
 function picksTime(value) {
@@ -914,18 +924,18 @@ function picksTime(value) {
 }
 function weekKey(game) { return `${game.seasonType}:${game.week}`; }
 function weeklyGameHref(game, division = 'fbs') {
-  const base = `#compare/weekly${division === 'fcs' ? '/fcs' : ''}`;
-  return ['regular', 'postseason'].includes(game?.seasonType) && Number.isInteger(game.week) && /^\d+$/.test(game.id ?? '')
-    ? `${base}/${weekKey(game)}/${game.id}` : base;
+  const base = `compare/weekly${division === 'fcs' ? '/fcs' : ''}`;
+  const linked = ['regular', 'postseason'].includes(game?.seasonType) && Number.isInteger(game.week) && /^\d+$/.test(game.id ?? '');
+  return routeHref(linked ? `${base}/${weekKey(game)}/${game.id}` : base);
 }
 function focusLinkedGame(prefix, id) {
-  if (!/^\d+$/.test(id ?? '') || location.hash === focusedGameLink) return;
+  if (!/^\d+$/.test(id ?? '') || location.href === focusedGameLink) return;
   const result = document.getElementById(prefix + id);
   if (!result) return;
-  const hash = location.hash;
+  const currentUrl = location.href;
   requestAnimationFrame(() => {
-    if (!result.isConnected || location.hash !== hash) return;
-    focusedGameLink = hash;
+    if (!result.isConnected || location.href !== currentUrl) return;
+    focusedGameLink = currentUrl;
     result.scrollIntoView({ block: 'start' });
     result.focus({ preventScroll: true });
   });
@@ -1081,7 +1091,7 @@ function weeklyPicksGame(picks, game) {
     <p class="compact-note">${teamKickoff(game, game.status === 'scheduled')}${game.neutral ? ' · Neutral site' : ''}${crossDivision ? ' · FBS–FCS' : ''}</p>
     <div class="matchup-actions">${share}${calendar}
       ${rankedTeam(home.id) && rankedTeam(away.id) ? `<a class="text-link" href="${matchupLabHref(home.id,away.id,game.neutral ? 'neutral' : 'home')}">Matchup Lab</a>` : ''}
-      ${picks.division === 'fbs' ? `<a class="text-link" href="#beat-the-model/${encodeURIComponent(weekKey(game))}/${game.id}">${scheduled ? 'Make your pick' : 'Contest results'}</a>` : ''}</div></div>
+      ${picks.division === 'fbs' ? `<a class="text-link" href="${routeHref(`beat-the-model/${encodeURIComponent(weekKey(game))}/${game.id}`)}">${scheduled ? 'Make your pick' : 'Contest results'}</a>` : ''}</div></div>
     <dl class="weekly-game-details">
       <div><dt>${pickLabel}</dt><dd>${pickText}${capture ? `<small><time datetime="${esc(capture)}">${picksTimestamp.format(picksTime(capture))} MT</time></small>` : ''}</dd></div>
       <div><dt>${game.status === 'final' ? 'Final' : 'Status'}</dt><dd>${result}${grade ? ` <span class="weekly-grade ${grade.toLowerCase()}">${grade}</span>` : ''}</dd></div>
@@ -1177,7 +1187,7 @@ function weeklyResults(picks) {
   const record = correct + missed ? `${correct} correct · ${missed} missed` : 'No saved picks graded this week';
   return `<section class="predictability" aria-labelledby="predictability-title">
     <h3 id="predictability-title">Predictability score</h3><div id="predictability-content">${predictabilityContent(picks)}</div>
-    </section><p><a class="text-link" href="#model-report/${picks.division}/${encodeURIComponent(picks.selectedWeek)}">Open the full Model Report Card ${icon('arrow')}</a></p>
+    </section><p><a class="text-link" href="${routeHref(`model-report/${picks.division}/${encodeURIComponent(picks.selectedWeek)}`)}">Open the full Model Report Card ${icon('arrow')}</a></p>
     ${gameFilterModule?.gameFilterControls({ filters: picks.filters, games, teams:filterTeams,myTeamIds:favoriteIds,rankLabel:`${picks.division.toUpperCase()} SOR`,idPrefix:'weekly' }) ?? ''}
     <p class="weekly-record">${rows.length} of ${games.length} ${games.length === 1 ? 'game' : 'games'} shown · ${record}</p>
     ${rows.length ? `<ul class="weekly-list" aria-label="Games for ${esc(weekLabel(games[0]))}">${rows.map(row => row.html).join('')}</ul>` : '<p class="empty" role="status">No games match these filters.</p>'}`;
@@ -1195,13 +1205,13 @@ function renderWeeklyPicks(picks) {
   const fcs = division === 'fcs';
   const label = division.toUpperCase();
   const group = `<nav class="matchup-views weekly-division-nav" aria-label="Weekly Picks divisions">
-    <a href="#compare/weekly"${fcs ? '' : ' aria-current="page"'}>FBS</a>
-    <a href="#compare/weekly/fcs"${fcs ? ' aria-current="page"' : ''}>FCS</a></nav>`;
+    <a href="/weekly-picks"${fcs ? '' : ' aria-current="page"'}>FBS</a>
+    <a href="/weekly-picks/fcs/"${fcs ? ' aria-current="page"' : ''}>FCS</a></nav>`;
   let body;
   if (status === 'ready') {
     const cutoff = Number.isFinite(picksTime(data.source?.scheduleAsOf)) ? data.source.scheduleAsOf : data.asOf;
     const provider = data.source?.provider === 'cfbd' ? 'CollegeFootballData' : data.source?.provider === 'sportsdataverse' ? 'sportsdataverse' : '';
-    body = `<p class="compact-note">Published schedule and results${provider ? ` from ${provider}` : ''} as of <time datetime="${esc(cutoff)}">${picksTimestamp.format(picksTime(cutoff))} MT</time>.${data.source?.extraScoreProvider === 'ESPN' ? ' Some final scores are from ESPN.' : ''} <a href="#scoreboard">Live Scoreboard</a> may be newer; this page grades saved picks after published results refresh.</p>
+    body = `<p class="compact-note">Published schedule and results${provider ? ` from ${provider}` : ''} as of <time datetime="${esc(cutoff)}">${picksTimestamp.format(picksTime(cutoff))} MT</time>.${data.source?.extraScoreProvider === 'ESPN' ? ' Some final scores are from ESPN.' : ''} <a href="/scoreboard">Live Scoreboard</a> may be newer; this page grades saved picks after published results refresh.</p>
       <p class="compact-note">${fcs
         ? 'Predictive Strength picks cover games between two FCS teams. The record grades picks saved before kickoff. Historical replays appear separately.'
         : 'Predictive Strength picks cover FBS–FBS and FBS–FCS games. FBS–FCS win chances are uncalibrated estimates. Each refresh can save picks up to seven days ahead. The record grades picks saved before kickoff. Historical replays and preview odds are separate.'}</p>
@@ -1221,11 +1231,10 @@ function renderWeeklyPicks(picks) {
   if (status === 'loading') picks.request ??= loadWeeklyPicks(picks);
   if (status === 'ready') focusLinkedGame('weekly-game-', route()[fcs ? 4 : 3]);
 }
-function matchupLabHref(a, b, venue) {
-  return `#compare/matchup/${a}/${b}/${venue}`;
-}
+function matchupToken(a, b, venue) { return `compare/matchup/${a}/${b}/${venue}`; }
+function matchupLabHref(a, b, venue) { return routeHref(matchupToken(a, b, venue)); }
 function chooseMatchup() {
-  history.replaceState(history.state, '', matchupLabHref(state.compareA, state.compareB, state.venue));
+  navigate(matchupToken(state.compareA, state.compareB, state.venue), { replace: true, render: false });
   renderCompare();
 }
 function selectMatchupTeam(side, id) {
@@ -1265,7 +1274,7 @@ function renderCompare() {
     venue: state.venue === 'neutral' ? 'Neutral field' : `At ${state.venue === 'home' ? a.name : b.name}`,
     forecastLabel: 'Matchup Lab estimate',
   }) : '';
-  main.innerHTML=`${banner('Matchup lab · Experimental strength model','CHANGE THE MATCHUP. FOLLOW THE NUMBERS.','Compare two teams using our own historical and opponent-adjusted strength ratings.')}<div class="wrap page-content">${matchupNav('compare')}<div class="segmented compare-venue" aria-label="Game location">${[['neutral','Neutral field'],['home','Team A at home'],['away','Team B at home']].map(([v,label])=>`<button data-action="venue" data-value="${v}" class="${state.venue===v?'active':''}" aria-pressed="${state.venue===v}">${label}</button>`).join('')}</div><div class="compare-layout">${[a,b].map((t,i)=>`<section class="panel compare-picker"><div class="section-label">TEAM ${i?'B':'A'}</div>${logo(t,'large')}<h2>${esc(t.name)}</h2><p>${record(t)} · ${rank(nationalRank(t))} ${achievementName()}</p><label><span class="sr-only">Team ${i?'B':'A'}</span><select id="compare-${i?'b':'a'}">${compareOptions(t.id,i ? a.id : b.id)}</select></label><p style="margin-top:14px">Strength <strong>${number(t.strength,2)} pts</strong> · ${rank(strengthRank(t))}</p></section>`).join('')}<section class="panel prediction-card"><div class="eyebrow">${matchup ? 'Historically calibrated odds' : 'Experimental model estimate'}</div><h2>${esc(edge>=0?a.name:b.name)} edge</h2><div class="prediction-number">${number(Math.abs(edge),1)}<span style="font-size:27px"> pts</span></div><p>Bounded-model margin estimate</p><div class="probability-track"><span style="width:${probability*100}%"></span></div><p>${esc(a.name)} ${number(probability*100,1)}% &nbsp; · &nbsp; ${esc(b.name)} ${number((1-probability)*100,1)}%${oddsLabel ? ` · <span class="prediction-odds-description">${oddsLabel}</span>` : ''}</p>${matchupMarginRange(a,b,edge)}${share ? `<div class="matchup-actions">${share}</div>` : ''}</section></div><div class="notice"><strong>Reading the matchup.</strong> ${explanation} <a class="text-link" href="#methodology">See what we checked</a></div>${playersPanel}</div>`;
+  main.innerHTML=`${banner('Matchup lab · Experimental strength model','CHANGE THE MATCHUP. FOLLOW THE NUMBERS.','Compare two teams using our own historical and opponent-adjusted strength ratings.')}<div class="wrap page-content">${matchupNav('compare')}<div class="segmented compare-venue" aria-label="Game location">${[['neutral','Neutral field'],['home','Team A at home'],['away','Team B at home']].map(([v,label])=>`<button data-action="venue" data-value="${v}" class="${state.venue===v?'active':''}" aria-pressed="${state.venue===v}">${label}</button>`).join('')}</div><div class="compare-layout">${[a,b].map((t,i)=>`<section class="panel compare-picker"><div class="section-label">TEAM ${i?'B':'A'}</div>${logo(t,'large')}<h2>${esc(t.name)}</h2><p>${record(t)} · ${rank(nationalRank(t))} ${achievementName()}</p><label><span class="sr-only">Team ${i?'B':'A'}</span><select id="compare-${i?'b':'a'}">${compareOptions(t.id,i ? a.id : b.id)}</select></label><p style="margin-top:14px">Strength <strong>${number(t.strength,2)} pts</strong> · ${rank(strengthRank(t))}</p></section>`).join('')}<section class="panel prediction-card"><div class="eyebrow">${matchup ? 'Historically calibrated odds' : 'Experimental model estimate'}</div><h2>${esc(edge>=0?a.name:b.name)} edge</h2><div class="prediction-number">${number(Math.abs(edge),1)}<span style="font-size:27px"> pts</span></div><p>Bounded-model margin estimate</p><div class="probability-track"><span style="width:${probability*100}%"></span></div><p>${esc(a.name)} ${number(probability*100,1)}% &nbsp; · &nbsp; ${esc(b.name)} ${number((1-probability)*100,1)}%${oddsLabel ? ` · <span class="prediction-odds-description">${oddsLabel}</span>` : ''}</p>${matchupMarginRange(a,b,edge)}${share ? `<div class="matchup-actions">${share}</div>` : ''}</section></div><div class="notice"><strong>Reading the matchup.</strong> ${explanation} <a class="text-link" href="/methodology/">See what we checked</a></div>${playersPanel}</div>`;
   const disclosure = main.querySelector('[data-matchup-players]');
   if (!disclosure?.isConnected) return;
   const target = disclosure.querySelector('[data-matchup-player-content]');
@@ -1341,7 +1350,7 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
     ? `<a class="text-link" href="${esc(poll.url)}">Read the ${source.name} edition ${icon('external')}</a>`
     : `<a class="text-link" href="${source.url}">Open ${source.name} ${icon('external')}</a>`;
   const tabs = `<nav class="matchup-views edition-tabs" aria-label="Poll source">${Object.entries(pollSources)
-    .map(([id, item]) => `<a href="#polls/${id}/${week}"${id === key ? ' aria-current="page"' : ''}>${item.name}</a>`).join('')}</nav>`;
+    .map(([id, item]) => `<a href="${routeHref(`polls/${id}/${week}`)}"${id === key ? ' aria-current="page"' : ''}>${item.name}</a>`).join('')}</nav>`;
   const summary = [
     poll && sor ? `${shared(columns[0], columns[2])} of 25 shared by ${sorLabel} and ${source.short}` : '',
     poll && forge ? `${shared(columns[1], columns[2])} of 25 shared by Forge and ${source.short}` : '',
@@ -1359,12 +1368,12 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
     ${savedCheckpoint ? '<p class="compact-note edition-context">This saved SOR checkpoint covers games through the same date as the poll. The full week includes later games.</p>' : ''}
     ${replay ? `<p class="compact-note edition-context">SOR replay calculated ${editionDate(replay.released)} using the published SOR formula and ${replay.networkGames.toLocaleString()} confirmed games through this cutoff. That includes ${replay.fbsGames.toLocaleString()} games involving FBS teams.</p>` : ''}
     ${summary.length ? `<p class="edition-notice">${summary.join(' · ')}.</p>` : ''}
-    ${!poll && latestSource ? `<a class="text-link" href="#polls/${key}/${latestSource.week}">View the ${editionDate(latestSource.released)} edition ${icon('arrow')}</a>` : ''}
-    ${!sor && latestSor && latestSor.week !== week ? `<a class="text-link" href="#polls/${key}/${latestSor.week}">Compare SOR and Forge after Week ${latestSor.week} ${icon('arrow')}</a>` : ''}
+    ${!poll && latestSource ? `<a class="text-link" href="${routeHref(`polls/${key}/${latestSource.week}`)}">View the ${editionDate(latestSource.released)} edition ${icon('arrow')}</a>` : ''}
+    ${!sor && latestSor && latestSor.week !== week ? `<a class="text-link" href="${routeHref(`polls/${key}/${latestSor.week}`)}">Compare SOR and Forge after Week ${latestSor.week} ${icon('arrow')}</a>` : ''}
     </div><div class="table-scroll"><table class="edition-table poll-rank-table">
     <caption class="sr-only">Ranking comparison for ${editionLabel(week)}</caption>
     <thead><tr><th scope="col">Rank</th><th scope="col">${sorLabel}</th><th scope="col">Forge</th><th scope="col">${source.short}</th></tr></thead><tbody>${rows}</tbody></table></div>
-    <div class="panel-body"><p class="compact-note">Tied teams share a cell. A dash marks a skipped rank or an unavailable edition.</p>${forge ? `<a class="text-link edition-ballot-link" href="#forge-top-25/${week}">Forge’s full ballot for this week ${icon('arrow')}</a>` : ''}</div>
+    <div class="panel-body"><p class="compact-note">Tied teams share a cell. A dash marks a skipped rank or an unavailable edition.</p>${forge ? `<a class="text-link edition-ballot-link" href="${routeHref(`forge-top-25/${week}`)}">Forge’s full ballot for this week ${icon('arrow')}</a>` : ''}</div>
     </section>`;
 }
 function renderForgeBallot(data, requestedWeek) {
@@ -1519,7 +1528,7 @@ function renderConnectedFeature(page, id, scope) {
     } else if (page === 'sor-compare') {
       const [, ,a,b] = route();
       options = { snapshot:state.snapshot, dataRoot, division, a, b,
-        onNavigate(next) { location.hash = `#sor-compare/${next.division || division}/${encodeURIComponent(next.a || '')}/${encodeURIComponent(next.b || '')}`; } };
+        onNavigate(next) { navigate(`sor-compare/${next.division || division}/${next.a ?? ''}/${next.b ?? ''}`); } };
     } else if (page === 'model-report') options = { dataRoot, division, week: conferenceId(scope) };
     else options = { page };
     lifecycle.close = module[mountName](target,options);
@@ -1577,7 +1586,6 @@ function render() {
   if (page === 'scoreboard') {
     renderHeader();
     renderScoreboardPage();
-    document.title = `Live Scoreboard · ${BRAND}`;
     document.querySelector('#announce').textContent = document.title;
   }
   if (page !== 'bracket' && closeBracket) {
@@ -1597,6 +1605,11 @@ function render() {
     closeHistory = undefined;
   }
   if (page === 'scoreboard') return;
+  if (page === 'not-found') {
+    renderHeader();
+    main.innerHTML = '<section class="wrap page-content"><h1>Page not found</h1><p>Check the address, or <a href="/">return to the homepage</a>.</p></section>';
+    return;
+  }
   if (!state.snapshot) { renderRankingsStatus(); return; }
   renderHeader();
   if (page === 'rankings') {
@@ -1614,7 +1627,7 @@ function render() {
     }
     state.division = division;
   }
-  if (page === 'team' && (scope === 'results' || playerTabs.has(scope))) state.teamTab = scope;
+  if (page === 'team' && (scope === 'results' || scope === 'model' || playerTabs.has(scope))) state.teamTab = scope;
   if (page === 'compare' && id === 'matchup') {
     const [, , a, b, venue] = route();
     Object.assign(state, {
@@ -1624,8 +1637,6 @@ function render() {
     });
   }
   if(page==='home')renderHome();else if(page==='rankings')renderRankings();else if(page==='teams')renderTeams();else if(page==='team')renderTeam(id);else if(page==='methodology')renderMethodology();else if(page==='compare')renderCompare();else if (page === 'polls' || page === 'forge-top-25') renderRankingEditions(page,id,scope);else if (page === 'conference-strength') renderConferenceStrengthPage();else if (['my-teams','sor-compare','model-report','about','privacy','terms','support','account','admin'].includes(page)) renderConnectedFeature(page,id,scope);else if (page === 'bracket') renderBracketPage();else if (page === 'cfp-scenarios') renderScenarioPage();else if (page === 'beat-the-model') renderContestPage();else if (page === 'ranking-history') renderHistoryPage(id);else renderHome();
-  const compareTitle = id === 'weekly' ? scope === 'fcs' ? 'FCS Weekly Picks' : 'Weekly picks' : 'Matchup lab';
-  const team=rankedTeam(id);document.title=page==='home'?'The Games Decide Top 25':`${page==='team'&&team?team.name:({rankings:`${state.division.toUpperCase()} rankings`,teams:`${state.division.toUpperCase()} team directory`,compare:compareTitle,methodology:'Methodology',polls:'Compare Rankings','forge-top-25':'Forge’s Top 25','conference-strength':'Conference Strength','my-teams':'My Teams','sor-compare':'Compare earned SOR','model-report':'Model Report Card',about:'About The Games Decide',privacy:'Privacy and accounts',terms:'Terms of use',support:'Support',account:'Account settings',admin:'Administration',bracket:'Playoff Bracket','cfp-scenarios':'CFP Scenario Builder','beat-the-model':'Beat the Model','ranking-history':'Weekly SOR movement'}[page]||'Home')} · ${BRAND}`;
   document.querySelector('#announce').textContent=document.title;
 }
 document.addEventListener('error', event => {
@@ -1658,7 +1669,7 @@ document.addEventListener('change',e=>{
   if (e.target.id === 'edition-week') {
     const [page, id] = route();
     const key = Object.hasOwn(pollSources, id) ? id : 'ap';
-    location.hash = page === 'polls' ? `polls/${key}/${e.target.value}` : `forge-top-25/${e.target.value}`;
+    navigate(page === 'polls' ? `polls/${key}/${e.target.value}` : `forge-top-25/${e.target.value}`);
   }
   if(e.target.id==='conference-filter'){state.conference=e.target.value;route()[0]==='teams'?renderTeams():renderRankings();}
   if(e.target.id==='compare-a') selectMatchupTeam('a', e.target.value);
@@ -1668,7 +1679,7 @@ document.addEventListener('change',e=>{
     if (!picks?.weeks?.has(e.target.value)) return;
     picks.selectedWeek = e.target.value;
     const scope = picks.division === 'fcs' ? 'fcs/' : '';
-    if (picks.weeks.has(route()[scope ? 3 : 2])) history.replaceState(history.state, '', `#compare/weekly/${scope}${e.target.value}`);
+    navigate(`compare/weekly/${scope}${e.target.value}`, { replace: true, render: false });
     document.querySelector('#weekly-results').innerHTML = weeklyResults(picks);
     document.querySelector('#announce').textContent = `${picks.division.toUpperCase()} ${weekLabel(picks.weeks.get(picks.selectedWeek)[0])} games shown`;
   }
@@ -1678,22 +1689,23 @@ document.addEventListener('click',e=>{
   if (more?.open) {
     const moreLink = e.target.closest('.nav-more-links a');
     if (moreLink || !more.contains(e.target)) more.open = false;
-    if (moreLink?.hash === location.hash) more.querySelector('summary').focus();
+    if (moreLink?.href === location.href) more.querySelector('summary').focus();
     else if (moreLink && e.detail === 0 && !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey) focusMoreDestination = true;
   }
   if(e.target.closest('.skip-link')){e.preventDefault();main.focus();main.scrollIntoView();return;}
+  const destination = internalNavigationTarget(e, location.href);
+  if (destination) { e.preventDefault(); navigate(destination); return; }
   const button=e.target.closest('[data-action]');if(!button)return;
   const {action,value}=button.dataset;
   if (action === 'choose-my-team' && rankedTeam(value)) {
-    location.hash = `#my-teams/${encodeURIComponent(value)}`;
+    navigate(`my-teams/${encodeURIComponent(value)}`);
   }
   if (action === 'retry-editions') {
     rankingEditions.failed = false;
     render();
   }
   if (action === 'model' && ['achievement', 'strength', 'performance'].includes(value)) {
-    location.hash = rankingHash(value, state.all, state.division);
-    render();
+    navigate(rankingRouteToken(value, state.all, state.division));
   }
   if (action === 'load-performance') {
     const [page, id] = route();
@@ -1706,14 +1718,13 @@ document.addEventListener('click',e=>{
   if (action === 'toggle-all') {
     state.search = '';
     state.conference = '';
-    location.hash = rankingHash(state.model, !state.all, state.division);
-    render();
+    navigate(rankingRouteToken(state.model, !state.all, state.division));
   }
   if (action === 'team-tab') {
     state.teamTab = value;
-    const [, id, scope] = route();
-    if (playerTabs.has(value)) history.replaceState(history.state, '', `#team/${encodeURIComponent(id)}/${value}`);
-    else if (playerTabs.has(scope) || (scope === 'results' && value !== 'results')) history.replaceState(history.state, '', `#team/${encodeURIComponent(id)}`);
+    const [, id] = route();
+    const view = value === 'overview' ? '' : `/${value}`;
+    navigate(`team/${encodeURIComponent(id)}${view}`, { replace: true, render: false });
     renderTeam(id);
     if (button.classList?.contains('team-record-button')) main.querySelector('.tabs [data-value="results"]')?.focus();
   }
@@ -1725,7 +1736,7 @@ document.addEventListener('click',e=>{
     if (state.compareB === value || rankedTeam(state.compareB)?.division !== team.division) {
       state.compareB = divisionTeams(team.division).find(t => t.id !== value)?.id ?? '';
     }
-    location.hash = matchupLabHref(state.compareA,state.compareB,'neutral');
+    navigate(matchupToken(state.compareA, state.compareB, 'neutral'));
   }
 });
 document.addEventListener('keydown', event => {
@@ -1735,7 +1746,13 @@ document.addEventListener('keydown', event => {
   more.open = false;
   more.querySelector('summary').focus();
 });
-window.addEventListener('hashchange', event => {
+if (!isAccountCallbackUrl(location.href)) replaceLegacyAppUrl(window);
+let lastRoutedUrl = location.href;
+function reroute({ previousUrl = lastRoutedUrl, render: renderPage = true, force = false } = {}) {
+  if (!isAccountCallbackUrl(location.href)) replaceLegacyAppUrl(window);
+  if (!force && location.href === lastRoutedUrl) return;
+  lastRoutedUrl = location.href;
+  if (!renderPage) return;
   focusedGameLink = null;
   state.teamTab = 'overview';
   render();
@@ -1743,10 +1760,13 @@ window.addEventListener('hashchange', event => {
     focusMoreDestination = false;
     main.focus({ preventScroll: true });
   }
-  const from = event.oldURL ? new URL(event.oldURL).hash.slice(1).split('/')[0] : '';
+  const from = routeFromUrl(previousUrl)?.split('/')[0];
   if (!isRankingsHub(from) || !isRankingsHub(route()[0])) window.scrollTo({ top: 0, behavior: 'instant' });
-});
-window.addEventListener(ACCOUNT_ROUTE_EVENT,()=>{render();});
+}
+window.addEventListener(APP_NAVIGATION_EVENT, event => reroute(event.detail));
+window.addEventListener('popstate', () => reroute());
+window.addEventListener('hashchange', event => reroute({ previousUrl: event.oldURL }));
+window.addEventListener(ACCOUNT_ROUTE_EVENT, () => reroute({ force: true }));
 function loadFootballHelpers() {
   footballFormatRequest ??= Promise.all([
     import('./format.js?v=1').then(module => { footballFormat = module; }),
@@ -1789,16 +1809,6 @@ async function load(){
     console.error(error);
   }
 }
-const authReturn = location.search && new URLSearchParams(location.search);
-let savedAccountPage;
-if ((authReturn && (authReturn.get('myteam') === '1' || authReturn.has('code'))) || accountCallbackMode(location.href)) {
-  try {
-    savedAccountPage = window.sessionStorage.getItem(accountReturnKey);
-    window.sessionStorage.removeItem(accountReturnKey);
-  } catch {}
-}
-const signInReturn=initialAccountReturnUrl(location.href,savedAccountPage);
-if(signInReturn!==location.href)history.replaceState(history.state,'',signInReturn);
 if (route()[0] === 'scoreboard') render();
 else renderHeader();
 load();

@@ -12,7 +12,7 @@ const types={'.js':'text/javascript','.json':'application/json','.css':'text/css
 const server=createServer(async(request,response)=>{
   const pathname=decodeURIComponent(new URL(request.url,'http://localhost').pathname);
   let file=resolve(directory,'.'+pathname);
-  if(pathname.endsWith('/'))file=resolve(file,'index.html');
+  if(!extname(pathname))file=resolve(file,'index.html');
   if(!file.startsWith(directory+sep))return response.writeHead(404).end();
   try{response.writeHead(200,{'Content-Type':types[extname(file)]??'application/octet-stream'}).end(await readFile(file));}
   catch{response.writeHead(404).end();}
@@ -28,8 +28,7 @@ try{
     const context=await browser.newContext({viewport:{width,height:1050},reducedMotion:width===390?'no-preference':'reduce',hasTouch:true});
     const page=await context.newPage(),errors=[];
     page.on('pageerror',error=>errors.push(error.message));
-    await page.route('https://cdn.jsdelivr.net/**',route=>route.abort());
-    await page.route('https://egxyfyorggwnrnmirrax.supabase.co/**',route=>route.abort());
+    await context.route('**/*',route=>route.request().url().startsWith(base)?route.continue():route.abort());
     // Use the current source when this check is run before the combined build.
     for(const name of ['my-team.js','my-team.css'])await page.route(`**/${name}*`,async route=>route.fulfill({contentType:types[extname(name)],body:await readFile(resolve('frontend',name))}));
     await page.addInitScript(({ids})=>{
@@ -41,7 +40,7 @@ try{
         contest:{client:{auth:{getSession:async()=>({data:{session:{user:{id:'carousel-fixture'}}}}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}})}}}};
       window.refreshCarouselAccount=()=>listener();
     },{ids});
-    await page.goto(base+'#home',{waitUntil:'domcontentloaded'});
+    await page.goto(base,{waitUntil:'domcontentloaded'});
     await page.locator(`[data-my-team] [data-favorite-team="${ids[0]}"]`).waitFor();
     const next=()=>page.getByRole('button',{name:'Next followed team',exact:true});
     const previous=()=>page.getByRole('button',{name:'Previous followed team',exact:true});

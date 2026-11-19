@@ -18,7 +18,7 @@ test('calendar represents a confirmed zoned kickoff and a stable game identity',
   assert.match(original, /\r\nDTSTAMP:20261116T010138Z\r\n/);
   assert.match(original, /\r\nPRODID:-\/\/The Games Decide\/\/College Football Schedule\/\/EN\r\n/);
   assert.match(original, /\r\nSUMMARY:Illinois at Ohio State\r\n/);
-  assert.match(original, /\r\nURL:https:\/\/www\.thegamesdecide\.com\/#compare\/weekly\/12\r\n/);
+  assert.match(original, /\r\nURL:https:\/\/www\.thegamesdecide\.com\/weekly-picks\?week=regular%3A12\r\n/);
   assert.match(original, /\r\nUID:college-football-401866465@fbs-intelligence\.onrender\.com\r\n/);
   assert.equal(original.match(/UID:[^\r]+/)[0], shifted.match(/UID:[^\r]+/)[0]);
   assert.match(original, /Downloaded events do not automatically follow schedule changes\./);
@@ -70,13 +70,26 @@ test('matchup card preserves actual zero and one probabilities without inventing
 });
 
 test('weekly game deeplinks preserve the kickoff in FBS and FCS calendar and share links', () => {
-  const fbs = '#compare/weekly/regular:12/401856866';
-  const fcs = '#compare/weekly/fcs/postseason:2/401856865';
-  assert.equal(publicFootballPageUrl(fbs), 'https://www.thegamesdecide.com/' + fbs);
-  assert.equal(publicFootballPageUrl(fcs), 'https://www.thegamesdecide.com/' + fcs);
-  assert.match(unfold(kickoffEvent({ ...fixtureGame, href: fcs })), /\/weekly\/fcs\/postseason:2\/401856865/);
+  const fbs = '/weekly-picks?week=regular%3A12&game=401856866';
+  const fcs = '/weekly-picks/fcs/?week=postseason%3A2&game=401856865';
+  assert.equal(publicFootballPageUrl('#compare/weekly/regular:12/401856866'), 'https://www.thegamesdecide.com' + fbs);
+  assert.equal(publicFootballPageUrl('#compare/weekly/fcs/postseason:2/401856865'), 'https://www.thegamesdecide.com' + fcs);
+  assert.match(unfold(kickoffEvent({ ...fixtureGame, href: fcs })), /\/weekly-picks\/fcs\/\?week=postseason%3A2&game=401856865/);
   const teams = [{ id: '254', name: 'Utah' }, { id: '26', name: 'UCLA' }];
-  assert.ok(shareCardButton({ teams, href: '#compare/matchup/254/26/neutral' }));
-  assert.match(shareCardButton({ teams, href: fbs }), /regular:12\/401856866/);
+  assert.match(shareCardButton({ teams, href: '#compare/matchup/254/26/neutral' }), /\/matchup-lab\?a=254&amp;b=26/);
+  assert.match(shareCardButton({ teams, href: fbs }), /week=regular%3A12&amp;game=401856866/);
   assert.equal(publicFootballPageUrl('#compare/weekly/secret:12/401856866'), null);
+});
+
+test('shared links use the preferred domain and only expose permitted public route state', () => {
+  assert.equal(publicFootballPageUrl('https://thegamesdecide.com/scoreboard/?tracking=private'), 'https://www.thegamesdecide.com/scoreboard');
+  assert.equal(publicFootballPageUrl('https://fbs-intelligence.onrender.com/#compare/matchup/254/26/home'),
+    'https://www.thegamesdecide.com/matchup-lab?a=254&b=26&venue=home');
+  assert.equal(publicFootballPageUrl('/team/254/?view=results&game=123&code=private#access_token=private'),
+    'https://www.thegamesdecide.com/team/254/?view=results&game=123');
+  for (const href of ['/account?code=private', '/admin', '/my-teams', '/methodology/', '/team/254/?view=private',
+    '/matchup-lab?a=254&b=254&venue=home', '/matchup-lab?a=254', '/#access_token=private',
+    'https://www.thegamesdecide.com.example/team/254/', 'https://private@www.thegamesdecide.com/team/254/']) {
+    assert.equal(publicFootballPageUrl(href), null);
+  }
 });

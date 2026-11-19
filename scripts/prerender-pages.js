@@ -5,7 +5,8 @@ import { myTeamColors } from '../frontend/my-team-colors.js';
 import { platformInfoMarkup } from '../frontend/platform-info.js';
 import { buildModelReport } from '../frontend/model-report.js';
 import { conferenceRecords } from '../frontend/conference-metrics.js';
-import { PUBLIC_SITE_ORIGIN as origin } from '../frontend/page-routes.js';
+import { PUBLIC_SITE_ORIGIN as origin, pageMetadata } from '../frontend/page-routes.js';
+import { routeHref } from '../frontend/clean-routes.js';
 
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -14,22 +15,46 @@ const record = team => [team.wins, team.losses, ...(team.ties ? [team.ties] : []
 const number = (value, digits = 2) => Number.isFinite(value) ? value.toFixed(digits) : 'Unavailable';
 
 function metadata(html, { path, title, description, image, route, content, links }) {
-  const canonical = origin + path;
-  const pageTitle = route === 'home' ? title : title + ' · The Games Decide';
+  const privateOrMissing = !path;
+  const fallback = privateOrMissing ? pageMetadata(route) : null;
+  const canonical = privateOrMissing ? null : origin + path;
+  const pageTitle = fallback?.title ?? (route === 'home' ? title : title + ' · The Games Decide');
+  const pageDescription = description ?? fallback?.description;
   const head = `<title>${escapeHtml(pageTitle)}</title>
-  <meta name="description" content="${escapeHtml(description)}">
+  <meta name="description" content="${escapeHtml(pageDescription)}">` + (privateOrMissing ? `
+  <meta name="robots" content="noindex, nofollow" data-account-robots="true">` : `
   <link rel="canonical" href="${canonical}">
   <meta property="og:type" content="website"><meta property="og:site_name" content="The Games Decide">
-  <meta property="og:title" content="${escapeHtml(pageTitle)}"><meta property="og:description" content="${escapeHtml(description)}">
+  <meta property="og:title" content="${escapeHtml(pageTitle)}"><meta property="og:description" content="${escapeHtml(pageDescription)}">
   <meta property="og:url" content="${canonical}"><meta property="og:image" content="${origin}${image}">
   <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="${escapeHtml(title)}">
-  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(pageTitle)}"><meta name="twitter:description" content="${escapeHtml(description)}"><meta name="twitter:image" content="${origin}${image}">
-  <meta name="app-route" content="${escapeHtml(route)}">`;
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(pageTitle)}"><meta name="twitter:description" content="${escapeHtml(pageDescription)}"><meta name="twitter:image" content="${origin}${image}">`) + (route ? `
+  <meta name="app-route" content="${escapeHtml(route)}">` : '');
   return html.replace(/<title>[\s\S]*?<\/title>/, '').replace(/\s*<meta name="description"[^>]*>/, '')
     .replace(/\s*<link rel="canonical"[^>]*>/g, '')
     .replace('</head>', head + '\n</head>')
     .replace(/<main\b[^>]*>[\s\S]*?<\/main>/, `<main id="main" tabindex="-1"><div class="wrap page-content"><section class="panel"><div class="panel-body">${content}<nav class="public-page-links" aria-label="Explore The Games Decide">${links}</nav></div></section></div></main>`);
 }
+
+function pageLink(route, label) {
+  const href = routeHref(route);
+  if (!href) throw new Error(`Unknown route while generating public pages: ${route}`);
+  return `<a href="${escapeHtml(href)}">${escapeHtml(label)}</a>`;
+}
+
+async function writePage(output, path, html) {
+  const directory = join(output, path);
+  await mkdir(directory, { recursive: true });
+  await writeFile(join(directory, 'index.html'), html);
+}
+
+const crawlableAliases = new Map([
+  ['/rankings/fbs/', '/rankings'],
+  ['/weekly-picks/fbs/', '/weekly-picks'],
+  ['/teams/', '/teams/fbs/'],
+  ['/model-reports/', '/model-reports/fbs/'],
+  ['/polls/', '/polls/ap/'],
+]);
 
 function previewSvg({ title, subtitle, detail, accent = '#00b7ed', logo }) {
   const safeAccent = /^#[\da-f]{6}$/i.test(accent) ? accent : '#00b7ed';
@@ -49,7 +74,9 @@ export async function prerenderPublicPages({ root, output, snapshot, teams, html
   const logo = await sharp(await readFile(join(root, 'frontend/assets/the-games-decide-logo.webp'))).resize({ width: 720 }).png().toBuffer();
   const logoUrl = 'data:image/png;base64,' + logo.toString('base64');
   const asOf = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', dateStyle: 'medium' }).format(new Date(snapshot.asOf));
-  const baseLinks = '<a href="/">Home</a> · <a href="/rankings/fbs/">FBS rankings</a> · <a href="/rankings/fcs/">FCS rankings</a> · <a href="/conference-strength/">Conference Strength</a> · <a href="/model-reports/fbs/">Model report</a> · <a href="/methodology/">Methodology</a>';
+  const baseLinks = [['home', 'Home'], ['rankings', 'FBS rankings'], ['rankings/fcs/sor', 'FCS rankings'],
+    ['conference-strength/records', 'Conference Strength'], ['model-report/fbs', 'Model report'], ['methodology', 'Methodology']]
+    .map(([route, label]) => pageLink(route, label)).join(' · ');
   const teamRows = division => teams.filter(team => team.division === division);
   const table = division => `<table><caption>${division.toUpperCase()} Strength of Record · ${snapshot.season}</caption><thead><tr><th>Rank</th><th>Team</th><th>Record</th><th>SOR</th></tr></thead><tbody>${teamRows(division).map(team => `<tr><td>${team.displayRank ?? team.sorRank ?? '—'}</td><td><a href="/team/${team.id}/">${escapeHtml(team.name)}</a></td><td>${record(team)}</td><td>${number(team.sor, 4)}</td></tr>`).join('')}</tbody></table>`;
   const reportText = (picks, division) => {
@@ -65,15 +92,15 @@ export async function prerenderPublicPages({ root, output, snapshot, teams, html
   })() : '';
   const primary = [
     ['/', 'home', 'The Games Decide Top 25', 'Independent FBS and FCS rankings, team evidence, saved predictions, and conference comparisons.', `<h1>The Games Decide Top 25</h1><p>Independent college football rankings and matchup analysis. Published ${asOf}.</p>${table('fbs')}`],
-    ['/rankings/fbs/', 'rankings', 'FBS Strength of Record', `Explore all ${snapshot.fbsTeams} FBS teams by achieved record and opponent quality. Published ${asOf}.`, '<h1>FBS Strength of Record</h1>' + table('fbs')],
+    ['/rankings', 'rankings', 'FBS Strength of Record', `Explore all ${snapshot.fbsTeams} FBS teams by achieved record and opponent quality. Published ${asOf}.`, '<h1>FBS Strength of Record</h1>' + table('fbs')],
     ['/rankings/fcs/', 'rankings/fcs/sor', 'FCS Strength of Record', `Explore ${snapshot.fcsTeams} FCS teams in the Experimental FCS Strength of Record rankings.`, '<h1>FCS Strength of Record · Experimental</h1>' + table('fcs')],
     ['/teams/fbs/', 'teams/fbs', 'FBS team directory', 'Browse FBS teams, records, rankings, and team profiles.', '<h1>FBS team directory</h1>' + table('fbs')],
     ['/teams/fcs/', 'teams/fcs', 'FCS team directory', 'Browse FCS teams, records, rankings, and team profiles.', '<h1>FCS team directory</h1>' + table('fcs')],
-    ['/conference-strength/', 'conference-strength/records', 'Conference Strength', 'Compare interconference records, opponent quality, and individual game evidence.', '<h1>Conference Strength</h1><p>Explore conference records and an interactive head-to-head matrix. FCS results have separate records. Opponent-adjusted conference scores are Experimental.</p>'+conferenceTable+'<a href="/#conference-strength/quality">Quality rankings</a> · <a href="/#conference-strength/compare">Compare conferences</a>'],
-    ['/matchup-lab/', 'compare', 'Matchup Lab', 'Compare valid FBS or FCS matchups using Predictive Strength, location, and available player evidence.', '<h1>Matchup Lab</h1><p>Select two teams to inspect their Predictive Strength, model win probabilities, and reported player information.</p>'],
-    ['/weekly-picks/fbs/', 'compare/weekly', 'FBS weekly picks', 'Inspect saved pregame FBS predictions, scheduled games and published final results. Live scores and historical replays are labeled separately.', '<h1>FBS weekly picks</h1>'+reportText(fbsPicks,'fbs')],
+    ['/conference-strength/', 'conference-strength/records', 'Conference Strength', 'Compare interconference records, opponent quality, and individual game evidence.', '<h1>Conference Strength</h1><p>Explore conference records and an interactive head-to-head matrix. FCS results have separate records. Opponent-adjusted conference scores are Experimental.</p>' + conferenceTable + pageLink('conference-strength/quality', 'Quality rankings') + ' · ' + pageLink('conference-strength/compare', 'Compare conferences')],
+    ['/matchup-lab', 'compare', 'Matchup Lab', 'Compare valid FBS or FCS matchups using Predictive Strength, location, and available player evidence.', '<h1>Matchup Lab</h1><p>Select two teams to inspect their Predictive Strength, model win probabilities, and reported player information.</p>'],
+    ['/weekly-picks', 'compare/weekly', 'FBS weekly picks', 'Inspect saved pregame FBS predictions, scheduled games and published final results. Live scores and historical replays are labeled separately.', '<h1>FBS weekly picks</h1>'+reportText(fbsPicks,'fbs')],
     ['/weekly-picks/fcs/', 'compare/weekly/fcs', 'FCS weekly picks', 'Inspect saved pregame FCS predictions and results with separate coverage and validation limits.', '<h1>FCS weekly picks</h1>'+reportText(fcsPicks,'fcs')],
-    ['/scoreboard/', 'scoreboard', 'Live Scoreboard', 'Follow college football scores and confirmed kickoff times. Live ESPN responses and the published model snapshot have distinct update times.', '<h1>Live Scoreboard</h1><p>The interactive scoreboard retrieves ESPN scores when online. A live-score response is separate from the published rankings and saved-prediction grading cutoff.</p><a href="/weekly-picks/fbs/">Inspect saved predictions and published results</a>'],
+    ['/scoreboard', 'scoreboard', 'Live Scoreboard', 'Follow college football scores and confirmed kickoff times. Live ESPN responses and the published model snapshot have distinct update times.', '<h1>Live Scoreboard</h1><p>The interactive scoreboard retrieves ESPN scores when online. A live-score response is separate from the published rankings and saved-prediction grading cutoff.</p>' + pageLink('compare/weekly', 'Inspect saved predictions and published results')],
     ['/beat-the-model/', 'beat-the-model', 'Beat the Model', 'Make picks before each confirmed kickoff and compare graded results with Forge’s saved pregame predictions.', '<h1>Beat the Model</h1><p>Sign in to submit your own picks before each game’s confirmed kickoff. Other participants’ shared picks remain protected until that game locks. Public standings and model predictions are available through the contest.</p>'],
     ['/ranking-history/', 'ranking-history', 'Ranking History', 'Explore retained SOR publications and clearly labeled retrospective replays. Historical game archives are distinct from saved weekly editions.', '<h1>Ranking History</h1><p>Compare retained weekly Strength of Record editions and movement. Reconstructed replays have separate labels and are not presented as publications saved before those games.</p><a href="/conference-strength/">Explore available prior-season conference evidence</a>'],
     ['/forge-rankings/', 'forge-top-25', 'Forge’s rankings', 'Read Forge’s separately labeled AI-authored ballots and compare them with earned SOR and external polls.', '<h1>Forge’s rankings</h1><p>Forge’s ballot is AI-authored analysis, separate from the reproducible SOR formula and the AP, Coaches and CFP comparison sources.</p>'],
@@ -84,7 +111,7 @@ export async function prerenderPublicPages({ root, output, snapshot, teams, html
     ['/model-reports/fbs/', 'model-report/fbs', 'FBS weekly model report', 'Examine saved pregame predictions, accuracy, Brier score, notable misses, and sample sizes.', '<h1>FBS weekly model report</h1>'+reportText(fbsPicks,'fbs')],
     ['/model-reports/fcs/', 'model-report/fcs', 'FCS weekly model report', 'Track FCS saved pregame picks and results with separate reporting and coverage.', '<h1>FCS weekly model report</h1>'+reportText(fcsPicks,'fcs')],
     ['/methodology/', 'methodology', 'Ranking methodology', 'Read how SOR, Predictive Strength, Performance, and conference comparisons use game data.', '<h1>Ranking methodology</h1><p>SOR = −log10(P(reference team matches at least the observed wins)). Predictive Strength fits bounded scoring margins with opponent and venue adjustments. Coverage and calibration limitations accompany each method.</p><a href="https://github.com/egemicated/-fbs-ranking-engine-https-github.com-egemicated-fbs-ranking-engine-/blob/main/METHODOLOGY.md">Full mathematical documentation</a>'],
-    ...['about', 'privacy', 'terms', 'support'].map(page => ['/' + page + '/', page, {about:'About The Games Decide',privacy:'Privacy and accounts',terms:'Using The Games Decide',support:'Support and data discrepancies'}[page], 'Understand The Games Decide and its public data, accounts, and reporting tools.', platformInfoMarkup(page)]),
+    ...['about', 'privacy', 'terms', 'support'].map(page => [routeHref(page), page, {about:'About The Games Decide',privacy:'Privacy and accounts',terms:'Using The Games Decide',support:'Support and data discrepancies'}[page], 'Understand The Games Decide and its public data, accounts, and reporting tools.', platformInfoMarkup(page)]),
   ];
   const pages = primary.map(([path, route, title, description, content]) => ({ path, route, title, description, content, subtitle: `${snapshot.season} season · ${asOf}`, detail: 'Independent college football intelligence', image: '/social/platform.png' }));
   for (const team of teams) {
@@ -95,19 +122,30 @@ export async function prerenderPublicPages({ root, output, snapshot, teams, html
       image: '/social/team-' + team.id + '.png', socialTitle: team.name, accent: myTeamColors[team.id],
       subtitle: `${team.division.toUpperCase()} SOR ${Number.isInteger(rank) ? '#' + rank : 'unranked'} · ${record(team)}${team.division === 'fcs' ? ' · Experimental' : ''}`,
       detail: `${team.conference} · ${snapshot.season} · ${asOf}`,
-      content: `<h1>${escapeHtml(team.name)}</h1><p>${escapeHtml(description)}</p><p>SOR ${number(team.sor, 4)} · Predictive Strength ${number(team.strength)} points.</p><a href="/#team/${team.id}/results">Results and upcoming games</a> · <a href="/#sor-compare/${team.division}/${team.id}">Compare earned rankings</a> · <a href="/#compare">Matchup Lab</a>`,
+      content: `<h1>${escapeHtml(team.name)}</h1><p>${escapeHtml(description)}</p><p>SOR ${number(team.sor, 4)} · Predictive Strength ${number(team.strength)} points.</p>${pageLink(`team/${team.id}/results`, 'Results and upcoming games')} · ${pageLink(`sor-compare/${team.division}/${team.id}`, 'Compare earned rankings')} · ${pageLink('compare', 'Matchup Lab')}`,
     });
   }
   await mkdir(join(output, 'social'), { recursive: true });
   await sharp(Buffer.from(previewSvg({ title: 'The Games Decide', subtitle: 'College football, examined', detail: `${snapshot.season} · ${asOf}`, logo: logoUrl }))).png().toFile(join(output, 'social/platform.png'));
   for (let start = 0; start < pages.length; start += 8) {
     await Promise.all(pages.slice(start, start + 8).map(async page => {
-      const directory = join(output, page.path);
-      await mkdir(directory, { recursive: true });
-      await writeFile(join(directory, 'index.html'), metadata(html, { ...page, links: baseLinks }));
+      if (page.path !== routeHref(page.route)) throw new Error(`Public metadata route has no matching clean URL: ${page.route}`);
+      const document = metadata(html, { ...page, links: baseLinks });
+      await writePage(output, page.path, document);
+      for (const [alias, canonical] of crawlableAliases) {
+        if (canonical === page.path) await writePage(output, alias, document);
+      }
       if (page.socialTitle) await sharp(Buffer.from(previewSvg({ title: page.socialTitle, subtitle: page.subtitle, detail: page.detail, accent: page.accent, logo: logoUrl }))).png().toFile(join(output, page.image));
     }));
   }
+  for (const [route, title] of [['account', 'Account settings'], ['admin', 'Administration'], ['my-teams', 'My Teams']]) {
+    const content = `<h1>${title}</h1><p>Sign in to access this page.</p>`;
+    await writePage(output, routeHref(route), metadata(html, { route, content, links: baseLinks }));
+  }
+  const missing = metadata(html.replace(/\s*<script\b[^>]*><\/script>/g, ''), {
+    content: '<h1>Page not found</h1><p>This address does not match a page on The Games Decide.</p>', links: baseLinks,
+  });
+  await writeFile(join(output, '404.html'), missing);
   const urls = pages.map(page => `<url><loc>${origin}${page.path}</loc><lastmod>${snapshot.asOf.slice(0, 10)}</lastmod></url>`).join('');
   await writeFile(join(output,'data','page-metadata.json'), JSON.stringify(Object.fromEntries(pages.map(page=>[page.path,{title:page.route==='home'?page.title:page.title+' · The Games Decide',description:page.description,image:page.image}]))));
   await writeFile(join(output, 'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + urls + '</urlset>');

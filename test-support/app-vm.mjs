@@ -1,26 +1,82 @@
-// Adapt the one known ESM binding for legacy VM DOM tests. All application
-// statements still execute; imported callback helpers are the real functions.
+// The VM executes the application with its real static dependencies and a small browser fixture.
 import assert from 'node:assert/strict';
-import { ACCOUNT_ROUTE_EVENT, accountCallbackMode, initialAccountReturnUrl, safeAccountReturnHash } from '../frontend/bracket-auth.js?v=header-account';
+import { ACCOUNT_ROUTE_EVENT, isAccountCallbackUrl, pendingAccountRoute, safeAccountReturnPath } from '../frontend/bracket-auth.js?v=clean-routes';
+import { routeFromUrl, routeHref } from '../frontend/clean-routes.js';
+import { APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl } from '../frontend/clean-navigation.js';
 
-const knownImport="import { ACCOUNT_ROUTE_EVENT, accountCallbackMode, initialAccountReturnUrl, safeAccountReturnHash } from './bracket-auth.js?v=header-account';";
+const knownImports = [
+  "import { ACCOUNT_ROUTE_EVENT, isAccountCallbackUrl, pendingAccountRoute, safeAccountReturnPath } from './bracket-auth.js?v=clean-routes';",
+  "import { routeFromUrl, routeHref } from './clean-routes.js';",
+  "import { APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl } from './clean-navigation.js';",
+];
 
 export function appVmSource(source) {
-  assert.equal(source.split(knownImport).length,2,'Expected exactly the known account-routing import; review new application dependencies');
-  const script=source.replace(knownImport,'');
-  assert.doesNotMatch(script,/(?:^|\n)\s*import\b(?!\s*\()/,'Unexpected static application import; extend the VM bridge explicitly');
+  let script = source;
+  for (const statement of knownImports) {
+    assert.equal(script.split(statement).length, 2, 'Expected a known application import. Review changes to app dependencies.');
+    script = script.replace(statement, '');
+  }
+  assert.doesNotMatch(script, /(?:^|\n)\s*import\b(?!\s*\()/, 'Unexpected static application import. Extend the VM bridge explicitly.');
   return script;
 }
 
 export function installAppVmContext(context) {
-  Object.assign(context,{ACCOUNT_ROUTE_EVENT,accountCallbackMode,initialAccountReturnUrl,safeAccountReturnHash,URL,URLSearchParams});
-  const location=context.location;
-  assert.ok(location&&typeof location.hash==='string','VM browser requires a location hash');
-  location.search??='';location.origin??='https://example.test';location.hostname??='example.test';
-  if(!Object.hasOwn(location,'href'))Object.defineProperty(location,'href',{configurable:true,get(){
-    const hash=location.hash?location.hash.startsWith('#')?location.hash:'#'+location.hash:'';
-    return location.origin+'/'+location.search+hash;
-  }});
-  context.window.location=location;
+  Object.assign(context, { ACCOUNT_ROUTE_EVENT, isAccountCallbackUrl, pendingAccountRoute, safeAccountReturnPath,
+    routeFromUrl, routeHref, APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl, URL, URLSearchParams });
+  const { location, window } = context;
+  assert.ok(location && window, 'VM browser requires location and window fixtures');
+  const origin = location.origin ?? 'https://example.test';
+  let url = new URL(location.href ?? (location.pathname ?? '/') + (location.search ?? '') + (location.hash ?? ''), origin);
+  const entries = [{ url: url.href, state: null }];
+  let index = 0;
+  const listeners = new Map();
+  const register = window.addEventListener?.bind(window);
+  window.location = location;
+  window.CustomEvent = CustomEvent;
+  window.addEventListener = (name, listener) => {
+    if (!listeners.has(name)) listeners.set(name, []);
+    listeners.get(name).push(listener);
+    register?.(name, listener);
+  };
+  window.dispatchEvent = event => {
+    for (const listener of listeners.get(event.type) ?? []) listener.call(window, event);
+    return !event.defaultPrevented;
+  };
+  for (const property of ['pathname', 'search', 'hash']) {
+    Object.defineProperty(location, property, { get: () => url[property], set: value => { url[property] = value; } });
+  }
+  for (const property of ['origin', 'hostname']) Object.defineProperty(location, property, { get: () => url[property] });
+  Object.defineProperty(location, 'href', { get: () => url.href, set: value => { url = new URL(value, url); } });
+
+  const setEntry = (state, href, replace) => {
+    const next = new URL(href ?? url.href, url);
+    assert.equal(next.origin, origin, 'Browser history may only change a same-origin URL');
+    url = next;
+    if (!replace) entries.splice(++index);
+    entries[index] = { url: url.href, state };
+  };
+  const history = {
+    get state() { return entries[index].state; },
+    get length() { return entries.length; },
+    pushState: (state, unused, href) => setEntry(state, href, false),
+    replaceState: (state, unused, href) => setEntry(state, href, true),
+    go(delta) {
+      const next = index + delta;
+      if (next < 0 || next >= entries.length || next === index) return;
+      index = next;
+      location.href = entries[index].url;
+      window.dispatchEvent(new Event('popstate'));
+    },
+    back() { history.go(-1); },
+    forward() { history.go(1); },
+  };
+  window.history = context.history = history;
+  context.visit = href => {
+    const oldURL = location.href;
+    const legacy = href.startsWith('#');
+    history.pushState(null, '', legacy ? '/' + href : href);
+    const event = legacy ? Object.assign(new Event('hashchange'), { oldURL, newURL: location.href }) : new Event('popstate');
+    window.dispatchEvent(event);
+  };
   return context;
 }

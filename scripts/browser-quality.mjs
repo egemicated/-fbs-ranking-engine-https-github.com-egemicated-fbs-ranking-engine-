@@ -3,19 +3,25 @@ import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { chromium } from 'playwright';
+import { routeHref } from '../frontend/clean-routes.js';
 
 const directory = resolve('static-dist');
 const types = {'.js':'text/javascript','.json':'application/json','.css':'text/css','.html':'text/html','.svg':'image/svg+xml','.woff2':'font/woff2','.png':'image/png','.webp':'image/webp','.xml':'application/xml'};
 const server = createServer(async (request,response) => {
   const path = decodeURIComponent(new URL(request.url,'http://localhost').pathname);
   let file = resolve(directory,'.'+path);
-  if (path.endsWith('/')) file = resolve(file,'index.html');
+  if (!extname(path)) file = resolve(file,'index.html');
   if (!file.startsWith(directory+sep)) return response.writeHead(404).end();
   try { const body=await readFile(file); response.writeHead(200,{'Content-Type':types[extname(file)]??'application/octet-stream'}).end(body); }
   catch { response.writeHead(404).end(); }
 });
 await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
 const base = process.env.QUALITY_SITE || 'http://127.0.0.1:'+server.address().port+'/';
+const localOrigin = new URL(base).origin;
+const address = (route) => new URL(routeHref(route), base).href;
+const openRoute = (page, route, options) => page.goto(address(route), options);
+const isolate = context => context.route('**/*', route =>
+  new URL(route.request().url()).origin === localOrigin ? route.continue() : route.abort());
 const browser = await chromium.launch({headless:true, ...(process.env.QUALITY_BROWSER ? {executablePath:process.env.QUALITY_BROWSER}:{}), args:['--no-sandbox']});
 const snapshot=JSON.parse(await readFile('static-dist/data/rankings.json','utf8'));
 const fcs=snapshot.fcsRankings[0], fbs=snapshot.rankings[0];
@@ -27,28 +33,32 @@ const routes = [
   ['sor-compare','[data-sor-evidence] .intelligence-panel'], ['model-report/fbs','.model-report'],
   ['model-report/fcs','.model-report'], ['my-teams','.my-teams-page'],
   ['bracket/demo','[data-bracket-action="sample"]'], ['cfp-scenarios','[data-scenario-action="fill"]'],
-  ['about','.platform-info'], ['privacy','.platform-info'], ['terms','.platform-info'], ['support','.platform-info'],
+  ['about','[data-connected-feature] .platform-info'], ['privacy','[data-connected-feature] .platform-info'],
+  ['terms','[data-connected-feature] .platform-info'], ['support','[data-connected-feature] .platform-info'],
   ['conference-strength/compare/2025/SEC/Big%20Ten','.conference-game'],
 ];
 let checks=0;
 try {
     for (const width of [320,375,390,768,1024,1440]) {
     const context=await browser.newContext({viewport:{width,height:960},reducedMotion:'reduce'});
+    await isolate(context);
     const page=await context.newPage();
     const errors=[];
     page.on('pageerror',error=>errors.push(error.message));
-    for (const [hash,selector] of routes) {
-      await page.goto(base+'#'+hash,{waitUntil:'domcontentloaded'});
+    for (const [route,selector] of routes) {
+      const response = await openRoute(page, route, {waitUntil:'domcontentloaded'});
+      assert.equal(response.status(),200,route+' direct route');
       await page.locator(selector).first().waitFor({timeout:15000});
-      assert.equal(await page.locator('main h1').count(),1,hash+' primary heading');
+      assert.equal(page.url(),address(route),route+' clean URL');
+      assert.equal(await page.locator('main h1').count(),1,route+' primary heading');
       const dimensions=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
-      assert.equal(dimensions.scroll,dimensions.width,hash+' overflow at '+width);
+      assert.equal(dimensions.scroll,dimensions.width,route+' overflow at '+width);
       const missingLabels=await page.locator('main').evaluate(main=>[...main.querySelectorAll('select,textarea,input:not([type="hidden"]):not([type="submit"])')].filter(control=>!control.labels?.length&&!control.getAttribute('aria-label')&&!control.getAttribute('aria-labelledby')).map(control=>control.id));
-      assert.deepEqual(missingLabels,[],hash+' unlabeled controls');
-      assert.ok(!await page.locator('main').innerText().then(text=>/\bundefined\b|NaN%/.test(text)),hash+' invalid displayed values');
+      assert.deepEqual(missingLabels,[],route+' unlabeled controls');
+      assert.ok(!await page.locator('main').innerText().then(text=>/\bundefined\b|NaN%/.test(text)),route+' invalid displayed values');
       checks++;
     }
-    await page.goto(base+'#compare/matchup/254/254/home');
+    await openRoute(page,'compare/matchup/254/254/home');
     await page.getByText(/Choose a different opponent/).waitFor();
     assert.equal(await page.locator('.prediction-card').count(),0);
     await page.keyboard.press('Tab');
@@ -66,16 +76,49 @@ try {
   const sitemap=await (await fetch(base+'sitemap.xml')).text();
   assert.match(sitemap,/\/team\/252\//);
   assert.match(sitemap,/\/model-reports\/fcs\//);
+  assert.doesNotMatch(sitemap,/\/(?:account|admin|my-teams)(?:\/|<)/);
+  for (const path of ['account','admin','my-teams']) {
+    const response=await fetch(base+path), html=await response.text();
+    assert.equal(response.status,200,path);
+    assert.match(html,/name="robots" content="noindex, nofollow"/);
+    assert.doesNotMatch(html,/rel="canonical"|property="og:/);
+  }
+  for (const path of ['invalid-route','team/99999999/','rankings/unregistered','account/unregistered']) {
+    assert.equal((await fetch(base+path)).status,404,path);
+  }
   for (const path of ['rankings.json','weekly-picks.json','weekly-fcs-picks.json','performance.json','conferences/index.json']) assert.equal((await fetch(base+'data/'+path)).status,200,path);
-  const page=await browser.newPage();
-  await page.goto(base+'team/252/');
+  const context=await browser.newContext({reducedMotion:'reduce'});
+  await isolate(context);
+  const page=await context.newPage();
+  await openRoute(page,'team/252');
   await page.locator('.team-narrative').waitFor();
-  assert.match(page.url(),/#team\/252$/);
+  assert.equal(page.url(),address('team/252'));
+  const legacyState=address('team/252/results');
+  await page.goto(base+'#team/252/results');
+  await page.waitForURL(legacyState);
+  const resultsTab=page.getByRole('button',{name:'Results',exact:true});
+  await resultsTab.waitFor();
+  assert.equal(await resultsTab.getAttribute('aria-pressed'),'true');
+  await page.reload();
+  await resultsTab.waitFor();
+  assert.equal(page.url(),legacyState);
+  assert.equal(await resultsTab.getAttribute('aria-pressed'),'true');
+  await page.locator('nav[aria-label="Main navigation"] a[href="/rankings"]').click();
+  await page.waitForURL(address('rankings'));
+  await page.locator('#ranking-results').waitFor();
+  await page.goBack();
+  await page.waitForURL(legacyState);
+  await resultsTab.waitFor();
+  assert.equal(await resultsTab.getAttribute('aria-pressed'),'true');
+  await page.goForward();
+  await page.waitForURL(address('rankings'));
+  await page.locator('#ranking-results').waitFor();
   await page.goto(base+'#polls/ap/-1');
+  await page.waitForURL(address('polls/ap/-1'));
   await page.locator('.edition-panel').waitFor();
   assert.match(await page.locator('.edition-panel').innerText(),/exact game cutoff has not been verified/);
   assert.ok((await page.locator('.poll-rank-table tbody tr td:first-of-type').allTextContents()).every(text=>text.trim()==='—'));
-  await page.goto(base+'#conference-strength/quality/2025');
+  await openRoute(page,'conference-strength/quality/2025');
   await page.locator('[data-conference-field="method"]').selectOption('ap');
   await page.locator('[data-conference-field="rankScope"]').selectOption('pregame');
   assert.match(await page.locator('main').innerText(),/Pregame ranking coverage · 245 of 245 eligible games/);
@@ -88,7 +131,7 @@ try {
       status:{type:index===0?{state:'in',description:'Live',shortDetail:'3rd quarter'}:index===1?{state:'post',completed:true,name:'STATUS_FINAL',shortDetail:'Final'}:{state:'pre',shortDetail:'Scheduled'}},
       broadcasts:[{names:['ESPN']}],competitors:['away','home'].map(side=>({homeAway:side,score:index<2?'14':undefined,team:{id:game[side],displayName:names.get(game[side]),abbreviation:'TEST'}}))}]}))};
   await page.route('https://site.api.espn.com/**/scoreboard?*',request=>request.fulfill({json:feed}));
-  await page.goto(base+'#scoreboard');
+  await openRoute(page,'scoreboard');
   await page.locator('[data-game-id]').first().waitFor();
   assert.equal(await page.locator('[data-game-id]').count(),4);
   await page.locator('[data-game-filter="status"]').selectOption('live');
@@ -103,8 +146,8 @@ try {
   await page.locator('[data-game-filter="scope"]').selectOption('mine');
   assert.equal(await page.locator('[data-game-id]').count(),0);
   assert.match(await page.locator('[data-scoreboard-filters]').innerText(),/Sign in and choose teams/);
-  await page.goto(base+'#support');
-  await page.locator('.platform-info').first().waitFor();
+  await openRoute(page,'support');
+  await page.locator('[data-connected-feature] .platform-info').first().waitFor();
   await page.evaluate(async()=>{
     const root=document.createElement('div');root.id='support-test';document.querySelector('main').append(root);
     const {mountPlatformInfo}=await import('/platform-info.js');
@@ -147,8 +190,8 @@ try {
   await page.waitForFunction(()=>document.querySelector('#my-teams-signed-test .my-teams-card')?.getAttribute('data-saved-team')!=='252');
   await page.locator('#my-teams-signed-test [data-my-teams-remove="252"]').click();
   await page.waitForFunction(()=>document.querySelectorAll('#my-teams-signed-test .my-teams-card').length===1);
-  await page.close();
-  console.log('Browser quality gate passed '+checks+' responsive routes, duplicate matchup rejection, labels, JSON, metadata, clean team URLs, scoreboard filters and private request UI.');
+  await context.close();
+  console.log('Browser quality gate passed '+checks+' responsive routes, direct and legacy entry, refresh, browser history, 404s, metadata, duplicate matchup rejection, labels, JSON, scoreboard filters and private request UI.');
 } finally {
   await browser.close();
   server.close();

@@ -97,7 +97,7 @@ function baseMarkup(input, teams, baseline) {
     <div class="scenario-layout"><div class="scenario-editor">
     <section class="panel" aria-labelledby="scenario-games-title"><div class="panel-body">
       <h2 id="scenario-games-title" tabindex="-1">Remaining games</h2>
-      <p class="compact-note">These games had no final result in the published ${escape(displayDate(input.asOf))} snapshot. This list is not live; a game may already have finished. Check the <a href="#scoreboard">Live Scoreboard</a> for newer results. Win chances use the published model.</p>
+      <p class="compact-note">These games had no final result in the published ${escape(displayDate(input.asOf))} snapshot. This list is not live; a game may already have finished. Check the <a href="/scoreboard">Live Scoreboard</a> for newer results. Win chances use the published model.</p>
       <div class="scenario-filter"><label for="scenario-week">Week<select id="scenario-week">
         ${[...weeks].map(([key, label]) => `<option value="${escape(key)}">${escape(label)}</option>`).join('')}<option value="all">All weeks</option></select></label>
       <label for="scenario-team">Filter by team<select id="scenario-team"><option value="">All teams</option>${options}</select></label></div>
@@ -161,7 +161,7 @@ export async function renderCfpScenario(main, { snapshot, inputUrl, workerUrl } 
   try {
     if (snapshot?.season !== SCENARIO_CFP_SEASON || Date.parse(snapshot.asOf) >= Date.parse(SCENARIO_CFP_SELECTION_AT)) {
       root.innerHTML = `<section class="panel"><div class="panel-body"><h2>Pre-Selection Day scenarios</h2>
-        <p>This builder covers the 2026 playoff field before Selection Day.</p><div class="scenario-actions"><a class="button light" href="#bracket">View playoff bracket</a></div></div></section>`;
+        <p>This builder covers the 2026 playoff field before Selection Day.</p><div class="scenario-actions"><a class="button light" href="/playoff-bracket/">View playoff bracket</a></div></div></section>`;
       return;
     }
     if (!inputUrl || !workerUrl || !Array.isArray(snapshot.rankings)) {
@@ -414,7 +414,7 @@ export async function renderCfpScenario(main, { snapshot, inputUrl, workerUrl } 
     if (!current()) return;
     root.innerHTML = `<section class="panel"><div class="panel-body"><h2>Scenario Builder is unavailable</h2>
       <p>Try again when the schedule and rankings have both loaded.</p><div class="scenario-actions"><button type="button" class="button light">Try again</button>
-      <a class="button light" href="#rankings">Current rankings</a></div></div></section>`;
+      <a class="button light" href="/rankings">Current rankings</a></div></div></section>`;
     root.querySelector('button').onclick = () => {
       root.remove();
       void renderCfpScenario(main, { snapshot, inputUrl, workerUrl });

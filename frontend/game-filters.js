@@ -66,7 +66,7 @@ export function gameFilterControls({ filters = {}, teams, games = [], myTeamIds 
     ${select('day', 'Game day', [['', 'All days'], ...days.map(day => [day, dayLabel.format(new Date(day + 'T12:00:00Z'))])])}
     ${select('status', 'Status', [['all', 'All games'], ['upcoming', 'Upcoming'], ['live', 'Live'], ['final', 'Final']])}
     <div class="game-filter-checks">${check('close', 'Close matchups')}${coverage ? check('ranked', `${rankLabel} Top 25 teams`) : ''}</div>
-    ${chosen.scope === 'mine' && !myTeamIds.length ? '<p class="compact-note game-filter-note">Sign in and choose teams in <a href="#my-teams">My Teams</a> to use this filter.</p>' : ''}
+    ${chosen.scope === 'mine' && !myTeamIds.length ? '<p class="compact-note game-filter-note">Sign in and choose teams in <a href="/my-teams">My Teams</a> to use this filter.</p>' : ''}
     ${chosen.close ? '<p class="compact-note game-filter-note">Upcoming games use a 35–65% model win chance. Live and final games use a margin of seven points or fewer. Games without the required evidence are excluded.</p>' : ''}
   </div>`;
 }

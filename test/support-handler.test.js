@@ -49,7 +49,7 @@ test('notification uses provider idempotency and contains no private message or 
   const mail = JSON.parse(send.body); assert.deepEqual(mail.to, [env.SUPPORT_ADMIN_EMAIL]);
   assert.equal(mail.from, `The Games Decide <${env.SUPPORT_FROM}>`); assert.equal(mail.reply_to, env.SUPPORT_ADMIN_EMAIL);
   assert.equal(mail.subject, 'The Games Decide: new support request');
-  assert.ok(mail.text.includes(ticket) && mail.text.includes('https://fbs.example/#admin'));
+  assert.ok(mail.text.includes(ticket) && mail.text.includes('https://www.thegamesdecide.com/admin'));
   assert.ok(!send.body.includes('lease') && !send.body.includes('server-test-key'));
   const completed = JSON.parse(network.calls.find(call => call.url.endsWith('/service_complete_support_notification')).body);
   assert.equal(completed.p_succeeded, true); assert.equal(completed.p_provider_id, receipt);

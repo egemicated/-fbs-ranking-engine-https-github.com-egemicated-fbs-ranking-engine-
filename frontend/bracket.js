@@ -1,4 +1,5 @@
-import { loadBracketClient } from './bracket-auth.js?v=header-account';
+import { routeFromUrl, routeHref } from './clean-routes.js';
+import { loadBracketClient } from './bracket-auth.js?v=clean-routes';
 import { mountBracketBoard, renderBracketBoard } from './bracket-board.js?v=2';
 
 const season = 2026;
@@ -81,7 +82,7 @@ function orderedSlots(contest) {
 }
 
 function bracketView() {
-  const tab = location.hash.split('/')[1];
+  const tab = routeFromUrl(location.href)?.split('/')[1];
   return ['leaderboard', 'demo'].includes(tab) ? tab : 'entry';
 }
 
@@ -104,7 +105,7 @@ async function rpc(client, method, args = {}) {
 function mountWaiting(root, showSignIn = false) {
   root.innerHTML = panel('Waiting for the official field', 'The CFP announces the 12 teams on Dec. 6. Entries open when we load the official field.',
     `${showSignIn ? '<p class="compact-note">Sign in from the header to enter when the field is set.</p>' : ''}
-    <div class="bracket-waiting-actions"><a class="button light" href="#bracket/demo">Open the 2025 demo</a></div>`);
+    <div class="bracket-waiting-actions"><a class="button light" href="/playoff-bracket/?view=demo">Open the 2025 demo</a></div>`);
 }
 
 function mountFieldPreview(root) {
@@ -219,11 +220,11 @@ export async function renderBracket(main, teams) {
   main.innerHTML = `<section class="hero page-banner"><div class="wrap"><div class="eyebrow">College Football Playoff · ${view === 'demo' ? '2025 demo' : `${season} season`}</div>
     <h1>Playoff Bracket</h1><p>Pick the winners, follow the results, and see where your bracket stands.</p></div></section>
     <div class="wrap page-content bracket-page" data-bracket-view="${view}"><nav class="matchup-views bracket-tabs" aria-label="Playoff bracket">
-    ${[['entry', '#bracket', 'My bracket'], ['leaderboard', '#bracket/leaderboard', 'Leaderboard'], ['demo', '#bracket/demo', '2025 demo']].map(([tab, path, label]) => `<a href="${path}"${tab === view ? ' aria-current="page"' : ''}>${label}</a>`).join('')}
-    <a href="#cfp-scenarios">CFP Scenario Builder</a>
+    ${[['entry', 'My bracket'], ['leaderboard', 'Leaderboard'], ['demo', '2025 demo']].map(([tab, label]) => `<a href="${routeHref(`bracket/${tab}`)}"${tab === view ? ' aria-current="page"' : ''}>${label}</a>`).join('')}
+    <a href="/cfp-scenarios/">CFP Scenario Builder</a>
     </nav><div data-bracket-content><p class="compact-note" role="status">Loading the bracket…</p></div></div>`;
   const root = main.querySelector('[data-bracket-content]');
-  const current = () => root.isConnected && location.hash.split('/')[0] === '#bracket' && bracketView() === view;
+  const current = () => root.isConnected && routeFromUrl(location.href)?.split('/')[0] === 'bracket' && bracketView() === view;
   const refresh = () => {
     root.closest('[data-bracket-view]').remove();
     void renderBracket(main, teams);
@@ -239,7 +240,7 @@ export async function renderBracket(main, teams) {
     const config = await getJson('/bracket-config.json');
     if (!current()) return;
     if (!config?.url || !config.publishableKey || config.enabled === false) {
-      if (!pendingNotice) root.innerHTML = panel('Bracket entries are coming', 'Try the 2025 demo to see how picks and scoring work.', '<a class="button light bracket-retry" href="#bracket/demo">Open the 2025 demo</a>');
+      if (!pendingNotice) root.innerHTML = panel('Bracket entries are coming', 'Try the 2025 demo to see how picks and scoring work.', '<a class="button light bracket-retry" href="/playoff-bracket/?view=demo">Open the 2025 demo</a>');
       return;
     }
     const client = await loadBracketClient(config);

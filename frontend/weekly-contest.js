@@ -1,4 +1,5 @@
-import { loadBracketClient } from './bracket-auth.js?v=header-account';
+import { navigateApp } from './clean-navigation.js';
+import { loadBracketClient } from './bracket-auth.js?v=clean-routes';
 import { renderWeeklyTeamStats } from './weekly-team-stats.js';
 import {
   contestGames, contestGameLocked, contestGameWinner, contestPickChanges,
@@ -397,7 +398,7 @@ export async function renderWeeklyContest(main, options = {}) {
         <div class="contest-controls"><label for="contest-week">Select week</label><select id="contest-week"${busy || !weeks.length ? ' disabled' : ''}>
         ${weeks.map(key => `<option value="${escape(key)}"${key === week ? ' selected' : ''}>${escape(contestWeekLabel(key))}</option>`).join('')}</select>
         <button type="button" class="button light" data-contest-action="refresh"${busy ? ' disabled' : ''}>Refresh results</button>
-        <a class="button light" href="#compare/weekly">Model picks and results</a></div>
+        <a class="button light" href="/weekly-picks">Model picks and results</a></div>
         <p class="compact-note">${contest.observedAt ? `Contest result snapshot ${escape(date(contest.observedAt))}. ` : 'Contest result cutoff not reported. '}${open} ${open === 1 ? 'game open' : 'games open'} for this week. Game times are Mountain Time. Live scores and published rankings can have different cutoffs.</p>
         ${week ? renderContestScores(games, entry.picks, week) : '<p class="contest-empty">The contest will open when an eligible upcoming model forecast is saved.</p>'}
         <p class="contest-message${messageError ? ' is-error' : ''}" role="status" aria-live="polite">${escape(message)}</p></div></section>
@@ -441,6 +442,9 @@ export async function renderWeeklyContest(main, options = {}) {
     root.onchange = event => {
       if (event.target.id === 'contest-week') {
         week = event.target.value;
+        if (location.pathname.replace(/\/$/, '') === '/beat-the-model') {
+          navigateApp(`beat-the-model/${week}`, { replace: true, render: false });
+        }
         if (view === 'leaderboard' && boardScope === 'week') refreshLeaderboard();
         else { draw(); void refreshCommunity(); }
       } else if (event.target.id === 'contest-public') {

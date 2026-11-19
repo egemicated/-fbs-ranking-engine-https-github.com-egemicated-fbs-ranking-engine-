@@ -4,7 +4,8 @@ import { accountCapabilities, validateNewPassword, accountCallbackUrl, cleanAcco
 import { accountCenterMarkup, qrDataUrl, supportRequestMarkup, mountAccountCenter, authenticatorLabel } from '../frontend/account-center.js';
 import { administrationMarkup, mountAdministration, failedNotificationRetryMarkup, notificationRequeueNotice, requeueFailedNotification, adminUserPageState, registeredUsersMarkup, ADMIN_USERS_PAGE_SIZE, adminAuditMarkup } from '../frontend/account-administration.js';
 import { notifySupportIfReady, supportSubmission, supportResponseMarkup, supportResultNotice, restoreSupportDraft } from '../frontend/account-support.js';
-import { accountCallbackMode, initialAccountReturnUrl, safeAccountReturnHash, accountCallbackErrorNotice } from '../frontend/bracket-auth.js?v=header-account';
+import { accountCallbackMode, isAccountCallbackUrl, pendingAccountRoute, safeAccountReturnPath, accountCallbackErrorNotice } from '../frontend/bracket-auth.js?v=clean-routes';
+import { routeHref } from '../frontend/clean-routes.js';
 
 const strong='A long test passphrase 42';
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
@@ -114,11 +115,12 @@ test('password entry handles passphrases, confirmation, length and UTF-8 bcrypt 
 });
 
 test('callbacks preserve origin and remove authorization credentials and provider errors from history',()=>{
+  assert.equal(accountCallbackUrl('https://www.thegamesdecide.com','recovery'),'https://www.thegamesdecide.com/account?account=recovery');
   assert.equal(accountCallbackUrl('https://fbs-intelligence.onrender.com','recovery'),'https://fbs-intelligence.onrender.com/?account=recovery#account');
   assert.throws(()=>accountCallbackUrl('https://example.com','evil'));
   const cleaned=cleanAccountCallbackUrl('https://example.com/?code=private&account=recovery&error_description=private&season=2026#account');
-  assert.equal(cleaned,'https://example.com/?season=2026#account');
-  assert.equal(cleanAccountCallbackUrl('https://example.com/#access_token=secret&refresh_token=secret'),'https://example.com/#account');
+  assert.equal(cleaned,'https://example.com/account?season=2026');
+  assert.equal(cleanAccountCallbackUrl('https://example.com/#access_token=secret&refresh_token=secret'),'https://example.com/account');
 });
 
 test('adding a password updates the current Google identity and never signs up or edits saved application data',async()=>{
@@ -147,7 +149,7 @@ test('MFA completes only an existing verified TOTP factor and distinguishes aal1
 
 test('public form output escapes arbitrary account and request text without exposing hidden operations',()=>{
   const markup=accountCenterMarkup({email:'<script>bad</script>',nickname:'<img src=x>',role:'user',status:'active'},{config:{emailAuthEnabled:true},requests:[{id:'<bad>',category:'general',status:'pending',createdAt:'2026-11-18T12:00:00Z'}],mfa:{factors:[]}});
-  assert.doesNotMatch(markup,/<script>|<img src=x>|href="#admin"/);assert.match(markup,/&lt;script&gt;/);assert.match(markup,/Manage My Teams/);
+  assert.doesNotMatch(markup,/<script>|<img src=x>|href="[/#]admin"/);assert.match(markup,/&lt;script&gt;/);assert.match(markup,/Manage My Teams/);
   assert.doesNotMatch(supportRequestMarkup([]),/data-admin/);
   const admin=administrationMarkup({users:[{userId:'user',email:'<script>',nickname:'<img>',role:'user',status:'active'}],requests:[{id:'request',message:'<script>alert(1)</script>',category:'deletion',status:'pending'}]});
   assert.doesNotMatch(admin,/<script>|type="password"|data-admin-delete|data-admin-pick/);assert.match(admin,/does not delete/);
@@ -240,19 +242,35 @@ test('requeue feedback separates queued alerts, provider acceptance and actual i
 
 test('email callbacks override stale OAuth destinations without consuming pending managed credentials',()=>{
   for(const mode of ['recovery','verification']){
-    const before=`https://example.test/?account=${mode}&code=synthetic#account`;
-    const planned=new URL(initialAccountReturnUrl(before,'#home'));
-    assert.equal(planned.hash,'#account');assert.equal(planned.searchParams.get('code'),'synthetic');assert.equal(accountCallbackMode(planned.href),mode);
+    for(const path of ['/','/account']){
+      const suffix = path === '/' ? '#account' : '';
+      const callback = new URL(`https://example.test${path}?account=${mode}&code=synthetic${suffix}`);
+      const original = callback.href;
+      assert.equal(pendingAccountRoute(callback,'#home'),'account');
+      assert.equal(callback.href,original);
+      assert.equal(accountCallbackMode(callback),mode);
+    }
   }
   const implicit='https://example.test/?account=recovery#access_token=synthetic&refresh_token=synthetic&type=recovery';
-  assert.equal(new URL(initialAccountReturnUrl(implicit,'#home')).hash,new URL(implicit).hash);
+  assert.equal(pendingAccountRoute(implicit,'#home'),'account');
   assert.equal(accountCallbackMode(implicit),'recovery');
 });
 
 test('ordinary Google PKCE callbacks retain remembered pages and never store credential fragments as navigation',()=>{
-  assert.equal(new URL(initialAccountReturnUrl('https://example.test/?code=synthetic#home','#teams/fcs')).hash,'#teams/fcs');
-  assert.equal(new URL(initialAccountReturnUrl('https://example.test/?weekly=1&code=synthetic','#home')).hash,'#beat-the-model');
-  assert.equal(safeAccountReturnHash('#access_token=synthetic&refresh_token=synthetic'),'#account');
+  const googleCallback = 'https://example.test/?myteam=1&code=synthetic#home';
+  const teamResults = routeHref('team/252/results');
+  assert.equal(pendingAccountRoute(googleCallback,'#teams/fcs'),'teams/fcs');
+  assert.equal(pendingAccountRoute(googleCallback,teamResults),'team/252/results');
+  assert.equal(pendingAccountRoute('https://example.test/?weekly=1&code=synthetic','#home'),'beat-the-model');
+  assert.equal(pendingAccountRoute('https://example.test/team/252/#main','#home'),null);
+  assert.equal(safeAccountReturnPath(teamResults),teamResults);
+  assert.equal(safeAccountReturnPath('#access_token=synthetic&refresh_token=synthetic'),'/account');
+  assert.equal(safeAccountReturnPath('/account?code=synthetic'),'/account');
+  assert.equal(safeAccountReturnPath('//other.example/account'),'/');
+  assert.equal(safeAccountReturnPath('/\\other.example/account'),'/');
+  assert.equal(safeAccountReturnPath('/route-that-does-not-exist'),'/');
+  assert.equal(isAccountCallbackUrl('https://example.test/#main'),false);
+  assert.equal(isAccountCallbackUrl('https://example.test/#error_code=otp_expired'),true);
 });
 
 test('callback errors use fixed guidance for expired or mismatched links without reflecting provider diagnostics',()=>{

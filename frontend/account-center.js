@@ -1,4 +1,4 @@
-import { loadAccountConfig, loadBracketClient, hasPasswordRecoverySession, finishPasswordRecovery, getAccountCallbackNotice } from './bracket-auth.js?v=header-account';
+import { loadAccountConfig, loadBracketClient, hasPasswordRecoverySession, finishPasswordRecovery, getAccountCallbackNotice } from './bracket-auth.js?v=clean-routes';
 import { accountCapabilities, authMessage, updateAccountPassword, secondFactorRequired, openAccountDialog, PasswordValidationError } from './account-auth.js';
 import { notifySupportIfReady, supportRequestMarkup, updateSupportCategory, supportSubmission, restoreSupportDraft, supportResultNotice } from './account-support.js';
 export { supportRequestMarkup, SUPPORT_CATEGORIES } from './account-support.js';
@@ -16,7 +16,7 @@ export function authenticatorLabel(factor={}) {
 export function accountCenterMarkup(context, { config = {}, requests = [], mfa, recovering = false, callbackNotice = '' } = {}) {
   const caps = accountCapabilities(config), admin = context.role === 'admin';
   const verified = mfa?.factors?.filter(factor=>factor.status === 'verified') ?? [];
-  return `<div class="account-center"><section class="panel account-overview"><div class="panel-body"><span class="eyebrow">Your account at The Games Decide</span><h1>Account settings</h1><p>${escapeHtml(context.email)}</p><div class="account-summary"><span class="account-status">${statusLabel(context.status)}</span><span>${admin ? 'Administrator' : 'Free account'}</span><a href="#my-teams">Manage My Teams →</a>${admin ? '<a href="#admin">Administration →</a>' : ''}</div>${context.status === 'suspended' ? '<p class="account-notice">Contest participation is suspended. You can still review your account and contact support.</p>' : ''}${callbackNotice?`<p class="account-notice" role="status">${escapeHtml(callbackNotice)}</p>`:''}${recovering ? '<p class="account-notice" role="status">Your recovery link was verified. Set a new password below.</p>' : ''}</div></section>
+  return `<div class="account-center"><section class="panel account-overview"><div class="panel-body"><span class="eyebrow">Your account at The Games Decide</span><h1>Account settings</h1><p>${escapeHtml(context.email)}</p><div class="account-summary"><span class="account-status">${statusLabel(context.status)}</span><span>${admin ? 'Administrator' : 'Free account'}</span><a href="/my-teams">Manage My Teams →</a>${admin ? '<a href="/admin">Administration →</a>' : ''}</div>${context.status === 'suspended' ? '<p class="account-notice">Contest participation is suspended. You can still review your account and contact support.</p>' : ''}${callbackNotice?`<p class="account-notice" role="status">${escapeHtml(callbackNotice)}</p>`:''}${recovering ? '<p class="account-notice" role="status">Your recovery link was verified. Set a new password below.</p>' : ''}</div></section>
     <div class="account-grid"><section class="panel"><div class="panel-body account-section"><h2>Public profile</h2><p class="compact-note">Your email stays private. Choose the nickname visitors see on contest leaderboards.</p><form class="account-form" data-account-profile>
       <label for="account-nickname">Public nickname</label><input id="account-nickname" name="nickname" autocomplete="nickname" value="${escapeHtml(context.nickname ?? '')}" minlength="2" maxlength="30" required>
       <label class="account-check"><input type="checkbox" name="public"${context.publicLeaderboard ? ' checked' : ''}> Show my nickname and results on public leaderboards</label>
@@ -63,7 +63,7 @@ export function mountAccountCenter(container, { previewClient, previewConfig } =
       }).data.subscription;
       const user = await client.auth.getUser();
       if (!current()) return;
-      if (user.error || !user.data?.user) { container.innerHTML = `<section class="panel"><div class="panel-body account-section"><h1>Your account</h1>${getAccountCallbackNotice()?`<p class="account-notice" role="status">${escapeHtml(getAccountCallbackNotice())}</p>`:''}<p>Sign in from the header to manage your account, saved teams and picks on The Games Decide.</p><a class="button light" href="#support">Get account help</a></div></section>`; return; }
+      if (user.error || !user.data?.user) { container.innerHTML = `<section class="panel"><div class="panel-body account-section"><h1>Your account</h1>${getAccountCallbackNotice()?`<p class="account-notice" role="status">${escapeHtml(getAccountCallbackNotice())}</p>`:''}<p>Sign in from the header to manage your account, saved teams and picks on The Games Decide.</p><a class="button light" href="/support">Get account help</a></div></section>`; return; }
       const secondFactor = await secondFactorRequired(client);
       if (!current()) return;
       if (secondFactor) {

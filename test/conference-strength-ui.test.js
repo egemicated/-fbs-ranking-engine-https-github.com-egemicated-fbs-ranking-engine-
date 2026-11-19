@@ -62,9 +62,9 @@ test('SOR pre-archive gaps are explained separately from missing data or a known
 
 test('the matrix links both conference orientations and keeps FCS separate', () => {
   const markup = conferenceStrengthMarkup(dataset,{ ...options, view:'records' });
-  assert.match(markup, /#conference-strength\/compare\/2026\/SEC\/Big%20Ten/);
-  assert.match(markup, /#conference-strength\/compare\/2026\/Big%20Ten\/SEC/);
-  assert.match(markup, /#conference-strength\/compare\/2026\/SEC\/FCS/);
+  assert.match(markup, /href="\/conference-strength\/\?view=compare&season=2026&a=SEC&b=Big\+Ten"/);
+  assert.match(markup, /href="\/conference-strength\/\?view=compare&season=2026&a=Big\+Ten&b=SEC"/);
+  assert.match(markup, /href="\/conference-strength\/\?view=compare&season=2026&a=SEC&b=FCS"/);
   assert.match(markup, /vs\. Power Four/);
 
   const fcs = conferenceStrengthMarkup(dataset,{ ...options, b:'FCS', opponents:'power-four', rankScope:'current' });

@@ -1,3 +1,5 @@
+import { navigateApp } from './clean-navigation.js';
+import { routeHref } from './clean-routes.js';
 import { validWeeklyPick, weeklyPicksScore } from './weekly-picks-score.js';
 import { formatNumber, formatProbability } from './format.js?v=1';
 
@@ -77,11 +79,11 @@ function stat(label,value,detail='') {
 }
 function gameLinks(game,division) {
   const favored = game.pick.favored === 'home' ? game.homeTeam : game.pick.favored === 'away' ? game.awayTeam : null;
-  return `<div class="intelligence-result"><strong><a href="#team/${encodeURIComponent(game.away)}">${escapeHtml(game.awayTeam.name)}</a>
-    ${game.awayPoints} at <a href="#team/${encodeURIComponent(game.home)}">${escapeHtml(game.homeTeam.name)}</a> ${game.homePoints}</strong>
+  return `<div class="intelligence-result"><strong><a href="${routeHref(`team/${encodeURIComponent(game.away)}`)}">${escapeHtml(game.awayTeam.name)}</a>
+    ${game.awayPoints} at <a href="${routeHref(`team/${encodeURIComponent(game.home)}`)}">${escapeHtml(game.homeTeam.name)}</a> ${game.homePoints}</strong>
     <span>${game.correct === null ? 'Even forecast' : game.correct ? 'Correct pick' : 'Miss'} · ${favored ? escapeHtml(favored.name)+' '+escapeHtml(formatProbability(game.confidence,1)) : '50.0% each'}</span>
     <small>Saved ${dates.format(new Date(game.pick.capturedAt))} MT</small>
-    <a class="text-link" href="#compare/weekly/${division === 'fcs' ? 'fcs/' : ''}${weekKey(game)}">Weekly game details</a></div>`;
+    <a class="text-link" href="${routeHref(`compare/weekly/${division === 'fcs' ? 'fcs/' : ''}${weekKey(game)}`)}">Weekly game details</a></div>`;
 }
 function list(title,rows,division,empty) {
   return `<details class="panel intelligence-disclosure"><summary>${title}<span>${rows.length}</span></summary><div>${rows.length ?
@@ -94,8 +96,8 @@ export function modelReportMarkup(report) {
   return `<div class="intelligence-tools model-report">
     <div class="intelligence-toolbar"><label>Division<select data-report-field="division"><option value="fbs"${division==='fbs'?' selected':''}>FBS slate</option><option value="fcs"${division==='fcs'?' selected':''}>FCS vs. FCS</option></select></label>
     <label>Report week<select data-report-field="week">${[...report.weeks].reverse().map(value=>`<option value="${value}"${value===week?' selected':''}>${weekName(value)}</option>`).join('')}</select></label>
-    <a class="text-link" href="#compare/weekly/${division === 'fcs' ? 'fcs/' : ''}${week}">Weekly Picks →</a>
-    <a class="text-link" href="#beat-the-model">Beat the Model →</a></div>
+    <a class="text-link" href="${routeHref(`compare/weekly/${division === 'fcs' ? 'fcs/' : ''}${week}`)}">Weekly Picks →</a>
+    <a class="text-link" href="/beat-the-model/">Beat the Model →</a></div>
     <section class="panel intelligence-panel"><h2>${report.season} · ${label} model report</h2>
     <p class="compact-note">${division==='fcs'?'FCS vs. FCS':'Games involving FBS teams, including FCS opponents'}. Results through ${dates.format(new Date(report.asOf))} MT. Live results count forecasts saved before kickoff.</p>
     <dl class="intelligence-stat-grid">
@@ -155,7 +157,7 @@ export function mountModelReport(container,{dataRoot='',division='fbs',week,onNa
     if(!field||!report) return;
     const next={division:cohort,week:report.week,[field]:event.target.value};
     if(onNavigate)onNavigate(next);
-    else location.hash=`model-report/${next.division}/${next.week}`;
+    else navigateApp(`model-report/${next.division}/${next.week}`);
   }
   container.addEventListener('change',change);
   return ()=>{active=false;container.removeEventListener('change',change);};

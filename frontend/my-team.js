@@ -1,4 +1,4 @@
-import { loadAccountConfig, loadBracketClient } from './bracket-auth.js?v=header-account';
+import { loadAccountConfig, loadBracketClient } from './bracket-auth.js?v=clean-routes';
 import { myTeamColors } from './my-team-colors.js?v=2026';
 import { mountMyTeamUpdates } from './my-team-updates.js?v=1';
 import { loadMyTeams, setPrimaryMyTeam, removeMyTeam, subscribeMyTeams } from './my-teams-store.js?v=1';
@@ -89,7 +89,7 @@ export function mountMyTeam(root, { teams, renderTeam, chosenTeamId, adapter = a
     root.innerHTML = `<section class="panel my-team"${theme}${compact ? ' data-my-team-compact="true"' : ''} aria-labelledby="my-team-title"${carousel ? ' aria-roledescription="carousel"' : ''}><div class="panel-body">
       <div class="my-team-header"><div class="my-team-header-title"><h2 id="my-team-title">${showFavorite ? '<span class="my-team-star" aria-hidden="true">☆</span>' : ''}My Team</h2>
       ${showFavorite ? '<span data-my-team-update-badge></span>' : ''}</div><div class="my-team-header-controls">${carousel ? `<nav class="my-team-carousel-nav" aria-label="Followed teams" data-my-team-carousel><button type="button" class="my-team-cycle" data-my-team-action="previous" aria-label="Previous followed team"><span aria-hidden="true">◀</span></button><span class="my-team-carousel-position" role="status" aria-live="polite" aria-atomic="true"><span class="sr-only">Team </span>${position + 1} of ${followed.length}<span class="sr-only">: ${escape(team.name)}</span></span><button type="button" class="my-team-cycle" data-my-team-action="next" aria-label="Next followed team"><span aria-hidden="true">▶</span></button></nav>` : ''}${showFavorite ? button('edit', 'Change team', '⇄') : ''}</div></div>
-      ${showFavorite ? '<div data-my-team-update-panel hidden></div>' : ''}${content}<p class="my-team-message compact-note" role="status">${escape(message)}</p><a class="text-link" href="#my-teams">My Teams</a></div></section>`;
+      ${showFavorite ? '<div data-my-team-update-panel hidden></div>' : ''}${content}<p class="my-team-message compact-note" role="status">${escape(message)}</p><a class="text-link" href="/my-teams">My Teams</a></div></section>`;
     if (showFavorite) {
       cleanupExtras = mountExtras?.(root, team);
       // The existing seen marker belongs to the saved primary team. Browsing

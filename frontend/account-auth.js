@@ -1,6 +1,19 @@
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 export const MIN_PASSWORD_LENGTH = 12;
 export class PasswordValidationError extends Error {}
+export const ACCOUNT_CALLBACK_MODES = ['signin', 'recovery', 'verification'];
+const callbackCredentialKeys = [
+  'code', 'state', 'access_token', 'refresh_token', 'provider_token', 'provider_refresh_token',
+  'token_hash', 'error', 'error_code', 'error_description',
+];
+
+export function hasAccountCallbackParameters(params) {
+  return callbackCredentialKeys.some(key => params.has(key));
+}
+
+export function accountCallbackFragment(hash) {
+  return new URLSearchParams(hash.replace(/^#\??/, ''));
+}
 
 export function accountCapabilities(config = {}) {
   return {
@@ -20,19 +33,27 @@ export function validateNewPassword(password, confirmation) {
 }
 
 export function accountCallbackUrl(origin, mode = 'signin') {
-  const url = new URL('/', origin);
-  if (!['signin', 'recovery', 'verification'].includes(mode)) throw Error('Invalid account callback');
+  if (!ACCOUNT_CALLBACK_MODES.includes(mode)) throw Error('Invalid account callback');
+  const legacyHost = new URL(origin).hostname === 'fbs-intelligence.onrender.com';
+  // Keep the existing allowlisted callback on the legacy origin, where the
+  // browser also stores the PKCE verifier for links requested there.
+  const url = new URL(legacyHost ? '/#account' : '/account', origin);
   url.searchParams.set('account', mode);
-  url.hash = 'account';
   return url.href;
 }
 
 export function cleanAccountCallbackUrl(value) {
   const url = new URL(value);
-  for (const key of ['code', 'access_token', 'refresh_token', 'token_hash', 'error', 'error_code', 'error_description', 'account']) url.searchParams.delete(key);
-  // Implicit credentials should never be retained in navigation/history, even
-  // if a legacy link reaches this PKCE client. Managed Auth processes them first.
-  if (/(?:^#|[&#])(?:access_token|refresh_token|token_hash|error)=/.test(url.hash)) url.hash = 'account';
+  const emailCallback = ACCOUNT_CALLBACK_MODES.includes(url.searchParams.get('account'));
+  const fragmentCallback = hasAccountCallbackParameters(accountCallbackFragment(url.hash));
+  for (const key of [...callbackCredentialKeys, 'account', 'token_type', 'expires_at', 'expires_in', 'type']) {
+    url.searchParams.delete(key);
+  }
+  // Use this after the managed SDK has processed the original URL.
+  if (emailCallback || fragmentCallback) {
+    url.pathname = '/account';
+    url.hash = '';
+  }
   return url.href;
 }
 
@@ -75,7 +96,7 @@ export async function secondFactorRequired(client) {
 
 export function authFormMarkup(mode, { config = {}, googleEnabled = false, notice = '' } = {}) {
   const enabled = accountCapabilities(config);
-  if (mode === 'mfa') return `<div class="account-auth-brand"><img src="/assets/the-games-decide-icon.png" alt=""><span>The Games Decide</span></div><h2 id="fbs-auth-title">Verify your authenticator</h2><p class="compact-note">Enter the current six-digit code from your authenticator app to finish signing in.</p><form data-auth-form="mfa" class="account-form"><label for="fbs-auth-mfa">Authenticator code</label><input id="fbs-auth-mfa" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button class="button" type="submit">Verify and continue</button><p role="status" data-auth-status></p></form><p class="compact-note"><a href="#support" data-auth-close>Need account help?</a></p>`;
+  if (mode === 'mfa') return `<div class="account-auth-brand"><img src="/assets/the-games-decide-icon.png" alt=""><span>The Games Decide</span></div><h2 id="fbs-auth-title">Verify your authenticator</h2><p class="compact-note">Enter the current six-digit code from your authenticator app to finish signing in.</p><form data-auth-form="mfa" class="account-form"><label for="fbs-auth-mfa">Authenticator code</label><input id="fbs-auth-mfa" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required><button class="button" type="submit">Verify and continue</button><p role="status" data-auth-status></p></form><p class="compact-note"><a href="/support" data-auth-close>Need account help?</a></p>`;
   const titles = { signin:'Welcome back', register:'Create your account', recovery:'Reset your password', verification:'Verify your email' };
   const current = ['register','verification'].includes(mode) && !enabled.registration || mode === 'recovery' && !enabled.recovery ? 'signin' : mode;
   const email = `<label for="fbs-auth-email">Email</label><input id="fbs-auth-email" name="email" type="email" autocomplete="email" maxlength="254" required>`;
@@ -86,7 +107,7 @@ export function authFormMarkup(mode, { config = {}, googleEnabled = false, notic
     ${enabled.emailLogin ? `<form data-auth-form="${current}" class="account-form">${email}${['recovery','verification'].includes(current) ? '' : password}${current === 'register' ? confirmation + '<p class="compact-note">Use at least 12 characters. Your email must be verified before you sign in.</p>' : ''}<button class="button" type="submit">${current === 'register' ? 'Create account' : current === 'recovery' ? 'Send recovery email' : current === 'verification' ? 'Resend verification' : 'Sign in'}</button><p role="status" data-auth-status></p></form>` : '<p class="compact-note">Email sign-in is being prepared. Continue with your existing Google account.</p>'}
     ${current === 'signin' && googleEnabled ? `<button class="button light account-google" type="button" data-auth-google>Continue with Google</button><p class="compact-note">Already use Google here? Continue with that same account to keep your saved teams and picks.</p>` : ''}
     <div class="account-auth-links">${current !== 'signin' ? '<button type="button" class="text-button" data-auth-mode="signin">Back to sign in</button>' : `${enabled.registration ? '<button type="button" class="text-button" data-auth-mode="register">Create account</button><button type="button" class="text-button" data-auth-mode="verification">Resend verification</button>' : ''}${enabled.recovery ? '<button type="button" class="text-button" data-auth-mode="recovery">Forgot password?</button>' : ''}`}</div>
-    <p class="compact-note account-auth-policy"><a href="#privacy" data-auth-close>Privacy and accounts</a> · <a href="#support" data-auth-close>Need help?</a></p>`;
+    <p class="compact-note account-auth-policy"><a href="/privacy/" data-auth-close>Privacy and accounts</a> · <a href="/support" data-auth-close>Need help?</a></p>`;
 }
 
 export function openAccountDialog({ client, config = {}, googleEnabled = false, rememberPage, onSignedIn, mode = 'signin', notice = '', mfaFactorId }) {
@@ -111,8 +132,8 @@ export function openAccountDialog({ client, config = {}, googleEnabled = false, 
     busy = true;
     try {
       rememberPage?.();
-      // Keep the already configured production Google callback during the
-      // transition; new email callback URLs remain gated until delivery testing.
+      // The existing Google redirect is an exact allowlisted callback. The
+      // app restores the saved path once the managed SDK consumes its code.
       const result = await client.auth.signInWithOAuth({ provider:'google', options:{ redirectTo:new URL('/?myteam=1',location.origin).href } });
       if (result.error) throw result.error;
     } catch { notice = 'Google sign-in could not start. Please try again.'; draw(); }

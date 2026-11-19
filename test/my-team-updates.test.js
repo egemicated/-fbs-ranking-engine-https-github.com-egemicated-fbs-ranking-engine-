@@ -30,9 +30,9 @@ test('rank, newly completed game and changed availability link to the correct de
   const { updates, next, changed } = compareTeamUpdates(prior, current);
   assert.equal(changed, true);
   assert.deepEqual(updates.map(update => [update.title, update.href, update.asOf]), [
-    ['SOR rank #14 → #12', '#team/252', newDate],
-    ['Win over Baylor by 7', '#team/252/results', newDate],
-    ['Player A · Out vs. Baylor', '#team/252/availability', newDate],
+    ['SOR rank #14 → #12', '/team/252/', newDate],
+    ['Win over Baylor by 7', '/team/252/?view=results', newDate],
+    ['Player A · Out vs. Baylor', '/team/252/?view=availability', newDate],
   ]);
   assert.deepEqual(compareTeamUpdates(next, current), { updates: [], next, changed: false });
 });

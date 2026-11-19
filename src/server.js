@@ -15,16 +15,22 @@ import { browserSorSource, buildScenarioPublication } from './scenario-publicati
 import { readTeamPage } from './player-publication.js';
 import { loadConferencePublications } from './conference-publication.js';
 import { applySecurityMetadata, securityResponseHeaders } from './security-policy.js';
+import { routeFromUrl } from '../frontend/clean-routes.js';
+import { pageMetadata } from '../frontend/page-routes.js';
 
 const root = resolve(import.meta.dirname, '..');
 const directory = resolve(process.env.DATA_DIR || 'data', 'snapshots');
 const publications = resolve(import.meta.dirname, '../published');
+const htmlType = 'text/html; charset=utf-8';
+const previewApiPaths = new Set(['/rankings', '/weekly-picks', '/cfp-scenarios']);
+const escapeHtml = value => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 // Read-only API. No login to view public sports ratings; no write/admin routes.
 export function createApi(snapshotDirectory = directory, frontendDirectory = resolve('frontend'), publicationDirectory = publications) {
   const staticFiles = new Map([
-    ['/', ['index.html', 'text/html; charset=utf-8']],
     ['/styles.css', ['styles.css', 'text/css; charset=utf-8']],
     ['/app.js', ['app.js', 'text/javascript; charset=utf-8']],
+    ['/clean-routes.js', ['clean-routes.js', 'text/javascript; charset=utf-8']],
+    ['/clean-navigation.js', ['clean-navigation.js', 'text/javascript; charset=utf-8']],
     ['/scoreboard.js', ['scoreboard.js', 'text/javascript; charset=utf-8']],
     ['/scoreboard.css', ['scoreboard.css', 'text/css; charset=utf-8']],
     ['/my-team.js', ['my-team.js', 'text/javascript; charset=utf-8']],
@@ -86,16 +92,43 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     res.setHeader('Cache-Control', 'public, max-age=60');
     const send = (status, value) => { res.writeHead(status); res.end(JSON.stringify(value)); };
     if (req.method !== 'GET' && req.method !== 'HEAD') { res.setHeader('Allow', 'GET, HEAD'); return send(405, { error: 'Read-only API' }); }
-    const path = new URL(req.url, 'http://localhost').pathname;
+    const url = new URL(req.url, 'http://localhost');
+    const path = url.pathname;
+    const htmlRequest = /(?:^|,)\s*text\/html(?:\s*[,;]|$)/i.test(req.headers.accept ?? '');
+    const route = routeFromUrl(url);
+    if (route && (htmlRequest || !previewApiPaths.has(path))) {
+      try {
+        const team = /^team\/(\d+)(?:\/|$)/.exec(route);
+        if (team) {
+          const snapshot = JSON.parse(await readFile(join(snapshotDirectory, 'latest.json'), 'utf8'));
+          if (![snapshot.rankings, snapshot.fcsRankings].some(rows => rows?.some(row => String(row.id) === team[1])))
+            return send(404, { error: 'Team not found' });
+        }
+        const [file, config] = await Promise.all([
+          readFile(join(frontendDirectory, 'index.html'), 'utf8'),
+          readFile(join(frontendDirectory, 'bracket-config.json'), 'utf8').then(JSON.parse),
+        ]);
+        const metadata = pageMetadata(route);
+        const body = applySecurityMetadata(file, { authUrl: config.url })
+          .replace(/<title>[^<]*<\/title>/, `<title>${escapeHtml(metadata.title)}</title>`)
+          .replace('</head>', (metadata.noindex
+            ? '<meta name="robots" content="noindex, nofollow" data-account-robots="true">'
+            : `<link rel="canonical" href="${escapeHtml(metadata.canonical)}">`) + '\n</head>');
+        for (const [name, value] of Object.entries(securityResponseHeaders({ authUrl: config.url }))) res.setHeader(name, value);
+        res.setHeader('Content-Type', htmlType);
+        res.setHeader('Vary', 'Accept');
+        res.setHeader('Cache-Control', metadata.noindex ? 'no-store' : 'no-cache');
+        res.writeHead(200);
+        return res.end(req.method === 'HEAD' ? undefined : body);
+      } catch (error) {
+        return send(error.code === 'ENOENT' ? 404 : 500, { error: 'Page unavailable' });
+      }
+    }
+    if (previewApiPaths.has(path)) res.setHeader('Vary', 'Accept');
     if (staticFiles.has(path)) {
       const [file, type] = staticFiles.get(path);
       try {
-        let body = await readFile(join(frontendDirectory, file));
-        if (type.startsWith('text/html')) {
-          const config = JSON.parse(await readFile(join(frontendDirectory, 'bracket-config.json'), 'utf8'));
-          for (const [name, value] of Object.entries(securityResponseHeaders({ authUrl: config.url }))) res.setHeader(name, value);
-          body = applySecurityMetadata(body.toString('utf8'), { authUrl: config.url });
-        }
+        const body = await readFile(join(frontendDirectory, file));
         res.setHeader('Content-Type', type);
         res.setHeader('Cache-Control', path.startsWith('/fonts/') || path.startsWith('/assets/') ? 'public, max-age=3600' : 'no-cache');
         res.writeHead(200); res.end(req.method === 'HEAD' ? undefined : body); return;

@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { randomUUID, randomBytes, createHmac, createHash } from 'node:crypto';
+import { accountCallbackUrl } from '../../frontend/account-auth.js';
 
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 const password = () => `FbsLocal-${randomBytes(18).toString('base64url')}`;
@@ -26,7 +27,7 @@ function totp(secret, now = Date.now()) {
   return ((digest.readUInt32BE(offset) & 0x7fffffff) % 1000000).toString().padStart(6, '0');
 }
 
-export async function runAuthFlowTests({ base, mailbox, adminJWT, sql }) {
+export async function runAuthFlowTests({ base, siteUrl, mailbox, adminJWT, sql }) {
   const origin = new URL(base);
   assert.ok(['127.0.0.1', 'localhost', '[::1]'].includes(origin.hostname), 'Auth tests require a loopback server');
   const results = [];
@@ -38,6 +39,7 @@ export async function runAuthFlowTests({ base, mailbox, adminJWT, sql }) {
   };
   const step = async (name, action) => { await action(); results.push({ name, passed: true }); };
   const success = (result, name) => assert.ok(result.ok, `${name}: HTTP ${result.status}, code ${result.body?.error_code ?? result.body?.code ?? 'unavailable'}`);
+  const emailCallback = (endpoint, mode) => endpoint + '?' + new URLSearchParams({ redirect_to: accountCallbackUrl(siteUrl, mode) });
   const user = body => body?.user ?? body;
   const login = (address, pass) => api('/token?grant_type=password', { email: address, password: pass });
   const jwt = token => JSON.parse(Buffer.from(token.split('.')[1], 'base64url'));
@@ -53,6 +55,19 @@ export async function runAuthFlowTests({ base, mailbox, adminJWT, sql }) {
   const verify = link => {
     assert.equal(link.origin, origin.origin, 'Captured action link must point to local Auth');
     return api('/verify', { type: link.searchParams.get('type'), token_hash: link.searchParams.get('token') });
+  };
+  const redirectCode = async (link, mode) => {
+    assert.equal(link.origin, origin.origin, 'Captured action link must point to local Auth');
+    const expected = accountCallbackUrl(siteUrl, mode);
+    assert.equal(link.searchParams.get('redirect_to'), expected);
+    const redirected = await api(link.pathname + link.search, undefined, undefined, 'GET');
+    assert.ok(redirected.status >= 300 && redirected.status < 400, 'PKCE email verification must redirect');
+    const location = redirected.headers.get('location'); assert.ok(location, 'PKCE email verification has a redirect destination');
+    const destination = new URL(location);
+    const code = destination.searchParams.get('code'); assert.ok(code, 'PKCE email verification issues an authorization code');
+    destination.searchParams.delete('code');
+    assert.ok(destination.href === expected, 'PKCE callback should preserve the clean path and mode');
+    return code;
   };
 
   const accountEmail = email(), initialPassword = password(), nextPassword = password();
@@ -88,16 +103,21 @@ export async function runAuthFlowTests({ base, mailbox, adminJWT, sql }) {
     const count = await sql(`select count(*) from auth.users where email='${accountEmail}';`);
     assert.equal(String(count).trim(), '1');
   });
-  await step('password recovery consumes real generated mail and changes the same account', async () => {
+  await step('password recovery reaches the clean PKCE callback and changes the same account', async () => {
     const since = mailbox.length;
-    success(await api('/recover', { email: accountEmail }), 'Recover');
-    const recoveryLink = await waitMail(accountEmail, 'recovery', since), recovered = await verify(recoveryLink);
+    const codeVerifier = randomBytes(32).toString('base64url');
+    const codeChallenge = createHash('sha256').update(codeVerifier).digest('base64url');
+    success(await api(emailCallback('/recover', 'recovery'), {
+      email: accountEmail, code_challenge: codeChallenge, code_challenge_method: 's256',
+    }), 'Recover');
+    const recoveryLink = await waitMail(accountEmail, 'recovery', since);
+    const authCode = await redirectCode(recoveryLink, 'recovery');
+    const exchange = () => api('/token?grant_type=pkce', { auth_code: authCode, code_verifier: codeVerifier });
+    const recovered = await exchange();
     success(recovered, 'Recovery verification'); assert.equal(user(recovered.body).id, accountId);
-    // POST /verify issues OTP AMR; v2.198.0 Session.IsRecovery recognizes OTP.
-    assert.ok(jwt(recovered.body.access_token).amr.some(claim => claim.method === 'otp'),
-      'The verified recovery token must carry the actual OTP AMR recognized by Auth');
     const changed = await api('/user', { password: nextPassword }, recovered.body.access_token, 'PUT'); success(changed, 'Recovery password update');
     assert.equal(user(changed.body).id, accountId);
+    assert.ok(!(await exchange()).ok, 'Consumed recovery authorization code must fail');
     assert.ok(!(await verify(recoveryLink)).ok, 'Consumed recovery token must fail');
     assert.ok(!(await login(accountEmail, initialPassword)).ok, 'Old password must fail');
     const signed = await login(accountEmail, nextPassword); success(signed, 'Recovered password sign-in');
@@ -207,17 +227,14 @@ export async function runAuthFlowTests({ base, mailbox, adminJWT, sql }) {
     assert.equal(await platformDigest(), beforePlatform, 'Existing saved teams and contest profile must remain unchanged');
     assert.equal(String(await sql(`select count(*) from auth.users where email='${address}';`)).trim(), '1');
   });
-  await step('real email PKCE confirmation exchanges once with the original verifier and same identity', async () => {
+  await step('real email PKCE confirmation reaches the clean route and exchanges once with the original verifier and identity', async () => {
     const address = email(), codeVerifier = randomBytes(32).toString('base64url');
     const codeChallenge = createHash('sha256').update(codeVerifier).digest('base64url');
     const since = mailbox.length;
-    const signed = await api('/signup', { email: address, password: password(), code_challenge: codeChallenge, code_challenge_method: 's256' });
+    const signed = await api(emailCallback('/signup', 'verification'), { email: address, password: password(), code_challenge: codeChallenge, code_challenge_method: 's256' });
     success(signed, 'PKCE signup'); const expectedId = user(signed.body).id; assert.ok(uid(expectedId));
     const confirmation = await waitMail(address, 'signup', since);
-    const redirected = await api(confirmation.pathname + confirmation.search, undefined, undefined, 'GET');
-    assert.ok(redirected.status >= 300 && redirected.status < 400, 'PKCE email confirmation must redirect');
-    const location = redirected.headers.get('location'); assert.ok(location, 'PKCE confirmation has a redirect destination');
-    const authCode = new URL(location).searchParams.get('code'); assert.ok(authCode, 'PKCE confirmation issues an authorization code');
+    const authCode = await redirectCode(confirmation, 'verification');
     const exchanged = await api('/token?grant_type=pkce', { auth_code: authCode, code_verifier: codeVerifier });
     success(exchanged, 'PKCE exchange'); assert.equal(user(exchanged.body).id, expectedId); assert.ok(exchanged.body.access_token);
     assert.ok(!(await api('/token?grant_type=pkce', { auth_code: authCode, code_verifier: codeVerifier })).ok, 'Consumed PKCE authorization code must fail');

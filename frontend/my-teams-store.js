@@ -1,4 +1,4 @@
-import { loadAccountConfig, loadBracketClient } from './bracket-auth.js?v=header-account';
+import { loadAccountConfig, loadBracketClient } from './bracket-auth.js?v=clean-routes';
 
 const validId = value => typeof value === 'string' && /^[0-9]{1,32}$/.test(value);
 export function normalizeMyTeamIds(values) {

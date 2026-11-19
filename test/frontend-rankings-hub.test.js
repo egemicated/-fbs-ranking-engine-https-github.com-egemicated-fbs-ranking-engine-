@@ -10,21 +10,21 @@ const editions = JSON.parse(await readFile(new URL('../frontend/ranking-editions
 
 function fixture() {
   const teams = [
-    { id: 'a', name: 'Alpha State', division: 'fbs', conference: 'FBS East' },
-    { id: 'b', name: 'Beta State', division: 'fbs', conference: 'FBS West' },
-    { id: 'c', name: 'Cedar College', division: 'fcs', conference: 'FCS East' },
-    { id: 'd', name: 'Dogwood College', division: 'fcs', conference: 'FCS West' },
+    { id: '101', name: 'Alpha State', division: 'fbs', conference: 'FBS East' },
+    { id: '102', name: 'Beta State', division: 'fbs', conference: 'FBS West' },
+    { id: '201', name: 'Cedar College', division: 'fcs', conference: 'FCS East' },
+    { id: '202', name: 'Dogwood College', division: 'fcs', conference: 'FCS West' },
   ];
   const game = (id, home, away) => ({ id, home, away, homePoints: 28, awayPoints: 14,
     completed: true, neutral: true, week: 1, seasonType: 'regular', startDate: '2026-09-05T12:00:00Z' });
   const snapshot = { ...rankSeason({ year: 2026, teams,
-    games: [game('one', 'a', 'b'), game('two', 'b', 'c'), game('three', 'c', 'd')],
+    games: [game('one', '101', '102'), game('two', '102', '201'), game('three', '201', '202')],
     source: { provider: 'cfbd' } }), asOf: '2026-11-06T03:39:55.757Z', performanceEndpoint: '/performance' };
   const sorRow = (row, index) => ({ ...row, displayRank: index + 1, displayConferenceRank: 1, sor: 3 - index,
     sorTailProbability: .01, sorExpectedWins: 1, sorWins: row.wins, sorGames: row.games, sorExcludedGames: 0,
     sosRank: index + 1, strength: 10 * index, strengthRank: 2 - index });
-  snapshot.rankings = ['a', 'b'].map((id, index) => sorRow(snapshot.rankings.find(row => row.id === id), index));
-  snapshot.fcsRankings = ['c', 'd'].map((id, index) => sorRow(snapshot.ratings.find(row => row.id === id), index));
+  snapshot.rankings = ['101', '102'].map((id, index) => sorRow(snapshot.rankings.find(row => row.id === id), index));
+  snapshot.fcsRankings = ['201', '202'].map((id, index) => sorRow(snapshot.ratings.find(row => row.id === id), index));
   snapshot.fcsTeams = snapshot.fcsRankings.length;
   const performanceRow = (id, rank, score) => ({ id, rank, score, measuredGames: 1, expectedGames: 1,
     offensiveSuccessRate: .55, defensiveSuccessRateAllowed: .35, provisional: true, explanation: {} });
@@ -32,14 +32,14 @@ function fixture() {
     method: { id: 'test-performance', name: 'Scrimmage consistency' },
     coverage: { measuredFbsTeams: 2, sourceFbsTeams: 2, measuredFbsGames: 1, eligibleFbsGames: 1,
       measuredFcsTeams: 2, sourceFcsTeams: 2, measuredFcsGames: 1, eligibleFcsGames: 1 },
-    rankings: [performanceRow('b', 1, 4.75), performanceRow('a', 2, -4.75)],
-    fcsRankings: [performanceRow('c', 1, 8.25), performanceRow('d', 2, -8.25)],
+    rankings: [performanceRow('102', 1, 4.75), performanceRow('101', 2, -4.75)],
+    fcsRankings: [performanceRow('201', 1, 8.25), performanceRow('202', 2, -8.25)],
   };
   return { snapshot, performance };
 }
 
 async function browser({ snapshot, performance, initialRoute = '#rankings', performanceGate, reducedMotion }) {
-  const nodes = new Map(), calls = [], errors = [], inputs = new Map(), events = new Map();
+  const nodes = new Map(), calls = [], errors = [], inputs = new Map();
   const animations = [];
   const node = id => {
     if (!nodes.has(id)) nodes.set(id, { innerHTML: '', textContent: '', querySelector: node, addEventListener() {} });
@@ -48,7 +48,7 @@ async function browser({ snapshot, performance, initialRoute = '#rankings', perf
   const context = {
     document: { querySelector: node, addEventListener: (name, callback) => inputs.set(name, callback), title: '' },
     location: { hash: initialRoute },
-    window: { addEventListener: (name, callback) => events.set(name, callback), scrollTo() {} },
+    window: { scrollTo() {} },
     HTMLImageElement: class {}, URL,
     console: { error: error => errors.push(error) },
     fetch: async path => {
@@ -85,10 +85,8 @@ async function browser({ snapshot, performance, initialRoute = '#rankings', perf
   };
   await settle();
   return { calls, html, settle, context, animations, node,
-    async go(hash) {
-      const oldURL = `https://example.test/${context.location.hash}`;
-      context.location.hash = hash;
-      events.get('hashchange')({ oldURL });
+    async go(href) {
+      context.visit(href);
       return settle();
     },
     search(value) {
@@ -131,16 +129,16 @@ function activeModel(html) {
 test('Compare Rankings lives in the hub while More still lists the other pages', async () => {
   const page = await browser(fixture());
   const header = page.node('#header').innerHTML;
-  assert.doesNotMatch(header, /href="#polls/);
+  assert.doesNotMatch(header, /href="\/polls\/ap\//);
   assert.match(header, /<summary>More/);
-  assert.match(header, /href="#scoreboard"/);
-  assert.match(header, /href="#ranking-history"/);
-  assert.match(page.html(), /href="#polls" data-ranking-section="polls">Compare Rankings/);
-  assert.match(page.html(), /href="#conference-strength\/records" data-ranking-section="conference-strength">Conference Strength/);
+  assert.match(header, /href="\/scoreboard"/);
+  assert.match(header, /href="\/ranking-history\/"/);
+  assert.match(page.html(), /href="\/polls\/ap\/" data-ranking-section="polls">Compare Rankings/);
+  assert.match(page.html(), /href="\/conference-strength\/" data-ranking-section="conference-strength">Conference Strength/);
   assert.deepEqual(page.calls, ['/rankings']);
   const comparison = await page.go('#polls/ap/10');
   assert.match(comparison, /After Week 10/);
-  assert.match(comparison, /href="#forge-top-25\/10">Forge’s full ballot for this week/);
+  assert.match(comparison, /href="\/forge-rankings\/\?week=10">Forge’s full ballot for this week/);
   assert.doesNotMatch(comparison, />Official SOR <svg/);
 });
 
@@ -148,7 +146,7 @@ test('Home offers a single all-team link and methodology describes both subdivis
   const data = fixture();
   data.snapshot.fcsRankingMethod = { id: 'fcs-sor-reference-v1' };
   const page = await browser({ ...data, initialRoute: '#home' });
-  assert.equal([...page.html().matchAll(/href="#rankings\/all"/g)].length, 1);
+  assert.equal([...page.html().matchAll(/href="\/rankings\?all=1"/g)].length, 1);
   const methodology = await page.go('#methodology');
   assert.match(methodology, /Three views\./);
   assert.match(methodology, /FCS Strength of Record uses an average-strength FCS reference team/);
@@ -160,7 +158,7 @@ test('Rankings Hub routes choose the tier and model independently', async () => 
   const page = await browser(fixture());
   for (const route of ['#rankings', '#rankings/sor', '#rankings/fbs/sor', '#rankings/all']) {
     const html = await page.go(route);
-    assert.equal(activeHubTab(html), '#rankings');
+    assert.equal(activeHubTab(html), '/rankings');
     assert.match(html, /id="rankings-hub-content"/);
     assert.match(rankingTable(html), /SOR score/);
     assert.equal(activeModel(html), 'achievement');
@@ -168,18 +166,18 @@ test('Rankings Hub routes choose the tier and model independently', async () => 
   }
   for (const route of ['#rankings/strength', '#rankings/predictive', '#rankings/fbs/predictive']) {
     const html = await page.go(route);
-    assert.equal(activeHubTab(html), '#rankings');
+    assert.equal(activeHubTab(html), '/rankings');
     assert.match(rankingTable(html), /Strength · pts/);
     assert.equal(activeModel(html), 'strength');
     assertTeams(html, 'Beta State', 'Alpha State', /Cedar College|Dogwood College/);
   }
   const fcs = await page.go('#rankings/fcs/sor');
-  assert.equal(activeHubTab(fcs), '#rankings/fcs/sor');
+  assert.equal(activeHubTab(fcs), '/rankings/fcs/');
   assert.match(rankingTable(fcs), /SOR score/);
   assert.equal(activeModel(fcs), 'achievement');
   assertTeams(fcs, 'Cedar College', 'Dogwood College', /Alpha State|Beta State/);
   const predictive = await page.go('#rankings/fcs/predictive');
-  assert.equal(activeHubTab(predictive), '#rankings/fcs/sor');
+  assert.equal(activeHubTab(predictive), '/rankings/fcs/');
   assert.match(rankingTable(predictive), /Strength · pts/);
   assert.equal(activeModel(predictive), 'strength');
   assertTeams(predictive, 'Dogwood College', 'Cedar College', /Alpha State|Beta State/);
@@ -189,11 +187,16 @@ test('Rankings Hub routes choose the tier and model independently', async () => 
 test('clicking the FCS model and show-all controls keeps the selected tier and model in the URL', async () => {
   const page = await browser({ ...fixture(), initialRoute: '#rankings/fcs/sor' });
   assert.match(await page.click('model', 'strength'), /Strength · pts/);
-  assert.equal(page.context.location.hash, '#rankings/fcs/predictive');
+  assert.equal(page.context.location.href, 'https://example.test/rankings/fcs/?model=strength');
   const all = await page.click('toggle-all');
-  assert.match(page.context.location.hash, /^#rankings\/fcs\/predictive\/all$/);
+  assert.equal(page.context.location.href, 'https://example.test/rankings/fcs/?model=strength&all=1');
   assert.match(all, /All FCS teams/);
   assertTeams(all, 'Dogwood College', 'Cedar College', /Alpha State|Beta State/);
+  page.context.history.back();
+  assert.match(await page.settle(), /Strength · pts/);
+  assert.equal(page.context.location.search, '?model=strength');
+  page.context.history.forward();
+  assert.match(await page.settle(), /All FCS teams/);
 });
 
 test('search and conference controls use the selected tier', async () => {
@@ -215,13 +218,13 @@ test('performance is requested on demand and uses the selected tier rows', async
   const page = await browser(fixture());
   assert.deepEqual(page.calls, ['/rankings']);
   const fcs = await page.go('#rankings/fcs/performance');
-  assert.equal(activeHubTab(fcs), '#rankings/fcs/sor');
+  assert.equal(activeHubTab(fcs), '/rankings/fcs/');
   assert.match(rankingTable(fcs), /Performance · pp/);
   assert.equal(activeModel(fcs), 'performance');
   assert.match(rankingTable(fcs), /\+8\.25 pp/);
   assertTeams(fcs, 'Cedar College', 'Dogwood College', /Alpha State|Beta State/);
   const fbs = await page.go('#rankings/performance');
-  assert.equal(activeHubTab(fbs), '#rankings');
+  assert.equal(activeHubTab(fbs), '/rankings');
   assert.match(rankingTable(fbs), /\+4\.75 pp/);
   assertTeams(fbs, 'Beta State', 'Alpha State', /Cedar College|Dogwood College/);
   assert.deepEqual(page.calls, ['/rankings', '/performance']);
@@ -229,7 +232,7 @@ test('performance is requested on demand and uses the selected tier rows', async
 
 test('an unavailable FCS performance artifact keeps the Rankings Hub usable', async () => {
   const page = await browser({ ...fixture(), performance: null, initialRoute: '#rankings/fcs/performance' });
-  assert.equal(activeHubTab(page.html()), '#rankings/fcs/sor');
+  assert.equal(activeHubTab(page.html()), '/rankings/fcs/');
   assert.match(page.html(), /Performance is temporarily unavailable/);
   assert.doesNotMatch(rankingTable(page.html()), /Alpha State|Beta State/);
   assertTeams(await page.go('#rankings/fcs/sor'), 'Cedar College', 'Dogwood College', /Alpha State|Beta State/);
@@ -237,9 +240,9 @@ test('an unavailable FCS performance artifact keeps the Rankings Hub usable', as
 
 test('invalid FCS rows do not replace FCS results with FBS ranks', async () => {
   const data = fixture();
-  data.performance.fcsRankings[0].id = 'a';
+  data.performance.fcsRankings[0].id = '101';
   const page = await browser({ ...data, initialRoute: '#rankings/fcs/performance' });
-  assert.equal(activeHubTab(page.html()), '#rankings/fcs/sor');
+  assert.equal(activeHubTab(page.html()), '/rankings/fcs/');
   assert.doesNotMatch(rankingTable(page.html()), /Alpha State|Beta State/);
   assertTeams(await page.go('#rankings/performance'), 'Beta State', 'Alpha State', /Cedar College|Dogwood College/);
   assert.deepEqual(page.calls, ['/rankings', '/performance']);
@@ -261,16 +264,16 @@ test('a delayed Performance response stays on the chosen tier and model', async 
 test('Compare and Forge remain accessible through the hub and retain dated edition routes', async () => {
   const page = await browser(fixture());
   const compare = await page.go('#polls/coaches/9');
-  assert.equal(activeHubTab(compare), '#polls');
+  assert.equal(activeHubTab(compare), '/polls/ap/');
   assert.match(compare, /id="rankings-hub-content"/);
   assert.match(compare, /After Week 9/);
   assert.match(rankingTable(compare), /<th scope="col">Coaches<\/th>/);
   page.select('edition-week', '8');
-  assert.match(page.context.location.hash, /^#?polls\/coaches\/8$/);
+  assert.equal(page.context.location.href, 'https://example.test/polls/coaches/?week=8');
   const forge = await page.go('#forge-top-25/8');
-  assert.equal(activeHubTab(forge), '#forge-top-25');
+  assert.equal(activeHubTab(forge), '/forge-rankings/');
   assert.match(forge, /id="rankings-hub-content"/);
-  assert.match(forge, /<a\b[^>]*href="#polls"[^>]*>Compare Rankings<\/a>/);
+  assert.match(forge, /<a\b[^>]*href="\/polls\/ap\/"[^>]*>Compare Rankings<\/a>/);
   assert.match(forge, /<select\b[^>]*id="edition-week"/);
   assert.doesNotMatch(forge, /<a\b[^>]*class="text-link"[^>]*>Compare rankings/);
   assert.match(rankingTable(forge), /Forge’s Top 25 for After Week 8/);
