@@ -4,16 +4,16 @@
   "frozenManifestSha256": "a0ca4661ef41d8e014afad1fee760bd85d5ddb1bb4d6e5d440cd716659bd231f",
   "frozenAt": "2026-11-19T00:17:44.341Z",
   "season": 2026,
-  "evaluatedAt": "2026-11-19T00:23:54.106Z",
-  "asOf": "2026-11-18T12:30:14.250Z",
-  "resultScheduleAsOf": "2026-11-18T12:30:09.923Z",
-  "resultSourceHash": "caf17786cbac28cbf5b90dabc621c845e89561152a3b5038fd3d136e9cfad8bb",
-  "resultSnapshotHash": "a36df50d7f94c050e03b2d5df03cba802067d8dd2a1732f715a3ea3cc57dc4c1",
+  "evaluatedAt": "2026-11-19T14:22:08.314Z",
+  "asOf": "2026-11-19T14:22:06.297Z",
+  "resultScheduleAsOf": "2026-11-19T14:22:05.068Z",
+  "resultSourceHash": "f275352f1e8a7f92ec4fb5a1f6d432a8fa958bc9c07ec030b943008de6f28e06",
+  "resultSnapshotHash": "6453abdbdc75b809981373796142b0c7771f4d6d5ec328dfe5df76bb90b93b35",
   "status": "awaiting-first-scored-game",
-  "observationsRead": 1,
+  "observationsRead": 2,
   "otherSeasonObservations": 0,
   "selectedForecasts": 4,
-  "duplicateCheckpoints": 0,
+  "duplicateCheckpoints": 4,
   "pending": [
     {
       "gameId": "401856746",
@@ -249,10 +249,10 @@
   },
   "evaluated": [],
   "interpretation": "Only confirmed decisive finals with matching identity, subdivision, venue and a corrected kickoff strictly after capture within seven days are graded. Both models retain the same captured Strength graph. No graded games means evidence is pending, not success. Saved public picks and retrospective replays are not included; no automatic promotion.",
-  "reportSha256": "9288a9cb994fc31b902e771a1aa4064d4852ad7dae2e42ee500f97064cb7acfa",
+  "reportSha256": "fe090f8b27690f2eb4edf586f6fdd259baf532cb452b592d621508afc1ba7ae2",
   "inputSha256": {
-    "snapshot": "452fd04b7e1e3bc2531dcb111efea5e3c97c16e88c6e34691979dd4e787597d7",
-    "weekly": "d430f9d8ad2fddf8feff5bde02156f342e0868277dc51f067d02e709fffe589c",
+    "snapshot": "bb9d159092631b6d3b1b1ea18c2da430cbb5d01ce8b95cf1d48aa2a583afa9db",
+    "weekly": "da724cd0c9fb0d4b971a0801f674adb87831fc3014f4d2e2bb79cd7d4addc63d",
     "evaluatorManifest": "544d400bc96ad715603b39c7bcc7f9285f79541b7f2dafe8a60adc2764e10bc8"
   }
 }

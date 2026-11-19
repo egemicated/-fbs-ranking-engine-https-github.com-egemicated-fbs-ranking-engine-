@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "protocolId": "cross-division-calibration-shadow-v1",
+  "frozenAt": "2026-11-19T00:17:44.341Z",
+  "capturedAt": "2026-11-19T14:22:08.205Z",
+  "season": 2026,
+  "sourceAsOf": "2026-11-19T14:22:06.297Z",
+  "sourceFetchedAt": "2026-11-19T14:22:05.068Z",
+  "snapshotHash": "6453abdbdc75b809981373796142b0c7771f4d6d5ec328dfe5df76bb90b93b35",
+  "sourceHash": "f275352f1e8a7f92ec4fb5a1f6d432a8fa958bc9c07ec030b943008de6f28e06",
+  "inputSha256": {
+    "snapshot": "bb9d159092631b6d3b1b1ea18c2da430cbb5d01ce8b95cf1d48aa2a583afa9db",
+    "weekly": "da724cd0c9fb0d4b971a0801f674adb87831fc3014f4d2e2bb79cd7d4addc63d",
+    "frozen": "a0ca4661ef41d8e014afad1fee760bd85d5ddb1bb4d6e5d440cd716659bd231f"
+  },
+  "model": {
+    "family": "temperatureDivision",
+    "coefficients": [
+      2.329814851971762,
+      1.869996947261027
+    ]
+  },
+  "forecasts": [
+    {
+      "gameId": "401856749",
+      "week": 12,
+      "seasonType": "regular",
+      "home": "145",
+      "away": "2747",
+      "homeTeam": "Ole Miss",
+      "awayTeam": "Wofford",
+      "homeDivision": "fbs",
+      "awayDivision": "fcs",
+      "neutral": false,
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "homeMargin": 21.583458573097875,
+      "baselineHomeProbability": 0.8237081779392351,
+      "candidateHomeProbability": 0.9957721113064771
+    },
+    {
+      "gameId": "401856750",
+      "week": 12,
+      "seasonType": "regular",
+      "home": "344",
+      "away": "2635",
+      "homeTeam": "Mississippi State",
+      "awayTeam": "Tennessee Tech",
+      "homeDivision": "fbs",
+      "awayDivision": "fcs",
+      "neutral": false,
+      "kickoff": "2026-11-21T18:00:00.000Z",
+      "homeMargin": 3.632311743919506,
+      "baselineHomeProbability": 0.5645012910403427,
+      "candidateHomeProbability": 0.9223325337985468
+    },
+    {
+      "gameId": "401856746",
+      "week": 12,
+      "seasonType": "regular",
+      "home": "333",
+      "away": "236",
+      "homeTeam": "Alabama",
+      "awayTeam": "Chattanooga",
+      "homeDivision": "fbs",
+      "awayDivision": "fcs",
+      "neutral": false,
+      "kickoff": "2026-11-21T19:00:00.000Z",
+      "homeMargin": 23.35867796898516,
+      "baselineHomeProbability": 0.8413726597755429,
+      "candidateHomeProbability": 0.9968501305693291
+    },
+    {
+      "gameId": "401856747",
+      "week": 12,
+      "seasonType": "regular",
+      "home": "2",
+      "away": "2535",
+      "homeTeam": "Auburn",
+      "awayTeam": "Samford",
+      "homeDivision": "fbs",
+      "awayDivision": "fcs",
+      "neutral": false,
+      "kickoff": "2026-11-21T20:30:00.000Z",
+      "homeMargin": 20.389463648099046,
+      "baselineHomeProbability": 0.8109799535904818,
+      "candidateHomeProbability": 0.9948475470628196
+    }
+  ],
+  "interpretation": "True before-kickoff research capture using an already published cached checkpoint. Both probabilities use the SAME current Strength graph. These are new research observations, not replacements for earlier saved public picks. The cached source may precede the parameter freeze. No future outcome is used.",
+  "resultSha256": "7f889976f44efc170cdb44e2fa555d64ca4244ccd04d59c9979387ab3b471252"
+}

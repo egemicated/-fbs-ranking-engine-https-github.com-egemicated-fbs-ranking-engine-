@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "season": 2026,
-  "asOf": "2026-11-18T12:30:16.270Z",
+  "asOf": "2026-11-19T14:22:08.675Z",
   "source": {
     "provider": "cfbd",
-    "scheduleAsOf": "2026-11-18T12:30:09.923Z",
-    "rankingAsOf": "2026-11-18T12:30:14.250Z",
-    "snapshotHash": "a36df50d7f94c050e03b2d5df03cba802067d8dd2a1732f715a3ea3cc57dc4c1",
+    "scheduleAsOf": "2026-11-19T14:22:05.068Z",
+    "rankingAsOf": "2026-11-19T14:22:06.297Z",
+    "snapshotHash": "6453abdbdc75b809981373796142b0c7771f4d6d5ec328dfe5df76bb90b93b35",
     "modelVersion": "0.2.0",
     "probabilityScale": 6.74434303402901,
     "calibrated": true,
@@ -12685,6 +12685,26 @@
       "replay": null
     },
     {
+      "id": "401866697",
+      "week": 12,
+      "seasonType": "regular",
+      "home": "2097",
+      "away": "2405",
+      "startDate": "2026-11-21T17:00:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-15T18:04:42.540Z",
+        "homeWinProbability": 0.6335877225354078,
+        "favored": "home"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
       "id": "401866700",
       "week": 12,
       "seasonType": "regular",
@@ -12939,26 +12959,6 @@
       "pick": {
         "capturedAt": "2026-11-15T18:04:42.540Z",
         "homeWinProbability": 0.5552250767766668,
-        "favored": "home"
-      },
-      "estimate": null,
-      "replay": null
-    },
-    {
-      "id": "401866697",
-      "week": 12,
-      "seasonType": "regular",
-      "home": "2097",
-      "away": "2405",
-      "startDate": "2026-11-21T18:00:00.000Z",
-      "neutral": false,
-      "status": "scheduled",
-      "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
-      "pick": {
-        "capturedAt": "2026-11-15T18:04:42.540Z",
-        "homeWinProbability": 0.6335877225354078,
         "favored": "home"
       },
       "estimate": null,
@@ -13325,6 +13325,26 @@
       "replay": null
     },
     {
+      "id": "401868117",
+      "week": 12,
+      "seasonType": "regular",
+      "home": "147",
+      "away": "149",
+      "startDate": "2026-11-21T19:00:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-15T18:04:42.540Z",
+        "homeWinProbability": 0.7666760312070735,
+        "favored": "home"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
       "id": "401868203",
       "week": 12,
       "seasonType": "regular",
@@ -13399,26 +13419,6 @@
       "pick": {
         "capturedAt": "2026-11-15T18:04:42.540Z",
         "homeWinProbability": 0.8676724252465321,
-        "favored": "home"
-      },
-      "estimate": null,
-      "replay": null
-    },
-    {
-      "id": "401868117",
-      "week": 12,
-      "seasonType": "regular",
-      "home": "147",
-      "away": "149",
-      "startDate": "2026-11-21T19:05:00.000Z",
-      "neutral": false,
-      "status": "scheduled",
-      "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
-      "pick": {
-        "capturedAt": "2026-11-15T18:04:42.540Z",
-        "homeWinProbability": 0.7666760312070735,
         "favored": "home"
       },
       "estimate": null,
