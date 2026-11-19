@@ -1,6 +1,6 @@
 {
-  "startedAt": "2026-11-19T02:28:31.339Z",
-  "completedAt": "2026-11-19T02:28:41.358Z",
+  "startedAt": "2026-11-19T03:10:03.437Z",
+  "completedAt": "2026-11-19T03:10:13.599Z",
   "passed": true,
   "auth": {
     "version": "v2.198.0",
@@ -64,9 +64,15 @@
   "localMessagesCaptured": 3,
   "productionRequests": 0,
   "externalEmails": 0,
+  "authPolicy": {
+    "passwordMinLength": 12,
+    "requireEmailConfirmation": true,
+    "requireCurrentPasswordOnUpdate": true,
+    "requireReauthenticationNonceOnUpdate": false
+  },
   "isolatedLoopbackOnly": true,
   "platformMigrationsApplied": 14,
-  "authDatabase": "forge_auth_test_a42e36714498",
+  "authDatabase": "forge_auth_test_13a5a7c82b96",
   "databaseRemoved": true,
   "source": {
     "tag": "v2.198.0",

@@ -89,6 +89,7 @@ Object.assign(env, {
   GOTRUE_MAILER_URLPATHS_INVITE: '/verify', GOTRUE_MAILER_OTP_EXP: '3600',
   GOTRUE_PASSWORD_MIN_LENGTH: '12', GOTRUE_RATE_LIMIT_EMAIL_SENT: '1000',
   GOTRUE_SECURITY_UPDATE_PASSWORD_REQUIRE_CURRENT_PASSWORD: 'true',
+  GOTRUE_SECURITY_UPDATE_PASSWORD_REQUIRE_REAUTHENTICATION: 'false',
   GOTRUE_RATE_LIMIT_VERIFY: '1000', GOTRUE_RATE_LIMIT_TOKEN_REFRESH: '1000',
   GOTRUE_MFA_TOTP_ENROLL_ENABLED: 'true', GOTRUE_MFA_TOTP_VERIFY_ENABLED: 'true',
   GOTRUE_LOG_LEVEL: 'warn', GOTRUE_DISABLE_AUDIT_LOG: 'false',
@@ -132,6 +133,8 @@ try {
   const checks = await runAuthFlowTests({ base, mailbox, adminJWT, sql });
   const result = { startedAt, completedAt: new Date().toISOString(), passed: true, auth: health, checks,
     localMessagesCaptured: mailbox.length, productionRequests: 0, externalEmails: 0,
+    authPolicy: { passwordMinLength: 12, requireEmailConfirmation: true,
+      requireCurrentPasswordOnUpdate: true, requireReauthenticationNonceOnUpdate: false },
     isolatedLoopbackOnly: true, platformMigrationsApplied:migrationFiles.length, authDatabase: database, databaseRemoved: false,
     source: { tag: 'v2.198.0', sourceArchiveSha256: '44864b95510681e26406c71b2b464141f5a6e65e4db8061eb93d0b023562ef6d',
       binarySha256, runtime: approvedBinaries.get(binarySha256),

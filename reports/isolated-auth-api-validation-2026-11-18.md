@@ -1,6 +1,6 @@
 # Isolated real Auth API validation
 
-The real Supabase Auth v2.198.0 API passed **13 grouped checks** against a disposable local PostgreSQL database with all **14 current application migrations** applied. The strengthened run completed at `2026-11-19T02:28:41.358Z` (November 18 Mountain Time). It captured three locally generated email messages, removed its database and listeners, and made no production requests or external email deliveries.
+The real Supabase Auth v2.198.0 API passed **13 grouped checks** against a disposable local PostgreSQL database with all **14 current application migrations** applied. The latest strengthened run completed at `2026-11-19T03:10:13.599Z` (November 18 Mountain Time). It captured three locally generated email messages, removed its database and listeners, and made no production requests or external email deliveries.
 
 Machine-readable evidence: [account-real-auth-validation-2026-11-18.json](account-real-auth-validation-2026-11-18.json).
 
@@ -27,6 +27,18 @@ This is a running Auth server, not a mocked API. It generated confirmation/recov
 The administration checks use real issued JWT claims and real Auth session/factor rows with the application's authenticated database role and protected SQL functions. They also verify that the returned directory contains no password, token or picks fields. This does not replace a hosted PostgREST/API integration test.
 
 After a successful current-password change, the harness checks the live `auth.sessions` row still has the original session ID, user ID and `aal2`; calls the real authenticated user endpoint; refreshes the session and checks the newly issued token still identifies the same AAL2 session; and successfully calls the protected administrator directory with those fresh claims. This verifies continued authorization rather than inspecting only an unchanged preexisting token.
+
+## Current-password policy verification
+
+The isolated process explicitly uses a 12-character password minimum, email confirmation enabled, `GOTRUE_SECURITY_UPDATE_PASSWORD_REQUIRE_CURRENT_PASSWORD=true`, and `GOTRUE_SECURITY_UPDATE_PASSWORD_REQUIRE_REAUTHENTICATION=false`. The latter is the separate secure-password-change nonce mechanism; it must not be confused with requiring the current password.
+
+The exact fields are defined in [the v2.198.0 configuration source](https://github.com/supabase/auth/blob/v2.198.0/internal/conf/configuration.go#L932). [The password-update handler](https://github.com/supabase/auth/blob/v2.198.0/internal/api/user.go#L173) requires the current password when an account already has one and its session is not a recovery session. The strengthened tests confirm:
+
+* A regular password-authenticated account omitting its current password receives `current_password_required`; an incorrect current password receives `current_password_invalid`.
+* An actual emailed recovery-token session can set a new password without knowing the old one; subsequent login uses the new password and the same user ID. `POST /verify` produces OTP AMR, which [Session.IsRecovery](https://github.com/supabase/auth/blob/v2.198.0/internal/models/sessions.go#L114) and [AuthenticationMethod.IsRecovery](https://github.com/supabase/auth/blob/v2.198.0/internal/models/factor.go#L66) recognize as recovery-capable.
+* A seeded Google-only account with an explicitly empty password hash can add its first password without a current password, sign in with it, retain the Google identity, and preserve the same UID and actual saved-team/profile rows. This remains a provider fixture, not a real Google OAuth migration test.
+
+These results support the current-password setting without adding a nonce requirement to the frontend. They do not establish hosted email delivery or production browser behavior.
 
 ## Runtime provenance and safety
 

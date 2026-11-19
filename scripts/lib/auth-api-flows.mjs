@@ -93,6 +93,9 @@ export async function runAuthFlowTests({ base, mailbox, adminJWT, sql }) {
     success(await api('/recover', { email: accountEmail }), 'Recover');
     const recoveryLink = await waitMail(accountEmail, 'recovery', since), recovered = await verify(recoveryLink);
     success(recovered, 'Recovery verification'); assert.equal(user(recovered.body).id, accountId);
+    // POST /verify issues OTP AMR; v2.198.0 Session.IsRecovery recognizes OTP.
+    assert.ok(jwt(recovered.body.access_token).amr.some(claim => claim.method === 'otp'),
+      'The verified recovery token must carry the actual OTP AMR recognized by Auth');
     const changed = await api('/user', { password: nextPassword }, recovered.body.access_token, 'PUT'); success(changed, 'Recovery password update');
     assert.equal(user(changed.body).id, accountId);
     assert.ok(!(await verify(recoveryLink)).ok, 'Consumed recovery token must fail');
@@ -142,8 +145,12 @@ export async function runAuthFlowTests({ base, mailbox, adminJWT, sql }) {
   await step('current-password validation does not downgrade verified MFA or change UID', async () => {
     const priorSessionId = jwt(token).session_id;
     assert.ok(uid(priorSessionId));
+    const missing = await api('/user', { password: password() }, token, 'PUT');
+    assert.ok(!missing.ok, 'A normal session with an existing password must supply its current password');
+    assert.equal(missing.body.error_code, 'current_password_required');
     const wrong = await api('/user', { password: password(), current_password: 'wrong-current-passphrase' }, token, 'PUT');
     assert.ok(!wrong.ok, 'Wrong current password must fail under the configured policy');
+    assert.equal(wrong.body.error_code, 'current_password_invalid');
     const finalPassword = password();
     const changed = await api('/user', { password: finalPassword, current_password: nextPassword }, token, 'PUT'); success(changed, 'Current-password update');
     assert.equal(user(changed.body).id, accountId);
@@ -189,6 +196,8 @@ export async function runAuthFlowTests({ base, mailbox, adminJWT, sql }) {
     const state = await api('/user', undefined, signed.body.access_token, 'GET'); success(state, 'Google-only fixture state');
     assert.ok(user(state.body).identities.some(item => item.provider === 'google'));
     assert.ok(!user(state.body).identities.some(item => item.provider === 'email'));
+    assert.equal(String(await sql(`select encrypted_password='' from auth.users where id='${fixtureId}';`)).trim(), 't',
+      'The seeded external identity must genuinely have no existing password');
     const changed = await api('/user', { password: addedPassword }, signed.body.access_token, 'PUT'); success(changed, 'Add password to fixture');
     assert.equal(user(changed.body).id, fixtureId);
     const newLogin = await login(address, addedPassword); success(newLogin, 'External fixture password sign-in');
