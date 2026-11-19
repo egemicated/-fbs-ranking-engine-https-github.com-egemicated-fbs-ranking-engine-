@@ -16,8 +16,10 @@ test('calendar represents a confirmed zoned kickoff and a stable game identity',
   assert.match(original, /\r\nDTSTART:20261121T170000Z\r\n/);
   assert.match(shifted, /\r\nDTSTART:20261122T013000Z\r\n/);
   assert.match(original, /\r\nDTSTAMP:20261116T010138Z\r\n/);
+  assert.match(original, /\r\nPRODID:-\/\/The Games Decide\/\/College Football Schedule\/\/EN\r\n/);
   assert.match(original, /\r\nSUMMARY:Illinois at Ohio State\r\n/);
   assert.match(original, /\r\nURL:https:\/\/fbs-intelligence\.onrender\.com\/#compare\/weekly\/12\r\n/);
+  assert.match(original, /\r\nUID:college-football-401866465@fbs-intelligence\.onrender\.com\r\n/);
   assert.equal(original.match(/UID:[^\r]+/)[0], shifted.match(/UID:[^\r]+/)[0]);
   assert.match(original, /Downloaded events do not automatically follow schedule changes\./);
   assert.match(kickoffCalendar(fixtureGame), /download="fbs-kickoff-401866465\.ics"/);

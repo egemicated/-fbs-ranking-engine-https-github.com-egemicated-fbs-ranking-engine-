@@ -73,6 +73,8 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
     ['/assets/stadium-mobile.webp', ['assets/stadium-mobile.webp', 'image/webp']],
     ['/assets/fbs-intelligence-logo.svg', ['assets/fbs-intelligence-logo.svg', 'image/svg+xml']],
     ['/assets/fbs-intelligence-icon.png', ['assets/fbs-intelligence-icon.png', 'image/png']],
+    ['/assets/the-games-decide-logo.webp', ['assets/the-games-decide-logo.webp', 'image/webp']],
+    ['/assets/the-games-decide-icon.png', ['assets/the-games-decide-icon.png', 'image/png']],
     ['/fonts/BarlowCondensed-Bold.ttf', ['fonts/BarlowCondensed-Bold.ttf', 'font/ttf']],
     ['/fonts/BarlowCondensed-SemiBold.ttf', ['fonts/BarlowCondensed-SemiBold.ttf', 'font/ttf']],
     ['/fonts/BarlowCondensed-Bold.woff2', ['fonts/BarlowCondensed-Bold.woff2', 'font/woff2']],

@@ -26,7 +26,7 @@ test('private support responses escape text and omit internal notes and administ
   assert.match(markup,/Action requested/);assert.match(markup,/&lt;script&gt;/);
   assert.doesNotMatch(markup,/<script>|PRIVATE INTERNAL|PRIVATE AUTHOR/);
   assert.match(markup,/Your original details/);assert.match(markup,/Original &lt;b&gt;private question&lt;\/b&gt;/);
-  assert.match(supportRequestMarkup([{...row,id:'request',category:'general'}]),/Responses from FBS Intelligence/);
+  assert.match(supportRequestMarkup([{...row,id:'request',category:'general'}]),/Responses from The Games Decide/);
 });
 
 test('an existing open support request preserves the unsent draft and never claims it was newly saved',()=>{
@@ -49,10 +49,11 @@ test('administrator status counts, due alerts, and audit labels distinguish reco
   assert.doesNotMatch(audit,/support_status|Administrative operation recorded/);
 });
 
-test('generated authenticator names use readable Mountain dates without changing custom labels',()=>{
-  assert.match(authenticatorLabel({friendly_name:'FBS Intelligence 2026-11-19T04:04:38'}),/FBS Intelligence authenticator · Added Nov 18, 2026/);
+test('old and new generated authenticator names show the current brand and a readable Mountain date',()=>{
+  for(const brand of ['FBS Intelligence','The Games Decide']){
+    assert.equal(authenticatorLabel({friendly_name:`${brand} 2026-11-19T04:04:38`}), 'The Games Decide authenticator · Added Nov 18, 2026');
+  }
   assert.equal(authenticatorLabel({friendly_name:'My backup phone'}),'My backup phone');
-  assert.doesNotMatch(authenticatorLabel({friendly_name:'FBS Intelligence 2026-11-19T04:04:38'}),/T04:04/);
 });
 
 test('admin directory pages are bounded to ten accounts and a compact number window at large totals',()=>{
@@ -99,6 +100,8 @@ test('email registration and recovery fail closed until delivery readiness is ex
     assert.match(markup,/Continue with Google/);
   }
   const ready=authFormMarkup('signin',{config:{emailAuthEnabled:true,emailRegistrationEnabled:true,passwordRecoveryEnabled:true}});
+  assert.match(ready,/\/assets\/the-games-decide-icon\.png/);
+  assert.match(ready,/<span>The Games Decide<\/span>/);
   assert.match(ready,/data-auth-mode="register"/);assert.match(ready,/data-auth-mode="recovery"/);
   assert.match(ready,/data-auth-mode="verification"/);
   assert.doesNotMatch(authFormMarkup('verification',{config:{emailAuthEnabled:true,emailRegistrationEnabled:true}}),/type="password"/);

@@ -203,7 +203,7 @@ function ratingMarkup(player, team, model) {
   const explanation = rating?.explanation ?? model?.explanation;
   const formula = rating?.formula ?? model?.formula;
   const sample = Number.isInteger(rating?.attempts) ? ` · ${count(rating.attempts)} rated pass attempts` : '';
-  return `<section class="player-qb-rating"><div class="player-rating-heading"><div><h3>FBS Intelligence QB Rating</h3>
+  return `<section class="player-qb-rating"><div class="player-rating-heading"><div><h3>The Games Decide QB Rating</h3>
     <small>${ratingGroup(rating, team)}${sample}</small></div><span class="player-status">Experimental</span></div>
     <strong class="player-rating-number">${Number.isFinite(rating?.rating) ? rating.rating.toFixed(1) : missing}</strong>
     ${rating?.sampleStatus === 'small-sample' ? '<p class="compact-note">Small sample · provisional</p>' : ''}

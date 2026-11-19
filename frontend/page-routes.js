@@ -41,19 +41,19 @@ export function activatePageRoute() {
 }
 
 const origin = 'https://fbs-intelligence.onrender.com';
-const titles = {home:'The FBS Intelligence Top 25',rankings:'FBS and FCS rankings',teams:'Team directory',team:'Team profile',
+const titles = {home:'The Games Decide Top 25',rankings:'FBS and FCS rankings',teams:'Team directory',team:'Team profile',
   methodology:'Ranking methodology',scoreboard:'Live Scoreboard','beat-the-model':'Beat the Model',compare:'Matchup Lab',
   'model-report':'Weekly model report','sor-compare':'Compare earned SOR','conference-strength':'Conference Strength',
   'ranking-history':'Ranking History','forge-top-25':'Forge’s rankings',polls:'Compare rankings',bracket:'Playoff bracket',
-  'cfp-scenarios':'CFP scenarios',about:'About FBS Intelligence',privacy:'Privacy and accounts',terms:'Using FBS Intelligence',
+  'cfp-scenarios':'CFP scenarios',about:'About The Games Decide',privacy:'Privacy and accounts',terms:'Using The Games Decide',
   support:'Support and data discrepancies',account:'Account settings',admin:'Administration','my-teams':'My Teams'};
 
 export function pageMetadata(hash, registry = {}) {
   const route = String(hash ?? '').replace(/^#/, '') || 'home', path = canonicalPath(hash);
   const key = Object.hasOwn(titles, route.split('/')[0]) ? route.split('/')[0] : 'home';
   const saved = path && registry[path];
-  return {canonical:path ? origin + path : null, title:saved?.title ?? `${titles[key]}${key === 'home' ? '' : ' · FBS Intelligence'}`,
-    description:saved?.description ?? `${titles[key]} on FBS Intelligence. Inspect independent rankings, game evidence and clearly labeled model estimates.`,
+  return {canonical:path ? origin + path : null, title:saved?.title ?? `${titles[key]}${key === 'home' ? '' : ' · The Games Decide'}`,
+    description:saved?.description ?? `${titles[key]} on The Games Decide. Inspect independent rankings, game evidence and clearly labeled model estimates.`,
     image:origin + (typeof saved?.image === 'string' && /^\/social\/[\w.-]+\.png$/.test(saved.image) ? saved.image : '/social/platform.png'),
     noindex:['account','admin','my-teams'].includes(key)};
 }

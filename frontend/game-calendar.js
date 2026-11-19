@@ -64,7 +64,7 @@ export function kickoffEvent({ id, startDate, startTimeTbd, awayName, homeName, 
   return [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//FBS Intelligence//College Football Schedule//EN',
+    'PRODID:-//The Games Decide//College Football Schedule//EN',
     'CALSCALE:GREGORIAN',
     'BEGIN:VEVENT',
     'UID:college-football-' + id + '@fbs-intelligence.onrender.com',

@@ -66,7 +66,7 @@ async function browser({ hash = '#compare/weekly', missingFcs, fcsData = fcs, fc
       assert.equal(path, '/data/weekly-fcs-picks.json');
       if (fcsGate) await fcsGate;
       if (missingFcs === '404') return { ok: false, status: 404 };
-      if (missingFcs === 'spa') return new Response('<title>FBS Intelligence · FBS Top 25</title><meta name="publication-data-root" content="/data">', {
+      if (missingFcs === 'spa') return new Response('<title>The Games Decide Top 25</title><meta name="publication-data-root" content="/data"><script type="module" src="/app.js?v=brand"></script>', {
         headers: { 'Content-Type': 'text/html' },
       });
       return { ok: true, json: async () => fcsData };

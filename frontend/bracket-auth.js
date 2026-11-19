@@ -127,7 +127,7 @@ export function mountHeaderAccount(root, { previewClient, rememberPage, icon = '
     const action = !ready && !checking ? 'retry' : session ? 'signout' : 'signin';
     const label = action === 'retry' ? 'Retry sign-in' : session ? 'Sign out' : 'Sign in';
     const unavailable = action === 'signin' && !checking && !providerEnabled && config.emailAuthEnabled !== true;
-    root.innerHTML = `${session ? '<a class="header-account-button header-account-settings" href="#account" aria-label="Your FBS Intelligence account">Account</a>' : ''}<button class="header-account-button" type="button" data-account-action="${action}"${checking || busy || unavailable ? ' disabled' : ''}>
+    root.innerHTML = `${session ? '<a class="header-account-button header-account-settings" href="#account" aria-label="Your account at The Games Decide">Account</a>' : ''}<button class="header-account-button" type="button" data-account-action="${action}"${checking || busy || unavailable ? ' disabled' : ''}>
       ${icon}<span>${unavailable ? 'Sign-in unavailable' : label}</span></button><span class="header-account-message" role="status">${message}</span>`;
     if (focus) root.querySelector('[data-account-action]')?.focus();
   }

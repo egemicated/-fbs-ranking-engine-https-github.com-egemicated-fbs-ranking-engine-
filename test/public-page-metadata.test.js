@@ -7,7 +7,7 @@ test('major public routes have independent canonical destinations, including wee
   assert.notEqual(pageMetadata('#methodology').canonical,pageMetadata('#beat-the-model').canonical);
 });
 test('team metadata reuses the generated team-specific publication description and image',()=>{
-  const registry={'/team/252/':{title:'BYU · FBS Intelligence',description:'BYU published team evidence.',image:'/social/team-252.png'}};
+  const registry={'/team/252/':{title:'BYU · The Games Decide',description:'BYU published team evidence.',image:'/social/team-252.png'}};
   const metadata=pageMetadata('#team/252/players',registry);
   assert.equal(metadata.title,registry['/team/252/'].title);assert.equal(metadata.description,registry['/team/252/'].description);
   assert.equal(metadata.canonical,'https://fbs-intelligence.onrender.com/team/252/');

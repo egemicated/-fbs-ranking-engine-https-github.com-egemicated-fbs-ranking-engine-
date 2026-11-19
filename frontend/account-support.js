@@ -7,7 +7,7 @@ const requestStatus=value=>({pending:'Pending',in_review:'In review',resolved:'R
 export function supportResponseMarkup(row,{admin=false}={}){
   const responses=Array.isArray(row.responses)?row.responses:[];
   const original=!admin&&typeof row.message==='string'?`<details class="support-original"><summary>Your original details</summary><p>${escapeHtml(row.message)}</p></details>`:'';
-  return original+(responses.length?`<section class="support-responses" aria-label="${admin?'User-visible responses':'Responses from FBS Intelligence'}"><h3>${admin?'Responses visible to the user':'Responses from FBS Intelligence'}</h3>${responses.map(response=>`<article class="support-response"><p class="compact-note"><time>${date(response.createdAt)}</time>${response.requiresAction?' · Action requested':''}</p><p>${escapeHtml(response.message)}</p></article>`).join('')}${row.responseTotal>responses.length?`<p class="compact-note">Showing the latest ${responses.length} responses.</p>`:''}</section>`:'');
+  return original+(responses.length?`<section class="support-responses" aria-label="${admin?'User-visible responses':'Responses from The Games Decide'}"><h3>${admin?'Responses visible to the user':'Responses from The Games Decide'}</h3>${responses.map(response=>`<article class="support-response"><p class="compact-note"><time>${date(response.createdAt)}</time>${response.requiresAction?' · Action requested':''}</p><p>${escapeHtml(response.message)}</p></article>`).join('')}${row.responseTotal>responses.length?`<p class="compact-note">Showing the latest ${responses.length} responses.</p>`:''}</section>`:'');
 }
 
 export function supportRequestMarkup(requests=[],{idPrefix='account'}={}){

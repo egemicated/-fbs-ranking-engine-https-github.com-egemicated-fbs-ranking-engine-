@@ -122,7 +122,7 @@ function baseMarkup(input, teams, baseline) {
     </div><div class="scenario-output" data-scenario-output>
       <section class="panel" aria-labelledby="scenario-projection-title"><div class="panel-body">
         <div class="scenario-projection-heading"><h2 id="scenario-projection-title" tabindex="-1">Projected playoff field</h2><button type="button" class="scenario-text-button" data-scenario-action="picks">Back to picks</button></div>
-        <p class="compact-note">Unofficial ${input.season} field based on FBS Intelligence SOR and the <a href="${escape(CFP_RULES_URL)}" target="_blank" rel="noopener noreferrer">CFP selection rules</a>.</p>
+        <p class="compact-note">Unofficial ${input.season} field based on Strength of Record from The Games Decide and the <a href="${escape(CFP_RULES_URL)}" target="_blank" rel="noopener noreferrer">CFP selection rules</a>.</p>
         <p class="scenario-projection-status" data-scenario-projection-status></p><div data-scenario-field></div>
       </div></section>
       <details class="panel scenario-details"><summary>Projected SOR rankings</summary>

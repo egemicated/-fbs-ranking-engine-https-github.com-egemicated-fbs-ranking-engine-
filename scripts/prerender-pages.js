@@ -15,11 +15,11 @@ const number = (value, digits = 2) => Number.isFinite(value) ? value.toFixed(dig
 
 function metadata(html, { path, title, description, image, route, content, links }) {
   const canonical = origin + path;
-  const pageTitle = route === 'home' ? title : title + ' · FBS Intelligence';
+  const pageTitle = route === 'home' ? title : title + ' · The Games Decide';
   const head = `<title>${escapeHtml(pageTitle)}</title>
   <meta name="description" content="${escapeHtml(description)}">
   <link rel="canonical" href="${canonical}">
-  <meta property="og:type" content="website"><meta property="og:site_name" content="FBS Intelligence">
+  <meta property="og:type" content="website"><meta property="og:site_name" content="The Games Decide">
   <meta property="og:title" content="${escapeHtml(pageTitle)}"><meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:url" content="${canonical}"><meta property="og:image" content="${origin}${image}">
   <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="${escapeHtml(title)}">
@@ -28,7 +28,7 @@ function metadata(html, { path, title, description, image, route, content, links
   return html.replace(/<title>[\s\S]*?<\/title>/, '').replace(/\s*<meta name="description"[^>]*>/, '')
     .replace(/\s*<link rel="canonical"[^>]*>/g, '')
     .replace('</head>', head + '\n</head>')
-    .replace(/<main\b[^>]*>[\s\S]*?<\/main>/, `<main id="main" tabindex="-1"><div class="wrap page-content"><section class="panel"><div class="panel-body">${content}<nav class="public-page-links" aria-label="Explore FBS Intelligence">${links}</nav></div></section></div></main>`);
+    .replace(/<main\b[^>]*>[\s\S]*?<\/main>/, `<main id="main" tabindex="-1"><div class="wrap page-content"><section class="panel"><div class="panel-body">${content}<nav class="public-page-links" aria-label="Explore The Games Decide">${links}</nav></div></section></div></main>`);
 }
 
 function previewSvg({ title, subtitle, detail, accent = '#00b7ed', logo }) {
@@ -42,12 +42,11 @@ function previewSvg({ title, subtitle, detail, accent = '#00b7ed', logo }) {
     <text x="64" y="377" fill="#00c6ef" font-family="Arial,sans-serif" font-size="38" font-weight="bold">${escapeHtml(subtitle)}</text>
     <text x="64" y="447" fill="#d9e6f4" font-family="Arial,sans-serif" font-size="27">${escapeHtml(detail)}</text>
     <text x="64" y="563" fill="#a6c0dd" font-family="Arial,sans-serif" font-size="22">DATA · OPPONENTS · EVIDENCE</text>
-    <text x="1138" y="563" fill="#a6c0dd" text-anchor="end" font-family="Arial,sans-serif" font-size="22">fbs-intelligence.onrender.com</text>
   </svg>`;
 }
 
 export async function prerenderPublicPages({ root, output, snapshot, teams, html, fbsPicks, fcsPicks, conferenceDatasets = [] }) {
-  const logo = await sharp(await readFile(join(root, 'frontend/assets/fbs-intelligence-logo.svg'))).resize({ width: 720 }).png().toBuffer();
+  const logo = await sharp(await readFile(join(root, 'frontend/assets/the-games-decide-logo.webp'))).resize({ width: 720 }).png().toBuffer();
   const logoUrl = 'data:image/png;base64,' + logo.toString('base64');
   const asOf = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', dateStyle: 'medium' }).format(new Date(snapshot.asOf));
   const baseLinks = '<a href="/">Home</a> · <a href="/rankings/fbs/">FBS rankings</a> · <a href="/rankings/fcs/">FCS rankings</a> · <a href="/conference-strength/">Conference Strength</a> · <a href="/model-reports/fbs/">Model report</a> · <a href="/methodology/">Methodology</a>';
@@ -65,7 +64,7 @@ export async function prerenderPublicPages({ root, output, snapshot, teams, html
     return `<table><caption>FBS interconference records · ${snapshot.season}</caption><thead><tr><th>Conference</th><th>Wins</th><th>Losses</th><th>FBS vs. FCS</th></tr></thead><tbody>${conferences.conferences.map(({id,name}) => `<tr><th>${escapeHtml(name)}</th><td>${records.summaries[id].wins}</td><td>${records.summaries[id].losses}</td><td>${record(records.fcs[id])}</td></tr>`).join('')}</tbody></table>`;
   })() : '';
   const primary = [
-    ['/', 'home', 'The FBS Intelligence Top 25', 'Independent FBS and FCS rankings, team evidence, saved predictions, and conference comparisons.', `<h1>The FBS Intelligence Top 25</h1><p>Independent college football rankings and matchup analysis. Published ${asOf}.</p>${table('fbs')}`],
+    ['/', 'home', 'The Games Decide Top 25', 'Independent FBS and FCS rankings, team evidence, saved predictions, and conference comparisons.', `<h1>The Games Decide Top 25</h1><p>Independent college football rankings and matchup analysis. Published ${asOf}.</p>${table('fbs')}`],
     ['/rankings/fbs/', 'rankings', 'FBS Strength of Record', `Explore all ${snapshot.fbsTeams} FBS teams by achieved record and opponent quality. Published ${asOf}.`, '<h1>FBS Strength of Record</h1>' + table('fbs')],
     ['/rankings/fcs/', 'rankings/fcs/sor', 'FCS Strength of Record', `Explore ${snapshot.fcsTeams} FCS teams in the Experimental FCS Strength of Record rankings.`, '<h1>FCS Strength of Record · Experimental</h1>' + table('fcs')],
     ['/teams/fbs/', 'teams/fbs', 'FBS team directory', 'Browse FBS teams, records, rankings, and team profiles.', '<h1>FBS team directory</h1>' + table('fbs')],
@@ -78,20 +77,20 @@ export async function prerenderPublicPages({ root, output, snapshot, teams, html
     ['/beat-the-model/', 'beat-the-model', 'Beat the Model', 'Make picks before each confirmed kickoff and compare graded results with Forge’s saved pregame predictions.', '<h1>Beat the Model</h1><p>Sign in to submit your own picks before each game’s confirmed kickoff. Other participants’ shared picks remain protected until that game locks. Public standings and model predictions are available through the contest.</p>'],
     ['/ranking-history/', 'ranking-history', 'Ranking History', 'Explore retained SOR publications and clearly labeled retrospective replays. Historical game archives are distinct from saved weekly editions.', '<h1>Ranking History</h1><p>Compare retained weekly Strength of Record editions and movement. Reconstructed replays have separate labels and are not presented as publications saved before those games.</p><a href="/conference-strength/">Explore available prior-season conference evidence</a>'],
     ['/forge-rankings/', 'forge-top-25', 'Forge’s rankings', 'Read Forge’s separately labeled AI-authored ballots and compare them with earned SOR and external polls.', '<h1>Forge’s rankings</h1><p>Forge’s ballot is AI-authored analysis, separate from the reproducible SOR formula and the AP, Coaches and CFP comparison sources.</p>'],
-    ...[['ap','AP Poll'],['coaches','Coaches Poll'],['cfp','CFP rankings']].map(([key,title])=>['/polls/'+key+'/', 'polls/'+key, title+' comparison', 'Compare dated '+title+' editions with FBS Intelligence where aligned historical evidence exists.', '<h1>'+title+' comparison</h1><p>External poll editions are comparison evidence, not inputs to earned SOR. Current ranks, pregame ranks, confirmed unranked teams and unavailable editions have distinct labels.</p>']),
+    ...[['ap','AP Poll'],['coaches','Coaches Poll'],['cfp','CFP rankings']].map(([key,title])=>['/polls/'+key+'/', 'polls/'+key, title+' comparison', 'Compare dated '+title+' editions with The Games Decide where aligned historical evidence exists.', '<h1>'+title+' comparison</h1><p>External poll editions are comparison evidence, not inputs to earned SOR. Current ranks, pregame ranks, confirmed unranked teams and unavailable editions have distinct labels.</p>']),
     ['/playoff-bracket/', 'bracket', 'Playoff bracket', 'Create a complete playoff bracket before the entry deadline and track confirmed results. Official, provisional and demo fields are labeled.', '<h1>Playoff bracket</h1><p>Review the available official or clearly labeled provisional field, fill out the full bracket and track confirmed results. Historical demos are separate from the live contest.</p>'],
     ['/cfp-scenarios/', 'cfp-scenarios', 'CFP Scenario Builder', 'Explore hypothetical outcomes and their model effects without changing published rankings or actual game results.', '<h1>CFP Scenario Builder</h1><p>Choose hypothetical outcomes from the available schedule. Scenario projections stay separate from published rankings and the official announced playoff field.</p>'],
     ['/sor-compare/', 'sor-compare', 'Why one team ranks above another', 'Compare earned Strength of Record rankings, schedules, wins, losses, and common opponents.', '<h1>Why one team ranks above another</h1><p>Compare SOR scores, reference-team probabilities, expected wins, venue context, and actual results.</p>'],
     ['/model-reports/fbs/', 'model-report/fbs', 'FBS weekly model report', 'Examine saved pregame predictions, accuracy, Brier score, notable misses, and sample sizes.', '<h1>FBS weekly model report</h1>'+reportText(fbsPicks,'fbs')],
     ['/model-reports/fcs/', 'model-report/fcs', 'FCS weekly model report', 'Track FCS saved pregame picks and results with separate reporting and coverage.', '<h1>FCS weekly model report</h1>'+reportText(fcsPicks,'fcs')],
     ['/methodology/', 'methodology', 'Ranking methodology', 'Read how SOR, Predictive Strength, Performance, and conference comparisons use game data.', '<h1>Ranking methodology</h1><p>SOR = −log10(P(reference team matches at least the observed wins)). Predictive Strength fits bounded scoring margins with opponent and venue adjustments. Coverage and calibration limitations accompany each method.</p><a href="https://github.com/egemicated/-fbs-ranking-engine-https-github.com-egemicated-fbs-ranking-engine-/blob/main/METHODOLOGY.md">Full mathematical documentation</a>'],
-    ...['about', 'privacy', 'terms', 'support'].map(page => ['/' + page + '/', page, {about:'About FBS Intelligence',privacy:'Privacy and accounts',terms:'Using FBS Intelligence',support:'Support and data discrepancies'}[page], 'Understand FBS Intelligence and its public data, accounts, and reporting tools.', platformInfoMarkup(page)]),
+    ...['about', 'privacy', 'terms', 'support'].map(page => ['/' + page + '/', page, {about:'About The Games Decide',privacy:'Privacy and accounts',terms:'Using The Games Decide',support:'Support and data discrepancies'}[page], 'Understand The Games Decide and its public data, accounts, and reporting tools.', platformInfoMarkup(page)]),
   ];
   const pages = primary.map(([path, route, title, description, content]) => ({ path, route, title, description, content, subtitle: `${snapshot.season} season · ${asOf}`, detail: 'Independent college football intelligence', image: '/social/platform.png' }));
   for (const team of teams) {
     const rank = team.displayRank ?? team.sorRank;
     const title = `${team.name} · ${team.division.toUpperCase()} team profile`;
-    const description = `${team.name} is ${record(team)} and ${Number.isInteger(rank) ? '#' + rank : 'unranked'} in FBS Intelligence ${team.division.toUpperCase()} SOR. Inspect its schedule, results, player statistics, and next matchup. As of ${asOf}.`;
+    const description = `${team.name} is ${record(team)} and ${Number.isInteger(rank) ? '#' + rank : 'unranked'} in The Games Decide ${team.division.toUpperCase()} SOR. Inspect its schedule, results, player statistics, and next matchup. As of ${asOf}.`;
     pages.push({ path: '/team/' + team.id + '/', route: 'team/' + team.id, title, description,
       image: '/social/team-' + team.id + '.png', socialTitle: team.name, accent: myTeamColors[team.id],
       subtitle: `${team.division.toUpperCase()} SOR ${Number.isInteger(rank) ? '#' + rank : 'unranked'} · ${record(team)}${team.division === 'fcs' ? ' · Experimental' : ''}`,
@@ -100,7 +99,7 @@ export async function prerenderPublicPages({ root, output, snapshot, teams, html
     });
   }
   await mkdir(join(output, 'social'), { recursive: true });
-  await sharp(Buffer.from(previewSvg({ title: 'FBS Intelligence', subtitle: 'College football, examined', detail: `${snapshot.season} · ${asOf}`, logo: logoUrl }))).png().toFile(join(output, 'social/platform.png'));
+  await sharp(Buffer.from(previewSvg({ title: 'The Games Decide', subtitle: 'College football, examined', detail: `${snapshot.season} · ${asOf}`, logo: logoUrl }))).png().toFile(join(output, 'social/platform.png'));
   for (let start = 0; start < pages.length; start += 8) {
     await Promise.all(pages.slice(start, start + 8).map(async page => {
       const directory = join(output, page.path);
@@ -110,7 +109,7 @@ export async function prerenderPublicPages({ root, output, snapshot, teams, html
     }));
   }
   const urls = pages.map(page => `<url><loc>${origin}${page.path}</loc><lastmod>${snapshot.asOf.slice(0, 10)}</lastmod></url>`).join('');
-  await writeFile(join(output,'data','page-metadata.json'), JSON.stringify(Object.fromEntries(pages.map(page=>[page.path,{title:page.route==='home'?page.title:page.title+' · FBS Intelligence',description:page.description,image:page.image}]))));
+  await writeFile(join(output,'data','page-metadata.json'), JSON.stringify(Object.fromEntries(pages.map(page=>[page.path,{title:page.route==='home'?page.title:page.title+' · The Games Decide',description:page.description,image:page.image}]))));
   await writeFile(join(output, 'sitemap.xml'), '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + urls + '</urlset>');
   await writeFile(join(output, 'robots.txt'), 'User-agent: *\nAllow: /\nSitemap: ' + origin + '/sitemap.xml\n');
   return { pages: pages.length };

@@ -1,6 +1,6 @@
 import { ACCOUNT_ROUTE_EVENT, accountCallbackMode, initialAccountReturnUrl, safeAccountReturnHash } from './bracket-auth.js?v=header-account';
 
-const BRAND = 'FBS Intelligence';
+const BRAND = 'The Games Decide';
 const main = document.querySelector('#main');
 let shareCardButton = () => '';
 let kickoffCalendar = () => '';
@@ -237,7 +237,7 @@ function topTwentyFive(teams, model) {
 function strengthRank(t) { return Object.hasOwn(t, 'strengthRank') ? t.strengthRank : ordered('strength', t.division).findIndex(x => x.id === t.id) + 1; }
 function sosRank(t) { return Object.hasOwn(t, 'sosRank') ? t.sosRank : [...divisionTeams(t.division)].sort((a,b) => (b.achievementScheduleStrength ?? -1) - (a.achievementScheduleStrength ?? -1)).findIndex(x => x.id === t.id) + 1; }
 function teamLink(t) { return `<a href="#team/${encodeURIComponent(t.id)}">${esc(t.name)}</a>`; }
-function brand() { return `<a class="brand" href="#home" aria-label="${BRAND} home"><img class="brand-logo" src="/assets/fbs-intelligence-logo.svg?v=compact" width="1340" height="430" alt="${BRAND}" fetchpriority="high"></a>`; }
+function brand() { return `<a class="brand" href="#home" aria-label="${BRAND} home"><img class="brand-logo" src="/assets/the-games-decide-logo.webp" width="780" height="260" alt="${BRAND}" fetchpriority="high"></a>`; }
 function renderHeader() {
   const page = route()[0];
   if (renderedHeader?.snapshot === state.snapshot && renderedHeader.page === page) return;
@@ -468,9 +468,9 @@ function renderHome() {
   closeFavorite?.();
   closeFavorite = null;
   const top = topTwentyFive(state.snapshot.rankings, 'achievement');
-  const title = usesSor() ? 'The FBS Intelligence Top 25' : 'HISTORICAL TOP 25';
-  const summary = usesSor() ? 'The FBS Intelligence ranking weighs each team’s wins against the opponents it faced and where it played.' : 'This historical snapshot ranks teams by their results and the opponents they faced.';
-  main.innerHTML = `<div class="wrap home-favorite" data-my-team></div><section class="hero home-hero"><div class="wrap hero-layout"><div><div class="eyebrow">${state.snapshot.season} FBS season · ${achievementName()}</div><h1>The FBS Intelligence <em>Top 25</em></h1><p class="hero-copy">${summary} Select a team to see how it earned its rank.</p><div class="hero-actions"><a class="button" href="${rankingHash('achievement', true)}">${icon('chart')}View all ${state.snapshot.fbsTeams} teams ${icon('chevron')}</a><a class="button outline" href="#methodology">${icon('layers')}Inside the engine</a></div></div><aside class="top-five"><div class="top-five-title">${icon('trophy')}<h2>${usesSor() ? "SOR TOP FIVE" : "TOP FIVE"}</h2><small>${snapshotDate()} SNAPSHOT</small></div>${top.slice(0,5).map(t=>`<a class="top-five-row" href="#team/${t.id}"><span class="rank-chip">${nationalRank(t)}</span>${logo(t)}<strong>${esc(t.name)}</strong><span>${record(t)}</span></a>`).join('')}<a class="top-five-footer" href="#rankings">Explore the Top 25 ${icon('chevron')}</a></aside></div></section><div class="wrap home-body">${thisWeekPanel()}<div class="two-column"><section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<div><h2>${title}</h2><p>${achievementName()} rankings · ${state.snapshot.season} season · ${snapshotDate()} publication</p>${movementNote()}</div></div></div>${top.length?rankingTable(top,'achievement',true):'<div class="empty">No ranked teams in this snapshot.</div>'}</section><aside class="stack">${coveragePanel()}${companionPanel()}${schedulePanel()}</aside></div>${pipeline()}</div>`;
+  const title = usesSor() ? 'The Games Decide Top 25' : 'HISTORICAL TOP 25';
+  const summary = usesSor() ? 'Our Strength of Record rankings weigh each team’s wins against the opponents it faced and where it played.' : 'This historical snapshot ranks teams by their results and the opponents they faced.';
+  main.innerHTML = `<div class="wrap home-favorite" data-my-team></div><section class="hero home-hero"><div class="wrap hero-layout"><div><div class="eyebrow">${state.snapshot.season} FBS season · ${achievementName()}</div><h1>The Games Decide <em>Top 25</em></h1><p class="hero-copy">${summary} Select a team to see how it earned its rank.</p><div class="hero-actions"><a class="button" href="${rankingHash('achievement', true)}">${icon('chart')}View all ${state.snapshot.fbsTeams} teams ${icon('chevron')}</a><a class="button outline" href="#methodology">${icon('layers')}Inside the engine</a></div></div><aside class="top-five"><div class="top-five-title">${icon('trophy')}<h2>${usesSor() ? "SOR TOP FIVE" : "TOP FIVE"}</h2><small>${snapshotDate()} SNAPSHOT</small></div>${top.slice(0,5).map(t=>`<a class="top-five-row" href="#team/${t.id}"><span class="rank-chip">${nationalRank(t)}</span>${logo(t)}<strong>${esc(t.name)}</strong><span>${record(t)}</span></a>`).join('')}<a class="top-five-footer" href="#rankings">Explore the Top 25 ${icon('chevron')}</a></aside></div></section><div class="wrap home-body">${thisWeekPanel()}<div class="two-column"><section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('trophy')}<div><h2>${title}</h2><p>${achievementName()} rankings · ${state.snapshot.season} season · ${snapshotDate()} publication</p>${movementNote()}</div></div></div>${top.length?rankingTable(top,'achievement',true):'<div class="empty">No ranked teams in this snapshot.</div>'}</section><aside class="stack">${coveragePanel()}${companionPanel()}${schedulePanel()}</aside></div>${pipeline()}</div>`;
   mountHomeFavorite();
 }
 function banner(kicker, title, description) { return `<section class="hero page-banner"><div class="wrap"><div class="eyebrow">${kicker}</div><h1>${title}</h1><p>${description}</p></div></section>`; }
@@ -687,7 +687,7 @@ function breakdown(t, explain = false) {
   ];
   const colleyRank = t.colleyRank ?? t.rank;
   const colleyNote = explain
-    ? `These three pieces add up to the team’s Colley rating${colleyRank ? `, ranked <strong>${rank(colleyRank)}</strong> nationally by Colley` : ''}. Averaging the opponents’ Colley ratings gives the schedule strength shown on the team page.${official ? ' FBS Intelligence’s national and conference rankings use Strength of Record.' : ' This season’s national and conference rankings use Colley.'}`
+    ? `These three pieces add up to the team’s Colley rating${colleyRank ? `, ranked <strong>${rank(colleyRank)}</strong> nationally by Colley` : ''}. Averaging the opponents’ Colley ratings gives the schedule strength shown on the team page.${official ? ' The Games Decide’s national and conference rankings use Strength of Record.' : ' This season’s national and conference rankings use Colley.'}`
     : official ? `These terms reconcile to the Colley baseline (${rank(colleyRank)}), not the SOR score. Colley supplies the opponent network and displayed SOS; national and conference ranks use SOR.`
       : 'These terms reconcile to the Colley score. Opponent effects are part of the jointly solved network.';
   return `<div class="${block}">${sor}<h3>${official ? 'COLLEY BASELINE, EXPLAINED' : 'THE SCORE, EXPLAINED'}</h3>
@@ -993,7 +993,7 @@ async function loadWeeklyPicks(picks) {
     else if (!response.ok) throw new Error(`Weekly picks returned ${response.status}`);
     else if (response.headers?.get('content-type')?.includes('text/html')) {
       const html = await response.text();
-      if (!/<title>[^<]*FBS Intelligence[^<]*<\/title>/.test(html) || !html.includes('name="publication-data-root"'))
+      if (!html.includes('name="publication-data-root"') || !html.includes('src="/app.js'))
         throw new Error('Weekly picks returned unexpected HTML');
       picks.status = 'missing';
     } else {
@@ -1482,15 +1482,15 @@ function renderConnectedFeature(page, id, scope) {
     'my-teams': ['My Teams', 'Follow your teams, their next games, results, and ranking evidence.', 'my-teams.js', 'mountMyTeams'],
     'sor-compare': ['Compare earned rankings', 'Why does one team rank above another? Compare their records and schedules.', 'sor-compare.js', 'mountSorComparison'],
     'model-report': ['Model Report Card', 'See how the model’s saved predictions performed after the games were played.', 'model-report.js', 'mountModelReport'],
-    about: ['About FBS Intelligence', 'Independent college football intelligence with calculations you can inspect.', 'platform-info.js', 'mountPlatformInfo'],
+    about: ['About The Games Decide', 'Independent college football intelligence with calculations you can inspect.', 'platform-info.js', 'mountPlatformInfo'],
     privacy: ['Privacy and accounts', 'Understand what your account saves and what visitors can see.', 'platform-info.js', 'mountPlatformInfo'],
-    terms: ['Terms of use', 'How public data and contests work on FBS Intelligence.', 'platform-info.js', 'mountPlatformInfo'],
+    terms: ['Terms of use', 'How public data and contests work on The Games Decide.', 'platform-info.js', 'mountPlatformInfo'],
     support: ['Support and data discrepancies', 'Find help or report a result that needs checking.', 'platform-info.js', 'mountPlatformInfo'],
     account: ['Account settings', 'Manage your sign-in, public profile, saved teams and private requests.', 'account-center.js', 'mountAccountCenter'],
     admin: ['Administration', 'Secure account and support management.', 'account-administration.js', 'mountAdministration'],
   };
   const [title,description,file,mountName] = features[page];
-  main.innerHTML = `${['account','admin','about','privacy','terms','support'].includes(page)?'':banner('FBS Intelligence',title,description)}<div class="wrap page-content" data-connected-feature><p role="status">Loading ${esc(title)}…</p></div>`;
+  main.innerHTML = `${['account','admin','about','privacy','terms','support'].includes(page)?'':banner('The Games Decide',title,description)}<div class="wrap page-content" data-connected-feature><p role="status">Loading ${esc(title)}…</p></div>`;
   const target = main.querySelector('[data-connected-feature]');
   if (!target?.isConnected) return;
   const lifecycle = { target, close: null };
@@ -1625,7 +1625,7 @@ function render() {
   }
   if(page==='home')renderHome();else if(page==='rankings')renderRankings();else if(page==='teams')renderTeams();else if(page==='team')renderTeam(id);else if(page==='methodology')renderMethodology();else if(page==='compare')renderCompare();else if (page === 'polls' || page === 'forge-top-25') renderRankingEditions(page,id,scope);else if (page === 'conference-strength') renderConferenceStrengthPage();else if (['my-teams','sor-compare','model-report','about','privacy','terms','support','account','admin'].includes(page)) renderConnectedFeature(page,id,scope);else if (page === 'bracket') renderBracketPage();else if (page === 'cfp-scenarios') renderScenarioPage();else if (page === 'beat-the-model') renderContestPage();else if (page === 'ranking-history') renderHistoryPage(id);else renderHome();
   const compareTitle = id === 'weekly' ? scope === 'fcs' ? 'FCS Weekly Picks' : 'Weekly picks' : 'Matchup lab';
-  const team=rankedTeam(id);document.title=page==='home'?'The FBS Intelligence Top 25':`${page==='team'&&team?team.name:({rankings:`${state.division.toUpperCase()} rankings`,teams:`${state.division.toUpperCase()} team directory`,compare:compareTitle,methodology:'Methodology',polls:'Compare Rankings','forge-top-25':'Forge’s Top 25','conference-strength':'Conference Strength','my-teams':'My Teams','sor-compare':'Compare earned SOR','model-report':'Model Report Card',about:'About FBS Intelligence',privacy:'Privacy and accounts',terms:'Terms of use',support:'Support',account:'Account settings',admin:'Administration',bracket:'Playoff Bracket','cfp-scenarios':'CFP Scenario Builder','beat-the-model':'Beat the Model','ranking-history':'Weekly SOR movement'}[page]||'Home')} · ${BRAND}`;
+  const team=rankedTeam(id);document.title=page==='home'?'The Games Decide Top 25':`${page==='team'&&team?team.name:({rankings:`${state.division.toUpperCase()} rankings`,teams:`${state.division.toUpperCase()} team directory`,compare:compareTitle,methodology:'Methodology',polls:'Compare Rankings','forge-top-25':'Forge’s Top 25','conference-strength':'Conference Strength','my-teams':'My Teams','sor-compare':'Compare earned SOR','model-report':'Model Report Card',about:'About The Games Decide',privacy:'Privacy and accounts',terms:'Terms of use',support:'Support',account:'Account settings',admin:'Administration',bracket:'Playoff Bracket','cfp-scenarios':'CFP Scenario Builder','beat-the-model':'Beat the Model','ranking-history':'Weekly SOR movement'}[page]||'Home')} · ${BRAND}`;
   document.querySelector('#announce').textContent=document.title;
 }
 document.addEventListener('error', event => {

@@ -163,7 +163,6 @@ function cardFooter(ctx, card) {
   ctx.fillRect(61, 543, 1078, 2);
   const asOf = card.asOf ? 'AS OF ' + dateFormat.format(new Date(card.asOf)).toUpperCase() : 'SNAPSHOT DATE UNAVAILABLE';
   text(ctx, asOf, 63, 589, { size: 24, color: '#d4e4f7' });
-  text(ctx, 'FBS-INTELLIGENCE.ONRENDER.COM', 1137, 589, { size: 24, align: 'right', color: '#8edfff' });
 }
 
 function drawTeamCard(ctx, team, image) {
@@ -197,7 +196,7 @@ export async function createShareCardImage(value) {
   const card = publicShareCard(value);
   if (!card) throw new TypeError('Invalid share card');
   const [brand, images] = await Promise.all([
-    shareImage('/assets/fbs-intelligence-icon.png'),
+    shareImage('/assets/the-games-decide-logo.webp'),
     Promise.all(card.teams.map(team => teamImage(team.id))),
     fontReady(),
   ]);
@@ -208,8 +207,8 @@ export async function createShareCardImage(value) {
   if (!ctx) throw new Error('Could not create share image');
   const matchup = card.teams.length === 2;
   cardBackground(ctx, card);
-  if (brand) fitImage(ctx, brand, 61, 35, 55, 55);
-  text(ctx, 'FBS INTELLIGENCE', brand ? 125 : 61, 75, { size: 37, max: 500 });
+  if (brand) fitImage(ctx, brand, 61, 16, 285, 89);
+  else text(ctx, 'THE GAMES DECIDE', 61, 75, { size: 37, max: 500 });
   text(ctx, matchup ? 'MATCHUP FORECAST' : 'TEAM SNAPSHOT', 1139, 75, {
     size: 25, align: 'right', color: '#8ddfff',
   });
@@ -227,14 +226,14 @@ function canShare(data) {
 
 function openShareCard(trigger, card) {
   const title = card.teams.map(team => team.name).join(' vs. ');
-  const filename = 'fbs-intelligence-' + (slug(title) || 'share-card') + '.png';
+  const filename = 'the-games-decide-' + (slug(title) || 'share-card') + '.png';
   const dialog = document.createElement('dialog');
   dialog.className = 'share-card-dialog';
   dialog.setAttribute('aria-labelledby', 'fbs-share-title');
   dialog.innerHTML = `<div class="share-card-dialog-heading"><h2 id="fbs-share-title">Share card</h2>
     <button type="button" class="share-card-close" aria-label="Close share card" autofocus>×</button></div>
     <p class="share-card-caption">${escapeHtml(title)}</p>
-    <div class="share-card-preview"><img alt="${escapeHtml(title)} · FBS Intelligence" hidden></div>
+    <div class="share-card-preview"><img alt="${escapeHtml(title)} · The Games Decide" hidden></div>
     <p class="share-card-status" role="status">Preparing the image…</p>
     <div class="share-card-actions"><button type="button" class="button small" data-share-native hidden></button>
     <a class="button light small" data-save-card download="${escapeHtml(filename)}" hidden>Save image</a>
