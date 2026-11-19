@@ -2,7 +2,7 @@
 
 Prepared November 18, 2026, Mountain Time. This report covers the account, administration, support, security and subscription-foundation assignment. It distinguishes implemented code, deployed backend changes, local verification and features deliberately awaiting configuration. It is not a claim that every requested production journey is complete.
 
-**Release status:** the additive database foundation and notification-requeue migrations are applied, and support Edge Function version 2 is active. The new frontend has not yet been deployed at this report checkpoint; the release coordinator must update section I with the exact commit, CI result, Render deployment and live route checks. Google remains available. Public email registration, recovery and support-email notifications remain gated until real delivery tests pass. No payments are enabled.
+**Release status:** the account-settings foundation is live on Render at commit `16c0be0787f54aa86e895fed43f6726dc0ca7b7d`, after the complete required GitHub checks passed. Both additive database migrations and support Edge Function version 2 are installed. Google remains available. Public email registration, recovery and support-email notifications remain gated until private configuration and real delivery tests pass. Administrator provisioning and permanent deletion are incomplete and disabled. No payments are enabled. This is a controlled foundation release, not completion of the entire account rollout.
 
 ## A. User accounts
 
@@ -115,17 +115,20 @@ Evidence: [frozen division research](division-calibration-research-2026-11-18.md
 
 | Check | Actual result and scope |
 |---|---|
-| Complete Node suite | **435/435 passed**, zero failures/skips, reported by release coordinator after latest frontend changes |
-| Migrations and SQL suites | **14 migrations / 13 SQL suites passed** in disposable loopback PostgreSQL; transactional fixtures and empty-table checks; database removed |
+| Complete Node suite | **435/435 passed**, zero failures/skips, locally and in the successful Linux release workflow |
+| Migrations and SQL suites | **14 migrations / 13 SQL suites passed** in disposable PostgreSQL 18 locally and 17 in CI; transactional fixtures and empty-table checks; databases removed |
 | Real local Auth API | **13/13 grouped checks passed** using pinned Auth v2.198.0, actual locally issued sessions/TOTP/email tokens; database/listeners removed |
-| Existing browser quality | **72 responsive routes passed** in the retained successful local run |
+| Official Linux Auth API | **13/13 grouped checks passed** using the checksum-verified, unmodified v2.198.0 release and PostgreSQL 17 in CI; three loopback SMTP messages, no external mail |
+| Existing browser quality | **72 responsive routes passed** locally and in the successful Linux release workflow |
 | New account/admin browser flows | Passed at **320, 390, 768 and 1440** widths, with explicit disposable SDK/RPC doubles; no unlabeled controls, horizontal overflow or uncaught errors reported |
 | CSP enforcement browser harness | Passed with real Chromium and intercepted external transport; inline scripts/handlers/eval/unapproved hosts blocked; approved SDK/API/worker/image paths worked |
 | Public hosted database API | Private schemas rejected as unexposed; anonymous account/admin/service RPC calls denied |
 | Hosted support Edge boundaries | Unauthorized notify/dispatch denied; foreign origin denied; unconfigured guest intake unavailable; no mail sent |
 | Application rollback restore | Encrypted source roundtrip and isolated typed-row restore equality passed for all eight original application tables |
+| Production guest browser | Account, Support, Admin denial, My Teams, Rankings and Home passed at **320 and 1440**; real public SDK/sign-in dialog, no credential/form submission |
+| Production static publication | Nine live assets/public rankings matched the tested local build byte-for-byte; CSP/referrer metadata and disabled email-readiness flags confirmed |
 
-These rows describe different layers of evidence. Browser SDK/RPC doubles do not become real Auth tests; local SMTP is not inbox deliverability; direct authenticated SQL is not hosted PostgREST. The final remote CI result and deployed browser checks remain section I rollout evidence.
+These rows describe different layers of evidence. Browser SDK/RPC doubles do not become real Auth tests; loopback SMTP is not inbox deliverability; direct authenticated SQL is not hosted PostgREST. Production guest checks do not prove signed-in or administrator production journeys. Exact CI/deployment evidence is in section I.
 
 ### Protections implemented or retained
 
@@ -142,9 +145,9 @@ Independent review corrected a final notification-lease trap, MFA-downgrading pa
 - Actual notification delivery/retry after private credentials are configured.
 - Permanent deletion/anonymization, which remains disabled pending policy and execution design.
 - Trusted-gateway client-IP behavior and CAPTCHA setup for any future public guest form; that intake remains disabled.
-- Final post-rollout advisor result and live Render security response headers, unless appended by the release coordinator.
+- Host-level anti-framing/Permissions-Policy configuration. Live response checks show HSTS and `nosniff`, with CSP/referrer enforcement supplied through HTML metadata; `X-Frame-Options` and HTTP CSP are absent. The Render dashboard requires sign-in and its connector does not expose these header settings.
 
-The baseline advisors reported intentional private RPC-only RLS/no-policy INFO notices and disabled leaked-password protection. The latter is a paid-plan capability and was not silently purchased. Preserve explicit privilege controls rather than adding permissive policies to silence informational notices.
+The final hosted advisors reported eleven intentional private RPC-only RLS/no-policy INFO findings and the disabled leaked-password-protection warning. Performance advisors reported four unused indexes on newly empty support/audit tables; those purpose-built indexes remain pending measured use. No ERROR/CRITICAL advisor finding was returned. Leaked-password checking is a paid-plan capability and was not silently purchased. Preserve explicit privilege controls rather than adding permissive policies to silence informational notices. [Hosted advisor evidence](account-hosted-advisors-2026-11-18.json)
 
 ## H. Scalability, costs and operations
 
@@ -182,13 +185,17 @@ Evidence: [capacity analysis](account-security-capacity-2026-11-18.md), [measure
 
 The final read-only preservation check retained **134 picks** and the exact saved-pick/profile digests, plus the original favorite selection and all other preference fields except `seen_updates`. The full preference-row digest changed solely in that seen-marker projection; no actor is attributed, and no overwrite or rollback was performed. It would be incorrect to claim the entire live preference row stayed byte-identical. Counts remain one identity/profile/preference, 888 games and no support requests; the new foundation has one ordinary membership, no administrator, no suspension, no entitlement and no audit action. [Sanitized post-migration evidence](account-postmigration-preservation-2026-11-18.json)
 
-### Frontend/deployment checkpoint — coordinator to finalize
+### Verified frontend rollout
 
-The previous observed static deployment was commit `7d096d4`; repository baseline was `c7301ff`. **Neither is represented as this account release's deployed commit.** At this checkpoint the new frontend remains local and its final remote CI/Render deployment is pending.
+The deployed application commit is **`16c0be0787f54aa86e895fed43f6726dc0ca7b7d`**, including foundation commit `3261cb8`. [Required GitHub workflow 44446209050](https://github.com/egemicated/-fbs-ranking-engine-https-github.com-egemicated-fbs-ranking-engine-/actions/runs/44446209050), job `135298860431`, completed successfully: Node, isolated SQL, official Linux Auth, static build, general browser, account/admin and CSP checks all passed.
 
-Before marking rollout complete, append the exact release commit, successful remote checks, Render deployment ID/state and served revision. Verify Home/header, Account, Support, My Teams, representative ranking/team/scoreboard/contest pages, published JSON and Google transition behavior. Confirm registration/recovery/notifications remain gated unless actual mail tests have independently passed. Verify live CSP/referrer metadata and separately report host-level anti-framing limitations.
+The release gate correctly stopped the earlier candidate after Linux detected a one-pixel signed-in mobile-header overflow. The correction lets the mobile logo yield space while retaining readable account buttons. Strict overflow checks remain, with a wider-font regression case and diagnostic element bounds. The corrected candidate passed on Linux before publication.
 
-Production link: **https://fbs-intelligence.onrender.com/**. Account and administration use the existing shared route architecture (`/#account`, `/#admin`) once the new frontend is deployed. Do not advertise admin as usable before provisioning or email registration as live before delivery validation.
+Render static service `srv-dbn9jqc9v7es73c4ql2g` automatically deployed **`dep-dbv63ueq1p3s7382tjp0`**, which became **live at `2026-11-19T02:44:13.995982Z`** (November 18 Mountain Time). Public verification at `02:44:49Z` found all nine sampled assets—including account scripts, CSS, config, app and published rankings—HTTP 200 and byte-identical to the tested build. Registration, recovery and support-notification UI flags remain false. Live HTML includes the intended CSP/referrer metadata; the host-level header limitation above remains explicit. [Static/live evidence](account-production-verification-2026-11-18.json)
+
+An actual production browser then checked Account, Support, guest Admin denial, My Teams, Rankings and Home at 320 and 1440 pixels. The live managed SDK loaded, the native sign-in dialog exposed email/password and the retained Google option, gated registration/recovery controls were absent, and all twelve route/width combinations had no horizontal overflow or uncaught page errors. No credentials, forms or mail requests were submitted. [Guest browser evidence](account-production-guest-browser-2026-11-18.json)
+
+Production: **https://fbs-intelligence.onrender.com/**. Account settings use **https://fbs-intelligence.onrender.com/#account**; `/#admin` correctly denies a guest and remains unusable until protected provisioning. Google remains enabled; a new real Google OAuth handshake was not performed as a release test. Do not advertise administrator access or public email registration as active.
 
 ### Rollback readiness and data preservation
 

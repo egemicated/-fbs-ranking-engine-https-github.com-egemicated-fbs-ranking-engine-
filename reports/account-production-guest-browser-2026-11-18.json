@@ -1,0 +1,79 @@
+{
+  "checkedAt": "2026-11-19T02:47:21.551Z",
+  "passed": true,
+  "checks": [
+    {
+      "width": 320,
+      "route": "account",
+      "guest": true,
+      "noOverflow": true
+    },
+    {
+      "width": 320,
+      "route": "support",
+      "guest": true,
+      "noOverflow": true
+    },
+    {
+      "width": 320,
+      "route": "admin",
+      "guest": true,
+      "noOverflow": true
+    },
+    {
+      "width": 320,
+      "route": "my-teams",
+      "guest": true,
+      "noOverflow": true
+    },
+    {
+      "width": 320,
+      "route": "rankings",
+      "guest": true,
+      "noOverflow": true
+    },
+    {
+      "width": 320,
+      "route": "home",
+      "guest": true,
+      "noOverflow": true
+    },
+    {
+      "width": 1440,
+      "route": "account",
+      "guest": true,
+      "noOverflow": true
+    },
+    {
+      "width": 1440,
+      "route": "support",
+      "guest": true,
+      "noOverflow": true
+    },
+    {
+      "width": 1440,
+      "route": "admin",
+      "guest": true,
+      "noOverflow": true
+    },
+    {
+      "width": 1440,
+      "route": "my-teams",
+      "guest": true,
+      "noOverflow": true
+    },
+    {
+      "width": 1440,
+      "route": "rankings",
+      "guest": true,
+      "noOverflow": true
+    },
+    {
+      "width": 1440,
+      "route": "home",
+      "guest": true,
+      "noOverflow": true
+    }
+  ],
+  "scope": "Real public production browser and SDK; disposable guest contexts. No sign-in submission, account mutation, email, support request or sports-data pull."
+}

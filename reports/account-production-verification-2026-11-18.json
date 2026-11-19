@@ -1,0 +1,81 @@
+{
+  "checkedAt": "2026-11-19T02:44:49.657Z",
+  "deployment": "dep-dbv63ueq1p3s7382tjp0",
+  "commit": "16c0be0787f54aa86e895fed43f6726dc0ca7b7d",
+  "checks": [
+    {
+      "path": "/account-auth.js",
+      "status": 200,
+      "sha256": "d290a3f0676584a8d0881307213e3c32d75c3a3e0e1c137e21f6ee88efcbfe57",
+      "matchesLocal": true
+    },
+    {
+      "path": "/account-center.js",
+      "status": 200,
+      "sha256": "b73e3d40e3272dc5afadb80a0e9bdb8c36426fe98c258b2d1f83154b2206bd30",
+      "matchesLocal": true
+    },
+    {
+      "path": "/account-administration.js",
+      "status": 200,
+      "sha256": "e33f92d3ae4d7dbbec74936b6cd5eb5a46ac1d3586cb50e09ddbddb4e9622c49",
+      "matchesLocal": true
+    },
+    {
+      "path": "/account-support.js",
+      "status": 200,
+      "sha256": "f242399667610a4bbb9223dfc884fc5893b188753092edd74e432afb1a083bd4",
+      "matchesLocal": true
+    },
+    {
+      "path": "/account-center.css",
+      "status": 200,
+      "sha256": "261fc4e2d2cf600312af6e16d3056eaaac0353e17e4046a100028b724c5443cc",
+      "matchesLocal": true
+    },
+    {
+      "path": "/bracket-auth.js",
+      "status": 200,
+      "sha256": "a9ca4ab185ef76da8888d14f42c388bc71c23ad240e7c3a5a703aa2ff980253c",
+      "matchesLocal": true
+    },
+    {
+      "path": "/bracket-config.json",
+      "status": 200,
+      "sha256": "faeb632d57200cac7043a961160bc499977b5ad8faf1be65d81d50df3f58dc94",
+      "matchesLocal": true
+    },
+    {
+      "path": "/app.js",
+      "status": 200,
+      "sha256": "4770c15ea62d2ce339e7f864ec8243620137d718471bb174ab8ca9f27135244b",
+      "matchesLocal": true
+    },
+    {
+      "path": "/data/rankings.json",
+      "status": 200,
+      "sha256": "1c23e9d2335217f67f9da49535c9169a50cb5a43e455bfe4a0f5a1bde4f934e4",
+      "matchesLocal": true
+    }
+  ],
+  "home": {
+    "status": 200,
+    "metaCsp": true,
+    "noReferrerMetadata": true,
+    "headers": {
+      "content-security-policy": null,
+      "x-frame-options": null,
+      "referrer-policy": null,
+      "x-content-type-options": "nosniff",
+      "strict-transport-security": "max-age=315360000; includeSubdomains; preload",
+      "permissions-policy": null
+    }
+  },
+  "gates": {
+    "emailRegistrationUi": false,
+    "passwordRecoveryUi": false,
+    "supportNotificationUi": false
+  },
+  "scope": "Public GET requests and exact static-asset/publication byte comparison. No signed-in user, email, support request or CFBD pull.",
+  "passed": true
+}

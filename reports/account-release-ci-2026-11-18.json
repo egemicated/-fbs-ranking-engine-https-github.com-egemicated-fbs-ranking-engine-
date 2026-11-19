@@ -1,0 +1,83 @@
+{
+  "checkedAt": "2026-11-19T02:48:35.979Z",
+  "commit": "16c0be0787f54aa86e895fed43f6726dc0ca7b7d",
+  "runId": 44446209050,
+  "jobs": [
+    {
+      "id": 135298860431,
+      "status": "completed",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "conclusion": "success"
+        },
+        {
+          "name": "Initialize containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npm ci",
+          "conclusion": "success"
+        },
+        {
+          "name": "Full Node test suite",
+          "conclusion": "success"
+        },
+        {
+          "name": "Isolated migrations, privacy, and account SQL tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Pinned managed Auth integration tests",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run node scripts/prepare-static.js",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run npx playwright install --with-deps chromium",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run node scripts/browser-quality.mjs",
+          "conclusion": "success"
+        },
+        {
+          "name": "Account and administration browser regressions",
+          "conclusion": "success"
+        },
+        {
+          "name": "Browser security policy enforcement",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "conclusion": "success"
+        },
+        {
+          "name": "Stop containers",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "scope": "GitHub Actions release evidence; production email and signed-in journeys remain separate gates"
+}

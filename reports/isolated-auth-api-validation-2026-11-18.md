@@ -75,3 +75,7 @@ On Windows, set `AUTH_TEST_RUNTIME` to the temporary runtime directory, `AUTH_TE
 * No ranking formula, calibration coefficient, historical input, forecast, scheduled publication or production account changed.
 
 These checks provide a reproducible free Auth regression layer. They supplement the existing Node, SQL and browser suites and do not authorize disabling working Google sign-in or activating unverified email delivery.
+
+## Subsequent Linux release verification
+
+The unmodified official Linux artifact subsequently passed all 13 groups against PostgreSQL 17 in [GitHub release run 44446209050](https://github.com/egemicated/-fbs-ranking-engine-https-github.com-egemicated-fbs-ranking-engine-/actions/runs/44446209050), for application commit `16c0be0787f54aa86e895fed43f6726dc0ca7b7d`. All 14 application migrations applied. The complete Node, SQL and browser release gates also passed. This adds real Linux evidence without changing the earlier Windows run's provenance or implying Brevo inbox receipt, external Google OAuth or signed-in production verification. [Release details](account-platform-release-2026-11-18.md)
