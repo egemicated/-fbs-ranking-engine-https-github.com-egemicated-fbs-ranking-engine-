@@ -1,0 +1,202 @@
+{
+  "checkedAt": "2026-11-19T14:27:51.407Z",
+  "applicationCommit": "19310b3c60a5214d3b0eb5a30a47f44a89f29985",
+  "dataCommit": "8cc9a3aa8a24d744119c8d0534dfe529fe59f1e4",
+  "dataDeploy": "dep-dbvgcgjm8hqs73b4s92g",
+  "dataDeployFinishedAt": "2026-11-19T14:25:43.614033Z",
+  "sourceFetchedAt": "2026-11-19T14:22:05.068Z",
+  "modelAsOf": "2026-11-19T14:22:06.297Z",
+  "snapshotHash": "6453abdbdc75b809981373796142b0c7771f4d6d5ec328dfe5df76bb90b93b35",
+  "gamesUsed": 3479,
+  "fbsTeams": 138,
+  "fcsTeams": 128,
+  "performance": {
+    "status": "experimental",
+    "coverage": {
+      "measuredFbsTeams": 138,
+      "sourceFbsTeams": 138,
+      "measuredFbsGames": 757,
+      "eligibleFbsGames": 757,
+      "measuredFcsContextGames": 590,
+      "eligibleFcsContextGames": 590,
+      "measuredFcsTeams": 128,
+      "sourceFcsTeams": 128,
+      "measuredFcsGames": 713,
+      "eligibleFcsGames": 713
+    },
+    "reconciledExplanations": 266,
+    "exactCutoffAndHash": true,
+    "remainingCallsObservation": 931,
+    "quotaObservedAt": "2026-11-19T14:22:32.470Z"
+  },
+  "finals": [
+    {
+      "id": "401866467",
+      "status": "final",
+      "homePoints": 33,
+      "awayPoints": 34,
+      "capturedAt": "2026-11-12T15:42:49.184Z"
+    },
+    {
+      "id": "401866469",
+      "status": "final",
+      "homePoints": 40,
+      "awayPoints": 21,
+      "capturedAt": "2026-11-12T15:42:49.184Z"
+    }
+  ],
+  "preservedModels": [
+    {
+      "file": "published/weekly-picks.json",
+      "unchangedOriginalSavedForecasts": 139
+    },
+    {
+      "file": "published/weekly-fcs-picks.json",
+      "unchangedOriginalSavedForecasts": 60
+    }
+  ],
+  "modelHashes": [
+    {
+      "file": "data/model.json",
+      "sha256": "dfae27e9a2b56a6df6d696c21be2f3a2cc841d631ecaf98813dc8c7c5db2d33a",
+      "unchangedFromBaseline": true
+    },
+    {
+      "file": "data/publication-model.json",
+      "sha256": "177ef4d5248bc56f133944edd80bf6db76a304f5662b5e9c741672ddaa331bc9",
+      "unchangedFromBaseline": true
+    },
+    {
+      "file": "data/performance-model.json",
+      "sha256": "f768d939f97ee5cad5bbcafb90f38df4188afc3f588ab3f59fb15efba1afea35",
+      "unchangedFromBaseline": true
+    },
+    {
+      "file": "src/engine.js",
+      "sha256": "8a1e5de4c96474ea4b999293fe2576b4a369fb9ef7e9720833c54779166f71b1",
+      "unchangedFromBaseline": true
+    }
+  ],
+  "checks": [
+    {
+      "path": "data/rankings.json",
+      "status": 200,
+      "sha256": "1ab681fb54a6b5428fd12424f3f8ee12b831c98d553536a24cd060279d20a0d3",
+      "matchesTestedBuild": true
+    },
+    {
+      "path": "data/weekly-picks.json",
+      "status": 200,
+      "sha256": "da724cd0c9fb0d4b971a0801f674adb87831fc3014f4d2e2bb79cd7d4addc63d",
+      "matchesTestedBuild": true
+    },
+    {
+      "path": "data/performance.json",
+      "status": 200,
+      "sha256": "a1374e0e41e1b71eebb017e484130fe5797996d8f56642f3edd214245c573c58",
+      "matchesTestedBuild": true
+    },
+    {
+      "path": "data/weekly-fcs-picks.json",
+      "status": 200,
+      "sha256": "4c9f7d6446aab42b0bcb56f7e2d3a9ac1bee59c8f3d451ac46187f9362393f8b",
+      "matchesTestedBuild": true
+    },
+    {
+      "path": "searchable-team-select.js",
+      "status": 200,
+      "sha256": "8fd2d01d9eba14134120d043e53206d908fef917b24e6b2e28fec529cb17004f",
+      "matchesTestedBuild": true
+    },
+    {
+      "path": "account-support.js",
+      "status": 200,
+      "sha256": "32b29d76215287b4ea4563ad36c81d7aeeb3be3a7d1cf6ef502b3bb7d1da000d",
+      "matchesTestedBuild": true
+    },
+    {
+      "path": "account-administration.js",
+      "status": 200,
+      "sha256": "4ae2d15d1ff8bf21b34a74b525d4ac1147c84e50eee8e29e9bdeaf9e9f5504d7",
+      "matchesTestedBuild": true
+    },
+    {
+      "path": "scoreboard.js",
+      "status": 200,
+      "sha256": "f9a530ca13ae94ffef7c696010b8f9cdc961ffaab64e66379d8f611f3dbf7b5a",
+      "matchesTestedBuild": true
+    },
+    {
+      "path": "page-routes.js",
+      "status": 200,
+      "sha256": "be17ebf5df1eea807336746670d71b80b428cff13d13d8579f0762773dcdfc00",
+      "matchesTestedBuild": true
+    },
+    {
+      "path": "data/conferences/2025.json",
+      "status": 200,
+      "sha256": "6ecceac72c9f1fd1ece7f66d313d5f82e1c77ececd0ba5e7a232c744047dd9bf",
+      "matchesTestedBuild": true
+    },
+    {
+      "path": "data/conferences/2026.json",
+      "status": 200,
+      "sha256": "cb9dfefacc845c486f6ab62f6009d046726c9c8a2c5ab1c72f991a0136bd2188",
+      "matchesTestedBuild": true
+    },
+    {
+      "path": "ranking-history.json",
+      "status": 200,
+      "sha256": "11caababa12214329257b67d464fde6725c8d1c95f69ea090eecb84081156fc9",
+      "matchesTestedBuild": true
+    }
+  ],
+  "pages": [
+    {
+      "path": "/",
+      "status": 200,
+      "canonicalAndOpenGraphPresent": true
+    },
+    {
+      "path": "/team/252/",
+      "status": 200,
+      "canonicalAndOpenGraphPresent": true
+    },
+    {
+      "path": "/scoreboard/",
+      "status": 200,
+      "canonicalAndOpenGraphPresent": true
+    },
+    {
+      "path": "/ranking-history/",
+      "status": 200,
+      "canonicalAndOpenGraphPresent": true
+    },
+    {
+      "path": "/conference-strength/",
+      "status": 200,
+      "canonicalAndOpenGraphPresent": true
+    },
+    {
+      "path": "/privacy/",
+      "status": 200,
+      "canonicalAndOpenGraphPresent": true
+    },
+    {
+      "path": "/terms/",
+      "status": 200,
+      "canonicalAndOpenGraphPresent": true
+    },
+    {
+      "path": "/support/",
+      "status": 200,
+      "canonicalAndOpenGraphPresent": true
+    },
+    {
+      "path": "/beat-the-model/",
+      "status": 200,
+      "canonicalAndOpenGraphPresent": true
+    }
+  ],
+  "passed": true
+}

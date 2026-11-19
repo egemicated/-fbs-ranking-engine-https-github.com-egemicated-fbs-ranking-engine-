@@ -1,0 +1,26 @@
+{
+  "scope": "Post-live-reply read-only aggregate verification. One clearly identified response was appended to the administrator’s existing controlled support test; no request message, internal note, account, profile, preference or saved pick was altered.",
+  "checks": {
+    "checked_at": "2026-11-19 14:25:15.776164+00",
+    "accounts": 3,
+    "saved_picks": 134,
+    "picks_digest": "5dfea904ed227a2eba0070bce9fbea73",
+    "profiles_digest": "87ae74ad10643f11ac2ac189221cfe37",
+    "preferences_without_seen_digest": "a3f2864da419ad871eb8f9502b0a08c3",
+    "private_responses": 1
+  },
+  "preserved": {
+    "accounts": true,
+    "original134Picks": true,
+    "profiles": true,
+    "preferencesExcludingSeen": true
+  },
+  "liveBrowser": {
+    "verifiedAdminSession": true,
+    "controlledPrivateReplySaved": true,
+    "ownerHistoryReplyVisible": true,
+    "internalNoteAbsentFromOwnerView": true,
+    "conditionalDeletionAcknowledgment": true,
+    "newCredentialsEntered": false
+  }
+}
