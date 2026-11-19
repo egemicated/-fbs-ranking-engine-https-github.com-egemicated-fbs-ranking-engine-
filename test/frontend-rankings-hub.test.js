@@ -286,11 +286,15 @@ test('same-week Coaches and AP polls use their own archived SOR cutoff', async (
   assert.match(coaches, /Games through Nov 14, 2026/);
   assert.match(coaches, /saved SOR checkpoint/i);
   assert.match(rankingTable(coaches), /<th scope="col">SOR checkpoint<\/th>/);
+  assert.match(coaches, /Forge’s ballot covers games through Nov 15, 2026\. The Coaches Poll covers games through Nov 14, 2026\./);
+  assert.match(coaches, /href="\/forge-rankings\/\?week=11">View Forge’s ballot for this week/);
+  assert.match(rankingTable(coaches), /<tr><th scope="row">1<\/th><td>.*?Utah.*?<\/td><td>—<\/td><td>.*?Georgia/);
   assert.match(rankingTable(coaches), /Ole Miss[\s\S]*6–3/);
   const ap = await page.go('#polls/ap/11');
   assert.match(ap, /Games through Nov 15, 2026/);
   assert.match(rankingTable(ap), /<th scope="col">SOR<\/th>/);
   assert.doesNotMatch(ap, /saved SOR checkpoint/i);
+  assert.doesNotMatch(ap, /The table only compares editions with matching cutoffs/);
   assert.match(ap, /Forge ballot reconstructed Nov 16, 2026/);
 });
 

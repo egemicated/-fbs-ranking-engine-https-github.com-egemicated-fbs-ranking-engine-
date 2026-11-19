@@ -1342,6 +1342,7 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
   const savedCheckpoint = Boolean(official && official === checkpoint);
   const sorLabel = replay ? 'SOR replay' : savedCheckpoint ? 'SOR checkpoint' : 'SOR';
   const forge = gamesThrough && weekForge?.gamesThrough === gamesThrough ? weekForge : undefined;
+  const separateForgeBallot = weekForge && !forge && typeof weekForge.gamesThrough === 'string';
   const teams = new Map(state.snapshot.rankings.map(team => [team.name, team]));
   const columns = [sor, forge, poll].map(edition => [...editionRankMap(edition).values()]
     .filter(row => Number.isInteger(row.rank) && row.rank >= 1 && row.rank <= 25));
@@ -1365,6 +1366,7 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
   return `<section class="panel edition-panel"><div class="panel-body">
     ${tabs}<div class="edition-controls">${editionPicker(weeks, week)}${editionLink}</div>
     <h2>${editionLabel(week)}</h2><p>${gamesThrough ? `Games through ${editionDate(gamesThrough)}.` : 'The poll’s exact game cutoff has not been verified.'}${poll ? ` ${source.name} released ${editionDate(poll.released)}.` : ''}${official ? ` SOR published ${editionDate(official.released)}.` : ''}${forge ? ` Forge ballot reconstructed ${editionDate(forge.released)}.` : ''}</p>
+    ${separateForgeBallot ? `<p class="compact-note edition-context">Forge’s ballot covers games through ${editionDate(weekForge.gamesThrough)}. ${poll && gamesThrough ? `The ${source.name} covers games through ${editionDate(gamesThrough)}. ` : ''}The table only compares editions with matching cutoffs. <a class="text-link" href="${routeHref(`forge-top-25/${week}`)}">View Forge’s ballot for this week ${icon('arrow')}</a></p>` : ''}
     ${savedCheckpoint ? '<p class="compact-note edition-context">This saved SOR checkpoint covers games through the same date as the poll. The full week includes later games.</p>' : ''}
     ${replay ? `<p class="compact-note edition-context">SOR replay calculated ${editionDate(replay.released)} using the published SOR formula and ${replay.networkGames.toLocaleString()} confirmed games through this cutoff. That includes ${replay.fbsGames.toLocaleString()} games involving FBS teams.</p>` : ''}
     ${summary.length ? `<p class="edition-notice">${summary.join(' · ')}.</p>` : ''}
