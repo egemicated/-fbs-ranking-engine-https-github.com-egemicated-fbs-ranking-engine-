@@ -53,9 +53,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           if [[ ! -d published/team-availability ]]; then exit 0; fi
-          node scripts/prepare-static.js
           git add -- published/team-availability
-          if git diff --cached --quiet; then exit 0; fi
+          if git diff --cached --quiet; then
+            echo "No changed availability reports to publish."
+            exit 0
+          fi
+          node scripts/prepare-static.js
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git commit -m 'Publish official player availability'

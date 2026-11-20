@@ -118,7 +118,12 @@ function updateMetadata(event) {
   const url = new URL(location.href);
   const legacy = url.pathname === '/' ? legacyRouteFromHash(url.hash) : null;
   const route = event?.detail?.route ?? (pendingAccountRoute(url) === 'account' ? 'account' : legacy ?? routeFromUrl(url));
-  applyMetadata(pageMetadata(route));
+  const page = pageMetadata(route);
+  // A direct static page already includes its exact metadata. The registry is
+  // needed when navigation reuses that document for a different public page.
+  if (!event && page.canonical && document.querySelector('link[rel="canonical"]')?.href === page.canonical) return;
+  applyMetadata(page);
+  if (page.noindex) return;
   metadataRequest ??= fetch('/data/page-metadata.json', { cache: 'no-cache' })
     .then(response => response.ok ? response.json() : {})
     .catch(() => ({}));

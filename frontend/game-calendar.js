@@ -1,5 +1,5 @@
 import { legacyRouteFromHash, routeFromUrl, routeHref } from './clean-routes.js';
-import { PUBLIC_SITE_ORIGIN } from './page-routes.js';
+import { PUBLIC_SITE_ORIGIN } from './page-routes.js?v=navigation-metadata';
 
 const legacyOrigin = 'https://fbs-intelligence.onrender.com';
 const previewHosts = new Set(['localhost', '127.0.0.1', '[::1]']);

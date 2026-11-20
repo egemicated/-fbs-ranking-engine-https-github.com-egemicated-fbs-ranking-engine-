@@ -1,249 +1,54 @@
-# Independent FBS Ranking Engine
+# The Games Decide
 
-An independent, experimental college football ranking engine. No human polls,
-recruiting ratings, betting lines, third-party team ratings, conference bonuses,
-or manual team overrides enter its calculations. The FBS Intelligence site serves
-cached rankings without a login.
+[The Games Decide](https://www.thegamesdecide.com/) publishes independent college football rankings, team evidence, and saved pregame forecasts. Strength of Record (SOR) ranks achieved results. Predictive Strength estimates future matchups. Human polls and Forge’s AI-authored ballot have their own comparison views.
 
-## Run
+## Architecture
 
-Requires Node.js 24. No external runtime packages or database.
+- **Website** — Native HTML, CSS, and browser modules in `frontend/`. The static build creates crawlable public pages, social previews, and versioned publication metadata. Public rankings and team evidence are available without an account.
+- **Publication** — The engine in `src/` and publishers in `scripts/` turn season data into snapshots, predictions, and source evidence. Render serves `static-dist/` from committed inputs. Cloudflare manages the public domain.
+- **Accounts** — Supabase Auth handles email verification, password recovery, Google sign-in, and user sessions. Database policies and functions enforce account ownership, contest deadlines, and administrative access. Private support requests use Supabase and a server-side email notification path. See the [database runbook](supabase/README.md) and [account release evidence](reports/account-platform-release-2026-11-18.md).
+- **Research** — `research/` and `reports/` retain experiments, validation evidence, and data lineage. Frozen challenger forecasts and retrospective replays have their own evidence. Production SOR and its approved parameters are documented in [METHODOLOGY.md](METHODOLOGY.md).
+
+## Build and verify locally
+
+Use Node.js 24 and the committed lockfile.
 
 ```sh
+npm ci
 npm test
-npm run import -- --from 2004 --to 2025
-npm run backtest -- --mode tune
-npm run build
-npm run report
-npm start
+node scripts/prepare-static.js --build-only
+npx playwright install chromium
+node scripts/browser-quality.mjs
 ```
 
-The API serves `/rankings`, `/rankings/2025`, and `/health` on port 3000.
-Viewing rankings requires no account or password. There are no public write or
-administration endpoints. Data acquisition/builds run from the command line or
-deployment pipeline. HTTPS is provided by the host. Credentials belong in host
-environment variables, never in source code or API responses.
+Run the browser against `static-dist/` as the quality script does. `npm run preview` still serves the development API at `http://127.0.0.1:3100`. Both paths use committed publications and make zero CFBD requests. A plain `node scripts/prepare-static.js` runs the Node checks as well as building. The isolated [PostgreSQL test procedure](supabase/README.md) uses a disposable database.
 
-## Frontend design preview
+Render’s static site runs `node scripts/prepare-static.js` and publishes `static-dist/`. The build verifies a successful **Engine checks** run for the exact main commit before publishing. That workflow runs Node tests, isolated PostgreSQL checks, pinned managed Auth checks, and desktop/mobile browser suites. Render repeats the artifact integrity checks when it generates the site. Automatic data commits dispatch Engine checks explicitly because GitHub’s bot-token pushes do not trigger another push workflow. Failed or unavailable release evidence blocks the new deployment.
 
-`npm run preview` serves the frontend and committed ranking publication at
-`http://127.0.0.1:3100`. It makes no CFBD API calls. The approved design is served by the existing Render web service, with a home dashboard, searchable rankings and conference filters, team
-dashboards, an experimental matchup lab, and methodology/data coverage views.
-The working brand is FBS Intelligence; it can change when the team name is set.
+## Publication and sources
 
-The frontend is buildless HTML, CSS and JavaScript in `frontend/`. Only an
-explicit static-file allowlist is served. Ranking JSON routes remain intact;
-service metadata is available at `/api`. Team logos load from ESPN's public
-image CDN, with initials as a fallback. Display fonts are bundled under the
-SIL Open Font License. The unbranded stadium illustration was generated with
-the built-in image tool; its production prompt is in
-`frontend/assets/ASSET-NOTES.txt`.
+| Source | Platform use |
+| --- | --- |
+| [CollegeFootballData](https://collegefootballdata.com/) | Results, schedule, team classifications, player statistics, and inputs for the site’s own ratings. See [source terms](https://collegefootballdata.com/terms). |
+| [sportsdataverse/cfbfastR](https://cfbfastr.sportsdataverse.org/reference/load_cfb_schedules.html) | Historical schedule inputs for reproducibility. The import discards source Elo and source win probabilities. |
+| [ESPN](https://www.espn.com/college-football/scoreboard) | Scoreboard and kickoff verification, school images, and some poll ingestion. The live endpoint and image references require separate rights review before broader use. |
+| [AP](https://apnews.com/hub/ap-top-25-college-football-poll), [AFCA](https://www.afca.com/polls/), [CFP](https://collegefootballplayoff.com/rankings) | Dated human-poll comparisons and official playoff context. The ranking engine calculates SOR independently. |
+| [Official conference availability reports](src/player-availability.js) | Game-specific reported statuses and source links where an official feed is covered. |
 
-GitHub Actions checks for new results daily at 3:45 a.m. Mountain Time. Render
-promotes the committed snapshot using the pinned
-publication policy. Deployments use the committed data. Each snapshot is promoted
-before its source evidence and publication are saved. To reconstruct an archive cutoff use
-`npm run build -- --before 2025-10-01T00:00:00Z`.
+The [results workflow](.github/workflows/weekly.yml) checks at **3:45 a.m. Mountain Time daily** and has a conditional **8:11 p.m. Sunday** backup. The saved schedule guards whether a check needs a new pull. A full refresh uses two CFBD calls for results and FBS membership, plus one shared advanced-statistics request for optional Experimental Performance. The [player workflow](.github/workflows/player-stats.yml) uses the existing encrypted cache on Sundays when due. The [CFP bracket workflow](.github/workflows/cfp-bracket.yml) uses one postseason results call on scheduled playoff game nights. Most publication work and all ordinary page visits use stored data.
 
-## Two separate ratings
+The workflow saves forecasts before confirmed kickoff, grades final results, and retains capture timestamps on valid saved picks. Failed imports leave the previous publication in service. Performance renders only when its season, cutoff, and base snapshot align with the primary rankings. Availability and poll jobs use their respective source windows. Kickoff or contest-only recovery modes can use the committed slate with zero CFBD calls.
 
-**Strength of Record (primary current national and conference rank)** uses the
-tested, frozen division-aware SOR calculation. It asks how likely an average FBS
-reference team would be to earn at least the observed wins against that schedule.
-Each game's difficulty is measured after removing that game. Fixed historical
-coefficients account for venue and the residual FBS/FCS gap. Score margins, past
-team success, polls and conference prestige supply no achievement credit.
+Public artifacts include rankings, team explanations, saved and retrospective model records, and published poll and conference views. Keep raw provider responses, normalized source caches, API keys, and private account records outside the public build and repository. `data/raw/`, `data/seasons/`, and research caches are local or job-workspace paths. Source checksums, derived evidence, and historical snapshots support auditing. Public distribution rights depend on the source and the artifact.
 
-Colley remains the underlying opponent network, displayed SOS and retained
-baseline. In JSON, `displayRank`/`sor` identify the current ordering;
-`rank`/`achievement` retain Colley for reproducible comparisons. Historical
-snapshots remain Colley and are labeled accordingly. Identical SOR scores share
-a rank; idle teams remain unranked. The previous full current publication is
-preserved at `published/archive/colley-2026-11-06.json`. The data's original
-`asOf` stays unchanged when a model is promoted; `modelPublishedAt` is separate.
+## Account and operational boundaries
 
-**Strength (experimental predictive rating)** fits opponent-adjusted, bounded
-score margins with a location adjustment. It starts with our own previous
-season's strength, regressed toward zero. It uses no imported team ratings.
-Hyperparameters are selected using forward predictions in 2019–2022; 2023–2025
-are a separate evaluation window. Probabilities are explicitly uncalibrated.
+The browser uses the Supabase project URL and its publishable key. Privileged keys for contest grading and support dispatch belong in GitHub Actions secrets or the relevant Supabase server settings. Account preferences, support requests, and private picks are isolated by database rules. Public contest picks require the participant’s sharing preference and the corresponding confirmed kickoff. The administrator interface requires a provisioned role and a second authentication factor. Database migrations and email-provider changes are separate from the static deployment.
 
-See [METHODOLOGY.md](METHODOLOGY.md) for equations, assumptions, and limitations.
+The production origin is `https://www.thegamesdecide.com`. Preserve its existing account callback allowlist and Supabase provider callback when working on authentication. Use disposable test identities and the isolated database harness for account changes. Current privacy, support, and methodology explanations are available from the site footer.
 
-## First validation run
+## Recovery and history
 
-The selected model predicted 71.27% of winners in 2,398 FBS-vs-FBS games from
-2023–2025, versus 58.63% for the simple home-only baseline. Log loss was 0.5812
-versus 0.6778; Brier score was 0.1971 versus 0.2424. These are preliminary
-retrospective benchmarks, not evidence of superiority to mature ranking
-systems or calibrated betting probabilities. See
-[reports/validation.json](reports/validation.json).
+To roll back a code release, revert its code on the current main branch, run Engine checks on the new revision, and verify the previous behavior on Render. Keep later valid data publications and account records. For a bad data update, identify the affected publication files, restore a verified version with matching ranking, forecast, and companion cutoffs, then verify the identifiers after deployment. Use the designated workflow recovery modes for a missed results or grading run. See the [publication reliability report](reports/publication-reliability-2026-11-18.md).
 
-The first import contains 138 teams classified FBS in the 2026 schedule.
-All have completed games. The historical files cover 2004–2026, but contain
-no postseason rows before 2023 and omit some inactive programs in 2020.
-One exact duplicate fixture was removed; two incomplete final scores were
-excluded. See [reports/data-quality.json](reports/data-quality.json).
-
-## Data and provenance
-
-The default importer uses the public schedule CSVs from
-[sportsdataverse/cfbfastR-data](https://github.com/sportsdataverse/cfbfastR-data),
-whose [schedule loader documentation](https://cfbfastr.sportsdataverse.org/reference/load_cfb_schedules.html)
-attributes games and schedules to CollegeFootballData.com. Source-supplied Elo
-and win probabilities are discarded through a field whitelist. Original files,
-retrieval times and SHA-256 checksums are retained locally. Raw and normalized
-data are excluded from Git. Source availability and downstream usage rights
-must be reviewed before broad redistribution of raw data.
-
-The weekly publisher uses CFBD directly: store `CFBD_API_KEY` as a GitHub Actions
-repository secret. For a local manual import, set the same environment variable
-and add `--provider cfbd` to import. It fetches a year-specific
-FBS roster and game period scores. No key is needed for the default public
-schedule import. See [CFBD data availability](https://api.collegefootballdata.com/data-availability).
-
-## Storage
-
-`data/raw/` preserves downloaded source files; `data/seasons/` holds normalized
-seasons; `data/snapshots/` holds reproducible ratings; `data/reports/` holds
-validation reports and individual predictions. `data/model.json` holds selected
-parameters. Local JSON files keep the first engine simple; a database is not
-needed for immutable season snapshots. Hosting may rebuild these files from
-source during deployment rather than require a paid persistent disk.
-
-## Render deployment
-
-Use one Node web service with build command `npm run prepare:render` and start
-command `npm start`. Set `RANKING_SEASON=2026` and `NODE_ENV=production`.
-The preparation script runs tests, imports the historical schedules afresh,
-and generates all season snapshots before the service starts. No data API key
-or paid database is required. Render supplies `PORT`, `RENDER`, and HTTPS.
-
-The service serves the frontend and read-only JSON API. The free plan can sleep when idle.
-
-## Weekly CFBD publication
-
-The Rankings hub includes [Conference Strength](https://fbs-intelligence.onrender.com/#conference-strength/records)
-with a head-to-head matrix, matchup details, and Experimental quality rankings.
-The static build generates the current season's conference data from the
-existing results publication. The season menu also includes verified derived
-archives. See the [conference methodology](METHODOLOGY.md#conference-strength-and-quality-of-wins)
-for data coverage and the exact scoring formula.
-
-`.github/workflows/weekly.yml` checks for new FBS and FCS results **daily at 03:45
-America/Denver**. It uses the saved schedule to limit pulls to recent unresolved
-games and the weekly refresh of the upcoming slate. The **Sunday 20:11** backup
-checks for finals from Sunday games. GitHub's schedule follows Mountain Time
-through daylight saving changes. GitHub scheduling and Render deployment can
-delay the actual publication.
-
-Set the repository secret `CFBD_API_KEY` once. The workflow fetches the current
-season's games and FBS roster (two API calls for the existing models),
-uses our stored prior-season strength from `published/prior-2025.json`, and
-commits the derived `published/latest.json`. The separate experimental Performance
-step fetches advanced game statistics once and commits
-`published/performance-latest.json`. A full refresh uses three CFBD calls. The
-schedule uses at most 108 calls in a calendar month if all scheduled checks pull,
-before separate player stats and manual requests. Render automatically deploys
-the commit. No paid cron service, database, or additional user login is required.
-Beat the Model grades saved picks after the results are committed. Set
-`CFP_SUPABASE_SECRET_KEY` to the project's server-side `sb_secret_` API key in
-GitHub Actions secrets. To retry grading from the committed results, enable
-`contest_sync_only` when manually running **Weekly CFBD rankings**. This uses
-zero CFBD calls.
-The repository is public and the workflow uses standard `ubuntu-latest` runners,
-whose compute is free outside the shared private-repository Actions allowance.
-The workflow has a five-minute timeout. The optional
-Performance calculator has its own failure handling: its failure preserves the
-existing SOR/predictive publication. A stale Performance artifact is hidden
-until it matches the same primary snapshot, season and cutoff.
-No paid usage or billing setting is enabled. Derived ranking snapshots, frozen
-research comparisons and source checksums are uploaded with 14-day retention;
-raw CFBD responses and normalized source datasets stay in the private job
-workspace and are not uploaded publicly. Exact raw inputs are not retained
-after that job workspace expires. Artifact storage remains subject to GitHub's
-included storage allowance. No Actions cache is used.
-
-Confirmed completed Saturday games count even if they finished less than
-24 hours earlier. In-progress games do not count. Data missing from CFBD at
-retrieval waits until the next successful publication. Failed imports leave
-the previous snapshot intact. API traffic never spends CFBD calls. The key
-never leaves GitHub's secret-backed job environment for Render or a browser.
-
-Run the workflow manually for setup or an intentional one-off update; creating
-or updating `published/refresh-request.json` on main also requests a run. To
-move to another season, update `RANKING_SEASON` in the workflow and Render,
-and supply our calculated strength prior for that season's previous year.
-
-Render builds continue reconstructing archived historical seasons, then restore
-the committed weekly snapshot as the authoritative current-season publication.
-Restarts and source-code deploys therefore preserve that publication until the
-next successful weekly update. Historical CSV coverage limitations remain.
-
-## CFP committee poll publication
-
-`.github/workflows/cfp.yml` opens the check just before each remaining 2026
-committee announcement. It checks the official CFP rankings page about once
-per minute until the dated Top 25 appears or the check window ends. It commits
-only the comparison archive. Render deploys that update using zero CFBD calls.
-If a release runs past the window, rerun the workflow with its release date.
-Set the workflow times and publisher release dates when the next season's
-official schedule is published.
-
-## CFP bracket contest
-
-The site serves a [2025 practice bracket](https://fbs-intelligence.onrender.com/#bracket/demo)
-with all 11 [official results](https://collegefootballplayoff.com/sports/2026/1/27/cfp-recap-2526).
-The live contest uses a Supabase project for Google sign-in, saved entries,
-and scoring. The database accepts one complete entry per account before
-first kickoff. It grades the four rounds at 1, 2, 4, and 8 points per correct
-pick, with shared ranks for ties and only nicknames and standings shown publicly.
-
-1. Apply the migration in `supabase/migrations/`. The public project URL and
-   publishable key go in `frontend/bracket-config.json`. Set `enabled` to
-   `true` after the hosted migration and Google sign-in are ready.
-2. Enable Google as the Supabase auth provider using a Google Cloud web OAuth
-   client. Set the site URL to `https://fbs-intelligence.onrender.com` and add
-   `https://fbs-intelligence.onrender.com/?cfp=1` to the redirect allowlist.
-   Google uses the Supabase project's `/auth/v1/callback` URL.
-3. Save a Supabase secret API key in GitHub Actions as
-   `CFP_SUPABASE_SECRET_KEY`. The browser only uses the publishable key.
-4. Before Selection Day, verify the free database is active. On Selection Day,
-   verify the 12 teams, bracket paths, and kickoffs against
-   the [official CFP bracket](https://collegefootballplayoff.com/sports/2026/8/9/bracket-place-holder).
-   Commit `data/cfp-bracket-2026.json` to `main`. Use the practice bracket as
-   the shape reference and include `season`, `lockAt`, and the 11 `slots`, with
-   team names matching the current FBS roster. Add `homeSeed` and `awaySeed`
-   on the sides with named entrants. Omit historical `results`.
-   `lockAt` must equal the earliest kickoff. The push publishes the field.
-
-The rankings workflow grades from its saved finals, with no additional CFBD
-request. `cfp-bracket.yml` also runs a one-request postseason check on each of
-the seven playoff game days after the last scheduled game. To retry a missed
-update, dispatch `CFP bracket contest` with `game-night`. If the field update
-failed, dispatch it with `selection`. The database retains previously verified
-finals and computes standings from the saved picks and published winners.
-
-## Experimental Performance
-
-The third ranking is **scrimmage consistency**, a separate opponent-adjusted
-net-success-rate model. Scores are percentage points above the measured FBS
-average. It retains individual FCS opponents, uses learned venue/subdivision
-context and gives no previous-season team credit. Its general starting context
-comes from the completed previous season; current team effects start neutral.
-The selected 2026 parameters and prior-input fingerprints live in
-`data/performance-model.json`.
-
-`GET /performance` serves only the committed derived artifact. The main API
-advertises it only when the season, source snapshot, cutoff and FBS identities
-match. Browsers never call CFBD. Render builds copy the artifact and do not need
-Python, NumPy, provider credentials or another data request.
-
-This is an experimental completed-game view, not a complete football grade or
-a calibrated forecast. The original historical FBS/FCS forecasting gate remains
-failed and is retained in its validation metadata. Recent-prior forward tests
-and as-of-date withheld-game checks are documented in
-`research/results/performance-display/`; those checks do not retrospectively
-turn the original result into a pass. Individual games can materially influence
-positions. Special teams and full turnover/scoring-opportunity costs remain
-outside this success-rate measure. It does not affect SOR, SOS or the matchup lab.
+The [legacy Node web-service runbook](https://github.com/egemicated/-fbs-ranking-engine-https-github.com-egemicated-fbs-ranking-engine-/blob/4dd4a5b1a99944a91a60073463ee32b5c6540264/README.md) records the original deployment and first validation results. Historical archives and research evidence remain in Git. No project-wide open-source license is recorded. Bundled Barlow fonts carry their [SIL Open Font License](frontend/fonts/OFL.txt). The stadium image’s creation record is in [asset notes](frontend/assets/ASSET-NOTES.txt).

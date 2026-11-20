@@ -36,9 +36,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          node scripts/prepare-static.js
           git add frontend/ranking-editions.json published/poll-history
           if git diff --cached --quiet; then exit 0; fi
+          node scripts/prepare-static.js
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git commit -m 'Publish CFP committee rankings'

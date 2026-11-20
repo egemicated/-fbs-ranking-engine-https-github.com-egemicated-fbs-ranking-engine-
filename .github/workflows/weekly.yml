@@ -78,8 +78,11 @@ jobs:
           fi
           echo "needed=$needed" >> "$GITHUB_OUTPUT"
           echo "kickoff_only=$KICKOFF_SYNC_ONLY" >> "$GITHUB_OUTPUT"
-      - if: steps.refresh-needed.outputs.needed == 'true'
-        run: npm test
+      - name: Check the engine before requesting CFBD data
+        if: steps.refresh-needed.outputs.needed == 'true'
+        run: |
+          npm ci --omit=dev
+          npm test
       - name: Fetch CFBD and calculate rankings
         id: primary-publish
         if: steps.refresh-needed.outputs.needed == 'true'
@@ -190,9 +193,8 @@ jobs:
           steps.kickoff-check.outputs.updated == 'true') }}
         env:
           GH_TOKEN: ${{ github.token }}
+          PRIMARY_REFRESH_NEEDED: ${{ steps.refresh-needed.outputs.needed }}
         run: |
-          # Verify the complete candidate before any changed data reaches main.
-          node scripts/prepare-static.js
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add published/latest.json
@@ -209,6 +211,12 @@ jobs:
           git add research/cross-division-calibration-observations/
           if test -f research/cross-division-calibration-evaluations/latest.json; then git add research/cross-division-calibration-evaluations/latest.json; fi
           if git diff --cached --quiet; then exit 0; fi
+          # Check the candidate publications. Kickoff-only changes did not run the earlier Node suite.
+          if [[ "$PRIMARY_REFRESH_NEEDED" == true ]]; then
+            node scripts/prepare-static.js --build-only
+          else
+            node scripts/prepare-static.js
+          fi
           git commit -m 'Publish weekly CFBD rankings'
           git pull --rebase origin main
           git push origin HEAD:main

@@ -15,6 +15,8 @@ const checks=[];
 try{
   for(const width of [320,375,390,768,1024,1440]){
     const context=await browser.newContext({viewport:{width,height:960},reducedMotion:'reduce'}),page=await context.newPage(),errors=[];
+    let metadataRequests=0;
+    page.on('request',request=>{if(new URL(request.url()).pathname==='/data/page-metadata.json')metadataRequests++;});
     page.on('pageerror',error=>errors.push(error.message));
     await context.route('**/*',route=>route.request().url().startsWith(base)?route.continue():route.abort());
     await openRoute(page,'compare/matchup/252/254/neutral');
@@ -41,11 +43,17 @@ try{
       assert.equal(await page.locator('main h1').count(),1,'Duplicate heading '+route);
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth===document.documentElement.clientWidth),true,route+' overflow '+width);
     }
+    const beforeMetadata=metadataRequests;
     await openRoute(page,'methodology');await page.locator('.method-grid').first().waitFor();
-    await page.locator('a[href="/beat-the-model/"]').first().click();
+    assert.equal(metadataRequests,beforeMetadata,'Direct static page should retain its prerendered metadata');
+    await Promise.all([
+      page.waitForResponse(response=>new URL(response.url()).pathname==='/data/page-metadata.json'&&response.ok()),
+      page.locator('a[href="/beat-the-model/"]').first().click(),
+    ]);
     await page.waitForURL(address('beat-the-model'));
     await page.waitForFunction(()=>document.querySelector('link[rel="canonical"]')?.href==='https://www.thegamesdecide.com/beat-the-model/');
     await page.waitForFunction(()=>document.querySelector('meta[property="og:title"]')?.content.includes('Beat the Model'));
+    assert.equal(metadataRequests,beforeMetadata+1,'Navigation should read the public metadata registry once');
     await openRoute(page,'team/252');await page.locator('.team-narrative').waitFor();
     await page.waitForFunction(()=>document.querySelector('meta[property="og:image"]')?.content.endsWith('/social/team-252.png'));
     assert.ok((await page.locator('meta[name="description"]').getAttribute('content')).includes('BYU'));

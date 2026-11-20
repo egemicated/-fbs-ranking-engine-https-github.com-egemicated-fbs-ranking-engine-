@@ -1,7 +1,7 @@
 import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
-import { join, resolve } from 'node:path';
+import { join, relative, resolve } from 'node:path';
 import { execFile } from 'node:child_process';
-import { promisify } from 'node:util';
+import { parseArgs, promisify } from 'node:util';
 import { readPublicPerformance } from '../src/public-performance.js';
 import { readFcsWeeklyPicks } from '../src/weekly-fcs-publication.js';
 import { publishDivisionSnapshot, readPublicationPolicy } from '../src/publication.js';
@@ -20,7 +20,8 @@ import { assertPublicationBundle } from '../src/publication-integrity.js';
 import { applySecurityMetadata } from '../src/security-policy.js';
 
 const root = resolve(import.meta.dirname, '..');
-await requireRenderReleaseChecks();
+const { values: options } = parseArgs({ options: { 'build-only': { type: 'boolean' } } });
+const releaseChecks = await requireRenderReleaseChecks();
 // Render's existing build command invokes this file directly. Install the
 // lockfile's build dependencies when the platform has not installed them.
 try { await import('sharp'); }
@@ -34,22 +35,27 @@ catch (error) {
   console.log(stdout.trim());
 }
 const { prerenderPublicPages } = await import('./prerender-pages.js');
-console.log('Checking application and published-data integrity before building');
-try {
-  const { stdout } = await promisify(execFile)(process.execPath, ['--test'], {
-    cwd: root, timeout: 180_000, maxBuffer: 4 * 1024 * 1024,
-  });
-  console.log(stdout.trim().split('\n').slice(-8).join('\n'));
-} catch (error) {
-  console.error(error.stdout?.trim().split('\n').slice(-45).join('\n') ?? error.message);
-  throw Error('Application quality checks failed; static publication stopped');
+if (!releaseChecks && !options['build-only']) {
+  console.log('Checking application and published-data integrity before building');
+  try {
+    const { stdout } = await promisify(execFile)(process.execPath, ['--test'], {
+      cwd: root, timeout: 180_000, maxBuffer: 4 * 1024 * 1024,
+    });
+    console.log(stdout.trim().split('\n').slice(-8).join('\n'));
+  } catch (error) {
+    console.error(error.stdout?.trim().split('\n').slice(-45).join('\n') ?? error.message);
+    throw Error('Application quality checks failed; static publication stopped');
+  }
 }
 const frontend = join(root, 'frontend');
 const published = join(root, 'published');
 const output = join(root, 'static-dist');
 const data = join(output, 'data');
 const teamDirectory = join(data, 'teams');
-const legacyHero = join(frontend, 'assets', 'stadium.png');
+const sourceOnlyFiles = [
+  'assets/stadium.png', 'assets/fbs-intelligence-logo.svg', 'assets/fbs-intelligence-icon.png',
+  'fonts/BarlowCondensed-Bold.ttf', 'fonts/BarlowCondensed-SemiBold.ttf',
+].map(file => join(frontend, file));
 
 // Build from committed results and use the same publication rules as the API.
 const [policy, source, rawHtml, accountConfig] = await Promise.all([
@@ -86,7 +92,8 @@ delete publicSnapshot.performanceEndpoint;
 if (performance) publicSnapshot.performanceEndpoint = '/data/performance.json';
 if (fcsPicks) publicSnapshot.weeklyFcsPicksEndpoint = '/data/weekly-fcs-picks.json';
 
-await cp(frontend, output, { recursive: true, filter: source => source !== legacyHero });
+await cp(frontend, output, { recursive: true, filter: source => !sourceOnlyFiles.includes(source) });
+await Promise.all(sourceOnlyFiles.map(file => rm(join(output, relative(frontend, file)), { force: true })));
 await mkdir(teamDirectory, { recursive: true });
 const teamFiles = new Set();
 const publicTeams = [...snapshot.rankings, ...(snapshot.fcsRankings ?? [])];

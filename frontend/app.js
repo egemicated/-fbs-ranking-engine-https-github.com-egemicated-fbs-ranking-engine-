@@ -1,7 +1,7 @@
 import { ACCOUNT_ROUTE_EVENT, isAccountCallbackUrl, pendingAccountRoute, safeAccountReturnPath } from './bracket-auth.js?v=clean-routes';
 import { routeFromUrl, routeHref } from './clean-routes.js';
 import { APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl } from './clean-navigation.js';
-import { formatSorScore, sorEligibleRecord } from './format.js?v=sor-transparency';
+import { formatNumber, formatProbability, formatRecord, formatSorScore, indefiniteArticle, sorEligibleRecord } from './format.js?v=sor-transparency';
 
 const BRAND = 'The Games Decide';
 const main = document.querySelector('#main');
@@ -9,7 +9,7 @@ let shareCardButton = () => '';
 let kickoffCalendar = () => '';
 let gameActionsModule;
 function loadGameActions() {
-  gameActionsModule ??= Promise.all([import('./share-card.js?v=platform-review'), import('./game-calendar.js?v=platform-review')]).then(([sharing, calendar]) => {
+  gameActionsModule ??= Promise.all([import('./share-card.js?v=platform-review'), import('./game-calendar.js?v=navigation-metadata')]).then(([sharing, calendar]) => {
     sharing.mountShareCards(main);
     shareCardButton = sharing.shareCardButton;
     kickoffCalendar = calendar.kickoffCalendar;
@@ -40,8 +40,7 @@ let scoreboardModule;
 let teamPlayersModule;
 let scoreboardPage;
 let rankingsFailed = false;
-let footballFormat;
-let footballFormatRequest;
+let gamePreferencesRequest;
 let gameFilterModule;
 let myTeamsStore;
 let favoriteSubscription;
@@ -106,12 +105,9 @@ function mountPlayerFeature(target, mount) {
   });
 }
 function esc(value) { return String(value ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c])); }
-function record(t) { return footballFormat ? footballFormat.formatRecord(t) : `${t.wins}–${t.losses}${t.ties ? `–${t.ties}` : ''}`; }
-function number(n, digits = 4) {
-  if (footballFormat) return footballFormat.formatNumber(n, digits);
-  return Number.isFinite(n) ? Number(n.toFixed(digits)).toFixed(digits) : '—';
-}
-function recordArticle(t) { return footballFormat?.indefiniteArticle(record(t)) ?? (/^(8|11|18)(?:\D|$)/.test(record(t)) ? 'an' : 'a'); }
+const record = formatRecord;
+function number(n, digits = 4) { return formatNumber(n, digits); }
+function recordArticle(t) { return indefiniteArticle(record(t)); }
 function oddsDescription(probability) {
   if (!Number.isFinite(probability)) return '';
   const displayed = Number(number(probability * 100, 1));
@@ -185,7 +181,7 @@ function conferenceRank(t) {
 }
 function rankedTeam(id) { return state.byId.get(id) ?? state.byFcsId.get(id); }
 function opponentRank(g) { const t = rankedTeam(g.opponentId); return t ? nationalRank(t) : null; }
-function probability(n) { return footballFormat ? footballFormat.formatProbability(n) : Number.isFinite(n) ? n > 0 && n < 0.0001 ? '<0.01%' : `${number(n * 100, 2)}%` : '—'; }
+const probability = formatProbability;
 function logo(t, size = '', { dark = false } = {}) {
   const initials = t.name.split(/\s+/).slice(0, 2).map(x => x[0]).join('');
   const id = encodeURIComponent(t.id);
@@ -1807,9 +1803,8 @@ window.addEventListener(APP_NAVIGATION_EVENT, event => reroute(event.detail));
 window.addEventListener('popstate', () => reroute());
 window.addEventListener('hashchange', event => reroute({ previousUrl: event.oldURL }));
 window.addEventListener(ACCOUNT_ROUTE_EVENT, () => reroute({ force: true }));
-function loadFootballHelpers() {
-  footballFormatRequest ??= Promise.all([
-    import('./format.js?v=sor-transparency').then(module => { footballFormat = module; }),
+function loadGamePreferences() {
+  gamePreferencesRequest ??= Promise.all([
     import('./game-filters.js?v=1').then(module => { gameFilterModule = module; }),
     import('./my-teams-store.js?v=1').then(module => {
       myTeamsStore = module;
@@ -1825,13 +1820,13 @@ function loadFootballHelpers() {
       void module.loadMyTeams().catch(() => {});
     }),
   ].map(request => request.catch(() => {})));
-  return footballFormatRequest;
+  return gamePreferencesRequest;
 }
 async function load(){
   rankingsFailed = false;
   try{
     const [response]=await Promise.all([
-      fetch(publicationPath('rankings'),{headers:{Accept:'application/json'}}), loadGameActions(), loadFootballHelpers(),
+      fetch(publicationPath('rankings'),{headers:{Accept:'application/json'}}), loadGameActions(), loadGamePreferences(),
     ]);
     if(!response.ok)throw Error(`Rankings returned ${response.status}`);
     const snapshot=await response.json();
