@@ -5,13 +5,17 @@
   "frozenAt": "2026-11-16T14:53:35.000Z",
   "season": 2026,
   "status": "awaiting-first-scored-game",
-  "asOf": "2026-11-19T14:22:06.297Z",
-  "generatedAt": "2026-11-19T14:22:08.564Z",
-  "resultSourceHash": "f275352f1e8a7f92ec4fb5a1f6d432a8fa958bc9c07ec030b943008de6f28e06",
-  "observationsRead": 1,
-  "selectedForecasts": 2,
+  "asOf": "2026-11-20T14:13:27.254Z",
+  "generatedAt": "2026-11-20T14:13:29.794Z",
+  "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+  "observationsRead": 2,
+  "selectedForecasts": 3,
   "duplicateCheckpoints": 0,
   "pending": [
+    {
+      "gameId": "401856879",
+      "reason": "awaiting-confirmed-final"
+    },
     {
       "gameId": "401866470",
       "reason": "awaiting-confirmed-final"
@@ -50,5 +54,5 @@
   },
   "evaluated": [],
   "interpretation": "Compare the same FBS vs. FBS outcomes from the first valid paired pregame forecast for each game. A 50% forecast receives half credit for accuracy. Brier score and log loss reward the probabilities themselves, with lower values better. Early summaries are descriptive.",
-  "reportSha256": "51f42abd0835b79e141d843929ae85c47a62c0e4fdca5725ce82f66749c2557c"
+  "reportSha256": "3d9a061f304b094bfa9601c0659e921168e2fbe1340cc55a56f21b982843bc92"
 }

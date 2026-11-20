@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "protocolId": "recent-form-shadow-v1",
+  "protocolSha256": "3b9c35d2ac91b9d11e29f83909bb827797e555e008ddd3c6d4399ff82ccb8ea4",
+  "season": 2026,
+  "sourceFetchedAt": "2026-11-20T14:13:26.450Z",
+  "asOf": "2026-11-20T14:13:27.254Z",
+  "weeklyPicksAsOf": "2026-11-20T14:13:29.051Z",
+  "sourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+  "snapshotHash": "e28b48d559b8ddde703168997b86045be1178fed1b779f2a60f5b37ff7fcc9ec",
+  "inputSha256": {
+    "normalizedSeason": "35ce5f9674ef4a4100ac4b60549fa2949eafdefcf4e5785589ec3cf3959f2d89",
+    "snapshot": "7d6c08ddf08db533a69ff51661fd0928de9be1670e3a93618785b653798d48dc",
+    "weeklyPicks": "30e8a4ba4fb51d0ba3f7303953693a2004133f07be5afbe4a08149f7668587d4",
+    "previous": "85485a24c7cee79b75f3e7b21dcf978a8f26265a82e5030d36c9c3feba262903"
+  },
+  "forecastCapturedAt": "2026-11-20T14:13:29.675Z",
+  "forecasts": [
+    {
+      "gameId": "401856879",
+      "home": "2641",
+      "away": "2628",
+      "neutral": false,
+      "seasonType": "regular",
+      "week": 13,
+      "kickoff": "2026-11-27T01:00:00.000Z",
+      "baselineCapturedAt": "2026-11-20T14:13:29.051Z",
+      "baselineProbability": 0.8034184588418217,
+      "challengerProbability": 0.8032989666209726
+    }
+  ],
+  "resultSha256": "ad8a2779695382595c316df2416521c8a64d29508e711f28afeed0f50f41e468"
+}
