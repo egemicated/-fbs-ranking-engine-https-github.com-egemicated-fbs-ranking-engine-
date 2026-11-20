@@ -78,7 +78,7 @@ try{
       await page.locator('[data-my-team] .my-team').screenshot({path:resolve(process.env.MY_TEAM_CAROUSEL_SCREENSHOTS,`carousel-${width}.png`)});
     }
     await page.evaluate(()=>{window.carouselAccount={signedIn:false,userId:null,teamId:null,teamIds:[]};window.refreshCarouselAccount();});
-    await page.getByText('Sign in from the header to follow your favorite team.',{exact:true}).waitFor();
+    await page.getByRole('link',{name:'Follow teams',exact:true}).waitFor();
     assert.equal(await page.locator('[data-my-team-carousel]').count(),0);
     if(width===1440){
       await page.evaluate(async()=>{

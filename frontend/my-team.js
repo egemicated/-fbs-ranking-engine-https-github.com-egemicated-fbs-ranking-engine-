@@ -2,6 +2,7 @@ import { loadAccountConfig, loadBracketClient } from './bracket-auth.js?v=clean-
 import { myTeamColors } from './my-team-colors.js?v=2026';
 import { mountMyTeamUpdates } from './my-team-updates.js?v=1';
 import { loadMyTeams, setPrimaryMyTeam, removeMyTeam, subscribeMyTeams } from './my-teams-store.js?v=1';
+import { teamDisplayName } from './team-identity.js';
 
 const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -51,7 +52,7 @@ function options(teams, selected) {
     const members = [...teams.values()].filter(team => team.division === division)
       .sort((a, b) => a.name.localeCompare(b.name));
     return members.length ? `<optgroup label="${division.toUpperCase()}">${members.map(team =>
-      `<option value="${escape(team.id)}"${team.id === selected ? ' selected' : ''}>${escape(team.name)}</option>`).join('')}</optgroup>` : '';
+      `<option value="${escape(team.id)}"${team.id === selected ? ' selected' : ''}>${escape(teamDisplayName(team.id, team.name))}</option>`).join('')}</optgroup>` : '';
   });
   return '<option value="">Choose a team</option>'+groups.join('');
 }
@@ -71,11 +72,12 @@ export function mountMyTeam(root, { teams, renderTeam, chosenTeamId, adapter = a
     const disabled = busy ? ' disabled' : '';
     const button = (action, label, symbol) => `<button type="button" class="button ${symbol ? 'my-team-change' : 'light small'}" data-my-team-action="${action}"${disabled}>${symbol ? `<span aria-hidden="true">${symbol}</span>` : ''}${label}</button>`;
     const showFavorite = loaded && signedIn && team && !editing;
+    const guest = loaded && !signedIn;
     const carousel = showFavorite && followed.length > 1;
     const position = followed.indexOf(favorite);
     let content;
     if (!loaded) content = failure ? `<div class="my-team-prompt"><p>My Team could not load.</p>${button('retry', 'Try again')}</div>` : '<p role="status">Loading My Team…</p>';
-    else if (!signedIn) content = '<p>Sign in from the header to follow your favorite team.</p>';
+    else if (guest) content = '<p class="my-team-guest-note">See your favorite teams’ rankings and next games here when you sign in.</p>';
     else if (!editing && !team && !favorite) content = `<div class="my-team-prompt"><p>Keep your teams and their next games close.</p>${button('edit','Choose team')}</div>`;
     else if (editing || !team) content = `${team ? '' : `<p>${favorite ? 'Your saved team is unavailable this season.' : 'Choose your favorite team.'}</p>`}
       <form class="my-team-choice" data-my-team-form><div><label for="my-team-select">Team</label>
@@ -86,10 +88,10 @@ export function mountMyTeam(root, { teams, renderTeam, chosenTeamId, adapter = a
     const teamColor = showFavorite ? myTeamColors[team.id] : null;
     const theme = showFavorite ? ` data-favorite-team="${escape(team.id)}"${teamColor ? ` style="--my-team-color:${teamColor}"` : ''}` : '';
     const compact = loaded && !editing && !team && !favorite;
-    root.innerHTML = `<section class="panel my-team"${theme}${compact ? ' data-my-team-compact="true"' : ''} aria-labelledby="my-team-title"${carousel ? ' aria-roledescription="carousel"' : ''}><div class="panel-body">
+    root.innerHTML = `<section class="panel my-team${showFavorite ? ' team-accent-card' : ''}"${theme}${compact ? ' data-my-team-compact="true"' : ''} aria-labelledby="my-team-title"${carousel ? ' aria-roledescription="carousel"' : ''}><div class="panel-body">
       <div class="my-team-header"><div class="my-team-header-title"><h2 id="my-team-title">${showFavorite ? '<span class="my-team-star" aria-hidden="true">☆</span>' : ''}My Team</h2>
       ${showFavorite ? '<span data-my-team-update-badge></span>' : ''}</div><div class="my-team-header-controls">${carousel ? `<nav class="my-team-carousel-nav" aria-label="Followed teams" data-my-team-carousel><button type="button" class="my-team-cycle" data-my-team-action="previous" aria-label="Previous followed team"><span aria-hidden="true">◀</span></button><span class="my-team-carousel-position" role="status" aria-live="polite" aria-atomic="true"><span class="sr-only">Team </span>${position + 1} of ${followed.length}<span class="sr-only">: ${escape(team.name)}</span></span><button type="button" class="my-team-cycle" data-my-team-action="next" aria-label="Next followed team"><span aria-hidden="true">▶</span></button></nav>` : ''}${showFavorite ? button('edit', 'Change team', '⇄') : ''}</div></div>
-      ${showFavorite ? '<div data-my-team-update-panel hidden></div>' : ''}${content}<p class="my-team-message compact-note" role="status">${escape(message)}</p><a class="text-link" href="/my-teams">My Teams</a></div></section>`;
+      ${showFavorite ? '<div data-my-team-update-panel hidden></div>' : ''}${content}<p class="my-team-message compact-note" role="status">${escape(message)}</p><a class="${guest ? 'button light small my-team-guest-link' : 'text-link'}" href="/my-teams">${guest ? 'Follow teams' : 'My Teams'}</a></div></section>`;
     if (showFavorite) {
       cleanupExtras = mountExtras?.(root, team);
       // The existing seen marker belongs to the saved primary team. Browsing

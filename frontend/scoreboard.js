@@ -170,12 +170,12 @@ function kickoff(game) {
   return game.timeTbd ? `${gameDateOnly.format(game.start)} · Time TBD` : `${gameDate.format(game.start)} · ${gameTime.format(game.start)}`;
 }
 
-function teamLine(team, game, leader) {
+function teamLine(team, game, winner) {
   const possession = game.situation?.possession != null && String(game.situation.possession) === team.id;
-  return `<div class="scoreboard-team team-accent-row${leader ? ' scoreboard-winner' : ''}" ${teamAccentAttr(team.id)}>
+  return `<div class="scoreboard-team team-accent-row${winner ? ' scoreboard-winner' : ''}" ${teamAccentAttr(team.id)}>
     <span class="scoreboard-team-rank" data-scoreboard-rank="${escapeHtml(team.id)}"></span>
     <div class="scoreboard-team-name">${teamNameMarkup(team.id, team.schoolName ?? team.name)}${possession ? '<span class="scoreboard-possession" role="img" aria-label="Has possession" title="Has possession">●</span>' : ''}${team.record ? `<small>${escapeHtml(team.record)}</small>` : ''}</div>
-    ${game.state === 'live' || game.state === 'final' ? `<strong class="scoreboard-score">${escapeHtml(team.score ?? '—')}</strong>` : ''}
+    ${game.state === 'live' || game.state === 'final' ? `<div class="scoreboard-score-line"><strong class="scoreboard-score">${escapeHtml(team.score ?? '—')}</strong>${winner ? '<small>Winner</small>' : ''}</div>` : ''}
   </div>`;
 }
 
@@ -186,9 +186,12 @@ function gameName(game) {
 function gameDetails(game) {
   const detail = game.state === 'upcoming' ? kickoff(game) : game.detail || sections.find(([id]) => id === game.state)[1];
   const note = game.state === 'live' ? game.situation?.downDistanceText || '' : game.state === 'final' ? kickoff(game) : '';
-  return `<div class="scoreboard-game-top"><strong>${escapeHtml(detail)}</strong><small>${escapeHtml(game.networks)}</small></div>
+  const status = { upcoming: 'Scheduled', live: 'Live', final: 'Final', changed: 'Schedule update' }[game.state];
+  return `<div class="scoreboard-game-top"><div class="scoreboard-game-kickoff"><span class="scoreboard-game-status">${status}</span>
+      ${detail && String(detail).toLowerCase() !== status.toLowerCase() ? `<strong>${escapeHtml(detail)}</strong>` : ''}</div>
+      ${game.networks ? `<small>${escapeHtml(game.networks)}</small>` : ''}</div>
     <div class="scoreboard-teams">${game.teams.map((team, index) => teamLine(team, game, game.state === 'final' && team.score != null && game.teams[1 - index].score != null && Number(team.score) > Number(game.teams[1 - index].score))).join('')}</div>
-    <div class="scoreboard-game-bottom"><span>${escapeHtml(note)}</span><a href="https://www.espn.com/college-football/game/_/gameId/${game.id}" target="_blank" rel="noopener">Gamecast<span class="sr-only"> for ${escapeHtml(gameName(game))}</span></a></div>
+    <div class="scoreboard-game-bottom">${note ? `<span>${escapeHtml(note)}</span>` : ''}${game.close && game.state !== 'changed' ? `<span class="scoreboard-close-label">${game.state === 'upcoming' ? 'Close forecast' : 'Within 7 points'}</span>` : ''}<a href="https://www.espn.com/college-football/game/_/gameId/${game.id}" target="_blank" rel="noopener">Gamecast<span class="sr-only"> for ${escapeHtml(gameName(game))}</span></a></div>
     <div class="scoreboard-game-links">${game.teams.filter(team => team.published).map(team => `<a href="${routeHref(`team/${team.id}`)}">${escapeHtml(team.name)}</a>`).join('')}${game.teams.every(team => team.published) ? `<a href="${routeHref(`compare/matchup/${game.teams[1].id}/${game.teams[0].id}/home`)}">Matchup Lab</a><a href="${game.predictionHref ?? '/weekly-picks'}">${game.hasSavedPrediction?'Saved prediction':'Weekly picks'}</a>` : ''}<a href="/beat-the-model/">Make picks</a></div>`;
 }
 

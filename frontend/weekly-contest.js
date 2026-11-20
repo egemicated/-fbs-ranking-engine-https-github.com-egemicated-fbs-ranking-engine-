@@ -76,17 +76,23 @@ export function renderContestGames(games, { saved = {}, draft = {}, teams, signe
     const userGrade = winner && saved[game.id] ? saved[game.id] === winner ? 'correct' : 'wrong' : '';
     const waitingForKickoff = game.startTimeTbd === true;
     const status = game.voidReason ? 'Excluded from scoring' : winner ? 'Final' : waitingForKickoff ? 'Awaiting kickoff time' : locked ? 'Locked' : 'Open';
+    const statusClass = winner ? 'is-final' : locked ? 'is-locked' : 'is-open';
     const note = game.voidReason ? game.voidReason
       : winner ? `${saved[game.id] ? `Your pick: ${userGrade === 'correct' ? 'correct · +1 point' : 'incorrect · 0 points'}. ` : 'No saved pick. ' }Model: ${game.modelTeam === winner ? 'correct' : 'incorrect'}.`
         : changed ? 'Unsaved selection' : saved[game.id] ? 'Pick saved' : waitingForKickoff ? 'Picks open when kickoff is confirmed.' : locked ? 'No saved pick' : signedIn ? 'Select your winner, then save picks.' : 'Sign in from the header to make your pick.';
     return `<li class="contest-game"><div class="contest-game-meta"><span>Kickoff · ${kickoffLabel(game)}</span>
-      <span class="contest-lock${!locked ? ' contest-open' : ''}">${status}</span></div>
-      <h3>${escape(teamName(game, 'away', teams))} at ${escape(teamName(game, 'home', teams))}</h3>
+      <span class="contest-lock ${statusClass}">${status}</span></div>
+      <h3 class="sr-only">${escape(teamName(game, 'away', teams))} at ${escape(teamName(game, 'home', teams))}</h3>
       <p class="contest-model-pick">Forge’s saved pick <strong>${teamLabel(game, modelSide, teams)}</strong> · ${percent(modelProbability)} win probability${oddsDescription ? ` · ${escape(oddsDescription)}` : ''}
         <span class="sr-only">, saved ${escape(date(game.modelCapturedAt))}</span></p>
-      ${['away', 'home'].map(side => `<button type="button" class="contest-team team-accent-row${winner === game[side] ? ' is-winner' : ''}" ${teamAccentAttr(game[side])} data-contest-game="${escape(game.id)}" data-contest-team="${escape(game[side])}"
-        aria-pressed="${selected === game[side]}"${!signedIn || locked || busy ? ' disabled' : ''}>
-        <span>${teamLabel(game, side, teams)}</span><small>${winner ? escape(game[`${side}Points`]) : selected === game[side] ? changed ? 'Unsaved' : 'Your pick' : 'Pick'}</small></button>`).join('')}
+      ${['away', 'home'].map(side => {
+        const won = winner === game[side];
+        const isSelected = selected === game[side];
+        const selection = isSelected ? changed ? 'Selected' : 'Saved pick' : !locked && signedIn ? 'Choose' : '';
+        return `<button type="button" class="contest-team team-accent-row${won ? ' is-winner' : ''}" ${teamAccentAttr(game[side])} data-contest-game="${escape(game.id)}" data-contest-team="${escape(game[side])}"
+          aria-pressed="${isSelected}"${!signedIn || locked || busy ? ' disabled' : ''}>
+          <span>${teamLabel(game, side, teams)}</span><span class="contest-team-result">${winner ? `<strong>${escape(game[`${side}Points`])}</strong>${won ? '<small>Winner</small>' : ''}` : ''}${selection ? `<small>${selection}</small>` : ''}</span></button>`;
+      }).join('')}
       <p class="contest-pick-status${userGrade ? ` is-${userGrade}` : ''}">${escape(note)}</p>
       ${signedIn && !game.voidReason && [game.home, game.away].includes(saved[game.id]) ? `<div data-contest-community="${escape(game.id)}"></div>` : ''}
       <div data-contest-team-stats="${escape(game.id)}"></div></li>`;
@@ -409,7 +415,7 @@ export async function renderWeeklyContest(main, options = {}) {
         <p class="contest-message${messageError ? ' is-error' : ''}" role="status" aria-live="polite">${escape(message)}</p></div></section>
         <nav class="matchup-views contest-tabs" aria-label="Weekly contest views"><button type="button" class="button${view === 'picks' ? '' : ' light'}" data-contest-view="picks" aria-pressed="${view === 'picks'}">My picks</button>
         <button type="button" class="button${view === 'leaderboard' ? '' : ' light'}" data-contest-view="leaderboard" aria-pressed="${view === 'leaderboard'}">Leaderboards</button></nav>
-        ${view === 'picks' ? `<section class="panel"><div class="panel-body"><div class="contest-heading"><h2>${week ? escape(contestWeekLabel(week)) : 'Upcoming games'}</h2><span class="compact-note">${selectedGames.length} eligible games</span></div>
+        ${view === 'picks' ? `<section class="panel"><div class="panel-body"><div class="contest-heading"><h2>${session && open ? 'Choose your winner' : week ? escape(contestWeekLabel(week)) : 'Upcoming games'}</h2><span class="compact-note">${session && open && week ? `${escape(contestWeekLabel(week))} · ` : ''}${selectedGames.length} eligible games</span></div>
           ${renderContestGames(selectedGames, { saved: entry.picks, draft, teams, signedIn: Boolean(session), busy, now: now(), describeOdds })}
           ${session ? `<form data-contest-save class="contest-save-row"><label for="contest-nickname">Leaderboard nickname</label>
             <input id="contest-nickname" name="nickname" value="${escape(nickname)}" minlength="2" maxlength="30" autocomplete="nickname" required${busy ? ' disabled' : ''}>

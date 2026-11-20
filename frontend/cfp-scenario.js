@@ -10,6 +10,8 @@ const score = value => Number.isFinite(value) ? value.toFixed(4) : '—';
 const percent = value => `${(value * 100).toFixed(0)}%`;
 const mountain = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
 const displayDate = value => Number.isFinite(Date.parse(value)) ? `${mountain.format(new Date(value))} MT` : 'Kickoff TBD';
+const publishedDate = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', dateStyle: 'long', timeStyle: 'short' });
+const publicationTime = value => `<time datetime="${escape(value)}">${escape(publishedDate.format(new Date(value)))} Mountain Time</time>`;
 const gamePageSize = 12;
 const fixtureWeekKey = game => `${game.seasonType}:${game.week}`;
 const fixtureWeekLabel = game => `${game.seasonType === 'postseason' ? 'Postseason · ' : ''}Week ${game.week}`;
@@ -36,25 +38,42 @@ function movement(row, baseline) {
   return `<span class="scenario-movement ${delta > 0 ? 'up' : 'down'}" aria-label="${direction} ${Math.abs(delta)} places">${delta > 0 ? '↑' : '↓'} ${Math.abs(delta)}</span>`;
 }
 
-function projectionMarkup(rows, champions) {
+function projectionMarkup(rows, champions, baseline) {
   const { field, champions: selectedChampions, matchups } = selectScenarioField(rows, champions);
+  const savedField = rows === baseline && !Object.keys(champions).length ? field : selectScenarioField(baseline).field;
+  const savedSeeds = new Map(savedField.map(row => [row.id, row.seed]));
+  const fieldIds = new Set(field.map(row => row.id));
+  const dropped = savedField.filter(row => !fieldIds.has(row.id));
   const names = new Map(rows.map(row => [row.id, row.name]));
+  const usedChampions = new Map(selectedChampions.map(row => [row.teamId, row]));
   const bid = row => {
-    if (row.bid === 'conference champion') return `${row.conference} champion`;
-    if (row.bid === 'highest-ranked eligible conference') return `${row.conference} automatic bid`;
-    if (row.bid === 'Notre Dame') return 'Notre Dame automatic bid';
+    if (row.bid === 'conference champion') {
+      const { assumed } = usedChampions.get(row.id);
+      return `${row.conference} champion · ${assumed ? 'Assumed by SOR' : 'Your choice'}`;
+    }
+    if (row.bid === 'highest-ranked eligible conference') return `${row.conference} qualifier`;
+    if (row.bid === 'Notre Dame') return 'Notre Dame top-12 berth';
     return 'At-large';
   };
-  return `<ol class="scenario-field" aria-label="Projected seeds">${field.map(row => `<li>
-    <span class="scenario-seed" aria-label="Seed ${row.seed}">${row.seed}</span>
-    <div><strong>${teamNameMarkup(row.id, row.name)}</strong><small>${escape(bid(row))}${row.seed <= 4 ? ' · First-round bye' : ''}</small></div>
-    <div class="scenario-field-record"><strong>#${row.sorRank} SOR</strong><small>${row.wins}–${row.losses}</small></div>
-    </li>`).join('')}</ol>
+  return `<ol class="scenario-field" aria-label="Projected seeds">${field.map(row => {
+    const previous = savedSeeds.get(row.id);
+    const change = previous === undefined ? 'New to field' : previous !== row.seed ? `Was seed ${previous}` : '';
+    return `<li class="team-accent-row" ${teamAccentAttr(row.id)}>
+      <span class="scenario-seed" aria-label="Seed ${row.seed}">${row.seed}</span>
+      <div><strong class="scenario-field-team">${teamNameMarkup(row.id, row.name)}</strong>
+      <small class="scenario-bid">${row.bid !== 'at-large' ? '<span class="scenario-qualifier">Automatic</span> ' : ''}${escape(bid(row))}</small></div>
+      <div class="scenario-field-record"><strong>#${row.sorRank} SOR</strong><small>${row.wins}–${row.losses}</small></div>
+      ${row.seed <= 4 || change ? `<div class="scenario-seed-note">${row.seed <= 4 ? '<span>First-round bye</span>' : ''}
+      ${change ? `<span>${escape(change)}</span>` : ''}</div>` : ''}
+    </li>`;
+  }).join('')}</ol>
+    ${dropped.length ? `<p class="scenario-field-changes"><strong>Out of the field:</strong> ${dropped.map(row => escape(teamDisplayName(row.id, row.name))).join(', ')}.</p>` : ''}
     <div class="scenario-first-round"><h3>First-round games</h3><ul>${matchups.map(({ home, away, byeOpponent }) => `<li>
-      <strong>#${away.seed} ${teamNameMarkup(away.id, away.name)} at #${home.seed} ${teamNameMarkup(home.id, home.name)}</strong>
-      <span>Winner faces #${byeOpponent.seed} ${teamNameMarkup(byeOpponent.id, byeOpponent.name)}</span></li>`).join('')}</ul></div>
-    <div class="scenario-assumed"><h3>Conference champions used</h3><ul>${selectedChampions.map(({ conference, teamId, assumed }) => `<li>
-      <span>${escape(conference)}</span><strong>${teamNameMarkup(teamId, names.get(teamId))}</strong><small>${assumed ? 'Assumed by SOR' : 'Your choice'}</small></li>`).join('')}</ul></div>`;
+      <div class="scenario-matchup-line"><span class="scenario-matchup-seed">#${away.seed}</span> <strong>${teamNameMarkup(away.id, away.name)}</strong></div>
+      <div class="scenario-matchup-line"><span class="scenario-matchup-seed">#${home.seed}</span> <strong>${teamNameMarkup(home.id, home.name)}</strong><small>Host</small></div>
+      <p>Winner faces #${byeOpponent.seed} ${teamNameMarkup(byeOpponent.id, byeOpponent.name)}</p></li>`).join('')}</ul></div>
+    <details class="scenario-assumed"><summary>Conference champions used</summary><ul>${selectedChampions.map(({ conference, teamId, assumed }) => `<li>
+      <span>${escape(conference)}</span><strong>${teamNameMarkup(teamId, names.get(teamId))}</strong><small>${assumed ? 'Assumed by SOR' : 'Your choice'}</small></li>`).join('')}</ul></details>`;
 }
 
 function rankingsMarkup(rows, baseline, all) {
@@ -86,7 +105,7 @@ function matchupMarkup(game, names, winner) {
     ${choicesMarkup(game, names, winner)}</li>`;
 }
 
-function baseMarkup(input, teams, baseline) {
+function baseMarkup(input, teams, baseline, publishedAt) {
   const weeks = new Map(input.fixtures.map(game => [fixtureWeekKey(game), fixtureWeekLabel(game)]));
   const options = teamOptions(teams);
   return `<section class="panel scenario-summary"><div class="panel-body">
@@ -94,11 +113,12 @@ function baseMarkup(input, teams, baseline) {
     <div class="scenario-actions"><button class="button" type="button" data-scenario-action="fill">Fill remaining games with model favorites</button>
     <button class="button light" type="button" data-scenario-action="reset">Reset scenario</button>
     <button class="button light" type="button" data-scenario-action="projection">View projection</button></div>
+    <p class="compact-note scenario-fill-note">Predictive Strength picks hypothetical winners for games you leave open. Those outcomes then recalculate SOR for the projected field.</p>
     <p class="scenario-status" data-scenario-status role="status"></p></div></section>
     <div class="scenario-layout"><div class="scenario-editor">
     <section class="panel" aria-labelledby="scenario-games-title"><div class="panel-body">
       <h2 id="scenario-games-title" tabindex="-1">Remaining games</h2>
-      <p class="compact-note">These games had no final result in the published ${escape(displayDate(input.asOf))} snapshot. This list is not live; a game may already have finished. Check the <a href="/scoreboard">Live Scoreboard</a> for newer results. Win chances use the published model.</p>
+      <p class="compact-note">These games had no final result at the saved data cutoff, ${publicationTime(input.asOf)}. For newer results, check the <a href="/scoreboard">Live Scoreboard</a>. Win chances use the saved model.</p>
       <div class="scenario-filter"><label for="scenario-week">Week<select id="scenario-week">
         ${[...weeks].map(([key, label]) => `<option value="${escape(key)}">${escape(label)}</option>`).join('')}<option value="all">All weeks</option></select></label>
       <label for="scenario-team">Filter by team<select id="scenario-team"><option value="">All teams</option>${options}</select></label></div>
@@ -121,9 +141,18 @@ function baseMarkup(input, teams, baseline) {
         <select data-scenario-champion="${escape(conference)}"><option value="">Assume highest SOR</option>${teamOptions(teams.filter(team => team.conference === conference && hasRank(baseline.get(team.id))))}</select></label>`).join('')}</div>
     </div></details>
     </div><div class="scenario-output" data-scenario-output>
-      <section class="panel" aria-labelledby="scenario-projection-title"><div class="panel-body">
-        <div class="scenario-projection-heading"><h2 id="scenario-projection-title" tabindex="-1">Projected playoff field</h2><button type="button" class="scenario-text-button" data-scenario-action="picks">Back to picks</button></div>
-        <p class="compact-note">Unofficial ${input.season} field based on Strength of Record from The Games Decide and the <a href="${escape(CFP_RULES_URL)}" target="_blank" rel="noopener noreferrer">CFP selection rules</a>.</p>
+      <section class="panel scenario-projection" aria-labelledby="scenario-projection-title"><div class="panel-body">
+        <div class="scenario-projection-heading"><h2 id="scenario-projection-title" tabindex="-1">SOR-Based Playoff Projection</h2><button type="button" class="scenario-text-button" data-scenario-action="picks">Back to picks</button></div>
+        <p class="scenario-projection-intro">An unofficial ${input.season} 12-team field selected and seeded by The Games Decide’s Strength of Record (SOR). Conference champions are assumed unless you choose them. The CFP committee makes the official selections using its own rankings.</p>
+        <p class="scenario-publication">Based on rankings published ${publicationTime(publishedAt)}.</p>
+        <details class="scenario-method"><summary>How this projection works</summary>
+          <dl>
+            <div><dt>Current SOR rankings</dt><dd>What teams earned through the saved results cutoff at ${publicationTime(input.asOf)}.</dd></div>
+            <div><dt>SOR-based field</dt><dd>The highest-SOR team in each of the ACC, Big Ten, Big 12 and SEC gets the assumed champion bid unless you pick another. The top SOR team across the American, Conference USA, MAC, Mountain West, Pac-12 and Sun Belt earns the fifth automatic bid. Notre Dame earns a berth when it is among the first 12 teams in SOR order. The highest remaining teams fill the at-large spots. Seeds follow SOR order and seeds 1–4 get byes.</dd></div>
+            <div><dt>CFP committee rankings</dt><dd>The committee uses its own rankings and actual champions. The CFP also assigns bowl sites under the <a href="${escape(CFP_RULES_URL)}" target="_blank" rel="noopener noreferrer">official 2026 selection framework</a>.</dd></div>
+            <div><dt>Hypothetical scenarios</dt><dd>Your chosen outcomes recalculate SOR from the saved publication and can change the field and seeds.</dd></div>
+          </dl>
+        </details>
         <p class="scenario-projection-status" data-scenario-projection-status></p><div data-scenario-field></div>
       </div></section>
       <details class="panel scenario-details"><summary>Projected SOR rankings</summary>
@@ -143,10 +172,7 @@ export async function renderCfpScenario(main, { snapshot, inputUrl, workerUrl } 
   const abort = new AbortController();
   let worker, debounce, timeout, active = true;
   main.innerHTML = `<section class="hero page-banner"><div class="wrap"><h1>CFP Scenario Builder</h1>
-    <div class="scenario-banner-meta">
-      <p>See how your game results could change the playoff field and Strength of Record.</p>
-      <p class="scenario-refresh-note">Refresh checks · Wed–Sun</p>
-    </div></div></section>
+    <p>Explore an unofficial playoff field built from our Strength of Record rankings. Choose hypothetical game winners to see how the field changes.</p></div></section>
     <div class="wrap page-content scenario-page" data-scenario-page><p role="status">Loading the scenario schedule…</p></div>`;
   const root = main.querySelector('[data-scenario-page]');
   const current = () => active && root.isConnected;
@@ -181,7 +207,8 @@ export async function renderCfpScenario(main, { snapshot, inputUrl, workerUrl } 
     let rows = original, picks = Object.create(null), customGames = [], champions = Object.create(null);
     let week, team = '', page = 0, customId = 0, showAllRankings = false;
     let revision = 0, inFlight, resultCount = 0, calculating = false, failed = false;
-    root.innerHTML = baseMarkup(input, teams, baseline);
+    const publishedAt = Number.isFinite(Date.parse(snapshot.modelPublishedAt)) ? snapshot.modelPublishedAt : input.asOf;
+    root.innerHTML = baseMarkup(input, teams, baseline, publishedAt);
     const get = selector => root.querySelector(selector);
     week = get('#scenario-week').value;
     const outcomeCount = () => Object.keys(picks).length + customGames.length;
@@ -219,12 +246,13 @@ export async function renderCfpScenario(main, { snapshot, inputUrl, workerUrl } 
       get('[data-scenario-output]').setAttribute('aria-busy', String(calculating));
       const status = get('[data-scenario-projection-status]');
       if (failed) status.innerHTML = 'Showing the last completed projection. <button type="button" class="scenario-text-button" data-scenario-action="recalculate">Retry projection</button>';
-      else status.textContent = calculating ? 'Updating the projection…' : resultCount ? `Based on ${resultCount} chosen ${resultCount === 1 ? 'outcome' : 'outcomes'}.` : `Based on the published rankings as of ${displayDate(input.asOf)}.`;
+      else status.textContent = calculating ? 'Updating the projection…' : resultCount ? `Based on ${resultCount} hypothetical ${resultCount === 1 ? 'outcome' : 'outcomes'}.` :
+        Object.keys(champions).length ? 'Published SOR with your champion choices' : 'Published SOR baseline';
     }
 
     function drawResults() {
       try {
-        get('[data-scenario-field]').innerHTML = projectionMarkup(rows, champions);
+        get('[data-scenario-field]').innerHTML = projectionMarkup(rows, champions, original);
       } catch {
         get('[data-scenario-field]').innerHTML = '<p class="compact-note">The playoff field is unavailable for these champion choices.</p>';
       }

@@ -101,12 +101,12 @@ function fitImage(ctx, image, x, y, w, h) {
   ctx.drawImage(image, x + (w - iw) / 2, y + (h - ih) / 2, iw, ih);
 }
 
-function cornerAccent(ctx, x, y, accent, size = 56) {
+function cornerAccent(ctx, x, y, accent, size = 48) {
   ctx.fillStyle = accent;
   ctx.beginPath();
   ctx.moveTo(x - size, y);
+  ctx.lineTo(x, y - size * 0.58);
   ctx.lineTo(x, y);
-  ctx.lineTo(x, y + size);
   ctx.closePath();
   ctx.fill();
 }
@@ -135,7 +135,7 @@ function cardFooter(ctx, card) {
 
 function drawTeamCard(ctx, team) {
   const { school, nickname } = teamNameParts(team.id, team.name);
-  cornerAccent(ctx, width, 0, teamAccent(team.id), 80);
+  cornerAccent(ctx, width, height, teamAccent(team.id), 72);
   text(ctx, team.division ? team.division + ' FOOTBALL' : 'COLLEGE FOOTBALL', 64, 164, { size: 25, color: '#85dcff' });
   text(ctx, school, 64, 250, { size: nickname ? 65 : 92, max: 1074, weight: nickname ? 600 : 700 });
   if (nickname) text(ctx, nickname.toUpperCase(), 61, 370, { size: 105, max: 1074 });
@@ -151,7 +151,10 @@ function drawMatchupCard(ctx, card) {
     const x = index ? 628 : 62, center = x + 255;
     const { school, nickname } = teamNameParts(team.id, team.name);
     fillBox(ctx, x, 161, 510, 352, 14, '#122e53');
-    cornerAccent(ctx, x + 496, 161, teamAccent(team.id));
+    ctx.save();
+    ctx.clip();
+    cornerAccent(ctx, x + 510, 513, teamAccent(team.id));
+    ctx.restore();
     text(ctx, school, center, nickname ? 247 : 278, { size: nickname ? 44 : 58, max: 455, align: 'center', weight: nickname ? 600 : 700 });
     if (nickname) text(ctx, nickname.toUpperCase(), center, 313, { size: 63, max: 455, align: 'center' });
     const description = [rankDescription(team), team.record].filter(Boolean).join(' · ');

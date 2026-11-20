@@ -15,7 +15,15 @@
 .scoreboard-toolbar h2 { font-size: 24px; }
 .scoreboard-toolbar p, .scoreboard-source { color: var(--muted); font-size: 12px; }
 .scoreboard-toolbar p { font-variant-numeric: tabular-nums; }
-.scoreboard-diagnostics{margin:8px 0 16px;color:var(--muted);font-size:12px}.scoreboard-diagnostics summary{cursor:pointer;min-height:40px;display:flex;align-items:center;font-weight:650}.scoreboard-diagnostics dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 20px;padding:12px;border:1px solid var(--line);border-radius:8px}.scoreboard-diagnostics dl>div{min-width:0}.scoreboard-diagnostics dt{font-weight:650;color:var(--text,#17324d)}.scoreboard-diagnostics dd{margin:3px 0 0;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}.scoreboard-diagnostics p{margin-top:9px;line-height:1.6}.scoreboard-diagnostics a{color:var(--blue)}
+.scoreboard-diagnostics { margin: 8px 0 16px; color: var(--muted); font-size: 12px; }
+.scoreboard-diagnostics summary { padding-block: 10px; min-height: 44px; width: fit-content; cursor: pointer; color: #214e83; font-weight: 700; }
+.scoreboard-diagnostics summary:focus-visible { outline: 2px solid #1262ad; outline-offset: 2px; }
+.scoreboard-diagnostics dl { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px 20px; padding: 12px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+.scoreboard-diagnostics dl > div { min-width: 0; }
+.scoreboard-diagnostics dt { color: var(--ink); font-weight: 700; }
+.scoreboard-diagnostics dd { margin: 3px 0 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.scoreboard-diagnostics p { margin-top: 9px; line-height: 1.6; }
+.scoreboard-diagnostics a { color: var(--blue); }
 @media(max-width:600px){.scoreboard-diagnostics dl{grid-template-columns:minmax(0,1fr)}}
 .scoreboard-toolbar button { cursor: pointer; min-height: 44px; }
 .scoreboard-order-help {
@@ -72,7 +80,12 @@
 }
 .scoreboard-game-top { background: #edf4ff; color: #244a79; font-size: 12px; }
 .scoreboard-game-top small { font-size: 11px; }
-.scoreboard-game[data-state="live"] .scoreboard-game-top { background: #e8f5ed; color: #1a6838; }
+.scoreboard-game-kickoff { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 7px; }
+.scoreboard-game-status { border-radius: 4px; padding: 2px 6px; background: #deebfc; color: #244a79; font-size: 10px; font-weight: 750; }
+.scoreboard-game[data-state="live"] .scoreboard-game-status { background: #d9f2e4; color: #175737; }
+.scoreboard-game[data-state="final"] .scoreboard-game-status { background: #dee7f3; color: #2c4e70; }
+.scoreboard-game[data-state="changed"] .scoreboard-game-status { background: #faecd5; color: #6f480b; }
+.scoreboard-game[data-state="live"] { border-color: #8bc3a7; }
 .scoreboard-teams { flex: 1; display: grid; gap: 7px; padding: 9px 12px; }
 .scoreboard-team {
   display: grid;
@@ -82,13 +95,15 @@
   min-height: 29px;
 }
 .scoreboard-team-rank { text-align: right; color: var(--muted); font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.scoreboard-team .logo { width: 29px; height: 29px; }
 .scoreboard-team-name { overflow-wrap: anywhere; font-size: 13px; line-height: 1.25; }
 .scoreboard-team-name small { color: var(--muted); font-size: 11px; display: block; margin-top: 3px; }
 .scoreboard-possession { color: #1a743e; font-size: 10px; margin-inline-start: 4px; }
-.scoreboard-score { font: 700 26px/1 Barlow, sans-serif; font-variant-numeric: tabular-nums; }
+.scoreboard-score-line { display: grid; justify-items: end; text-align: end; }
+.scoreboard-score { font: 700 29px/1 Barlow, sans-serif; font-variant-numeric: tabular-nums; }
+.scoreboard-score-line small { color: #174e86; font-size: 10px; font-weight: 700; }
 .scoreboard-winner .scoreboard-score { color: #075bb5; }
 .scoreboard-game-bottom { border-top: 1px solid var(--line); font-size: 11px; color: var(--muted); }
+.scoreboard-close-label { color: #255782; font-weight: 700; }
 .scoreboard-game-bottom a { margin-inline-start: auto; color: var(--blue); font-weight: 650; }
 .scoreboard-game-bottom a:hover, .scoreboard-source a:hover { text-decoration: underline; }
 .scoreboard-empty { grid-column: 1 / -1; color: var(--muted); font-size: 13px; }

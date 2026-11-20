@@ -1,0 +1,320 @@
+.home-hero .hero-layout {
+  min-height: 0;
+  padding-block: clamp(26px, 3.6vw, 58px);
+}
+
+.home-hero h1 {
+  max-width: 13ch;
+  font-size: clamp(45px, 6vw, 82px);
+  text-wrap: balance;
+}
+
+@media (max-width: 700px) {
+  .home-hero h1 {
+    max-width: 17ch;
+  }
+}
+
+.home-hero .hero-copy {
+  max-width: 48ch;
+  color: #e1eeff;
+}
+
+.hero-actions > a {
+  min-height: 44px;
+}
+
+.hero-actions .home-rankings-action {
+  background: #065ed7;
+  border-color: #509af8;
+}
+
+.hero-actions .home-rankings-action:hover {
+  background: #0c52b8;
+}
+
+.top-five-record,
+.team-meta,
+.team-card small,
+.team-card-rank,
+.weekly-day-head > span,
+.weekly-game-details,
+.compare-team-context,
+.compare-team-strength {
+  font-variant-numeric: tabular-nums;
+}
+
+.home-body > .home-favorite:not(:empty) {
+  padding: 0;
+  margin-block-end: clamp(12px, 1.7vw, 18px);
+}
+
+.my-team-guest-note {
+  flex: 1 1 20ch;
+  color: #384f6d;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.my-team-guest-link {
+  margin-inline-start: auto;
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+.team-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #f7faff;
+}
+
+.team-filter-bar .toolbar-group {
+  display: grid;
+  flex: 1 1 26rem;
+  grid-template-columns: minmax(0, 1fr) minmax(116px, max-content);
+  gap: 8px;
+  min-width: 0;
+}
+
+.team-filter-bar input,
+.team-filter-bar select {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 44px;
+}
+
+.team-filter-bar .search-box svg {
+  top: 14px;
+}
+
+.team-filter-bar > button {
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+.team-filter-bar > button[aria-pressed="true"] {
+  border-color: #b4d2fb;
+  background: #e5effe;
+  color: #154375;
+}
+
+.rank-with-movement .rank-movement {
+  display: inline-grid;
+  place-content: center;
+  min-width: 1.45em;
+  min-height: 1.65em;
+  padding-inline: .18em;
+  border-radius: 4px;
+}
+
+.rank-with-movement .rank-movement.up { background: #e6f4eb; }
+.rank-with-movement .rank-movement.down { background: #faeae8; }
+.rank-with-movement .rank-movement.even { background: #edf2f8; }
+
+.team-banner .team-meta {
+  row-gap: 5px;
+  color: #e1edfd;
+}
+
+.team-banner .team-meta b {
+  font-size: 1.12em;
+}
+
+.team-center .metric strong,
+.team-upcoming-odds strong {
+  font-variant-numeric: tabular-nums;
+}
+
+.team-center .metric span,
+.team-center .metric small {
+  color: #3c5878;
+}
+
+.compare-venue button {
+  min-height: 44px;
+  white-space: normal;
+}
+
+.compare-team-strength {
+  margin-block-start: 12px;
+  padding-block-start: 9px;
+  border-top: 1px solid var(--line);
+}
+
+.compare-picker select {
+  min-height: 44px;
+}
+
+.prediction-card .prediction-number > span {
+  font-size: .42em;
+}
+
+.prediction-card .probability-track {
+  margin-block: 13px 8px;
+}
+
+.matchup-win-chances {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.matchup-win-chance {
+  display: grid;
+  gap: 2px;
+  overflow-wrap: anywhere;
+  color: #e5f1ff;
+}
+
+.matchup-win-chance + .matchup-win-chance {
+  border-inline-start: 1px solid #bcd4ef43;
+}
+
+.matchup-win-chance strong {
+  font: 700 clamp(22px, 4vw, 29px)/1 Barlow, sans-serif;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.matchup-win-chance small {
+  color: #bed3ef;
+}
+
+.prediction-card .prediction-odds-description {
+  margin-block: 6px 2px;
+  color: #9ce8ff;
+}
+
+.weekly-day + .weekly-day {
+  margin-block-start: 22px;
+}
+
+.weekly-day-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px 8px;
+  padding: 8px 12px;
+  border: 1px solid #cfdeef;
+  border-radius: 8px 8px 0 0;
+  background: #eef4fc;
+  color: #284664;
+}
+
+.weekly-day-head h3 {
+  font-size: 21px;
+}
+
+.weekly-day-head > span {
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.weekly-day .weekly-game {
+  padding: 12px;
+  border: 1px solid #dce7f3;
+  border-top: 0;
+  background: #fff;
+}
+
+.weekly-day .weekly-game:last-child {
+  border-radius: 0 0 8px 8px;
+}
+
+.weekly-game-meta {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 7px;
+  color: #3c5878;
+  font-size: 11px;
+}
+
+.weekly-game-status,
+.weekly-close {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #e7eef8;
+  color: #304e71;
+  font-weight: 700;
+}
+
+.weekly-game-status[data-weekly-state="final"] {
+  background: #e3f3ea;
+  color: #215a41;
+}
+
+.weekly-game-status[data-weekly-state="pending"] {
+  background: #fff1d5;
+  color: #684b16;
+}
+
+.weekly-close {
+  background: #e8f2ff;
+  color: #1a517f;
+}
+
+.weekly-game h4 {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 3px 6px;
+  margin-block: 5px;
+  font: 700 clamp(19px, 4vw, 24px)/1.12 Barlow, sans-serif;
+  overflow-wrap: anywhere;
+}
+
+.weekly-game-venue {
+  color: #4b6381;
+  font-size: .65em;
+}
+
+.weekly-game-details {
+  align-self: center;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 132px), 1fr));
+}
+
+.weekly-pick-source[data-weekly-source="saved"] {
+  color: #174684;
+}
+
+.weekly-pick-percent {
+  color: #184e8c;
+  white-space: nowrap;
+}
+
+.weekly-pick-edge {
+  color: #3d5876;
+  font-weight: 600;
+}
+
+.weekly-game .weekly-team-stats {
+  grid-column: 1 / -1;
+  margin-block: 0;
+}
+
+.weekly-game .weekly-team-stats summary {
+  min-height: 44px;
+  align-content: center;
+}
+
+@media (max-width: 700px) {
+  .home-hero .hero-layout { padding-block: 23px 19px; }
+  .home-hero .top-five { margin-block-start: 18px; }
+  .team-filter-bar > button { min-width: 44px; }
+  .weekly-day + .weekly-day { margin-block-start: 16px; }
+  .weekly-day .weekly-game { padding: 9px; }
+  .weekly-game-details { padding-block-start: 6px; border-top: 1px solid #e6edf6; }
+}
+
+@media (max-width: 370px) {
+  .team-filter-bar .toolbar-group { grid-template-columns: minmax(0, 1fr); }
+  .weekly-game-details { grid-template-columns: 1fr; }
+}

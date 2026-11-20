@@ -104,9 +104,10 @@ function stat(label,value,detail='') {
 }
 function gameLinks(game,division) {
   const favored = game.pick.favored === 'home' ? game.homeTeam : game.pick.favored === 'away' ? game.awayTeam : null;
+  const result = game.correct === null ? 'even' : game.correct ? 'correct' : 'miss';
   return `<div class="intelligence-result"><strong><a href="${routeHref(`team/${encodeURIComponent(game.away)}`)}">${teamNameMarkup(game.away, game.awayTeam.name)}</a>
     ${game.awayPoints} at <a href="${routeHref(`team/${encodeURIComponent(game.home)}`)}">${teamNameMarkup(game.home, game.homeTeam.name)}</a> ${game.homePoints}</strong>
-    <span>${game.correct === null ? 'Even forecast' : game.correct ? 'Correct pick' : 'Miss'} · ${favored ? teamNameMarkup(favored.id, favored.name)+' '+escapeHtml(formatProbability(game.confidence,1)) : '50.0% each'}</span>
+    <span><b class="model-report-result is-${result}">${result === 'even' ? 'Even forecast' : result === 'correct' ? 'Correct pick' : 'Miss'}</b> ${favored ? teamNameMarkup(favored.id, favored.name)+' '+escapeHtml(formatProbability(game.confidence,1)) : '50.0% each'}</span>
     <small>Saved ${dates.format(new Date(game.pick.capturedAt))} MT</small>
     <a class="text-link" href="${routeHref(`compare/weekly/${division === 'fcs' ? 'fcs/' : ''}${weekKey(game)}`)}">Weekly game details</a></div>`;
 }
@@ -147,7 +148,8 @@ export function modelReportMarkup(report) {
     <section class="panel intelligence-panel"><h3>Results by saved favorite probability</h3>
     <p class="compact-note">These ranges describe the model’s saved win probability. They are not a separate confidence rating.</p>
     <div class="intelligence-table-scroll" tabindex="0" role="region" aria-label="Saved prediction results by probability"><table><thead><tr><th>Probability</th><th>Correct / decided</th><th>Accuracy</th><th>Brier</th></tr></thead><tbody>
-    ${report.bins.map(bin=>`<tr><th scope="row">${bin.label}</th><td>${bin.correct} / ${bin.decided}</td><td>${formatProbability(bin.accuracy,1)}</td><td>${formatNumber(bin.brier,3)}</td></tr>`).join('')}
+    ${report.bins.map(bin=>`<tr><th scope="row">${bin.label}</th><td>${bin.correct} / ${bin.decided}</td><td><span class="model-report-accuracy">${formatProbability(bin.accuracy,1)}
+    ${Number.isFinite(bin.accuracy) ? `<meter aria-hidden="true" min="0" max="1" value="${bin.accuracy}"></meter>` : ''}</span></td><td>${formatNumber(bin.brier,3)}</td></tr>`).join('')}
     </tbody></table></div></section>
     <div class="intelligence-feature-grid">
     ${list('Closest correct calls',report.correctCalls,division,'No correctly predicted decided games have final results this week.')}

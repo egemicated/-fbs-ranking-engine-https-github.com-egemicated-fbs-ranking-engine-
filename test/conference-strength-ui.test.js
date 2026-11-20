@@ -73,6 +73,18 @@ test('the matrix links both conference orientations and keeps FCS separate', () 
   assert.doesNotMatch(fcs,/A &amp; B defeated Bears/);
 });
 
+test('matrix shading follows actual win percentages and shows the exact records and scale', () => {
+  const render = games => conferenceStrengthMarkup({ ...dataset, games }, { ...options, view: 'records' });
+  const markup = render(dataset.games);
+  assert.match(markup, /ties counting as half a win/);
+  assert.match(markup, /aria-label="Win percentage shading"/);
+  assert.match(markup, /data-record-band="even"><a[^>]+aria-label="SEC vs\. Big Ten 1–1"[^>]*>1–1/);
+  assert.match(markup, /data-record-band="none"><span aria-label="No games">—/);
+  const one = render(dataset.games.slice(0, 1));
+  assert.match(one, /data-record-band="higher"><a[^>]+aria-label="SEC vs\. Big Ten 1–0"[^>]*>1–0/);
+  assert.match(one, /data-record-band="lower"><a[^>]+aria-label="Big Ten vs\. SEC 0–1"[^>]*>0–1/);
+});
+
 test('archived ratings use season-end language and show group membership from the archive', () => {
   const archive = { ...dataset, archived:true, conferences:conferences.map(conference => conference.group === 'group-of-six'
     ? { ...conference, group:'group-of-five' } : conference) };

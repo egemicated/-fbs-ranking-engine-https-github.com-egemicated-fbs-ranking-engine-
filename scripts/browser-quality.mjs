@@ -39,7 +39,7 @@ const routes = [
 ];
 let checks=0;
 try {
-    for (const width of [320,375,390,768,1024,1440]) {
+    for (const width of [320,375,390,430,768,1024,1440,1600]) {
     const context=await browser.newContext({viewport:{width,height:960},reducedMotion:'reduce'});
     await isolate(context);
     const page=await context.newPage();
@@ -57,8 +57,25 @@ try {
       assert.deepEqual(missingLabels,[],route+' unlabeled controls');
       assert.ok(!await page.locator('main').innerText().then(text=>/\bundefined\b|NaN%/.test(text)),route+' invalid displayed values');
       assert.equal(await page.locator('main .logo, main .bracket-team-logo, main img[src*="espncdn"]').count(),0,route+' school image placeholders');
+      if (route === 'teams/fcs') {
+        const wedges = await page.locator('.team-card.team-accent-card').evaluateAll(cards => cards.map(card => {
+          const corner = getComputedStyle(card, '::after');
+          const before = getComputedStyle(card, '::before');
+          return corner.bottom === '0px' && corner.right === '0px' && corner.top !== '0px' &&
+            corner.clipPath.startsWith('polygon(') && ['none', 'normal'].includes(before.content);
+        }));
+        assert.ok(wedges.length > 0 && wedges.every(Boolean), 'Every team card has one bottom-right wedge');
+      }
       checks++;
     }
+    const more = page.locator('.nav-more > summary');
+    await more.focus();
+    await page.keyboard.press('Space');
+    await page.locator('.nav-more[open] .nav-more-links').waitFor();
+    assert.ok(await more.evaluate(el => el.getBoundingClientRect().height >= 44));
+    await page.keyboard.press('Escape');
+    assert.equal(await page.locator('.nav-more[open]').count(), 0);
+    assert.ok(await more.evaluate(el => el === document.activeElement));
     await openRoute(page,'compare/matchup/254/254/home');
     await page.getByText(/Choose a different opponent/).waitFor();
     assert.equal(await page.locator('.prediction-card').count(),0);

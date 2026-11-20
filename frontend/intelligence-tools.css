@@ -18,6 +18,16 @@
 .intelligence-result small,.intelligence-result span { color:#52677e; }
 .intelligence-result a { color:#0d50a7; }
 .intelligence-note { padding:10px 12px; background:#edf6fd; border-left:3px solid #1686ce; color:#264966; font-size:13px; }
+.model-report .intelligence-stat-grid > div { padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: #f7faff; }
+.model-report .intelligence-stat-grid dd, .model-report .intelligence-table-scroll td { font-variant-numeric: tabular-nums; }
+.model-report-result { display: inline-block; margin-inline-end: 4px; padding: 2px 6px; border-radius: 4px; background: #edf2f8; color: #435872; font-size: 11px; }
+.model-report-result.is-correct { background: #e4f3eb; color: #12603c; }
+.model-report-result.is-miss { background: #faecef; color: #922f42; }
+.model-report-accuracy { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.model-report-accuracy meter { width: clamp(38px, 8vw, 80px); height: 7px; appearance: none; }
+.model-report-accuracy meter::-webkit-meter-bar { border: 0; border-radius: 3px; background: #dde7f3; }
+.model-report-accuracy meter::-webkit-meter-optimum-value { border-radius: 3px; background: #1c6cc0; }
+.model-report-accuracy meter::-moz-meter-bar { border-radius: 3px; background: #1c6cc0; }
 .intelligence-table-scroll { overflow:auto; max-width:100%; }
 .intelligence-table-scroll table { width:100%; min-width:400px; border-collapse:collapse; font-size:13px; }
 .intelligence-table-scroll th,.intelligence-table-scroll td { padding:12px; text-align:left; border-bottom:1px solid #dbe4ef; }

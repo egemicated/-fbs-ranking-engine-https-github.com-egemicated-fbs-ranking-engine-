@@ -130,11 +130,25 @@ function recordLink(state, a, b, value, label) {
   return `<a href="${route({view:'compare',season:state.season,a,b})}" data-conference-pair-link aria-label="${escapeHtml(label)}">${escapeHtml(value)}</a>`;
 }
 
+const matrixBands = [
+  ['lower', 'Below 25%'], ['low', '25% to under 50%'], ['even', '50%'],
+  ['high', 'Above 50% to under 75%'], ['higher', '75% or higher'], ['none', 'No games'],
+];
+
+function matrixBand(row) {
+  const percent = row?.winningPercentage;
+  if (!row?.games || !Number.isFinite(percent)) return 'none';
+  if (percent < .25) return 'lower';
+  if (percent < .5) return 'low';
+  if (percent === .5) return 'even';
+  return percent < .75 ? 'high' : 'higher';
+}
+
 function recordsView(data, state) {
   const { summaries, matrix, groups, fcs } = conferenceRecords(data);
   const independents = data.conferences.find(item => item.group === 'independent');
   const six = data.conferences.some(item => item.group === 'group-of-six');
-  const columns = data.conferences.map(item => `<th scope="col" title="${escapeHtml(item.name)}">${escapeHtml(shortNames.get(item.name) ?? item.name)}</th>`).join('');
+  const columns = data.conferences.map(item => `<th scope="col" aria-label="${escapeHtml(item.name)}" title="${escapeHtml(item.name)}">${escapeHtml(shortNames.get(item.name) ?? item.name)}</th>`).join('');
   return `
     <section class="panel"><div class="panel-head conference-records-heading">
       <div><h3>Interconference records</h3><p class="compact-note">${data.season} · Results through ${date(data.resultsThrough)}</p></div>
@@ -159,13 +173,14 @@ function recordsView(data, state) {
       ${data.coverage?.excludedFbsGames ? `<p class="compact-note">${data.coverage.excludedFbsGames} other covered FBS games were against unclassified or lower-division opponents.</p>` : ''}</div>
     </section>
     <section class="panel"><div class="panel-head"><h3>Conference matchup matrix</h3></div>
-      <div class="panel-body"><p class="compact-note">Read each record from the row conference’s perspective. Select a record to open the games.</p></div>
-      <div class="conference-scroll" role="region" aria-label="Conference matchup matrix, horizontally scrollable" tabindex="0"><table class="conference-table conference-matrix"><caption class="sr-only">Wins and losses for each row conference against each column conference</caption>
+      <div class="panel-body conference-matrix-guide"><p class="compact-note" id="conference-matrix-help">Each record uses the row conference’s perspective. Shading shows win percentage, with ties counting as half a win. Scroll sideways to see all opponents. Select any record to open its games.</p>
+      <ul class="conference-matrix-legend" aria-label="Win percentage shading">${matrixBands.map(([band, label]) => `<li><span data-record-band="${band}" aria-hidden="true"></span>${label}</li>`).join('')}</ul></div>
+      <div class="conference-scroll" role="region" aria-label="Conference matchup matrix, horizontally scrollable" aria-describedby="conference-matrix-help" tabindex="0"><table class="conference-table conference-matrix"><caption class="sr-only">Wins and losses for each row conference against each column conference</caption>
         <thead><tr><th scope="col">Conference</th>${columns}</tr></thead><tbody>${data.conferences.map(({ id, name }) =>
-    `<tr><th scope="row">${escapeHtml(name)}</th>${data.conferences.map(other => {
+    `<tr><th scope="row"><span class="conference-matrix-full">${escapeHtml(name)}</span><span class="conference-matrix-short" aria-hidden="true">${escapeHtml(shortNames.get(name) ?? name)}</span></th>${data.conferences.map(other => {
       const row = matrix[id]?.[other.id];
       const pair = record(row);
-      return `<td>${row?.games ? recordLink(state,id,other.id,pair,name+' vs. '+other.name+' '+pair) : '<span aria-label="No games">—</span>'}</td>`;
+      return `<td data-record-band="${matrixBand(row)}">${row?.games ? recordLink(state,id,other.id,pair,name+' vs. '+other.name+' '+pair) : '<span aria-label="No games">—</span>'}</td>`;
     }).join('')}</tr>`).join('')}</tbody></table></div>
     </section>`;
 }

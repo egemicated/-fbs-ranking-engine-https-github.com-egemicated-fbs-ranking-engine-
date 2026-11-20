@@ -19,7 +19,7 @@
 .conference-league-context { display: flex; gap: 12px 24px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
 .conference-league-context span { display: block; font-size: 11px; font-weight: 700; }
 .conference-league-context strong { color: #184f92; font: 700 25px/1.2 Barlow, 'Arial Narrow', sans-serif; font-variant-numeric: tabular-nums; }
-.conference-scroll { width: 100%; min-width: 0; overflow-x: auto; margin-block: 0 4px; }
+.conference-scroll { width: 100%; min-width: 0; overflow-x: auto; overscroll-behavior-inline: contain; margin-block: 0 4px; }
 .conference-scroll:focus-visible { outline-offset: -3px; }
 .conference-table { width: 100%; text-align: left; font-variant-numeric: tabular-nums; }
 .conference-table th, .conference-table td { padding: 10px 12px; white-space: nowrap; }
@@ -28,14 +28,26 @@
 .conference-records tbody th { min-width: 112px; }
 .conference-matrix { width: max-content; min-width: 100%; border-collapse: separate; border-spacing: 0; }
 .conference-matrix :is(th, td):not(:first-child) { text-align: center; }
-.conference-matrix :is(th, td) { padding: 0 4px; }
+.conference-matrix :is(th, td) { padding: 2px 4px; }
 .conference-matrix thead th { height: 43px; padding-inline: 7px; }
 .conference-matrix tr > :first-child { position: sticky; left: 0; z-index: 1; padding: 10px 12px; border-right: 1px solid var(--line); }
 .conference-matrix tbody th { background: #fff; }
-.conference-matrix td a, .conference-matrix td span { display: grid; place-items: center; min-height: 44px; min-width: 44px; border-radius: 6px; }
-.conference-matrix td a:hover { background: #eaf3fe; }
+.conference-matrix td a, .conference-matrix td span { display: grid; place-items: center; min-height: 44px; min-width: 44px; border-radius: 6px; background: var(--matrix-fill); }
+.conference-matrix td a { color: #143d72; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.conference-matrix td a:hover { box-shadow: inset 0 0 0 1px #739bc8; }
 .conference-matrix td a:focus-visible { outline-offset: -2px; }
 .conference-matrix td span { color: var(--muted); }
+.conference-matrix-guide { padding-block: 12px; }
+.conference-matrix-short { display: none; }
+.conference-matrix-legend { display: flex; list-style: none; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; padding: 0; color: var(--muted); font-size: 11px; }
+.conference-matrix-legend li { display: flex; align-items: center; gap: 5px; }
+.conference-matrix-legend span { width: 15px; height: 12px; border: 1px solid #a2b4c9; border-radius: 3px; background: var(--matrix-fill); }
+.conference-strength [data-record-band="lower"] { --matrix-fill: #f5d5d1; }
+.conference-strength [data-record-band="low"] { --matrix-fill: #f9e8e5; }
+.conference-strength [data-record-band="even"] { --matrix-fill: #eff3f8; }
+.conference-strength [data-record-band="high"] { --matrix-fill: #e3effc; }
+.conference-strength [data-record-band="higher"] { --matrix-fill: #cfe4f8; }
+.conference-strength [data-record-band="none"] { --matrix-fill: transparent; }
 .conference-quality-list { padding-inline: 12px; }
 .conference-quality-list details { border-top: 1px solid var(--line); }
 .conference-quality-row { display: grid; grid-template-columns: minmax(115px, 1.55fr) repeat(4, minmax(60px, 1fr)) 12px; align-items: center; text-align: left; gap: 8px; min-height: 57px; padding: 8px 10px; cursor: pointer; }
@@ -85,6 +97,9 @@ details[open] > .conference-quality-row::after, .conference-game[open] > summary
   .conference-records th:first-child { position: sticky; left: 0; z-index: 1; border-right: 1px solid var(--line); }
   .conference-records tbody th { background: #fff; }
   .conference-table :is(th, td) { font-size: 11px; }
+  .conference-matrix tr > :first-child { padding-inline: 8px; }
+  .conference-matrix-short { display: inline; }
+  .conference-matrix-full { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .conference-quality-list, .conference-games { padding-inline: 6px; }
   .conference-quality-row { grid-template-columns: repeat(4, minmax(0, 1fr)); min-height: 65px; gap: 6px; }
   .conference-quality-row > :first-child { grid-column: 1 / 4; }

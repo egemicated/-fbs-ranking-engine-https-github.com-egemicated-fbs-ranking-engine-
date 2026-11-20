@@ -1,0 +1,103 @@
+:root {
+  --radius: 12px;
+  --shadow: 0 2px 5px #10274412, 0 6px 18px #1738590c;
+  --muted: #505f75;
+  --control-height: 44px;
+  --control-radius: 8px;
+  --focus-ring: #0870bf;
+}
+
+.button,
+.toolbar select,
+.search-box {
+  border-radius: var(--control-radius);
+}
+
+.toolbar select,
+.toolbar .search-box,
+.header-account-button {
+  min-block-size: var(--control-height);
+}
+
+.rank-with-movement,
+.team-banner-score,
+.scoreboard-score,
+.prediction-number {
+  font-variant-numeric: tabular-nums;
+}
+
+.nav a:focus-visible,
+.nav-more summary:focus-visible,
+.toolbar :is(select, button):focus-visible,
+.search-box:focus-within {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.nav-more-links {
+  padding: 7px;
+  border-radius: var(--radius);
+}
+
+.nav-more-links a[aria-current='page'] {
+  background: #e8f2ff;
+  color: #07478b;
+  font-weight: 700;
+}
+
+@media (max-width: 767px) {
+  #header .masthead-inner {
+    height: auto;
+    min-height: 58px;
+    gap: 10px;
+    padding-block: 6px;
+  }
+
+  #header .masthead-inner > .brand {
+    width: clamp(128px, 42vw, 192px);
+    min-height: 44px;
+  }
+
+  #header .header-account {
+    gap: 5px;
+  }
+
+  #header .header-account-button {
+    gap: 5px;
+    padding-inline: 9px;
+    border-radius: var(--control-radius);
+    font-size: 12px;
+  }
+
+  #header .header-account-button svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  #header .nav-inner {
+    min-height: 49px;
+    padding-block: 2px;
+  }
+
+  #header .nav-inner > .nav-primary,
+  #header .nav-more > summary {
+    min-block-size: var(--control-height);
+    border-radius: var(--control-radius);
+  }
+
+  #header .nav-more-links {
+    max-height: min(420px, 66dvh);
+  }
+}
+
+@media (max-width: 375px) {
+  #header .header-account-button:has(+ .header-account-message) svg {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

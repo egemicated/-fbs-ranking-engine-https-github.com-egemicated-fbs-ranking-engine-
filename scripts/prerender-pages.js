@@ -66,7 +66,7 @@ function previewSvg({ title, nickname, subtitle, detail, accent = '#00b7ed', log
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
     <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#061329"/><stop offset="1" stop-color="#073361"/></linearGradient></defs>
     <rect width="1200" height="630" fill="url(#bg)"/><path d="M0 0h8v630H0z" fill="#00b7ed"/>
-    <path d="M1106 0h94v94z" fill="${safeAccent}"/>
+    <path d="M1128 630l72-42v42z" fill="${safeAccent}"/>
     <image href="${logo}" x="64" y="45" width="360" height="120"/>
     <path d="M64 201h1072" stroke="#48658a"/>
     <g font-family="Arial,sans-serif">${headline}

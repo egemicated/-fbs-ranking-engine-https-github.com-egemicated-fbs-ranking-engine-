@@ -136,6 +136,22 @@ test('the first unpublished FCS schedule gives a useful message for 404 and the 
   }
 });
 
+test('Weekly Picks groups confirmed kickoffs by Mountain game day and retains date-only entries', async () => {
+  const page = await browser({ hash: '#compare/weekly/fcs', fcsData: { ...fcs, games: [
+    game('406', '201', '202', { startDate: '2026-11-15T01:20:00Z', startTimeTbd: false, pick }),
+    game('407', '202', '201', { startDate: '2026-11-15T00:00:00Z', startTimeTbd: true }),
+  ] } });
+  await page.settle('fcs', true);
+  const days = [...page.html().matchAll(/<section class="weekly-day" aria-labelledby="weekly-day-([\d-]+)">([\s\S]*?)<\/section>/g)];
+  assert.deepEqual(days.map(day => day[1]), ['2026-11-14', '2026-11-15']);
+  assert.match(days[0][2], /id="weekly-game-406"/);
+  assert.match(days[0][2], /Saved pregame pick/);
+  assert.match(days[1][2], /id="weekly-game-407"/);
+  assert.match(days[1][2], /Time pending/);
+  assert.match(page.html(), /1 correct · 0 missed/);
+  assert.deepEqual(page.errors, []);
+});
+
 test('an unaligned FCS artifact is rejected without redirecting visitors to FBS', async () => {
   for (const change of [data => { data.source.scheduleAsOf = '2026-11-14T14:59:00Z'; },
     data => { data.source.snapshotHash = 'stale'; }, data => { data.source.calibrated = false; },

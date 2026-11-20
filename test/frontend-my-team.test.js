@@ -29,7 +29,8 @@ test('signed-out visitors use the header and the known team draft stays unsaved 
     subscribe: callback => { onChange = callback; },
   }, '147');
   await flush();
-  assert.match(ui.root.innerHTML, /Sign in from the header/);
+  assert.match(ui.root.innerHTML, /See your favorite teams’ rankings and next games here when you sign in/);
+  assert.match(ui.root.innerHTML, /href="\/my-teams">Follow teams<\/a>/);
   assert.doesNotMatch(ui.root.innerHTML, /my-team-select|data-my-team-action="signin"/);
   signedIn = true;
   onChange();

@@ -54,7 +54,6 @@
 .my-team-message:not(:empty) { margin-top: 8px; }
 
 .my-team[data-favorite-team] {
-  --my-team-accent: color-mix(in srgb, var(--my-team-color, #087dff) 89%, #fff);
   --my-team-divider: #b4d6fa58;
   --my-team-copy: #c4d5eb;
   position: relative;
@@ -65,18 +64,7 @@
   color: #fff;
   box-shadow: 0 9px 22px #09254d26, 0 2px 5px #091c3830;
 }
-.my-team[data-favorite-team="252"] { --my-team-accent: #0796ff; }
-.my-team[data-favorite-team="251"] { --my-team-accent: #d3702c; }
-.my-team[data-favorite-team]::before {
-  position: absolute;
-  z-index: -1;
-  inset: 54px auto auto 0;
-  width: clamp(21px, 2.9vw, 41px);
-  height: clamp(102px, 10vw, 145px);
-  background: var(--my-team-accent, #0796ff);
-  clip-path: polygon(0 0, 100% 0, 0 100%);
-  content: '';
-}
+.my-team[data-favorite-team].team-accent-card { --team-accent: var(--my-team-color, #1689c1); }
 .my-team[data-favorite-team] > .panel-body { padding: 0 clamp(18px, 2.6vw, 34px) 10px; }
 .my-team[data-favorite-team] .my-team-header {
   min-height: 54px;

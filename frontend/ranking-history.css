@@ -7,6 +7,10 @@
 .history-toolbar label, .history-search label { font-size: 13px; font-weight: 700; }
 .history-toolbar .text-link { margin-left: auto; }
 .history-context h2 { margin-bottom: 8px; }
+.history-edition { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; margin-bottom: 8px; }
+.history-edition h2 { margin: 0; }
+.history-edition-tag { padding: 3px 8px; border-radius: 5px; background: #dfedfc; color: #194d86; font-size: 11px; font-weight: 700; }
+.history-edition-tag.is-replay { background: #ede9f4; color: #59436f; }
 .history-context p { max-width: 850px; color: var(--muted); font-size: 13px; line-height: 1.8; }
 .history-context .history-alert { margin-top: 10px; color: #805717; }
 .history-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
@@ -20,14 +24,15 @@
 .history-movers .history-positions { color: var(--ink); font-weight: 700; }
 .history-members li { font-size: 13px; padding: 10px 0; }
 .history-members span { white-space: nowrap; color: var(--muted); }
-.history-move { display: inline-block; min-width: 40px; font-weight: 700; color: var(--muted); white-space: nowrap; }
-.history-move.up { color: #087545; }
-.history-move.down { color: #b1343c; }
+.history-move { display: inline-block; min-width: 42px; padding: 2px 6px; border-radius: 5px; background: #edf2f8; color: #435872; font-weight: 700; text-align: center; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.history-move.up { color: #12603c; background: #e4f3eb; }
+.history-move.down { color: #922f42; background: #faecef; }
 .history-search { display: flex; gap: 16px; align-items: center; }
 .history-search input { flex: 1; max-width: 400px; padding: 11px 14px; border: 1px solid var(--line); border-radius: 7px; font: inherit; font-size: 14px; min-width: 0; }
 .history-table { min-width: 640px; }
 .history-table td:nth-child(n+3) { font-variant-numeric: tabular-nums; }
 .history-table td:nth-child(2) { font-weight: 700; }
+.history-page .table-scroll:focus-visible { outline: 2px solid #1262ad; outline-offset: -2px; }
 @media (max-width: 640px) {
   .history-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
   .history-card { padding: 20px; }
