@@ -121,6 +121,7 @@
 
 .top-five-row {
   grid-template-columns: 26px minmax(0, 1fr) auto;
+  border-inline-start-width: 6px;
 }
 
 .rail-row {
