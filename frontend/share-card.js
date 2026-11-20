@@ -1,9 +1,8 @@
-import { myTeamColors } from './my-team-colors.js?v=2026';
 import { publicFootballPageUrl } from './game-calendar.js';
+import { teamAccent, teamDisplayName, teamNameParts } from './team-identity.js';
 
 const width = 1200;
 const height = 630;
-const accentDefault = '#1da4ff';
 const dateFormat = new Intl.DateTimeFormat('en-US', {
   month: 'short', day: 'numeric', year: 'numeric', timeZone: 'America/Denver',
 });
@@ -13,7 +12,7 @@ const escapeHtml = value => String(value).replace(/[&<>"']/g, character => ({
 const clean = (value, length) => typeof value === 'string' ? value.replace(/\s+/g, ' ').trim().slice(0, length) : '';
 const slug = value => value.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const validId = value => /^\d{1,24}$/.test(String(value));
-const savedImages = new Map();
+let brandArtwork;
 
 export function publicShareCard({ teams, asOf, href, venue, forecastLabel } = {}) {
   if (!Array.isArray(teams) || teams.length < 1 || teams.length > 2) return null;
@@ -21,7 +20,7 @@ export function publicShareCard({ teams, asOf, href, venue, forecastLabel } = {}
   if (!link) return null;
   const publicTeams = teams.map(team => ({
     id: validId(team?.id) ? String(team.id) : null,
-    name: clean(team?.name, 85),
+    name: clean(teamDisplayName(team?.id, clean(team?.name, 85)), 85),
     rank: Number.isSafeInteger(team?.rank) && team.rank > 0 ? team.rank : null,
     rankLabel: clean(team?.rankLabel, 26),
     record: clean(team?.record, 18),
@@ -48,8 +47,9 @@ export function shareCardButton(value) {
   return `<button type="button" class="share-calendar-button share-card-trigger" data-share-card="${escapeHtml(JSON.stringify(card))}" aria-label="Share ${escapeHtml(title)} card">${shareIcon}<span>Share</span></button>`;
 }
 
-function loadImage(url) {
-  return new Promise(resolve => {
+function loadBrandArtwork() {
+  if (brandArtwork) return brandArtwork;
+  brandArtwork = new Promise(resolve => {
     const image = new Image();
     const finish = value => {
       clearTimeout(timeout);
@@ -57,27 +57,14 @@ function loadImage(url) {
       resolve(value);
     };
     const timeout = setTimeout(() => finish(null), 2500);
-    image.crossOrigin = 'anonymous';
     image.onload = () => finish(image);
     image.onerror = () => finish(null);
-    image.src = url;
+    image.src = '/assets/the-games-decide-logo.webp';
+  }).then(image => {
+    if (!image) brandArtwork = null;
+    return image;
   });
-}
-
-function shareImage(url) {
-  if (!savedImages.has(url)) {
-    if (savedImages.size >= 24) savedImages.delete(savedImages.keys().next().value);
-    const promise = loadImage(url);
-    savedImages.set(url, promise);
-    void promise.then(image => {
-      if (!image && savedImages.get(url) === promise) savedImages.delete(url);
-    });
-  }
-  return savedImages.get(url);
-}
-
-function teamImage(id) {
-  return id ? shareImage('https://a.espncdn.com/i/teamlogos/ncaa/500/' + id + '.png') : null;
+  return brandArtwork;
 }
 
 function fontReady() {
@@ -85,7 +72,8 @@ function fontReady() {
   if (!fonts?.load) return null;
   return new Promise(resolve => {
     const timer = setTimeout(resolve, 1100);
-    void fonts.load('700 64px Barlow').then(resolve, resolve).finally(() => clearTimeout(timer));
+    void Promise.all([fonts.load('600 64px Barlow'), fonts.load('700 64px Barlow')])
+      .then(resolve, resolve).finally(() => clearTimeout(timer));
   });
 }
 
@@ -113,44 +101,24 @@ function fitImage(ctx, image, x, y, w, h) {
   ctx.drawImage(image, x + (w - iw) / 2, y + (h - ih) / 2, iw, ih);
 }
 
-function teamAccent(team) {
-  return myTeamColors[team.id] ?? accentDefault;
+function cornerAccent(ctx, x, y, accent, size = 56) {
+  ctx.fillStyle = accent;
+  ctx.beginPath();
+  ctx.moveTo(x - size, y);
+  ctx.lineTo(x, y);
+  ctx.lineTo(x, y + size);
+  ctx.closePath();
+  ctx.fill();
 }
 
-function initials(name) {
-  return name.split(' ').slice(0, 3).map(word => Array.from(word)[0]).join('').toUpperCase();
-}
-
-function teamEmblem(ctx, team, image, x, y, size) {
-  const pad = size * 0.12;
-  fillBox(ctx, x, y, size, size, size * 0.18, '#f4f8ff');
-  if (image) fitImage(ctx, image, x + pad, y + pad, size - pad * 2, size - pad * 2);
-  else text(ctx, initials(team.name), x + size / 2, y + size * 0.64, {
-    size: size * 0.43, align: 'center', max: size - pad * 2, color: '#132c4c',
-  });
-}
-
-function cardBackground(ctx, card) {
+function cardBackground(ctx) {
   const background = ctx.createLinearGradient(0, 0, width, height);
   background.addColorStop(0, '#102952');
   background.addColorStop(1, '#07152d');
   ctx.fillStyle = background;
   ctx.fillRect(0, 0, width, height);
-  for (const [index, team] of card.teams.entries()) {
-    const edge = index ? width : 0, side = index ? -1 : 1;
-    ctx.save();
-    ctx.fillStyle = teamAccent(team);
-    ctx.globalAlpha = 0.27;
-    ctx.beginPath();
-    ctx.moveTo(edge, 0);
-    ctx.lineTo(edge + side * 340, 0);
-    ctx.lineTo(edge + side * 90, height);
-    ctx.lineTo(edge, height);
-    ctx.fill();
-    ctx.globalAlpha = 1;
-    ctx.fillRect(index ? width - 9 : 0, 0, 9, height);
-    ctx.restore();
-  }
+  ctx.fillStyle = '#00b7ed';
+  ctx.fillRect(0, 0, 8, height);
 }
 
 function rankDescription(team) {
@@ -165,55 +133,53 @@ function cardFooter(ctx, card) {
   text(ctx, asOf, 63, 589, { size: 24, color: '#d4e4f7' });
 }
 
-function drawTeamCard(ctx, team, image) {
-  teamEmblem(ctx, team, image, 64, 162, 306);
-  text(ctx, team.division ? team.division + ' FOOTBALL' : 'COLLEGE FOOTBALL', 418, 191, { size: 27, color: '#85dcff' });
-  text(ctx, team.name, 414, 288, { size: 94, max: 720 });
+function drawTeamCard(ctx, team) {
+  const { school, nickname } = teamNameParts(team.id, team.name);
+  cornerAccent(ctx, width, 0, teamAccent(team.id), 80);
+  text(ctx, team.division ? team.division + ' FOOTBALL' : 'COLLEGE FOOTBALL', 64, 164, { size: 25, color: '#85dcff' });
+  text(ctx, school, 64, 250, { size: nickname ? 65 : 92, max: 1074, weight: nickname ? 600 : 700 });
+  if (nickname) text(ctx, nickname.toUpperCase(), 61, 370, { size: 105, max: 1074 });
   const place = rankDescription(team);
-  if (place) text(ctx, place, 418, 362, { size: 52, max: 710, color: '#9be7ff' });
-  if (team.record) text(ctx, team.record + ' overall', 418, place ? 425 : 366, { size: 41, max: 710, color: '#e7f1ff' });
+  const detail = [place, team.record && team.record + ' overall'].filter(Boolean).join(' · ');
+  if (detail) text(ctx, detail, 64, nickname ? 448 : 342, { size: 43, max: 1074, color: '#9be7ff' });
 }
 
-function drawMatchupCard(ctx, card, images) {
+function drawMatchupCard(ctx, card) {
   const label = [card.forecastLabel || 'Model win chance', card.venue].filter(Boolean).join(' · ');
   text(ctx, label.toUpperCase(), 600, 133, { size: 25, max: 1050, align: 'center', color: '#97e5ff' });
   for (const [index, team] of card.teams.entries()) {
     const x = index ? 628 : 62, center = x + 255;
-    fillBox(ctx, x, 153, 510, 364, 26, '#122e53');
-    fillBox(ctx, x + 23, 155, 464, 9, 4, teamAccent(team));
-    teamEmblem(ctx, team, images[index], center - 81, 183, 162);
-    text(ctx, team.name, center, 401, { size: 52, max: 455, align: 'center' });
+    const { school, nickname } = teamNameParts(team.id, team.name);
+    fillBox(ctx, x, 161, 510, 352, 14, '#122e53');
+    cornerAccent(ctx, x + 496, 161, teamAccent(team.id));
+    text(ctx, school, center, nickname ? 247 : 278, { size: nickname ? 44 : 58, max: 455, align: 'center', weight: nickname ? 600 : 700 });
+    if (nickname) text(ctx, nickname.toUpperCase(), center, 313, { size: 63, max: 455, align: 'center' });
     const description = [rankDescription(team), team.record].filter(Boolean).join(' · ');
     const chance = team.probability === null ? 'Win chance unavailable' : (100 * team.probability).toFixed(1) + '%';
-    text(ctx, chance, center, 465, { size: team.probability === null ? 34 : 60, max: 454, align: 'center', color: '#96e8ff' });
-    if (description) text(ctx, description, center, 494, { size: 24, max: 455, align: 'center', color: '#dceaff' });
+    text(ctx, chance, center, 423, { size: team.probability === null ? 34 : 78, max: 454, align: 'center', color: '#96e8ff' });
+    if (description) text(ctx, description, center, 476, { size: 27, max: 455, align: 'center', color: '#dceaff' });
   }
-  fillBox(ctx, 565, 305, 70, 48, 24, '#0a1a34');
-  text(ctx, 'VS', 600, 338, { size: 26, align: 'center', color: '#9fe6ff' });
+  text(ctx, 'VS', 600, 338, { size: 26, max: 50, align: 'center', color: '#9fe6ff' });
 }
 
 export async function createShareCardImage(value) {
   const card = publicShareCard(value);
   if (!card) throw new TypeError('Invalid share card');
-  const [brand, images] = await Promise.all([
-    shareImage('/assets/the-games-decide-logo.webp'),
-    Promise.all(card.teams.map(team => teamImage(team.id))),
-    fontReady(),
-  ]);
+  const [brand] = await Promise.all([loadBrandArtwork(), fontReady()]);
   const canvas = document.createElement('canvas');
   canvas.width = width;
   canvas.height = height;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Could not create share image');
   const matchup = card.teams.length === 2;
-  cardBackground(ctx, card);
+  cardBackground(ctx);
   if (brand) fitImage(ctx, brand, 61, 16, 285, 89);
   else text(ctx, 'THE GAMES DECIDE', 61, 75, { size: 37, max: 500 });
   text(ctx, matchup ? 'MATCHUP FORECAST' : 'TEAM SNAPSHOT', 1139, 75, {
     size: 25, align: 'right', color: '#8ddfff',
   });
-  if (matchup) drawMatchupCard(ctx, card, images);
-  else drawTeamCard(ctx, card.teams[0], images[0]);
+  if (matchup) drawMatchupCard(ctx, card);
+  else drawTeamCard(ctx, card.teams[0]);
   cardFooter(ctx, card);
   return new Promise((resolve, reject) => {
     canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('Could not encode share image')), 'image/png');

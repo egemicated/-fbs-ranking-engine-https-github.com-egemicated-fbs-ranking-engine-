@@ -4,8 +4,10 @@ import { ACCOUNT_ROUTE_EVENT, isAccountCallbackUrl, pendingAccountRoute, safeAcc
 import { routeFromUrl, routeHref } from '../frontend/clean-routes.js';
 import { APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl } from '../frontend/clean-navigation.js';
 import { formatNumber, formatProbability, formatRecord, formatSorScore, indefiniteArticle, sorEligibleRecord } from '../frontend/format.js';
+import { teamDisplayName, teamNameMarkup, teamAccentAttr } from '../frontend/team-identity.js';
 
 const knownImports = [
+  "import { teamDisplayName, teamNameMarkup, teamAccentAttr } from './team-identity.js';",
   "import { ACCOUNT_ROUTE_EVENT, isAccountCallbackUrl, pendingAccountRoute, safeAccountReturnPath } from './bracket-auth.js?v=clean-routes';",
   "import { routeFromUrl, routeHref } from './clean-routes.js';",
   "import { APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl } from './clean-navigation.js';",
@@ -25,7 +27,8 @@ export function appVmSource(source) {
 export function installAppVmContext(context) {
   Object.assign(context, { ACCOUNT_ROUTE_EVENT, isAccountCallbackUrl, pendingAccountRoute, safeAccountReturnPath,
     routeFromUrl, routeHref, APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl,
-    formatNumber, formatProbability, formatRecord, formatSorScore, indefiniteArticle, sorEligibleRecord, URL, URLSearchParams });
+    formatNumber, formatProbability, formatRecord, formatSorScore, indefiniteArticle, sorEligibleRecord,
+    teamDisplayName, teamNameMarkup, teamAccentAttr, URL, URLSearchParams });
   const { location, window } = context;
   assert.ok(location && window, 'VM browser requires location and window fixtures');
   const origin = location.origin ?? 'https://example.test';

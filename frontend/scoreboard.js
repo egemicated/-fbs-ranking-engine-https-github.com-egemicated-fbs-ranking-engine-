@@ -1,6 +1,7 @@
 import { routeHref } from './clean-routes.js';
 import { defaultGameFilters, filterGames, gameFilterControls, readGameFilterChange } from './game-filters.js?v=1';
 import { loadMyTeams, subscribeMyTeams, getMyTeamIds } from './my-teams-store.js?v=1';
+import { teamAccentAttr, teamNameMarkup } from './team-identity.js';
 
 const feedUrl = 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard';
 const pollInterval = 15_000;
@@ -171,12 +172,9 @@ function kickoff(game) {
 
 function teamLine(team, game, leader) {
   const possession = game.situation?.possession != null && String(game.situation.possession) === team.id;
-  const hasLogo = /^\d+$/.test(team.id);
-  const logo = hasLogo ? `<img src="https://a.espncdn.com/i/teamlogos/ncaa/500/${team.id}.png" alt="" loading="lazy" decoding="async">` : '';
-  return `<div class="scoreboard-team${leader ? ' scoreboard-winner' : ''}">
+  return `<div class="scoreboard-team team-accent-row${leader ? ' scoreboard-winner' : ''}" ${teamAccentAttr(team.id)}>
     <span class="scoreboard-team-rank" data-scoreboard-rank="${escapeHtml(team.id)}"></span>
-    <span class="logo${hasLogo ? '' : ' failed'}" aria-hidden="true">${logo}<span>${escapeHtml(team.abbr)}</span></span>
-    <div class="scoreboard-team-name"><strong>${escapeHtml(team.name)}</strong>${possession ? '<span class="scoreboard-possession" role="img" aria-label="Has possession" title="Has possession">●</span>' : ''}${team.record ? `<small>${escapeHtml(team.record)}</small>` : ''}</div>
+    <div class="scoreboard-team-name">${teamNameMarkup(team.id, team.schoolName ?? team.name)}${possession ? '<span class="scoreboard-possession" role="img" aria-label="Has possession" title="Has possession">●</span>' : ''}${team.record ? `<small>${escapeHtml(team.record)}</small>` : ''}</div>
     ${game.state === 'live' || game.state === 'final' ? `<strong class="scoreboard-score">${escapeHtml(team.score ?? '—')}</strong>` : ''}
   </div>`;
 }
@@ -242,6 +240,7 @@ function newCard(id) {
 function updateCard(card, game, count) {
   const name = gameName(game);
   card.dataset.state = game.state;
+  card.toggleAttribute('data-close-game', game.close);
   if (card.getAttribute('aria-label') !== name) card.setAttribute('aria-label', name);
   card.toggleAttribute('data-movable', count > 1);
   if (count > 1) {
@@ -566,11 +565,13 @@ export function mountScoreboard(root, rankForTeam = () => undefined, { getTeams 
     const teams = getTeams();
     const normalized = normalizedGames();
     const eligible = new Set(filterGames(normalized, filters, { teams, myTeamIds: getMyTeamIds() }).map(game => game.id));
+    const closeGames = new Set(filterGames(normalized, { close: true }).map(game => game.id));
     const games = previous.games.filter(game => eligible.has(game.id)).map(game => {
       const saved = savedGames.get(game.id);
       const predictionHref = saved && ['regular', 'postseason'].includes(saved.seasonType) && Number.isInteger(saved.week)
         ? routeHref(`compare/weekly/${saved.seasonType}:${saved.week}/${game.id}`) : '/weekly-picks';
-      return { ...game, predictionHref, hasSavedPrediction:!!saved?.pick, teams: game.teams.map(team => ({ ...team, published: teams.has(team.id) })) };
+      return { ...game, predictionHref, hasSavedPrediction:!!saved?.pick, close: closeGames.has(game.id),
+        teams: game.teams.map(team => ({ ...team, published: teams.has(team.id), schoolName: teams.get(team.id)?.name })) };
     });
     drawSlate(root, { ...previous, games }, order, cards, Object.entries(filters).some(([key, value]) => value !== defaultGameFilters[key]));
     drawFilters(normalized, teams);

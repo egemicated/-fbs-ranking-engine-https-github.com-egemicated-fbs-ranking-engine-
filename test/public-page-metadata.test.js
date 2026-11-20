@@ -59,7 +59,9 @@ test('static build writes an allowlist of rendered destinations, canonicalizes a
       assert.ok((await readPage(alias)).includes(`<link rel="canonical" href="${origin}${canonical}">`));
     }
     const team = await readPage('/team/252/');
-    assert.match(team, /<h1>BYU<\/h1>/);
+    const heading = team.match(/<h1>([^]*?)<\/h1>/)?.[1].replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+    assert.equal(heading, 'BYU Cougars');
+    assert.match(team, /property="og:title" content="BYU Cougars · FBS team profile · The Games Decide"/);
     assert.match(team, /href="\/team\/252\/\?view=results"/);
     assert.ok(team.includes(`property="og:image" content="${origin}/social/team-252.png"`));
     const home = await readPage('/'), rankings = await readPage('/rankings');

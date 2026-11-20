@@ -24,7 +24,7 @@ export function contentSecurityPolicy({ authUrl, allowLocalAuth = false } = {}) 
     // This exception never enables inline JavaScript or eval.
     "style-src 'self' 'unsafe-inline'",
     "font-src 'self'",
-    "img-src 'self' https://a.espncdn.com data: blob:",
+    "img-src 'self' data: blob:",
     `connect-src 'self' ${auth} ${websocket} https://site.api.espn.com`,
     "worker-src 'self'",
     "object-src 'none'",

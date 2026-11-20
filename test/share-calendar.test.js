@@ -66,6 +66,8 @@ test('matchup card preserves actual zero and one probabilities without inventing
   ];
   const card = publicShareCard({ teams, href: '#compare', forecastLabel: 'Model win chance', venue: 'Neutral field' });
   assert.deepEqual(card.teams.map(team => [team.probability, team.rank]), [[1, null], [0, null]]);
+  assert.deepEqual(card.teams.map(team => team.name), ['Utah Utes', 'UCLA Bruins']);
+  assert.deepEqual(publicShareCard(card), card);
   assert.equal(card.asOf, null);
 });
 

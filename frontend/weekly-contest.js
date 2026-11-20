@@ -1,6 +1,7 @@
 import { navigateApp } from './clean-navigation.js';
 import { loadBracketClient } from './bracket-auth.js?v=clean-routes';
 import { renderWeeklyTeamStats } from './weekly-team-stats.js';
+import { teamAccentAttr, teamNameMarkup } from './team-identity.js';
 import {
   contestGames, contestGameLocked, contestGameWinner, contestPickChanges,
   contestWeekKey, contestWeekLabel, defaultContestWeek, scoreContestPicks,
@@ -33,6 +34,10 @@ function teamName(game, side, teams) {
   return game[`${side}Name`] || teams?.get(game[side])?.name || game[side];
 }
 
+function teamLabel(game, side, teams) {
+  return teamNameMarkup(game[side], teamName(game, side, teams));
+}
+
 export function renderContestCommunityPicks(game, teams, result, state = 'loading', now = Date.now()) {
   const releaseReady = !game.startTimeTbd && !game.voidReason && game.status !== 'pending' &&
     Number.isFinite(Date.parse(game.startDate)) && Date.parse(game.startDate) <= now;
@@ -52,8 +57,8 @@ export function renderContestCommunityPicks(game, teams, result, state = 'loadin
   return `<div class="contest-community"><div class="contest-community-heading"><strong>Community picks</strong>
     ${hasParticipants ? `<span>${count.toLocaleString('en-US')} ${count === 1 ? 'participant' : 'participants'}</span>` : ''}</div>
     ${hasParticipants && count < 10 ? '<span class="contest-community-early">Early voting</span>' : ''}
-    ${hasCounts ? `<div class="contest-community-sides"><span>${escape(teamName(game, 'away', teams))} <b>${awayShare.toFixed(1)}%</b></span>
-    <span>${escape(teamName(game, 'home', teams))} <b>${homeShare.toFixed(1)}%</b></span></div>
+    ${hasCounts ? `<div class="contest-community-sides"><span>${teamLabel(game, 'away', teams)} <b>${awayShare.toFixed(1)}%</b></span>
+    <span>${teamLabel(game, 'home', teams)} <b>${homeShare.toFixed(1)}%</b></span></div>
     <div class="contest-community-bar" aria-hidden="true"><span style="width:${awayShare}%"></span></div>`
     : `<p>${waiting || 'No community totals available yet.'}</p>`}</div>`;
 }
@@ -77,11 +82,11 @@ export function renderContestGames(games, { saved = {}, draft = {}, teams, signe
     return `<li class="contest-game"><div class="contest-game-meta"><span>Kickoff · ${kickoffLabel(game)}</span>
       <span class="contest-lock${!locked ? ' contest-open' : ''}">${status}</span></div>
       <h3>${escape(teamName(game, 'away', teams))} at ${escape(teamName(game, 'home', teams))}</h3>
-      <p class="contest-model-pick">Forge’s saved pick <strong>${escape(teamName(game, modelSide, teams))}</strong> · ${percent(modelProbability)} win probability${oddsDescription ? ` · ${escape(oddsDescription)}` : ''}
+      <p class="contest-model-pick">Forge’s saved pick <strong>${teamLabel(game, modelSide, teams)}</strong> · ${percent(modelProbability)} win probability${oddsDescription ? ` · ${escape(oddsDescription)}` : ''}
         <span class="sr-only">, saved ${escape(date(game.modelCapturedAt))}</span></p>
-      ${['away', 'home'].map(side => `<button type="button" class="contest-team${winner === game[side] ? ' is-winner' : ''}" data-contest-game="${escape(game.id)}" data-contest-team="${escape(game[side])}"
+      ${['away', 'home'].map(side => `<button type="button" class="contest-team team-accent-row${winner === game[side] ? ' is-winner' : ''}" ${teamAccentAttr(game[side])} data-contest-game="${escape(game.id)}" data-contest-team="${escape(game[side])}"
         aria-pressed="${selected === game[side]}"${!signedIn || locked || busy ? ' disabled' : ''}>
-        <span>${escape(teamName(game, side, teams))}</span><small>${winner ? escape(game[`${side}Points`]) : selected === game[side] ? changed ? 'Unsaved' : 'Your pick' : 'Pick'}</small></button>`).join('')}
+        <span>${teamLabel(game, side, teams)}</span><small>${winner ? escape(game[`${side}Points`]) : selected === game[side] ? changed ? 'Unsaved' : 'Your pick' : 'Pick'}</small></button>`).join('')}
       <p class="contest-pick-status${userGrade ? ` is-${userGrade}` : ''}">${escape(note)}</p>
       ${signedIn && !game.voidReason && [game.home, game.away].includes(saved[game.id]) ? `<div data-contest-community="${escape(game.id)}"></div>` : ''}
       <div data-contest-team-stats="${escape(game.id)}"></div></li>`;
@@ -126,11 +131,11 @@ export function renderContestPlayerPicks(profile, { teams, now = Date.now() } = 
     const winner = contestGameWinner(game);
     const correct = winner && winner === game.teamId;
     const grade = winner ? correct ? 'Correct' : 'Miss' : 'Pending';
-    const pickName = teamName(game, game.teamId === game.home ? 'home' : 'away', teams);
-    const modelName = teamName(game, game.modelTeam === game.home ? 'home' : 'away', teams);
+    const pickName = teamLabel(game, game.teamId === game.home ? 'home' : 'away', teams);
+    const modelName = teamLabel(game, game.modelTeam === game.home ? 'home' : 'away', teams);
     return `<li class="contest-player-game"><h4>${escape(teamName(game, 'away', teams))} at ${escape(teamName(game, 'home', teams))}</h4>
       <p class="compact-note">${escape(contestWeekLabel(contestWeekKey(game)))} · ${kickoffLabel(game)}</p>
-      <dl><div><dt>Player pick</dt><dd>${escape(pickName)}</dd></div><div><dt>Model pick</dt><dd>${escape(modelName)}</dd></div>
+      <dl><div><dt>Player pick</dt><dd>${pickName}</dd></div><div><dt>Model pick</dt><dd>${modelName}</dd></div>
       <div><dt>Result</dt><dd class="${winner ? correct ? 'is-correct' : 'is-wrong' : ''}">${grade}</dd></div></dl></li>`;
   }).join('')}</ul>`;
 }

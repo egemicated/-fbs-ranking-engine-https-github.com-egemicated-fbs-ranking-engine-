@@ -1,5 +1,6 @@
 import { fillScenarioFavorites, predictScenarioGame } from './cfp-scenario-model.js';
 import { CFP_RULES_URL, SCENARIO_CFP_SEASON, SCENARIO_CFP_SELECTION_AT, SCENARIO_CHAMPION_CONFERENCES, selectScenarioField } from './cfp-scenario-field.js';
+import { teamAccentAttr, teamDisplayName, teamNameMarkup } from './team-identity.js';
 
 const escape = value => String(value ?? '').replace(/[&<>"']/g, character => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -46,26 +47,26 @@ function projectionMarkup(rows, champions) {
   };
   return `<ol class="scenario-field" aria-label="Projected seeds">${field.map(row => `<li>
     <span class="scenario-seed" aria-label="Seed ${row.seed}">${row.seed}</span>
-    <div><strong>${escape(row.name)}</strong><small>${escape(bid(row))}${row.seed <= 4 ? ' · First-round bye' : ''}</small></div>
+    <div><strong>${teamNameMarkup(row.id, row.name)}</strong><small>${escape(bid(row))}${row.seed <= 4 ? ' · First-round bye' : ''}</small></div>
     <div class="scenario-field-record"><strong>#${row.sorRank} SOR</strong><small>${row.wins}–${row.losses}</small></div>
     </li>`).join('')}</ol>
     <div class="scenario-first-round"><h3>First-round games</h3><ul>${matchups.map(({ home, away, byeOpponent }) => `<li>
-      <strong>#${away.seed} ${escape(away.name)} at #${home.seed} ${escape(home.name)}</strong>
-      <span>Winner faces #${byeOpponent.seed} ${escape(byeOpponent.name)}</span></li>`).join('')}</ul></div>
+      <strong>#${away.seed} ${teamNameMarkup(away.id, away.name)} at #${home.seed} ${teamNameMarkup(home.id, home.name)}</strong>
+      <span>Winner faces #${byeOpponent.seed} ${teamNameMarkup(byeOpponent.id, byeOpponent.name)}</span></li>`).join('')}</ul></div>
     <div class="scenario-assumed"><h3>Conference champions used</h3><ul>${selectedChampions.map(({ conference, teamId, assumed }) => `<li>
-      <span>${escape(conference)}</span><strong>${escape(names.get(teamId))}</strong><small>${assumed ? 'Assumed by SOR' : 'Your choice'}</small></li>`).join('')}</ul></div>`;
+      <span>${escape(conference)}</span><strong>${teamNameMarkup(teamId, names.get(teamId))}</strong><small>${assumed ? 'Assumed by SOR' : 'Your choice'}</small></li>`).join('')}</ul></div>`;
 }
 
 function rankingsMarkup(rows, baseline, all) {
   const ranked = all ? rows : rows.filter(hasRank).slice(0, 25);
   return `<table class="scenario-rankings"><caption class="sr-only">Projected ${all ? 'FBS' : 'Top 25'} Strength of Record compared with current ranks</caption>
     <thead><tr><th scope="col">Proj.</th><th scope="col">Team</th><th scope="col">Current</th><th scope="col">Move</th><th scope="col">SOR</th></tr></thead>
-    <tbody>${ranked.map(row => `<tr><td><strong>${row.sorRank ?? '—'}</strong></td><th scope="row">${escape(row.name)}</th>
+    <tbody>${ranked.map(row => `<tr><td><strong>${row.sorRank ?? '—'}</strong></td><th scope="row">${teamNameMarkup(row.id, row.name)}</th>
     <td>${baseline.get(row.id)?.sorRank ?? '—'}</td><td>${movement(row, baseline)}</td><td>${score(row.sor)}</td></tr>`).join('')}</tbody></table>`;
 }
 
 function teamOptions(teams) {
-  return teams.map(team => `<option value="${escape(team.id)}">${escape(team.name)}</option>`).join('');
+  return teams.map(team => `<option value="${escape(team.id)}">${escape(teamDisplayName(team.id, team.name))}</option>`).join('');
 }
 
 function choicesMarkup(game, names, winner, { custom = false } = {}) {
@@ -73,10 +74,10 @@ function choicesMarkup(game, names, winner, { custom = false } = {}) {
   const home = names.get(game.home);
   const probability = game.homeWinProbability;
   const group = custom ? 'data-scenario-custom-choice' : 'data-scenario-choice';
-  return `<div class="scenario-choices" role="group" aria-label="Choose the winner of ${escape(away)} versus ${escape(home)}">
-    ${[[game.away, away, 1 - probability], [game.home, home, probability]].map(([id, name, chance]) => `<button type="button" class="scenario-choice"
+  return `<div class="scenario-choices" role="group" aria-label="Choose the winner of ${escape(teamDisplayName(game.away, away))} versus ${escape(teamDisplayName(game.home, home))}">
+    ${[[game.away, away, 1 - probability], [game.home, home, probability]].map(([id, name, chance]) => `<button type="button" class="scenario-choice team-accent-row" ${teamAccentAttr(id)}
     ${group}="${escape(game.id)}" data-scenario-team="${escape(id)}" aria-pressed="${winner === id}">
-    <span>${escape(name)}</span>${Number.isFinite(probability) ? `<small aria-label="Model win chance ${percent(chance)}">${percent(chance)}</small>` : ''}</button>`).join('')}</div>`;
+    <span>${teamNameMarkup(id, name)}</span>${Number.isFinite(probability) ? `<small aria-label="Model win chance ${percent(chance)}">${percent(chance)}</small>` : ''}</button>`).join('')}</div>`;
 }
 
 function matchupMarkup(game, names, winner) {
@@ -204,7 +205,7 @@ export async function renderCfpScenario(main, { snapshot, inputUrl, workerUrl } 
     function drawCustomGames(focusId, focusTeam) {
       const region = get('[data-scenario-custom-list]');
       region.innerHTML = customGames.length ? `<ul class="scenario-games">${customGames.map(game => `<li class="scenario-game"><div class="scenario-game-meta">
-        <span>${game.neutral ? 'Neutral site' : `At ${escape(names.get(game.home))}`}</span><button type="button" class="scenario-text-button" data-scenario-remove="${escape(game.id)}">Remove game</button></div>
+        <span>${game.neutral ? 'Neutral site' : `At ${teamNameMarkup(game.home, names.get(game.home))}`}</span><button type="button" class="scenario-text-button" data-scenario-remove="${escape(game.id)}">Remove game</button></div>
         ${choicesMarkup({ ...game, homeWinProbability: predictScenarioGame(input, game.home, game.away, game.neutral) }, names, game.winner, { custom: true })}</li>`).join('')}</ul>` : '';
       if (focusId) region.querySelector(`[data-scenario-custom-choice="${CSS.escape(focusId)}"][data-scenario-team="${CSS.escape(focusTeam)}"]`)?.focus({ preventScroll: true });
     }
@@ -311,7 +312,7 @@ export async function renderCfpScenario(main, { snapshot, inputUrl, workerUrl } 
       winner.innerHTML = `<option value="">Choose a winner</option>${teamOptions(participants)}<option value="model"${favoriteAvailable ? '' : ' disabled'}>Use model favorite</option>`;
       if (participants.some(team => team.id === previous) || previous === 'model' && favoriteAvailable) winner.value = previous;
       get('[data-scenario-custom-odds]').textContent = Number.isFinite(odds) && game.home !== game.away ?
-        `${names.get(game.away)} ${percent(1 - odds)} · ${names.get(game.home)} ${percent(odds)}` : '';
+        `${teamDisplayName(game.away, names.get(game.away))} ${percent(1 - odds)} · ${teamDisplayName(game.home, names.get(game.home))} ${percent(odds)}` : '';
       get('[data-scenario-custom-message]').textContent = '';
     }
 

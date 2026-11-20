@@ -1,3 +1,5 @@
+import { teamAccentAttr, teamNameMarkup } from './team-identity.js';
+
 const rounds = [
   ['First Round', 'First round'], ['CFP Quarterfinals', 'Quarters'],
   ['CFP Semifinals', 'Semis'], ['National Championship', 'Final'],
@@ -12,30 +14,23 @@ function participants(slot, advances) {
   return { away: slot.away ?? advances[slot.awayFrom], home: slot.home ?? advances[slot.homeFrom] };
 }
 
-function teamLogo(team, teams) {
-  if (!team) return '<span class="bracket-team-logo bracket-logo-empty" aria-hidden="true"></span>';
-  const initials = team.split(/\s+/).slice(0, 2).map(word => word[0]).join('');
-  const id = teams?.get(team);
-  return id ? `<span class="logo bracket-team-logo" aria-hidden="true"><img src="https://a.espncdn.com/i/teamlogos/ncaa/500/${encodeURIComponent(id)}.png" alt="" loading="lazy" decoding="async"><span>${escape(initials)}</span></span>`
-    : `<span class="bracket-team-logo bracket-logo-empty" aria-hidden="true">${escape(initials)}</span>`;
-}
-
 function fixedSeed(slot, side) {
   const seed = slot[`${side}Seed`];
   return Number.isInteger(seed) ? seed : undefined;
 }
 
-function teamName(team, seed) {
-  return `${seed ? `<small class="bracket-team-seed" aria-label="Seed ${seed}">${seed}</small>` : ''}<span>${escape(team ?? (seed ? 'TBD' : 'Winner TBD'))}</span>`;
+function teamName(team, seed, teams) {
+  return `${seed ? `<small class="bracket-team-seed" aria-label="Seed ${seed}">${seed}</small>` : ''}<span>${team ? teamNameMarkup(teams?.get(team), team) : seed ? 'TBD' : 'Winner TBD'}</span>`;
 }
 
 function teamRow(slot, index, side, team, { pick, score, winner, editable, seeds, teams }) {
   const selected = !!team && pick === team;
-  const classes = `bracket-team-row${selected ? ' is-selected' : ''}${winner ? ' is-winner' : ''}`;
-  const content = `${teamLogo(team, teams)}<span class="bracket-team-name">${teamName(team, fixedSeed(slot, side) ?? seeds.get(team))}</span>
+  const classes = `bracket-team-row${team ? ' team-accent-row' : ''}${selected ? ' is-selected' : ''}${winner ? ' is-winner' : ''}`;
+  const accent = team ? teamAccentAttr(teams?.get(team)) : '';
+  const content = `<span class="bracket-team-name">${teamName(team, fixedSeed(slot, side) ?? seeds.get(team), teams)}</span>
     <span class="bracket-team-score">${Number.isInteger(score) ? score : ''}</span>${selected ? '<span class="bracket-team-check" aria-hidden="true">✓</span>' : ''}`;
-  if (!editable || !team) return `<div class="${classes}">${content}</div>`;
-  return `<button class="${classes}" type="button" id="bracket-pick-${index}-${side}" data-bracket-game="${escape(slot.id)}" data-bracket-team="${escape(team)}" aria-pressed="${selected}">${content}</button>`;
+  if (!editable || !team) return `<div class="${classes}" ${accent}>${content}</div>`;
+  return `<button class="${classes}" ${accent} type="button" id="bracket-pick-${index}-${side}" data-bracket-game="${escape(slot.id)}" data-bracket-team="${escape(team)}" aria-pressed="${selected}">${content}</button>`;
 }
 
 function gameCard(slot, index, context) {
@@ -53,14 +48,14 @@ function gameCard(slot, index, context) {
   const champion = pick || result?.winner;
   return `<article class="bracket-game${titleGame ? ' bracket-title-game' : ''}${grade}" data-bracket-slot="${escape(slot.id)}">
     ${titleGame ? `<div class="bracket-title-head"><p>${pick ? 'Championship pick' : result?.winner ? 'National champion' : 'National Championship'}</p>
-      ${champion ? `<div>${teamLogo(champion, teams)}<strong>${escape(champion)}</strong></div>` : '<strong>The title game</strong>'}</div>` : ''}
+      ${champion ? `<div><strong>${teamNameMarkup(teams?.get(champion), champion)}</strong></div>` : '<strong>The title game</strong>'}</div>` : ''}
     <div class="bracket-game-sheet">
       <div class="bracket-game-meta">${Number.isFinite(kickoff) ? `<time datetime="${escape(slot.kickoff)}">${gameFormat.format(kickoff)} MT</time>` : '<span>Time TBD</span>'}
         ${showScores ? '<span class="bracket-final-label">Final</span>' : ''}</div>
       ${['away', 'home'].map(side => teamRow(slot, index, side, shown[side], { pick, score: showScores ? result[`${side}Points`] : undefined,
         winner: showScores && result.winner === shown[side], editable, seeds, teams })).join('')}
-      ${hasScore && !showScores ? `<div class="bracket-official-final"><strong>Official final</strong><span>${escape(actual.away)} <b>${result.awayPoints}</b></span><span>${escape(actual.home)} <b>${result.homePoints}</b></span></div>` : ''}
-      ${pick ? `<div class="bracket-pick-status"><span>Your pick · <strong>${escape(pick)}</strong></span>
+      ${hasScore && !showScores ? `<div class="bracket-official-final"><strong>Official final</strong><span>${teamNameMarkup(teams?.get(actual.away), actual.away)} <b>${result.awayPoints}</b></span><span>${teamNameMarkup(teams?.get(actual.home), actual.home)} <b>${result.homePoints}</b></span></div>` : ''}
+      ${pick ? `<div class="bracket-pick-status"><span>Your pick · <strong>${teamNameMarkup(teams?.get(pick), pick)}</strong></span>
         <span class="bracket-grade">${result?.winner ? correct ? `Correct · +${pointsByRound[slot.round - 1]}` : 'Incorrect' : 'Awaiting final'}</span></div>` : ''}
     </div></article>`;
 }
@@ -76,8 +71,8 @@ function byeCard(quarterfinal, context) {
   if (!side) return '';
   const team = quarterfinal[side];
   const seed = fixedSeed(quarterfinal, side) ?? context.seeds.get(team);
-  return `<div class="bracket-bye" data-bracket-bye="${escape(quarterfinal.id)}">${teamLogo(team, context.teams)}
-    <div><strong>${teamName(team, seed)}</strong><p>First-round bye</p></div><span class="bracket-bye-label" aria-hidden="true">BYE</span></div>`;
+  return `<div class="bracket-bye${team ? ' team-accent-row' : ''}" data-bracket-bye="${escape(quarterfinal.id)}" ${team ? teamAccentAttr(context.teams?.get(team)) : ''}>
+    <div><strong>${teamName(team, seed, context.teams)}</strong><p>First-round bye</p></div><span class="bracket-bye-label" aria-hidden="true">BYE</span></div>`;
 }
 
 function connections(slots, picks, results) {
@@ -229,18 +224,12 @@ export function mountBracketBoard(root, activeRound, onRoundChange) {
     select(next, true);
     tabs[next - 1].focus();
   };
-  const showLoadedLogo = image => {
-    if (image.naturalWidth) image.closest('.bracket-team-logo')?.classList.add('is-loaded');
-  };
-  const onLoad = event => showLoadedLogo(event.target);
   const observer = new ResizeObserver(queueSize);
   observer.observe(grid);
   for (const game of games.values()) observer.observe(game);
   viewport.addEventListener('scroll', onScroll, { passive: true });
   board.addEventListener('click', onClick);
   board.addEventListener('keydown', onKeydown);
-  board.addEventListener('load', onLoad, true);
-  board.querySelectorAll('.bracket-team-logo img').forEach(showLoadedLogo);
   mobile.addEventListener('change', onResize);
   window.addEventListener('resize', onResize);
   select(round, true);
@@ -250,7 +239,6 @@ export function mountBracketBoard(root, activeRound, onRoundChange) {
     viewport.removeEventListener('scroll', onScroll);
     board.removeEventListener('click', onClick);
     board.removeEventListener('keydown', onKeydown);
-    board.removeEventListener('load', onLoad, true);
     mobile.removeEventListener('change', onResize);
     window.removeEventListener('resize', onResize);
   };

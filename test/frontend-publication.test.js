@@ -231,7 +231,7 @@ test('FCS team Results links a ranked FBS opponent from the same team-details re
   ];
   const page = await browser(snapshot, lookupDetails(details));
   const results = await openResults(page, '201');
-  assert.match(results, /<h1>GAMMA<\/h1>/);
+  assert.match(results, /<h1>Gamma<\/h1>/);
   const upcoming = upcomingPanel(results);
   assert.match(upcoming, /upcoming games/i);
   assert.match(upcoming, /href="\/team\/102\/"[^>]*>Beta</);
@@ -339,12 +339,12 @@ test('FCS directory uses its own rows and preserves subdivision search state', a
   const fcs = page.go('#teams/fcs');
   assert.match(fcs, /1 of 1 FCS teams/);
   assert.match(fcs, /Gamma/);
-  assert.doesNotMatch(fcs, /<h3>Alpha|<h3>Beta/);
+  assert.doesNotMatch(fcs, /class="team-school">(?:Alpha|Beta)</);
   page.ui.state.search = 'no such team';
   assert.match(page.go('#teams/fcs'), /No teams match these filters/);
   const fbs = page.go('#teams');
   assert.match(fbs, /2 of 2 FBS teams/);
-  assert.doesNotMatch(fbs, /<h3>Gamma/);
+  assert.doesNotMatch(fbs, />Gamma<\/a>/);
   assert.match(fbs, /href="\/teams\/fcs\/"/);
 });
 

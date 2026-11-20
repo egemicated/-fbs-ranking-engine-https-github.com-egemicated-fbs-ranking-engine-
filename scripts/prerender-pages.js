@@ -1,7 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import sharp from 'sharp';
-import { myTeamColors } from '../frontend/my-team-colors.js';
+import { teamAccent, teamDisplayName, teamNameMarkup, teamNameParts } from '../frontend/team-identity.js';
 import { platformInfoMarkup } from '../frontend/platform-info.js';
 import { buildModelReport } from '../frontend/model-report.js';
 import { conferenceRecords } from '../frontend/conference-metrics.js';
@@ -57,17 +57,23 @@ const crawlableAliases = new Map([
   ['/polls/', '/polls/ap/'],
 ]);
 
-function previewSvg({ title, subtitle, detail, accent = '#00b7ed', logo }) {
+function previewSvg({ title, nickname, subtitle, detail, accent = '#00b7ed', logo }) {
   const safeAccent = /^#[\da-f]{6}$/i.test(accent) ? accent : '#00b7ed';
-  const size = title.length > 28 ? 52 : title.length > 18 ? 68 : 86;
+  const titleSize = Math.min(nickname ? 66 : 86, Math.floor(1450 / Math.max(1, title.length)));
+  const nicknameSize = Math.min(101, Math.floor(1450 / Math.max(1, nickname?.length ?? 0)));
+  const headline = `<text x="64" y="${nickname ? 284 : 315}" fill="#fff" font-size="${titleSize}" font-weight="${nickname ? 600 : 700}">${escapeHtml(title)}</text>`
+    + (nickname ? `<text x="60" y="394" fill="#fff" font-size="${nicknameSize}" font-weight="700">${escapeHtml(nickname.toUpperCase())}</text>` : '');
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
     <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#061329"/><stop offset="1" stop-color="#073361"/></linearGradient></defs>
-    <rect width="1200" height="630" fill="url(#bg)"/><path d="M0 0h18v630H0z" fill="${safeAccent}"/>
+    <rect width="1200" height="630" fill="url(#bg)"/><path d="M0 0h8v630H0z" fill="#00b7ed"/>
+    <path d="M1106 0h94v94z" fill="${safeAccent}"/>
     <image href="${logo}" x="64" y="45" width="360" height="120"/>
-    <path d="M64 201h1072" stroke="#48658a"/><text x="64" y="299" fill="#fff" font-family="Arial,sans-serif" font-size="${size}" font-weight="bold">${escapeHtml(title)}</text>
-    <text x="64" y="377" fill="#00c6ef" font-family="Arial,sans-serif" font-size="38" font-weight="bold">${escapeHtml(subtitle)}</text>
-    <text x="64" y="447" fill="#d9e6f4" font-family="Arial,sans-serif" font-size="27">${escapeHtml(detail)}</text>
-    <text x="64" y="563" fill="#a6c0dd" font-family="Arial,sans-serif" font-size="22">DATA · OPPONENTS · EVIDENCE</text>
+    <path d="M64 201h1072" stroke="#48658a"/>
+    <g font-family="Arial,sans-serif">${headline}
+    <text x="64" y="${nickname ? 468 : 399}" fill="#85dcff" font-size="36" font-weight="700">${escapeHtml(subtitle)}</text>
+    <text x="64" y="${nickname ? 515 : 459}" fill="#d9e6f4" font-size="27">${escapeHtml(detail)}</text>
+    <path d="M64 550h1072" stroke="#48658a"/>
+    <text x="64" y="588" fill="#a6c0dd" font-size="22">DATA · OPPONENTS · EVIDENCE</text></g>
   </svg>`;
 }
 
@@ -88,7 +94,7 @@ export async function prerenderPublicPages({ root, output, snapshot, teams, html
     return `<table><caption>${division.toUpperCase()} ${top25 ? 'Top 25 by ' : ''}Strength of Record · ${snapshot.season}</caption><thead><tr><th>Rank</th><th>Team</th><th>Record</th><th>SOR</th></tr></thead><tbody>${visible.map(team => {
       const rank = rankOf(team);
       const eligible = division === 'fcs' && team.sorExcludedGames > 0 ? sorEligibleRecord(team) : null;
-      return `<tr><td>${counts.get(rank) > 1 ? 'T-' + rank : rank ?? '—'}</td><td><a href="/team/${team.id}/">${escapeHtml(team.name)}</a></td><td>${record(team)}${eligible ? ` (${eligible} SOR-eligible)` : ''}</td><td>${formatSorScore(team.sor)}</td></tr>`;
+      return `<tr><td>${counts.get(rank) > 1 ? 'T-' + rank : rank ?? '—'}</td><td><a href="/team/${team.id}/">${teamNameMarkup(team.id, team.name)}</a></td><td>${record(team)}${eligible ? ` (${eligible} SOR-eligible)` : ''}</td><td>${formatSorScore(team.sor)}</td></tr>`;
     }).join('')}</tbody></table>`;
   };
   const reportText = (picks, division) => {
@@ -128,13 +134,15 @@ export async function prerenderPublicPages({ root, output, snapshot, teams, html
   const pages = primary.map(([path, route, title, description, content]) => ({ path, route, title, description, content, subtitle: `${snapshot.season} season · ${asOf}`, detail: 'Independent college football intelligence', image: '/social/platform.png' }));
   for (const team of teams) {
     const rank = team.displayRank ?? team.sorRank;
-    const title = `${team.name} · ${team.division.toUpperCase()} team profile`;
-    const description = `${team.name} is ${record(team)} and ${Number.isInteger(rank) ? '#' + rank : 'unranked'} in The Games Decide ${team.division.toUpperCase()} SOR. Inspect its schedule, results, player statistics, and next matchup. As of ${asOf}.`;
+    const name = teamDisplayName(team.id, team.name);
+    const { school, nickname } = teamNameParts(team.id, team.name);
+    const title = `${name} · ${team.division.toUpperCase()} team profile`;
+    const description = `${name} holds a ${record(team)} record and is ${Number.isInteger(rank) ? '#' + rank : 'unranked'} in The Games Decide ${team.division.toUpperCase()} SOR. Inspect its schedule, results, player statistics, and next matchup. As of ${asOf}.`;
     pages.push({ path: '/team/' + team.id + '/', route: 'team/' + team.id, title, description,
-      image: '/social/team-' + team.id + '.png', socialTitle: team.name, accent: myTeamColors[team.id],
+      image: '/social/team-' + team.id + '.png', socialTitle: school, nickname, accent: teamAccent(team.id),
       subtitle: `${team.division.toUpperCase()} SOR ${Number.isInteger(rank) ? '#' + rank : 'unranked'} · ${record(team)}${team.division === 'fcs' ? ' · Experimental' : ''}`,
       detail: `${team.conference} · ${snapshot.season} · ${asOf}`,
-      content: `<h1>${escapeHtml(team.name)}</h1><p>${escapeHtml(description)}</p><p>SOR ${formatSorScore(team.sor)} · Predictive Strength ${number(team.strength)} points.</p>${pageLink(`team/${team.id}/results`, 'Results and upcoming games')} · ${pageLink(`sor-compare/${team.division}/${team.id}`, 'Compare earned rankings')} · ${pageLink('compare', 'Matchup Lab')}`,
+      content: `<h1>${teamNameMarkup(team.id, team.name)}</h1><p>${escapeHtml(description)}</p><p>SOR ${formatSorScore(team.sor)} · Predictive Strength ${number(team.strength)} points.</p>${pageLink(`team/${team.id}/results`, 'Results and upcoming games')} · ${pageLink(`sor-compare/${team.division}/${team.id}`, 'Compare earned rankings')} · ${pageLink('compare', 'Matchup Lab')}`,
     });
   }
   await mkdir(join(output, 'social'), { recursive: true });
@@ -147,7 +155,7 @@ export async function prerenderPublicPages({ root, output, snapshot, teams, html
       for (const [alias, canonical] of crawlableAliases) {
         if (canonical === page.path) await writePage(output, alias, document);
       }
-      if (page.socialTitle) await sharp(Buffer.from(previewSvg({ title: page.socialTitle, subtitle: page.subtitle, detail: page.detail, accent: page.accent, logo: logoUrl }))).png().toFile(join(output, page.image));
+      if (page.socialTitle) await sharp(Buffer.from(previewSvg({ title: page.socialTitle, nickname: page.nickname, subtitle: page.subtitle, detail: page.detail, accent: page.accent, logo: logoUrl }))).png().toFile(join(output, page.image));
     }));
   }
   for (const [route, title] of [['account', 'Account settings'], ['admin', 'Administration'], ['my-teams', 'My Teams']]) {

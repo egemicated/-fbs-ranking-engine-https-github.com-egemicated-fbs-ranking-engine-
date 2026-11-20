@@ -27,7 +27,7 @@ const snapshot=JSON.parse(await readFile('static-dist/data/rankings.json','utf8'
 const fcs=snapshot.fcsRankings[0], fbs=snapshot.rankings[0];
 const routes = [
   ['home','.home-hero'], ['polls/ap/-1','.edition-panel'],
-  ['rankings','#ranking-results'], ['teams/fcs','.team-grid'], ['team/'+fbs.id,'.team-narrative'],
+  ['rankings','#ranking-results'], ['rankings/fcs','#ranking-results'], ['teams/fcs','.team-grid'], ['team/'+fbs.id,'.team-narrative'],
   ['team/'+fcs.id,'.team-narrative'], ['conference-strength/records','.conference-matrix'],
   ['conference-strength/quality','.conference-quality-list'], ['compare','.compare-picker'],
   ['sor-compare','[data-sor-evidence] .intelligence-panel'], ['model-report/fbs','.model-report'],
@@ -56,6 +56,7 @@ try {
       const missingLabels=await page.locator('main').evaluate(main=>[...main.querySelectorAll('select,textarea,input:not([type="hidden"]):not([type="submit"])')].filter(control=>!control.labels?.length&&!control.getAttribute('aria-label')&&!control.getAttribute('aria-labelledby')).map(control=>control.id));
       assert.deepEqual(missingLabels,[],route+' unlabeled controls');
       assert.ok(!await page.locator('main').innerText().then(text=>/\bundefined\b|NaN%/.test(text)),route+' invalid displayed values');
+      assert.equal(await page.locator('main .logo, main .bracket-team-logo, main img[src*="espncdn"]').count(),0,route+' school image placeholders');
       checks++;
     }
     await openRoute(page,'compare/matchup/254/254/home');
@@ -134,6 +135,7 @@ try {
   await openRoute(page,'scoreboard');
   await page.locator('[data-game-id]').first().waitFor();
   assert.equal(await page.locator('[data-game-id]').count(),4);
+  assert.equal(await page.locator('.scoreboard-team img').count(),0);
   await page.locator('[data-game-filter="status"]').selectOption('live');
   assert.equal(await page.locator('[data-game-id]').count(),1);
   await page.locator('[data-game-filter="status"]').selectOption('all');

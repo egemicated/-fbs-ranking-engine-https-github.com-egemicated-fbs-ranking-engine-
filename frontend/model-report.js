@@ -2,6 +2,7 @@ import { navigateApp } from './clean-navigation.js';
 import { routeHref } from './clean-routes.js';
 import { validWeeklyPick, weeklyPicksScore } from './weekly-picks-score.js';
 import { formatNumber, formatProbability } from './format.js?v=1';
+import { teamNameMarkup } from './team-identity.js';
 
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -103,9 +104,9 @@ function stat(label,value,detail='') {
 }
 function gameLinks(game,division) {
   const favored = game.pick.favored === 'home' ? game.homeTeam : game.pick.favored === 'away' ? game.awayTeam : null;
-  return `<div class="intelligence-result"><strong><a href="${routeHref(`team/${encodeURIComponent(game.away)}`)}">${escapeHtml(game.awayTeam.name)}</a>
-    ${game.awayPoints} at <a href="${routeHref(`team/${encodeURIComponent(game.home)}`)}">${escapeHtml(game.homeTeam.name)}</a> ${game.homePoints}</strong>
-    <span>${game.correct === null ? 'Even forecast' : game.correct ? 'Correct pick' : 'Miss'} · ${favored ? escapeHtml(favored.name)+' '+escapeHtml(formatProbability(game.confidence,1)) : '50.0% each'}</span>
+  return `<div class="intelligence-result"><strong><a href="${routeHref(`team/${encodeURIComponent(game.away)}`)}">${teamNameMarkup(game.away, game.awayTeam.name)}</a>
+    ${game.awayPoints} at <a href="${routeHref(`team/${encodeURIComponent(game.home)}`)}">${teamNameMarkup(game.home, game.homeTeam.name)}</a> ${game.homePoints}</strong>
+    <span>${game.correct === null ? 'Even forecast' : game.correct ? 'Correct pick' : 'Miss'} · ${favored ? teamNameMarkup(favored.id, favored.name)+' '+escapeHtml(formatProbability(game.confidence,1)) : '50.0% each'}</span>
     <small>Saved ${dates.format(new Date(game.pick.capturedAt))} MT</small>
     <a class="text-link" href="${routeHref(`compare/weekly/${division === 'fcs' ? 'fcs/' : ''}${weekKey(game)}`)}">Weekly game details</a></div>`;
 }

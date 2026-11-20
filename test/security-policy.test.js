@@ -11,7 +11,7 @@ test('static policy allows only the pinned SDK and required existing network hos
   assert.ok(!/unsafe-inline|unsafe-eval|\*/.test(script));
   assert.match(policy, /connect-src 'self' https:\/\/egxyfyorggwnrnmirrax\.supabase\.co wss:\/\/egxyfyorggwnrnmirrax\.supabase\.co https:\/\/site\.api\.espn\.com/);
   assert.match(policy, /worker-src 'self'/);
-  assert.match(policy, /img-src 'self' https:\/\/a\.espncdn\.com data: blob:/);
+  assert.match(policy, /img-src 'self' data: blob:/);
   assert.match(policy, /font-src 'self'/);
   const loader = await readFile(new URL('../frontend/bracket-auth.js', import.meta.url), 'utf8');
   assert.ok(loader.includes(SUPABASE_BROWSER_SCRIPT), 'SDK URL changes require a reviewed matching policy');

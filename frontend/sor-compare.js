@@ -1,6 +1,7 @@
 import { navigateApp } from './clean-navigation.js';
 import { routeHref } from './clean-routes.js';
 import { formatNumber, formatProbability, formatRecord, formatSorScore, sorEligibleRecord } from './format.js?v=sor-transparency';
+import { teamAccentAttr, teamNameMarkup } from './team-identity.js';
 
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -60,7 +61,7 @@ function stat(label,value) { return `<div><dt>${label}</dt><dd>${value}</dd></di
 function evidenceRow(row) {
   const opponentRank=position(row.opponent);
   const rank=row.opponent?.division ? row.opponent.division.toUpperCase()+' '+rankLabel(opponentRank) : 'Rank unavailable';
-  return `<li><a href="${routeHref(`team/${encodeURIComponent(row.opponentId)}`)}">${escapeHtml(row.opponentName)}</a>
+  return `<li><a href="${routeHref(`team/${encodeURIComponent(row.opponentId)}`)}">${teamNameMarkup(row.opponentId, row.opponentName)}</a>
     · ${row.result==='W'?'Won':row.result==='L'?'Lost':'Tied'}${row.finalMargin ? ' by '+Math.abs(row.finalMargin) : ''}
     · ${row.venue ? row.venue==='neutral'?'Neutral site':row.venue : 'Venue not reported'}
     <small>${rank} · Opponent record ${escapeHtml(row.opponentRecord??'Not reported')}</small></li>`;
@@ -70,8 +71,8 @@ function resultList(title,rows) {
     `<ul>${rows.map(evidenceRow).join('')}</ul>` : '<p class="compact-note">No covered results in this category.</p>'}</details>`;
 }
 function teamCard(team,details,best,losses,sosRanks) {
-  return `<section class="panel intelligence-panel intelligence-compare-team">
-    <h3><a href="${routeHref(`team/${encodeURIComponent(team.id)}`)}">${escapeHtml(team.name)}</a></h3><p class="compact-note">${escapeHtml(team.conference)} · ${team.division.toUpperCase()}</p>
+  return `<section class="panel intelligence-panel intelligence-compare-team team-accent-card" ${teamAccentAttr(team.id)}>
+    <h3><a href="${routeHref(`team/${encodeURIComponent(team.id)}`)}">${teamNameMarkup(team.id, team.name)}</a></h3><p class="compact-note">${escapeHtml(team.conference)} · ${team.division.toUpperCase()}</p>
     <dl class="intelligence-stat-grid">
       ${stat('Published SOR rank',rankLabel(position(team)))}${stat('SOR score',formatSorScore(team.sor))}
       ${stat('Overall record',formatRecord(team))}${stat('Schedule rank (Colley SOS)',rankLabel(sosRanks.get(team.id)))}
@@ -100,7 +101,7 @@ export function sorComparisonMarkup(comparison) {
     ${one('Head-to-head results',comparison.headToHead.length?
       `<ul class="intelligence-evidence-list">${comparison.headToHead.map(evidenceRow).join('')}</ul><p class="compact-note">Head-to-head is part of the achieved record. SOR evaluates the full schedules with the same equation.</p>`:
       '<p class="compact-note">No head-to-head game appears in the published results.</p>')}
-    ${one('Common opponents',comparison.common.length?`<div class="intelligence-common">${comparison.common.map(row=>`<section><h4>${escapeHtml(row.name)}</h4><p>${escapeHtml(a.name)} · ${row.a.map(x=>x.result+' '+Math.abs(x.finalMargin)+'-point margin'+(x.venue?' · '+x.venue:'')).join(', ')}</p><p>${escapeHtml(b.name)} · ${row.b.map(x=>x.result+' '+Math.abs(x.finalMargin)+'-point margin'+(x.venue?' · '+x.venue:'')).join(', ')}</p></section>`).join('')}</div>`:'<p class="compact-note">No common opponent appears in the published results.</p>')}
+    ${one('Common opponents',comparison.common.length?`<div class="intelligence-common">${comparison.common.map(row=>`<section><h4>${teamNameMarkup(row.opponentId, row.name)}</h4><p>${escapeHtml(a.name)} · ${row.a.map(x=>x.result+' '+Math.abs(x.finalMargin)+'-point margin'+(x.venue?' · '+x.venue:'')).join(', ')}</p><p>${escapeHtml(b.name)} · ${row.b.map(x=>x.result+' '+Math.abs(x.finalMargin)+'-point margin'+(x.venue?' · '+x.venue:'')).join(', ')}</p></section>`).join('')}</div>`:'<p class="compact-note">No common opponent appears in the published results.</p>')}
     <p class="compact-note">Best wins are ordered by the opponents’ current Colley ratings, which also supply SOS. Venue and point margins describe the games. SOR uses outcomes, opponent difficulty and venue, with no margin-of-victory weight.</p>`;
 }
 function read(url) {
