@@ -77,3 +77,50 @@ test('report pairs the home-team benchmark and grades coverage on eligible final
   assert.match(markup,/0\.250 Brier on the same 4 finals/);
   assert.match(markup,/upcoming games up to 7 days ahead/);
 });
+
+test('2026 FBS championship week has a selector entry and an honest empty report', () => {
+  const artifact = { ...fixture([
+    game('week-13-final', 28, 7, .8, { week:13, startDate:'2026-11-28T20:00:00Z' }),
+    game('week-15-scheduled', null, null, .7, { week:15, pick:null, status:'scheduled', startDate:'2026-12-12T20:00:00Z' }),
+  ]), asOf:'2026-12-01T12:00:00Z' };
+  const before = JSON.stringify(artifact);
+  const report = buildModelReport(artifact, 'regular:14');
+  assert.deepEqual(report.weeks, ['regular:13', 'regular:14', 'regular:15']);
+  assert.equal(report.week, 'regular:14');
+  assert.ok(report.championshipPending);
+  assert.equal(report.scores.week, null);
+  assert.deepEqual(report.scores.season, buildModelReport(artifact, 'regular:13').scores.season);
+  assert.equal(buildModelReport(artifact, 'regular:15').week, 'regular:15');
+  assert.equal(buildModelReport(artifact).week, 'regular:13');
+  assert.equal(JSON.stringify(artifact), before);
+  const markup = modelReportMarkup(report);
+  assert.match(markup, /<option value="regular:14" selected>Week 14 — Conference Championship Week<\/option>/);
+  assert.match(markup, /Awaiting qualifying predictions/);
+  assert.match(markup, /Season saved-pick accuracy/);
+  assert.doesNotMatch(markup, /Weekly saved-pick accuracy|Weekly Brier score|Results by saved favorite probability/);
+  assert.ok(!buildModelReport({ ...artifact, season:2025 }, 'regular:14').weeks.includes('regular:14'));
+  assert.ok(!buildModelReport(artifact, 'regular:14', 'fcs').weeks.includes('regular:14'));
+});
+
+test('published 2026 championship games use normal report scoring', () => {
+  const matchup = game('141', null, null, .8, { week:14, pick:null, status:'scheduled', startDate:'2026-12-06T01:00:00Z', startTimeTbd:false });
+  const pendingTime = { ...matchup, id:'142', startDate:'2026-12-05T00:00:00Z', startTimeTbd:true };
+  const scheduled = buildModelReport(fixture([matchup, pendingTime]), 'regular:14');
+  assert.deepEqual(scheduled.weeks, ['regular:14']);
+  assert.equal(scheduled.championshipPending, false);
+  const markup = modelReportMarkup(scheduled);
+  assert.match(markup, /Awaiting qualifying predictions/);
+  assert.match(markup, /Published Week 14 matchups/);
+  assert.match(markup, /href="\/weekly-picks\?week=regular%3A14&amp;game=141"/);
+  assert.match(markup, /B at A/);
+  assert.match(markup, /<time datetime="2026-12-06T01:00:00Z">[^<]+ MT<\/time>/);
+  assert.match(markup, /<time datetime="2026-12-05">Dec 5, 2026<\/time> · Time pending/);
+  assert.doesNotMatch(markup, /matchups have not yet been confirmed|Weekly Brier score/);
+  const artifact = { ...fixture([{ ...matchup, status:'final', homePoints:28, awayPoints:7,
+    pick:{capturedAt:'2026-12-05T12:00:00Z', homeWinProbability:.8, favored:'home'} }]), asOf:'2026-12-06T12:00:00Z' };
+  const final = buildModelReport(artifact, 'regular:14');
+  assert.deepEqual(final.scores, weeklyPicksScore(artifact, 'regular:14'));
+  assert.equal(final.scores.week.completedPicks, 1);
+  assert.match(modelReportMarkup(final), /<dt>Weekly saved-pick accuracy<\/dt><dd>100\.0%<\/dd>/);
+  assert.doesNotMatch(modelReportMarkup(final), /Awaiting qualifying predictions/);
+});

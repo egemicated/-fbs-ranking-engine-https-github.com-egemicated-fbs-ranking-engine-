@@ -47,7 +47,7 @@ const fcs = {
   ],
 };
 
-async function browser({ hash = '#compare/weekly', missingFcs, fcsData = fcs, fcsGate } = {}) {
+async function browser({ hash = '#compare/weekly', fbsData = fbs, missingFcs, fcsData = fcs, fcsGate } = {}) {
   const nodes = new Map(), documentEvents = new Map(), calls = [], errors = [];
   const node = id => {
     if (!nodes.has(id)) nodes.set(id, { innerHTML: '', textContent: '', querySelector: node, addEventListener() {} });
@@ -62,7 +62,7 @@ async function browser({ hash = '#compare/weekly', missingFcs, fcsData = fcs, fc
     fetch: async path => {
       calls.push(path);
       if (path === '/data/rankings.json') return { ok: true, json: async () => snapshot };
-      if (path === '/data/weekly-picks.json') return { ok: true, json: async () => fbs };
+      if (path === '/data/weekly-picks.json') return { ok: true, json: async () => fbsData };
       assert.equal(path, '/data/weekly-fcs-picks.json');
       if (fcsGate) await fcsGate;
       if (missingFcs === '404') return { ok: false, status: 404 };
@@ -105,6 +105,7 @@ test('FBS and FCS weekly routes load distinct schedules and preserve the selecte
   assert.equal(page.location.pathname, '/weekly-picks/fcs/');
   assert.match(page.html(), /href="\/weekly-picks\/fcs\/" aria-current="page">FCS/);
   assert.match(page.html(), /2026 FCS schedule and picks/);
+  assert.doesNotMatch(page.html(), /Conference Championship Week/);
   assert.match(page.html(), /FCS forecast validation/);
   assert.match(page.html(), /1,000 games in 2023–2025/);
   assert.match(page.html(), /Cedar College/);
@@ -121,6 +122,34 @@ test('FBS and FCS weekly routes load distinct schedules and preserve the selecte
   assert.match(page.html(), /value="regular:11" selected/);
   assert.match(page.html(), /Alpha State/);
   assert.deepEqual(page.calls, ['/data/rankings.json', '/data/weekly-picks.json', '/data/weekly-fcs-picks.json']);
+  assert.deepEqual(page.errors, []);
+});
+
+test('2026 FBS Weekly Picks includes championship week without creating any game or pick', async () => {
+  const before = game('410', '101', '102', { week: 13, startDate: '2026-11-28T20:00:00Z', status: 'scheduled' });
+  const after = game('412', '102', '101', { week: 15, startDate: '2026-12-12T20:00:00Z', status: 'scheduled' });
+  const fbsData = { ...fbs, games: [before, after] };
+  const page = await browser({ hash: '#compare/weekly/regular:14', fbsData });
+  await page.settle('fbs', true);
+  assert.match(page.html(), /value="regular:13"[\s\S]*value="regular:14" selected[\s\S]*value="regular:15"/);
+  assert.match(page.html(), /Week 14 — Conference Championship Week/);
+  assert.match(page.html(), /Awaiting qualifying predictions/);
+  assert.doesNotMatch(page.html(), /id="weekly-game-|Predictability score|Brier score/);
+  page.selectWeek('regular:13');
+  assert.match(page.node('#weekly-results').innerHTML, /weekly-game-410/);
+  page.selectWeek('regular:15');
+  assert.match(page.node('#weekly-results').innerHTML, /weekly-game-412/);
+  assert.equal(fbsData.games.length, 2);
+  assert.deepEqual(page.errors, []);
+});
+
+test('2026 FBS Weekly Picks shows a real championship game once published', async () => {
+  const publishedGame = game('411', '101', '102', { week: 14, startDate: '2026-12-05T20:00:00Z', status: 'scheduled' });
+  const page = await browser({ hash: '#compare/weekly/regular:14', fbsData: { ...fbs, games: [publishedGame] } });
+  await page.settle('fbs', true);
+  assert.equal((page.html().match(/value="regular:14"/g) ?? []).length, 1);
+  assert.match(page.html(), /weekly-game-411/);
+  assert.doesNotMatch(page.html(), /not yet been confirmed in our published game data/);
   assert.deepEqual(page.errors, []);
 });
 

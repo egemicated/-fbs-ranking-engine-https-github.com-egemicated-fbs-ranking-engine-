@@ -5,9 +5,11 @@ import { routeFromUrl, routeHref } from '../frontend/clean-routes.js';
 import { APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl } from '../frontend/clean-navigation.js';
 import { formatNumber, formatProbability, formatRecord, formatSorScore, indefiniteArticle, sorEligibleRecord } from '../frontend/format.js';
 import { teamDisplayName, teamNameMarkup, teamAccentAttr } from '../frontend/team-identity.js';
+import { championshipWeekLabel, championshipWeekMessage, isChampionshipWeek, withChampionshipWeek } from '../frontend/football-weeks.js';
 
 const knownImports = [
   "import { teamDisplayName, teamNameMarkup, teamAccentAttr } from './team-identity.js';",
+  "import { championshipWeekLabel, championshipWeekMessage, isChampionshipWeek, withChampionshipWeek } from './football-weeks.js';",
   "import { ACCOUNT_ROUTE_EVENT, isAccountCallbackUrl, pendingAccountRoute, safeAccountReturnPath } from './bracket-auth.js?v=clean-routes';",
   "import { routeFromUrl, routeHref } from './clean-routes.js';",
   "import { APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl } from './clean-navigation.js';",
@@ -28,7 +30,8 @@ export function installAppVmContext(context) {
   Object.assign(context, { ACCOUNT_ROUTE_EVENT, isAccountCallbackUrl, pendingAccountRoute, safeAccountReturnPath,
     routeFromUrl, routeHref, APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl,
     formatNumber, formatProbability, formatRecord, formatSorScore, indefiniteArticle, sorEligibleRecord,
-    teamDisplayName, teamNameMarkup, teamAccentAttr, URL, URLSearchParams });
+    teamDisplayName, teamNameMarkup, teamAccentAttr, championshipWeekLabel, championshipWeekMessage,
+    isChampionshipWeek, withChampionshipWeek, URL, URLSearchParams });
   const { location, window } = context;
   assert.ok(location && window, 'VM browser requires location and window fixtures');
   const origin = location.origin ?? 'https://example.test';

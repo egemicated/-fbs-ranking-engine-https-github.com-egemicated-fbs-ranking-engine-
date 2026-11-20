@@ -1,4 +1,5 @@
 import { teamDisplayName, teamNameMarkup, teamAccentAttr } from './team-identity.js';
+import { championshipWeekLabel, championshipWeekMessage, isChampionshipWeek, withChampionshipWeek } from './football-weeks.js';
 import { ACCOUNT_ROUTE_EVENT, isAccountCallbackUrl, pendingAccountRoute, safeAccountReturnPath } from './bracket-auth.js?v=clean-routes';
 import { routeFromUrl, routeHref } from './clean-routes.js';
 import { APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl } from './clean-navigation.js';
@@ -955,6 +956,11 @@ function focusLinkedGame(prefix, id) {
   });
 }
 function weekLabel(game) { return game.seasonType === 'postseason' ? `Postseason · Week ${game.week}` : `Week ${game.week}`; }
+function weeklySelectorLabel(key, season, division) {
+  if (isChampionshipWeek(key, season, division)) return championshipWeekLabel;
+  const [seasonType, week] = key.split(':');
+  return weekLabel({ seasonType, week });
+}
 function activeWeeklyPicks() {
   const [page, view, division] = route();
   return page === 'compare' && view === 'weekly' ? weeklyPickTabs[division === 'fcs' ? 'fcs' : 'fbs'] : null;
@@ -1008,7 +1014,9 @@ function picksPublication(data, division) {
   }
   const next = games.find(game => game.status === 'scheduled' && picksTime(game.startDate) >= picksTime(data.asOf));
   const latest = games.findLast(game => game.status !== 'scheduled');
-  return { data, teams, weeks, selectedWeek: games.length ? weekKey(next ?? latest ?? games[0]) : '' };
+  const weekKeys = withChampionshipWeek(weeks.keys(), data.season, division);
+  const scheduleWeeks = new Map(weekKeys.map(key => [key, weeks.get(key) ?? []]));
+  return { data, teams, weeks: scheduleWeeks, selectedWeek: games.length ? weekKey(next ?? latest ?? games[0]) : weekKeys[0] ?? '' };
 }
 async function loadWeeklyPicks(picks) {
   try {
@@ -1195,6 +1203,13 @@ function predictabilityContent(picks) {
 }
 function weeklyResults(picks) {
   const games = picks.weeks.get(picks.selectedWeek);
+  const reportLink = `<p><a class="text-link" href="${routeHref(`model-report/${picks.division}/${encodeURIComponent(picks.selectedWeek)}`)}">Open the full Model Report Card ${icon('arrow')}</a></p>`;
+  if (!games.length && isChampionshipWeek(picks.selectedWeek, picks.data.season, picks.division)) {
+    return `<section class="notice" aria-labelledby="weekly-championship-title">
+      <div class="panel-head-title">${icon('trophy')}<h3 id="weekly-championship-title">Conference Championship Week</h3></div>
+      <p>${championshipWeekMessage}</p><p><strong>Awaiting qualifying predictions</strong></p>
+    </section>${reportLink}`;
+  }
   const allRows = new Map(games.map(game => [game.id, weeklyPicksGame(picks, game)]));
   const favoriteIds = myTeamsStore?.getMyTeamIds() ?? [];
   const filterTeams = new Map([...picks.teams].map(([id,team]) => [id,{ ...team,...rankedTeam(id) }]));
@@ -1214,7 +1229,7 @@ function weeklyResults(picks) {
     <span>${rows.length} ${rows.length === 1 ? 'game' : 'games'}</span></header><ul class="weekly-list" aria-labelledby="weekly-day-${day}">${rows.join('')}</ul></section>`).join('');
   return `<section class="predictability" aria-labelledby="predictability-title">
     <h3 id="predictability-title">Predictability score</h3><div id="predictability-content">${predictabilityContent(picks)}</div>
-    </section><p><a class="text-link" href="${routeHref(`model-report/${picks.division}/${encodeURIComponent(picks.selectedWeek)}`)}">Open the full Model Report Card ${icon('arrow')}</a></p>
+    </section>${reportLink}
     ${gameFilterModule?.gameFilterControls({ filters: picks.filters, games, teams:filterTeams,myTeamIds:favoriteIds,rankLabel:`${picks.division.toUpperCase()} SOR`,idPrefix:'weekly' }) ?? ''}
     <p class="weekly-record" role="status">${filteredGames.length} of ${games.length} ${games.length === 1 ? 'game' : 'games'} shown · ${record}</p>
     ${grouped || '<p class="empty" role="status">No games match these filters.</p>'}`;
@@ -1243,8 +1258,8 @@ function renderWeeklyPicks(picks) {
         ? 'Predictive Strength picks cover games between two FCS teams. The record grades picks saved before kickoff. Historical replays appear separately.'
         : 'Predictive Strength picks cover FBS–FBS and FBS–FCS games. FBS–FCS win chances are uncalibrated estimates. Each refresh can save picks up to seven days ahead. The record grades picks saved before kickoff. Historical replays and preview odds are separate.'}</p>
       ${fcs ? fcsForecastValidation(data.source.validation) : ''}
-      ${weeks.size ? `<div class="weekly-controls"><label for="weekly-week">Select week</label><select id="weekly-week">${[...weeks].map(([key, games]) =>
-        `<option value="${esc(key)}"${key === selectedWeek ? ' selected' : ''}>${esc(weekLabel(games[0]))}</option>`).join('')}</select></div>
+      ${weeks.size ? `<div class="weekly-controls"><label for="weekly-week">Select week</label><select id="weekly-week">${[...weeks.keys()].map(key =>
+        `<option value="${esc(key)}"${key === selectedWeek ? ' selected' : ''}>${esc(weeklySelectorLabel(key, data.season, division))}</option>`).join('')}</select></div>
         <div id="weekly-results">${weeklyResults(picks)}</div>` : '<p class="compact-note">No games in the saved schedule.</p>'}`;
   } else {
     body = `<p class="compact-note" role="status">${status === 'loading' ? `Loading ${label} weekly picks…` :
@@ -1739,7 +1754,8 @@ document.addEventListener('change',e=>{
     const scope = picks.division === 'fcs' ? 'fcs/' : '';
     navigate(`compare/weekly/${scope}${e.target.value}`, { replace: true, render: false });
     document.querySelector('#weekly-results').innerHTML = weeklyResults(picks);
-    document.querySelector('#announce').textContent = `${picks.division.toUpperCase()} ${weekLabel(picks.weeks.get(picks.selectedWeek)[0])} games shown`;
+    const week = weeklySelectorLabel(picks.selectedWeek, picks.data.season, picks.division);
+    document.querySelector('#announce').textContent = `${picks.division.toUpperCase()} ${week}${picks.weeks.get(picks.selectedWeek).length ? ' games shown' : ' · Awaiting qualifying predictions'}`;
   }
 });
 document.addEventListener('click',e=>{

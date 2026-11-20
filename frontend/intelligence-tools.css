@@ -20,6 +20,13 @@
 .intelligence-note { padding:10px 12px; background:#edf6fd; border-left:3px solid #1686ce; color:#264966; font-size:13px; }
 .model-report .intelligence-stat-grid > div { padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: #f7faff; }
 .model-report .intelligence-stat-grid dd, .model-report .intelligence-table-scroll td { font-variant-numeric: tabular-nums; }
+.model-report-upcoming { display:grid; grid-template-columns:auto minmax(0,1fr); gap:14px; border-inline-start:4px solid #1686ce; }
+.model-report-upcoming-icon { display:grid; place-items:center; width:42px; height:42px; border-radius:8px; background:#e7f2fd; color:#0d50a7; }
+.model-report-upcoming-icon svg { width:23px; height:23px; }
+.model-report-awaiting { color:#16456e; font-size:13px; font-weight:700; margin-block:10px 5px; }
+.model-report-championship-games { list-style:none; margin:0 0 10px; padding:0; }
+.model-report-championship-games li + li { margin-top:8px; }
+.model-report-championship-games a { color:#0d50a7; font-weight:700; }
 .model-report-result { display: inline-block; margin-inline-end: 4px; padding: 2px 6px; border-radius: 4px; background: #edf2f8; color: #435872; font-size: 11px; }
 .model-report-result.is-correct { background: #e4f3eb; color: #12603c; }
 .model-report-result.is-miss { background: #faecef; color: #922f42; }
@@ -47,5 +54,6 @@
   .intelligence-feature-grid,.intelligence-compare-grid { grid-template-columns:minmax(0,1fr); }
   .intelligence-panel { padding:16px; }
   .intelligence-toolbar label { flex:1 1 130px; min-width:0; }
+  .intelligence-toolbar .model-report-championship-choice { flex-basis:min(100%,270px); }
 }
 @media(prefers-reduced-motion:reduce) { .intelligence-tools * { animation:none!important; transition:none!important; } }
