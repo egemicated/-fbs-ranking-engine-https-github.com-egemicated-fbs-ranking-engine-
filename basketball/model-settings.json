@@ -1,0 +1,20 @@
+{
+  "modelVersion": "gd-ncaam-1.0-preview",
+  "validationProtocol": "gd-basketball-chronological-v1",
+  "modelConfig": {
+    "id": "margin",
+    "calibrated": true,
+    "probability": {
+      "venue": 0.6090412913481499,
+      "margin": 0.17393601177622797
+    },
+    "scoreMargin": {
+      "venue": 4.35988814700159,
+      "margin": 1.1637737221177602
+    },
+    "sor": {
+      "venue": 0.5976855367735421,
+      "colley": 4.310746736838692
+    }
+  }
+}

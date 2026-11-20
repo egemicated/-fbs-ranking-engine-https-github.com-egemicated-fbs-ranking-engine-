@@ -1,0 +1,261 @@
+.bb-bracket {
+  --bb-border: #c5d5e8;
+  --bb-ink: #102b50;
+  --bb-muted: #4a6280;
+  --bb-blue: #0759b8;
+  color: var(--bb-ink);
+  min-width: 0;
+}
+.bb-bracket :is(select, button) {
+  font: inherit;
+  font-weight: 650;
+  line-height: 1.25;
+}
+.bb-bracket button {
+  border: 1px solid var(--bb-border);
+  background: #fff;
+  color: var(--bb-ink);
+  min-height: 44px;
+  padding: .55rem .85rem;
+  border-radius: .45rem;
+  cursor: pointer;
+}
+.bb-bracket button:not([disabled]):hover {
+  border-color: var(--bb-blue);
+}
+.bb-bracket button[disabled] {
+  cursor: default;
+  opacity: .68;
+}
+.bb-bracket a {
+  color: var(--bb-blue);
+  text-underline-offset: .2em;
+}
+.bb-bracket :is(button, a, select):focus-visible {
+  outline: 3px solid #0c70db;
+  outline-offset: 2px;
+}
+.bb-bracket .bb-bracket-primary, .bb-bracket-modes button[aria-pressed=true] {
+  color: #fff;
+  background: var(--bb-blue);
+  border-color: var(--bb-blue);
+}
+.bb-bracket :is(h2, h3, h4, p) {
+  margin: 0;
+}
+.bb-bracket-modes, .bb-bracket-actions, .bb-bracket-filters, .bb-bracket-counts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .55rem;
+}
+.bb-bracket-modes {
+  padding: .55rem;
+  margin-bottom: .9rem;
+  background: #edf4fc;
+  border: 1px solid var(--bb-border);
+  border-radius: .6rem;
+}
+.bb-bracket select {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  color: var(--bb-ink);
+  background: #fff;
+  border: 1px solid var(--bb-border);
+  padding: .5rem 1.5rem .5rem .55rem;
+  border-radius: .35rem;
+  margin-top: .2rem;
+}
+.bb-bracket :is(.bb-bracket-empty, .bb-bracket-intro) {
+  background: #f6faff;
+  border: 1px solid var(--bb-border);
+  border-bottom: 3px solid #2678c9;
+  border-radius: .65rem;
+  padding: clamp(1rem, 3%, 1.5rem);
+  display: grid;
+  gap: .55rem;
+}
+.bb-bracket h2 {
+  line-height: 1.1;
+  font-size: clamp(1.5rem, 3vw, 2.15rem);
+}
+.bb-bracket .bb-bracket-field {
+  display: block;
+  width: min(24rem, 100%);
+  margin: 0 0 .6rem;
+}
+.bb-bracket :is(.bb-bracket-field, .bb-bracket-filters label) {
+  color: var(--bb-muted);
+  font-size: .88rem;
+  font-weight: 700;
+}
+.bb-bracket .bb-bracket-kicker {
+  color: var(--bb-blue);
+  font-weight: 700;
+  font-size: .78rem;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+}
+.bb-bracket-counts {
+  gap: .8rem 1.25rem;
+  color: var(--bb-muted);
+}
+.bb-bracket-counts strong {
+  color: var(--bb-ink);
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+}
+.bb-bracket-method {
+  line-height: 1.5;
+}
+.bb-bracket-method summary {
+  min-height: 36px;
+  color: var(--bb-blue);
+  font-weight: 700;
+  cursor: pointer;
+}
+.bb-bracket-method p + p { margin-top: .35rem; }
+.bb-bracket :is(.bb-bracket-note, .bb-bracket-source) {
+  color: var(--bb-muted);
+  font-size: .875rem;
+}
+.bb-bracket .bb-bracket-source { margin-top: 1rem; }
+.bb-bracket progress {
+  width: min(100%, 34rem);
+  height: .6rem;
+  accent-color: var(--bb-blue);
+}
+.bb-bracket-notice:not(:empty) {
+  font-size: .875rem;
+  color: #144d35;
+  margin: .5rem 0;
+}
+.bb-bracket-filters {
+  align-items: end;
+  gap: .8rem;
+  margin-top: 1rem;
+}
+.bb-bracket-filters label { min-width: min(10rem, 100%); }
+.bb-bracket .bb-bracket-region-title { margin: 1rem 0 .5rem; }
+.bb-bracket-board {
+  display: grid;
+  position: relative;
+  gap: .7rem;
+  grid-template-columns: minmax(0, 1fr);
+}
+.bb-bracket-board[data-columns="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.bb-bracket-board[data-columns="4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.bb-bracket-board[data-columns="5"] { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.bb-bracket-column {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.bb-bracket-column h4 {
+  background: #102b50;
+  color: #fff;
+  border-radius: .35rem;
+  padding: .5rem .55rem;
+  font-size: .9rem;
+  font-weight: 700;
+}
+.bb-bracket-round-games {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  justify-content: space-around;
+  flex: 1;
+  padding-top: .55rem;
+}
+.bb-bracket-connections {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.bb-bracket-game {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  gap: .28rem;
+  padding: .4rem;
+  border-radius: .45rem;
+  border: 1px solid var(--bb-border);
+  background: #fff;
+}
+.bb-bracket-game .bb-bracket-team {
+  display: grid;
+  align-items: center;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: .3rem .4rem;
+  gap: .35rem;
+  border-radius: .3rem;
+  background: #f1f6fd;
+  text-align: left;
+  text-decoration: none;
+  color: var(--bb-ink);
+  overflow-wrap: anywhere;
+  font-size: .875rem;
+  font-weight: 650;
+}
+.bb-bracket-game .bb-bracket-team:is(.is-selected, .is-winner) {
+  color: #053963;
+  background: #e0efff;
+  box-shadow: inset 3px 0 0 #1268bb;
+  font-weight: 800;
+}
+.bb-bracket-game .bb-bracket-tbd {
+  display: flex;
+  background: #f7f9fc;
+  color: #526885;
+  font-weight: 500;
+}
+.bb-bracket-seed, .bb-bracket-score {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.bb-bracket-seed {
+  background: #e1edf8;
+  min-width: 1.5em;
+  padding: .1em .2em;
+  border-radius: .15rem;
+  text-align: center;
+  color: #143c66;
+}
+.bb-bracket :is(.bb-bracket-path, .bb-bracket-odds, .bb-bracket-result, .bb-bracket-analysis) {
+  font-size: .76rem;
+  overflow-wrap: anywhere;
+}
+.bb-bracket :is(.bb-bracket-path, .bb-bracket-odds) { color: var(--bb-muted); }
+.bb-bracket .bb-bracket-odds {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: .45em;
+  align-items: center;
+}
+.bb-bracket-odds strong {
+  color: var(--bb-ink);
+  font-variant-numeric: tabular-nums;
+}
+.bb-bracket-odds small { font-size: inherit; }
+.bb-bracket .bb-bracket-analysis { width: fit-content; }
+.bb-bracket-result.is-right { color: #1a684a; }
+.bb-bracket-result.is-wrong { color: #902829; }
+@media (max-width: 860px) {
+  .bb-bracket-board[data-columns] { grid-template-columns: minmax(0, 1fr); }
+  .bb-bracket-connections { display: none; }
+  .bb-bracket-game .bb-bracket-team { font-size: 1rem; }
+}
+@media (max-width: 430px) {
+  .bb-bracket-modes button {
+    flex: 1 1 7rem;
+    padding-inline: .45rem;
+    font-size: .82rem;
+  }
+  .bb-bracket-filters label { flex: 1 1 100%; }
+}

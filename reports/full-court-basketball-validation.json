@@ -1,0 +1,821 @@
+{
+  "kind": "historical-replay",
+  "protocol": "gd-basketball-chronological-v1",
+  "methodology": "One as-of refit per UTC day. Results with no measured availability receive a 24-hour buffer, or 48 hours when tipoff is unconfirmed. Unknown tipoffs are excluded from grading. Training, tuning, and holdout use separate entire seasons. No own prospective outcomes were scored here.",
+  "cohorts": {
+    "training": [
+      2022,
+      2023,
+      2024
+    ],
+    "tuning": [
+      2025
+    ],
+    "holdout": [
+      2026
+    ]
+  },
+  "sources": [
+    {
+      "season": 2022,
+      "sourceSha256": "c8f8d12030ce3c5174e6d5b488b2662eeb6f073579e0511c4c806dccbddf77a1",
+      "teams": 358,
+      "replayGames": 5475
+    },
+    {
+      "season": 2023,
+      "sourceSha256": "0e60c79b0281d1fa9bd4c0fecf62ec028eaee703a69b65e32ba2bb3a19d33129",
+      "teams": 363,
+      "replayGames": 5715
+    },
+    {
+      "season": 2024,
+      "sourceSha256": "7d3f0715179e377dc8043df334aee5920ea4ed596f3c0119ce669e9a568d69fd",
+      "teams": 362,
+      "replayGames": 5726
+    },
+    {
+      "season": 2025,
+      "sourceSha256": "dcccf6f14256a616d1cdc7763939ec5063f29408b13f023ddfa889fc0561afdf",
+      "teams": 364,
+      "replayGames": 5764
+    },
+    {
+      "season": 2026,
+      "sourceSha256": "44f51f3ed199649df50f0568af63fbf787a324764ecf135dc388081b43e082bf",
+      "teams": 365,
+      "replayGames": 5752
+    }
+  ],
+  "modelConfig": {
+    "id": "margin",
+    "calibrated": true,
+    "probability": {
+      "venue": 0.6090412913481499,
+      "margin": 0.17393601177622797
+    },
+    "scoreMargin": {
+      "venue": 4.35988814700159,
+      "margin": 1.1637737221177602
+    },
+    "sor": {
+      "venue": 0.5976855367735421,
+      "colley": 4.310746736838692
+    }
+  },
+  "selected": "margin",
+  "candidates": [
+    {
+      "id": "coin",
+      "keys": [],
+      "probability": {},
+      "scoreMargin": {},
+      "tuning": {
+        "games": 5764,
+        "accuracy": 0.5,
+        "brier": 0.25,
+        "logLoss": 0.6931471805600085,
+        "marginMae": 12.175746009715475,
+        "meanConfidence": 0.5,
+        "averageHomeProbability": 0.5,
+        "actualHomeWinRate": 0.6429562803608605,
+        "brierApprox95": [
+          0.25,
+          0.25
+        ]
+      },
+      "holdout": {
+        "games": 5752,
+        "accuracy": 0.5,
+        "brier": 0.25,
+        "logLoss": 0.6931471805600082,
+        "marginMae": 12.428198887343532,
+        "meanConfidence": 0.5,
+        "averageHomeProbability": 0.5,
+        "actualHomeWinRate": 0.6369958275382476,
+        "brierApprox95": [
+          0.25,
+          0.25
+        ]
+      }
+    },
+    {
+      "id": "venue",
+      "keys": [
+        "venue"
+      ],
+      "probability": {
+        "venue": 0.5939049967925257
+      },
+      "scoreMargin": {
+        "venue": 5.213632502147746
+      },
+      "tuning": {
+        "games": 5764,
+        "accuracy": 0.6284698126301179,
+        "brier": 0.23107667106498117,
+        "logLoss": 0.6547339280872457,
+        "marginMae": 11.395657137013819,
+        "meanConfidence": 0.6257650364109593,
+        "averageHomeProbability": 0.6257650364109593,
+        "actualHomeWinRate": 0.6429562803608605,
+        "brierApprox95": [
+          0.2277482165740098,
+          0.23440512555595255
+        ]
+      },
+      "holdout": {
+        "games": 5752,
+        "accuracy": 0.6268254520166898,
+        "brier": 0.23176262171725068,
+        "logLoss": 0.6561522076003705,
+        "marginMae": 11.657362590005796,
+        "meanConfidence": 0.6272312552420288,
+        "averageHomeProbability": 0.6272312552420288,
+        "actualHomeWinRate": 0.6369958275382476,
+        "brierApprox95": [
+          0.22840461998778794,
+          0.23512062344671342
+        ]
+      }
+    },
+    {
+      "id": "colley",
+      "keys": [
+        "venue",
+        "colley"
+      ],
+      "probability": {
+        "venue": 0.5976855367735421,
+        "colley": 4.310746736838692
+      },
+      "scoreMargin": {
+        "venue": 4.371215802706834,
+        "colley": 30.049500676063133
+      },
+      "tuning": {
+        "games": 5764,
+        "accuracy": 0.7094899375433726,
+        "brier": 0.19179166663707545,
+        "logLoss": 0.564182099785505,
+        "marginMae": 9.912353629799142,
+        "meanConfidence": 0.700182793336633,
+        "averageHomeProbability": 0.6363562160146143,
+        "actualHomeWinRate": 0.6429562803608605,
+        "brierApprox95": [
+          0.18709699208464534,
+          0.19648634118950556
+        ]
+      },
+      "holdout": {
+        "games": 5752,
+        "accuracy": 0.7036682892906815,
+        "brier": 0.1934294335230809,
+        "logLoss": 0.5679348404426728,
+        "marginMae": 10.040157389822015,
+        "meanConfidence": 0.7018801194323143,
+        "averageHomeProbability": 0.6403533700105284,
+        "actualHomeWinRate": 0.6369958275382476,
+        "brierApprox95": [
+          0.18865405241761415,
+          0.19820481462854764
+        ]
+      }
+    },
+    {
+      "id": "elo",
+      "keys": [
+        "venue",
+        "elo"
+      ],
+      "probability": {
+        "venue": 0.6312331433088664,
+        "elo": 1.2230397646246365
+      },
+      "scoreMargin": {
+        "venue": 4.8058518893928355,
+        "elo": 7.967010330841731
+      },
+      "tuning": {
+        "games": 5764,
+        "accuracy": 0.7017696044413602,
+        "brier": 0.19507142960643076,
+        "logLoss": 0.5731501840422553,
+        "marginMae": 10.25232849910023,
+        "meanConfidence": 0.6916571334158897,
+        "averageHomeProbability": 0.6367138058265427,
+        "actualHomeWinRate": 0.6429562803608605,
+        "brierApprox95": [
+          0.19048954455324446,
+          0.19965331465961705
+        ]
+      },
+      "holdout": {
+        "games": 5752,
+        "accuracy": 0.6994958275382476,
+        "brier": 0.1989184674794778,
+        "logLoss": 0.5834787971146493,
+        "marginMae": 10.502926174577922,
+        "meanConfidence": 0.6940697597963232,
+        "averageHomeProbability": 0.6391914953442522,
+        "actualHomeWinRate": 0.6369958275382476,
+        "brierApprox95": [
+          0.1941671464536465,
+          0.20366978850530912
+        ]
+      }
+    },
+    {
+      "id": "margin",
+      "keys": [
+        "venue",
+        "margin"
+      ],
+      "probability": {
+        "venue": 0.6090412913481499,
+        "margin": 0.17393601177622797
+      },
+      "scoreMargin": {
+        "venue": 4.35988814700159,
+        "margin": 1.1637737221177602
+      },
+      "tuning": {
+        "games": 5764,
+        "accuracy": 0.7176439972241498,
+        "brier": 0.18500677968103238,
+        "logLoss": 0.5463630408948834,
+        "marginMae": 9.652383079117135,
+        "meanConfidence": 0.7117811164474345,
+        "averageHomeProbability": 0.6395833071548798,
+        "actualHomeWinRate": 0.6429562803608605,
+        "brierApprox95": [
+          0.18025448935837743,
+          0.18975907000368733
+        ]
+      },
+      "holdout": {
+        "games": 5752,
+        "accuracy": 0.7054068150208623,
+        "brier": 0.18836353551263998,
+        "logLoss": 0.5541733942476773,
+        "marginMae": 9.871307723246028,
+        "meanConfidence": 0.7197814268799309,
+        "averageHomeProbability": 0.6431797548944721,
+        "actualHomeWinRate": 0.6369958275382476,
+        "brierApprox95": [
+          0.18336211848277292,
+          0.19336495254250705
+        ]
+      }
+    },
+    {
+      "id": "efficiency",
+      "keys": [
+        "venue",
+        "efficiency"
+      ],
+      "probability": {
+        "venue": 0.6018571011618516,
+        "efficiency": 0.17239828774205304
+      },
+      "scoreMargin": {
+        "venue": 4.617591391403887,
+        "efficiency": 0.997415291500787
+      },
+      "tuning": {
+        "games": 5764,
+        "accuracy": 0.7166030534351145,
+        "brier": 0.18635377005968143,
+        "logLoss": 0.5507665981370724,
+        "marginMae": 9.812371728627411,
+        "meanConfidence": 0.6962969935367191,
+        "averageHomeProbability": 0.6393952794694231,
+        "actualHomeWinRate": 0.6429562803608605,
+        "brierApprox95": [
+          0.1819026545169594,
+          0.19080488560240347
+        ]
+      },
+      "holdout": {
+        "games": 5752,
+        "accuracy": 0.7083623087621697,
+        "brier": 0.18899443263825622,
+        "logLoss": 0.5566932404032703,
+        "marginMae": 10.029382808165415,
+        "meanConfidence": 0.7022008695153138,
+        "averageHomeProbability": 0.6422177400902637,
+        "actualHomeWinRate": 0.6369958275382476,
+        "brierApprox95": [
+          0.184338682521146,
+          0.19365018275536644
+        ]
+      }
+    },
+    {
+      "id": "combined",
+      "keys": [
+        "venue",
+        "margin",
+        "efficiency"
+      ],
+      "probability": {
+        "venue": 0.6090458279716544,
+        "margin": 0.1737698834371206,
+        "efficiency": 0.0001920018001782257
+      },
+      "scoreMargin": {
+        "venue": 4.358733495779836,
+        "margin": 1.1899926982499616,
+        "efficiency": -0.03025438650050366
+      },
+      "tuning": {
+        "games": 5764,
+        "accuracy": 0.7176439972241498,
+        "brier": 0.18500689820017774,
+        "logLoss": 0.5463635402795671,
+        "marginMae": 9.65181031430194,
+        "meanConfidence": 0.7117811516274785,
+        "averageHomeProbability": 0.6395842840632525,
+        "actualHomeWinRate": 0.6429562803608605,
+        "brierApprox95": [
+          0.18025460106099428,
+          0.1897591953393612
+        ]
+      },
+      "holdout": {
+        "games": 5752,
+        "accuracy": 0.7054068150208623,
+        "brier": 0.1883635602772526,
+        "logLoss": 0.5541738714162172,
+        "marginMae": 9.870598265425228,
+        "meanConfidence": 0.7197801949911629,
+        "averageHomeProbability": 0.6431799421658897,
+        "actualHomeWinRate": 0.6369958275382476,
+        "brierApprox95": [
+          0.1833621576254427,
+          0.1933649629290625
+        ]
+      }
+    },
+    {
+      "id": "context",
+      "keys": [
+        "venue",
+        "margin",
+        "efficiency",
+        "recent",
+        "rest"
+      ],
+      "probability": {
+        "venue": 0.6060162127683127,
+        "margin": 0.1686589054831027,
+        "efficiency": 0.0002069442648878681,
+        "recent": 0.02134385005140909,
+        "rest": -0.06052906502706344
+      },
+      "scoreMargin": {
+        "venue": 4.314665816157977,
+        "margin": 1.1408259678749504,
+        "efficiency": -0.029733228465194106,
+        "recent": 0.20345612653364667,
+        "rest": -0.5093567456503854
+      },
+      "tuning": {
+        "games": 5764,
+        "accuracy": 0.7181644691186676,
+        "brier": 0.184851634508941,
+        "logLoss": 0.5460479844131284,
+        "marginMae": 9.648360912930519,
+        "meanConfidence": 0.7124093886737635,
+        "averageHomeProbability": 0.6392999637952742,
+        "actualHomeWinRate": 0.6429562803608605,
+        "brierApprox95": [
+          0.18008664981351977,
+          0.1896166192043622
+        ]
+      },
+      "holdout": {
+        "games": 5752,
+        "accuracy": 0.7074930458970793,
+        "brier": 0.18800818646898482,
+        "logLoss": 0.5529984339981181,
+        "marginMae": 9.846991882752613,
+        "meanConfidence": 0.7199751873022806,
+        "averageHomeProbability": 0.6430933774537486,
+        "actualHomeWinRate": 0.6369958275382476,
+        "brierApprox95": [
+          0.18301543666502082,
+          0.19300093627294881
+        ]
+      }
+    }
+  ],
+  "holdout": {
+    "games": 5752,
+    "accuracy": 0.7054068150208623,
+    "brier": 0.18836353551263998,
+    "logLoss": 0.5541733942476773,
+    "marginMae": 9.871307723246028,
+    "meanConfidence": 0.7197814268799309,
+    "averageHomeProbability": 0.6431797548944721,
+    "actualHomeWinRate": 0.6369958275382476,
+    "brierApprox95": [
+      0.18336211848277292,
+      0.19336495254250705
+    ],
+    "calibrationError": 0.01594805584250085,
+    "confidence": [
+      {
+        "label": "50–59%",
+        "games": 1302,
+        "accuracy": 0.5180491551459293,
+        "brier": 0.24885657776419082,
+        "logLoss": 0.6908576732804407,
+        "marginMae": 9.711227428113556,
+        "meanConfidence": 0.5494185883387932,
+        "averageHomeProbability": 0.5073135847014071,
+        "actualHomeWinRate": 0.5184331797235023,
+        "brierApprox95": [
+          0.24576027087449243,
+          0.2519528846538892
+        ]
+      },
+      {
+        "label": "60–69%",
+        "games": 1418,
+        "accuracy": 0.6382228490832158,
+        "brier": 0.23121859958131474,
+        "logLoss": 0.6552108876818002,
+        "marginMae": 10.236053995591991,
+        "meanConfidence": 0.6502161055939144,
+        "averageHomeProbability": 0.5633044574201851,
+        "actualHomeWinRate": 0.5705218617771509,
+        "brierApprox95": [
+          0.22359379150735081,
+          0.23884340765527867
+        ]
+      },
+      {
+        "label": "70–79%",
+        "games": 1244,
+        "accuracy": 0.7371382636655949,
+        "brier": 0.19341460560784005,
+        "logLoss": 0.5752097939423836,
+        "marginMae": 9.484675619436365,
+        "meanConfidence": 0.7491564616303119,
+        "averageHomeProbability": 0.642956585520704,
+        "actualHomeWinRate": 0.6165594855305466,
+        "brierApprox95": [
+          0.1812179125558391,
+          0.20561129865984099
+        ]
+      },
+      {
+        "label": "80–89%",
+        "games": 1176,
+        "accuracy": 0.8350340136054422,
+        "brier": 0.1361418870262957,
+        "logLoss": 0.44152583971419646,
+        "marginMae": 9.531260168601785,
+        "meanConfidence": 0.8472856414050355,
+        "averageHomeProbability": 0.7621163992524393,
+        "actualHomeWinRate": 0.7372448979591837,
+        "brierApprox95": [
+          0.12163051321377652,
+          0.1506532608388149
+        ]
+      },
+      {
+        "label": "90–100%",
+        "games": 612,
+        "accuracy": 0.946078431372549,
+        "brier": 0.050452923683572404,
+        "logLoss": 0.2029808222230403,
+        "marginMae": 10.806079931541198,
+        "meanConfidence": 0.9386842730451703,
+        "averageHomeProbability": 0.8892076214727342,
+        "actualHomeWinRate": 0.8921568627450981,
+        "brierApprox95": [
+          0.03511780182484166,
+          0.06578804554230315
+        ]
+      }
+    ],
+    "slices": {
+      "2026": {
+        "games": 5752,
+        "accuracy": 0.7054068150208623,
+        "brier": 0.18836353551263998,
+        "logLoss": 0.5541733942476773,
+        "marginMae": 9.871307723246028,
+        "meanConfidence": 0.7197814268799309,
+        "averageHomeProbability": 0.6431797548944721,
+        "actualHomeWinRate": 0.6369958275382476,
+        "brierApprox95": [
+          0.18336211848277292,
+          0.19336495254250705
+        ]
+      },
+      "neutral": {
+        "games": 679,
+        "accuracy": 0.6369661266568483,
+        "brier": 0.20997872243098037,
+        "logLoss": 0.6029959379607065,
+        "marginMae": 9.376638552077644,
+        "meanConfidence": 0.6765708953275471,
+        "averageHomeProbability": 0.5796781189605286,
+        "actualHomeWinRate": 0.5861561119293078,
+        "brierApprox95": [
+          0.197104058703352,
+          0.22285338615860875
+        ]
+      },
+      "early-season": {
+        "games": 1028,
+        "accuracy": 0.7621595330739299,
+        "brier": 0.1680474851327589,
+        "logLoss": 0.5105187637855193,
+        "marginMae": 12.433255108257082,
+        "meanConfidence": 0.7001652862130183,
+        "averageHomeProbability": 0.6611271632846244,
+        "actualHomeWinRate": 0.7373540856031129,
+        "brierApprox95": [
+          0.15823861947257978,
+          0.17785635079293804
+        ]
+      },
+      "similar records": {
+        "games": 1977,
+        "accuracy": 0.6173495194739504,
+        "brier": 0.22860340482568947,
+        "logLoss": 0.6494409200945197,
+        "marginMae": 10.057297990079434,
+        "meanConfidence": 0.6572139502832607,
+        "averageHomeProbability": 0.6316903410812346,
+        "actualHomeWinRate": 0.6302478502781993,
+        "brierApprox95": [
+          0.22122741206613625,
+          0.2359793975852427
+        ]
+      },
+      "margin fallback": {
+        "games": 422,
+        "accuracy": 0.792654028436019,
+        "brier": 0.1671043401616135,
+        "logLoss": 0.5152327275786364,
+        "marginMae": 14.634745617413872,
+        "meanConfidence": 0.672617204145751,
+        "averageHomeProbability": 0.6639128403300407,
+        "actualHomeWinRate": 0.7985781990521327,
+        "brierApprox95": [
+          0.15419823456138165,
+          0.18001044576184533
+        ]
+      },
+      "nonconference": {
+        "games": 2092,
+        "accuracy": 0.7545411089866156,
+        "brier": 0.16351525141788897,
+        "logLoss": 0.4935348857043131,
+        "marginMae": 11.325254109396122,
+        "meanConfidence": 0.7266929508694391,
+        "averageHomeProbability": 0.6787529977099948,
+        "actualHomeWinRate": 0.7208413001912046,
+        "brierApprox95": [
+          0.15600083593118014,
+          0.1710296669045978
+        ]
+      },
+      "other games": {
+        "games": 5685,
+        "accuracy": 0.7049252418645559,
+        "brier": 0.1887138488893578,
+        "logLoss": 0.5551482820860222,
+        "marginMae": 9.870499302277974,
+        "meanConfidence": 0.7195768858986746,
+        "averageHomeProbability": 0.6422816292936115,
+        "actualHomeWinRate": 0.636235708003518,
+        "brierApprox95": [
+          0.18367705883095367,
+          0.19375063894776193
+        ]
+      },
+      "pick’em": {
+        "games": 11,
+        "accuracy": 0.5,
+        "brier": 0.25,
+        "logLoss": 0.6931471805599453,
+        "marginMae": 11,
+        "meanConfidence": 0.5,
+        "averageHomeProbability": 0.5,
+        "actualHomeWinRate": 0.8181818181818182,
+        "brierApprox95": [
+          0.25,
+          0.25
+        ]
+      },
+      "home court": {
+        "games": 5073,
+        "accuracy": 0.7145673171693279,
+        "brier": 0.18547043243407596,
+        "logLoss": 0.5476386993568559,
+        "marginMae": 9.937517139217505,
+        "meanConfidence": 0.7255649772296389,
+        "averageHomeProbability": 0.6516791853693686,
+        "actualHomeWinRate": 0.6438005125172481,
+        "brierApprox95": [
+          0.1800723100891867,
+          0.19086855477896522
+        ]
+      },
+      "home side favored": {
+        "games": 4302,
+        "accuracy": 0.7284983728498373,
+        "brier": 0.18055171183576496,
+        "logLoss": 0.5357441399025668,
+        "marginMae": 10.121706944690693,
+        "meanConfidence": 0.7426490838640611,
+        "averageHomeProbability": 0.7426490838640611,
+        "actualHomeWinRate": 0.7284983728498373,
+        "brierApprox95": [
+          0.17443192322558676,
+          0.18667150044594316
+        ]
+      },
+      "separated records": {
+        "games": 3775,
+        "accuracy": 0.7515231788079471,
+        "brier": 0.16728956951743443,
+        "logLoss": 0.5042809707776917,
+        "marginMae": 9.773903019264663,
+        "meanConfidence": 0.7525485530340004,
+        "averageHomeProbability": 0.6491968598239463,
+        "actualHomeWinRate": 0.6405298013245033,
+        "brierApprox95": [
+          0.1608206480649725,
+          0.17375849096989635
+        ]
+      },
+      "away side favored": {
+        "games": 1439,
+        "accuracy": 0.6379430159833217,
+        "brier": 0.2112464155324824,
+        "logLoss": 0.6082067094271357,
+        "marginMae": 9.114092250209758,
+        "meanConfidence": 0.6530968788256991,
+        "averageHomeProbability": 0.3469031211743,
+        "actualHomeWinRate": 0.36205698401667824,
+        "brierApprox95": [
+          0.20330712441871104,
+          0.21918570664625378
+        ]
+      },
+      "box-feature coverage": {
+        "games": 5330,
+        "accuracy": 0.698499061913696,
+        "brier": 0.190046721335929,
+        "logLoss": 0.5572565014398612,
+        "marginMae": 9.494164985659019,
+        "meanConfidence": 0.7235156298806498,
+        "averageHomeProbability": 0.6415382235522952,
+        "actualHomeWinRate": 0.624202626641651,
+        "brierApprox95": [
+          0.18474930298403958,
+          0.19534413968781844
+        ]
+      },
+      "established": {
+        "games": 4724,
+        "accuracy": 0.6930567315834039,
+        "brier": 0.19278455579005635,
+        "logLoss": 0.563673174119629,
+        "marginMae": 9.313796734297828,
+        "meanConfidence": 0.724050138269768,
+        "averageHomeProbability": 0.6392741799950065,
+        "actualHomeWinRate": 0.6151566469093989,
+        "brierApprox95": [
+          0.18708848673942674,
+          0.19848062484068596
+        ]
+      },
+      "conference": {
+        "games": 3660,
+        "accuracy": 0.6773224043715848,
+        "brier": 0.20256643450887413,
+        "logLoss": 0.5888334379287499,
+        "marginMae": 9.040254215096828,
+        "meanConfidence": 0.7158309055176196,
+        "averageHomeProbability": 0.6228466335911702,
+        "actualHomeWinRate": 0.5890710382513661,
+        "brierApprox95": [
+          0.1960272091293166,
+          0.20910565988843166
+        ]
+      },
+      "NCAA tournament": {
+        "games": 67,
+        "accuracy": 0.746268656716418,
+        "brier": 0.15863918407022107,
+        "logLoss": 0.47145343363588477,
+        "marginMae": 9.939902845684584,
+        "meanConfidence": 0.7371368817820465,
+        "averageHomeProbability": 0.719386382370466,
+        "actualHomeWinRate": 0.7014925373134329,
+        "brierApprox95": [
+          0.11756001086576864,
+          0.1997183572746735
+        ]
+      }
+    }
+  },
+  "sorSensitivity": [
+    {
+      "season": 2025,
+      "period": "midseason",
+      "cutoff": "2025-01-11T19:00:00.000Z",
+      "gamesUsed": 2579,
+      "alternatives": {
+        "top25": {
+          "colley": 0.8511099657191807,
+          "teams": 364,
+          "meanAbsoluteRankChange": 6.25,
+          "retainedTop25": 24,
+          "originalTop25": 25
+        },
+        "bubble": {
+          "colley": 0.7719672199010232,
+          "teams": 364,
+          "meanAbsoluteRankChange": 4.936813186813187,
+          "retainedTop25": 24,
+          "originalTop25": 25
+        }
+      }
+    },
+    {
+      "season": 2025,
+      "period": "selection-window",
+      "cutoff": "2025-03-18T22:39:59.999Z",
+      "gamesUsed": 5641,
+      "alternatives": {
+        "top25": {
+          "colley": 0.8546624385563354,
+          "teams": 364,
+          "meanAbsoluteRankChange": 10.945054945054945,
+          "retainedTop25": 24,
+          "originalTop25": 25
+        },
+        "bubble": {
+          "colley": 0.7815159293174084,
+          "teams": 364,
+          "meanAbsoluteRankChange": 6.3791208791208796,
+          "retainedTop25": 24,
+          "originalTop25": 25
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "period": "midseason",
+      "cutoff": "2026-01-10T01:30:00.000Z",
+      "gamesUsed": 2580,
+      "alternatives": {
+        "top25": {
+          "colley": 0.8635312235758917,
+          "teams": 365,
+          "meanAbsoluteRankChange": 6.16986301369863,
+          "retainedTop25": 23,
+          "originalTop25": 25
+        },
+        "bubble": {
+          "colley": 0.7601332068933851,
+          "teams": 365,
+          "meanAbsoluteRankChange": 4.3561643835616435,
+          "retainedTop25": 24,
+          "originalTop25": 25
+        }
+      }
+    },
+    {
+      "season": 2026,
+      "period": "selection-window",
+      "cutoff": "2026-03-17T22:39:59.999Z",
+      "gamesUsed": 5647,
+      "alternatives": {
+        "top25": {
+          "colley": 0.8836482256029246,
+          "teams": 365,
+          "meanAbsoluteRankChange": 15.005479452054795,
+          "retainedTop25": 24,
+          "originalTop25": 25
+        },
+        "bubble": {
+          "colley": 0.7689376602814143,
+          "teams": 365,
+          "meanAbsoluteRankChange": 5.947945205479452,
+          "retainedTop25": 24,
+          "originalTop25": 25
+        }
+      }
+    }
+  ]
+}
