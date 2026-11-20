@@ -52,12 +52,15 @@ test('weekly CFBD input saves only timed unresolved FCS kickoffs for the refresh
   assert.equal(Object.hasOwn(publicRankings(snapshot, '/teams'), 'pendingFcsKickoffs'), false);
   assert.equal(Object.hasOwn(publicRankings(snapshot, '/teams'), 'futureFixtures'), false);
 });
-test('schedule means 3:45 AM Mountain in both daylight and standard time', () => {
+test('both update slots follow Eastern Time in daylight and standard time', () => {
   const localTime = new Intl.DateTimeFormat('en-US', { timeZone: UPDATE_SCHEDULE.timeZone, weekday: 'long',
     hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
-  assert.equal(localTime.format(new Date('2026-10-25T09:45:00Z')), 'Sunday 03:45');
-  assert.equal(localTime.format(new Date('2026-11-09T10:45:00Z')), 'Monday 03:45');
-  assert.equal(UPDATE_SCHEDULE.cron, '45 3 * * *');
+  assert.equal(localTime.format(new Date('2026-10-25T06:45:00Z')), 'Sunday 02:45');
+  assert.equal(localTime.format(new Date('2026-10-25T08:45:00Z')), 'Sunday 04:45');
+  assert.equal(localTime.format(new Date('2026-11-09T07:45:00Z')), 'Monday 02:45');
+  assert.equal(localTime.format(new Date('2026-11-09T09:45:00Z')), 'Monday 04:45');
+  assert.equal(UPDATE_SCHEDULE.cron, '45 2 * * *');
+  assert.equal(UPDATE_SCHEDULE.backup.cron, '45 4 * * *');
 });
 test('each achievement explanation exactly reconciles to its calculated score', () => {
   const snapshot = buildWeeklySnapshot(season, prior, config, new Date('2026-11-08T15:00:00Z'));

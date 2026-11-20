@@ -1,10 +1,11 @@
 name: Official player availability
+run-name: ${{ github.event_name == 'schedule' && format('Scheduled update ({0})', github.event.schedule) || github.workflow }}
 on:
   schedule:
-    - cron: '20 20 * 8-12,1 *'
-      timezone: 'America/Denver'
-    - cron: '4,19,34,49 6-22 * 8-12,1 *'
-      timezone: 'America/Denver'
+    - cron: '45 2 * 8-12,1 *'
+      timezone: 'America/New_York'
+    - cron: '45 4 * 8-12,1 *'
+      timezone: 'America/New_York'
   workflow_dispatch:
     inputs:
       mode:
@@ -29,26 +30,21 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Check for a missed daily results refresh
+      - name: Check whether the scheduled availability update is needed
+        id: schedule
         if: github.event_name == 'schedule'
-        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
-        run: node scripts/daily-refresh-watchdog.mjs
+        run: node scripts/scheduled-update-needed.mjs availability
       - name: Check official conference reports
+        id: reports
+        if: github.event_name != 'schedule' || steps.schedule.outputs.needed == 'true'
         env:
-          EVENT_CRON: ${{ github.event.schedule }}
           MANUAL_MODE: ${{ inputs.mode }}
         run: |
-          if [[ -n "$MANUAL_MODE" ]]; then
-            mode="$MANUAL_MODE"
-          elif [[ "$EVENT_CRON" == '20 20 * 8-12,1 *' ]]; then
-            mode=nightly
-          else
-            mode=game-day
-          fi
-          node scripts/publish-player-availability.js --mode "$mode"
+          node scripts/publish-player-availability.js --mode "${MANUAL_MODE:-overnight}"
       - name: Commit changed availability reports
+        if: github.event_name != 'schedule' || steps.schedule.outputs.needed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -65,3 +61,8 @@ jobs:
           git pull --rebase origin main
           git push origin HEAD:main
           gh workflow run test.yml --ref main
+      - name: Report incomplete conference coverage
+        if: steps.reports.outputs.incomplete == 'true'
+        run: |
+          echo '::error::Some due conference feeds failed. Successfully retrieved reports were saved.'
+          exit 1

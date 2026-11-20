@@ -43,7 +43,7 @@ test('frozen evaluator pin and the shared weekly fetch are preserved',async()=>{
   const schedule = [...workflow.matchAll(/cron: '([^']+)'\s+timezone: '([^']+)'/g)].map(([, cron, zone]) => [cron, zone]);
   assert.deepEqual(schedule, [
     [UPDATE_SCHEDULE.cron, UPDATE_SCHEDULE.timeZone],
-    [UPDATE_SCHEDULE.sundayNight.cron, UPDATE_SCHEDULE.timeZone],
+    [UPDATE_SCHEDULE.backup.cron, UPDATE_SCHEDULE.timeZone],
   ]);
   assert.equal((workflow.match(/run: node scripts\/refresh-weekly.js/g)??[]).length,1);
   assert.match(workflow,/git add research\/division-observations\//);

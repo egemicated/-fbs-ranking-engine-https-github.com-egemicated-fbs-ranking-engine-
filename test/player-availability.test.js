@@ -1,5 +1,11 @@
 import assert from 'node:assert/strict';
+import { execFile } from 'node:child_process';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join, resolve, sep } from 'node:path';
 import test from 'node:test';
+import { fileURLToPath } from 'node:url';
+import { promisify } from 'node:util';
 import {
   buildAvailabilitySchedule, fetchOfficialAvailability, mergeAvailability, parseOfficialAvailability,
   planAvailabilityChecks,
@@ -102,6 +108,52 @@ test('checks night reports and league deadlines with one pending-only backup win
   const bigTenSchedule = buildAvailabilitySchedule({ ...slate, teams: slate.teams.map(team => ({ ...team, conference: 'Big Ten' })) });
   assert.equal(planAvailabilityChecks(bigTenSchedule, new Map(), { mode: 'game-day', now: '2026-11-21T15:22:00.000Z' }).size, 1);
   assert.equal(planAvailabilityChecks(bigTenSchedule, new Map(), { mode: 'game-day', now: checkedAt }).size, 0);
+});
+
+test('overnight checks include same-day games and can archive the prior day’s official reports', () => {
+  const overnight = '2026-11-21T07:45:00.000Z';
+  const due = (now, games = schedule, previous = new Map()) =>
+    planAvailabilityChecks(games, previous, { mode: 'overnight', now }).size;
+  assert.equal(due(overnight), 1);
+  assert.equal(due('2026-11-18T07:45:00.000Z'), 1);
+  assert.equal(due('2026-11-17T07:45:00.000Z'), 0);
+  assert.equal(due(overnight, [{ ...schedule[0], status: 'final' }]), 0);
+  assert.equal(due(kickoff), 0);
+  assert.equal(due(checkedAt, schedule, mergeAvailability(new Map(), parse({ official }))), 0);
+  const nextNight = '2026-11-22T07:45:00.000Z';
+  const completed = [{ ...schedule[0], status: 'final' }];
+  assert.equal(due(nextNight, completed), 1);
+  assert.equal(due(nextNight, completed, mergeAvailability(new Map(), parse({ official }))), 0);
+  assert.equal(due('2026-11-23T07:45:00.000Z', completed), 0);
+});
+
+test('overnight publication retains successful reports and marks a partial feed failure for retry', async t => {
+  const directory = await mkdtemp(join(tmpdir(), 'availability-publication-'));
+  t.after(async () => {
+    assert.ok(resolve(directory).startsWith(resolve(tmpdir()) + sep));
+    await rm(directory, { recursive: true, force: true });
+  });
+  await mkdir(join(directory, 'published'));
+  const secHome = { id: '1', name: 'Home', division: 'fbs', conference: 'SEC' };
+  const secAway = { id: '2', name: 'Away', division: 'fbs', conference: 'SEC' };
+  await writeFile(join(directory, 'published', 'weekly-picks.json'), JSON.stringify({ ...slate,
+    teams: [...slate.teams, secHome, secAway],
+    games: [game, { ...game, id: '1', home: secHome.id, away: secAway.id }],
+  }));
+  const preliminary = { ...official, ReportType: 'Friday Update', publishDate: '2026-11-20', postedTime: '21:00:00' };
+  await writeFile(join(directory, 'B12-publish.json'), JSON.stringify({ preliminary }));
+
+  const workflowOutput = join(directory, 'workflow-output');
+  const publisher = fileURLToPath(new URL('../scripts/publish-player-availability.js', import.meta.url));
+  const { stdout } = await promisify(execFile)(process.execPath, [publisher, '--mode', 'overnight',
+    '--source-dir', directory, '--at', '2026-11-21T07:45:00.000Z'], {
+    cwd: directory, env: { ...process.env, GITHUB_OUTPUT: workflowOutput },
+  });
+  assert.match(stdout, /Checked 1 of 2 due conference feeds/);
+  assert.equal(await readFile(workflowOutput, 'utf8'), 'incomplete=true\n');
+  const artifact = JSON.parse(await readFile(join(directory, 'published', 'team-availability', `${byu.id}.json`), 'utf8'));
+  assert.equal(artifact.reports[0].reportAt, '2026-11-21T03:00:00.000Z');
+  assert.equal(artifact.reports[0].final, false);
 });
 
 test('keeps only reports for the exact rescheduled kickoff', () => {

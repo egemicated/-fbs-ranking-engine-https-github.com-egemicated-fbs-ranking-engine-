@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises';
+import { appendFile, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
 import { atomicJson } from '../src/ingest.js';
@@ -68,6 +68,9 @@ if (checks.size === 0) {
   const changed = [...merged.entries()].filter(([teamId, artifact]) => previous.get(teamId) !== artifact);
   for (const [teamId, artifact] of changed) {
     await atomicJson(join(options['output-dir'], `${teamId}.json`), artifact);
+  }
+  if (options.mode === 'overnight' && succeeded < checks.size && process.env.GITHUB_OUTPUT) {
+    await appendFile(process.env.GITHUB_OUTPUT, 'incomplete=true\n');
   }
   console.log(`Checked ${succeeded} of ${checks.size} due conference feeds, matched ${additions.length} team reports and refreshed ${changed.length} team files.`);
 }

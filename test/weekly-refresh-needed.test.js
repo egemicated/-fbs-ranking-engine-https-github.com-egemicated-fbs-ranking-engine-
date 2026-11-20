@@ -1,10 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { dailyRefreshNeeded, sundayNightRefreshNeeded } from '../scripts/weekly-refresh-needed.js';
+import { dailyRefreshNeeded } from '../scripts/weekly-refresh-needed.js';
 
 // The saved Sunday publication below precedes the clock change that morning.
-const sundayMorning = '2026-11-01T10:45:00Z';
-const mondayMorning = '2026-11-02T10:45:00Z';
+const sundayMorning = '2026-11-01T07:45:00Z';
+const mondayMorning = '2026-11-02T07:45:00Z';
 const snapshot = {
   season: 2026, asOf: '2026-11-01T06:01:01Z', snapshotHash: 'current',
   source: { provider: 'cfbd', fetchedAt: '2026-11-01T06:01:00Z' },
@@ -66,48 +66,20 @@ test('daily check deduplicates on the Mountain date and checks new results the n
   assert.equal(dailyRefreshNeeded(refreshed, aligned, '2026-11-05T10:45:00Z'), true);
 });
 
-// The scheduled Sunday evening check lands on Monday in UTC.
-const sundayNight = '2026-11-02T03:11:00Z';
 const sundayGame = { ...lateGame, id: 'sunday', startDate: '2026-11-01T18:00:00Z', status: 'scheduled' };
 
-test('Sunday night catches an unresolved Sunday kickoff after the morning refresh and after three hours', () => {
+test('the next overnight check catches an unresolved Sunday result', () => {
   const schedule = { ...picks, games: [sundayGame] };
-  assert.equal(sundayNightRefreshNeeded(snapshot, schedule, '2026-11-01T20:59:59Z'), false);
-  assert.equal(sundayNightRefreshNeeded(snapshot, schedule, '2026-11-01T21:00:00Z'), true);
-  assert.equal(sundayNightRefreshNeeded(snapshot, schedule, sundayNight), true);
+  assert.equal(dailyRefreshNeeded(snapshot, schedule, sundayMorning), false);
   assert.equal(dailyRefreshNeeded(snapshot, schedule, mondayMorning), true);
 });
 
-test('Sunday night skips ordinary Saturdays, undated or canceled games, and unavailable or finished results', () => {
-  const canceledSnapshot = { ...snapshot, source: { ...snapshot.source, audit: { confirmedCanceledRecords: [{ id: 'canceled' }] } } };
-  const games = [
-    lateGame,
-    { ...sundayGame, status: 'final' },
-    { ...sundayGame, startTimeTbd: true },
-    { ...sundayGame, home: 'other-fcs' },
-    { ...sundayGame, id: 'canceled' },
-    { ...sundayGame, startDate: '2026-11-02T01:00:00Z' },
-    { ...sundayGame, startDate: '2026-11-08T18:00:00Z' },
-  ];
-  assert.equal(sundayNightRefreshNeeded(canceledSnapshot, { ...picks, games }, sundayNight), false);
-  assert.equal(sundayNightRefreshNeeded(snapshot, null, sundayNight), false);
-  assert.equal(sundayNightRefreshNeeded(null, picks, sundayNight), false);
-});
-
-test('Sunday night does not repeat an aligned evening pull even if a game has no final yet', () => {
-  const refreshed = { ...snapshot, asOf: '2026-11-02T03:11:42Z', source: { ...snapshot.source, fetchedAt: '2026-11-02T03:11:40Z' } };
-  const schedule = { ...picks, source: { ...picks.source, scheduleAsOf: refreshed.source.fetchedAt, rankingAsOf: refreshed.asOf }, games: [sundayGame] };
-  assert.equal(sundayNightRefreshNeeded(refreshed, schedule, '2026-11-02T03:18:00Z'), false);
-});
-
-test('FCS-only kickoffs can trigger either check without adding games to FBS Weekly Picks', () => {
+test('FCS-only kickoffs can trigger an overnight check without adding games to FBS Weekly Picks', () => {
   const fcsSaturday = { ...snapshot, pendingFcsKickoffs: [lateGame.startDate] };
   const fcsSunday = { ...snapshot, pendingFcsKickoffs: [sundayGame.startDate] };
   const fcsMidweek = { ...snapshot, pendingFcsKickoffs: [tuesdayGame.startDate] };
   assert.equal(dailyRefreshNeeded(fcsSaturday, picks, mondayMorning), true);
   assert.equal(dailyRefreshNeeded(fcsMidweek, picks, wednesday), true);
-  assert.equal(sundayNightRefreshNeeded(fcsSunday, picks, sundayNight), true);
-  assert.equal(sundayNightRefreshNeeded(fcsSunday, null, sundayNight), true);
-  assert.equal(sundayNightRefreshNeeded(fcsSaturday, picks, sundayNight), false);
-  assert.equal(sundayNightRefreshNeeded({ ...snapshot, pendingFcsKickoffs: ['no time supplied'] }, picks, sundayNight), false);
+  assert.equal(dailyRefreshNeeded(fcsSunday, picks, mondayMorning), true);
+  assert.equal(dailyRefreshNeeded({ ...snapshot, pendingFcsKickoffs: ['no time supplied'] }, picks, mondayMorning), false);
 });

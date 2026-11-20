@@ -74,7 +74,7 @@ function reportFor(previous, teamId, game) {
 
 export function planAvailabilityChecks(schedule, previous, { now, mode }) {
   const time = Date.parse(now);
-  if (!validInstant(now) || !['nightly', 'game-day', 'bootstrap'].includes(mode)) throw new Error('Invalid availability run mode or time');
+  if (!validInstant(now) || !['overnight', 'nightly', 'game-day', 'bootstrap'].includes(mode)) throw new Error('Invalid availability run mode or time');
   const today = Math.floor(wallClock(time, mountain) / day);
   const jobs = new Map();
   for (const game of schedule) {
@@ -85,9 +85,14 @@ export function planAvailabilityChecks(schedule, previous, { now, mode }) {
     const lead = (availabilitySources[game.conference].deadline - 15) * minute;
     const first = kickoff - lead;
     const backup = kickoff - 30 * minute;
+    const upcoming = game.status !== 'final' && daysUntil <= 3 && (
+      (mode === 'nightly' && daysUntil >= 1) || (mode === 'overnight' && daysUntil >= 0 && time < kickoff));
+    // An overnight schedule can archive final reports posted after the previous pull.
+    const recent = mode === 'overnight' && daysUntil === -1;
+    const deadlineWindow = mode === 'game-day' && ((time >= first && time < first + 15 * minute) ||
+      (time >= backup && time < backup + 15 * minute));
     const due = mode === 'bootstrap' ? daysUntil >= -7 && daysUntil <= 3
-      : mode === 'nightly' ? game.status !== 'final' && daysUntil >= 1 && daysUntil <= 3 && !alreadyFinal
-      : game.status !== 'final' && !alreadyFinal && ((time >= first && time < first + 15 * minute) || (time >= backup && time < backup + 15 * minute));
+      : !alreadyFinal && (upcoming || recent || (game.status !== 'final' && deadlineWindow));
     if (!due) continue;
     const group = jobs.get(game.conference) ?? [];
     group.push(game);
