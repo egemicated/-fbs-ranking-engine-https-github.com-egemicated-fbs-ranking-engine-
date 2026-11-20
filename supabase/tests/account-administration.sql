@@ -35,6 +35,7 @@ set local role anon;
 do $$begin
   begin perform public.account_context();raise exception 'Guest account access';exception when insufficient_privilege then null;end;
   begin perform public.admin_users();raise exception 'Guest admin access';exception when insufficient_privilege then null;end;
+  begin perform public.admin_action_history(8,0);raise exception 'Guest audit history access';exception when insufficient_privilege then null;end;
   begin perform public.service_claim_support_notifications();raise exception 'Guest outbox access';exception when insufficient_privilege then null;end;
 end $$;
 set local role authenticated;
@@ -43,6 +44,7 @@ do $$declare v jsonb;begin
   perform set_config('request.jwt.claims','{"sub":"a1000000-0000-4000-8000-000000000002","aal":"aal2","user_metadata":{"role":"admin"}}',true);
   assert public.account_context()->>'role'='user';
   begin perform public.admin_users();raise exception 'Metadata privilege escalation';exception when insufficient_privilege then null;end;
+  begin perform public.admin_action_history(8,0);raise exception 'User audit history access';exception when insufficient_privilege then null;end;
   begin perform account_private.provision_administrator('owner@example.invalid','Attacker self provision');raise exception 'Public admin provision';exception when insufficient_privilege then null;end;
   begin update account_private.memberships set role='admin' where user_id=auth.uid();raise exception 'Raw admin escalation';exception when insufficient_privilege then null;end;
   v:=public.save_account_profile('Original Nickname',true,true);
@@ -74,6 +76,7 @@ do $$begin
   perform set_config('request.jwt.claim.sub','a1000000-0000-4000-8000-000000000001',true);
   perform set_config('request.jwt.claims','{"sub":"a1000000-0000-4000-8000-000000000001","aal":"aal1"}',true);
   begin perform public.admin_users();raise exception 'AAL1 admin allowed';exception when insufficient_privilege then null;end;
+  begin perform public.admin_action_history(8,0);raise exception 'AAL1 audit history access';exception when insufficient_privilege then null;end;
   perform set_config('request.jwt.claims','{"sub":"a1000000-0000-4000-8000-000000000001","aal":"aal2","session_id":"a2000000-0000-4000-8000-000000000099"}',true);
   begin perform public.admin_users();raise exception 'Missing live session allowed';exception when insufficient_privilege then null;end;
   perform set_config('request.jwt.claims','{"sub":"a1000000-0000-4000-8000-000000000001","aal":"aal2","session_id":"a2000000-0000-4000-8000-000000000001"}',true);
@@ -85,7 +88,7 @@ do $$begin
   begin perform public.admin_set_account_status(auth.uid(),'suspended','Must not suspend myself');raise exception 'Self suspension accepted';exception when insufficient_privilege then null;end;
   perform public.admin_set_account_status('a1000000-0000-4000-8000-000000000002','suspended','Disposable suspension check');
 end $$;
-do $$begin
+do $$declare latest_audit jsonb; next_audit jsonb;begin
   perform set_config('request.jwt.claim.sub','a1000000-0000-4000-8000-000000000002',true);
   assert public.account_context()->>'status'='suspended';
   begin perform public.weekly_save_picks(2088,'Old Nickname','{}',false);raise exception 'Suspended picks save';exception when insufficient_privilege then null;end;
@@ -100,7 +103,12 @@ do $$begin
   assert public.admin_support_requests('in_review')->>'total'='1';
   begin perform public.admin_update_request(current_setting('account_test.legacy_deletion')::uuid,'resolved','');raise exception 'Legacy deletion falsely completed';exception when invalid_parameter_value then null;end;
   begin perform public.admin_update_request((public.admin_support_requests()->'requests'->0->>'id')::uuid,'invalid','');raise exception 'Invalid request state';exception when invalid_parameter_value then null;end;
-  assert(public.admin_action_history()->>'total')::integer>=4;
+  latest_audit:=public.admin_action_history(1,0);
+  next_audit:=public.admin_action_history(1,1);
+  assert (latest_audit->>'total')::integer>=4 and next_audit->>'total'=latest_audit->>'total';
+  assert jsonb_array_length(latest_audit->'actions')=1 and jsonb_array_length(next_audit->'actions')=1;
+  assert latest_audit->'actions'->0->>'id'<>next_audit->'actions'->0->>'id';
+  assert public.admin_action_history(8,(latest_audit->>'total')::integer)->'actions'='[]'::jsonb;
   perform set_config('request.jwt.claim.sub','a1000000-0000-4000-8000-000000000002',true);
   begin perform public.save_account_profile('Original Nickname',true,true);raise exception 'Moderated nickname restored';exception when invalid_parameter_value then null;end;
   perform public.save_account_profile('New Valid Nickname',false,true);

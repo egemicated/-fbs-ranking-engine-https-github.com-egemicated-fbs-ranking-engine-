@@ -1531,7 +1531,8 @@ function renderConnectedFeature(page, id, scope) {
   if (!target?.isConnected) return;
   const lifecycle = { target, close: null };
   mountedFeature = lifecycle;
-  if (!featureRequests.has(file)) featureRequests.set(file, import(`./${file}?v=1`).catch(error => { featureRequests.delete(file); throw error; }));
+  const revision = page === 'admin' ? 'admin-paging' : '1';
+  if (!featureRequests.has(file)) featureRequests.set(file, import(`./${file}?v=${revision}`).catch(error => { featureRequests.delete(file); throw error; }));
   featureRequests.get(file).then(module => {
     if (mountedFeature !== lifecycle || !target.isConnected) return;
     const division = id === 'fcs' ? 'fcs' : 'fbs';

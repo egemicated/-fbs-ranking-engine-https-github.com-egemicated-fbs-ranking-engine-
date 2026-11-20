@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { accountCapabilities, validateNewPassword, accountCallbackUrl, cleanAccountCallbackUrl, updateAccountPassword, secondFactorRequired, authFormMarkup, authMessage } from '../frontend/account-auth.js';
 import { accountCenterMarkup, qrDataUrl, supportRequestMarkup, mountAccountCenter, authenticatorLabel } from '../frontend/account-center.js';
-import { administrationMarkup, mountAdministration, failedNotificationRetryMarkup, notificationRequeueNotice, requeueFailedNotification, adminUserPageState, registeredUsersMarkup, ADMIN_USERS_PAGE_SIZE, adminAuditMarkup } from '../frontend/account-administration.js';
+import { administrationMarkup, mountAdministration, failedNotificationRetryMarkup, notificationRequeueNotice, requeueFailedNotification, adminUserPageState, registeredUsersMarkup, ADMIN_USERS_PAGE_SIZE, ADMIN_AUDIT_PAGE_SIZE, adminAuditMarkup } from '../frontend/account-administration.js';
 import { notifySupportIfReady, supportSubmission, supportResponseMarkup, supportResultNotice, restoreSupportDraft } from '../frontend/account-support.js';
 import { accountCallbackMode, isAccountCallbackUrl, pendingAccountRoute, safeAccountReturnPath, accountCallbackErrorNotice } from '../frontend/bracket-auth.js?v=clean-routes';
 import { routeHref } from '../frontend/clean-routes.js';
@@ -57,12 +57,12 @@ test('old and new generated authenticator names show the current brand and a rea
   assert.equal(authenticatorLabel({friendly_name:'My backup phone'}),'My backup phone');
 });
 
-test('admin directory pages are bounded to ten accounts and a compact number window at large totals',()=>{
-  assert.equal(ADMIN_USERS_PAGE_SIZE,10);
-  assert.deepEqual(adminUserPageState(23,3),{total:23,page:3,pages:3,offset:20,numbers:[1,2,3]});
+test('admin directory pages are bounded to eight accounts and a compact number window at large totals',()=>{
+  assert.equal(ADMIN_USERS_PAGE_SIZE,8);
+  assert.deepEqual(adminUserPageState(23,3),{total:23,page:3,pages:3,offset:16,numbers:[1,2,3]});
   const large=adminUserPageState(50000,2500);
-  assert.equal(large.pages,5000);assert.equal(large.offset,24990);
-  assert.deepEqual(large.numbers,[1,2499,2500,2501,5000]);
+  assert.equal(large.pages,6250);assert.equal(large.offset,19992);
+  assert.deepEqual(large.numbers,[1,2499,2500,2501,6250]);
   assert.equal(adminUserPageState(23,99).page,3);
   assert.equal(adminUserPageState(0,99).page,1);
   assert.equal(adminUserPageState(23,-4).page,1);
@@ -71,13 +71,13 @@ test('admin directory pages are bounded to ten accounts and a compact number win
 test('compact directory shows page ranges, disabled boundaries and expandable account details',()=>{
   const users=Array.from({length:3},(_,i)=>({userId:`u${i}`,email:`user${i}@example.test`,nickname:`User ${i}`,status:'active',role:'user'}));
   const first=registeredUsersMarkup({users,userTotal:3});
-  assert.match(first,/Showing 1–3 of 3 accounts · 10 per page/);
+  assert.match(first,/Showing 1–3 of 3 accounts · 8 per page/);
   assert.doesNotMatch(first,/aria-label="Registered user pages"/);
   assert.match(registeredUsersMarkup({users,userTotal:23}),/data-admin-users-page="0" disabled/);
   assert.doesNotMatch(first,/<details[^>]* open/);
   assert.match(first,/data-admin-user-status="u0"/);
-  const final=registeredUsersMarkup({users,userTotal:23,userPage:3});
-  assert.match(final,/Showing 21–23 of 23 accounts/);
+  const final=registeredUsersMarkup({users,userTotal:19,userPage:3});
+  assert.match(final,/Showing 17–19 of 19 accounts/);
   assert.match(final,/data-admin-users-page="3" aria-current="page"/);
   const empty=registeredUsersMarkup({search:'<not found>'});
   assert.doesNotMatch(empty,/Showing 0–0|data-admin-users-page/);
@@ -85,12 +85,33 @@ test('compact directory shows page ranges, disabled boundaries and expandable ac
   assert.doesNotMatch(empty,/<not found>/);
 });
 
-test('admin directory never renders thousands of page controls or more than ten supplied rows',()=>{
+test('admin directory never renders thousands of page controls or more than eight supplied rows',()=>{
   const users=Array.from({length:50},(_,i)=>({userId:`u${i}`,nickname:`User ${i}`}));
   const markup=registeredUsersMarkup({users,userTotal:50000,userPage:2500});
-  assert.equal((markup.match(/class="admin-user"/g)??[]).length,10);
+  assert.equal((markup.match(/class="admin-user"/g)??[]).length,8);
   assert.equal((markup.match(/data-admin-users-page=/g)??[]).length,7);
   assert.match(markup,/of 50,000 accounts/);
+});
+
+test('administrative action history limits rows and numbered buttons and announces the full server total',()=>{
+  assert.equal(ADMIN_AUDIT_PAGE_SIZE,8);
+  const actions=Array.from({length:21},(_,index)=>({id:`action-${index}`,action:'nickname_moderation',details:{reason:`Audited change ${index+1}`}}));
+  const large=adminAuditMarkup(actions,{total:50000,page:2500});
+  assert.equal((large.match(/Audited change \d+/g)??[]).length,8);
+  assert.equal((large.match(/data-admin-audit-page=/g)??[]).length,7);
+  assert.match(large,/Showing 19,993–20,000 of 50,000 actions · 8 per page/);
+  assert.match(large,/aria-label="Administrative action history pages"/);
+  assert.match(large,/data-admin-audit-page="2500" aria-current="page"/);
+  assert.doesNotMatch(large,/up to 50 recent/);
+
+  const markup=administrationMarkup({users:[{userId:'u17'}],userTotal:17,userPage:3,actions:actions.slice(0,3),auditTotal:19,auditPage:3});
+  assert.match(markup,/Showing 17–17 of 17 accounts/);
+  assert.match(markup,/Showing 17–19 of 19 actions/);
+  assert.match(markup,/data-admin-users-page="4" disabled/);
+  assert.match(markup,/data-admin-audit-page="4" disabled/);
+  const empty=adminAuditMarkup([],{total:0,page:1});
+  assert.match(empty,/No administrative actions recorded/);
+  assert.doesNotMatch(empty,/Showing 0–0|data-admin-audit-page=/);
 });
 
 test('email registration and recovery fail closed until delivery readiness is explicitly enabled',()=>{

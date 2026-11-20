@@ -244,7 +244,10 @@ try{
         {id:'test-failed-alert-sent',email:'fan@example.test',category:'general',message:'A saved request whose retry will be accepted by the provider.',status:'pending',notificationStatus:'failed'}];
       const users=Array.from({length:23},(_,index)=>({userId:index===0?'test-user':`test-user-${index+1}`,
         email:index===0?'fan@example.test':`fan${String(index+1).padStart(2,'0')}@example.test`,
-        nickname:index===0?'Fan':`Fan ${index+1}`,role:'user',status:'active',emailConfirmed:true})),actions=[];let lastRequeue;
+        nickname:index===0?'Fan':`Fan ${index+1}`,role:'user',status:'active',emailConfirmed:true}));
+      const actions=Array.from({length:22},(_,index)=>({id:`action-${index+1}`,action:'nickname_moderation',actorLabel:'Administrator',
+        targetLabel:`Fan ${index+1}`,details:{reason:`Audited change ${index+1}`},createdAt:'2026-11-19T12:00:00Z'}));
+      let lastRequeue;
       window.adminCalls=[];
       const client={auth:{getUser:async()=>({data:{user:{id:'test-admin'}}}),mfa:{getAuthenticatorAssuranceLevel:async()=>({data:{currentLevel:'aal2'}})}},
         functions:{invoke:async()=>{if(lastRequeue==='test-failed-alert-sent'){requests.find(row=>row.id===lastRequeue).notificationStatus='sent';return{data:{accepted:true,delivery:'processed'}};}throw Error('Disposable email delivery outage');}},
@@ -259,7 +262,7 @@ try{
             const matching=requests.filter(row=>!args.p_status||row.status===args.p_status);
             return{data:{requests:matching,total:matching.length,statusCounts:Object.fromEntries(['pending','in_review','resolved','closed'].map(status=>[status,requests.filter(row=>row.status===status).length])),notifications:{due:requests.filter(row=>row.notificationStatus==='pending').length,failed:requests.filter(row=>row.notificationStatus==='failed').length}}};
           }
-          if(name==='admin_action_history')return{data:{actions,total:actions.length}};
+          if(name==='admin_action_history')return{data:{actions:actions.slice(args.p_offset,args.p_offset+args.p_limit),total:actions.length}};
           if(name==='admin_update_request'){const row=requests.find(row=>row.id===args.p_request_id);row.status=args.p_status;row.adminNote=args.p_note;return{data:row};}
           if(name==='admin_reply_request'){const row=requests.find(row=>row.id===args.p_request_id);row.responses.push({id:args.p_reply_id,message:args.p_message,requiresAction:args.p_requires_action,createdAt:'2026-11-19T12:00:00Z'});return{data:{id:args.p_reply_id,requestId:row.id}};}
           if(name==='admin_set_account_status'){users.find(row=>row.userId===args.p_user_id).status=args.p_status;return{data:{}};}
@@ -274,30 +277,77 @@ try{
     const checkUserPage=async(number,count,range)=>{
       await userPages.locator(`[data-admin-users-page="${number}"][aria-current="page"]`).waitFor();
       await page.locator('[data-admin-users-range]').filter({hasText:range}).waitFor();
-      assert.equal(await page.locator('[data-admin-users-range]').innerText(),`${range} · 10 per page`);
+      assert.equal(await page.locator('[data-admin-users-range]').innerText(),`${range} · 8 per page`);
       assert.equal(await page.locator('.admin-user').count(),count);
       const call=await page.evaluate(()=>window.adminCalls.filter(call=>call.name==='admin_users').at(-1));
-      assert.equal(call.args.p_limit,10);assert.equal(call.args.p_offset,(number-1)*10);
-      await assertPageFits(page,`Admin page ${number} overflow at ${width}`);
+      assert.equal(call.args.p_limit,8);assert.equal(call.args.p_offset,(number-1)*8);
+      await assertPageFits(page,`Registered user page ${number} overflow at ${width}`);
     };
-    await checkUserPage(1,10,'Showing 1–10 of 23 accounts');
+    const auditPages=page.locator('nav[aria-label="Administrative action history pages"]');
+    const auditRows=page.locator('[data-admin-audit-panel] .admin-audit-list > li');
+    const checkAuditPage=async(number,count,range)=>{
+      await auditPages.locator(`[data-admin-audit-page="${number}"][aria-current="page"]`).waitFor();
+      await page.locator('[data-admin-audit-range]').filter({hasText:range}).waitFor();
+      assert.equal(await page.locator('[data-admin-audit-range]').innerText(),`${range} · 8 per page`);
+      assert.equal(await auditRows.count(),count);
+      const call=await page.evaluate(()=>window.adminCalls.filter(call=>call.name==='admin_action_history').at(-1));
+      assert.deepEqual(call.args,{p_limit:8,p_offset:(number-1)*8});
+      await assertPageFits(page,`Administrative history page ${number} overflow at ${width}`);
+    };
+    const callCount=()=>page.evaluate(()=>window.adminCalls.length);
+    const callNamesAfter=index=>page.evaluate(start=>window.adminCalls.slice(start).map(call=>call.name),index);
+    await checkUserPage(1,8,'Showing 1–8 of 23 accounts');
+    await checkAuditPage(1,8,'Showing 1–8 of 22 actions');
     assert.equal(await page.locator('.admin-user details[open]').count(),0);
     assert.equal(await userPages.getByRole('button',{name:'Previous',exact:true}).isDisabled(),true);
+    assert.equal(await auditPages.getByRole('button',{name:'Previous',exact:true}).isDisabled(),true);
+
+    // Audit pagination must keep account edits in place and move keyboard
+    // focus to the resulting range announcement.
+    await page.locator('.admin-user summary').first().click();
+    const accountDraft=page.locator('[data-admin-user-status="test-user"] input[name="reason"]');
+    await accountDraft.fill('An unsent account edit');
+    let priorCalls=await callCount();
+    await auditPages.getByRole('button',{name:'Next',exact:true}).focus();
+    await page.keyboard.press('Enter');
+    await checkAuditPage(2,8,'Showing 9–16 of 22 actions');
+    await page.waitForFunction(()=>document.activeElement.matches('[data-admin-audit-range]'));
+    assert.deepEqual(await callNamesAfter(priorCalls),['admin_action_history']);
+    assert.equal(await accountDraft.inputValue(),'An unsent account edit');
+    await checkUserPage(1,8,'Showing 1–8 of 23 accounts');
+    assert.match(await auditRows.first().innerText(),/Audited change 9\b/);
+
+    const supportSummary=page.locator('#support-request-test-request > summary');
+    const supportDraft=page.locator('[data-admin-reply="test-request"] textarea');
+    await supportSummary.click();
+    await supportDraft.fill('An unsent support reply');
+    priorCalls=await callCount();
     await userPages.locator('[data-admin-users-page="2"]').first().click();
-    await checkUserPage(2,10,'Showing 11–20 of 23 accounts');
-    assert.match(await page.locator('.admin-user').first().innerText(),/fan11@example\.test/);
+    await checkUserPage(2,8,'Showing 9–16 of 23 accounts');
+    await page.waitForFunction(()=>document.activeElement.matches('[data-admin-users-range]'));
+    assert.deepEqual(await callNamesAfter(priorCalls),['admin_users']);
+    assert.equal(await supportDraft.inputValue(),'An unsent support reply');
+    await supportSummary.click();
+    assert.match(await page.locator('.admin-user').first().innerText(),/fan09@example\.test/);
+    await checkAuditPage(2,8,'Showing 9–16 of 22 actions');
+    await auditPages.locator('[data-admin-audit-page="3"]').first().click();
+    await checkAuditPage(3,6,'Showing 17–22 of 22 actions');
+    assert.equal(await auditPages.getByRole('button',{name:'Next',exact:true}).isDisabled(),true);
+    assert.match(await auditRows.first().innerText(),/Audited change 17\b/);
+    await checkUserPage(2,8,'Showing 9–16 of 23 accounts');
     await userPages.locator('[data-admin-users-page="3"]').first().click();
-    await checkUserPage(3,3,'Showing 21–23 of 23 accounts');
+    await checkUserPage(3,7,'Showing 17–23 of 23 accounts');
     assert.equal(await userPages.getByRole('button',{name:'Next',exact:true}).isDisabled(),true);
-    assert.match(await page.locator('.admin-user').first().innerText(),/fan21@example\.test/);
+    assert.match(await page.locator('.admin-user').first().innerText(),/fan17@example\.test/);
     await userPages.locator('[data-admin-users-page="2"]').first().click();
-    await checkUserPage(2,10,'Showing 11–20 of 23 accounts');
+    await checkUserPage(2,8,'Showing 9–16 of 23 accounts');
     await page.locator('[data-admin-search] input').fill('fan@example.test');
     await page.locator('[data-admin-search] [type="submit"]').click();
     await page.locator('[data-admin-users-range]').filter({hasText:'Showing 1–1 of 1 matching account ·'}).waitFor();
     assert.equal(await page.locator('.admin-user').count(),1);
     assert.equal(await page.locator('nav[aria-label="Registered user pages"]').count(),0);
-    assert.deepEqual(await page.evaluate(()=>window.adminCalls.filter(call=>call.name==='admin_users').at(-1).args),{p_search:'fan@example.test',p_limit:10,p_offset:0});
+    assert.deepEqual(await page.evaluate(()=>window.adminCalls.filter(call=>call.name==='admin_users').at(-1).args),{p_search:'fan@example.test',p_limit:8,p_offset:0});
+    await checkAuditPage(3,6,'Showing 17–22 of 22 actions');
     await assertPageFits(page,`Admin filtered users overflow at ${width}`);
     await page.locator('[data-admin-search] input').fill('no-such-user@example.test');
     await page.locator('[data-admin-search] [type="submit"]').click();
@@ -306,7 +356,7 @@ try{
     assert.equal(await page.locator('nav[aria-label="Registered user pages"]').count(),0);
     await page.locator('[data-admin-search] input').fill('');
     await page.locator('[data-admin-search] [type="submit"]').click();
-    await checkUserPage(1,10,'Showing 1–10 of 23 accounts');
+    await checkUserPage(1,8,'Showing 1–8 of 23 accounts');
     await page.locator('.admin-request > summary').first().click();
     await page.locator('[data-admin-reply="test-request"] textarea').fill('Please check your saved team after reloading.');
     await page.locator('[data-admin-reply="test-request"] [name="requiresAction"]').check();
@@ -338,7 +388,7 @@ try{
     await assertPageFits(page,'Admin overflow at '+width);
     const adminLabels=await page.locator('#account-test input,#account-test select,#account-test textarea').evaluateAll(controls=>controls.filter(control=>!control.labels?.length&&!control.getAttribute('aria-label')).map(control=>control.id));assert.deepEqual(adminLabels,[]);
     assert.equal(await page.locator('#account-test input[type="password"]').count(),0);
-    assert.deepEqual(errors,[]);results.push({width,account:true,registrationMock:true,recoveryMock:true,googleMigrationMock:true,mfaMock:true,adminMock:true,adminPaginationMock:true,privateSupportReplyMock:true,failedNotificationRequeueMock:true,overflow:false,labels:true});await page.close();
+    assert.deepEqual(errors,[]);results.push({width,account:true,registrationMock:true,recoveryMock:true,googleMigrationMock:true,mfaMock:true,adminMock:true,adminUserPaginationMock:true,adminAuditPaginationMock:true,privateSupportReplyMock:true,failedNotificationRequeueMock:true,overflow:false,labels:true});await page.close();
   }
   const callbacks=[];for(const fixture of callbackCases)callbacks.push(await checkCallbackRouting(fixture));
   console.log(JSON.stringify({status:'passed',providerFlows:'Browser-only SDK/RPC doubles; no real email or OAuth delivery claimed',checks:results,callbacks},null,2));
