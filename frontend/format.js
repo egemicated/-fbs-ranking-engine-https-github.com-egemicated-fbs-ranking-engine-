@@ -6,6 +6,19 @@ export function formatNumber(value, digits = 2) {
   return (Object.is(rounded, -0) ? 0 : rounded).toFixed(digits);
 }
 
+export function formatSorScore(value) {
+  if (!Number.isFinite(value) || value < 0) return missing;
+  if (value === 0 || value >= 0.01) return formatNumber(value, 4);
+  if (value < 1e-9) return value.toExponential(3);
+  return formatNumber(value, 3 - Math.floor(Math.log10(value)));
+}
+
+export function sorEligibleRecord(team) {
+  const { sorWins, sorGames } = team ?? {};
+  return Number.isInteger(sorWins) && Number.isInteger(sorGames) && sorWins >= 0 && sorGames > 0 && sorWins <= sorGames
+    ? `${sorWins}–${sorGames - sorWins}` : null;
+}
+
 export function formatProbability(value, digits = 2) {
   if (!Number.isFinite(value) || value < 0 || value > 1) return missing;
   const percentage = value * 100;

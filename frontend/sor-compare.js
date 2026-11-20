@@ -1,6 +1,6 @@
 import { navigateApp } from './clean-navigation.js';
 import { routeHref } from './clean-routes.js';
-import { formatNumber, formatProbability, formatRecord } from './format.js?v=1';
+import { formatNumber, formatProbability, formatRecord, formatSorScore, sorEligibleRecord } from './format.js?v=sor-transparency';
 
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -47,10 +47,10 @@ export function explainSorComparison(snapshot,a,b,detailsA,detailsB,fixtures=[])
   const dHigher=higher.id===a.id?detailsA:detailsB,dLower=lower.id===a.id?detailsA:detailsB;
   const probabilityText=value=>formatProbability(value,2);
   const narrative=tied ? `${a.name} and ${b.name} share SOR rank ${rankLabel(position(a))}. Their calculated SOR scores fall within the model’s ranking tolerance.` :
-    `${higher.name} ranks above ${lower.name} because an average ${a.division.toUpperCase()} reference team has a smaller chance of matching its achieved record against its schedule. That chance is ${probabilityText(dHigher?.sorTailProbability)} for ${higher.name} and ${probabilityText(dLower?.sorTailProbability)} for ${lower.name}.`;
+    `${higher.name} (${formatRecord(higher)}) ranks above ${lower.name} (${formatRecord(lower)}). For a team with the average ${a.division.toUpperCase()} Colley rating, the chance of matching their eligible win totals on their respective schedules is ${probabilityText(dHigher?.sorTailProbability)} for ${higher.name} and ${probabilityText(dLower?.sorTailProbability)} for ${lower.name}. The smaller chance earns the higher rank.`;
   const sosOrder=[...population].sort((left,right)=>right.achievementScheduleStrength-left.achievementScheduleStrength||
     position(left)-position(right)||left.id.localeCompare(right.id));
-  const sosRanks=new Map(sosOrder.map((team,index)=>[team.id,index+1]));
+  const sosRanks=new Map(sosOrder.map((team,index)=>[team.id,team.sosRank ?? index+1]));
   return { a,b,detailsA,detailsB,narrative,tied,common,headToHead,sosRanks,
     bestA:sortWins(evidenceA),bestB:sortWins(evidenceB),lossesA:evidenceA.filter(row=>row.result==='L'),
     lossesB:evidenceB.filter(row=>row.result==='L'),asOf:snapshot.asOf,season:snapshot.season };
@@ -73,8 +73,9 @@ function teamCard(team,details,best,losses,sosRanks) {
   return `<section class="panel intelligence-panel intelligence-compare-team">
     <h3><a href="${routeHref(`team/${encodeURIComponent(team.id)}`)}">${escapeHtml(team.name)}</a></h3><p class="compact-note">${escapeHtml(team.conference)} · ${team.division.toUpperCase()}</p>
     <dl class="intelligence-stat-grid">
-      ${stat('Published SOR rank',rankLabel(position(team)))}${stat('SOR score',formatNumber(team.sor,4))}
-      ${stat('Overall record',formatRecord(team))}${stat('SOS rank',rankLabel(sosRanks.get(team.id)))}
+      ${stat('Published SOR rank',rankLabel(position(team)))}${stat('SOR score',formatSorScore(team.sor))}
+      ${stat('Overall record',formatRecord(team))}${stat('Schedule rank (Colley SOS)',rankLabel(sosRanks.get(team.id)))}
+      ${team.division === 'fcs' && sorEligibleRecord(team) ? stat('SOR-eligible record',sorEligibleRecord(team)) : ''}
       ${stat('Reference-team chance',escapeHtml(formatProbability(details?.sorTailProbability,2)))}
       ${stat('Expected reference wins',formatNumber(details?.sorExpectedWins,2))}
     </dl>
@@ -87,7 +88,7 @@ export function sorComparisonMarkup(comparison) {
   const one=(title,rows)=>`<details class="panel intelligence-disclosure"><summary>${title}</summary><div>${rows}</div></details>`;
   return `<section class="panel intelligence-panel"><h2>Why ${escapeHtml(a.name)} and ${escapeHtml(b.name)} rank here</h2>
     <p>${escapeHtml(comparison.narrative)}</p>
-    <p class="compact-note">SOR evaluates achieved results and the difficulty of matching each record. The reference team and schedule probabilities use this subdivision’s published method. Current opponent ranks are shown as supporting context.</p>
+    <p class="compact-note">SOR weighs wins against the opponents and venues on each schedule. SOS summarizes opponent ratings. These schedule probabilities explain earned rank. Matchup Lab estimates who is more likely to win next.</p>
     ${a.division==='fcs'?'<p class="intelligence-note">FCS SOR remains Experimental. Its reference population is FCS and its probability coefficients transfer from the FBS calibration.</p>':''}
     ${a.division==='fbs'?`<a class="text-link" href="${routeHref(`compare/matchup/${encodeURIComponent(a.id)}/${encodeURIComponent(b.id)}/neutral`)}">Explore a future matchup →</a>`:
       '<a class="text-link" href="/weekly-picks/fcs/">FCS weekly predictions →</a>'}

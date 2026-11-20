@@ -7,6 +7,7 @@ import { buildModelReport } from '../frontend/model-report.js';
 import { conferenceRecords } from '../frontend/conference-metrics.js';
 import { PUBLIC_SITE_ORIGIN as origin, pageMetadata } from '../frontend/page-routes.js';
 import { routeHref } from '../frontend/clean-routes.js';
+import { formatSorScore, sorEligibleRecord } from '../frontend/format.js';
 
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -78,12 +79,23 @@ export async function prerenderPublicPages({ root, output, snapshot, teams, html
     ['conference-strength/records', 'Conference Strength'], ['model-report/fbs', 'Model report'], ['methodology', 'Methodology']]
     .map(([route, label]) => pageLink(route, label)).join(' · ');
   const teamRows = division => teams.filter(team => team.division === division);
-  const table = division => `<table><caption>${division.toUpperCase()} Strength of Record · ${snapshot.season}</caption><thead><tr><th>Rank</th><th>Team</th><th>Record</th><th>SOR</th></tr></thead><tbody>${teamRows(division).map(team => `<tr><td>${team.displayRank ?? team.sorRank ?? '—'}</td><td><a href="/team/${team.id}/">${escapeHtml(team.name)}</a></td><td>${record(team)}</td><td>${number(team.sor, 4)}</td></tr>`).join('')}</tbody></table>`;
+  const table = (division, top25 = false) => {
+    const rows = teamRows(division);
+    const rankOf = team => team.displayRank ?? team.sorRank;
+    const counts = new Map();
+    for (const team of rows) if (rankOf(team)) counts.set(rankOf(team), (counts.get(rankOf(team)) ?? 0) + 1);
+    const visible = top25 ? rows.filter(team => rankOf(team) > 0 && rankOf(team) <= 25) : rows;
+    return `<table><caption>${division.toUpperCase()} ${top25 ? 'Top 25 by ' : ''}Strength of Record · ${snapshot.season}</caption><thead><tr><th>Rank</th><th>Team</th><th>Record</th><th>SOR</th></tr></thead><tbody>${visible.map(team => {
+      const rank = rankOf(team);
+      const eligible = division === 'fcs' && team.sorExcludedGames > 0 ? sorEligibleRecord(team) : null;
+      return `<tr><td>${counts.get(rank) > 1 ? 'T-' + rank : rank ?? '—'}</td><td><a href="/team/${team.id}/">${escapeHtml(team.name)}</a></td><td>${record(team)}${eligible ? ` (${eligible} SOR-eligible)` : ''}</td><td>${formatSorScore(team.sor)}</td></tr>`;
+    }).join('')}</tbody></table>`;
+  };
   const reportText = (picks, division) => {
     if (!picks) return '<p>A saved prediction publication is unavailable.</p>';
     const report = buildModelReport(picks, undefined, division);
     const season = report.scores.season;
-    return `<p>${snapshot.season} season · ${season.correctPicks} correct of ${season.decisivePicks} decided saved picks. Season Brier score ${number(season.brier, 3)}.</p><p>Only forecasts saved before kickoff enter the live tally. Replays have their own validation record.</p>`;
+    return `<p>${snapshot.season} season · ${season.correctPicks} correct of ${season.decisivePicks} decided saved picks. Season Brier score ${number(season.brier, 3)}.</p><p>${season.completedPicks} of ${report.eligibleFinals} eligible finals have a scored live pick. Only forecasts saved before kickoff enter the live tally. Replays have their own validation record.</p>`;
   };
   const conferences = conferenceDatasets.find(dataset => dataset.season === snapshot.season);
   const conferenceTable = conferences ? (() => {
@@ -91,7 +103,7 @@ export async function prerenderPublicPages({ root, output, snapshot, teams, html
     return `<table><caption>FBS interconference records · ${snapshot.season}</caption><thead><tr><th>Conference</th><th>Wins</th><th>Losses</th><th>FBS vs. FCS</th></tr></thead><tbody>${conferences.conferences.map(({id,name}) => `<tr><th>${escapeHtml(name)}</th><td>${records.summaries[id].wins}</td><td>${records.summaries[id].losses}</td><td>${record(records.fcs[id])}</td></tr>`).join('')}</tbody></table>`;
   })() : '';
   const primary = [
-    ['/', 'home', 'The Games Decide Top 25', 'Independent FBS and FCS rankings, team evidence, saved predictions, and conference comparisons.', `<h1>The Games Decide Top 25</h1><p>Independent college football rankings and matchup analysis. Published ${asOf}.</p>${table('fbs')}`],
+    ['/', 'home', 'The Games Decide Top 25', 'The FBS Top 25 by Strength of Record, with links to every FBS team, game evidence, and matchup analysis.', `<h1>The Games Decide Top 25</h1><p>Independent FBS Strength of Record rankings. Published ${asOf}.</p><p>${pageLink('rankings/all', `View all ${snapshot.fbsTeams} FBS teams`)}</p>${table('fbs', true)}`],
     ['/rankings', 'rankings', 'FBS Strength of Record', `Explore all ${snapshot.fbsTeams} FBS teams by achieved record and opponent quality. Published ${asOf}.`, '<h1>FBS Strength of Record</h1>' + table('fbs')],
     ['/rankings/fcs/', 'rankings/fcs/sor', 'FCS Strength of Record', `Explore ${snapshot.fcsTeams} FCS teams in the Experimental FCS Strength of Record rankings.`, '<h1>FCS Strength of Record · Experimental</h1>' + table('fcs')],
     ['/teams/fbs/', 'teams/fbs', 'FBS team directory', 'Browse FBS teams, records, rankings, and team profiles.', '<h1>FBS team directory</h1>' + table('fbs')],
@@ -110,7 +122,7 @@ export async function prerenderPublicPages({ root, output, snapshot, teams, html
     ['/sor-compare/', 'sor-compare', 'Why one team ranks above another', 'Compare earned Strength of Record rankings, schedules, wins, losses, and common opponents.', '<h1>Why one team ranks above another</h1><p>Compare SOR scores, reference-team probabilities, expected wins, venue context, and actual results.</p>'],
     ['/model-reports/fbs/', 'model-report/fbs', 'FBS weekly model report', 'Examine saved pregame predictions, accuracy, Brier score, notable misses, and sample sizes.', '<h1>FBS weekly model report</h1>'+reportText(fbsPicks,'fbs')],
     ['/model-reports/fcs/', 'model-report/fcs', 'FCS weekly model report', 'Track FCS saved pregame picks and results with separate reporting and coverage.', '<h1>FCS weekly model report</h1>'+reportText(fcsPicks,'fcs')],
-    ['/methodology/', 'methodology', 'Ranking methodology', 'Read how SOR, Predictive Strength, Performance, and conference comparisons use game data.', '<h1>Ranking methodology</h1><p>SOR = −log10(P(reference team matches at least the observed wins)). Predictive Strength fits bounded scoring margins with opponent and venue adjustments. Coverage and calibration limitations accompany each method.</p><a href="https://github.com/egemicated/-fbs-ranking-engine-https-github.com-egemicated-fbs-ranking-engine-/blob/main/METHODOLOGY.md">Full mathematical documentation</a>'],
+    ['/methodology/', 'methodology', 'Ranking methodology', 'Read how SOR, Predictive Strength, Performance, and conference comparisons use game data.', '<h1>Ranking methodology</h1><p>Strength of Record asks how often a team with the mean Colley rating of its subdivision could match the same win total against the same opponents at the same venues. We remove each game before recalculating the opponent and reference ratings. A harder record to match earns a higher score.</p><p>SOR = −log10(P(reference team matches at least the observed wins)). Predictive Strength uses a separate model to forecast matchups. Coverage and calibration limitations accompany each method.</p><a href="https://github.com/egemicated/-fbs-ranking-engine-https-github.com-egemicated-fbs-ranking-engine-/blob/main/METHODOLOGY.md">Full equations and technical documentation</a>'],
     ...['about', 'privacy', 'terms', 'support'].map(page => [routeHref(page), page, {about:'About The Games Decide',privacy:'Privacy and accounts',terms:'Using The Games Decide',support:'Support and data discrepancies'}[page], 'Understand The Games Decide and its public data, accounts, and reporting tools.', platformInfoMarkup(page)]),
   ];
   const pages = primary.map(([path, route, title, description, content]) => ({ path, route, title, description, content, subtitle: `${snapshot.season} season · ${asOf}`, detail: 'Independent college football intelligence', image: '/social/platform.png' }));
@@ -122,7 +134,7 @@ export async function prerenderPublicPages({ root, output, snapshot, teams, html
       image: '/social/team-' + team.id + '.png', socialTitle: team.name, accent: myTeamColors[team.id],
       subtitle: `${team.division.toUpperCase()} SOR ${Number.isInteger(rank) ? '#' + rank : 'unranked'} · ${record(team)}${team.division === 'fcs' ? ' · Experimental' : ''}`,
       detail: `${team.conference} · ${snapshot.season} · ${asOf}`,
-      content: `<h1>${escapeHtml(team.name)}</h1><p>${escapeHtml(description)}</p><p>SOR ${number(team.sor, 4)} · Predictive Strength ${number(team.strength)} points.</p>${pageLink(`team/${team.id}/results`, 'Results and upcoming games')} · ${pageLink(`sor-compare/${team.division}/${team.id}`, 'Compare earned rankings')} · ${pageLink('compare', 'Matchup Lab')}`,
+      content: `<h1>${escapeHtml(team.name)}</h1><p>${escapeHtml(description)}</p><p>SOR ${formatSorScore(team.sor)} · Predictive Strength ${number(team.strength)} points.</p>${pageLink(`team/${team.id}/results`, 'Results and upcoming games')} · ${pageLink(`sor-compare/${team.division}/${team.id}`, 'Compare earned rankings')} · ${pageLink('compare', 'Matchup Lab')}`,
     });
   }
   await mkdir(join(output, 'social'), { recursive: true });

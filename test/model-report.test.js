@@ -59,3 +59,21 @@ test('report uses saved pregame SOR for upset labels and separates FCS populatio
   assert.deepEqual(buildModelReport(fcs,'regular:11','fcs').selected.map(row=>row.id),['call']);
   assert.throws(()=>buildModelReport(fixture([games[0],games[0]]),'regular:11'),/Duplicate/);
 });
+
+test('report pairs the home-team benchmark and grades coverage on eligible finals only',()=>{
+  const artifact={...fixture([
+    game('home',28,7,.8,{neutral:false}), game('away',7,28,.25,{neutral:false}),
+    game('neutral',28,7,.8,{neutral:true}), game('even',28,7,.5,{neutral:false}),
+    game('missing',28,7,.8,{pick:null}), game('pending',null,null,.7,{status:'pending'}),
+    game('tie',14,14,.8),
+  ]),source:{pickHorizonDays:7}};
+  const report=buildModelReport(artifact,'regular:11');
+  assert.deepEqual(report.homeBenchmark,{games:2,modelCorrect:2,homeCorrect:1});
+  assert.equal(report.eligibleFinals,5);
+  assert.equal(report.firstSavedAt,'2026-11-09T12:00:00.000Z');
+  assert.equal(report.scores.season.completedPicks,4);
+  const markup=modelReportMarkup(report);
+  assert.match(markup,/4 of 5 eligible finals/);
+  assert.match(markup,/0\.250 Brier on the same 4 finals/);
+  assert.match(markup,/upcoming games up to 7 days ahead/);
+});

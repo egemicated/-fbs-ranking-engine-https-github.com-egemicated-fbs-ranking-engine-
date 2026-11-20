@@ -92,7 +92,7 @@ test('home, national table and directory display published SOR ranks and scores 
   assert.match(page.html(), /SOR score/); assert.match(page.html(), /2\.3456/);
   const ranking = page.go('#rankings');
   assert.match(ranking, /table-rank top">1<\/span>.*?href="\/team\/101\/"/s);
-  assert.match(ranking, /How hard would it be for an average team in this division to win as many games/);
+  assert.match(ranking, /average FBS Colley rating/);
   assert.match(ranking, /SOS · Colley/);
   assert.match(page.go('#teams'), /team-card-rank">#1<\/span>.*?<h3>Alpha<\/h3>.*?2\.3456 SOR/s);
   assert.equal(JSON.stringify(snapshot), before);
@@ -117,7 +117,7 @@ test('team, opponent evidence, conference and model sections distinguish SOR fro
   assert.match(html, /<strong>2\.3456<\/strong><span>SOR score/);
   assert.match(html, /WHY WE RANK ALPHA #1/); assert.match(html, /#2 FBS Strength of Record/);
   assert.match(html, /COLLEY BASELINE, EXPLAINED/); assert.match(html, /Colley baseline \(#2\), not the SOR score/);
-  assert.match(html, /Each game is removed from the network/); assert.match(html, /Reference-team chance: 0\.45%/);
+  assert.match(html, /team with the average FBS Colley rating/); assert.match(html, /Reference-team chance: 0\.45%/);
   page.ui.state.teamTab = 'model'; page.ui.renderTeam('101');
   const calculation = page.html();
   assert.match(calculation, /average FBS Colley rating playing the same opponents/);
@@ -273,7 +273,7 @@ test('SOS keeps the Colley opponent average while predictive ordering and matchu
 test('methodology explains active SOR and historical snapshots retain their Colley labels', async () => {
   const current = await browser(fixture()); const active = current.go('#methodology');
   assert.match(active, /primary national and conference ranking uses <strong>division-aware Strength of Record/);
-  assert.match(active, /fixed coefficients learned from older seasons/); assert.match(active, /independence assumption/);
+  assert.match(active, /Earlier seasons supplied the venue and FBS\/FCS coefficients/); assert.match(active, /independence assumption/);
   assert.match(active, /Colley network remains the opponent-rating baseline/);
   const historical = fixture(false), old = await browser(historical);
   assert.match(old.html(), /Colley achievement rankings/); assert.doesNotMatch(old.html(), /SOR score/);

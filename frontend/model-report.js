@@ -12,6 +12,19 @@ const calendar = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Denver', 
 const weekKey = game => `${game.seasonType}:${game.week}`;
 const weekName = key => key.startsWith('postseason:') ? 'Postseason week ' + key.split(':')[1] : 'Week ' + key.split(':')[1];
 
+function decisiveFinal(game, cutoff) {
+  const kickoff = Date.parse(game.startDate);
+  return game.status === 'final' && Number.isFinite(kickoff) && kickoff <= cutoff &&
+    [game.homePoints,game.awayPoints].every(points => Number.isSafeInteger(points) && points >= 0) &&
+    game.homePoints !== game.awayPoints;
+}
+
+function eligibleScheduleGame(game, teams, division) {
+  const home = teams.get(game.home)?.division, away = teams.get(game.away)?.division;
+  return division === 'fcs' ? home === 'fcs' && away === 'fcs'
+    : (home === 'fbs' || away === 'fbs') && [home, away].every(side => side === 'fbs' || side === 'fcs');
+}
+
 function pregameRanks(history, game) {
   if (!history?.editions) return null;
   const day = calendar.format(new Date(game.startDate));
@@ -31,9 +44,11 @@ export function buildModelReport(artifact, selectedWeek, division = 'fbs', histo
   const ids = new Set();
   const ordered = [...artifact.games].sort((a,b) => Date.parse(a.startDate) - Date.parse(b.startDate) || a.id.localeCompare(b.id));
   const weeks = [...new Set(ordered.map(weekKey))];
+  const cutoff = Date.parse(artifact.asOf);
   const saved = ordered.filter(game => validWeeklyPick(game,game.pick,game.pick?.capturedAt,artifact.asOf,teams,division));
-  const started = saved.filter(game => Date.parse(game.startDate) <= Date.parse(artifact.asOf));
-  const relevant = started.at(-1) ?? saved[0] ?? ordered.filter(game => Date.parse(game.startDate) <= Date.parse(artifact.asOf)).at(-1) ?? ordered[0];
+  const firstSaved = saved.reduce((first, game) => Math.min(first, Date.parse(game.pick.capturedAt)), Infinity);
+  const started = saved.filter(game => Date.parse(game.startDate) <= cutoff);
+  const relevant = started.at(-1) ?? saved[0] ?? ordered.filter(game => Date.parse(game.startDate) <= cutoff).at(-1) ?? ordered[0];
   const week = weeks.includes(selectedWeek) ? selectedWeek : relevant ? weekKey(relevant) : null;
   const scores = weeklyPicksScore(artifact,week,division);
   const rows = [], ungraded = [];
@@ -41,9 +56,7 @@ export function buildModelReport(artifact, selectedWeek, division = 'fbs', histo
     if (ids.has(game.id)) throw new Error('Duplicate saved game identity');
     ids.add(game.id);
     if (!validWeeklyPick(game,game.pick,game.pick?.capturedAt,artifact.asOf,teams,division)) continue;
-    const completed = game.status === 'final' && Date.parse(game.startDate) <= Date.parse(artifact.asOf) &&
-      [game.homePoints,game.awayPoints].every(points => Number.isSafeInteger(points) && points >= 0) &&
-      game.homePoints !== game.awayPoints;
+    const completed = decisiveFinal(game, cutoff);
     if (!completed) { ungraded.push({ ...game, reason: ['scheduled','pending'].includes(game.status) ? 'Awaiting final' :
       game.status === 'final' && game.homePoints === game.awayPoints ? 'Tied game, ungraded' : 'Unavailable or excluded result' }); continue; }
     const homeWon = game.homePoints > game.awayPoints;
@@ -57,6 +70,14 @@ export function buildModelReport(artifact, selectedWeek, division = 'fbs', histo
       calledUpset:correct === true && ranks && favoredRank > otherRank ? favoredRank - otherRank : null });
   }
   const selected = rows.filter(game => weekKey(game) === week);
+  // The publisher retains a pick only when the teams and neutral-site flag still match.
+  const homeGames = rows.filter(game => game.neutral === false && game.correct !== null);
+  const homeBenchmark = homeGames.length ? {
+    games: homeGames.length,
+    modelCorrect: homeGames.filter(game => game.correct).length,
+    homeCorrect: homeGames.filter(game => game.homePoints > game.awayPoints).length,
+  } : null;
+  const eligibleFinals = ordered.filter(game => eligibleScheduleGame(game, teams, division) && decisiveFinal(game, cutoff)).length;
   const bins = [[.5,.6],[.6,.7],[.7,.8],[.8,.9],[.9,1.0000001]].map(([lower,upper]) => {
     const games = selected.filter(game => game.confidence >= lower && game.confidence < upper);
     const decided = games.filter(game => game.correct !== null);
@@ -66,6 +87,9 @@ export function buildModelReport(artifact, selectedWeek, division = 'fbs', histo
       brier:games.length ? games.reduce((sum,game) => sum+game.error,0)/games.length : null };
   });
   return { season:artifact.season, asOf:artifact.asOf, division, weeks, week, scores, selected, ungraded:ungraded.filter(game=>weekKey(game)===week), bins,
+    firstSavedAt: Number.isFinite(firstSaved) ? new Date(firstSaved).toISOString() : null,
+    pickHorizonDays: Number.isInteger(artifact.source?.pickHorizonDays) && artifact.source.pickHorizonDays > 0 ? artifact.source.pickHorizonDays : null,
+    eligibleFinals, homeBenchmark,
     correctCalls:selected.filter(game=>game.correct).sort((a,b)=>a.confidence-b.confidence).slice(0,3),
     confidentWins:selected.filter(game=>game.correct && game.confidence>=.8).sort((a,b)=>b.confidence-a.confidence).slice(0,3),
     misses:selected.filter(game=>game.correct===false).sort((a,b)=>b.confidence-a.confidence).slice(0,3),
@@ -93,21 +117,32 @@ export function modelReportMarkup(report) {
   const {scores,division,week,selected} = report;
   if (!week) return '<section class="panel intelligence-panel"><h2>Model report</h2><p role="status">No saved game schedule is available for this division yet.</p></section>';
   const label=weekName(week);
+  const { completedPicks, availablePicks } = scores.season;
+  const benchmark = report.homeBenchmark;
   return `<div class="intelligence-tools model-report">
     <div class="intelligence-toolbar"><label>Division<select data-report-field="division"><option value="fbs"${division==='fbs'?' selected':''}>FBS slate</option><option value="fcs"${division==='fcs'?' selected':''}>FCS vs. FCS</option></select></label>
     <label>Report week<select data-report-field="week">${[...report.weeks].reverse().map(value=>`<option value="${value}"${value===week?' selected':''}>${weekName(value)}</option>`).join('')}</select></label>
     <a class="text-link" href="${routeHref(`compare/weekly/${division === 'fcs' ? 'fcs/' : ''}${week}`)}">Weekly Picks →</a>
     <a class="text-link" href="/beat-the-model/">Beat the Model →</a></div>
     <section class="panel intelligence-panel"><h2>${report.season} · ${label} model report</h2>
-    <p class="compact-note">${division==='fcs'?'FCS vs. FCS':'Games involving FBS teams, including FCS opponents'}. Results through ${dates.format(new Date(report.asOf))} MT. Live results count forecasts saved before kickoff.</p>
+    <p class="compact-note">${division==='fcs'?'FCS vs. FCS':'Games involving FBS teams, including FCS opponents'}. Results through ${dates.format(new Date(report.asOf))} MT.</p>
+    <p><strong>${completedPicks} of ${report.eligibleFinals} eligible finals</strong> have a graded live forecast this season. ${availablePicks - completedPicks} more saved forecasts remain ungraded.</p>
     <dl class="intelligence-stat-grid">
       ${stat('Weekly saved-pick accuracy',formatProbability(scores.week?.accuracy,1),`${scores.week?.correctPicks??0} correct · ${(scores.week?.decisivePicks??0)-(scores.week?.correctPicks??0)} incorrect`)}
       ${stat('Season saved-pick accuracy',formatProbability(scores.season.accuracy,1),`${scores.season.correctPicks} of ${scores.season.decisivePicks} decided picks`)}
       ${stat('Weekly Brier score',formatNumber(scores.week?.brier,3),`${scores.week?.completedPicks??0} scored forecasts · lower is better`)}
       ${stat('Season Brier score',formatNumber(scores.season.brier,3),`${scores.season.completedPicks} scored forecasts`)}
     </dl>
-    ${(scores.week?.completedPicks??0)<30 ? '<p class="intelligence-note">Small weekly sample. These results describe the saved games and do not establish future accuracy.</p>' : ''}
-    <p class="compact-note">${scores.week?.pendingPicks??0} saved picks awaiting final results. ${report.ungraded.filter(game=>game.reason!=='Awaiting final').length} tied, unavailable or excluded results remain ungraded. A 50–50 forecast contributes to Brier score and has no named winner.</p></section>
+    ${(scores.week?.completedPicks??0)<30 ? '<p class="intelligence-note">Small weekly sample. Use the season sample and game coverage to put this week’s results in context.</p>' : ''}
+    <p class="compact-note">${scores.week?.pendingPicks??0} saved picks awaiting final results this week. ${report.ungraded.filter(game=>game.reason!=='Awaiting final').length} tied, unavailable or excluded results remain ungraded.</p>
+    <details class="intelligence-evidence"><summary>Which games count?</summary>
+    <p>${report.firstSavedAt ? `Automatic saving in this archive starts ${dates.format(new Date(report.firstSavedAt))} MT.` : 'This archive has no qualifying saved pregame forecasts yet.'}${report.pickHorizonDays ? ` The publisher checks upcoming games up to ${report.pickHorizonDays} days ahead.` : ''} Only forecasts timestamped before kickoff enter the live record. Games from earlier weeks may have replay scores.</p>
+    <p>A confirmed final with a winner is required for grading. Postponed games wait for a confirmed final, and canceled games are excluded. A pick must still match the teams and venue and precede the updated kickoff if the schedule changes. Even forecasts with a final winner count toward Brier score; winner accuracy requires a named favorite.</p></details></section>
+    <section class="panel intelligence-panel"><h3>Season benchmarks</h3>
+    ${benchmark ? `<p><strong>Picking every home team:</strong> ${benchmark.homeCorrect} of ${benchmark.games} correct (${formatProbability(benchmark.homeCorrect/benchmark.games,1)}). The model got ${benchmark.modelCorrect} of the same ${benchmark.games} right (${formatProbability(benchmark.modelCorrect/benchmark.games,1)}).</p>` : '<p>No home-team comparison is available yet.</p>'}
+    <p class="compact-note">This uses the home team known before kickoff. The comparison includes only games with a known home venue, a named model favorite, and a confirmed winner.</p>
+    ${completedPicks ? `<p><strong>Even-odds reference:</strong> A 50% forecast every game scores 0.250 Brier on the same ${completedPicks} finals. The model scored ${formatNumber(scores.season.brier,3)}.</p>` : ''}
+    <p class="compact-note">Winner accuracy counts correct favorites. Brier measures squared probability error, with lower scores better. Calibration asks whether teams given a particular chance win about that often. These results describe the covered games. Stronger claims about future performance need more saved games across more weeks.</p></section>
     <section class="panel intelligence-panel"><h3>Results by saved favorite probability</h3>
     <p class="compact-note">These ranges describe the model’s saved win probability. They are not a separate confidence rating.</p>
     <div class="intelligence-table-scroll" tabindex="0" role="region" aria-label="Saved prediction results by probability"><table><thead><tr><th>Probability</th><th>Correct / decided</th><th>Accuracy</th><th>Brier</th></tr></thead><tbody>

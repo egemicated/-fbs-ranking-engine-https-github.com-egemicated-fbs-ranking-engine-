@@ -34,10 +34,13 @@ test('static build writes an allowlist of rendered destinations, canonicalizes a
     await mkdir(join(output, 'data'));
     await prerenderPublicPages({
       root, output,
-      snapshot: { asOf: '2026-11-18T09:00:00.000Z', season: 2026, fbsTeams: 1, fcsTeams: 1 },
+      snapshot: { asOf: '2026-11-18T09:00:00.000Z', season: 2026, fbsTeams: 26, fcsTeams: 1 },
       teams: [
         { id: '252', name: 'BYU', division: 'fbs', conference: 'Big 12', wins: 8, losses: 2, displayRank: 12 },
         { id: '149', name: 'North Dakota', division: 'fcs', conference: 'MVFC', wins: 6, losses: 4, displayRank: 21 },
+        ...Array.from({length:26}, (_, i) => i+1).filter(rank => rank !== 12).map(rank => ({
+          id:String(500+rank), name:`Test team ${rank}`, division:'fbs', conference:'Example', wins:8, losses:2, displayRank:rank,
+        })),
       ],
       html: await readFile(join(root, 'frontend/index.html'), 'utf8'),
     });
@@ -59,6 +62,12 @@ test('static build writes an allowlist of rendered destinations, canonicalizes a
     assert.match(team, /<h1>BYU<\/h1>/);
     assert.match(team, /href="\/team\/252\/\?view=results"/);
     assert.ok(team.includes(`property="og:image" content="${origin}/social/team-252.png"`));
+    const home = await readPage('/'), rankings = await readPage('/rankings');
+    assert.equal((home.match(/<tr><td>/g) ?? []).length, 25);
+    assert.equal((rankings.match(/<tr><td>/g) ?? []).length, 26);
+    assert.doesNotMatch(home, /Test team 26/);
+    assert.match(home, /href="\/rankings\?all=1">View all 26 FBS teams/);
+    assert.equal(((await readPage('/teams/fbs/')).match(/<tr><td>/g) ?? []).length, 26);
     const registry = JSON.parse(await readFile(join(output, 'data/page-metadata.json'), 'utf8'));
     for (const path of ['/account', '/admin', '/my-teams']) {
       assert.ok(!paths.includes(path));

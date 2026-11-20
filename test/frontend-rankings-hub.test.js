@@ -149,7 +149,7 @@ test('Home offers a single all-team link and methodology describes both subdivis
   assert.equal([...page.html().matchAll(/href="\/rankings\?all=1"/g)].length, 1);
   const methodology = await page.go('#methodology');
   assert.match(methodology, /Three views\./);
-  assert.match(methodology, /FCS Strength of Record uses an average-strength FCS reference team/);
+  assert.match(methodology, /FCS Strength of Record uses the mean Colley rating of the season’s FCS teams/);
   assert.match(methodology, /relative to the measured average for each subdivision/);
   assert.deepEqual(page.calls, ['/rankings']);
 });

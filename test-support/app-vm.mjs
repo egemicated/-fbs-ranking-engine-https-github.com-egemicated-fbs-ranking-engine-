@@ -3,11 +3,13 @@ import assert from 'node:assert/strict';
 import { ACCOUNT_ROUTE_EVENT, isAccountCallbackUrl, pendingAccountRoute, safeAccountReturnPath } from '../frontend/bracket-auth.js?v=clean-routes';
 import { routeFromUrl, routeHref } from '../frontend/clean-routes.js';
 import { APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl } from '../frontend/clean-navigation.js';
+import { formatSorScore, sorEligibleRecord } from '../frontend/format.js';
 
 const knownImports = [
   "import { ACCOUNT_ROUTE_EVENT, isAccountCallbackUrl, pendingAccountRoute, safeAccountReturnPath } from './bracket-auth.js?v=clean-routes';",
   "import { routeFromUrl, routeHref } from './clean-routes.js';",
   "import { APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl } from './clean-navigation.js';",
+  "import { formatSorScore, sorEligibleRecord } from './format.js?v=sor-transparency';",
 ];
 
 export function appVmSource(source) {
@@ -22,7 +24,7 @@ export function appVmSource(source) {
 
 export function installAppVmContext(context) {
   Object.assign(context, { ACCOUNT_ROUTE_EVENT, isAccountCallbackUrl, pendingAccountRoute, safeAccountReturnPath,
-    routeFromUrl, routeHref, APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl, URL, URLSearchParams });
+    routeFromUrl, routeHref, APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl, formatSorScore, sorEligibleRecord, URL, URLSearchParams });
   const { location, window } = context;
   assert.ok(location && window, 'VM browser requires location and window fixtures');
   const origin = location.origin ?? 'https://example.test';

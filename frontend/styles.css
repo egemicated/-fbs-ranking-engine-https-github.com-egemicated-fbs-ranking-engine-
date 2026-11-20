@@ -389,3 +389,5 @@ ul.edition-notice{padding-inline-start:20px}
 /* Team search filters the existing native choice without changing selections. */
 .searchable-team-select{display:grid;gap:7px;min-width:0;max-width:100%;width:100%}.searchable-team-select>input{width:100%;min-width:0;min-height:44px;padding:9px 11px;border:1px solid #b9cbdf;border-radius:8px;background:#fff;color:#17324d;font:inherit}.searchable-team-select>label:not(.sr-only){display:block;min-width:0}.searchable-team-select select{width:100%!important;max-width:100%}.team-select-search-status{font-size:12px;line-height:1.5;color:#526c87;margin:0!important}.team-select-search-status:empty{display:none}.my-teams-add>.searchable-team-select{flex:1 1 230px;max-width:380px}.my-team-choice .searchable-team-select{min-width:0}.my-team[data-favorite-team] .team-select-search-status{color:#c4d5eb}
 .intelligence-toolbar>.searchable-team-select{width:auto;flex:1 1 210px}
+
+.sor-eligible-record{display:block;font-size:.75em;color:var(--muted,#4e627a);white-space:normal}
