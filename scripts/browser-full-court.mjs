@@ -76,6 +76,9 @@ try {
       assert.match(page.url(),/\/basketball\/teams\//);
       await page.getByRole('link',{name:'2025–26',exact:true}).click();
       assert.match(page.url(),/season=2026/);
+      await page.goto(base+'/basketball/conferences/?'+new URLSearchParams({a:team.conference}));
+      await page.getByRole('heading',{name:team.conference+' membership',exact:true}).waitFor();
+      await widthDoesFit(page);
       await page.goto(base+'/basketball/matchup-lab/?'+new URLSearchParams({a:team.id,b:team.id}));
       await page.getByRole('heading',{name:'Choose a different opponent'}).waitFor();
       assert.equal(await page.locator('.fc-probability').count(),0);

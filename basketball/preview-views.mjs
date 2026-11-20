@@ -72,10 +72,15 @@ function gameTable(ctx,games,{picks=false,subject=null}={}) {
       <small>Saved ${stamp(record.capturedAt)}${game.completed ? ` · ${ctx.forecastReportById.get(game.id)?.right === 1 ? 'Correct' : 'Miss'}` : ''}</small>`
       : record ? '<small>Saved forecast excluded</small>' : '<small>No saved pre-tipoff forecast</small>';
     const matchup = h.id && a.id ? `<small><a href="${matchupHref(h.id,a.id,ctx.year,game.neutral?'neutral':'home')}">Matchup Lab</a></small>` : '';
+    const boxes = game.completed && game.box?.away && game.box?.home ? `<details class="fc-box">
+      <summary>Team box score</summary><dl>${[['possessions','Possessions'],['offensiveRebounds','Off. rebounds'],
+      ['defensiveRebounds','Def. rebounds'],['turnovers','Turnovers']].map(([key,label])=>
+        `<dt>${label}</dt><dd>${amount(game.box.away[key])} / ${amount(game.box.home[key])}</dd>`).join('')}</dl>
+      <small>Away / home</small></details>` : '';
     return values([
       {value:`<strong class="fc-chip">${e(gameStatus)}</strong><small>${game.startTimeTbd ? `${e(game.startDate ? dayKey(game.startDate) : '')} · Time TBD` : stamp(game.startDate)}</small>`,cls:'fc-game-meta'},
       teamLink(a,ctx.year),teamLink(h,ctx.year),
-      {value:`${result}${picks ? pick : ''}${matchup}`,cls:'fc-game-meta'}
+      {value:`${result}${picks ? pick : ''}${matchup}${boxes}`,cls:'fc-game-meta'}
     ]);
   }));
 }
@@ -152,10 +157,14 @@ function teamPage(ctx,t) {
     .sort((a,b)=>(b.opponentRating??-1)-(a.opponentRating??-1)).slice(0,5);
   const ordered = [...ctx.teams.values()].filter(row=>row.conference===t.conference && row.sorRank).sort(order('sorRank'));
   const conferenceRank = ordered.indexOf(t)+1;
+  const recent = finals.slice(0,5);
+  const recentWins = recent.filter(g=>g.home===t.id ? g.homePoints>g.awayPoints : g.awayPoints>g.homePoints).length;
+  const editions = ctx.editions.filter(ed=>ed.teams[t.id]!=null).slice(-6).reverse();
   const evidence = `<div class="fc-metrics">${metric('Record',teamRecord(t))}${metric('SOR rank',ordinal(t.sorRank),fmt(t.sorScore,3))}
     ${metric('Predictive rank',ordinal(t.predictiveRank))}${metric('Performance rank',ordinal(t.performanceRank),'Experimental')}
     ${metric('Conference position',conferenceRank?ordinal(conferenceRank):'—', t.conference ?? 'Unassigned')}
-    ${metric('Conference record',`${t.conferenceWins??0}–${t.conferenceLosses??0}`)}</div>`;
+    ${metric('Conference record',`${t.conferenceWins??0}–${t.conferenceLosses??0}`)}
+    ${metric('Last five',recent.length ? `${recentWins}–${recent.length-recentWins}` : '—',`${recent.length} qualifying finals`)}</div>`;
   return banner(`${t.name}${t.mascot?' '+t.mascot:''}`,`${t.conference??'Unassigned'} · ${teamRecord(t)}${t.provisional ? ' · Provisional ranks':''}`)
     + content(ctx,evidence+`<div class="fc-actions fc-date-links" aria-label="Team seasons">${ctx.teamSeasons(t.id)
       .filter(year=>year!==ctx.year).map(year=>action(teamHref(t.id,year),seasonLabel(year),true)).join('')}</div>
@@ -170,6 +179,9 @@ function teamPage(ctx,t) {
       <p class="fc-note">The score asks how hard it would be for the reference team to match this record against the same D-I opponents at the same venues.</p>${action(link('methodology',{season:ctx.year}),'See the formula',true)}`)}
     ${panel('Quality wins',best.length?table('Best wins',['Opponent','Venue','Opponent rating'],best.map(row=>values([
       teamLink(teamById(ctx,row.opponentId),ctx.year),e(row.venue),fmt(row.opponentRating,3)]))):empty('No completed D-I wins are recorded.'))}
+    ${panel('Saved ranking history',editions.length ? table('Team ranking history',['Published edition','SOR rank'],
+      editions.map(ed=>values([`<a href="${link('ranking-history',{season:ctx.year,edition:ed.asOf})}">${stamp(ed.asOf)}</a>`,ordinal(ed.teams[t.id])])))
+      : empty('No timestamped editions were saved for this historical season.'))}
     </div></div>`);
 }
 
@@ -185,8 +197,9 @@ function matchup(ctx, query) {
   if (!h || !a || h.id===a.id) return banner('Matchup Lab','Compare two different teams in the selected season.') + content(ctx,choice
     +panel('Choose a different opponent',empty('Two different Division I teams are required.')));
   const estimate = predictBasketball(ctx.snapshot,{home:h.id,away:a.id,neutral:venue==='neutral',venue});
-  const fields = [['SOR rank','sorRank',ordinal],['Predictive rank','predictiveRank',ordinal],['Schedule strength','scheduleStrength',x=>fmt(x,3)],
-    ['Adjusted offense','adjustedOffense',fmt],['Adjusted defense','adjustedDefense',fmt],['Tempo','tempo',fmt]];
+  const fields = [['Overall record',teamRecord],['SOR rank',t=>ordinal(t.sorRank)],['Predictive rank',t=>ordinal(t.predictiveRank)],
+    ['Schedule strength',t=>fmt(t.scheduleStrength,3)],['Adjusted offense',t=>fmt(t.adjustedOffense)],
+    ['Adjusted defense',t=>fmt(t.adjustedDefense)],['Tempo',t=>fmt(t.tempo)]];
   const paired=ctx.dataset.games.filter(g=>g.completed && (g.home===h.id&&g.away===a.id||g.home===a.id&&g.away===h.id));
   return banner('Matchup Lab','Explore how two teams match up under basketball’s own prediction model.')+content(ctx,choice
     +panel('Win probability',`<div class="fc-average"><div><span>${teamLink(h,ctx.year)} <strong>${pct(estimate.homeWinProbability)}</strong></span>
@@ -195,8 +208,9 @@ function matchup(ctx, query) {
       <p>${estimate.homeMargin!==null ? `Expected margin: ${e(estimate.homeMargin<0?a.name:h.name)} by ${fmt(Math.abs(estimate.homeMargin))} points. ` : ''}
       ${estimate.estimatedPossessions!==null ? `Estimated tempo: ${fmt(estimate.estimatedPossessions)} possessions. ` : ''}
       ${estimate.provisional ? 'Early-season estimate. ' : ''}Hypothetical matchup.</p></div>`,ctx.snapshot.modelConfig.id)
-    +`<div class="fc-grid fc-gap">${panel('Team evidence',table('Matchup statistics',['Metric',h.name,a.name],fields.map(([label,field,format])=>values([e(label),format(h[field]),format(a[field])]))))}
-    ${panel('Head-to-head this season', gameTable(ctx,paired))}</div>`);
+    +`<div class="fc-grid fc-gap">${panel('Team evidence',table('Matchup statistics',['Metric',h.name,a.name],fields.map(([label,format])=>
+      values([e(label),format(h),format(a)]))))}
+    ${panel('Head-to-head this season', gameTable(ctx,paired)+`<div class="fc-actions">${action(link('methodology',{season:ctx.year}),'How forecasts work',true)}</div>`)}</div>`);
 }
 
 function conferenceData(ctx) {
@@ -231,6 +245,13 @@ function conferences(ctx,query) {
   const opts = a && records.has(a) ? (b && records.has(b) ? head.get(a+'\0'+b)?.games??[]
     : [...head].filter(([key])=>key.startsWith(a+'\0')).flatMap(([,r])=>r.games)) : [];
   const details = a && records.has(a) ? panel(b?`${a} vs ${b}`:`${a} results`,gameTable(ctx,opts)) : '';
+  const members = a && records.has(a) ? [...ctx.teams.values()].filter(t=>t.conference===a).sort(order('sorRank')) : [];
+  const ranked = members.filter(t=>t.sorRank);
+  const meanRank = ranked.length ? ranked.reduce((sum,t)=>sum+t.sorRank,0)/ranked.length : null;
+  const membership = members.length ? panel(`${a} membership`,table('Conference member rankings',
+    ['Team','Conference record','SOR rank','Predictive rank','Opp. Colley'],members.map(t=>values([
+      teamLink(t,ctx.year),`${t.conferenceWins??0}–${t.conferenceLosses??0}`,ordinal(t.sorRank),
+      ordinal(t.predictiveRank),fmt(t.scheduleStrength,3)]))),`Average national SOR rank ${fmt(meanRank)} across ${ranked.length} ranked members.`) : '';
   const qualityTable = table('Opponent-adjusted nonconference quality',
     ['Conference','W–L','Reference wins','Win surplus','Surplus / game','Predictive median','Predictive middle 50%'],
     [...quality.rows].sort((x,y)=>(y.nonconference.surplusPerGame??-2)-(x.nonconference.surplusPerGame??-2))
@@ -248,7 +269,7 @@ function conferences(ctx,query) {
       href="${link('conferences',{season:ctx.year,a:x,b:y})}">${row.wins}–${row.losses}</a></td>`;
     }).join('')}</tr>`),'fc-heat');
   return banner('Conference Strength','Actual nonconference results alongside independently calculated team strength.')
-    +content(ctx,filter+`<div class="fc-stack">${details}${panel('Conference summary',ranks,'Winning percentage uses D-I games between different conferences.')}
+    +content(ctx,filter+`<div class="fc-stack">${details}${membership}${panel('Conference summary',ranks,'Winning percentage uses D-I games between different conferences.')}
     ${panel('Opponent-adjusted conference results',qualityTable,'Win surplus shows actual wins minus the average D-I reference team’s expected wins against the same opponents at the same venues.')}
     ${panel('Head-to-head matrix',matrix,'Rows show wins and losses against each column. Blue is a winning record, tan is a losing record.')}</div>`);
 }
@@ -286,7 +307,7 @@ function modelReport(ctx) {
     ${panel('Upsets against the model',gameTable(ctx,toGames(misses.sort((a,b)=>confidence(b)-confidence(a)).slice(0,5)),{picks:true}),'The saved favorite had a win probability of at least 70%.')}</div>` : '';
   const reportDetail = live.graded ? rows(live)+gameTable(ctx,toGames(decisions.slice(-15)),{picks:true})
     : empty('No saved basketball forecast has reached a qualifying final yet.');
-  return banner('Model Report Card','Results for saved forecasts and a separate test on historical seasons.')+content(ctx,`<div class="fc-stack">
+  return banner('Model Report Card','Results for saved forecasts and a separate test on historical seasons.')+content(ctx,form(seasonField(ctx),'Show season')+`<div class="fc-stack">
     ${panel('Saved prospective forecasts',`<div class="fc-metrics">${metric('Graded',amount(live.graded))}${metric('Pending',amount(live.pending))}
       ${metric('Accuracy',pct(live.accuracy))}${metric('Brier score',fmt(live.brier,4))}
       ${metric('Excluded',amount(live.excluded))}${metric('Finals without a saved pick',amount(live.missing))}</div>${reportDetail}`)}

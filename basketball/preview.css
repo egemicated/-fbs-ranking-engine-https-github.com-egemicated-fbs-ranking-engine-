@@ -113,6 +113,9 @@
 .fc-technical { font-size:13px; white-space:pre-wrap; overflow-wrap:anywhere; }
 .fc-panel p { line-height:1.55; }
 .fc-panel summary { padding:7px 0; cursor:pointer; }
+.fc-box summary { min-height:44px; display:flex; align-items:center; color:#174f88; font-weight:650; }
+.fc-box dl { display:grid; grid-template-columns:1fr auto; gap:4px 8px; margin:1px 0; font-size:12px; }
+.fc-box dd { margin:0; }
 .fc-notice { background:#dbecff; border:1px solid #aacbec; color:#123c6b; border-radius:8px; padding:12px; margin-bottom:12px; }
 .fc-pick-row { display:flex; flex-wrap:wrap; gap:10px 18px; justify-content:space-between; align-items:center; min-height:66px; padding:11px 0; }
 .fc-pick-row + .fc-pick-row { border-top:1px solid #dbe5ef; }

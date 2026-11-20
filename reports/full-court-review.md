@@ -54,7 +54,7 @@ The [architecture record](full-court-architecture.md) gives the starting SHA and
 ## Verification
 
 - The browser suite rendered 16 destinations at 320, 390, 768, 1100, and 1440 pixels. It exercised both sport switches, team search, historical team links, the identical-team guard, keyboard bracket advancement, projection, practice registration and picks, and private file denial.
-- Local Chromium measured median DOMContentLoaded of 17 ms and median transfer of 202 KiB across those visits. The largest HTML response was 122 KiB, a scrollable conference matrix and supporting tables. These are local measurements with external requests blocked.
+- Local Chromium measured median DOMContentLoaded of 16 ms and median transfer of 205 KiB across those visits. The largest HTML response was 122 KiB, a scrollable conference matrix and supporting tables. These are local measurements with external requests blocked.
 - The standalone tournament browser suite passed on mobile, tablet, and desktop. It exercised save/reopen, keyboard selection, historical grading, and model-favorite advancement. The existing football browser gate passed 168 route and viewport checks.
 - The isolated database applied all 15 repository migrations and passed 14 SQL suites. No production account, pick, or forecast rows were read or changed. Preserve actual deployed data as the source of truth during any public rollout.
 
