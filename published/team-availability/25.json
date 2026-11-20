@@ -10,8 +10,8 @@
       "opponentName": "Stanford",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-19T04:00:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.466Z",
+      "reportAt": "2026-11-20T04:00:00.000Z",
+      "checkedAt": "2026-11-20T11:55:06.549Z",
       "final": false,
       "players": [
         {
@@ -97,6 +97,13 @@
           "position": "ILB",
           "jersey": 33,
           "status": "Questionable"
+        },
+        {
+          "playerId": "4899704",
+          "name": "Jordan King",
+          "position": "WR",
+          "jersey": 4,
+          "status": "Out"
         },
         {
           "playerId": "4568099",

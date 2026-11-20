@@ -10,8 +10,8 @@
       "opponentName": "North Carolina",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-19T01:00:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.466Z",
+      "reportAt": "2026-11-20T01:00:00.000Z",
+      "checkedAt": "2026-11-20T11:55:06.549Z",
       "final": false,
       "players": [
         {
@@ -20,6 +20,13 @@
           "position": "DB",
           "jersey": 27,
           "status": "Out"
+        },
+        {
+          "playerId": "5219298",
+          "name": "Billy Koudelka",
+          "position": "DE",
+          "jersey": 93,
+          "status": "Questionable"
         },
         {
           "playerId": "5290674",
@@ -34,6 +41,13 @@
           "position": "DT",
           "jersey": 46,
           "status": "Out"
+        },
+        {
+          "playerId": "4837327",
+          "name": "Christian Ellis",
+          "position": "S",
+          "jersey": 8,
+          "status": "Doubtful"
         },
         {
           "playerId": "5195479",
@@ -54,7 +68,7 @@
           "name": "Drake Metcalf",
           "position": "OL",
           "jersey": 60,
-          "status": "Questionable"
+          "status": "Doubtful"
         },
         {
           "playerId": "5146637",

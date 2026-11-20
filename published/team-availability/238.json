@@ -10,8 +10,8 @@
       "opponentName": "Florida",
       "source": "SEC",
       "sourceUrl": "https://www.secsports.com/fbreports",
-      "reportAt": "2026-11-19T01:10:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.431Z",
+      "reportAt": "2026-11-20T01:10:00.000Z",
+      "checkedAt": "2026-11-20T11:55:06.309Z",
       "final": false,
       "players": [
         {
@@ -75,7 +75,7 @@
           "name": "Miles Capers",
           "position": "EDG",
           "jersey": 29,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5086466",

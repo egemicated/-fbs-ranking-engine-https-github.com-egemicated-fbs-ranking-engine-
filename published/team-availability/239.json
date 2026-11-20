@@ -10,8 +10,8 @@
       "opponentName": "Texas Tech",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-19T03:00:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.336Z",
+      "reportAt": "2026-11-20T03:00:00.000Z",
+      "checkedAt": "2026-11-20T11:55:05.591Z",
       "final": false,
       "players": [
         {
@@ -55,6 +55,13 @@
           "position": "CB",
           "jersey": 38,
           "status": "Out"
+        },
+        {
+          "playerId": "5149009",
+          "name": "Kyland Reed",
+          "position": "LB",
+          "jersey": 10,
+          "status": "Questionable"
         },
         {
           "playerId": "5160471",

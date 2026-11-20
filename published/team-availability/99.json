@@ -10,10 +10,17 @@
       "opponentName": "Tennessee",
       "source": "SEC",
       "sourceUrl": "https://www.secsports.com/fbreports",
-      "reportAt": "2026-11-19T01:10:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.431Z",
+      "reportAt": "2026-11-20T01:10:00.000Z",
+      "checkedAt": "2026-11-20T11:55:06.309Z",
       "final": false,
       "players": [
+        {
+          "playerId": "5207618",
+          "name": "Aidan Anding",
+          "position": "CB",
+          "jersey": 23,
+          "status": "Probable"
+        },
         {
           "playerId": "5201881",
           "name": "Charles Ross II",
@@ -68,7 +75,7 @@
           "name": "Whit Weeks",
           "position": "LB",
           "jersey": 7,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "5141697",

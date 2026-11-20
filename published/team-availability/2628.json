@@ -10,8 +10,8 @@
       "opponentName": "Utah",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-19T03:00:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.336Z",
+      "reportAt": "2026-11-20T03:00:00.000Z",
+      "checkedAt": "2026-11-20T11:55:05.591Z",
       "final": false,
       "players": [
         {
@@ -33,7 +33,7 @@
           "name": "G'Ivori Graham",
           "position": "RB",
           "jersey": 20,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5083569",
@@ -41,6 +41,13 @@
           "position": "QB",
           "jersey": 1,
           "status": "Probable"
+        },
+        {
+          "playerId": "5147339",
+          "name": "Keylan Abrams",
+          "position": "LB",
+          "jersey": 23,
+          "status": "Out"
         },
         {
           "playerId": "4870670",

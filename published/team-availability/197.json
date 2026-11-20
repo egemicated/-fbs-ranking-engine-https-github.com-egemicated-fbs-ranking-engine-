@@ -10,8 +10,8 @@
       "opponentName": "Arizona State",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-19T03:00:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.336Z",
+      "reportAt": "2026-11-20T03:00:00.000Z",
+      "checkedAt": "2026-11-20T11:55:05.591Z",
       "final": false,
       "players": [
         {
@@ -47,7 +47,7 @@
           "name": "Ethan Wesloski",
           "position": "LB",
           "jersey": 32,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4715344",

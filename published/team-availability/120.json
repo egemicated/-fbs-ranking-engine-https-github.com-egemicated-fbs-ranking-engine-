@@ -10,8 +10,8 @@
       "opponentName": "USC",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-19T01:00:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.155Z",
+      "reportAt": "2026-11-20T01:00:00.000Z",
+      "checkedAt": "2026-11-20T11:55:05.340Z",
       "final": false,
       "players": [
         {
@@ -54,7 +54,7 @@
           "name": "Javonte Williams",
           "position": "TE",
           "jersey": 81,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5327246",

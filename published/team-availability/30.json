@@ -10,8 +10,8 @@
       "opponentName": "Maryland",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-19T01:00:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.155Z",
+      "reportAt": "2026-11-20T01:00:00.000Z",
+      "checkedAt": "2026-11-20T11:55:05.340Z",
       "final": false,
       "players": [
         {
@@ -33,7 +33,7 @@
           "name": "GianCarlo Rufo",
           "position": "LB",
           "jersey": 58,
-          "status": "Questionable"
+          "status": "Doubtful"
         },
         {
           "playerId": "5146426",
@@ -68,7 +68,7 @@
           "name": "Mark Bowman",
           "position": "TE",
           "jersey": 19,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5160501",
@@ -110,7 +110,7 @@
           "name": "Zacharyus Williams",
           "position": "WR",
           "jersey": 0,
-          "status": "Questionable"
+          "status": "Probable"
         }
       ]
     },

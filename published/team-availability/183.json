@@ -10,8 +10,8 @@
       "opponentName": "Boston College",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-19T01:00:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.466Z",
+      "reportAt": "2026-11-20T01:00:00.000Z",
+      "checkedAt": "2026-11-20T11:55:06.549Z",
       "final": false,
       "players": [
         {
@@ -19,6 +19,13 @@
           "name": "Amari Odom",
           "position": "QB",
           "jersey": 12,
+          "status": "Out"
+        },
+        {
+          "playerId": "5277127",
+          "name": "Cam Hairston-Taylor",
+          "position": "DB",
+          "jersey": 25,
           "status": "Out"
         },
         {
@@ -75,7 +82,7 @@
           "name": "Trevion Mack",
           "position": "OL",
           "jersey": 75,
-          "status": "Questionable"
+          "status": "Doubtful"
         }
       ]
     },

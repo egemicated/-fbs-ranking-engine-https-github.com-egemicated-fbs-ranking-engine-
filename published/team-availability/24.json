@@ -10,8 +10,8 @@
       "opponentName": "California",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-19T04:00:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.466Z",
+      "reportAt": "2026-11-20T04:00:00.000Z",
+      "checkedAt": "2026-11-20T11:55:06.549Z",
       "final": false,
       "players": [
         {
@@ -68,7 +68,7 @@
           "name": "Ernest Cooper",
           "position": "OLB",
           "jersey": 44,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5209298",
@@ -96,7 +96,7 @@
           "name": "Max Meier",
           "position": "DL",
           "jersey": 98,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "4709052",
@@ -145,7 +145,7 @@
           "name": "Zaiden McDonald",
           "position": "DB",
           "jersey": 22,
-          "status": "Doubtful"
+          "status": "Out"
         }
       ]
     },

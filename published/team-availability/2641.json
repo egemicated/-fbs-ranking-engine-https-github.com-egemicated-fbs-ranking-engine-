@@ -10,8 +10,8 @@
       "opponentName": "Baylor",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-19T03:00:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.336Z",
+      "reportAt": "2026-11-20T03:00:00.000Z",
+      "checkedAt": "2026-11-20T11:55:05.591Z",
       "final": false,
       "players": [
         {
@@ -19,14 +19,14 @@
           "name": "Ansel Nedore",
           "position": "OLB",
           "jersey": 33,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "4870867",
           "name": "Brenden Jordan",
           "position": "S",
           "jersey": 7,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "4916941",
@@ -54,14 +54,14 @@
           "name": "LaDamion Guyton",
           "position": "OLB",
           "jersey": 32,
-          "status": "Questionable"
+          "status": "Doubtful"
         },
         {
           "playerId": "5186738",
           "name": "Leyton Stone",
           "position": "WR",
           "jersey": 17,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5079492",
@@ -75,7 +75,7 @@
           "name": "Miquel Dingle Jr.",
           "position": "S",
           "jersey": 21,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5110451",
@@ -96,7 +96,7 @@
           "name": "Thomas Castellanos",
           "position": "QB",
           "jersey": 4,
-          "status": "Probable"
+          "status": "Available"
         }
       ]
     },

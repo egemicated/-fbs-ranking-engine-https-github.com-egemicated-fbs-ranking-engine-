@@ -10,8 +10,8 @@
       "opponentName": "Rutgers",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-19T01:00:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.155Z",
+      "reportAt": "2026-11-20T01:00:00.000Z",
+      "checkedAt": "2026-11-20T11:55:05.340Z",
       "final": false,
       "players": [
         {
@@ -26,7 +26,7 @@
           "name": "Alijah Carnell",
           "position": "DT",
           "jersey": 56,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5081877",
@@ -47,7 +47,7 @@
           "name": "Donnie Harbour",
           "position": "OL",
           "jersey": 79,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "5141548",
@@ -82,7 +82,7 @@
           "name": "Tyler Armstead",
           "position": "CB",
           "jersey": 35,
-          "status": "Questionable"
+          "status": "Probable"
         }
       ]
     },

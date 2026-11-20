@@ -10,8 +10,8 @@
       "opponentName": "South Carolina",
       "source": "SEC",
       "sourceUrl": "https://www.secsports.com/fbreports",
-      "reportAt": "2026-11-19T01:10:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.431Z",
+      "reportAt": "2026-11-20T01:10:00.000Z",
+      "checkedAt": "2026-11-20T11:55:06.309Z",
       "final": false,
       "players": [
         {
@@ -27,6 +27,13 @@
           "position": "OL",
           "jersey": 74,
           "status": "Questionable"
+        },
+        {
+          "playerId": "5215017",
+          "name": "Landon Roldan",
+          "position": "WR",
+          "jersey": 8,
+          "status": "Out"
         }
       ]
     },

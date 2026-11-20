@@ -10,8 +10,8 @@
       "opponentName": "Texas A&M",
       "source": "SEC",
       "sourceUrl": "https://www.secsports.com/fbreports",
-      "reportAt": "2026-11-19T01:10:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.431Z",
+      "reportAt": "2026-11-20T01:10:00.000Z",
+      "checkedAt": "2026-11-20T11:55:06.309Z",
       "final": false,
       "players": [
         {
@@ -19,14 +19,14 @@
           "name": "Dakoda Fields",
           "position": "DB",
           "jersey": 9,
-          "status": "Out"
+          "status": "Questionable"
         },
         {
           "playerId": "5110453",
           "name": "Danny Okoye",
           "position": "DL",
           "jersey": 16,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5156434",
@@ -47,21 +47,21 @@
           "name": "Hayden Hansen",
           "position": "TE",
           "jersey": 89,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5223175",
           "name": "Kenny Ozowalu",
           "position": "DL",
           "jersey": 94,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5293827",
           "name": "Manny Choice",
           "position": "WR",
           "jersey": 0,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5195701",

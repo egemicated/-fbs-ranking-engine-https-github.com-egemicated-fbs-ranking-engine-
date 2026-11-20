@@ -10,8 +10,8 @@
       "opponentName": "Arkansas",
       "source": "SEC",
       "sourceUrl": "https://www.secsports.com/fbreports",
-      "reportAt": "2026-11-19T01:10:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.431Z",
+      "reportAt": "2026-11-20T01:10:00.000Z",
+      "checkedAt": "2026-11-20T11:55:06.309Z",
       "final": false,
       "players": [
         {
@@ -34,6 +34,13 @@
           "position": "RB",
           "jersey": 2,
           "status": "Out"
+        },
+        {
+          "playerId": "4432763",
+          "name": "Laurence Seymore III",
+          "position": "OL",
+          "jersey": 50,
+          "status": "Questionable"
         },
         {
           "playerId": "5195299",

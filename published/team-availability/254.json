@@ -10,8 +10,8 @@
       "opponentName": "TCU",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-19T03:00:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.336Z",
+      "reportAt": "2026-11-20T03:00:00.000Z",
+      "checkedAt": "2026-11-20T11:55:05.591Z",
       "final": false,
       "players": [
         {
@@ -19,7 +19,7 @@
           "name": "Karson Kaufusi",
           "position": "DT",
           "jersey": 51,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5084830",
@@ -33,7 +33,7 @@
           "name": "Mana Carvalho",
           "position": "WR",
           "jersey": 8,
-          "status": "Questionable"
+          "status": "Available"
         },
         {
           "playerId": "5155562",
@@ -47,14 +47,14 @@
           "name": "Semi Taulanga",
           "position": "TE",
           "jersey": 99,
-          "status": "Questionable"
+          "status": "Available"
         },
         {
           "playerId": "5173431",
           "name": "Wayshawn Parker",
           "position": "RB",
           "jersey": 1,
-          "status": "Questionable"
+          "status": "Probable"
         }
       ]
     },

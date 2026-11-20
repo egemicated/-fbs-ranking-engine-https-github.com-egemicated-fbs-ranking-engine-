@@ -10,8 +10,8 @@
       "opponentName": "Pittsburgh",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-19T01:00:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.466Z",
+      "reportAt": "2026-11-20T01:00:00.000Z",
+      "checkedAt": "2026-11-20T11:55:06.549Z",
       "final": false,
       "players": [
         {
@@ -41,6 +41,13 @@
           "position": "OL",
           "jersey": 71,
           "status": "Probable"
+        },
+        {
+          "playerId": "5278090",
+          "name": "Gavin Waddell",
+          "position": "WR",
+          "jersey": 89,
+          "status": "Out"
         },
         {
           "playerId": "5226577",
@@ -85,11 +92,18 @@
           "status": "Out"
         },
         {
+          "playerId": "4870664",
+          "name": "Stanquan Clark",
+          "position": "LB",
+          "jersey": 6,
+          "status": "Out (1st Half)"
+        },
+        {
           "playerId": "5151017",
           "name": "Travis Egan",
           "position": "TE",
           "jersey": 44,
-          "status": "Probable"
+          "status": "Questionable"
         }
       ]
     },
