@@ -7,7 +7,7 @@ import {extname,resolve,sep} from 'node:path';
 import {chromium} from 'playwright';
 
 const directory=resolve('static-dist');
-const types={'.js':'text/javascript','.json':'application/json','.css':'text/css','.html':'text/html','.svg':'image/svg+xml','.woff2':'font/woff2','.png':'image/png','.webp':'image/webp'};
+const types={'.js':'text/javascript','.mjs':'text/javascript','.json':'application/json','.css':'text/css','.html':'text/html','.svg':'image/svg+xml','.woff2':'font/woff2','.png':'image/png','.webp':'image/webp'};
 const server=createServer(async(req,res)=>{
   const path=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
   let file=resolve(directory,'.'+path);if(!extname(path))file=resolve(file,'index.html');

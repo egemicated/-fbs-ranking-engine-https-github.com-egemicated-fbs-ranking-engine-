@@ -8,7 +8,7 @@ import { extname, resolve, sep } from 'node:path';
 import { chromium } from 'playwright';
 
 const directory=resolve('static-dist');
-const types={'.js':'text/javascript','.json':'application/json','.css':'text/css','.html':'text/html','.svg':'image/svg+xml','.woff2':'font/woff2','.png':'image/png','.webp':'image/webp'};
+const types={'.js':'text/javascript','.mjs':'text/javascript','.json':'application/json','.css':'text/css','.html':'text/html','.svg':'image/svg+xml','.woff2':'font/woff2','.png':'image/png','.webp':'image/webp'};
 const server=createServer(async(request,response)=>{
   const pathname=decodeURIComponent(new URL(request.url,'http://localhost').pathname);
   let file=resolve(directory,'.'+pathname);
@@ -40,7 +40,7 @@ try{
         contest:{client:{auth:{getSession:async()=>({data:{session:{user:{id:'carousel-fixture'}}}}),onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}})}}}};
       window.refreshCarouselAccount=()=>listener();
     },{ids});
-    await page.goto(base,{waitUntil:'domcontentloaded'});
+    await page.goto(base+'football/',{waitUntil:'domcontentloaded'});
     await page.locator(`[data-my-team] [data-favorite-team="${ids[0]}"]`).waitFor();
     const next=()=>page.getByRole('button',{name:'Next followed team',exact:true});
     const previous=()=>page.getByRole('button',{name:'Previous followed team',exact:true});

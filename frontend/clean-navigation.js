@@ -23,7 +23,7 @@ export function replaceLegacyAppUrl(browser = window) {
   const url = new URL(browser.location.href);
   // Historic application links live at the site's root. Other fragments are
   // in-page anchors or managed-Auth callbacks and are left with the document.
-  if (url.pathname !== '/') return false;
+  if (!['/', '/football', '/football/'].includes(url.pathname)) return false;
   const route = legacyRouteFromHash(url.hash);
   if (!route) return false;
   const href = routeHref(route);
@@ -42,7 +42,7 @@ export function internalNavigationTarget(event, currentUrl) {
   if (!link || (link.target && link.target !== '_self') || link.hasAttribute('download')) return null;
   const current = new URL(currentUrl);
   const target = new URL(link.href, current);
-  if (target.origin !== current.origin || target.hash) return null;
+  if (target.origin !== current.origin || target.pathname === '/' || target.hash) return null;
   const route = routeFromUrl(target);
   if (!route) return null;
   // Leave links with provider callbacks or unrelated search parameters on the

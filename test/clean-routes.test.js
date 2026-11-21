@@ -4,7 +4,7 @@ import { legacyRouteFromHash, routeFromUrl, routeHref } from '../frontend/clean-
 
 test('all page routes have a clean landing path and continue to accept their hash bookmarks', () => {
   const pages = [
-    ['home', '/'], ['rankings', '/rankings'], ['rankings/fcs/sor', '/rankings/fcs/'],
+    ['home', '/football/'], ['rankings', '/rankings'], ['rankings/fcs/sor', '/rankings/fcs/'],
     ['teams/fbs', '/teams/fbs/'], ['teams/fcs', '/teams/fcs/'], ['team/252', '/team/252/'],
     ['conference-strength', '/conference-strength/'], ['compare', '/matchup-lab'],
     ['compare/weekly', '/weekly-picks'], ['compare/weekly/fcs', '/weekly-picks/fcs/'],
@@ -24,6 +24,7 @@ test('all page routes have a clean landing path and continue to accept their has
     assert.equal(routeFromUrl(new URL(path, 'https://www.thegamesdecide.com')), token, path);
     if (path !== '/') assert.equal(routeFromUrl(path.endsWith('/') ? path.slice(0, -1) : path + '/'), token, path);
   }
+  assert.equal(routeFromUrl('/'), 'home');
 });
 
 test('links preserve comparison, division, edition, season, player, and event selections', () => {

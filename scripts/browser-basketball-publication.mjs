@@ -35,7 +35,7 @@ const picksDate = index.directory[index.currentSeason].dates.find(date=>date>=in
 const report = sourceSeason.modelReport.totals;
 assert.ok(index.years.length >= 1 && teamA && teamB && picksDate);
 const pages = [
-  ['/sports/', '.fc-portal-grid','sports'], ['/football/', '.home-hero','football'],
+  ['/', '.fc-portal-grid','sports'], ['/sports/', '.fc-portal-grid','sports-alias'], ['/football/', '.home-hero','football'],
   ['/basketball/', '.fc-hoops-hero','basketball'], ['/basketball/rankings/','[data-ranking-browser]','rankings'],
   ['/basketball/teams/','[data-team-browser]','teams'], [teamPath(teamA), '.fc-content','team'],
   [matchup,'[data-matchup-form][data-matchup-enhanced]','matchup'], ['/basketball/conferences/','[data-gd-basketball-conferences]','conference'],
@@ -63,9 +63,11 @@ try {
       const result = await page.goto(origin+path,{waitUntil:'load'});
       assert.equal(result.status(),200,path);
       await page.locator(ready).first().waitFor();
+      assert.equal(await page.locator('header[data-gd-masthead]').count(),1,path+' shared masthead');
+      assert.equal(await page.locator('footer.gd-footer').count(),1,path+' shared footer');
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true,width+' '+path);
       assert.equal(await page.locator('a[href*="/preview-profile/"]').count(),0);
-      if (evidence && [390,1440].includes(width) && ['basketball','rankings','team','matchup','bracket'].includes(name)) {
+      if (evidence && [390,1440].includes(width) && ['sports','football','basketball','rankings','team','matchup','bracket'].includes(name)) {
         await page.screenshot({path:resolve(evidence,name+'-'+width+'.png'),animations:'disabled'});
       }
     }
@@ -76,6 +78,20 @@ try {
   const context = await browser.newContext({viewport:{width:390,height:900},reducedMotion:'reduce'});
   await context.route('**/*',route=>new URL(route.request().url()).origin===origin?route.continue():route.abort());
   const page = await context.newPage();
+  await page.goto(origin+'/#main');
+  await page.locator('.fc-portal-grid').waitFor();
+  assert.equal(new URL(page.url()).hash,'#main');
+  await page.goto(origin+'/#team/252/results');
+  await page.waitForURL('**/team/252/?view=results');
+  await page.getByRole('heading',{name:/BYU/}).first().waitFor();
+  await page.goto(origin+'/#home');
+  await page.waitForURL('**/football/');
+  await page.locator('.home-hero').waitFor();
+  await page.locator('.gd-brand').click();
+  await page.waitForURL(origin+'/');
+  await page.locator('.fc-portal-grid').waitFor();
+  await page.goto(origin+'/beat-the-model/');
+  assert.equal(await page.locator('[data-gd-sport-link="basketball"]').getAttribute('href'),'/basketball/picks/');
   await page.goto(origin+matchup);
   await page.locator('[data-matchup-form][data-matchup-enhanced]').waitFor();
   const original = await page.locator('.prediction-number').textContent();

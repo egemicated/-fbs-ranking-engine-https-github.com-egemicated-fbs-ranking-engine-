@@ -4,10 +4,12 @@ import {readFile} from 'node:fs/promises';
 import {extname,resolve,sep} from 'node:path';
 import {chromium} from 'playwright';
 import {routeHref} from '../frontend/clean-routes.js';
-const directory=resolve('static-dist'),types={'.js':'text/javascript','.css':'text/css','.json':'application/json','.html':'text/html','.png':'image/png','.svg':'image/svg+xml','.woff2':'font/woff2'};
-const server=createServer(async(req,res)=>{const path=decodeURIComponent(new URL(req.url,'http://localhost').pathname);const file=resolve(directory,'.'+path,extname(path)?'':'index.html');if(!file.startsWith(directory+sep))return res.writeHead(404).end();try{res.writeHead(200,{'Content-Type':types[extname(file)]??'application/octet-stream'}).end(await readFile(file));}catch{res.writeHead(404).end();}});
+const directory=resolve('static-dist'),types={'.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.json':'application/json','.html':'text/html','.png':'image/png','.webp':'image/webp','.svg':'image/svg+xml','.woff2':'font/woff2'};
+const server=createServer(async(req,res)=>{const path=decodeURIComponent(new URL(req.url,'http://localhost').pathname);const file=resolve(directory,'.'+path,extname(path)?'':'index.html');if(!file.startsWith(directory+sep))return res.writeHead(404).end();try{const body=await readFile(file);res.writeHead(200,{'Content-Type':types[extname(file)]??'application/octet-stream'}).end(body);}catch{res.writeHead(404).end();}});
 await new Promise(done=>server.listen(0,'127.0.0.1',done));
 const base='http://127.0.0.1:'+server.address().port+'/';
+const basketballEntry=await fetch(base+'basketball/');
+const unifiedSite=basketballEntry.ok&&(await basketballEntry.text()).includes('name="basketball-publication"');
 const address = route => new URL(routeHref(route),base).href;
 const openRoute = (page,route) => page.goto(address(route));
 const browser=await chromium.launch({headless:true,...(process.env.QUALITY_BROWSER?{executablePath:process.env.QUALITY_BROWSER}:{}),args:['--no-sandbox']});
@@ -46,9 +48,16 @@ try{
     const beforeMetadata=metadataRequests;
     await openRoute(page,'methodology');await page.locator('.method-grid').first().waitFor();
     assert.equal(metadataRequests,beforeMetadata,'Direct static page should retain its prerendered metadata');
+    let contestLink=page.locator('a[href="/beat-the-model/"]').first();
+    if(unifiedSite){
+      const mobileMenu=page.locator('.gd-menu-toggle');
+      if(await mobileMenu.isVisible())await mobileMenu.click();
+      await page.locator('summary[data-nav-section="predictions"]').click();
+      contestLink=page.getByRole('navigation',{name:'Football sections',exact:true}).getByRole('link',{name:'Beat the Model',exact:true});
+    }
     await Promise.all([
       page.waitForResponse(response=>new URL(response.url()).pathname==='/data/page-metadata.json'&&response.ok()),
-      page.locator('a[href="/beat-the-model/"]').first().click(),
+      contestLink.click(),
     ]);
     await page.waitForURL(address('beat-the-model'));
     await page.waitForFunction(()=>document.querySelector('link[rel="canonical"]')?.href==='https://www.thegamesdecide.com/beat-the-model/');
@@ -61,6 +70,18 @@ try{
     assert.equal(await page.locator('meta[name="robots"]').getAttribute('content'),'noindex, nofollow');
     await openRoute(page,'home');await page.locator('.home-hero').waitFor();
     assert.equal(await page.locator('meta[data-account-robots]').count(),0);
+    if(unifiedSite){
+      await page.locator('header .gd-brand').click();
+      await page.waitForURL(base);
+      await page.locator('main .fc-portal-grid').waitFor();
+      assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'),'https://www.thegamesdecide.com/');
+      assert.equal(await page.locator('meta[data-account-robots]').count(),0);
+      const football=page.getByRole('navigation',{name:'Switch sport',exact:true}).locator('a[href="/football/"]');
+      await football.click();
+      await page.waitForURL(address('home'));
+      await page.locator('.home-hero').waitFor();
+      assert.equal(await page.locator('link[rel="canonical"]').getAttribute('href'),'https://www.thegamesdecide.com/football/');
+    }
     await page.evaluate(async()=>{
       const {mountMyTeam}=await import('/my-team.js');
       const data=await fetch('/data/rankings.json').then(r=>r.json());

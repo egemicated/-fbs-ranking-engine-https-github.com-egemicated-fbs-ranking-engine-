@@ -94,18 +94,20 @@ function sportNav(active, pathname, season, publicSite) {
     }).join('')}</ul>
   </div></nav>`;
 }
-export const sharedNavigationAssets = '<link rel="stylesheet" href="/basketball-preview/navigation.css"><script type="module" src="/basketball-preview/navigation.js"></script>';
-export function shell(active, current = '', season, profile = null, { pathname, publication, query = '', publicSite = false } = {}) {
+const sharedNavigationStyles = '<link rel="stylesheet" href="/basketball-preview/navigation.css">';
+export const sharedNavigationAssets = sharedNavigationStyles + '<script type="module" src="/basketball-preview/navigation.js"></script>';
+export function shell(active, current = '', season, profile = null, { pathname, publication, query = '', publicSite = false, footballApp = false } = {}) {
   pathname ??= active === 'basketball' ? basketballHref(current) : active === 'football' ? '/football/' : '/';
   const snapshot = publication?.asOf;
-  return `<header class="fc-masthead gd-masthead" data-gd-masthead data-gd-sport="${active ?? ''}">
+  return `<header${footballApp ? ' id="header"' : ''} class="fc-masthead gd-masthead" data-gd-masthead data-gd-sport="${active ?? ''}"${publicSite ? ' data-gd-public' : ''}>
     <div class="gd-upper"><div class="wrap gd-upper-inner">
       <nav class="gd-sports" aria-label="Switch sport">${sports.map(sport => {
-        const href = active === sport.id ? withSeason(sportHref(sport.id, active, pathname), season) : sportHref(sport.id, active, pathname);
+        const destination = sportHref(sport.id, active, pathname, publicSite);
+        const href = active === sport.id ? withSeason(destination, season) : destination;
         return `<a href="${escape(href)}" data-gd-sport-link="${sport.id}"${active === sport.id ? ' aria-current="location"' : ''}>
           ${navIcon(sport.id)}<span>${sport.name}<small>${sport.id === 'football' ? 'NCAA FBS / FCS' : 'NCAA Division I'}</small></span></a>`;
       }).join('')}</nav>
-      <a class="gd-brand" href="${publicSite ? '/sports/' : '/'}"><img src="/assets/the-games-decide-logo.webp" alt="The Games Decide" width="780" height="260" fetchpriority="high"></a>
+      <a class="gd-brand" href="/"><img src="/assets/the-games-decide-logo.webp" alt="The Games Decide" width="780" height="260" fetchpriority="high"></a>
       <div class="gd-utilities">
         <details class="gd-utility gd-search" data-gd-disclosure>
           <summary aria-label="Find a team">${navIcon('search')}</summary>
@@ -116,7 +118,8 @@ export function shell(active, current = '', season, profile = null, { pathname, 
             <button type="submit">Search</button></div>
           </form>
         </details>
-        ${publicSite ? `<a class="header-account-button" href="/account" aria-label="Your account at The Games Decide">${navIcon('account')}<span>Account</span></a>` : `<details class="gd-utility gd-account" data-gd-disclosure>
+        ${footballApp ? `<div class="header-account gd-shared-account" data-header-account><a class="header-account-button" href="/account">${navIcon('account')}<span>Account</span></a></div>`
+          : publicSite ? `<a class="header-account-button" href="/account" aria-label="Your account at The Games Decide">${navIcon('account')}<span>Account</span></a>` : `<details class="gd-utility gd-account" data-gd-disclosure>
           <summary aria-label="${profile ? 'Practice profile' : 'Account'}">${navIcon('account')}<span>${profile ? 'My Profile' : 'Account'}</span>${navIcon('chevron')}</summary>
           <div class="gd-account-panel">
             <a href="/preview-profile/">${profile ? 'Manage practice profile' : 'Open practice profile'}</a>
@@ -127,13 +130,13 @@ export function shell(active, current = '', season, profile = null, { pathname, 
     </div></div>${sportNav(active, pathname, season, publicSite)}
   </header>`;
 }
-export function previewFooter(active, season) {
-  return `<footer class="gd-footer"><div class="wrap"><div><a href="/">The Games Decide</a><p>Results over reputation.</p></div>
+export function previewFooter(active, season, { footballApp = false } = {}) {
+  return `<footer${footballApp ? ' id="footer"' : ''} class="gd-footer"><div class="wrap"><div><a href="/">The Games Decide</a><p>Results over reputation.</p></div>
   <nav aria-label="Footer"><a data-gd-footer-methodology href="${withSeason(destination[active ?? 'football'].methodology, season)}">${active === 'basketball' ? 'Basketball' : 'Football'} methodology</a>
   ${active ? '' : '<a href="/basketball/methodology/">Basketball methodology</a>'}<a href="/about/">About</a><a href="/privacy/">Privacy</a>
-  <a href="/terms/">Terms</a><a href="/support">Support</a></nav></div></footer>`;
+  <a href="/terms/">Terms</a><a href="/support">Support</a>${footballApp ? '<a href="/account">Account settings</a><a href="/data/rankings.json" target="_blank" rel="noopener">Published data</a>' : ''}</nav></div></footer>`;
 }
-export function html({ title, active = 'basketball', current, season, profile, body, script = '', description, publication, pathname, query, publicVersion }) {
+export function html({ title, active = 'basketball', current, season, profile, body, script = '', description, publication, pathname, query, publicVersion, bootNavigation = true }) {
   const interiors = active === 'basketball' ? '<link rel="stylesheet" href="/basketball-preview/preview-interiors.css">'
     + (publicVersion ? '' : '<script type="module" src="/basketball-preview/preview-interiors.js"></script>') : '';
   const metadata = publicVersion
@@ -144,7 +147,7 @@ export function html({ title, active = 'basketball', current, season, profile, b
 ${metadata}<meta name="theme-color" content="#091833">
 <meta name="description" content="${escape(description ?? title)}"><title>${escape(title)} · The Games Decide</title>
 <link rel="icon" href="/assets/the-games-decide-icon.png"><link rel="stylesheet" href="/styles.css">
-<link rel="stylesheet" href="/basketball-preview/preview.css"><link rel="stylesheet" href="/basketball-preview/reconstruction.css">${sharedNavigationAssets}${interiors}
+<link rel="stylesheet" href="/basketball-preview/preview.css"><link rel="stylesheet" href="/basketball-preview/reconstruction.css">${bootNavigation ? sharedNavigationAssets : sharedNavigationStyles}${interiors}
 <link rel="stylesheet" href="/platform-ui.css"><link rel="stylesheet" href="/team-discovery.css"><link rel="stylesheet" href="/matchup-presentation.css">${script}</head><body class="fc-preview gd-page-shell">
 <a class="skip-link" href="#main">Skip to content</a>${shell(active, current, season, profile, {pathname, publication, query, publicSite: Boolean(publicVersion)})}
 <main id="main" tabindex="-1">${body}</main>${previewFooter(active, season)}</body></html>`;

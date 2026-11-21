@@ -33,7 +33,7 @@ function updateRoute() {
       && parameters(url.searchParams) === parameters(current.searchParams));
   });
   if (sport === 'football') masthead.querySelectorAll('[data-gd-sport-link]').forEach(link => {
-    link.href = sportHref(link.dataset.gdSportLink, sport, current.pathname);
+    link.href = sportHref(link.dataset.gdSportLink, sport, current.pathname, masthead.hasAttribute('data-gd-public'));
   });
 }
 
@@ -66,4 +66,4 @@ document.addEventListener('keydown', event => {
   }
 });
 updateRoute();
-for (const event of ['app:navigate', 'popstate', 'hashchange']) window.addEventListener(event,updateRoute);
+for (const event of ['app:navigate', 'popstate', 'hashchange', 'fbs-account-route']) window.addEventListener(event,updateRoute);

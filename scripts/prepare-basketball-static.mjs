@@ -1,7 +1,7 @@
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { applySecurityMetadata } from '../src/security-policy.js';
-import { html, nav, panel } from '../basketball/preview-ui.mjs';
+import { html, nav, panel, previewFooter, sharedNavigationAssets, shell } from '../basketball/preview-ui.mjs';
 import { portal } from '../basketball/preview-views.mjs';
 import { basketballPublicView } from '../basketball/site-view.mjs';
 import { readBasketballSitePublication } from '../basketball/site-publication.mjs';
@@ -30,6 +30,7 @@ const assets = {
   'basketball/site-view.mjs':'basketball/site-view.mjs',
   'basketball/site-client.mjs':'basketball/site-client.mjs',
   'basketball/site-browser.mjs':'basketball/site-browser.mjs',
+  'basketball/portal-entry.js':'basketball/portal-entry.js',
 };
 const getTitle = new Map(nav.map(([label,view]) => [view,label]));
 const scripts = '<script type="module" src="/basketball/site-browser.mjs"></script>';
@@ -88,26 +89,36 @@ export async function addBasketballSite({ root, output, publicationDirectory, fo
   for (const [path,year] of teamPaths) await buildPage(path,year);
 
   const basketball = { snapshot: record(index.currentSeason + '/season.json').snapshot };
+  const portalBody = portal({football,basketball});
   const specialPages = [
-    ['/sports/','College sports intelligence',portal({football,basketball})],
+    ['/sports/','College sports intelligence',portalBody],
     ['/find-team/','Find a team','<div class="wrap fc-content"><h1>Find a team</h1>' +
       '<form class="fc-form" action="/find-team/"><label>School or mascot<input name="q" type="search" required maxlength="80"></label>' +
       '<button>Search</button></form><div class="fc-grid" data-public-team-search>' +
       panel('Team directories','<p><a href="/teams/fbs/">Football</a> · <a href="/basketball/teams/">Basketball</a></p>') + '</div></div>'],
   ];
   for (const [pathname,title,body] of specialPages) {
-    const page = html({active:null,title,pathname,publicVersion,body,script:scripts});
+    const page = html({active:null,title,pathname:pathname === '/sports/' ? '/' : pathname,publicVersion,body,script:scripts});
     await write(pageName(pathname) + 'index.html',applySecurityMetadata(cleanAssets(page),{authUrl}));
   }
 
-  // Football's original front door and account callback keep their existing URLs.
-  const shipFootball = async file => {
+  const shipFootball = async (file, pathname) => {
     const src = await readFile(join(output,file),'utf8');
-    return src.replace('</head>','<meta name="basketball-site" content="available"><link rel="stylesheet" href="/basketball/football-switch.css"></head>');
+    return src
+      .replace('</head>', cleanAssets('<link rel="stylesheet" href="/basketball-preview/reconstruction.css">' + sharedNavigationAssets) + '</head>')
+      .replace('<header id="header"></header>',shell('football','',null,null,{pathname,publicSite:true,footballApp:true}))
+      .replace('<footer id="footer"></footer>',previewFooter('football',null,{footballApp:true}));
   };
-  const footballPage = await shipFootball('index.html');
+  const footballPage = await shipFootball('football/index.html','/football/');
   await write('football/index.html',footballPage);
-  await write('index.html',footballPage);
+  const footballMarkup = footballPage.match(/<body[^>]*>([\s\S]*?)<\/body>/)?.[1];
+  if (!footballMarkup) throw Error('Football callback markup unavailable');
+  const callbackStyles = footballPage.match(/<link rel="stylesheet"[^>]*>/g)?.join('') ?? '';
+  const home = html({active:null,title:'College sports intelligence',pathname:'/',publicVersion,body:portalBody,
+    bootNavigation:false,description:'Independent college football and basketball rankings, results, and matchup analysis.',
+    script:'<script type="module" src="/basketball/portal-entry.js"></script>'});
+  const callbackEntry = `<template data-football-callback>${callbackStyles}${footballMarkup}</template>`;
+  await write('index.html',applySecurityMetadata(cleanAssets(home.replace('</body>',callbackEntry + '</body>')),{authUrl}));
   const findPages = async (dir,path='') => {
     const nodes = await readdir(dir,{withFileTypes:true});
     for (const node of nodes.filter(x=>x.isDirectory() && !['basketball','basketball-data','football','sports','find-team'].includes(x.name))) {
@@ -115,15 +126,12 @@ export async function addBasketballSite({ root, output, publicationDirectory, fo
     }
     if (path && nodes.some(node=>node.isFile() && node.name==='index.html')) {
       const file = path+'index.html';
-      await write(file,await shipFootball(file));
+      await write(file,await shipFootball(file,'/' + path));
     }
   };
   await findPages(output);
-  await write('basketball/football-switch.css',
-    '.football-sport-switch{display:flex;justify-content:center;gap:1rem;padding:.25rem .75rem;background:#0a1d39;color:#fff;font-size:.8rem}' +
-    '.football-sport-switch a{color:#fff;display:inline-grid;place-items:center;min-height:28px;padding:0 .35rem}.football-sport-switch a:focus-visible{outline:2px solid #62dbff}');
   const sitemapFile = await readFile(join(output,'sitemap.xml'),'utf8');
-  const links = ['/sports/',...paths,...teamPaths.keys()].map(path=>
+  const links = ['/',...paths,...teamPaths.keys()].map(path=>
     '<url><loc>https://www.thegamesdecide.com' + path + '</loc></url>').join('');
   await write('sitemap.xml',sitemapFile.replace('</urlset>',links+'</urlset>'));
   return {version:publicVersion,pages:paths.length + teamPaths.size + specialPages.length};

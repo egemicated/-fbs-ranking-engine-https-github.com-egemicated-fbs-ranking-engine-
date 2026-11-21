@@ -7,7 +7,9 @@ import { extname, resolve, sep } from 'node:path';
 import { chromium } from 'playwright';
 
 const root=resolve('static-dist');
-const types={'.js':'text/javascript','.css':'text/css','.html':'text/html','.json':'application/json','.png':'image/png','.webp':'image/webp','.woff2':'font/woff2','.svg':'image/svg+xml'};
+const types={'.js':'text/javascript','.mjs':'text/javascript','.css':'text/css','.html':'text/html','.json':'application/json','.png':'image/png','.webp':'image/webp','.woff2':'font/woff2','.svg':'image/svg+xml'};
+const hasBasketballPublication=await readFile(resolve(root,'basketball/index.html'),'utf8')
+  .then(value=>value.includes('name="basketball-publication"')).catch(error=>{if(error.code==='ENOENT')return false;throw error;});
 const server=createServer(async(request,response)=>{
   const pathname=decodeURIComponent(new URL(request.url,'http://localhost').pathname);
   let file=resolve(root,'.'+pathname);
@@ -28,6 +30,9 @@ const callbackCases=[
   {name:'recovery-fragment-without-marker',input:'/#access_token=synthetic&refresh_token=synthetic&type=recovery',remembered:'#home',mode:'recovery',expected:'/account'},
   {name:'google-pkce-remembered-clean-route',input:'/?myteam=1&code=synthetic',remembered:'/teams/fcs/',mode:'signin',expected:'/teams/fcs/'},
   {name:'google-pkce-remembered-legacy-route',input:'/?code=synthetic#home',remembered:'#teams/fcs',mode:'signin',expected:'/teams/fcs/'},
+  {name:'google-pkce-football-home-fallback',input:'/?myteam=1&code=synthetic',remembered:null,mode:'signin',expected:'/football/',ready:'.home-hero'},
+  {name:'legacy-weekly-picks-return',input:'/?weekly=1&code=synthetic',remembered:'#home',mode:'signin',expected:'/beat-the-model/',ready:'[data-weekly-contest]'},
+  {name:'legacy-playoff-bracket-return',input:'/?cfp=1&code=synthetic',remembered:'#home',mode:'signin',expected:'/playoff-bracket/',ready:'.bracket-page'},
   {name:'expired-recovery-link',input:'/?account=recovery#error=access_denied&error_code=otp_expired&error_description=synthetic',remembered:'#home',mode:'expired',expected:'/account',notice:'This email link has expired or is no longer available.'},
   {name:'missing-pkce-verifier',input:'/account?account=recovery&code=synthetic',remembered:'#home',mode:'missing-verifier',expected:'/account',notice:'This link could not be matched to this browser.'},
 ];
@@ -36,25 +41,23 @@ async function checkCallbackRouting(fixture){
   const page=await browser.newPage({viewport:{width:390,height:1050}});
   await page.route('https://egxyfyorggwnrnmirrax.supabase.co/**',route=>route.abort());
   await page.route('**/auth/v1/settings',route=>route.fulfill({json:{external:{google:true}}}));
-  await page.route('**/app.js*',async route=>route.fulfill({contentType:'text/javascript',body:await readFile('frontend/app.js','utf8')}));
-  await page.route('**/account-auth.js*',async route=>route.fulfill({contentType:'text/javascript',body:await readFile('frontend/account-auth.js','utf8')}));
-  await page.route('**/account-center.js*',async route=>route.fulfill({contentType:'text/javascript',body:await readFile('frontend/account-center.js','utf8')}));
   await page.route('**/bracket-auth.js*',async route=>{
-    const source=await readFile('frontend/bracket-auth.js','utf8');
+    const source=await readFile(resolve(root,'bracket-auth.js'),'utf8');
     // Replace only the managed SDK boundary in this disposable context. The
     // production callback/routing/observation logic remains byte-identical.
     const boundary='export function loadBracketClient({ url, publishableKey }) {';
     assert.equal(source.split(boundary).length,2);
-    await route.fulfill({contentType:'text/javascript',body:source.replace(boundary,boundary+'\nreturn Promise.resolve(window.callbackClientFixture);')});
+    await route.fulfill({contentType:'text/javascript',body:source.replace(boundary,boundary+
+      '\nwindow.callbackClientStartUrl ??= location.href;\nreturn Promise.resolve(window.callbackClientFixture);')});
   });
   await page.addInitScript(({mode,remembered})=>{
-    sessionStorage.setItem('fbs-account-return',remembered);
+    if(remembered!==null)sessionStorage.setItem('fbs-account-return',remembered);
     const user={id:'callback-fixture',email:'routing@example.test'},session={user},listeners=new Set();
     let complete;
     const initialized=new Promise(resolve=>{complete=resolve;});
     const error=mode==='expired'?{code:'otp_expired',message:'synthetic provider diagnostic'}:mode==='missing-verifier'?{name:'AuthPKCECodeVerifierMissingError',message:'synthetic provider diagnostic'}:null;
     window.callbackClientFixture={auth:{getSession:async()=>{await initialized;return error?{data:{session:null},error}:{data:{session}};},getUser:async()=>{await initialized;return{data:{user:error?null:user}};},
-      onAuthStateChange:callback=>{listeners.add(callback);return{data:{subscription:{unsubscribe:()=>listeners.delete(callback)}}};},
+      onAuthStateChange:callback=>{window.callbackClientObserved=true;listeners.add(callback);return{data:{subscription:{unsubscribe:()=>listeners.delete(callback)}}};},
       mfa:{getAuthenticatorAssuranceLevel:async()=>({data:{currentLevel:'aal1',nextLevel:'aal1'}}),listFactors:async()=>({data:{totp:[]}})}},
       rpc:async name=>({data:name==='account_context'?{userId:user.id,email:user.email,role:'user',status:'active',nickname:'Routing fixture',publicLeaderboard:false,sharePicks:false}:[]})};
     window.completeCallbackFixture=()=>{
@@ -66,22 +69,54 @@ async function checkCallbackRouting(fixture){
     };
   },fixture);
   const callbackUrl = new URL(fixture.input,base).href;
+  const readyBefore=fixture.ready??(fixture.expected==='/account'?'[data-connected-feature]':'.team-grid');
+  const accountSlot=page.locator('#header [data-header-account]');
   await page.goto(callbackUrl,{waitUntil:'domcontentloaded'});
-  await page.locator(fixture.expected==='/account'?'[data-connected-feature]':'.team-grid').waitFor();
-  assert.equal(await page.locator('.home-hero').count(),0,fixture.name+' before managed Auth finishes');
+  await page.locator(readyBefore).waitFor();
+  await accountSlot.locator('[data-account-action]').waitFor();
+  await page.waitForFunction(()=>window.callbackClientObserved);
+  if(hasBasketballPublication){
+    assert.equal(await page.locator('.fc-sports-portal').count(),0,fixture.name+' enters the football app');
+    assert.equal(await page.locator('[data-gd-sport="football"] [data-header-account]').count(),1,fixture.name+' mounts the shared account slot');
+  }
+  assert.equal(await page.locator('.home-hero').count(),Number(fixture.ready==='.home-hero'),fixture.name+' before managed Auth finishes');
   assert.equal(page.url(),callbackUrl,fixture.name+' URL must reach managed Auth intact');
+  assert.equal(await page.evaluate(()=>window.callbackClientStartUrl),callbackUrl,fixture.name+' SDK starts at the original URL');
   assert.equal(await page.evaluate(()=>sessionStorage.getItem('fbs-account-return')),fixture.remembered);
-  await page.evaluate(()=>window.completeCallbackFixture());
+  await accountSlot.evaluate(element=>{
+    window.callbackHeaderSlot=element;
+    window.completeCallbackFixture();
+  });
   await page.waitForURL(new URL(fixture.expected,base).href);
   if(fixture.notice)await page.locator('main').getByText(fixture.notice,{exact:false}).waitFor();
-  else await page.locator(fixture.expected==='/account'?'.account-center':'.team-grid').waitFor();
+  else {
+    await page.locator(fixture.expected==='/account'?'.account-center':readyBefore).waitFor();
+    await accountSlot.locator('.header-account-settings[href="/account"]').waitFor();
+  }
   const outcome=await page.evaluate(async()=>({path:location.pathname,hash:location.hash,query:location.search,home:!!document.querySelector('.home-hero'),
+    sameHeader:window.callbackHeaderSlot===document.querySelector('#header [data-header-account]'),
     recovering:(await import('/bracket-auth.js?v=clean-routes')).hasPasswordRecoverySession(),remembered:sessionStorage.getItem('fbs-account-return')}));
-  assert.equal(outcome.path,fixture.expected,fixture.name+' after credential cleanup');assert.equal(outcome.home,false);
+  assert.equal(outcome.path,fixture.expected,fixture.name+' after credential cleanup');
+  assert.equal(outcome.home,fixture.ready==='.home-hero');
+  assert.equal(outcome.sameHeader,true,fixture.name+' keeps the mounted account slot through cleanup');
   assert.equal(outcome.hash,'');assert.equal(outcome.query,'');assert.equal(outcome.remembered,null);assert.equal(outcome.recovering,fixture.mode==='recovery');
   assert.doesNotMatch(await page.locator('body').innerText(),/synthetic provider diagnostic/);
   if(fixture.mode==='recovery'){assert.equal(await page.locator('#account-new-password').count(),1);assert.equal(await page.locator('#account-current-password').count(),0);}
   await page.close();return{name:fixture.name,passed:true};
+}
+
+async function checkPortalEntry(){
+  const page=await browser.newPage({viewport:{width:390,height:1050}});
+  const footballAppRequests=[];
+  await page.route('**/app.js*',route=>{footballAppRequests.push(route.request().url());return route.abort();});
+  try {
+    await page.goto(base,{waitUntil:'load'});
+    await page.locator('.fc-sports-portal').waitFor();
+    await page.getByRole('navigation',{name:'Switch sport'}).waitFor();
+    assert.equal(await page.locator('[data-header-account]').count(),0);
+    assert.equal(await page.getByRole('link',{name:'Your account at The Games Decide'}).getAttribute('href'),'/account');
+    assert.deepEqual(footballAppRequests,[],'A normal portal visit does not load the football app');
+  } finally { await page.close(); }
 }
 async function assertPageFits(page,label){
   const dimensions=await page.evaluate(()=>({client:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
@@ -96,6 +131,7 @@ async function assertPageFits(page,label){
   assert.equal(dimensions.scroll,dimensions.client,label+(diagnostics?' '+diagnostics:''));
 }
 try{
+  if(hasBasketballPublication)await checkPortalEntry();
   for(const width of [320,375,390,768,1024,1440]){
     const page=await browser.newPage({viewport:{width,height:1050},reducedMotion:'reduce'});
     const errors=[];page.on('pageerror',error=>errors.push(error.message));
@@ -391,5 +427,6 @@ try{
     assert.deepEqual(errors,[]);results.push({width,account:true,registrationMock:true,recoveryMock:true,googleMigrationMock:true,mfaMock:true,adminMock:true,adminUserPaginationMock:true,adminAuditPaginationMock:true,privateSupportReplyMock:true,failedNotificationRequeueMock:true,overflow:false,labels:true});await page.close();
   }
   const callbacks=[];for(const fixture of callbackCases)callbacks.push(await checkCallbackRouting(fixture));
-  console.log(JSON.stringify({status:'passed',providerFlows:'Browser-only SDK/RPC doubles; no real email or OAuth delivery claimed',checks:results,callbacks},null,2));
+  console.log(JSON.stringify({status:'passed',providerFlows:'Browser-only SDK/RPC doubles; no real email or OAuth delivery claimed',checks:results,callbacks,
+    ...(hasBasketballPublication?{unifiedPortal:true}:{})},null,2));
 }finally{await browser.close();await new Promise(done=>server.close(done));}

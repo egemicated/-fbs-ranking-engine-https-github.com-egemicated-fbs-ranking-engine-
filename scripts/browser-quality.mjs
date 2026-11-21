@@ -7,7 +7,7 @@ import { routeHref } from '../frontend/clean-routes.js';
 import { conferenceRecords } from '../frontend/conference-metrics.js';
 
 const directory = resolve('static-dist');
-const types = {'.js':'text/javascript','.json':'application/json','.css':'text/css','.html':'text/html','.svg':'image/svg+xml','.woff2':'font/woff2','.png':'image/png','.webp':'image/webp','.xml':'application/xml'};
+const types = {'.js':'text/javascript','.mjs':'text/javascript','.json':'application/json','.css':'text/css','.html':'text/html','.svg':'image/svg+xml','.woff2':'font/woff2','.png':'image/png','.webp':'image/webp','.xml':'application/xml'};
 const server = createServer(async (request,response) => {
   const path = decodeURIComponent(new URL(request.url,'http://localhost').pathname);
   let file = resolve(directory,'.'+path);
@@ -19,6 +19,8 @@ const server = createServer(async (request,response) => {
 await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
 const base = process.env.QUALITY_SITE || 'http://127.0.0.1:'+server.address().port+'/';
 const localOrigin = new URL(base).origin;
+const basketballEntry = await fetch(new URL('/basketball/',base));
+const unifiedSite = basketballEntry.ok && (await basketballEntry.text()).includes('name="basketball-publication"');
 const address = (route) => new URL(routeHref(route), base).href;
 const openRoute = (page, route, options) => page.goto(address(route), options);
 const isolate = context => context.route('**/*', route =>
@@ -101,12 +103,29 @@ try {
     const page=await context.newPage();
     const errors=[];
     page.on('pageerror',error=>errors.push(error.message));
+    if (unifiedSite) {
+      const response = await page.goto(new URL('/',base).href,{waitUntil:'domcontentloaded'});
+      assert.equal(response.status(),200,'Sports portal direct entry');
+      await page.locator('main .fc-portal-grid').waitFor();
+      assert.equal(await page.locator('main h1').count(),1,'Sports portal primary heading');
+      const switches = page.getByRole('navigation',{name:'Switch sport',exact:true});
+      await switches.locator('a[href="/football/"]').waitFor();
+      await switches.locator('a[href="/basketball/"]').waitFor();
+      assert.equal(await page.locator('.home-hero').count(),0,'Football homepage belongs at /football/');
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth===document.documentElement.clientWidth),true,'Sports portal overflow at '+width);
+      checks++;
+    }
     for (const [route,selector] of routes) {
       const response = await openRoute(page, route, {waitUntil:'domcontentloaded'});
       assert.equal(response.status(),200,route+' direct route');
       await page.locator(selector).first().waitFor({timeout:15000});
       assert.equal(page.url(),address(route),route+' clean URL');
       assert.equal(await page.locator('main h1').count(),1,route+' primary heading');
+      if (unifiedSite) {
+        assert.equal(await page.locator('header[data-gd-sport="football"] [data-header-account]').count(),1,route+' shared header account slot');
+        assert.equal(await page.locator('footer.gd-footer').count(),1,route+' shared footer');
+        assert.equal(await page.locator('.football-sport-switch').count(),0,route+' legacy sport switch');
+      }
       const dimensions=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
       assert.equal(dimensions.scroll,dimensions.width,route+' overflow at '+width);
       const missingLabels=await page.locator('main').evaluate(main=>[...main.querySelectorAll('select,textarea,input:not([type="hidden"]):not([type="submit"])')].filter(control=>!control.labels?.length&&!control.getAttribute('aria-label')&&!control.getAttribute('aria-labelledby')).map(control=>control.id));
@@ -139,14 +158,27 @@ try {
       }
       checks++;
     }
-    const more = page.locator('.nav-more > summary');
+    const mobileMenu = page.locator('.gd-menu-toggle');
+    const sharedMobile = unifiedSite && await mobileMenu.isVisible();
+    if (sharedMobile) {
+      await mobileMenu.focus();
+      await page.keyboard.press('Enter');
+      assert.equal(await mobileMenu.getAttribute('aria-expanded'),'true');
+    }
+    const more = page.locator(unifiedSite?'summary[data-nav-section="predictions"]':'.nav-more > summary');
+    const openMenu = page.locator(unifiedSite?'.gd-nav-group[open] .gd-mega':'.nav-more[open] .nav-more-links');
     await more.focus();
     await page.keyboard.press('Space');
-    await page.locator('.nav-more[open] .nav-more-links').waitFor();
+    await openMenu.waitFor();
     assert.ok(await more.evaluate(el => el.getBoundingClientRect().height >= 44));
     await page.keyboard.press('Escape');
-    assert.equal(await page.locator('.nav-more[open]').count(), 0);
+    assert.equal(await openMenu.count(), 0);
     assert.ok(await more.evaluate(el => el === document.activeElement));
+    if (sharedMobile) {
+      await page.keyboard.press('Escape');
+      assert.equal(await mobileMenu.getAttribute('aria-expanded'),'false');
+      assert.ok(await mobileMenu.evaluate(el=>el===document.activeElement));
+    }
     await openRoute(page,'compare/matchup/254/254/home');
     await page.getByText(/Choose a different opponent/).waitFor();
     assert.equal(await page.locator('.prediction-card').count(),0);
@@ -192,7 +224,8 @@ try {
   await resultsTab.waitFor();
   assert.equal(page.url(),legacyState);
   assert.equal(await resultsTab.getAttribute('aria-pressed'),'true');
-  await page.locator('nav[aria-label="Main navigation"] a[href="/rankings"]').click();
+  if (unifiedSite) await page.locator('summary[data-nav-section="rankings"]').click();
+  await page.locator(unifiedSite?'nav[aria-label="Football sections"] a[href="/rankings"]':'nav[aria-label="Main navigation"] a[href="/rankings"]').click();
   await page.waitForURL(address('rankings'));
   await page.locator('#ranking-results').waitFor();
   await page.goBack();

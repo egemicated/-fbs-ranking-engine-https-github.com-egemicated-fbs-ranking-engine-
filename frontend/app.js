@@ -241,7 +241,25 @@ function strengthRank(t) { return Object.hasOwn(t, 'strengthRank') ? t.strengthR
 function sosRank(t) { return Object.hasOwn(t, 'sosRank') ? t.sosRank : [...divisionTeams(t.division)].sort((a,b) => (b.achievementScheduleStrength ?? -1) - (a.achievementScheduleStrength ?? -1)).findIndex(x => x.id === t.id) + 1; }
 function teamLink(t) { return `<a href="${routeHref(`team/${encodeURIComponent(t.id)}`)}">${teamNameMarkup(t.id, t.name)}</a>`; }
 function brand() { return `<a class="brand" href="/" aria-label="${BRAND} home"><img class="brand-logo" src="/assets/the-games-decide-logo.webp" width="780" height="260" alt="${BRAND}" fetchpriority="high"></a>`; }
+function mountFootballAccount(slot) {
+  void import('./bracket-auth.js?v=clean-routes').then(({ mountHeaderAccount }) => {
+    mountHeaderAccount(slot, { icon: icon('teams'), previewClient: localPreview?.contest?.client,
+      rememberPage() {
+        try { window.sessionStorage.setItem(accountReturnKey, safeAccountReturnPath(location.pathname + location.search)); } catch {}
+      },
+    });
+  }).catch(() => { slot.innerHTML = '<span class="header-account-message" role="status">Sign-in is unavailable.</span>'; });
+}
 function renderHeader() {
+  const header = document.querySelector('#header');
+  const account = header.querySelector?.('[data-header-account]');
+  if (header.hasAttribute?.('data-gd-masthead')) {
+    if (account && !account.hasAttribute('data-auth-initialized')) {
+      account.setAttribute('data-auth-initialized', '');
+      mountFootballAccount(account);
+    }
+    return;
+  }
   const page = route()[0];
   if (renderedHeader?.snapshot === state.snapshot && renderedHeader.page === page) return;
   renderedHeader = { snapshot: state.snapshot, page };
@@ -254,11 +272,6 @@ function renderHeader() {
   const moreLinks = navs.filter(([id]) => !primaryPages.includes(id));
   const moreActive = moreLinks.some(([id]) => id === activePage) ? (desktopPages.includes(activePage) ? ' active-on-mobile' : ' active') : '';
   const snapshotBadges = state.snapshot ? `<div class="engine-badge">${icon('check')}<div><strong>Published rankings</strong><small>CFBD snapshot · ${snapshotDate()}</small></div></div><div class="season-badge">${state.snapshot.season}<small>SEASON SNAPSHOT</small></div>` : '';
-  const header = document.querySelector('#header');
-  const account = header.querySelector?.('[data-header-account]');
-  const sportSwitch = document.querySelector('meta[name="basketball-site"]')?.content === 'available'
-    ? '<nav class="football-sport-switch" aria-label="Switch sport"><a href="/sports/">All sports</a><a href="/" aria-current="location">Football</a><a href="/basketball/">Basketball</a></nav>'
-    : '';
   header.innerHTML = `<div class="masthead"><div class="wrap masthead-inner">${brand()}<span class="brand-divider"></span><div class="masthead-tag">THE INDEPENDENT COLLEGE FOOTBALL RANKING ENGINE<strong>DATA &nbsp; › &nbsp; OPPONENTS &nbsp; › &nbsp; EVIDENCE</strong></div><div class="header-right">${snapshotBadges}<div class="header-account" data-header-account><button class="header-account-button" type="button" disabled>${icon('teams')}<span>Sign in</span></button></div></div></div></div>
     <nav class="nav" aria-label="Main navigation"><div class="wrap nav-inner">
       ${mainLinks.map(item => link(item, primaryPages.includes(item[0]) ? 'nav-primary' : 'nav-desktop-link')).join('')}
@@ -267,16 +280,9 @@ function renderHeader() {
         <div class="nav-more-links">${moreLinks.map(item => link(item, desktopPages.includes(item[0]) ? 'nav-more-mobile-link' : '')).join('')}</div>
       </details>
     </div></nav>`;
-  if (sportSwitch) header.innerHTML = sportSwitch + header.innerHTML;
   const slot = header.querySelector?.('[data-header-account]');
   if (account && slot?.isConnected) slot.replaceWith(account);
-  else if (slot?.isConnected) void import('./bracket-auth.js?v=clean-routes').then(({ mountHeaderAccount }) => {
-    mountHeaderAccount(slot, { icon: icon('teams'), previewClient: localPreview?.contest?.client,
-      rememberPage() {
-        try { window.sessionStorage.setItem(accountReturnKey, safeAccountReturnPath(location.pathname + location.search)); } catch {}
-      },
-    });
-  }).catch(() => { slot.innerHTML = '<span class="header-account-message" role="status">Sign-in is unavailable.</span>'; });
+  else if (slot?.isConnected) mountFootballAccount(slot);
   document.querySelector('#footer').innerHTML = `<div class="footer"><div class="wrap footer-inner"><div><div class="footer-brand">${BRAND.toUpperCase()}</div><p>Independent FBS and FCS rankings calculated from game data.</p></div><div class="footer-links"><a href="/methodology/">${icon('layers')}Model methodology</a><a href="/about/">About</a><a href="/privacy/">Privacy and accounts</a><a href="/terms/">Terms of use</a><a href="/support">Support and data discrepancies</a><a href="/account">Account settings</a><a href="${esc(publicationPath('rankings'))}" target="_blank" rel="noopener">${icon('database')}Published data</a>${state.snapshot ? `<span>Ranking engine · v${esc(state.snapshot.modelVersion)}</span>` : ''}</div></div></div>`;
 }
 function schedulePanel() { return `<section class="panel schedule-card"><div class="panel-head"><div class="panel-head-title">${icon('calendar')}<h2>Results updates</h2></div></div><div class="panel-body"><div class="section-label">Eastern Time</div><div class="schedule-title">DAILY</div><p>FBS and FCS results are checked at <strong>2:45 a.m.</strong> A <strong>4:45 a.m.</strong> backup checks for results if the first update was missed or failed.</p><p style="margin-top:12px">Last publication <strong>${snapshotDate({ hour:'numeric', minute:'2-digit' })} MT</strong></p></div></section>`; }

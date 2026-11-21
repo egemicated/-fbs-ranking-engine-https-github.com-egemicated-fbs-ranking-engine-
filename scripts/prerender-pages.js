@@ -50,6 +50,7 @@ async function writePage(output, path, html) {
 }
 
 const crawlableAliases = new Map([
+  ['/', '/football/'],
   ['/rankings/fbs/', '/rankings'],
   ['/weekly-picks/fbs/', '/weekly-picks'],
   ['/teams/', '/teams/fbs/'],
@@ -109,7 +110,7 @@ export async function prerenderPublicPages({ root, output, snapshot, teams, html
     return `<table><caption>FBS interconference records · ${snapshot.season}</caption><thead><tr><th>Conference</th><th>Wins</th><th>Losses</th><th>FBS vs. FCS</th></tr></thead><tbody>${conferences.conferences.map(({id,name}) => `<tr><th>${escapeHtml(name)}</th><td>${records.summaries[id].wins}</td><td>${records.summaries[id].losses}</td><td>${record(records.fcs[id])}</td></tr>`).join('')}</tbody></table>`;
   })() : '';
   const primary = [
-    ['/', 'home', 'The Games Decide Top 25', 'The FBS Top 25 by Strength of Record, with links to every FBS team, game evidence, and matchup analysis.', `<h1>The Games Decide Top 25</h1><p>Independent FBS Strength of Record rankings. Published ${asOf}.</p><p>${pageLink('rankings/all', `View all ${snapshot.fbsTeams} FBS teams`)}</p>${table('fbs', true)}`],
+    ['/football/', 'home', 'The Games Decide Top 25', 'The FBS Top 25 by Strength of Record, with links to every FBS team, game evidence, and matchup analysis.', `<h1>The Games Decide Top 25</h1><p>Independent FBS Strength of Record rankings. Published ${asOf}.</p><p>${pageLink('rankings/all', `View all ${snapshot.fbsTeams} FBS teams`)}</p>${table('fbs', true)}`],
     ['/rankings', 'rankings', 'FBS Strength of Record', `Explore all ${snapshot.fbsTeams} FBS teams by achieved record and opponent quality. Published ${asOf}.`, '<h1>FBS Strength of Record</h1>' + table('fbs')],
     ['/rankings/fcs/', 'rankings/fcs/sor', 'FCS Strength of Record', `Explore ${snapshot.fcsTeams} FCS teams in the Experimental FCS Strength of Record rankings.`, '<h1>FCS Strength of Record · Experimental</h1>' + table('fcs')],
     ['/teams/fbs/', 'teams/fbs', 'FBS team directory', 'Browse FBS teams, records, rankings, and team profiles.', '<h1>FBS team directory</h1>' + table('fbs')],

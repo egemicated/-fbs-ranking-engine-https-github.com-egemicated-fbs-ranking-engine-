@@ -46,7 +46,7 @@ const routes = [
   { route: 'about', path: '/about/' },
   { route: 'account', path: '/account' },
   { route: 'admin', path: '/admin' },
-  { route: 'home', path: '/' },
+  { route: 'home', path: '/football/' },
 ].map(definition => ({ fields: [], ...definition, prefix: definition.route.split('/') }));
 
 const teamFields = fields(['view', tab], ['game', id], ['player', id]);
@@ -64,7 +64,7 @@ const prefixAliases = [
 const slashless = path => path === '/' || path.endsWith('//') ? path : path.replace(/\/$/, '');
 const paths = new Map(routes.map(definition => [slashless(definition.path), definition]));
 for (const [alias, path] of [['/teams', '/teams/fbs'], ['/polls', '/polls/ap'], ['/model-reports', '/model-reports/fbs'],
-  ['/weekly-picks/fbs', '/weekly-picks'], ['/football', '/']]) {
+  ['/weekly-picks/fbs', '/weekly-picks'], ['/', '/football']]) {
   paths.set(alias, paths.get(path));
 }
 

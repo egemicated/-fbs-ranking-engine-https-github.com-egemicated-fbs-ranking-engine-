@@ -47,13 +47,13 @@ test('static build writes an allowlist of rendered destinations, canonicalizes a
     const sitemap = await readFile(join(output, 'sitemap.xml'), 'utf8');
     const paths = [...sitemap.matchAll(/<loc>https:\/\/www\.thegamesdecide\.com([^<]+)<\/loc>/g)].map(match => match[1]);
     assert.equal(paths.length, new Set(paths).size);
-    for (const path of ['/', '/rankings', '/matchup-lab', '/scoreboard', '/weekly-picks', '/support', '/team/252/', '/team/149/']) {
+    for (const path of ['/football/', '/rankings', '/matchup-lab', '/scoreboard', '/weekly-picks', '/support', '/team/252/', '/team/149/']) {
       assert.ok(paths.includes(path), `Missing sitemap entry ${path}`);
     }
     for (const path of paths) {
       assert.ok((await readPage(path)).includes(`<link rel="canonical" href="${origin}${path}">`));
     }
-    for (const [alias, canonical] of [['/rankings/fbs/', '/rankings'], ['/weekly-picks/fbs/', '/weekly-picks'],
+    for (const [alias, canonical] of [['/', '/football/'], ['/rankings/fbs/', '/rankings'], ['/weekly-picks/fbs/', '/weekly-picks'],
       ['/teams/', '/teams/fbs/'], ['/model-reports/', '/model-reports/fbs/'], ['/polls/', '/polls/ap/']]) {
       assert.ok(!paths.includes(alias));
       assert.ok((await readPage(alias)).includes(`<link rel="canonical" href="${origin}${canonical}">`));

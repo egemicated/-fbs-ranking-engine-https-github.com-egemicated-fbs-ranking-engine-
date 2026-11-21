@@ -58,16 +58,15 @@ function notFound(profile) {
   return html({active:null,title:'Page not found',profile,body:banner('Page not found','Choose a sport to keep exploring.', 'The Games Decide')
     +`<div class="wrap fc-content">${action('/','Back to home')}</div>`});
 }
-function previewFootballRoute(src) {
-  return src.replace("{ route: 'home', path: '/' }", "{ route: 'home', path: '/football/' }");
-}
 function previewFootballDocument(source,profile,pathname,publication) {
   return source
     .replace(/<meta\s+http-equiv="Content-Security-Policy"[^>]*>/ig,'')
     .replace(/<(?:meta|link)\s+(?:name="robots"|rel="canonical")[^>]*>/ig,'')
+    .replace(sharedNavigationAssets.replaceAll('/basketball-preview/','/basketball/'),'')
+    .replace('<link rel="stylesheet" href="/basketball/reconstruction.css">','')
     .replace('</head>',`<meta name="robots" content="noindex,nofollow,noarchive"><link rel="stylesheet" href="/basketball-preview/reconstruction.css">${sharedNavigationAssets}</head>`)
-    .replace('<header id="header"></header>',shell('football','',null,profile,{pathname,publication}))
-    .replace('<footer id="footer"></footer>',previewFooter('football'));
+    .replace(/<header id="header"[^>]*>[\s\S]*?<\/header>/,shell('football','',null,profile,{pathname,publication}))
+    .replace(/<footer id="footer"[^>]*>[\s\S]*?<\/footer>/,previewFooter('football'));
 }
 function replaceFootballFunction(source, name, body='') {
   const signature=`function ${name}() {`;
@@ -226,7 +225,7 @@ export async function createBasketballPreview({root=project,clock=Date.now(),acc
         return;
       }
 
-      const extension=extname(path), fileName=path==='/football/'||path==='/football' ? 'index.html'
+      const extension=extname(path), fileName=path==='/football/'||path==='/football' ? 'football/index.html'
         : extension ? '.'+path : '.'+path.replace(/\/$/,'')+'/index.html';
       const target=resolve(publishedFootball,fileName);
       const inside=relative(publishedFootball,target);
@@ -237,9 +236,7 @@ export async function createBasketballPreview({root=project,clock=Date.now(),acc
         const bytes=await readFile(target);
         let body=bytes;
         if (extname(target)==='.html') body=previewFootballDocument(bytes.toString('utf8'),await profile(),path,await getFootballPublication());
-        else if (path==='/clean-routes.js') body=previewFootballRoute(bytes.toString('utf8'));
         else if (path==='/clean-navigation.js') body=bytes.toString('utf8')
-          .replace("if (url.pathname !== '/') return false;", "if (!['/', '/football', '/football/'].includes(url.pathname)) return false;")
           .replace(/if \(!route\) return null;\r?\n  \/\/ Leave links/, "if (!route || route === 'account' || route === 'admin') return null;\n  // Leave links");
         else if (path==='/app.js') body=previewFootballApp(bytes.toString('utf8'));
         send(res,200,types[extname(target)],body);

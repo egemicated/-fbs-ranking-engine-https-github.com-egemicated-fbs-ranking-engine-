@@ -85,6 +85,8 @@ export function primarySection(sport, pathname) {
   return sectionGroup[current] ?? current;
 }
 
-export function sportHref(targetSport, currentSport, pathname) {
-  return destination[targetSport][sectionAt(currentSport, pathname)] ?? destination[targetSport].home;
+export function sportHref(targetSport, currentSport, pathname, publicSite = false) {
+  const section = sectionAt(currentSport, pathname);
+  return destination[targetSport][publicSite && targetSport === 'basketball' && section === 'contest' ? 'picks' : section]
+    ?? destination[targetSport].home;
 }
