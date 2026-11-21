@@ -6,6 +6,7 @@ if (list) {
   let form = list.querySelector(part('filters'));
   const announcement = list.querySelector(part('announcement'));
   const error = list.querySelector(part('error'));
+  const isRanking = list.hasAttribute('data-ranking-browser');
   let results = list.querySelector(part('results'));
   let pending;
   let debounce;
@@ -40,7 +41,7 @@ if (list) {
         else if (next) control.value = next.value;
       }
     }
-    if (!list.hasAttribute('data-ranking-browser')) return;
+    if (!isRanking) return;
     for (const name of ['model','all']) {
       const previous = form.elements.namedItem(name);
       const next = nextForm.elements.namedItem(name);
@@ -61,7 +62,10 @@ if (list) {
     const request = new AbortController();
     pending = request;
     results.setAttribute('aria-busy','true');
-    if (error) error.hidden = true;
+    if (error) {
+      error.hidden = true;
+      if (isRanking) error.textContent = '';
+    }
     const previousCount = more ? results.querySelectorAll('[data-team-card]').length : 0;
     try {
       const page = document.querySelector('meta[name="basketball-publication"]')
@@ -83,7 +87,10 @@ if (list) {
       if (more) replacement.querySelectorAll('[data-team-card]')[previousCount]?.focus();
       else if (focusSelector) list.querySelector(focusSelector)?.focus({preventScroll:true});
     } catch {
-      if (!request.signal.aborted && error) error.hidden = false;
+      if (!request.signal.aborted && error) {
+        if (isRanking) error.textContent = 'Could not update rankings. The last results remain available.';
+        error.hidden = false;
+      }
     } finally {
       if (pending === request) {
         pending = null;

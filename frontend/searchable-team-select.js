@@ -6,6 +6,7 @@ const normalize = value => String(value ?? '').normalize('NFD').replace(/\p{Diac
 
 export function enhanceTeamSelect(select) {
   if (select.dataset.teamSearchEnhanced || select.disabled) return;
+  const wasFocused = document.activeElement === select;
   select.dataset.teamSearchEnhanced = 'true';
   const side = select.dataset.matchupTeam ?? select.dataset.sorField ?? select.id.slice(-1);
   const name = side === 'a' ? 'Team A' : side === 'b' ? 'Team B' : 'team';
@@ -20,6 +21,7 @@ export function enhanceTeamSelect(select) {
   label.htmlFor = input.id; label.className = 'sr-only'; label.textContent = `Filter ${name} list`;
   message.className = 'team-select-search-status'; message.setAttribute('role','status'); message.setAttribute('aria-live','polite');
   wrapper.append(label, input, labelContainer, message);
+  if (wasFocused) select.focus({ preventScroll:true });
   function filter() {
     const selected = select.value, query = normalize(input.value);
     let count = 0, retained = false;

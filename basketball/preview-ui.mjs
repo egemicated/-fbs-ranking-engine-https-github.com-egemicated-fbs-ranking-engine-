@@ -136,7 +136,7 @@ export function previewFooter(active, season, { footballApp = false } = {}) {
   ${active ? '' : '<a href="/basketball/methodology/">Basketball methodology</a>'}<a href="/about/">About</a><a href="/privacy/">Privacy</a>
   <a href="/terms/">Terms</a><a href="/support">Support</a>${footballApp ? '<a href="/account">Account settings</a><a href="/data/rankings.json" target="_blank" rel="noopener">Published data</a>' : ''}</nav></div></footer>`;
 }
-export function html({ title, active = 'basketball', current, season, profile, body, script = '', description, publication, pathname, query, publicVersion, bootNavigation = true }) {
+export function html({ title, active = 'basketball', current, season, profile, body, script = '', description, publication, pathname, query, publicVersion, bootNavigation = true, portalPage = false }) {
   const interiors = active === 'basketball' ? '<link rel="stylesheet" href="/basketball-preview/preview-interiors.css">'
     + (publicVersion ? '' : '<script type="module" src="/basketball-preview/preview-interiors.js"></script>') : '';
   const metadata = publicVersion
@@ -146,9 +146,9 @@ export function html({ title, active = 'basketball', current, season, profile, b
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 ${metadata}<meta name="theme-color" content="#091833">
 <meta name="description" content="${escape(description ?? title)}"><title>${escape(title)} · The Games Decide</title>
-<link rel="icon" href="/assets/the-games-decide-icon.png"><link rel="stylesheet" href="/styles.css">
+<link rel="icon" href="/assets/the-games-decide-icon.png"><link rel="stylesheet" href="/base.css">${portalPage ? '' : '<link rel="stylesheet" href="/styles.css?v=shared-base">'}
 <link rel="stylesheet" href="/basketball-preview/preview.css"><link rel="stylesheet" href="/basketball-preview/reconstruction.css">${bootNavigation ? sharedNavigationAssets : sharedNavigationStyles}${interiors}
-<link rel="stylesheet" href="/platform-ui.css"><link rel="stylesheet" href="/team-discovery.css"><link rel="stylesheet" href="/matchup-presentation.css">${script}</head><body class="fc-preview gd-page-shell">
+<link rel="stylesheet" href="/platform-ui.css">${portalPage ? '' : '<link rel="stylesheet" href="/team-discovery.css"><link rel="stylesheet" href="/matchup-presentation.css">'}${script}</head><body class="fc-preview gd-page-shell">
 <a class="skip-link" href="#main">Skip to content</a>${shell(active, current, season, profile, {pathname, publication, query, publicSite: Boolean(publicVersion)})}
 <main id="main" tabindex="-1">${body}</main>${previewFooter(active, season)}</body></html>`;
 }

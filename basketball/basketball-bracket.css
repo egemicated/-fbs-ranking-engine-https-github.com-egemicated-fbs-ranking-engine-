@@ -471,7 +471,7 @@
 }
 @media (max-width: 545px) {
   .bb-bracket-topbar { padding-inline: .6rem; }
-  .bb-bracket-filters select { padding-inline: .45rem 1.25rem; font-size: .84rem; }
+  .bb-bracket-filters select { padding-inline: .45rem; font-size: .84rem; }
   .bb-bracket-modes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
   .bb-bracket-modes button {
     padding-inline: .2rem;

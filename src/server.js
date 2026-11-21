@@ -27,6 +27,7 @@ const escapeHtml = value => String(value).replaceAll('&', '&amp;').replaceAll('<
 // Read-only API. No login to view public sports ratings; no write/admin routes.
 export function createApi(snapshotDirectory = directory, frontendDirectory = resolve('frontend'), publicationDirectory = publications) {
   const staticFiles = new Map([
+    ['/base.css', ['base.css', 'text/css; charset=utf-8']],
     ['/styles.css', ['styles.css', 'text/css; charset=utf-8']],
     ['/app.js', ['app.js', 'text/javascript; charset=utf-8']],
     ['/clean-routes.js', ['clean-routes.js', 'text/javascript; charset=utf-8']],
@@ -74,15 +75,10 @@ export function createApi(snapshotDirectory = directory, frontendDirectory = res
       .map(name => [`/${name}.js`, [`${name}.js`, 'text/javascript; charset=utf-8']]),
     ...['game-discovery', 'platform-info', 'intelligence-tools', 'my-teams', 'account-center']
       .map(name => [`/${name}.css`, [`${name}.css`, 'text/css; charset=utf-8']]),
-    ['/assets/stadium.png', ['assets/stadium.png', 'image/png']],
     ['/assets/stadium.webp', ['assets/stadium.webp', 'image/webp']],
     ['/assets/stadium-mobile.webp', ['assets/stadium-mobile.webp', 'image/webp']],
-    ['/assets/fbs-intelligence-logo.svg', ['assets/fbs-intelligence-logo.svg', 'image/svg+xml']],
-    ['/assets/fbs-intelligence-icon.png', ['assets/fbs-intelligence-icon.png', 'image/png']],
     ['/assets/the-games-decide-logo.webp', ['assets/the-games-decide-logo.webp', 'image/webp']],
     ['/assets/the-games-decide-icon.png', ['assets/the-games-decide-icon.png', 'image/png']],
-    ['/fonts/BarlowCondensed-Bold.ttf', ['fonts/BarlowCondensed-Bold.ttf', 'font/ttf']],
-    ['/fonts/BarlowCondensed-SemiBold.ttf', ['fonts/BarlowCondensed-SemiBold.ttf', 'font/ttf']],
     ['/fonts/BarlowCondensed-Bold.woff2', ['fonts/BarlowCondensed-Bold.woff2', 'font/woff2']],
     ['/fonts/BarlowCondensed-SemiBold.woff2', ['fonts/BarlowCondensed-SemiBold.woff2', 'font/woff2']]
   ]);

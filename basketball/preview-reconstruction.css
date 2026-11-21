@@ -80,8 +80,7 @@
 }
 .fc-top-title h2 { padding: 0; border: 0; text-transform: uppercase; }
 .fc-top-title :is(time,span) { display: block; text-align: right; color: #b9d5f0; font-size: 11px; }
-.fc-hoops-hero .fc-top-row { padding-block: 9px; }
-.fc-hoops-hero .fc-top-row { min-height: 44px; font-variant-numeric: tabular-nums; }
+.fc-hoops-hero .fc-top-row { padding-block: 9px; min-height: 44px; font-variant-numeric: tabular-nums; }
 .fc-hoops-hero .fc-top-row:hover, .fc-top-all:hover { color: #fff; background: #1b416b; }
 .fc-top-all { display: block; min-height: 44px; padding: 13px; text-align: center; font-size: 13px; font-weight: 700; border-top: 1px solid #3f5e83; }
 .fc-hoops-hero :is(a,button):focus-visible { outline: 2px solid #91e5ff; outline-offset: -3px; }

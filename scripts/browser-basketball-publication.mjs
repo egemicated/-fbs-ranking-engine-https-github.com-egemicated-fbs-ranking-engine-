@@ -46,6 +46,133 @@ const pages = [
   ['/basketball/methodology/','.fc-stack','methodology'],
   ['/basketball/march-madness/','.bb-bracket','bracket'],
 ];
+
+async function verifyMatchupHistory(page, basketball) {
+  const path = basketball ? matchup : '/matchup-lab';
+  const teamASelector = basketball ? 'select[data-matchup-team="a"]' : '#compare-a';
+  const teamBSelector = basketball ? 'select[data-matchup-team="b"]' : '#compare-b';
+  const a = page.locator(teamASelector), b = page.locator(teamBSelector);
+  const result = page.locator('.matchup-win-chances');
+  await page.goto(origin+path);
+  await page.getByRole('searchbox',{name:'Filter Team A list',exact:true}).waitFor();
+  await result.waitFor();
+  await page.evaluate(()=>{ window.matchupBrowserCheck=true; });
+  const state = async () => ({
+    url:page.url(), a:await a.inputValue(), b:await b.inputValue(), result:await result.textContent(),
+  });
+  const history = [await state()];
+  const scrollAt = control => control.evaluate(element => {
+    element.focus({preventScroll:true});
+    window.scrollTo({top:scrollY+element.getBoundingClientRect().top-112,behavior:'instant'});
+    return scrollY;
+  });
+  const verifyChange = async (control, top) => {
+    await page.waitForURL(url=>url.href!==history.at(-1).url);
+    await result.waitFor();
+    await page.waitForFunction(element=>element===document.activeElement,await control.elementHandle());
+    const next = await state();
+    assert.notEqual(next.result,history.at(-1).result);
+    const url = new URL(next.url);
+    assert.equal(url.hash,'');
+    assert.deepEqual([url.searchParams.get('a'),url.searchParams.get('b')],[next.a,next.b]);
+    const scroll = await page.evaluate(top=>({
+      actual:scrollY, expected:Math.min(top,Math.max(0,document.documentElement.scrollHeight-innerHeight)),
+    }),top);
+    assert.ok(Math.abs(scroll.actual-scroll.expected)<=1,
+      `${basketball?'Basketball':'Football'} matchup scroll at ${next.url}: ${scroll.actual}, expected ${scroll.expected} from ${top}`);
+    history.push(next);
+  };
+  for (const select of [a,b]) {
+    const selected = await select.inputValue();
+    const options = await select.locator('option').evaluateAll(nodes=>nodes.filter(option=>option.value&&!option.disabled).map(option=>option.value));
+    const replacement = options.findLast(id=>id!==selected);
+    assert.ok(replacement);
+    const top = await scrollAt(select);
+    await select.selectOption(replacement);
+    await verifyChange(select,top);
+    assert.equal(await select.inputValue(),replacement);
+  }
+  const venue = page.getByRole('button',{name:'Team A at home',exact:true});
+  const top = await scrollAt(venue);
+  await venue.click();
+  await verifyChange(venue,top);
+  assert.equal(await venue.getAttribute('aria-pressed'),'true');
+  const transition = await page.locator('[data-matchup-results]').evaluate(el=>({
+    duration:parseFloat(getComputedStyle(el).animationDuration),
+    reduce:matchMedia('(prefers-reduced-motion: reduce)').matches,
+  }));
+  assert.equal(transition.duration===0,transition.reduce);
+  for (const direction of ['goBack','goForward']) {
+    const states = direction === 'goBack' ? history.slice(0,-1).reverse() : history.slice(1);
+    for (const previous of states) {
+      await page[direction]();
+      await page.waitForURL(previous.url);
+      await page.waitForFunction(expected=>document.querySelector('.matchup-win-chances')?.textContent===expected,previous.result);
+      assert.deepEqual(await state(),previous);
+      assert.equal(await venue.evaluate(element=>element===document.activeElement),true);
+    }
+  }
+  assert.ok(await page.evaluate(()=>window.matchupBrowserCheck),'History and comparison edits stay in the same document');
+  await page.goto(history.at(-1).url);
+  await result.waitFor();
+  if (basketball) await page.locator('[data-matchup-form][data-matchup-enhanced]').waitFor();
+  assert.deepEqual(await state(),history.at(-1));
+}
+
+const rankingFields = {
+  sor:['sorRank','sorScore',3], predictive:['predictiveRank','predictiveScore',1],
+  performance:['performanceRank','performanceScore',1],
+};
+async function verifyRankings(page) {
+  const rankingsPath = origin+'/basketball/rankings/';
+  const view = page.locator('[data-ranking-browser]');
+  const tab = model => view.locator('[data-ranking-model="'+model+'"]');
+  const notice = view.locator('[data-team-error]');
+  const checkModel = async model => {
+    const [rank,score,digits] = rankingFields[model];
+    await tab(model).and(page.locator('[aria-current="page"]')).waitFor();
+    const visible = await view.locator('.fc-ranking-table tbody tr').evaluateAll(rows=>rows.map(row=>({
+      team:row.querySelector('a').pathname.split('/').filter(Boolean).at(-1),
+      rank:Number(row.querySelector('.fc-rank-marker').textContent.slice(1)),
+      score:row.cells[3].textContent.trim(),
+    })));
+    const expected = sourceSeason.snapshot.teams.filter(team=>Number.isFinite(team[rank])&&team[rank]<=25)
+      .sort((a,b)=>a[rank]-b[rank]||a.name.localeCompare(b.name))
+      .map(team=>({team:team.id.split(':').at(-1),rank:team[rank],score:Number.isFinite(team[score])?team[score].toFixed(digits):'—'}));
+    assert.deepEqual(visible,expected,model+' table matches the published model fields and order');
+    assert.equal(await page.locator('.fc-fresh time').getAttribute('datetime'),sourceSeason.snapshot.asOf);
+    assert.equal(await view.locator('[data-ranking-model-version]').textContent(),sourceSeason.snapshot.modelVersion);
+  };
+  const response = await page.goto(rankingsPath);
+  assert.doesNotMatch(await response.text(),/Could not update rankings\./,'Fresh HTML must not describe a failure');
+  await view.and(page.locator('[data-team-enhanced]')).waitFor();
+  await checkModel('sor');
+  await page.route('**/'+index.currentSeason+'/season.json',route=>route.fulfill({status:503}),{times:1});
+  await tab('predictive').click();
+  await notice.waitFor();
+  assert.match(await notice.textContent(),/Could not update rankings\./);
+  assert.equal(page.url(),rankingsPath);
+  await checkModel('sor');
+  await tab('predictive').click();
+  await page.waitForURL(/model=predictive/);
+  await checkModel('predictive');
+  assert.equal(await notice.isHidden(),true);
+  await tab('performance').click();
+  await page.waitForURL(/model=performance/);
+  await checkModel('performance');
+  await page.goBack();
+  await checkModel('predictive');
+  await page.goForward();
+  await checkModel('performance');
+  for (const model of Object.keys(rankingFields)) {
+    await page.goto(rankingsPath+'?model='+model);
+    await checkModel(model);
+  }
+  await view.locator('[data-team-filters] input[name="q"]').fill('ZZZ-UNMATCHED-TEAM');
+  await view.getByText('No teams match these filters.',{exact:true}).waitFor();
+  assert.equal(await notice.isHidden(),true);
+}
+
 const browser = await chromium.launch({headless:true,
   ...(process.env.QUALITY_BROWSER ? {executablePath:process.env.QUALITY_BROWSER} : {}),args:['--no-sandbox']});
 try {
@@ -112,11 +239,9 @@ try {
   await page.getByRole('heading',{name:'Player leaders',exact:true}).waitFor();
   await page.getByRole('heading',{name:'Four Factors',exact:true}).waitFor();
   await page.getByRole('heading',{name:'Team statistics',exact:true}).waitFor();
-  await page.goto(origin+'/basketball/rankings/');
-  await page.locator('[data-ranking-browser][data-team-enhanced]').waitFor();
-  await page.getByRole('link',{name:'Predictive Strength',exact:true}).last().click();
-  await page.waitForURL(/model=predictive/);
-  await page.getByRole('heading',{name:'Predictive Strength'}).waitFor();
+  await verifyMatchupHistory(page,true);
+  await verifyMatchupHistory(page,false);
+  await verifyRankings(page);
 
   const [primary] = sourceSeason.conferenceQuality.rows.filter(row=>row.nonconference.games>0);
   await page.goto(origin+'/basketball/conferences/?'+new URLSearchParams({view:'head',a:primary.conference}));
@@ -127,16 +252,27 @@ try {
   assert.equal(await page.getByText('Saved prospective forecasts',{exact:true}).count(),1);
   assert.ok(report.graded >= 0 && report.forecasts >= report.graded);
   await page.goto(origin+'/basketball/march-madness/');
+  await page.getByRole('button',{name:'Official bracket'}).click();
+  await page.getByRole('heading',{name:'Selection Sunday is ahead'}).waitFor();
+  await page.getByRole('button',{name:'Try the 76-team format'}).click();
+  await page.getByRole('heading',{name:'Practice a GD projection'}).waitFor();
+  assert.equal(await page.locator('[data-bracket-select="practiceField"]').inputValue(),'projection');
   await page.getByRole('button',{name:'My bracket'}).click();
   assert.equal(await page.locator('option[value="format"]').count(),0);
   assert.equal(await page.getByRole('button',{name:'Save practice bracket'}).count(),1);
   await page.getByRole('button',{name:'Save practice bracket'}).click();
   assert.equal(await page.evaluate(()=>Object.keys(localStorage).some(key=>key.startsWith('gd-bracket:mbb:'))),true);
   await context.close();
+  const desktop = await browser.newContext({viewport:{width:1440,height:790},reducedMotion:'no-preference'});
+  await desktop.route('**/*',route=>new URL(route.request().url()).origin===origin?route.continue():route.abort());
+  const desktopPage = await desktop.newPage();
+  await verifyMatchupHistory(desktopPage,true);
+  await verifyMatchupHistory(desktopPage,false);
+  await desktop.close();
   for (const path of ['/basketball/contest/','/preview-profile/','/basketball-preview/bracket-data.json','/basketball/preview-accounts.mjs','/.env.basketball.local']) {
     assert.equal((await fetch(origin+path)).status,404,path);
   }
-  console.log('Passed '+pages.length*8+' public route and width checks, filters, bracket drafts, matchup, player and team evidence, plus preview isolation.');
+  console.log('Passed '+pages.length*8+' public route and width checks, cross-sport matchup scroll and history, ranking rows and retry, bracket drafts, team evidence, and preview isolation.');
 } finally {
   await browser.close();
   await new Promise(resolve=>server.close(resolve));

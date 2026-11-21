@@ -15,6 +15,14 @@ const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character =>
 const record = team => [team.wins, team.losses, ...(team.ties ? [team.ties] : [])].join('–');
 const number = (value, digits = 2) => Number.isFinite(value) ? value.toFixed(digits) : 'Unavailable';
 
+export function socialMetadata({ path, title, description, image, alt = title }) {
+  return `<meta property="og:type" content="website"><meta property="og:site_name" content="The Games Decide">
+  <meta property="og:title" content="${escapeHtml(title)}"><meta property="og:description" content="${escapeHtml(description)}">
+  <meta property="og:url" content="${escapeHtml(origin + path)}"><meta property="og:image" content="${escapeHtml(origin + image)}">
+  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="${escapeHtml(alt)}">
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(title)}"><meta name="twitter:description" content="${escapeHtml(description)}"><meta name="twitter:image" content="${escapeHtml(origin + image)}">`;
+}
+
 function metadata(html, { path, title, description, image, route, content, links }) {
   const privateOrMissing = !path;
   const fallback = privateOrMissing ? pageMetadata(route) : null;
@@ -25,11 +33,7 @@ function metadata(html, { path, title, description, image, route, content, links
   <meta name="description" content="${escapeHtml(pageDescription)}">` + (privateOrMissing ? `
   <meta name="robots" content="noindex, nofollow" data-account-robots="true">` : `
   <link rel="canonical" href="${canonical}">
-  <meta property="og:type" content="website"><meta property="og:site_name" content="The Games Decide">
-  <meta property="og:title" content="${escapeHtml(pageTitle)}"><meta property="og:description" content="${escapeHtml(pageDescription)}">
-  <meta property="og:url" content="${canonical}"><meta property="og:image" content="${origin}${image}">
-  <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="${escapeHtml(title)}">
-  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${escapeHtml(pageTitle)}"><meta name="twitter:description" content="${escapeHtml(pageDescription)}"><meta name="twitter:image" content="${origin}${image}">`) + (route ? `
+  ${socialMetadata({ path, title: pageTitle, description: pageDescription, image, alt: title })}`) + (route ? `
   <meta name="app-route" content="${escapeHtml(route)}">` : '');
   return html.replace(/<title>[\s\S]*?<\/title>/, '').replace(/\s*<meta name="description"[^>]*>/, '')
     .replace(/\s*<link rel="canonical"[^>]*>/g, '')
@@ -78,7 +82,7 @@ function previewSvg({ title, nickname, subtitle, detail, accent = '#00b7ed', log
   </svg>`;
 }
 
-export async function prerenderPublicPages({ root, output, snapshot, teams, html, fbsPicks, fcsPicks, conferenceDatasets = [] }) {
+export async function prerenderPublicPages({ root, output, snapshot, teams, html, fbsPicks, fcsPicks, conferenceDatasets = [], multiSport = false }) {
   const logo = await sharp(await readFile(join(root, 'frontend/assets/the-games-decide-logo.webp'))).resize({ width: 720 }).png().toBuffer();
   const logoUrl = 'data:image/png;base64,' + logo.toString('base64');
   const asOf = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', dateStyle: 'medium' }).format(new Date(snapshot.asOf));
@@ -147,14 +151,17 @@ export async function prerenderPublicPages({ root, output, snapshot, teams, html
     });
   }
   await mkdir(join(output, 'social'), { recursive: true });
-  await sharp(Buffer.from(previewSvg({ title: 'The Games Decide', subtitle: 'College football, examined', detail: `${snapshot.season} · ${asOf}`, logo: logoUrl }))).png().toFile(join(output, 'social/platform.png'));
+  const platformPreview = multiSport
+    ? { subtitle: 'College football and basketball', detail: 'Independent rankings and matchup analysis' }
+    : { subtitle: 'College football, examined', detail: `${snapshot.season} · ${asOf}` };
+  await sharp(Buffer.from(previewSvg({ title: 'The Games Decide', ...platformPreview, logo: logoUrl }))).png().toFile(join(output, 'social/platform.png'));
   for (let start = 0; start < pages.length; start += 8) {
     await Promise.all(pages.slice(start, start + 8).map(async page => {
       if (page.path !== routeHref(page.route)) throw new Error(`Public metadata route has no matching clean URL: ${page.route}`);
       const document = metadata(html, { ...page, links: baseLinks });
       await writePage(output, page.path, document);
       for (const [alias, canonical] of crawlableAliases) {
-        if (canonical === page.path) await writePage(output, alias, document);
+        if (canonical === page.path && !(multiSport && alias === '/')) await writePage(output, alias, document);
       }
       if (page.socialTitle) await sharp(Buffer.from(previewSvg({ title: page.socialTitle, nickname: page.nickname, subtitle: page.subtitle, detail: page.detail, accent: page.accent, logo: logoUrl }))).png().toFile(join(output, page.image));
     }));

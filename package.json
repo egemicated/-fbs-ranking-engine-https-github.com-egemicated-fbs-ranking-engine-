@@ -12,7 +12,6 @@
     "build": "node src/cli.js build",
     "backtest": "node src/cli.js backtest",
     "report": "node scripts/summarize.js",
-    "prepare:render": "node scripts/prepare-render.js",
     "refresh:weekly": "node scripts/refresh-weekly.js",
     "preview": "node scripts/preview.js",
     "start": "node src/server.js"

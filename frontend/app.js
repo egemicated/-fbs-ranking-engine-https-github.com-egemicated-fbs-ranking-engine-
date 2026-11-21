@@ -55,6 +55,7 @@ let conferenceStrengthModule;
 let favoriteModule;
 let rootingGuideModule;
 let closeFavorite;
+let enhanceMatchupTeamSelect;
 let focusedGameLink;
 const accountReturnKey = 'fbs-account-return';
 const localPreview = ['localhost', '127.0.0.1', '[::1]'].includes(window.location?.hostname) && window.fbsReviewPreview;
@@ -1335,13 +1336,17 @@ function renderWeeklyPicks(picks) {
 }
 function matchupToken(a, b, venue) { return `compare/matchup/${a}/${b}/${venue}`; }
 function matchupLabHref(a, b, venue) { return routeHref(matchupToken(a, b, venue)); }
+function refreshMatchupControls(focusSelector) {
+  if (enhanceMatchupTeamSelect) main.querySelectorAll('#compare-a, #compare-b').forEach(enhanceMatchupTeamSelect);
+  main.querySelector('[data-matchup-results]')?.setAttribute('data-matchup-refresh', '');
+  if (focusSelector) main.querySelector(focusSelector)?.focus({ preventScroll: true });
+}
 function chooseMatchup(focusSelector) {
   const top = window.scrollY;
   navigate(matchupToken(state.compareA, state.compareB, state.venue), { render: false });
   renderCompare();
-  main.querySelector('[data-matchup-results]')?.setAttribute?.('data-matchup-refresh', '');
+  refreshMatchupControls(focusSelector);
   if (Number.isFinite(top)) window.scrollTo({ top, behavior: 'instant' });
-  if (focusSelector) main.querySelector(focusSelector)?.focus?.({ preventScroll: true });
   const a = rankedTeam(state.compareA), b = rankedTeam(state.compareB);
   if (a && b && a.id !== b.id) document.querySelector('#announce').textContent = `Matchup updated for ${a.name} and ${b.name}.`;
 }
@@ -1911,14 +1916,19 @@ function reroute({ previousUrl = lastRoutedUrl, render: renderPage = true, force
   if (!renderPage) return;
   focusedGameLink = null;
   state.teamTab = 'overview';
+  const [from, fromView] = routeFromUrl(previousUrl)?.split('/') ?? [];
+  const [to, toView] = route();
+  const withinMatchup = from === 'compare' && to === 'compare' && fromView !== 'weekly' && toView !== 'weekly';
+  const focused = withinMatchup ? document.activeElement : null;
+  const venue = focused?.dataset?.action === 'venue' ? focused.dataset.value : '';
+  const matchupFocus = ['compare-a', 'compare-b'].includes(focused?.id) ? '#' + focused.id
+    : ['neutral', 'home', 'away'].includes(venue) ? `[data-action="venue"][data-value="${venue}"]` : null;
   render();
   if (focusMoreDestination) {
     focusMoreDestination = false;
     main.focus({ preventScroll: true });
   }
-  const [from, fromView] = routeFromUrl(previousUrl)?.split('/') ?? [];
-  const [to, toView] = route();
-  const withinMatchup = from === 'compare' && to === 'compare' && fromView !== 'weekly' && toView !== 'weekly';
+  if (withinMatchup) refreshMatchupControls(matchupFocus);
   if (!withinMatchup && (!isRankingsHub(from) || !isRankingsHub(to))) window.scrollTo({ top: 0, behavior: 'instant' });
 }
 window.addEventListener(APP_NAVIGATION_EVENT, event => reroute(event.detail));
@@ -1969,4 +1979,7 @@ async function load(){
 if (route()[0] === 'scoreboard') render();
 else renderHeader();
 load();
-void import('./searchable-team-select.js?v=1').then(({enhanceTeamSelectors})=>enhanceTeamSelectors(main)).catch(()=>{});
+void import('./searchable-team-select.js?v=1').then(({enhanceTeamSelect,enhanceTeamSelectors})=>{
+  enhanceMatchupTeamSelect = enhanceTeamSelect;
+  enhanceTeamSelectors(main);
+}).catch(()=>{});

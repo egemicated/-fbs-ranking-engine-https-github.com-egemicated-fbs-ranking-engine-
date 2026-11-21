@@ -1,4 +1,5 @@
-Asset: stadium.png
+Assets: stadium.webp and stadium-mobile.webp
+Original: stadium.png is retained in Git at commit 1963802.
 Method: Built-in image_gen tool; no external paid API or API key.
 Purpose: Illustrative, unbranded mountain-stadium background for the frontend.
 Reference images informed atmosphere only. No reference UI, branding, rankings,

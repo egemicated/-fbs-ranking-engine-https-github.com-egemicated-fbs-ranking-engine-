@@ -108,7 +108,9 @@ async function checkCallbackRouting(fixture){
 async function checkPortalEntry(){
   const page=await browser.newPage({viewport:{width:390,height:1050}});
   const footballAppRequests=[];
+  const accountShellRequests=[];
   await page.route('**/app.js*',route=>{footballAppRequests.push(route.request().url());return route.abort();});
+  await page.route('**/account',route=>{accountShellRequests.push(route.request().url());return route.continue();});
   try {
     await page.goto(base,{waitUntil:'load'});
     await page.locator('.fc-sports-portal').waitFor();
@@ -116,6 +118,42 @@ async function checkPortalEntry(){
     assert.equal(await page.locator('[data-header-account]').count(),0);
     assert.equal(await page.getByRole('link',{name:'Your account at The Games Decide'}).getAttribute('href'),'/account');
     assert.deepEqual(footballAppRequests,[],'A normal portal visit does not load the football app');
+    assert.deepEqual(accountShellRequests,[],'A normal portal visit does not request the account shell');
+
+    let started, release, finished;
+    const shellStarted=new Promise(done=>{started=done;});
+    const shellPaused=new Promise(done=>{release=done;});
+    const shellFinished=new Promise(done=>{finished=done;});
+    const slowShell=async route=>{
+      started();
+      await shellPaused;
+      try { await route.continue(); } catch {}
+      finally { finished(); }
+    };
+    await page.route('**/account',slowShell);
+    try {
+      await page.evaluate(()=>{location.hash='access_token=synthetic&refresh_token=synthetic&type=recovery';});
+      await shellStarted;
+      await page.getByText('Opening your account link…').waitFor();
+      await page.goBack();
+      await page.getByText('Opening your account link…').waitFor({state:'detached'});
+      release();
+      await shellFinished;
+      assert.equal(page.url(),base);
+      assert.equal(await page.locator('.fc-sports-portal').count(),1);
+      assert.deepEqual(footballAppRequests,[],'A canceled callback leaves the sports portal mounted');
+    } finally {
+      release();
+      await page.unroute('**/account',slowShell);
+    }
+
+    const callbackUrl=new URL('/?account=recovery&code=synthetic',base).href;
+    await page.route('**/account',route=>route.fulfill({status:503,body:'Unavailable'}));
+    await page.goto(callbackUrl,{waitUntil:'load'});
+    await page.getByRole('alert').getByText('Could not open this account link.',{exact:false}).waitFor();
+    await page.getByRole('button',{name:'Reload'}).waitFor();
+    assert.equal(page.url(),callbackUrl,'A shell failure leaves the account link intact for retry');
+    assert.deepEqual(footballAppRequests,[],'A shell failure does not start the authentication app');
   } finally { await page.close(); }
 }
 async function assertPageFits(page,label){

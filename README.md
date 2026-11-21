@@ -1,11 +1,11 @@
 # The Games Decide
 
-[The Games Decide](https://www.thegamesdecide.com/) publishes independent college football rankings, team evidence, and saved pregame forecasts. Strength of Record (SOR) ranks achieved results. Predictive Strength estimates future matchups. Human polls and Forge’s AI-authored ballot have their own comparison views.
+[The Games Decide](https://www.thegamesdecide.com/) publishes independent college football and men’s Division I basketball rankings, team evidence, and saved pregame forecasts. Strength of Record (SOR) ranks achieved results. Predictive Strength estimates future matchups. Football also publishes comparison views for human polls and Forge’s AI-authored ballot.
 
 ## Architecture
 
-- **Website** — Native HTML, CSS, and browser modules in `frontend/`. The static build creates crawlable public pages, social previews, and versioned publication metadata. Public rankings and team evidence are available without an account.
-- **Publication** — The engine in `src/` and publishers in `scripts/` turn season data into snapshots, predictions, and source evidence. Render serves `static-dist/` from committed inputs. Cloudflare manages the public domain.
+- **Website** — The All Sports portal is at `/`, football is at `/football/`, and basketball is at `/basketball/`. Both sports use the same masthead, footer, and base styles. Football routes and account behavior live in `frontend/`. Basketball pages and shared navigation live in `basketball/`. Public rankings and team evidence are available without an account.
+- **Publication** — The football engine in `src/` and basketball engine in `basketball/` produce independent snapshots, predictions, and source evidence. `scripts/prepare-static.js` builds crawlable pages, social previews, and versioned data from committed publications. Render serves the generated `static-dist/` directory. Cloudflare manages the public domain.
 - **Accounts** — Supabase Auth handles email verification, password recovery, Google sign-in, and user sessions. Database policies and functions enforce account ownership, contest deadlines, and administrative access. Private support requests use Supabase and a server-side email notification path. See the [database runbook](supabase/README.md) and [account release evidence](reports/account-platform-release-2026-11-18.md).
 - **Research** — `research/` and `reports/` retain experiments, validation evidence, and data lineage. Frozen challenger forecasts and retrospective replays have their own evidence. Production SOR and its approved parameters are documented in [METHODOLOGY.md](METHODOLOGY.md).
 
@@ -31,13 +31,16 @@ Render’s static site runs `node scripts/prepare-static.js` and publishes `stat
 | --- | --- |
 | [CollegeFootballData](https://collegefootballdata.com/) | Results, schedule, team classifications, player statistics, and inputs for the site’s own ratings. See [source terms](https://collegefootballdata.com/terms). |
 | [sportsdataverse/cfbfastR](https://cfbfastr.sportsdataverse.org/reference/load_cfb_schedules.html) | Historical schedule inputs for reproducibility. The import discards source Elo and source win probabilities. |
-| [ESPN](https://www.espn.com/college-football/scoreboard) | Scoreboard and kickoff verification, school images, and some poll ingestion. The live endpoint and image references require separate rights review before broader use. |
+| [CollegeBasketballData](https://collegebasketballdata.com/) | Men’s Division I results, schedules, stats where available, and model inputs. Basketball publishes a bounded set of summaries and independent analysis from the versioned edition. |
+| [ESPN](https://www.espn.com/college-football/scoreboard) | External football Gamecast links and some archived AP poll ingestion. The AP archive workflow has a rights dependency recorded in the [launch report](reports/operation-lights-on.md). |
 | [AP](https://apnews.com/hub/ap-top-25-college-football-poll), [AFCA](https://www.afca.com/polls/), [CFP](https://collegefootballplayoff.com/rankings) | Dated human-poll comparisons and official playoff context. The ranking engine calculates SOR independently. |
 | [Official conference availability reports](src/player-availability.js) | Game-specific reported statuses and source links where an official feed is covered. |
 
 The [results workflow](.github/workflows/weekly.yml) checks daily at **2:45 a.m. Eastern Time**, and the [official availability workflow](.github/workflows/player-availability.yml) uses the same time from August through January. Each has a **4:45 a.m. Eastern** backup that checks for a successful run before making provider requests. The saved schedule also guards whether the results check needs a new pull. A full refresh uses two CFBD calls for results and FBS membership, plus one shared advanced-statistics request for optional Experimental Performance. The [player workflow](.github/workflows/player-stats.yml) uses the existing encrypted cache on Sundays when due. The [CFP bracket workflow](.github/workflows/cfp-bracket.yml) uses one postseason results call on scheduled playoff game nights. Most publication work and all ordinary page visits use stored data.
 
 The workflow saves forecasts before confirmed kickoff, grades final results, and retains capture timestamps on valid saved picks. Failed imports leave the previous publication in service. Performance renders only when its season, cutoff, and base snapshot align with the primary rankings. Game-day availability reports posted after the overnight check can still be archived on the following morning when the official feed retains them. Poll archives and official playoff releases keep their separate schedules. Kickoff or contest-only recovery modes can use the committed slate with zero CFBD calls.
+
+The [basketball source refresh](.github/workflows/basketball-refresh.yml) schedules its in-season primary at **4:15 a.m. Mountain Time**, recovery at **6:15 a.m. Mountain**, and cache-based pregame checks at **10:15 a.m. Mountain**. The provider quota is shared with football. The workflow authenticates an encrypted working cache, budgets calls against the football reserve, saves eligible forecasts before tipoff, and publishes only when meaningful data changes. The [basketball operations runbook](reports/basketball-managed-refresh.md) covers refresh evidence, budgeting, deployment, and recovery.
 
 Public artifacts include rankings, team explanations, saved and retrospective model records, and published poll and conference views. Keep raw provider responses, normalized source caches, API keys, and private account records outside the public build and repository. `data/raw/`, `data/seasons/`, and research caches are local or job-workspace paths. Source checksums, derived evidence, and historical snapshots support auditing. Public distribution rights depend on the source and the artifact.
 
@@ -46,6 +49,8 @@ Public artifacts include rankings, team explanations, saved and retrospective mo
 The browser uses the Supabase project URL and its publishable key. Privileged keys for contest grading and support dispatch belong in GitHub Actions secrets or the relevant Supabase server settings. Account preferences, support requests, and private picks are isolated by database rules. Public contest picks require the participant’s sharing preference and the corresponding confirmed kickoff. The administrator interface requires a provisioned role and a second authentication factor. Database migrations and email-provider changes are separate from the static deployment.
 
 The production origin is `https://www.thegamesdecide.com`. Preserve its existing account callback allowlist and Supabase provider callback when working on authentication. Use disposable test identities and the isolated database harness for account changes. Current privacy, support, and methodology explanations are available from the site footer.
+
+Older root auth URLs load the existing `/account` shell in the same document so the managed SDK receives the original callback credentials and browser state. Ordinary portal visits skip that account request. The root bookmark bridge resolves historical football fragments to their corresponding clean URLs.
 
 ## Recovery and history
 

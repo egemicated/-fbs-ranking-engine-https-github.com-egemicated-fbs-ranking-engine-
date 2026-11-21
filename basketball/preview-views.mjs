@@ -28,10 +28,11 @@ export function portal({ football, basketball } = {}) {
       year:basketball?.snapshot && seasonLabel(basketball.snapshot.season), href:'/basketball/',
       rankings:link('rankings'), description:'Track results, compare teams, and explore the road to March Madness.' },
   ];
-  return `<div class="fc-sports-portal"><div class="wrap">
+  return `<div class="fc-sports-portal" itemscope itemtype="https://schema.org/WebSite">
+    <meta itemprop="name" content="The Games Decide"><link itemprop="url" href="https://www.thegamesdecide.com/"><div class="wrap">
     <header class="fc-portal-intro"><p class="fc-kicker">The Games Decide · Independent college sports analytics</p>
       <h1>Results over <em>reputation.</em></h1>
-      <p>See what teams have earned, who they beat, and what the next matchup might bring.</p></header>
+      <p itemprop="description">See what teams have earned, who they beat, and what the next matchup might bring.</p></header>
     <div class="fc-portal-grid">${sports.map(sport => `<article class="fc-sport-panel fc-sport-panel-${sport.key}">
       <div class="fc-portal-division"><span>${sport.detail}</span>${sport.year ? `<span>${sport.year}</span>` : ''}</div>
       <div class="fc-portal-story"><h2>${sport.title}</h2><p>${sport.description}</p>
@@ -243,14 +244,15 @@ function rankings(ctx,query) {
     ? 'Opponent Colley is the average rating of the Division I teams on a team’s schedule. Higher values indicate stronger opponents.'
     : 'Adjusted offense and defense show points scored and allowed per 100 possessions.'}</p>
     <dl class="fc-ranking-context"><dt>Division I teams</dt><dd>${amount(teams.length)}</dd>
-    <dt>Completed games used</dt><dd>${amount(ctx.snapshot.gamesUsed)}</dd></dl>
+    <dt>Completed games used</dt><dd>${amount(ctx.snapshot.gamesUsed)}</dd>
+    <dt>Model version</dt><dd data-ranking-model-version>${e(ctx.snapshot.modelVersion ?? '—')}</dd></dl>
     ${action(link('methodology',{season:ctx.year}),'See how rankings are calculated',true)}`);
   return banner('Rankings','Compare what teams have earned, how they project and how they have performed.')
     + content(ctx,`<section id="${resultsId}" class="fc-interior-anchor" data-ranking-browser>
       ${tabs}<div class="fc-ranking-heading" data-ranking-heading><h2>${name}</h2><p>${description}</p></div>
       <div class="fc-rank-layout gd-team-rank-layout"><div>${filters}
         <p class="fc-visually-hidden" data-team-announcement role="status"></p>
-        <p class="fc-empty" data-team-error role="alert" hidden>Could not update rankings. The last results remain available.</p>
+        <p class="fc-empty" data-team-error role="alert" hidden></p>
         <div data-team-results>${panel(tableTitle,tableBody,`${shown.length} teams shown${movementNote}`)}
           <span data-team-count class="fc-visually-hidden">${shown.length} teams shown. ${name}.</span></div>
       </div><aside data-ranking-context>${context}</aside></div></section>`);

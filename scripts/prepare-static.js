@@ -1,5 +1,5 @@
 import { access, cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
-import { join, relative, resolve } from 'node:path';
+import { join, resolve } from 'node:path';
 import { execFile } from 'node:child_process';
 import { parseArgs, promisify } from 'node:util';
 import { readPublicPerformance } from '../src/public-performance.js';
@@ -54,10 +54,16 @@ const published = join(root, 'published');
 const output = resolve(root, options['output-dir'] ?? 'static-dist');
 const data = join(output, 'data');
 const teamDirectory = join(data, 'teams');
-const sourceOnlyFiles = [
+const basketballDirectory = resolve(root, options['basketball-publication'] ?? 'published/basketball-site');
+const basketballExists = await access(join(basketballDirectory, 'manifest.json')).then(() => true, error => {
+  if (error.code === 'ENOENT' && !options['basketball-publication']) return false;
+  throw error;
+});
+// Clear retired asset paths from a reused local output directory.
+const retiredAssets = [
   'assets/stadium.png', 'assets/fbs-intelligence-logo.svg', 'assets/fbs-intelligence-icon.png',
   'fonts/BarlowCondensed-Bold.ttf', 'fonts/BarlowCondensed-SemiBold.ttf',
-].map(file => join(frontend, file));
+];
 
 // Build from committed results and use the same publication rules as the API.
 const [policy, source, rawHtml, accountConfig] = await Promise.all([
@@ -94,8 +100,8 @@ delete publicSnapshot.performanceEndpoint;
 if (performance) publicSnapshot.performanceEndpoint = '/data/performance.json';
 if (fcsPicks) publicSnapshot.weeklyFcsPicksEndpoint = '/data/weekly-fcs-picks.json';
 
-await cp(frontend, output, { recursive: true, filter: source => !sourceOnlyFiles.includes(source) });
-await Promise.all(sourceOnlyFiles.map(file => rm(join(output, relative(frontend, file)), { force: true })));
+await cp(frontend, output, { recursive: true, filter: source => source !== join(frontend, 'index.html') });
+await Promise.all(retiredAssets.map(file => rm(join(output, file), { force: true })));
 await mkdir(teamDirectory, { recursive: true });
 const teamFiles = new Set();
 const publicTeams = [...snapshot.rankings, ...(snapshot.fcsRankings ?? [])];
@@ -136,7 +142,6 @@ await Promise.all([
       ...stale.map(file => rm(join(conferenceDirectory, file), { force: true })),
     ]);
   }),
-  writeFile(join(output, 'index.html'), html.replace(marker, '<meta name="publication-data-root" content="/data">')),
   writeFile(join(data, 'rankings.json'), JSON.stringify(publicSnapshot)),
   performance ? writeFile(performanceFile, JSON.stringify(performance)) : rm(performanceFile, { force: true }),
   fcsPicks ? writeFile(fcsPicksFile, JSON.stringify(fcsPicks)) : rm(fcsPicksFile, { force: true }),
@@ -150,13 +155,8 @@ await Promise.all([
 ]);
 const publicPages = await prerenderPublicPages({ root, output, snapshot, teams: publicTeams,
   html: html.replace(marker, '<meta name="publication-data-root" content="/data">'),
-  fbsPicks, fcsPicks, conferenceDatasets: (await conferencePublication).datasets });
+  fbsPicks, fcsPicks, conferenceDatasets: (await conferencePublication).datasets, multiSport: basketballExists });
 console.log(`Prerendered ${publicPages.pages} public pages and social previews`);
-const basketballDirectory = resolve(root, options['basketball-publication'] ?? 'published/basketball-site');
-const basketballExists = await access(join(basketballDirectory, 'manifest.json')).then(()=>true,error=>{
-  if (error.code === 'ENOENT' && !options['basketball-publication']) return false;
-  throw error;
-});
 if (basketballExists) {
   const {addBasketballSite} = await import('./prepare-basketball-static.mjs');
   const basketball = await addBasketballSite({root, output, publicationDirectory:basketballDirectory,

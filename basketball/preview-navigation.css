@@ -77,7 +77,7 @@
 .gd-sports a:last-child { border-radius: 0 11px 11px 0; }
 .gd-sports a + a { border-left: 1px solid #517598; }
 .gd-sports a > * { transform: skew(12deg); }
-.gd-sports a small { display: block; margin-top: 3px; color: #b1d8f1; font: 650 .62rem/1.15 system-ui, sans-serif; }
+.gd-sports a small { display: block; margin-top: 3px; color: #b1d8f1; font: 650 .62rem/1.15 system-ui, sans-serif; white-space: nowrap; }
 .gd-sports a:hover { background: #183c60; color: #fff; }
 .gd-sports a[aria-current] {
   background: linear-gradient(150deg, #005ab6, #11345b 85%);

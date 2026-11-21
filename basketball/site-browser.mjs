@@ -1,7 +1,6 @@
 import { publicView, siteRecord } from './site-client.mjs';
 import { escape, panel, teamHref, teamLink } from './preview-ui.mjs';
 import { publicBasketballLinks } from './site-view.mjs';
-import { mountBasketballBracket } from './basketball-bracket.js';
 import { predictBasketball } from './model-forecast.js';
 
 const main = document.getElementById('main');
@@ -43,6 +42,7 @@ async function start() {
   if (route.endsWith('/conferences')) await import('./conference.js');
   if (route.endsWith('/matchup-lab')) await import('./matchup.js');
   if (!route.endsWith('/march-madness')) return;
+  const { mountBasketballBracket } = await import('./basketball-bracket.js');
   const { snapshot } = page.ctx;
   let storage;
   try { storage = window.localStorage; } catch {}

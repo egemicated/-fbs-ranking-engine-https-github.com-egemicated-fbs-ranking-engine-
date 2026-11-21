@@ -1,0 +1,76 @@
+@font-face {
+  font-family: Barlow;
+  src: url('/fonts/BarlowCondensed-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Barlow;
+  src: url('/fonts/BarlowCondensed-Bold.woff2') format('woff2');
+  font-weight: 700 900;
+  font-display: swap;
+}
+
+:root {
+  --navy: #071634;
+  --navy2: #102a53;
+  --ink: #102443;
+  --muted: #64758c;
+  --blue: #0065ff;
+  --cyan: #03c8ff;
+  --line: #d9e4f1;
+  --paper: #fff;
+  --pale: #edf3fa;
+  --green: #198249;
+  --shadow: 0 6px 20px #12284a10, 0 1px 3px #12284a12;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+body { margin: 0; color: var(--ink); background: var(--pale); font: 14px/1.5 'Segoe UI', Arial, sans-serif; }
+button, input, select { font: inherit; }
+button, a, input, select { -webkit-tap-highlight-color: transparent; }
+button, a { touch-action: manipulation; }
+button { cursor: pointer; color: inherit; }
+button:disabled { cursor: default; opacity: .5; }
+a { color: inherit; text-decoration: none; }
+:is(button, a, input, select, summary):focus-visible { outline: 3px solid #009dff; outline-offset: 4px; }
+svg { width: 21px; height: 21px; stroke: currentColor; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+h1, h2, h3, h4, p { margin: 0; }
+h1, h2, h3, h4, .display { font-family: Barlow, 'Arial Narrow', sans-serif; }
+h2 { font-size: 27px; line-height: 1.15; }
+h3 { font-size: 23px; line-height: 1.2; }
+
+.wrap { width: min(1456px, calc(100% - 64px)); margin-inline: auto; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.skip-link { position: fixed; left: 16px; top: -70px; z-index: 100; padding: 12px 20px; background: white; color: var(--navy); }
+.skip-link:focus { top: 12px; }
+
+.header-account-button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 7px;
+  padding: 0 12px;
+  border: 1px solid #6491c6;
+  border-radius: 9px;
+  background: #173760;
+  color: white;
+  font: 700 13px/1.2 'Segoe UI', sans-serif;
+  white-space: nowrap;
+}
+.header-account-button:not(:disabled):hover { background: #244b79; }
+.header-account-button:disabled { opacity: .7; }
+.header-account-button:focus-visible { outline: 2px solid #8edfff; outline-offset: 3px; }
+.header-account-button svg { width: 18px; height: 18px; color: #c2ddff; }
+
+@media (min-width: 1700px) { .wrap { max-width: 1536px; } }
+@media (max-width: 1200px) { .wrap { width: calc(100% - 40px); } }
+@media (max-width: 700px) { .wrap { width: calc(100% - 28px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

@@ -394,8 +394,8 @@ test('a published Coaches cutoff is available while the same week’s full ballo
   assert.match(rankingTable(await page.go('/forge-rankings/')), /After Week 11/);
 });
 
-test('the rankings stylesheet disables animation and transitions for reduced motion', async () => {
-  const css = await readFile(new URL('../frontend/styles.css', import.meta.url), 'utf8');
+test('the shared stylesheet disables animation and transitions for reduced motion', async () => {
+  const css = await readFile(new URL('../frontend/base.css', import.meta.url), 'utf8');
   assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)[\s\S]*?animation:\s*none[\s\S]*?transition:\s*none/);
 });
 

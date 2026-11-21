@@ -198,6 +198,31 @@ try {
   assert.match(sitemap,/\/team\/252\//);
   assert.match(sitemap,/\/model-reports\/fcs\//);
   assert.doesNotMatch(sitemap,/\/(?:account|admin|my-teams)(?:\/|<)/);
+  if (unifiedSite) {
+    const portal = await (await fetch(base)).text();
+    assert.equal(portal, await (await fetch(base + 'sports/')).text());
+    assert.equal((portal.match(/<main\b/g) ?? []).length, 1);
+    assert.equal((portal.match(/<h1\b/g) ?? []).length, 1);
+    assert.match(portal, /<link rel="canonical" href="https:\/\/www\.thegamesdecide\.com\/">/);
+    assert.match(portal, /itemtype="https:\/\/schema\.org\/WebSite"/);
+    assert.match(portal, /property="og:description" content="Independent college football and basketball/);
+    assert.match(portal, /property="og:image" content="https:\/\/www\.thegamesdecide\.com\/social\/platform\.png"/);
+    assert.doesNotMatch(portal, /data-football-callback|The Games Decide Top 25|href="\/fonts\/[^"]+\.ttf/);
+    assert.equal((await fetch(base + 'social/platform.png')).headers.get('content-type'), 'image/png');
+    assert.match(sitemap, /<loc>https:\/\/www\.thegamesdecide\.com\/<\/loc>/);
+    assert.match(sitemap, /\/basketball\/rankings\//);
+
+    const noScript = await browser.newContext({ javaScriptEnabled: false });
+    try {
+      const page = await noScript.newPage();
+      await page.goto(base);
+      await page.getByRole('link', { name: 'Explore football' }).waitFor();
+      await page.getByRole('link', { name: 'Explore basketball' }).waitFor();
+      assert.equal(await page.getByRole('main').count(), 1);
+    } finally {
+      await noScript.close();
+    }
+  }
   for (const path of ['account','admin','my-teams']) {
     const response=await fetch(base+path), html=await response.text();
     assert.equal(response.status,200,path);

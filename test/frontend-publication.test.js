@@ -27,7 +27,9 @@ function fixture(sor = true) {
 async function browser(snapshot, detailResponse, now = Date.parse('2026-11-06T12:00:00Z')) {
   const nodes = new Map(), calls = [], errors = [], listeners = new Map();
   const node = id => {
-    if (!nodes.has(id)) nodes.set(id, { innerHTML: '', textContent: '', addEventListener() {}, querySelector: node, focus() {} });
+    if (!nodes.has(id)) nodes.set(id, { innerHTML: '', textContent: '', attributes: new Map(),
+      addEventListener() {}, querySelector: node, focus() {},
+      setAttribute(name, value) { this.attributes.set(name, value); } });
     return nodes.get(id);
   };
   const context = { document: { querySelector: node, addEventListener: (type, handler) => listeners.set(type, handler), title: '' },

@@ -103,6 +103,9 @@ export function mountBasketballBracket(root, {
   const projected = projectBasketballField(season, rankings, {excludedTeamIds});
   const projection = projected ? buildBracket(projected) : null;
   const practice = publicPractice ? null : buildBracket(practiceBasketballField(2027));
+  const introductoryPracticeField = practice ? 'format' : projection ? 'projection' : 'archive';
+  const introductoryPracticeLabel = practice || projection?.teamCount === 76 ? 'Try the 76-team format'
+    : projection ? 'Practice with the GD projection' : 'Practice the 2026 bracket';
   const official = officialBracket?.mode === 'official' && officialBracket.year === season &&
     officialSource(officialBracket.sourceUrl) && Number.isFinite(Date.parse(officialBracket.announcedAt)) &&
     Date.parse(officialBracket.announcedAt) <= Date.now() ? buildBracket(officialBracket) : null;
@@ -171,18 +174,20 @@ export function mountBasketballBracket(root, {
   }
 
   function introductoryState() {
+    const practiceButton = '<button type="button" class="bb-bracket-primary" data-bracket-action="demo">' +
+      introductoryPracticeLabel + '</button>';
     if (state.mode === 'official') {
       return '<div class="bb-bracket-empty"><p class="bb-bracket-kicker">2027 tournament</p>' +
         '<h2>Selection Sunday is ahead</h2><p>The NCAA will reveal the official teams, seeds and matchups on Selection Sunday. ' +
         'The 12 Opening Round games are scheduled for March 16–17 in Dayton and Wichita.</p>' +
         '<div class="bb-bracket-counts"><span><strong>76</strong> teams</span><span><strong>32</strong> automatic bids</span>' +
         '<span><strong>44</strong> at-large bids</span></div><div class="bb-bracket-actions">' +
-        '<button type="button" class="bb-bracket-primary" data-bracket-action="demo">Try the 76-team format</button>' +
+        practiceButton +
         '<a href="' + ncaaSites + '">NCAA Opening Round details</a></div></div>';
     }
     return '<div class="bb-bracket-empty"><h2>Projection needs more coverage</h2>' +
       '<p>We’ll show a projected field once the season rankings support all 32 automatic bids and 44 at-large places.</p>' +
-      '<button type="button" class="bb-bracket-primary" data-bracket-action="demo">Try the 76-team format</button></div>';
+      practiceButton + '</div>';
   }
 
   function formatTeam(team, id, game, bracket, result, picks, both, score, editing) {
@@ -581,7 +586,7 @@ export function mountBasketballBracket(root, {
       render({bracketMode: mode});
     } else if (action === 'demo') {
       state.mode = 'mine';
-      state.practiceField = 'format';
+      state.practiceField = introductoryPracticeField;
       state.region = 'east';
       state.round = 'all';
       camera.fit = true;
