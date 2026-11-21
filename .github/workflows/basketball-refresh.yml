@@ -28,7 +28,7 @@ concurrency:
 
 jobs:
   refresh:
-    if: github.ref == 'refs/heads/main' && vars.BASKETBALL_REFRESH_ENABLED == 'true'
+    if: github.ref == 'refs/heads/main' && ((github.event_name == 'workflow_dispatch' && inputs.mode == 'seed') || vars.BASKETBALL_REFRESH_ENABLED == 'true')
     runs-on: ubuntu-latest
     timeout-minutes: 14
     steps:

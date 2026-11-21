@@ -1,5 +1,14 @@
 name: Engine checks
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      basketball_preflight:
+        description: Verify provider access or test the private seed without publishing
+        type: choice
+        options: [none, verify, verify-seed]
+        default: none
 permissions:
   contents: read
 jobs:
@@ -25,6 +34,16 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
+      - name: Verify basketball release prerequisites
+        if: github.event_name == 'workflow_dispatch' && github.repository == 'egemicated/-fbs-ranking-engine-https-github.com-egemicated-fbs-ranking-engine-' && inputs.basketball_preflight != 'none'
+        env:
+          PREFLIGHT_MODE: ${{ inputs.basketball_preflight }}
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+          CBBD_API_KEY: ${{ secrets.CBBD_API_KEY }}
+          BASKETBALL_SHARED_ACCOUNT_VERIFIED: ${{ vars.BASKETBALL_SHARED_ACCOUNT_VERIFIED }}
+          BASKETBALL_REFRESH_CACHE_KEY: ${{ inputs.basketball_preflight == 'verify-seed' && secrets.BASKETBALL_REFRESH_CACHE_KEY || '' }}
+          BASKETBALL_REFRESH_SEED_URL: ${{ inputs.basketball_preflight == 'verify-seed' && secrets.BASKETBALL_REFRESH_SEED_URL || '' }}
+        run: node scripts/run-basketball-refresh.mjs --mode "$PREFLIGHT_MODE"
       - name: Full Node test suite
         run: npm test
       - name: Isolated migrations, privacy, and account SQL tests

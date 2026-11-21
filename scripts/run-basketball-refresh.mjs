@@ -94,15 +94,20 @@ function assertManagedRunner() {
   }
 }
 
-async function acquire(season, dataset, now, plan, memo) {
+function managedCredentials() {
   const footballKey = process.env.CFBD_API_KEY;
   const separateKey = process.env.CBBD_API_KEY;
   if (!footballKey || (separateKey && separateKey !== footballKey && process.env.BASKETBALL_SHARED_ACCOUNT_VERIFIED !== 'true')) {
     throw new Error('Confirm basketball access belongs to the production football quota before enabling acquisition.');
   }
+  return { footballKey, basketballKey: separateKey || footballKey };
+}
+
+async function acquire(season, dataset, now, plan, memo) {
+  const { footballKey, basketballKey } = managedCredentials();
   const ledger = await readBasketballLedger(paths.ledgerPath);
   const client = createBasketballClient({
-    token: separateKey || footballKey, ledger, maxCalls: MAX_RUN_CALLS, now: () => new Date(),
+    token: basketballKey, ledger, maxCalls: MAX_RUN_CALLS, now: () => new Date(),
     saveLedger: value => atomicJson(paths.ledgerPath, value, { spacing: 0 }),
   });
   const args = { season, ...paths, now, rolling: Boolean(dataset), players: plan.players, boxes: plan.boxes, refreshTeams: plan.refreshTeams };
@@ -159,6 +164,21 @@ async function main() {
   } });
   const now = new Date(), activeYear = activeBasketballYear(now);
   const cacheKey = process.env.BASKETBALL_REFRESH_CACHE_KEY;
+  if (values.mode === 'verify' || values.mode === 'verify-seed') {
+    const { footballKey, basketballKey } = managedCredentials();
+    await getManagedQuota(createBasketballClient({ token: basketballKey }), footballKey);
+    console.log('Football and basketball report the same shared provider allowance. No game or statistics calls were made.');
+    if (values.mode === 'verify-seed') {
+      const envelope = await readBasketballSeed(process.env.BASKETBALL_REFRESH_SEED_URL);
+      const state = openBasketballState(envelope, cacheKey);
+      if (state.season !== activeYear) throw new Error('The working seed does not include the active basketball season.');
+      await restoreBasketballState(paths, state);
+      await runProcess(process.execPath, ['scripts/publish-basketball-site.mjs', '--season', String(activeYear),
+        '--state-dir', paths.stateDir, '--no-capture'], { cwd: root });
+      console.log('The private working seed restored and built a verified basketball publication for local browser checks.');
+    }
+    return;
+  }
   if (values.mode === 'pack') {
     const state = await assembleBasketballState(paths, activeYear, { checks: [] });
     state.ops = newOps(state);
@@ -254,6 +274,9 @@ async function main() {
 
 main().catch(error => {
   if (process.argv.includes('pack') || process.argv.includes('inspect')) console.error(error.message);
+  else if (process.argv.includes('verify') || process.argv.includes('verify-seed')) {
+    console.error('Basketball preflight failed. Check the requested credential and private seed configuration.');
+  }
   else console.error('Basketball refresh did not complete. Review the protected working cache and the job summary.');
   process.exitCode = 1;
 });
