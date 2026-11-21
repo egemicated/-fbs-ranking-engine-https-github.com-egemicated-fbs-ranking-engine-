@@ -4,16 +4,16 @@
   "frozenManifestSha256": "a0ca4661ef41d8e014afad1fee760bd85d5ddb1bb4d6e5d440cd716659bd231f",
   "frozenAt": "2026-11-19T00:17:44.341Z",
   "season": 2026,
-  "evaluatedAt": "2026-11-20T14:13:29.270Z",
-  "asOf": "2026-11-20T14:13:27.254Z",
-  "resultScheduleAsOf": "2026-11-20T14:13:26.450Z",
-  "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
-  "resultSnapshotHash": "e28b48d559b8ddde703168997b86045be1178fed1b779f2a60f5b37ff7fcc9ec",
+  "evaluatedAt": "2026-11-21T15:38:20.294Z",
+  "asOf": "2026-11-21T15:38:18.357Z",
+  "resultScheduleAsOf": "2026-11-21T15:38:17.294Z",
+  "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+  "resultSnapshotHash": "fd7b592b680086422f7cdd1bb51613ad03ca780f54c454f7d456ec71647fd076",
   "status": "awaiting-first-scored-game",
-  "observationsRead": 3,
+  "observationsRead": 4,
   "otherSeasonObservations": 0,
   "selectedForecasts": 4,
-  "duplicateCheckpoints": 8,
+  "duplicateCheckpoints": 12,
   "pending": [
     {
       "gameId": "401856746",
@@ -249,10 +249,10 @@
   },
   "evaluated": [],
   "interpretation": "Only confirmed decisive finals with matching identity, subdivision, venue and a corrected kickoff strictly after capture within seven days are graded. Both models retain the same captured Strength graph. No graded games means evidence is pending, not success. Saved public picks and retrospective replays are not included; no automatic promotion.",
-  "reportSha256": "6b84064166eb11d3def3b29426662cbb686ccb5513b5f5d66105f86ab51b5064",
+  "reportSha256": "615c0e6f50d77dcbdd1d29b61fe8df921165fbefab51a7e2c542441d4c0b7da7",
   "inputSha256": {
-    "snapshot": "7d6c08ddf08db533a69ff51661fd0928de9be1670e3a93618785b653798d48dc",
-    "weekly": "30e8a4ba4fb51d0ba3f7303953693a2004133f07be5afbe4a08149f7668587d4",
+    "snapshot": "f7741018cfdc0c6ab81afbd88443675850f7b2e548cd859e886586965cbd1ac5",
+    "weekly": "0b56e7a505e868516e3872a8eb1f570f6b7a8746221cfcafb5b7171ebc0bd080",
     "evaluatorManifest": "544d400bc96ad715603b39c7bcc7f9285f79541b7f2dafe8a60adc2764e10bc8"
   }
 }

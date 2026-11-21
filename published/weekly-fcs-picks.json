@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "season": 2026,
-  "asOf": "2026-11-20T14:13:29.896Z",
+  "asOf": "2026-11-21T15:38:20.960Z",
   "source": {
     "provider": "cfbd",
-    "scheduleAsOf": "2026-11-20T14:13:26.450Z",
-    "rankingAsOf": "2026-11-20T14:13:27.254Z",
-    "snapshotHash": "e28b48d559b8ddde703168997b86045be1178fed1b779f2a60f5b37ff7fcc9ec",
+    "scheduleAsOf": "2026-11-21T15:38:17.294Z",
+    "rankingAsOf": "2026-11-21T15:38:18.357Z",
+    "snapshotHash": "fd7b592b680086422f7cdd1bb51613ad03ca780f54c454f7d456ec71647fd076",
     "modelVersion": "0.2.0",
     "probabilityScale": 6.74434303402901,
     "calibrated": true,
@@ -12945,26 +12945,6 @@
       "replay": null
     },
     {
-      "id": "401866696",
-      "week": 12,
-      "seasonType": "regular",
-      "home": "2803",
-      "away": "227",
-      "startDate": "2026-11-21T18:00:00.000Z",
-      "neutral": false,
-      "status": "scheduled",
-      "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
-      "pick": {
-        "capturedAt": "2026-11-15T18:04:42.540Z",
-        "homeWinProbability": 0.5552250767766668,
-        "favored": "home"
-      },
-      "estimate": null,
-      "replay": null
-    },
-    {
       "id": "401866698",
       "week": 12,
       "seasonType": "regular",
@@ -13199,6 +13179,26 @@
       "pick": {
         "capturedAt": "2026-11-15T18:04:42.540Z",
         "homeWinProbability": 0.8437397901329388,
+        "favored": "home"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
+      "id": "401866696",
+      "week": 12,
+      "seasonType": "regular",
+      "home": "2803",
+      "away": "227",
+      "startDate": "2026-11-21T18:20:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-15T18:04:42.540Z",
+        "homeWinProbability": 0.5552250767766668,
         "favored": "home"
       },
       "estimate": null,

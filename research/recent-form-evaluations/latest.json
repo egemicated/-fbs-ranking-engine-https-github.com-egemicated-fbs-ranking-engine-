@@ -5,15 +5,55 @@
   "frozenAt": "2026-11-16T14:53:35.000Z",
   "season": 2026,
   "status": "awaiting-first-scored-game",
-  "asOf": "2026-11-20T14:13:27.254Z",
-  "generatedAt": "2026-11-20T14:13:29.794Z",
-  "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
-  "observationsRead": 2,
-  "selectedForecasts": 3,
+  "asOf": "2026-11-21T15:38:18.357Z",
+  "generatedAt": "2026-11-21T15:38:20.854Z",
+  "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+  "observationsRead": 3,
+  "selectedForecasts": 16,
   "duplicateCheckpoints": 0,
   "pending": [
     {
+      "gameId": "401856756",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401856759",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401856762",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
       "gameId": "401856879",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401856880",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401858536",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401858544",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401862838",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401862840",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401864546",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401864549",
       "reason": "awaiting-confirmed-final"
     },
     {
@@ -22,6 +62,18 @@
     },
     {
       "gameId": "401866471",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401866472",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401866473",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401869930",
       "reason": "awaiting-confirmed-final"
     }
   ],
@@ -54,5 +106,5 @@
   },
   "evaluated": [],
   "interpretation": "Compare the same FBS vs. FBS outcomes from the first valid paired pregame forecast for each game. A 50% forecast receives half credit for accuracy. Brier score and log loss reward the probabilities themselves, with lower values better. Early summaries are descriptive.",
-  "reportSha256": "3d9a061f304b094bfa9601c0659e921168e2fbe1340cc55a56f21b982843bc92"
+  "reportSha256": "34148b84866daef9a92d3dc5110113dcb490289eb9da6f4f028414c446be9b88"
 }

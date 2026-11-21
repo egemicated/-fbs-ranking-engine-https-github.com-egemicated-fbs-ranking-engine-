@@ -4,15 +4,15 @@
   "protocolSha256": "667669f3315fabd1eb9c0ee28642f05e6f8d475971f68410cf320a982fd4b5eb",
   "frozenAt": "2026-11-06T22:49:59.146Z",
   "season": 2026,
-  "asOf": "2026-11-20T14:13:27.254Z",
-  "generatedAt": "2026-11-20T14:13:58.449Z",
-  "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+  "asOf": "2026-11-21T15:38:18.357Z",
+  "generatedAt": "2026-11-21T15:38:45.432Z",
+  "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
   "selectionRule": "First valid immutable captured-before-kickoff forecast per season/game; choose before reading eventual outcomes or rescheduling exclusions.",
-  "observationsRead": 11,
+  "observationsRead": 12,
   "ignoredOtherSeasonObservations": 0,
   "ignoredAfterResultCutoffObservations": 1,
-  "eligibleForecasts": 135,
-  "duplicateCheckpoints": 539,
+  "eligibleForecasts": 136,
+  "duplicateCheckpoints": 601,
   "pending": [
     {
       "gameId": "401856748",
@@ -43,15 +43,11 @@
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
-      "gameId": "401856869",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
       "gameId": "401856870",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
-      "gameId": "401858303",
+      "gameId": "401856879",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
@@ -80,10 +76,6 @@
     },
     {
       "gameId": "401858527",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401858529",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
@@ -151,23 +143,11 @@
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
-      "gameId": "401864542",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
       "gameId": "401864543",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
       "gameId": "401864544",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401864545",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401866468",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
@@ -271,8 +251,8 @@
   ],
   "trackingCoverage": {
     "rule": "All currently sourced confirmed-completed FBS-FBS games with corrected kickoff from protocol freeze through result asOf; no claim of complete contemporaneous schedule availability.",
-    "completedFbsFbsGamesSinceFreeze": 128,
-    "scored": 72,
+    "completedFbsFbsGamesSinceFreeze": 134,
+    "scored": 78,
     "selectedButExcluded": 1,
     "selectedButPending": 0,
     "noSavedForecastCount": 55,
@@ -303,22 +283,22 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401856849",
-        "kickoff": "2026-11-07T17:00:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401862822",
-        "kickoff": "2026-11-07T17:00:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
         "gameId": "401858285",
         "kickoff": "2026-11-07T17:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
         "gameId": "401856853",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856849",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858512",
         "kickoff": "2026-11-07T17:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -338,7 +318,7 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401858512",
+        "gameId": "401862822",
         "kickoff": "2026-11-07T17:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -358,12 +338,12 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401869945",
+        "gameId": "401856854",
         "kickoff": "2026-11-07T18:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401856854",
+        "gameId": "401869945",
         "kickoff": "2026-11-07T18:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -373,12 +353,12 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401871073",
+        "gameId": "401869936",
         "kickoff": "2026-11-07T20:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401869936",
+        "gameId": "401871073",
         "kickoff": "2026-11-07T20:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -388,7 +368,12 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401862820",
+        "gameId": "401856851",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401862819",
         "kickoff": "2026-11-07T20:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -403,22 +388,7 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401856851",
-        "kickoff": "2026-11-07T20:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
         "gameId": "401871076",
-        "kickoff": "2026-11-07T20:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401862819",
-        "kickoff": "2026-11-07T20:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401858514",
         "kickoff": "2026-11-07T20:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -428,13 +398,18 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401856850",
-        "kickoff": "2026-11-07T20:45:00.000Z",
+        "gameId": "401862820",
+        "kickoff": "2026-11-07T20:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401864534",
-        "kickoff": "2026-11-07T21:00:00.000Z",
+        "gameId": "401858514",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856850",
+        "kickoff": "2026-11-07T20:45:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
@@ -449,6 +424,11 @@
       },
       {
         "gameId": "401871074",
+        "kickoff": "2026-11-07T21:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401864534",
         "kickoff": "2026-11-07T21:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -483,17 +463,22 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401858287",
-        "kickoff": "2026-11-08T00:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401858511",
+        "gameId": "401858291",
         "kickoff": "2026-11-08T00:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
         "gameId": "401856741",
+        "kickoff": "2026-11-08T00:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401856852",
+        "kickoff": "2026-11-08T00:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858511",
         "kickoff": "2026-11-08T00:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -508,12 +493,7 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401856852",
-        "kickoff": "2026-11-08T00:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401858291",
+        "gameId": "401858287",
         "kickoff": "2026-11-08T00:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -528,17 +508,17 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401864532",
-        "kickoff": "2026-11-08T02:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
         "gameId": "401856856",
         "kickoff": "2026-11-08T02:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
         "gameId": "401860913",
+        "kickoff": "2026-11-08T02:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401864532",
         "kickoff": "2026-11-08T02:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -556,186 +536,186 @@
   },
   "scores": {
     "primary": {
-      "games": 72,
+      "games": 78,
       "models": {
         "sor": {
-          "accuracy": 0.6805555555555556,
+          "accuracy": 0.6923076923076923,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.6527777777777778,
-          "brier": 0.2234040894839252,
-          "logLoss": 0.6401226510138214,
-          "probabilityError": 0.047281825835954444
+          "probabilityAccuracy": 0.6666666666666666,
+          "brier": 0.2162453860078213,
+          "logLoss": 0.6228199580289293,
+          "probabilityError": 0.052966289514304814
         },
         "strength": {
-          "accuracy": 0.7222222222222222,
+          "accuracy": 0.717948717948718,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.6805555555555556,
-          "brier": 0.20958775963111637,
-          "logLoss": 0.6037011137316262,
-          "probabilityError": 0.06401695751406046
+          "probabilityAccuracy": 0.6923076923076923,
+          "brier": 0.2045266983268253,
+          "logLoss": 0.5909555502441288,
+          "probabilityError": 0.06480970949795452
         },
         "performance": {
-          "accuracy": 0.6388888888888888,
+          "accuracy": 0.6538461538461539,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.5972222222222222,
-          "brier": 0.22854044634805726,
-          "logLoss": 0.6477400299353824,
-          "probabilityError": 0.06355330726213834
+          "probabilityAccuracy": 0.6153846153846154,
+          "brier": 0.22071659751034445,
+          "logLoss": 0.6291541931607497,
+          "probabilityError": 0.0689594439846127
         },
         "triple": {
-          "accuracy": 0.7152777777777778,
+          "accuracy": 0.7243589743589743,
           "rankingTies": 1,
-          "probabilityAccuracy": 0.6805555555555556,
-          "brier": 0.21617830380331396,
-          "logLoss": 0.6207972754400221,
-          "probabilityError": 0.056588665473299785
+          "probabilityAccuracy": 0.6923076923076923,
+          "brier": 0.2087249472526961,
+          "logLoss": 0.6023221874423211,
+          "probabilityError": 0.06052361232083993
         },
         "sor+strength": {
           "accuracy": 0.6666666666666666,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.7222222222222222,
-          "brier": 0.214915355365003,
-          "logLoss": 0.6208187509984415,
-          "probabilityError": 0.05394672695038513
+          "probabilityAccuracy": 0.7307692307692307,
+          "brier": 0.20820492933727103,
+          "logLoss": 0.6040502765444712,
+          "probabilityError": 0.057324402877151494
         },
         "sor+performance": {
-          "accuracy": 0.6666666666666666,
+          "accuracy": 0.6794871794871795,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.6666666666666666,
-          "brier": 0.22248547029304996,
-          "logLoss": 0.6341657211068936,
-          "probabilityError": 0.05291736046897114
+          "probabilityAccuracy": 0.6794871794871795,
+          "brier": 0.21414886863408691,
+          "logLoss": 0.6139705604296704,
+          "probabilityError": 0.058442716597584835
         },
         "strength+performance": {
-          "accuracy": 0.6944444444444444,
+          "accuracy": 0.7051282051282052,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.625,
-          "brier": 0.21508213984843907,
-          "logLoss": 0.6159705233027651,
-          "probabilityError": 0.06428096395735922
+          "probabilityAccuracy": 0.6410256410256411,
+          "brier": 0.20821932329974102,
+          "logLoss": 0.5990814996899574,
+          "probabilityError": 0.06736644685735312
         }
       }
     },
     "allEligible": {
-      "games": 72,
+      "games": 78,
       "models": {
         "sor": {
-          "accuracy": 0.6805555555555556,
+          "accuracy": 0.6923076923076923,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.6527777777777778,
-          "brier": 0.2234040894839252,
-          "logLoss": 0.6401226510138214,
-          "probabilityError": 0.047281825835954444
+          "probabilityAccuracy": 0.6666666666666666,
+          "brier": 0.2162453860078213,
+          "logLoss": 0.6228199580289293,
+          "probabilityError": 0.052966289514304814
         },
         "strength": {
-          "accuracy": 0.7222222222222222,
+          "accuracy": 0.717948717948718,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.6805555555555556,
-          "brier": 0.20958775963111637,
-          "logLoss": 0.6037011137316262,
-          "probabilityError": 0.06401695751406046
+          "probabilityAccuracy": 0.6923076923076923,
+          "brier": 0.2045266983268253,
+          "logLoss": 0.5909555502441288,
+          "probabilityError": 0.06480970949795452
         },
         "performance": {
-          "accuracy": 0.6388888888888888,
+          "accuracy": 0.6538461538461539,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.5972222222222222,
-          "brier": 0.22854044634805726,
-          "logLoss": 0.6477400299353824,
-          "probabilityError": 0.06355330726213834
+          "probabilityAccuracy": 0.6153846153846154,
+          "brier": 0.22071659751034445,
+          "logLoss": 0.6291541931607497,
+          "probabilityError": 0.0689594439846127
         },
         "triple": {
-          "accuracy": 0.7152777777777778,
+          "accuracy": 0.7243589743589743,
           "rankingTies": 1,
-          "probabilityAccuracy": 0.6805555555555556,
-          "brier": 0.21617830380331396,
-          "logLoss": 0.6207972754400221,
-          "probabilityError": 0.056588665473299785
+          "probabilityAccuracy": 0.6923076923076923,
+          "brier": 0.2087249472526961,
+          "logLoss": 0.6023221874423211,
+          "probabilityError": 0.06052361232083993
         },
         "sor+strength": {
           "accuracy": 0.6666666666666666,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.7222222222222222,
-          "brier": 0.214915355365003,
-          "logLoss": 0.6208187509984415,
-          "probabilityError": 0.05394672695038513
+          "probabilityAccuracy": 0.7307692307692307,
+          "brier": 0.20820492933727103,
+          "logLoss": 0.6040502765444712,
+          "probabilityError": 0.057324402877151494
         },
         "sor+performance": {
-          "accuracy": 0.6666666666666666,
+          "accuracy": 0.6794871794871795,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.6666666666666666,
-          "brier": 0.22248547029304996,
-          "logLoss": 0.6341657211068936,
-          "probabilityError": 0.05291736046897114
+          "probabilityAccuracy": 0.6794871794871795,
+          "brier": 0.21414886863408691,
+          "logLoss": 0.6139705604296704,
+          "probabilityError": 0.058442716597584835
         },
         "strength+performance": {
-          "accuracy": 0.6944444444444444,
+          "accuracy": 0.7051282051282052,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.625,
-          "brier": 0.21508213984843907,
-          "logLoss": 0.6159705233027651,
-          "probabilityError": 0.06428096395735922
+          "probabilityAccuracy": 0.6410256410256411,
+          "brier": 0.20821932329974102,
+          "logLoss": 0.5990814996899574,
+          "probabilityError": 0.06736644685735312
         }
       }
     },
     "groups": {
       "regular": {
-        "games": 72,
+        "games": 78,
         "models": {
           "sor": {
-            "accuracy": 0.6805555555555556,
+            "accuracy": 0.6923076923076923,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6527777777777778,
-            "brier": 0.2234040894839252,
-            "logLoss": 0.6401226510138214,
-            "probabilityError": 0.047281825835954444
+            "probabilityAccuracy": 0.6666666666666666,
+            "brier": 0.2162453860078213,
+            "logLoss": 0.6228199580289293,
+            "probabilityError": 0.052966289514304814
           },
           "strength": {
-            "accuracy": 0.7222222222222222,
+            "accuracy": 0.717948717948718,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6805555555555556,
-            "brier": 0.20958775963111637,
-            "logLoss": 0.6037011137316262,
-            "probabilityError": 0.06401695751406046
+            "probabilityAccuracy": 0.6923076923076923,
+            "brier": 0.2045266983268253,
+            "logLoss": 0.5909555502441288,
+            "probabilityError": 0.06480970949795452
           },
           "performance": {
-            "accuracy": 0.6388888888888888,
+            "accuracy": 0.6538461538461539,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.5972222222222222,
-            "brier": 0.22854044634805726,
-            "logLoss": 0.6477400299353824,
-            "probabilityError": 0.06355330726213834
+            "probabilityAccuracy": 0.6153846153846154,
+            "brier": 0.22071659751034445,
+            "logLoss": 0.6291541931607497,
+            "probabilityError": 0.0689594439846127
           },
           "triple": {
-            "accuracy": 0.7152777777777778,
+            "accuracy": 0.7243589743589743,
             "rankingTies": 1,
-            "probabilityAccuracy": 0.6805555555555556,
-            "brier": 0.21617830380331396,
-            "logLoss": 0.6207972754400221,
-            "probabilityError": 0.056588665473299785
+            "probabilityAccuracy": 0.6923076923076923,
+            "brier": 0.2087249472526961,
+            "logLoss": 0.6023221874423211,
+            "probabilityError": 0.06052361232083993
           },
           "sor+strength": {
             "accuracy": 0.6666666666666666,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.7222222222222222,
-            "brier": 0.214915355365003,
-            "logLoss": 0.6208187509984415,
-            "probabilityError": 0.05394672695038513
+            "probabilityAccuracy": 0.7307692307692307,
+            "brier": 0.20820492933727103,
+            "logLoss": 0.6040502765444712,
+            "probabilityError": 0.057324402877151494
           },
           "sor+performance": {
-            "accuracy": 0.6666666666666666,
+            "accuracy": 0.6794871794871795,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6666666666666666,
-            "brier": 0.22248547029304996,
-            "logLoss": 0.6341657211068936,
-            "probabilityError": 0.05291736046897114
+            "probabilityAccuracy": 0.6794871794871795,
+            "brier": 0.21414886863408691,
+            "logLoss": 0.6139705604296704,
+            "probabilityError": 0.058442716597584835
           },
           "strength+performance": {
-            "accuracy": 0.6944444444444444,
+            "accuracy": 0.7051282051282052,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.625,
-            "brier": 0.21508213984843907,
-            "logLoss": 0.6159705233027651,
-            "probabilityError": 0.06428096395735922
+            "probabilityAccuracy": 0.6410256410256411,
+            "brier": 0.20821932329974102,
+            "logLoss": 0.5990814996899574,
+            "probabilityError": 0.06736644685735312
           }
         }
       },
@@ -748,185 +728,185 @@
         "models": {}
       },
       "homeVenue": {
-        "games": 72,
+        "games": 78,
         "models": {
           "sor": {
-            "accuracy": 0.6805555555555556,
+            "accuracy": 0.6923076923076923,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6527777777777778,
-            "brier": 0.2234040894839252,
-            "logLoss": 0.6401226510138214,
-            "probabilityError": 0.047281825835954444
+            "probabilityAccuracy": 0.6666666666666666,
+            "brier": 0.2162453860078213,
+            "logLoss": 0.6228199580289293,
+            "probabilityError": 0.052966289514304814
           },
           "strength": {
-            "accuracy": 0.7222222222222222,
+            "accuracy": 0.717948717948718,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6805555555555556,
-            "brier": 0.20958775963111637,
-            "logLoss": 0.6037011137316262,
-            "probabilityError": 0.06401695751406046
+            "probabilityAccuracy": 0.6923076923076923,
+            "brier": 0.2045266983268253,
+            "logLoss": 0.5909555502441288,
+            "probabilityError": 0.06480970949795452
           },
           "performance": {
-            "accuracy": 0.6388888888888888,
+            "accuracy": 0.6538461538461539,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.5972222222222222,
-            "brier": 0.22854044634805726,
-            "logLoss": 0.6477400299353824,
-            "probabilityError": 0.06355330726213834
+            "probabilityAccuracy": 0.6153846153846154,
+            "brier": 0.22071659751034445,
+            "logLoss": 0.6291541931607497,
+            "probabilityError": 0.0689594439846127
           },
           "triple": {
-            "accuracy": 0.7152777777777778,
+            "accuracy": 0.7243589743589743,
             "rankingTies": 1,
-            "probabilityAccuracy": 0.6805555555555556,
-            "brier": 0.21617830380331396,
-            "logLoss": 0.6207972754400221,
-            "probabilityError": 0.056588665473299785
+            "probabilityAccuracy": 0.6923076923076923,
+            "brier": 0.2087249472526961,
+            "logLoss": 0.6023221874423211,
+            "probabilityError": 0.06052361232083993
           },
           "sor+strength": {
             "accuracy": 0.6666666666666666,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.7222222222222222,
-            "brier": 0.214915355365003,
-            "logLoss": 0.6208187509984415,
-            "probabilityError": 0.05394672695038513
+            "probabilityAccuracy": 0.7307692307692307,
+            "brier": 0.20820492933727103,
+            "logLoss": 0.6040502765444712,
+            "probabilityError": 0.057324402877151494
           },
           "sor+performance": {
-            "accuracy": 0.6666666666666666,
+            "accuracy": 0.6794871794871795,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6666666666666666,
-            "brier": 0.22248547029304996,
-            "logLoss": 0.6341657211068936,
-            "probabilityError": 0.05291736046897114
+            "probabilityAccuracy": 0.6794871794871795,
+            "brier": 0.21414886863408691,
+            "logLoss": 0.6139705604296704,
+            "probabilityError": 0.058442716597584835
           },
           "strength+performance": {
-            "accuracy": 0.6944444444444444,
+            "accuracy": 0.7051282051282052,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.625,
-            "brier": 0.21508213984843907,
-            "logLoss": 0.6159705233027651,
-            "probabilityError": 0.06428096395735922
+            "probabilityAccuracy": 0.6410256410256411,
+            "brier": 0.20821932329974102,
+            "logLoss": 0.5990814996899574,
+            "probabilityError": 0.06736644685735312
           }
         }
       },
       "componentTop25": {
-        "games": 24,
+        "games": 26,
         "models": {
           "sor": {
-            "accuracy": 0.8333333333333334,
+            "accuracy": 0.8461538461538461,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.7083333333333334,
-            "brier": 0.18980243482417822,
-            "logLoss": 0.5599395090468205,
-            "probabilityError": 0.0332492048168166
+            "probabilityAccuracy": 0.7307692307692307,
+            "brier": 0.18500758418087912,
+            "logLoss": 0.5504726852970788,
+            "probabilityError": 0.057633087733104174
           },
           "strength": {
-            "accuracy": 0.7916666666666666,
+            "accuracy": 0.8076923076923077,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6666666666666666,
-            "brier": 0.1995052387839795,
-            "logLoss": 0.5820131500935753,
-            "probabilityError": 0.024128219293586217
+            "probabilityAccuracy": 0.6923076923076923,
+            "brier": 0.1873651052656625,
+            "logLoss": 0.5547656117124438,
+            "probabilityError": 0.03793042275410591
           },
           "performance": {
-            "accuracy": 0.7083333333333334,
+            "accuracy": 0.7307692307692307,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.625,
-            "brier": 0.19318354240496127,
-            "logLoss": 0.564170894173186,
-            "probabilityError": 0.054050633892972454
+            "probabilityAccuracy": 0.6538461538461539,
+            "brier": 0.18718215887448014,
+            "logLoss": 0.5523225956357536,
+            "probabilityError": 0.07554364926529915
           },
           "triple": {
-            "accuracy": 0.7916666666666666,
+            "accuracy": 0.8076923076923077,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.75,
-            "brier": 0.19109484737812912,
-            "logLoss": 0.5622228590297736,
-            "probabilityError": 0.0398464404136205
+            "probabilityAccuracy": 0.7692307692307693,
+            "brier": 0.18102806533377877,
+            "logLoss": 0.5406351297118227,
+            "probabilityError": 0.055659117944816754
           },
           "sor+strength": {
-            "accuracy": 0.7916666666666666,
+            "accuracy": 0.8076923076923077,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.75,
-            "brier": 0.19194674221750266,
-            "logLoss": 0.5662794145861468,
-            "probabilityError": 0.0299300605587607
+            "probabilityAccuracy": 0.7692307692307693,
+            "brier": 0.18228605202862266,
+            "logLoss": 0.5455264104107539,
+            "probabilityError": 0.04732295494184432
           },
           "sor+performance": {
-            "accuracy": 0.7916666666666666,
+            "accuracy": 0.8076923076923077,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.75,
-            "brier": 0.18788481634331042,
-            "logLoss": 0.5532141139083036,
-            "probabilityError": 0.046220203771207245
+            "probabilityAccuracy": 0.7692307692307693,
+            "brier": 0.17995399640820775,
+            "logLoss": 0.537121406723765,
+            "probabilityError": 0.06505002471545543
           },
           "strength+performance": {
-            "accuracy": 0.75,
+            "accuracy": 0.7692307692307693,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6666666666666666,
-            "brier": 0.19582517447044986,
-            "logLoss": 0.5706790268950869,
-            "probabilityError": 0.04239936973511715
+            "probabilityAccuracy": 0.6923076923076923,
+            "brier": 0.18510136631059854,
+            "logLoss": 0.5474073355572732,
+            "probabilityError": 0.05715121938538195
           }
         }
       },
       "componentsDisagree": {
-        "games": 22,
+        "games": 23,
         "models": {
           "sor": {
-            "accuracy": 0.5454545454545454,
+            "accuracy": 0.5652173913043478,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.5909090909090909,
-            "brier": 0.24086332171329888,
-            "logLoss": 0.6778118242018805,
-            "probabilityError": 0.0691492446790179
+            "probabilityAccuracy": 0.6086956521739131,
+            "brier": 0.23631171005693935,
+            "logLoss": 0.668362708879085,
+            "probabilityError": 0.050098378898237525
           },
           "strength": {
-            "accuracy": 0.6818181818181818,
+            "accuracy": 0.6521739130434783,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6363636363636364,
-            "brier": 0.23163289955570418,
-            "logLoss": 0.6531269716933215,
-            "probabilityError": 0.10430336365415149
+            "probabilityAccuracy": 0.6521739130434783,
+            "brier": 0.23144774695087628,
+            "logLoss": 0.6528981439617206,
+            "probabilityError": 0.0790363518823616
           },
           "performance": {
-            "accuracy": 0.4090909090909091,
+            "accuracy": 0.43478260869565216,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.5,
-            "brier": 0.2883598635826781,
-            "logLoss": 0.7776600817859827,
-            "probabilityError": 0.06799311563168248
+            "probabilityAccuracy": 0.5217391304347826,
+            "brier": 0.2797292573185294,
+            "logLoss": 0.759341461561165,
+            "probabilityError": 0.05200385974938898
           },
           "triple": {
-            "accuracy": 0.6590909090909091,
+            "accuracy": 0.6739130434782609,
             "rankingTies": 1,
-            "probabilityAccuracy": 0.5454545454545454,
-            "brier": 0.24167857250769934,
-            "logLoss": 0.6748198771750956,
-            "probabilityError": 0.08144256978240438
+            "probabilityAccuracy": 0.5652173913043478,
+            "brier": 0.23702918191993022,
+            "logLoss": 0.6653668473377199,
+            "probabilityError": 0.06194189273703265
           },
           "sor+strength": {
-            "accuracy": 0.5,
+            "accuracy": 0.4782608695652174,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.7272727272727273,
-            "brier": 0.23036474952766284,
-            "logLoss": 0.6544188715417938,
-            "probabilityError": 0.08506510072353123
+            "probabilityAccuracy": 0.7391304347826086,
+            "brier": 0.22779219071714413,
+            "logLoss": 0.6491842704815898,
+            "probabilityError": 0.06337712856190017
           },
           "sor+performance": {
-            "accuracy": 0.5,
+            "accuracy": 0.5217391304347826,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.5454545454545454,
-            "brier": 0.25302348370013744,
-            "logLoss": 0.6982155814747746,
-            "probabilityError": 0.0690503369396155
+            "probabilityAccuracy": 0.5652173913043478,
+            "brier": 0.2464824092592669,
+            "logLoss": 0.6846441721167666,
+            "probabilityError": 0.052122965387717275
           },
           "strength+performance": {
-            "accuracy": 0.5909090909090909,
+            "accuracy": 0.6086956521739131,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.45454545454545453,
-            "brier": 0.2553021553637361,
-            "logLoss": 0.7024535244459806,
-            "probabilityError": 0.08801470826995236
+            "probabilityAccuracy": 0.4782608695652174,
+            "brier": 0.2502967002839357,
+            "logLoss": 0.6923054114596993,
+            "probabilityError": 0.06790964381449215
           }
         }
       }
@@ -992,7 +972,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-14T22:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -1055,7 +1035,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-15T00:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -1118,7 +1098,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-14T17:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -1181,7 +1161,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T03:15:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -1244,7 +1224,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -1307,7 +1287,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T19:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -1370,7 +1350,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-15T02:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -1433,9 +1413,72 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-15T03:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
+    },
+    {
+      "season": 2026,
+      "gameId": "401856869",
+      "home": "2116",
+      "away": "66",
+      "kickoff": "2026-11-20T23:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-14T17:02:39.519Z",
+      "forecastCapturedAt": "2026-11-14T17:03:14.860Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 4.379562043795616,
+          "homeWinProbability": 0.6309793317210686,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": -8.759124087591239,
+          "homeWinProbability": 0.5231620929029841,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": 13.138686131386862,
+          "homeWinProbability": 0.7002402303389318,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 2.919708029197082,
+          "homeWinProbability": 0.6329269977388549,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": -2.189781021897808,
+          "homeWinProbability": 0.5862417410060163,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": 8.759124087591239,
+          "homeWinProbability": 0.6797207912459563,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 2.189781021897815,
+          "homeWinProbability": 0.6255982257943673,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "b7300f183977484ce41bbacd56e268804053448d3b6515496a57a2ac18de4b3a",
+      "snapshotHash": "c7ef6d507962037bded501411f4abbe0ac8e6b84476d37f882d6172192ca92f3",
+      "sourceHash": "98fffdc9c78c84be9db58a841d47f16cea00e3f073ebaa46faa56c385fbec488",
+      "performancePublicationHash": "89dfdd81f71add169c6c994ba938750f1c2215f78640b45ac58ef2b15f097b24",
+      "componentTop25": false,
+      "componentDisagreement": true,
+      "outcome": 1,
+      "resultKickoff": "2026-11-20T23:00:00.000Z",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "seasonType": "regular",
+      "week": 12
     },
     {
       "season": 2026,
@@ -1496,7 +1539,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-15T00:45:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -1559,7 +1602,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -1622,7 +1665,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T23:15:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -1685,7 +1728,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-15T00:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -1748,7 +1791,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-14T21:15:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -1811,7 +1854,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T20:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -1874,7 +1917,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T17:45:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -1937,7 +1980,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T00:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -2000,7 +2043,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -2063,7 +2106,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -2126,7 +2169,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T17:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -2189,7 +2232,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T17:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -2252,7 +2295,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-15T00:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -2315,7 +2358,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-15T00:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -2378,7 +2421,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T17:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -2441,9 +2484,72 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T17:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
+    },
+    {
+      "season": 2026,
+      "gameId": "401858303",
+      "home": "150",
+      "away": "228",
+      "kickoff": "2026-11-21T00:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-14T17:02:39.519Z",
+      "forecastCapturedAt": "2026-11-14T17:03:14.860Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 0.729927007299267,
+          "homeWinProbability": 0.6068062687148218,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 14.59854014598541,
+          "homeWinProbability": 0.7275953382611987,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 5.839416058394164,
+          "homeWinProbability": 0.6455850208164944,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 7.055961070559626,
+          "homeWinProbability": 0.6703255769073901,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 7.664233576642346,
+          "homeWinProbability": 0.6679045152357376,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 3.2846715328467155,
+          "homeWinProbability": 0.6332525843597644,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 10.21897810218978,
+          "homeWinProbability": 0.6986340515250151,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "b7300f183977484ce41bbacd56e268804053448d3b6515496a57a2ac18de4b3a",
+      "snapshotHash": "c7ef6d507962037bded501411f4abbe0ac8e6b84476d37f882d6172192ca92f3",
+      "sourceHash": "98fffdc9c78c84be9db58a841d47f16cea00e3f073ebaa46faa56c385fbec488",
+      "performancePublicationHash": "89dfdd81f71add169c6c994ba938750f1c2215f78640b45ac58ef2b15f097b24",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 0,
+      "resultKickoff": "2026-11-21T00:30:00.000Z",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "seasonType": "regular",
+      "week": 12
     },
     {
       "season": 2026,
@@ -2504,7 +2610,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -2567,7 +2673,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-15T00:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -2630,7 +2736,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T17:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -2693,7 +2799,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-14T22:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -2756,7 +2862,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T17:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -2819,7 +2925,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -2882,7 +2988,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-15T00:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -2945,7 +3051,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T17:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -3008,9 +3114,72 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T02:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
+    },
+    {
+      "season": 2026,
+      "gameId": "401858529",
+      "home": "127",
+      "away": "2483",
+      "kickoff": "2026-11-21T01:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-14T17:02:39.519Z",
+      "forecastCapturedAt": "2026-11-14T17:03:14.860Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -48.175182481751825,
+          "homeWinProbability": 0.28094652936192316,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -44.52554744525548,
+          "homeWinProbability": 0.21930824676612432,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -24.087591240875923,
+          "homeWinProbability": 0.3964685299212844,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -38.92944038929442,
+          "homeWinProbability": 0.24541124831917183,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -46.35036496350366,
+          "homeWinProbability": 0.22770974511759917,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -36.13138686131387,
+          "homeWinProbability": 0.28107946902818115,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -34.30656934306569,
+          "homeWinProbability": 0.27390350468391944,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "b7300f183977484ce41bbacd56e268804053448d3b6515496a57a2ac18de4b3a",
+      "snapshotHash": "c7ef6d507962037bded501411f4abbe0ac8e6b84476d37f882d6172192ca92f3",
+      "sourceHash": "98fffdc9c78c84be9db58a841d47f16cea00e3f073ebaa46faa56c385fbec488",
+      "performancePublicationHash": "89dfdd81f71add169c6c994ba938750f1c2215f78640b45ac58ef2b15f097b24",
+      "componentTop25": true,
+      "componentDisagreement": false,
+      "outcome": 0,
+      "resultKickoff": "2026-11-21T01:00:00.000Z",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "seasonType": "regular",
+      "week": 12
     },
     {
       "season": 2026,
@@ -3071,7 +3240,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T23:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -3134,7 +3303,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-15T02:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -3197,7 +3366,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T21:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -3260,7 +3429,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-15T03:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -3323,7 +3492,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T17:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -3386,7 +3555,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-13T01:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -3449,7 +3618,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T18:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -3512,7 +3681,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-15T00:15:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -3575,7 +3744,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-15T02:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -3638,7 +3807,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-14T21:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -3701,7 +3870,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-14T18:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -3764,7 +3933,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-20T00:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 12
     },
@@ -3827,7 +3996,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -3890,7 +4059,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-15T04:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -3953,7 +4122,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-15T00:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -4016,7 +4185,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-15T00:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -4079,9 +4248,135 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-15T03:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
+    },
+    {
+      "season": 2026,
+      "gameId": "401864542",
+      "home": "2751",
+      "away": "167",
+      "kickoff": "2026-11-21T02:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-14T17:02:39.519Z",
+      "forecastCapturedAt": "2026-11-14T17:03:14.860Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -26.277372262773717,
+          "homeWinProbability": 0.4195328360951869,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -49.63503649635037,
+          "homeWinProbability": 0.18780548179456,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -40.87591240875913,
+          "homeWinProbability": 0.27045113754515476,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -38.929440389294406,
+          "homeWinProbability": 0.245411248319172,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -37.956204379562045,
+          "homeWinProbability": 0.2843656299600963,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -33.57664233576642,
+          "homeWinProbability": 0.3009362830646861,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -45.25547445255475,
+          "homeWinProbability": 0.19444332569319972,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "b7300f183977484ce41bbacd56e268804053448d3b6515496a57a2ac18de4b3a",
+      "snapshotHash": "c7ef6d507962037bded501411f4abbe0ac8e6b84476d37f882d6172192ca92f3",
+      "sourceHash": "98fffdc9c78c84be9db58a841d47f16cea00e3f073ebaa46faa56c385fbec488",
+      "performancePublicationHash": "89dfdd81f71add169c6c994ba938750f1c2215f78640b45ac58ef2b15f097b24",
+      "componentTop25": true,
+      "componentDisagreement": false,
+      "outcome": 0,
+      "resultKickoff": "2026-11-21T02:00:00.000Z",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401864545",
+      "home": "2005",
+      "away": "2638",
+      "kickoff": "2026-11-21T01:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-14T17:02:39.519Z",
+      "forecastCapturedAt": "2026-11-14T17:03:14.860Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 67.15328467153284,
+          "homeWinProbability": 0.9088480116856252,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 42.33576642335767,
+          "homeWinProbability": 0.8848339019361142,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 62.77372262773723,
+          "homeWinProbability": 0.9268965815531961,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 57.42092457420925,
+          "homeWinProbability": 0.9380290346179964,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 54.74452554744526,
+          "homeWinProbability": 0.9146863004503459,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 64.96350364963504,
+          "homeWinProbability": 0.946365184912397,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 52.55474452554745,
+          "homeWinProbability": 0.9287214514386763,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "b7300f183977484ce41bbacd56e268804053448d3b6515496a57a2ac18de4b3a",
+      "snapshotHash": "c7ef6d507962037bded501411f4abbe0ac8e6b84476d37f882d6172192ca92f3",
+      "sourceHash": "98fffdc9c78c84be9db58a841d47f16cea00e3f073ebaa46faa56c385fbec488",
+      "performancePublicationHash": "89dfdd81f71add169c6c994ba938750f1c2215f78640b45ac58ef2b15f097b24",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T01:00:00.000Z",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "seasonType": "regular",
+      "week": 12
     },
     {
       "season": 2026,
@@ -4142,7 +4437,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-11T00:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -4205,7 +4500,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-11T00:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -4268,7 +4563,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-11T01:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -4331,7 +4626,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-12T00:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -4394,7 +4689,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-12T00:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -4457,7 +4752,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-12T00:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -4520,7 +4815,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-18T00:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 12
     },
@@ -4583,7 +4878,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-17T23:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 12
     },
@@ -4646,7 +4941,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-18T00:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 12
     },
@@ -4709,7 +5004,70 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-19T00:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401866468",
+      "home": "2649",
+      "away": "189",
+      "kickoff": "2026-11-21T00:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-14T17:02:39.519Z",
+      "forecastCapturedAt": "2026-11-14T17:03:14.860Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 56.2043795620438,
+          "homeWinProbability": 0.8799661443484332,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 47.44525547445256,
+          "homeWinProbability": 0.9032313381671163,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 42.33576642335767,
+          "homeWinProbability": 0.8633570077507661,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 48.661800486618006,
+          "homeWinProbability": 0.9143537410453437,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 51.82481751824818,
+          "homeWinProbability": 0.9062311522202882,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 49.27007299270073,
+          "homeWinProbability": 0.9071276282347105,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 44.89051094890512,
+          "homeWinProbability": 0.9050528908084973,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "b7300f183977484ce41bbacd56e268804053448d3b6515496a57a2ac18de4b3a",
+      "snapshotHash": "c7ef6d507962037bded501411f4abbe0ac8e6b84476d37f882d6172192ca92f3",
+      "sourceHash": "98fffdc9c78c84be9db58a841d47f16cea00e3f073ebaa46faa56c385fbec488",
+      "performancePublicationHash": "89dfdd81f71add169c6c994ba938750f1c2215f78640b45ac58ef2b15f097b24",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T00:30:00.000Z",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 12
     },
@@ -4772,7 +5130,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-19T00:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 12
     },
@@ -4835,7 +5193,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-14T23:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -4898,7 +5256,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T18:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -4961,7 +5319,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -5024,7 +5382,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-13T02:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -5087,7 +5445,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -5150,7 +5508,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T19:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -5213,7 +5571,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-14T20:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -5276,7 +5634,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-14T20:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -5339,7 +5697,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -5402,7 +5760,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T22:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     },
@@ -5465,11 +5823,11 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-15T00:00:00.000Z",
-      "resultSourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
       "seasonType": "regular",
       "week": 11
     }
   ],
   "interpretation": "Only immutable forecasts actually captured before kickoff count. No scored games means evidence is pending. This is future-game ordering/probability evidence, not proof of the correct earned-achievement order. Local capture timestamps and public repository history are retained; this is not an external trusted timestamp service.",
-  "reportSha256": "a217748b10d173af75add097d76d3b9442c87c1090f22a0b03a55f5262f25348"
+  "reportSha256": "b8ac35510cc7e179ed9b9eb705d6d7eae60337305656c3e29a81fd2724324478"
 }
