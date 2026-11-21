@@ -9,8 +9,14 @@ try {
   if (!response.ok) throw Error('No bracket publication');
   const {snapshot,profile} = await response.json();
   const year=snapshot.season;
+  let storage;
+  try {
+    storage = window.localStorage;
+  } catch {
+    // Users can still practice when their browser restricts local storage.
+  }
   mountBasketballBracket(root,{
-    season:year,rankings:snapshot.teams,modelAsOf:snapshot.asOf,previewProfile:profile,
+    season:year,rankings:snapshot.teams,modelAsOf:snapshot.asOf,previewProfile:profile,storage,
     teamHref:(id,edition=year)=>'/basketball/teams/'+encodeURIComponent(id)+'/?season='+edition,
     matchupHref:(a,b,edition=year)=>'/basketball/matchup-lab/?'+new URLSearchParams({a,b,season:edition,venue:'neutral'}),
     forecast(a,b) {

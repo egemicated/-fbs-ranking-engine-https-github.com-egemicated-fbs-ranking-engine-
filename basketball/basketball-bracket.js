@@ -16,6 +16,67 @@ const choice = (value, label, current) => '<option value="' + esc(value) + '"' +
   (String(value) === String(current) ? ' selected' : '') + '>' + esc(label) + '</option>';
 const reasonableChance = value => typeof value === 'number' && value >= 0 && value <= 1;
 const internalHref = value => typeof value === 'string' && /^\/basketball(?:\/|[?#]|$)/.test(value) ? value : null;
+const mapWidth = 3280;
+const mapCardWidth = 220;
+const mapCardHeight = 102;
+
+function bracketLayout(bracket) {
+  const positions = new Map();
+  const regions = new Map();
+  let top = 42;
+  for (const pair of bracket.field.semifinalPairs) {
+    const maxOpeners = Math.max(...pair.map(region => bracket.games.filter(game => game.region === region && game.round === 0).length));
+    const track = Math.max(7 * 119, (maxOpeners - 1) * 112);
+    pair.forEach((region, side) => {
+    const xAt = round => {
+      const x = 65 + round * 259;
+      return side === 0 ? x : mapWidth - mapCardWidth - x;
+    };
+      const games = bracket.games.filter(game => game.region === region);
+      regions.set(region, {top, side, xAt, games});
+      const opening = [];
+      games.filter(game => game.round === 1).forEach((game, index) => {
+        const y = top + 130 + index * track / 7;
+        positions.set(game.id, {x: xAt(1), y, side});
+        game.sides.forEach((slot, slotIndex) => {
+          if (slot.from) opening.push({id: slot.from, y: y + (slotIndex === 0 ? -24 : 24)});
+        });
+      });
+      const start = top + 130;
+      let end = start + track;
+      for (let index = opening.length - 1; index >= 0; index--) {
+        const slot = opening[index];
+        const y = Math.max(start + index * 112, Math.min(end, slot.y));
+        positions.set(slot.id, {x: xAt(0), y, side});
+        end = y - 112;
+      }
+      for (const game of games.filter(game => game.round >= 2)) {
+        const [first, second] = game.sides.map(slot => positions.get(slot.from));
+        positions.set(game.id, {x: xAt(game.round), y: (first.y + second.y) / 2, side});
+      }
+    });
+    top += track + 207;
+  }
+  for (const game of bracket.games.filter(game => game.round >= 5)) {
+    const [first, second] = game.sides.map(slot => positions.get(slot.from));
+    positions.set(game.id, {x: (mapWidth - mapCardWidth) / 2, y: (first.y + second.y) / 2});
+  }
+  return {positions, regions, height: top};
+}
+
+function connector(from, to, side, round) {
+  if (round === 6) {
+    const middle = from.x + mapCardWidth / 2;
+    const sign = Math.sign(to.y - from.y);
+    return 'M ' + middle + ' ' + (from.y + sign * mapCardHeight / 2) +
+      ' V ' + (to.y - sign * mapCardHeight / 2);
+  }
+  const start = from.x + (from.side === 0 ? mapCardWidth : 0);
+  const end = to.x + (from.side === 0 ? 0 : mapCardWidth);
+  const bend = (start + end) / 2;
+  const targetY = round === 5 ? to.y : to.y + (side === 0 ? -18 : 18);
+  return 'M ' + start + ' ' + from.y + ' H ' + bend + ' V ' + targetY + ' H ' + end;
+}
 
 function officialSource(value) {
   if (typeof value !== 'string') return null;
@@ -43,12 +104,18 @@ export function mountBasketballBracket(root, {
   const profileId = typeof previewProfile?.id === 'string' && /^[\w-]{1,100}$/.test(previewProfile.id) ? previewProfile.id : null;
   const savedKey = bracket => profileId ? 'gd-private-preview:mbb:' + profileId + ':' + bracketEdition(bracket) : null;
   const memory = new Map();
+  const document = root.ownerDocument;
+  const window = document.defaultView;
+  const compact = window.matchMedia('(max-width: 860px)');
+  const requestedMode = new URLSearchParams(window.location.search).get('mode');
   const state = {
-    mode: 'official', field: 'current', practiceField: projection ? 'projection' : 'format',
+    mode: requestedMode === 'projection' || (requestedMode !== 'official' && !official && projection) ? 'projection' : 'official',
+    field: season === 2026 ? 'archive' : 'current', practiceField: projection ? 'projection' : 'format',
     region: 'east', round: 'all', notice: '',
   };
+  const camera = {x: 0, y: 0, scale: 0, fit: true, expanded: false, jump: ''};
   let boardObserver;
-  const smallScreen = () => root.ownerDocument.defaultView?.matchMedia('(max-width: 860px)').matches;
+  let activeMap;
   const roundName = (round, bracket) => round === 0 && bracket.field.year < 2027 ? 'First Four' : ROUND_NAMES[round];
 
   function readDraft(bracket) {
@@ -120,7 +187,7 @@ export function mountBasketballBracket(root, {
     const selected = picks[game.id] === team.id;
     const winner = result?.winner === team.id;
     const name = '<span class="bb-bracket-seed" aria-label="Seed ' + team.seed + '">' + team.seed + '</span>' +
-      '<span class="bb-bracket-name">' + esc(team.name) + ((selected || winner) ? ' <span aria-hidden="true">✓</span>' : '') + '</span>' +
+      '<span class="bb-bracket-name" title="' + esc(team.name) + '">' + esc(team.name) + ((selected || winner) ? ' <span aria-hidden="true">✓</span>' : '') + '</span>' +
       (score == null ? '' : '<strong class="bb-bracket-score">' + score + '</strong>');
     const css = 'bb-bracket-team' + (selected ? ' is-selected' : '') + (winner ? ' is-winner' : '');
     if (editing) {
@@ -132,7 +199,7 @@ export function mountBasketballBracket(root, {
     return href ? '<a class="' + css + '" href="' + esc(href) + '">' + name + '</a>' : '<span class="' + css + '">' + name + '</span>';
   }
 
-  function card(game, bracket, picks, editing) {
+  function card(game, bracket, picks, editing, place) {
     const ids = bracketTeams(game, picks);
     const both = ids.every(Boolean);
     const actual = bracket.results[game.id];
@@ -141,7 +208,13 @@ export function mountBasketballBracket(root, {
     const selected = picks[game.id];
     const linked = both && bracket !== practice && internalHref(matchupHref?.(...ids, bracket.field.year));
     const destination = bracket.games.find(item => item.sides.some(side => side.from === game.id));
-    return '<article class="bb-bracket-game" data-bracket-slot="' + esc(game.id) + '">' +
+    const mapStyle = place ? ' style="--game-x:' + place.x + 'px;--game-y:' + place.y + 'px"' : '';
+    const css = place && game.round >= 5 ? ' bb-map-national-game' : '';
+    const region = bracket.field.regions.find(item => item.id === game.region);
+    const label = (region ? region.name + ' · ' : '') + roundName(game.round, bracket) +
+      (game.round === 6 ? '' : (game.round === 0 ? ' · Seed ' : ' · Game ') + game.id.split('-').at(-1));
+    return '<article class="bb-bracket-game' + css + '" data-bracket-slot="' + esc(game.id) + '" data-round="' + game.round + '"' +
+      (place ? ' aria-label="' + esc(label) + '"' : '') + mapStyle + '>' +
       (game.round === 0 ? '<p class="bb-bracket-path">Winner fills seed ' + bracket.teams[ids[0]].seed + ' in the First Round</p>' : '') +
       ids.map((id, index) => formatTeam(bracket.teams[id], index, game, bracket, result, picks, both, result?.scores[index], editing)).join('') +
       (chance == null ? '' : '<div class="bb-bracket-odds"><span>GD neutral win chance</span><strong>' +
@@ -158,63 +231,245 @@ export function mountBasketballBracket(root, {
     const regions = bracket.field.regions;
     const regionalGames = bracket.games.filter(game => state.region === 'national' ? game.region === null : game.region === state.region);
     const rounds = [...new Set(regionalGames.map(game => game.round))];
-    if (state.round !== 'all' && !rounds.includes(Number(state.round))) state.round = 'all';
-    if (smallScreen() && state.round === 'all') state.round = String(rounds[0]);
-    const visible = state.round === 'all' ? rounds : [Number(state.round)];
+    if (!rounds.includes(Number(state.round)) || state.round === 'all') state.round = String(rounds[0]);
+    const round = Number(state.round);
     const title = regions.find(region => region.id === state.region)?.name;
     const titleText = title ? title + ' region' : 'National rounds';
     const selectors = '<div class="bb-bracket-filters">' +
       '<label>Region<select data-bracket-select="region">' +
         regions.map(region => choice(region.id, region.name, state.region)).join('') + choice('national', 'Final Four and championship', state.region) + '</select></label>' +
-      '<label>Round<select data-bracket-select="round">' + (smallScreen() ? '' : choice('all', 'All rounds', state.round)) +
+      '<label>Round<select data-bracket-select="round">' +
         rounds.map(r => choice(r, roundName(r, bracket), state.round)).join('') + '</select></label>' +
       '<button type="button" data-bracket-action="national">Go to Final Four</button></div>';
     return selectors + '<h3 class="bb-bracket-region-title">' + esc(titleText) + '</h3>' +
-      '<div class="bb-bracket-board" data-columns="' + visible.length + '">' +
-      (visible.length > 1 ? '<canvas class="bb-bracket-connections" aria-hidden="true"></canvas>' : '') +
-      visible.map(round => '<section class="bb-bracket-column" aria-label="' + esc(roundName(round, bracket)) + '">' +
+      '<div class="bb-bracket-board">' +
+      '<section class="bb-bracket-column" aria-label="' + esc(roundName(round, bracket)) + '">' +
         '<h4>' + esc(roundName(round, bracket)) + '</h4><div class="bb-bracket-round-games">' +
         regionalGames.filter(game => game.round === round).map(game => card(game, bracket, picks, editing)).join('') +
-        '</div></section>').join('') + '</div>';
+        '</div></section></div>';
   }
 
-  function connectVisibleGames(bracket) {
-    const canvas = root.querySelector('.bb-bracket-connections');
-    if (!canvas) return;
-    const board = canvas.parentElement;
-    const cards = new Map([...board.querySelectorAll('[data-bracket-slot]')].map(el => [el.dataset.bracketSlot, el]));
-    const draw = () => {
-      const frame = board.getBoundingClientRect();
-      const ratio = root.ownerDocument.defaultView.devicePixelRatio || 1;
-      const context = canvas.getContext('2d');
-      if (!context || !frame.width || !frame.height) return;
-      canvas.width = Math.ceil(frame.width * ratio);
-      canvas.height = Math.ceil(frame.height * ratio);
-      context.scale(ratio, ratio);
-      context.strokeStyle = '#7095bb';
-      context.beginPath();
-      for (const game of bracket.games) {
-        const target = cards.get(game.id)?.getBoundingClientRect();
-        if (!target) continue;
-        for (const side of game.sides) {
-          const source = cards.get(side.from)?.getBoundingClientRect();
-          if (!source || target.left <= source.right) continue;
-          const entry = target.left - frame.left;
-          const exit = source.right - frame.left;
-          const bend = (entry + exit) / 2;
-          const from = (source.top + source.bottom) / 2 - frame.top;
-          const to = (target.top + target.bottom) / 2 - frame.top;
-          context.moveTo(exit, from);
-          context.lineTo(bend, from);
-          context.lineTo(bend, to);
-          context.lineTo(entry, to);
-        }
+  function renderMap(bracket, picks, editing, layout) {
+    const {positions, regions, height} = layout;
+    const title = editing ? 'Practice tournament' : state.mode === 'projection' ? 'Projected tournament' : 'Official tournament';
+    const path = bracket.games.flatMap(game => game.sides.flatMap((slot, index) => {
+      if (!slot.from) return [];
+      const incoming = picks[slot.from];
+      const css = incoming && picks[game.id] === incoming ? ' is-advancing' : incoming ? ' is-picked' : '';
+      return ['<path class="bb-map-line' + css + '" data-from="' + esc(slot.from) + '" data-to="' + esc(game.id) +
+        '" d="' + connector(positions.get(slot.from), positions.get(game.id), index, game.round) + '"/>'];
+    })).join('');
+    const labels = bracket.field.regions.map(region => {
+      const {top, side, xAt, games} = regions.get(region.id);
+      const x = side === 0 ? xAt(0) : xAt(4);
+      const rounds = [...new Set(games.map(game => game.round))];
+      return '<h4 class="bb-map-region' + (side ? ' is-right' : '') + '" style="--label-x:' + x + 'px;--label-y:' + top + 'px">' +
+        esc(region.name + ' region') + '</h4>' + rounds.map(round =>
+        '<span class="bb-map-round" aria-hidden="true" style="--label-x:' + xAt(round) + 'px;--label-y:' +
+          (top + 53) + 'px">' + esc(roundName(round, bracket)) + '</span>').join('');
+    }).join('');
+    const national = bracket.games.filter(game => game.round >= 5).map(game => {
+      const {x,y} = positions.get(game.id);
+      return '<h4 class="bb-map-round bb-map-national-label" style="--label-x:' + x + 'px;--label-y:' + (y - 100) + 'px">' +
+        esc(game.round === 5 ? 'Final Four' : 'Championship') + '</h4>';
+    }).join('');
+    return '<section class="bb-map" aria-label="Tournament map">' +
+      '<div class="bb-map-header"><div><h3>' + title + '</h3><p id="bb-map-help">Drag to pan. Scroll to zoom. Use the controls or keyboard to explore.</p></div>' +
+      '<div class="bb-map-jumps"><label>Jump to<select data-bracket-map-select>' +
+      choice('', 'Select a region', camera.jump) +
+      bracket.field.regions.map(region => choice(region.id, region.name + ' region', camera.jump)).join('') +
+      choice('national', 'Final Four', camera.jump) + choice('championship', 'Championship', camera.jump) + '</select></label>' +
+      '<button type="button" data-bracket-action="national">Go to Final Four</button></div></div>' +
+      '<div class="bb-map-frame">' +
+      '<div class="bb-map-tools" role="group" aria-label="Bracket view controls">' +
+      '<button type="button" data-bracket-view="zoom-in" aria-label="Zoom in">+</button>' +
+      '<button type="button" data-bracket-view="zoom-out" aria-label="Zoom out">−</button>' +
+      '<button type="button" data-bracket-view="fit" aria-label="Fit entire bracket">Fit</button>' +
+      '<button type="button" data-bracket-view="reset" aria-label="Reset view">Reset view</button>' +
+      '<button type="button" data-bracket-view="expand" aria-label="Fullscreen bracket">Fullscreen</button>' +
+      '<span class="bb-map-scale" aria-hidden="true"></span></div>' +
+      '<div class="bb-map-viewport" tabindex="0" role="region" aria-label="Interactive tournament bracket" aria-describedby="bb-map-help" ' +
+      'aria-keyshortcuts="+ - 0 ArrowLeft ArrowRight ArrowUp ArrowDown">' +
+      '<div class="bb-map-world" style="--map-width:' + mapWidth + 'px;--map-height:' + height + 'px;--card-width:' +
+      mapCardWidth + 'px;--card-height:' + mapCardHeight + 'px">' +
+      '<svg class="bb-map-connectors" viewBox="0 0 ' + mapWidth + ' ' + height + '" aria-hidden="true">' + path + '</svg>' +
+      labels + national + bracket.games.map(game => card(game, bracket, picks, editing, positions.get(game.id))).join('') +
+      '</div></div></div></section>';
+  }
+
+  function fitScale() {
+    const {viewport, layout} = activeMap;
+    return Math.max(.01, Math.min((viewport.clientWidth - 40) / mapWidth,
+      (viewport.clientHeight - 52) / layout.height));
+  }
+
+  function applyView() {
+    if (!activeMap) return;
+    const {viewport, world, status, jumpSelect, expandButton} = activeMap;
+    world.style.transform = 'translate(' + camera.x + 'px,' + camera.y + 'px) scale(' + camera.scale + ')';
+    viewport.dataset.scale = camera.scale.toFixed(4);
+    status.textContent = Math.round(camera.scale * 100) + '%';
+    jumpSelect.value = camera.jump || '';
+    const expanded = camera.expanded || document.fullscreenElement === root;
+    expandButton.textContent = expanded ? 'Exit fullscreen' : 'Fullscreen';
+    expandButton.setAttribute('aria-label', expanded ? 'Exit fullscreen bracket' : 'Fullscreen bracket');
+  }
+
+  function fitView() {
+    const {viewport, layout} = activeMap;
+    camera.scale = fitScale();
+    camera.x = (viewport.clientWidth - mapWidth * camera.scale) / 2;
+    camera.y = (viewport.clientHeight - layout.height * camera.scale) / 2;
+    camera.fit = true;
+    camera.jump = '';
+    applyView();
+  }
+
+  function panBy(x, y) {
+    const {viewport, layout} = activeMap;
+    const inset = 48;
+    camera.x = Math.max(inset - mapWidth * camera.scale, Math.min(viewport.clientWidth - inset, camera.x + x));
+    camera.y = Math.max(inset - layout.height * camera.scale, Math.min(viewport.clientHeight - inset, camera.y + y));
+    camera.fit = false;
+    camera.jump = '';
+    applyView();
+  }
+
+  function zoomBy(factor, anchorX, anchorY) {
+    const {viewport} = activeMap;
+    const x = anchorX ?? viewport.clientWidth / 2;
+    const y = anchorY ?? viewport.clientHeight / 2;
+    const scale = Math.min(1.55, Math.max(fitScale() * .78, camera.scale * factor));
+    const delta = scale / camera.scale;
+    camera.x = x - (x - camera.x) * delta;
+    camera.y = y - (y - camera.y) * delta;
+    camera.scale = scale;
+    camera.fit = false;
+    camera.jump = '';
+    applyView();
+  }
+
+  function centerOn(x, y, scale) {
+    const {viewport} = activeMap;
+    camera.scale = scale;
+    camera.x = viewport.clientWidth / 2 - x * scale;
+    camera.y = viewport.clientHeight / 2 - y * scale;
+    camera.fit = false;
+    applyView();
+  }
+
+  function jumpTo(name) {
+    if (!name) return fitView();
+    const {layout, viewport} = activeMap;
+    const region = layout.regions.get(name);
+    camera.jump = name;
+    if (region) {
+      const regionX = (region.xAt(0) + region.xAt(4) + mapCardWidth) / 2;
+      const regionGames = region.games.filter(game => game.round === 1);
+      const regionY = (layout.positions.get(regionGames.at(-1).id).y + region.top) / 2;
+      const width = Math.abs(region.xAt(4) - region.xAt(0)) + mapCardWidth;
+      const height = 2 * (regionY - region.top) + mapCardHeight;
+      centerOn(regionX, regionY, Math.min(1.12, (viewport.clientWidth - 42) / width, (viewport.clientHeight - 42) / height));
+    } else if (name === 'national') {
+      const final = layout.positions.get('championship');
+      const semifinal = layout.positions.get('semifinal-2');
+      const height = 2 * Math.abs(semifinal.y - final.y) + 180;
+      centerOn(mapWidth / 2, final.y - 25, Math.min(.9, (viewport.clientHeight - 45) / height));
+    } else if (name === 'championship') {
+      centerOn(mapWidth / 2, layout.positions.get('championship').y - 30, 1.35);
+    }
+  }
+
+  function onFullscreenChange() {
+    if (!activeMap) return;
+    if (camera.fit) fitView();
+    else if (camera.jump) jumpTo(camera.jump);
+    else applyView();
+  }
+
+  async function toggleExpanded() {
+    if (document.fullscreenElement === root) {
+      await document.exitFullscreen();
+      return;
+    }
+    if (!camera.expanded && root.requestFullscreen) {
+      try {
+        await root.requestFullscreen();
+        return;
+      } catch {
+        // Embedded previews may disallow browser fullscreen.
       }
-      context.stroke();
-    };
-    boardObserver = new ResizeObserver(draw);
-    boardObserver.observe(board);
-    draw();
+    }
+    camera.expanded = !camera.expanded;
+    root.classList.toggle('bb-map-expanded', camera.expanded);
+    onFullscreenChange();
+  }
+
+  function bindMap(layout) {
+    const viewport = root.querySelector('.bb-map-viewport');
+    const world = viewport.querySelector('.bb-map-world');
+    activeMap = {layout, viewport, world, status: root.querySelector('.bb-map-scale'),
+      jumpSelect: root.querySelector('[data-bracket-map-select]'), expandButton: root.querySelector('[data-bracket-view=expand]')};
+    let drag;
+    viewport.addEventListener('wheel', event => {
+      event.preventDefault();
+      const rect = viewport.getBoundingClientRect();
+      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? viewport.clientHeight : 1;
+      zoomBy(Math.exp(-Math.max(-360, Math.min(360, event.deltaY * unit)) * .0021),
+        event.clientX - rect.left, event.clientY - rect.top);
+    }, {passive: false});
+    viewport.addEventListener('pointerdown', event => {
+      if (event.button !== 0 || event.target.closest('button,a')) return;
+      drag = {id: event.pointerId, x: event.clientX, y: event.clientY, moving: false};
+    });
+    viewport.addEventListener('pointermove', event => {
+      if (drag?.id !== event.pointerId) return;
+      const x = event.clientX - drag.x;
+      const y = event.clientY - drag.y;
+      if (!drag.moving && Math.hypot(x,y) < 5) return;
+      if (!drag.moving) {
+        viewport.setPointerCapture(event.pointerId);
+        viewport.classList.add('is-dragging');
+        drag.moving = true;
+      }
+      drag.x = event.clientX;
+      drag.y = event.clientY;
+      panBy(x,y);
+    });
+    function stopDrag() {
+      drag = null;
+      viewport.classList.remove('is-dragging');
+    }
+    for (const event of ['pointerup', 'pointercancel', 'lostpointercapture']) viewport.addEventListener(event, stopDrag);
+    viewport.addEventListener('pointerleave', () => { if (!drag?.moving) stopDrag(); });
+    viewport.addEventListener('keydown', event => {
+      if (event.target !== viewport) return;
+      const action = ({
+        '+': () => zoomBy(1.25), '=': () => zoomBy(1.25), '-': () => zoomBy(.8), '0': fitView,
+        ArrowLeft: () => panBy(90,0), ArrowRight: () => panBy(-90,0),
+        ArrowUp: () => panBy(0,90), ArrowDown: () => panBy(0,-90),
+      })[event.key];
+      if (action) {
+        event.preventDefault();
+        action();
+      }
+    });
+    viewport.addEventListener('focusin', event => {
+      const game = event.target.closest('[data-bracket-slot]');
+      if (!game || !event.target.matches(':focus-visible')) return;
+      const bounds = viewport.getBoundingClientRect();
+      const item = event.target.getBoundingClientRect();
+      if (item.left >= bounds.left && item.right <= bounds.right && item.top >= bounds.top &&
+        item.bottom <= bounds.bottom && camera.scale >= .73) return;
+      const {x,y} = layout.positions.get(game.dataset.bracketSlot);
+      camera.jump = '';
+      centerOn(x + mapCardWidth / 2, y, Math.max(.82,camera.scale));
+    });
+    boardObserver = new ResizeObserver(() => {
+      if (activeMap?.viewport === viewport) onFullscreenChange();
+    });
+    boardObserver.observe(viewport);
+    onFullscreenChange();
   }
 
   function heading(bracket, editing, picks) {
@@ -260,8 +515,10 @@ export function mountBasketballBracket(root, {
 
   function render(focus) {
     boardObserver?.disconnect();
+    activeMap = null;
     const bracket = chooseDisplayField();
     const editing = state.mode === 'mine';
+    const layout = bracket && !compact.matches ? bracketLayout(bracket) : null;
     const picks = !bracket ? {} : editing ? load(bracket) : state.mode === 'projection'
       ? fillBasketballBracket(bracket, (a,b) => probability(bracket,a,b))
       : Object.fromEntries(Object.entries(bracket.results).map(([id, result]) => [id, result.winner]));
@@ -278,10 +535,10 @@ export function mountBasketballBracket(root, {
         choice('format', '2027 format demonstration', state.practiceField) +
         choice('archive', '2026 verified historical field', state.practiceField) + '</select></label>' : '') +
       '<p class="bb-bracket-notice" role="status" aria-live="polite">' + esc(state.notice) + '</p>' +
-      (bracket ? heading(bracket, editing, picks) + buildBoard(bracket, picks, editing)
+      (bracket ? heading(bracket, editing, picks) + (layout ? renderMap(bracket, picks, editing, layout) : buildBoard(bracket, picks, editing))
         : introductoryState()) +
       '<p class="bb-bracket-source"><a href="' + ncaaRules + '">NCAA selection and seeding rules</a></p></section>';
-    if (bracket) connectVisibleGames(bracket);
+    if (layout) bindMap(layout);
     if (focus) [...root.querySelectorAll('button,select')].find(element =>
       Object.keys(focus).every(key => element.dataset[key] === focus[key]) && !element.disabled)?.focus({preventScroll:true});
   }
@@ -289,18 +546,31 @@ export function mountBasketballBracket(root, {
   function handleClick(event) {
     const button = event.target.closest?.('button');
     if (!button || !root.contains(button)) return;
-    const {bracketMode: mode, bracketAction: action, bracketGame: game, bracketTeam: team} = button.dataset;
+    const {bracketMode: mode, bracketAction: action, bracketGame: game, bracketTeam: team, bracketView: view} = button.dataset;
+    if (view && activeMap) {
+      if (view === 'zoom-in') zoomBy(1.25);
+      else if (view === 'zoom-out') zoomBy(.8);
+      else if (view === 'expand') void toggleExpanded();
+      else fitView();
+      return;
+    }
+    if (action === 'national' && activeMap) {
+      jumpTo('national');
+      return;
+    }
     if (!mode && !action && !game) return;
     state.notice = '';
     if (mode) {
       state.mode = mode;
       state.round = 'all';
+      camera.fit = true;
       render({bracketMode: mode});
     } else if (action === 'demo') {
       state.mode = 'mine';
       state.practiceField = 'format';
       state.region = 'east';
       state.round = 'all';
+      camera.fit = true;
       render({bracketSelect: 'practiceField'});
     } else if (action === 'national') {
       state.region = 'national';
@@ -317,7 +587,7 @@ export function mountBasketballBracket(root, {
       } else if (action === 'reset') {
         memory.set(bracket, {});
         state.notice = profileId && storage ? 'Practice picks cleared. Your saved draft remains available until you save again.' : 'Practice picks cleared.';
-        render({bracketSelect: 'region'});
+        render({bracketSelect: activeMap ? 'practiceField' : 'region'});
       } else if (action === 'fill') {
         memory.set(bracket, fillBasketballBracket(bracket, (a,b) => probability(bracket,a,b)));
         state.notice = 'Model favorites filled wherever a forecast was available.';
@@ -342,20 +612,50 @@ export function mountBasketballBracket(root, {
   }
 
   function handleChange(event) {
+    if (activeMap && event.target === activeMap.jumpSelect) {
+      jumpTo(event.target.value);
+      return;
+    }
     const field = event.target.dataset?.bracketSelect;
     if (!['field','practiceField','region','round'].includes(field)) return;
     state[field] = event.target.value;
+    if (field === 'field' || field === 'practiceField') camera.fit = true;
     if (field !== 'round') state.round = 'all';
     state.notice = '';
     render({bracketSelect: field});
   }
 
+  function handleViewportChange() {
+    if (compact.matches && document.fullscreenElement === root) void document.exitFullscreen();
+    if (compact.matches && camera.expanded) {
+      camera.expanded = false;
+      root.classList.remove('bb-map-expanded');
+    }
+    render();
+  }
+
+  function exitExpanded(event) {
+    if (event.key === 'Escape' && camera.expanded) {
+      camera.expanded = false;
+      root.classList.remove('bb-map-expanded');
+      onFullscreenChange();
+    }
+  }
+
   root.addEventListener('click', handleClick);
   root.addEventListener('change', handleChange);
+  document.addEventListener('fullscreenchange', onFullscreenChange);
+  document.addEventListener('keydown', exitExpanded);
+  compact.addEventListener('change', handleViewportChange);
   render();
   return () => {
     boardObserver?.disconnect();
+    root.classList.remove('bb-map-expanded');
+    if (document.fullscreenElement === root) void document.exitFullscreen();
     root.removeEventListener('click', handleClick);
     root.removeEventListener('change', handleChange);
+    document.removeEventListener('fullscreenchange', onFullscreenChange);
+    document.removeEventListener('keydown', exitExpanded);
+    compact.removeEventListener('change', handleViewportChange);
   };
 }

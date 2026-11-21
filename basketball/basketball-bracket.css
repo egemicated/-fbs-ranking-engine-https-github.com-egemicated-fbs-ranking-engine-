@@ -138,20 +138,7 @@
 }
 .bb-bracket-filters label { min-width: min(10rem, 100%); }
 .bb-bracket .bb-bracket-region-title { margin: 1rem 0 .5rem; }
-.bb-bracket-board {
-  display: grid;
-  position: relative;
-  gap: .7rem;
-  grid-template-columns: minmax(0, 1fr);
-}
-.bb-bracket-board[data-columns="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.bb-bracket-board[data-columns="4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.bb-bracket-board[data-columns="5"] { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-.bb-bracket-column {
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-}
+.bb-bracket-column { min-width: 0; }
 .bb-bracket-column h4 {
   background: #102b50;
   color: #fff;
@@ -164,16 +151,7 @@
   display: flex;
   flex-direction: column;
   gap: .6rem;
-  justify-content: space-around;
-  flex: 1;
   padding-top: .55rem;
-}
-.bb-bracket-connections {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
 }
 .bb-bracket-game {
   position: relative;
@@ -246,9 +224,199 @@
 .bb-bracket .bb-bracket-analysis { width: fit-content; }
 .bb-bracket-result.is-right { color: #1a684a; }
 .bb-bracket-result.is-wrong { color: #902829; }
+.bb-map {
+  margin-top: 1.15rem;
+  background: #081a2d;
+  border: 1px solid #274969;
+  border-radius: .85rem;
+  color: #eef7ff;
+  min-width: 0;
+  overflow: clip;
+}
+.bb-map-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .8rem 1rem;
+  border-bottom: 1px solid #345470;
+  background: #0d243d;
+}
+.bb-map-header h3 { font-size: 1.4rem; line-height: 1.1; }
+.bb-map-header p { margin-top: .3rem; color: #b3c9e2; font-size: .83rem; }
+.bb-map-jumps { display: flex; align-items: end; gap: .5rem; }
+.bb-map-jumps label { font-size: .79rem; font-weight: 750; color: #bfd7ef; }
+.bb-map-frame { position: relative; padding-bottom: 4.35rem; }
+.bb-map-viewport {
+  position: relative;
+  isolation: isolate;
+  block-size: clamp(520px, 72vh, 850px);
+  overflow: hidden;
+  overflow: clip;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  overscroll-behavior: contain;
+  background:
+    radial-gradient(ellipse at 50% 43%, #153653 0%, transparent 62%),
+    linear-gradient(0deg, #16314a 1px, transparent 1px),
+    linear-gradient(90deg, #16314a 1px, #081827 1px);
+  background-size: auto, 42px 42px, 42px 42px;
+}
+.bb-map-viewport:focus-visible { outline: 3px solid #71d8ff; outline-offset: -3px; }
+.bb-map-viewport.is-dragging, .bb-map-viewport.is-dragging * { cursor: grabbing; }
+.bb-map-world {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--map-width);
+  height: var(--map-height);
+  transform-origin: 0 0;
+}
+.bb-map-connectors {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.bb-map-line { fill: none; stroke: #447aa6; stroke-width: 3.5; stroke-linejoin: round; }
+.bb-map-line.is-picked { stroke: #4fb5f4; }
+.bb-map-line.is-advancing { stroke: #67dcff; stroke-width: 5; }
+.bb-map :is(.bb-map-region, .bb-map-round) {
+  position: absolute;
+  left: var(--label-x);
+  top: var(--label-y);
+}
+.bb-map .bb-map-region {
+  width: calc(4 * 259px + var(--card-width));
+  padding-bottom: 7px;
+  border-bottom: 3px solid #345b7b;
+  font-size: 36px;
+  line-height: 1.15;
+  color: #eef7ff;
+}
+.bb-map-region.is-right { text-align: right; }
+.bb-map .bb-map-round {
+  width: var(--card-width);
+  color: #bce5ff;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: .06em;
+}
+.bb-map .bb-map-national-label {
+  padding: .22em .15em;
+  border: 2px solid #4a90b8;
+  border-radius: 6px;
+  color: #a9edff;
+  background: #102c47;
+  font-size: 21px;
+}
+.bb-map .bb-bracket-game {
+  position: absolute;
+  left: var(--game-x);
+  top: calc(var(--game-y) - var(--card-height) / 2);
+  width: var(--card-width);
+  height: var(--card-height);
+  box-sizing: border-box;
+  grid-template-rows: 33px 33px;
+  grid-auto-rows: auto;
+  align-content: center;
+  gap: 2px;
+  padding: 4px;
+  border: 2px solid #416889;
+  border-radius: 8px;
+  background: #14324e;
+  color: #eaf5ff;
+}
+.bb-map .bb-map-national-game {
+  border-color: #67c7f2;
+  border-width: 3px;
+  background: #1b4263;
+}
+.bb-map .bb-bracket-game[data-round="0"] { grid-template-rows: 11px 28px 28px; }
+.bb-map .bb-bracket-game[data-round="0"] .bb-bracket-team { min-height: 28px; }
+.bb-map .bb-bracket-team {
+  min-height: 33px;
+  padding: 3px 5px;
+  background: #1f415d;
+  border-color: transparent;
+  color: #f0f9ff;
+  font-size: 13.5px;
+  line-height: 1;
+}
+.bb-map .bb-bracket-team:is(.is-selected, .is-winner) {
+  background: #14587f;
+  box-shadow: inset 3px 0 0 #76ddff;
+  color: #f4fcff;
+}
+.bb-map .bb-bracket-team:focus-visible { outline-color: #a3eaff; outline-offset: 1px; z-index: 1; }
+.bb-map .bb-bracket-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bb-map .bb-bracket-seed { background: #324f69; color: #f8fcff; }
+.bb-map .bb-bracket-tbd { background: #19364f; color: #b8c9d8; }
+.bb-map :is(.bb-bracket-odds, .bb-bracket-path, .bb-bracket-result, .bb-bracket-analysis) {
+  width: auto;
+  margin-inline: 3px;
+  font-size: 9px;
+  line-height: 1.2;
+  color: #c8e3fb;
+}
+.bb-map .bb-bracket-odds strong { color: inherit; }
+.bb-map .bb-bracket-odds small { display: none; }
+.bb-map .bb-bracket-result.is-right { color: #a4eec8; }
+.bb-map .bb-bracket-result.is-wrong { color: #ffc0c0; }
+.bb-map .bb-bracket-analysis { color: #aadfff; }
+.bb-map .bb-bracket-path:last-child { display: none; }
+.bb-map-tools {
+  position: absolute;
+  right: .65rem;
+  bottom: .65rem;
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  padding: .35rem;
+  border: 1px solid #42698b;
+  border-radius: .65rem;
+  background: #0f2a43;
+  z-index: 1;
+}
+.bb-map-jumps button, .bb-map-tools button {
+  border-color: #5984a6;
+  background: #193c5b;
+  color: #f2f8ff;
+  font-size: .82rem;
+}
+.bb-map-tools button { padding-inline: .65rem; }
+.bb-map-tools button:is([data-bracket-view=zoom-in], [data-bracket-view=zoom-out]) {
+  min-width: 44px;
+  font-size: 1.22rem;
+}
+.bb-map .bb-map-tools button:hover, .bb-map .bb-map-jumps button:hover { border-color: #73d8ff; }
+.bb-map .bb-map-tools button:focus-visible, .bb-map .bb-map-jumps :is(button, select):focus-visible {
+  outline-color: #80dbff;
+}
+.bb-map-scale {
+  color: #d4e9fc;
+  min-width: 3.2rem;
+  text-align: center;
+  font-size: .82rem;
+  font-variant-numeric: tabular-nums;
+}
+.bb-map-expanded, :fullscreen:has(.bb-map) {
+  background: #0b1d30;
+  overflow: auto;
+}
+.bb-map-expanded {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+}
+:is(.bb-map-expanded, :fullscreen) > .bb-bracket:has(.bb-map) > :not(.bb-map) { display: none; }
+:is(.bb-map-expanded, :fullscreen) .bb-map { margin: 0; border-radius: 0; }
+:is(.bb-map-expanded, :fullscreen) .bb-map-viewport { block-size: calc(100dvh - 10.1rem); }
 @media (max-width: 860px) {
-  .bb-bracket-board[data-columns] { grid-template-columns: minmax(0, 1fr); }
-  .bb-bracket-connections { display: none; }
   .bb-bracket-game .bb-bracket-team { font-size: 1rem; }
 }
 @media (max-width: 430px) {

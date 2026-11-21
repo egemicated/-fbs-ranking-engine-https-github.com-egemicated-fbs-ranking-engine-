@@ -19,7 +19,7 @@ const sources = new Map([
   ['/basketball/bracket-archive.js','../basketball/bracket-archive.js'],
 ]);
 const server = createServer(async (req,res) => {
-  if (req.url === '/') {
+  if (new URL(req.url, 'http://local').pathname === '/') {
     res.setHeader('Content-Type','text/html; charset=utf-8').end(html);
     return;
   }
@@ -39,30 +39,100 @@ let browser;
 try {
   const executablePath = process.env.QUALITY_BROWSER;
   browser = await chromium.launch(executablePath ? {executablePath} : {});
-  for (const width of [390, 768, 1440]) {
+  for (const width of [390, 768, 1440, 1920]) {
+    const desktop = width > 860;
     const page = await browser.newPage({viewport:{width,height:900}});
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(url);
+    await page.getByRole('heading',{name:'GD projected field'}).waitFor();
+    if (desktop) await assertGeometry(page, 75, 12);
+    await page.goto(url+'?mode=official');
     await page.getByRole('heading',{name:'Selection Sunday is ahead'}).waitFor();
     await page.getByRole('button',{name:'Try the 76-team format'}).click();
     await page.getByRole('heading',{name:'2027 format demonstration'}).waitFor();
-    if (pics) await page.screenshot({path:join(pics,'basketball-demo-' + width + '.png'),fullPage:true});
+    if (pics && !desktop) await page.screenshot({path:join(pics,'basketball-demo-' + width + '.png'),fullPage:true});
+    const viewport = page.getByRole('region',{name:'Interactive tournament bracket'});
+    const world = page.locator('.bb-map-world');
+    const scale = async () => Number(await viewport.getAttribute('data-scale'));
+    const sameProgress = async value => assert.equal(await page.getByRole('progressbar',{name:'Bracket completion'}).getAttribute('value'),String(value));
+    if (desktop) {
+      await assertGeometry(page, 75, 12);
+      await viewport.scrollIntoViewIfNeeded();
+      if (pics) await page.getByRole('region',{name:'Tournament map'}).screenshot({path:join(pics,'basketball-demo-' + width + '.png')});
+      const fit = await scale();
+      const area = await viewport.boundingBox();
+      const before = await world.boundingBox();
+      const anchorX = area.x + area.width * .36;
+      const anchorY = area.y + area.height * .4;
+      await page.mouse.move(anchorX, anchorY);
+      await page.mouse.wheel(0, -330);
+      await page.waitForFunction(fit => +document.querySelector('.bb-map-viewport').dataset.scale > fit, fit);
+      const zoomed = await world.boundingBox();
+      const ratio = zoomed.width / before.width;
+      assert.ok(Math.abs((anchorX - before.x) * ratio - (anchorX - zoomed.x)) < 2, 'wheel preserves the pointer’s horizontal anchor');
+      assert.ok(Math.abs((anchorY - before.y) * ratio - (anchorY - zoomed.y)) < 2, 'wheel preserves the pointer’s vertical anchor');
+      const zoom = await scale();
+      await page.getByRole('button',{name:'Zoom out'}).click();
+      assert.ok(await scale() < zoom);
+      const translation = await world.evaluate(el => el.style.transform);
+      const view = await viewport.boundingBox();
+      await page.mouse.move(view.x + view.width/2, view.y + 10);
+      await page.mouse.down();
+      await page.mouse.move(view.x + view.width/2 + 72, view.y + 50,{steps:8});
+      assert.ok(await viewport.evaluate(el => el.classList.contains('is-dragging')));
+      await page.mouse.up();
+      assert.notEqual(await world.evaluate(el => el.style.transform),translation);
+      await sameProgress(0);
+      const jump = page.locator('[data-bracket-map-select]');
+      await jump.selectOption('east');
+      assert.ok(await scale() > fit);
+      await page.getByRole('button',{name:'Fit entire bracket'}).click();
+      assert.equal(await scale(),fit);
+      await viewport.press('+');
+      assert.ok(await scale() > fit);
+      await page.getByRole('button',{name:'Reset view'}).click();
+      assert.equal(await scale(),fit);
+      await jump.selectOption('championship');
+      assert.ok(await scale() > 1);
+      await page.getByRole('button',{name:'Fullscreen bracket'}).click();
+      await page.getByRole('button',{name:'Exit fullscreen bracket'}).waitFor();
+      assert.ok(await page.evaluate(() => !!document.fullscreenElement || document.querySelector('#bracket').classList.contains('bb-map-expanded')));
+      if (pics) await page.screenshot({path:join(pics,'basketball-fullscreen-' + width + '.png')});
+      await page.getByRole('button',{name:'Exit fullscreen bracket'}).click();
+      await page.getByRole('button',{name:'Fullscreen bracket'}).waitFor();
+      await sameProgress(0);
+      await jump.selectOption('east');
+      if (pics) await page.getByRole('region',{name:'Tournament map'}).screenshot({path:join(pics,'basketball-east-' + width + '.png')});
+    }
     const opening = page.locator('[data-bracket-slot=east-opening-16]').getByRole('button').first();
     await opening.focus();
     await opening.press('Space');
     assert.match(await page.getByRole('status').innerText(), /advances/);
     const identity = await opening.getAttribute('data-bracket-team');
-    await page.locator('[data-bracket-select=round]').selectOption('1');
+    if (desktop) {
+      await page.locator('[data-bracket-map-select]').selectOption('east');
+      assert.equal(await page.locator('path[data-from=east-opening-16].is-picked').count(), 1);
+    } else await page.locator('[data-bracket-select=round]').selectOption('1');
     const promoted = page.locator('[data-bracket-slot=east-r1-1]').getByRole('button').last();
     assert.equal(await promoted.getAttribute('data-bracket-team'),identity);
     await promoted.click();
+    await sameProgress(2);
+    if (desktop) {
+      await page.locator('[data-bracket-map-select]').selectOption('east');
+      assert.equal(await page.locator('path[data-from=east-opening-16].is-advancing').count(), 1);
+      await page.locator('[data-bracket-slot=east-opening-16]').getByRole('button').last().click();
+      await sameProgress(1);
+      assert.notEqual(await promoted.getAttribute('data-bracket-team'),identity);
+      assert.equal(await promoted.getAttribute('aria-pressed'),'false');
+    }
     await page.getByRole('button',{name:'Save practice bracket'}).click();
     await page.getByRole('button',{name:'Reset picks'}).click();
     await page.getByRole('button',{name:'Reopen saved draft'}).click();
-    assert.equal(await page.getByRole('progressbar',{name:'Bracket completion'}).getAttribute('value'),'2');
+    await sameProgress(desktop ? 1 : 2);
     await page.getByRole('button',{name:'Go to Final Four'}).click();
-    await page.getByRole('heading',{name:'National rounds'}).waitFor();
+    if (desktop) assert.equal(await page.locator('[data-bracket-map-select]').inputValue(),'national');
+    else await page.getByRole('heading',{name:'National rounds'}).waitFor();
     await page.getByRole('button',{name:'GD projected bracket'}).click();
     await page.getByRole('heading',{name:'GD projected field'}).waitFor();
     assert.match(await page.locator('.bb-bracket-intro').innerText(),/Neutral-site model favorite/);
@@ -73,8 +143,13 @@ try {
     await page.getByRole('button',{name:'Official bracket'}).click();
     await page.locator('[data-bracket-select=field]').selectOption('archive');
     assert.match(await page.locator('.bb-bracket-intro').innerText(),/Champion Michigan/);
-    await page.locator('[data-bracket-select=region]').selectOption('east');
-    if (width <= 860) await page.locator('[data-bracket-select=round]').selectOption('1');
+    if (desktop) {
+      await assertGeometry(page, 67, 4);
+      await page.locator('[data-bracket-map-select]').selectOption('east');
+    } else {
+      await page.locator('[data-bracket-select=region]').selectOption('east');
+      await page.locator('[data-bracket-select=round]').selectOption('1');
+    }
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
     assert.equal(overflow,false);
     assert.deepEqual(errors,[]);
@@ -82,13 +157,38 @@ try {
     await page.getByRole('button',{name:'My bracket'}).click();
     await page.locator('[data-bracket-select=practiceField]').selectOption('archive');
     await page.getByRole('heading',{name:'2026 historical practice'}).waitFor();
-    await page.locator('[data-bracket-select=round]').selectOption('1');
+    if (desktop) await page.locator('[data-bracket-map-select]').selectOption('east');
+    else await page.locator('[data-bracket-select=round]').selectOption('1');
     await page.getByRole('button',{name:'Advance Duke, seed 1'}).click();
     assert.match(await page.locator('.bb-bracket-progress').innerText(),/1 \/ 1 correct/);
+    await page.goto(url+'?mode=projection');
+    await page.getByRole('heading',{name:'GD projected field'}).waitFor();
+    assert.equal(await page.getByRole('button',{name:'GD projected bracket'}).getAttribute('aria-pressed'),'true');
     await page.close();
   }
-  console.log('Basketball tournament browser checks passed at 390, 768 and 1440 px.');
+  console.log('Basketball tournament browser checks passed at 390, 768, 1440 and 1920 px.');
 } finally {
   await browser?.close();
   server.close();
+}
+
+async function assertGeometry(page, games, openers) {
+  assert.equal(await page.locator('[data-bracket-slot]').count(),games);
+  assert.equal(await page.locator('[data-bracket-slot][data-round="0"]').count(),openers);
+  assert.equal(await page.locator('.bb-map-region').count(),4);
+  assert.equal(await page.locator('.bb-map-connectors path').count(),games-1);
+  const failures = await page.locator('.bb-map-viewport').evaluate(view => {
+    const bounds = view.getBoundingClientRect();
+    const cards = [...view.querySelectorAll('[data-bracket-slot]')];
+    return cards.flatMap((card,index) => {
+      const box = card.getBoundingClientRect();
+      const outside = box.left < bounds.left || box.top < bounds.top || box.right > bounds.right || box.bottom > bounds.bottom;
+      const overlaps = cards.slice(index + 1).some(next => {
+        const other = next.getBoundingClientRect();
+        return box.left < other.right && box.right > other.left && box.top < other.bottom && box.bottom > other.top;
+      });
+      return outside || overlaps ? [card.dataset.bracketSlot] : [];
+    });
+  });
+  assert.deepEqual(failures,[]);
 }
