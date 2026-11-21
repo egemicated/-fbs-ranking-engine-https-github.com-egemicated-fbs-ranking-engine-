@@ -6,7 +6,7 @@ import { APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLeg
 import { formatNumber, formatProbability, formatRecord, formatSorScore, indefiniteArticle, sorEligibleRecord } from '../frontend/format.js';
 import { teamDisplayName, teamNameMarkup, teamAccentAttr } from '../frontend/team-identity.js';
 import { championshipWeekLabel, championshipWeekMessage, isChampionshipWeek, withChampionshipWeek } from '../frontend/football-weeks.js';
-import { pageHero } from '../frontend/platform-presentation.js';
+import { matchupTeamCard, pageHero } from '../frontend/platform-presentation.js';
 
 const knownImports = [
   "import { teamDisplayName, teamNameMarkup, teamAccentAttr } from './team-identity.js';",
@@ -15,7 +15,7 @@ const knownImports = [
   "import { routeFromUrl, routeHref } from './clean-routes.js';",
   "import { APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl } from './clean-navigation.js';",
   "import { formatNumber, formatProbability, formatRecord, formatSorScore, indefiniteArticle, sorEligibleRecord } from './format.js?v=sor-transparency';",
-  "import { pageHero } from './platform-presentation.js';",
+  "import { matchupTeamCard, pageHero } from './platform-presentation.js';",
 ];
 
 export function appVmSource(source) {
@@ -33,7 +33,7 @@ export function installAppVmContext(context) {
     routeFromUrl, routeHref, APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl,
     formatNumber, formatProbability, formatRecord, formatSorScore, indefiniteArticle, sorEligibleRecord,
     teamDisplayName, teamNameMarkup, teamAccentAttr, championshipWeekLabel, championshipWeekMessage,
-    isChampionshipWeek, withChampionshipWeek, pageHero, URL, URLSearchParams });
+    isChampionshipWeek, withChampionshipWeek, matchupTeamCard, pageHero, URL, URLSearchParams });
   const { location, window } = context;
   assert.ok(location && window, 'VM browser requires location and window fixtures');
   const origin = location.origin ?? 'https://example.test';

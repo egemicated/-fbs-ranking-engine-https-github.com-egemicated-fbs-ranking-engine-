@@ -50,15 +50,29 @@
   color: #9ce8ff;
 }
 
-.gd-matchup-inputs:where(form) {
+.compare-venue button { min-height: 44px; white-space: normal; }
+.compare-picker select { min-height: 44px; }
+.compare-team-strength { margin-block-start: 12px; padding-block-start: 9px; border-top: 1px solid var(--line); }
+
+.gd-matchup-toolbar { display: flex; flex-wrap: wrap; align-items: end; gap: 8px 14px; margin-block-end: 20px; }
+.gd-matchup-toolbar label { display: grid; gap: 5px; font-size: 13px; font-weight: 700; }
+.gd-matchup-toolbar select {
+  min-width: 0; min-height: var(--gd-control-height);
+  padding: 7px 10px; border: 1px solid var(--gd-control-line); border-radius: var(--gd-control-radius);
+  background: #fff; color: var(--gd-ink);
+}
+[data-matchup-form] .compare-venue { margin: 0; }
+[data-matchup-form] :is([data-matchup-venue-fallback], [data-matchup-venue-buttons], [data-matchup-manual])[hidden] { display: none; }
+[data-matchup-enhanced] .gd-matchup-toolbar {
   display: grid;
-  grid-template-columns: minmax(90px, .58fr) repeat(2, minmax(135px, 1fr)) minmax(120px, .68fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: end;
 }
-
-.gd-matchup-inputs .searchable-team-select > label:not(.sr-only) {
-  display: grid;
-}
+[data-matchup-enhanced] .gd-matchup-toolbar > label:first-child { width: max-content; max-width: 100%; }
+[data-matchup-side] h2 .fc-team-name { display: flex; gap: .13em; line-height: inherit; }
+[data-matchup-side] h2 .fc-team-name > span { font-family: var(--gd-display); font-size: .85em; }
+[data-matchup-side] h2 .fc-team-name > strong { font-size: 1.23em; text-wrap: balance; }
+.gd-matchup-error:not([hidden]) { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; }
 
 @media (prefers-reduced-motion: no-preference) {
   [data-matchup-refresh] { animation: gd-matchup-in 180ms ease-out; }
@@ -68,7 +82,8 @@
   }
 }
 
-@media (max-width: 760px) {
-  .gd-matchup-inputs:where(form) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .gd-matchup-inputs > label:has([name="season"]) { grid-column: 1 / -1; }
+@media (max-width: 700px) {
+  [data-matchup-enhanced] .gd-matchup-toolbar { grid-template-columns: minmax(0, 1fr); }
+  [data-matchup-form] .compare-venue { width: 100%; }
+  [data-matchup-form] .compare-venue button { flex: 1; }
 }

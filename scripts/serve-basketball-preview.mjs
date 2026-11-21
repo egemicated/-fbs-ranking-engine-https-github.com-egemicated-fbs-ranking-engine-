@@ -219,7 +219,7 @@ export async function createBasketballPreview({root=project,clock=Date.now(),acc
         const title=teamRoute?ctx.teams?.get(view.slice(6))?.name:views.get(view);
         if (!body) { send(res,404,htmlType,notFound(owner)); return; }
         const scripts = view === 'march-madness' ? '<link rel="stylesheet" href="/basketball-bracket.css">'+scriptTag('/basketball-preview/bracket-page.js')
-          : view === 'matchup-lab' ? scriptTag('/basketball-preview/matchup.js')
+          : view === 'matchup-lab' ? '<link rel="stylesheet" href="/team-identity.css"><link rel="stylesheet" href="/team-players.css">'+scriptTag('/basketball-preview/matchup.js')
             : view === 'conferences' ? scriptTag('/basketball-preview/conference.js') : '';
         send(res,200,htmlType,html({title:title??'Basketball',description:`Division I men’s basketball · ${title??'The Games Decide'}`,
           current:view,pathname:path,season:year,profile:owner,publication:ctx.snapshot,body,script:scripts}));

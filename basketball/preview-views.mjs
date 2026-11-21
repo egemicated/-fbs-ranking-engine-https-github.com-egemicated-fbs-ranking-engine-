@@ -1,3 +1,4 @@
+import { matchupTeamCard } from '../frontend/platform-presentation.js';
 import { predictBasketball } from './model-forecast.js';
 import { conferenceDataCell, conferenceNameCell, conferenceSortArrow, conferenceSortControl,
   conferenceViewTabs, nextConferenceSort, orderConferenceRows } from '../frontend/conference-display.js';
@@ -320,12 +321,19 @@ function teamPage(ctx,t) {
     </div></div>`);
 }
 
-function matchupTeamField(name, teams, selected) {
-  const label = name === 'a' ? 'Team A' : 'Team B';
-  return `<label>${label}<select name="${name}" data-matchup-team="${name}" required>
-    <option value="" disabled${selected ? '' : ' selected'}>Choose a team</option>
-    ${teams.map(team => `<option value="${e(team.id)}"${team.id === selected ? ' selected' : ''}>${e(team.name)}</option>`).join('')}
+function basketballMatchupTeam(side, team, opponent, teams) {
+  const picker = `<label><span class="sr-only">Team ${side.toUpperCase()}</span>
+    <select name="${side}" data-matchup-team="${side}" required>
+      <option value="" disabled${team ? '' : ' selected'}>Choose a team</option>
+      ${teams.map(option => `<option value="${e(option.id)}"${option.id === team?.id ? ' selected' : option.id === opponent?.id ? ' disabled' : ''}>
+        ${e([option.name,option.mascot].filter(Boolean).join(' '))}</option>`).join('')}
     </select></label>`;
+  return matchupTeamCard({
+    side,picker,heading:team ? teamIdentity(team) : 'Choose a team',
+    attributes:`style="--team-accent:${accent(team)}"`,
+    context:team ? `${teamRecord(team)} · ${Number.isFinite(team.sorRank) ? ordinal(team.sorRank)+' Strength of Record' : 'SOR rank unavailable'}` : '',
+    strength:team ? `Predictive Strength <strong>${fmt(team.predictiveScore,3)}</strong> · ${ordinal(team.predictiveRank)}` : '',
+  });
 }
 
 function matchup(ctx, query) {
@@ -333,19 +341,36 @@ function matchup(ctx, query) {
   const first = query.get('a'), second=query.get('b');
   const h=ctx.teams.get(first)??(!first?byName[0]:null), a=ctx.teams.get(second)??(!second?byName.find(t=>t?.id!==h?.id):null);
   const venue = ['home','away','neutral'].includes(query.get('venue')) ? query.get('venue') : 'neutral';
-  const controls = `<form class="fc-form fc-results-filters gd-matchup-inputs" method="get" action="${link('matchup-lab')}" data-matchup-form="${ctx.year}">
-    ${seasonField(ctx)}${matchupTeamField('a',byName,h?.id)}${matchupTeamField('b',byName,a?.id)}
-    ${selector('venue','Venue',[['home','Team A at home'],['away','Team B at home'],['neutral','Neutral court']],venue)}
-    <button type="submit">Compare teams</button></form>`;
-  const body = !h || !a || h.id===a.id
-    ? panel('Choose a different opponent',empty('Two different Division I teams are required.'))
-    : matchupResults(ctx,h,a,venue);
-  const announcement = !h || !a || h.id===a.id ? 'Choose two different teams.' : `Matchup updated for ${h.name} and ${a.name}.`;
+  const venues = [['neutral','Neutral court'],['home','Team A at home'],['away','Team B at home']];
+  const valid = h && a && h.id !== a.id;
+  const { estimate, details } = valid ? matchupResults(ctx,h,a,venue)
+    : { estimate:'<h2>Choose a different opponent</h2><p>Two different Division I teams are required.</p>', details:'' };
+  const announcement = valid ? `Matchup updated for ${h.name} and ${a.name}.` : 'Choose two different teams.';
   return banner('Matchup Lab','Explore how two teams match up under basketball’s own prediction model.',undefined,'tool')
     + content(ctx,`<section data-matchup-lab aria-label="Matchup controls and results">
-      ${controls}<p class="sr-only" role="status" data-matchup-status></p>
-      <p class="fc-empty" role="alert" data-matchup-error hidden></p>
-      <div data-matchup-results data-matchup-announcement="${e(announcement)}">${body}</div></section>`);
+      <form method="get" action="${link('matchup-lab')}" data-matchup-form="${ctx.year}">
+        <div class="gd-matchup-toolbar">
+          ${seasonField(ctx)}
+          <div data-matchup-venue-fallback>${selector('venue','Venue',venues,venue)}</div>
+          <div class="segmented compare-venue" role="group" aria-label="Game location" data-matchup-venue-buttons hidden>
+            ${venues.map(([key,label])=>`<button type="button" data-matchup-venue-choice="${key}"${key===venue ? ' class="active"' : ''}
+              aria-pressed="${key===venue}">${label}</button>`).join('')}
+          </div>
+          <button type="submit" class="button" data-matchup-manual>Compare teams</button>
+        </div>
+        <div class="compare-layout">
+          ${basketballMatchupTeam('a',h,a,byName)}${basketballMatchupTeam('b',a,h,byName)}
+          <section class="panel prediction-card gd-matchup-estimate" aria-label="Win probability" data-matchup-results
+            data-matchup-announcement="${e(announcement)}">${estimate}</section>
+        </div>
+      </form>
+      <p class="sr-only" role="status" data-matchup-status></p>
+      <div class="gd-empty gd-matchup-error" role="alert" data-matchup-error hidden>
+        <p>Could not update the matchup. Previous results are still shown.</p>
+        <button type="button" class="button light small" data-matchup-retry>Retry</button>
+      </div>
+      <div data-matchup-details>${details}</div>
+    </section>`);
 }
 
 function matchupResults(ctx,h,a,venue) {
@@ -356,8 +381,7 @@ function matchupResults(ctx,h,a,venue) {
   const paired=ctx.dataset.games.filter(g=>g.completed && (g.home===h.id&&g.away===a.id||g.home===a.id&&g.away===h.id));
   const {homeMargin, homeWinProbability, awayWinProbability, estimatedPossessions, provisional} = estimate;
   const leader = homeMargin > 0 ? h.name : a.name;
-  return `<section class="panel prediction-card gd-matchup-estimate" aria-label="Win probability">
-    <div class="eyebrow">${provisional ? 'Early-season matchup estimate' : 'Current matchup estimate'}</div>
+  const estimateMarkup = `<div class="eyebrow">${provisional ? 'Early-season matchup estimate' : 'Current matchup estimate'}</div>
     <h2>${!Number.isFinite(homeMargin) ? 'Win probability' : homeMargin === 0 ? 'Even matchup' : `${e(leader)} edge`}</h2>
     ${Number.isFinite(homeMargin) ? `<div class="prediction-number">${fmt(Math.abs(homeMargin))}<span> pts</span></div><p>Expected margin</p>` : ''}
     <div class="probability-track" aria-hidden="true"><span style="width:${homeWinProbability*100}%"></span></div>
@@ -366,10 +390,22 @@ function matchupResults(ctx,h,a,venue) {
       <span><a href="${e(teamHref(team.id,ctx.year))}">${e(team.name)}</a></span><strong>${pct(chance)}</strong>
       ${chance!==.5 ? `<small>${chance>.5 ? 'Model favorite' : 'Underdog'}</small>` : ''}</div>`).join('')}</div>
     <p>${Number.isFinite(estimatedPossessions) ? `Estimated tempo: ${fmt(estimatedPossessions)} possessions. ` : ''}
-      Hypothetical matchup.</p></section>`
-    +`<div class="fc-grid fc-gap">${panel('Team evidence',table('Matchup statistics',['Metric',h.name,a.name],fields.map(([label,format])=>
+      Hypothetical matchup.</p>`;
+  const details = `<div class="fc-grid fc-gap">${panel('Team evidence',table('Matchup statistics',['Metric',h.name,a.name],fields.map(([label,format])=>
       values([e(label),format(h),format(a)]))))}
-    ${panel('Head-to-head this season', gameTable(ctx,paired)+`<div class="fc-actions">${action(link('methodology',{season:ctx.year}),'How forecasts work',true)}</div>`)}</div>`;
+    ${panel('Head-to-head this season', gameTable(ctx,paired)+`<div class="fc-actions">${action(link('methodology',{season:ctx.year}),'How forecasts work',true)}</div>`)}</div>${matchupPlayers([h,a])}`;
+  return { estimate:estimateMarkup, details };
+}
+
+function matchupPlayers(teams) {
+  return `<details class="panel player-fold matchup-players" data-matchup-players>
+      <summary>Players to know</summary>
+      <div class="panel-body">
+        <div class="matchup-player-grid">${teams.map(team=>`<section class="matchup-player-team" style="--team-player-accent:${accent(team)}">
+          <h3>${e(team.name)}</h3><p class="players-empty">No player stats or availability reports published for this season.</p>
+        </section>`).join('')}</div>
+      </div>
+    </details>`;
 }
 
 const conferenceModes = {

@@ -23,3 +23,12 @@ export function pageHero({
 }
 
 export const platformEmpty = message => `<p class="gd-empty">${escapeHtml(message)}</p>`;
+
+export function matchupTeamCard({ side, heading, context = '', picker, strength = '', attributes = '' }) {
+  return `<section class="panel compare-picker team-accent-card" data-matchup-side="${side}"${attributes ? ' ' + attributes : ''}>
+    <div class="section-label">Team ${side.toUpperCase()}</div><h2>${heading}</h2>
+    ${context ? `<p class="compare-team-context">${context}</p>` : ''}
+    ${picker}
+    ${strength ? `<p class="compare-team-strength">${strength}</p>` : ''}
+  </section>`;
+}

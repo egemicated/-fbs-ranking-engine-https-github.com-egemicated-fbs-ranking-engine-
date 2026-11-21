@@ -4,7 +4,7 @@ import { ACCOUNT_ROUTE_EVENT, isAccountCallbackUrl, pendingAccountRoute, safeAcc
 import { routeFromUrl, routeHref } from './clean-routes.js';
 import { APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl } from './clean-navigation.js';
 import { formatNumber, formatProbability, formatRecord, formatSorScore, indefiniteArticle, sorEligibleRecord } from './format.js?v=sor-transparency';
-import { pageHero } from './platform-presentation.js';
+import { matchupTeamCard, pageHero } from './platform-presentation.js';
 
 const BRAND = 'The Games Decide';
 const main = document.querySelector('#main');
@@ -1374,11 +1374,12 @@ function renderCompare() {
   main.innerHTML=`${banner('Football · Predictive Strength','Matchup Lab','Compare two teams using our own historical and opponent-adjusted strength ratings.','tool')}
     <div class="wrap page-content">${matchupNav('compare')}
     <div class="segmented compare-venue" role="group" aria-label="Game location">${[['neutral','Neutral field'],['home','Team A at home'],['away','Team B at home']].map(([v,label])=>`<button data-action="venue" data-value="${v}" class="${state.venue===v?'active':''}" aria-pressed="${state.venue===v}">${label}</button>`).join('')}</div>
-    <div class="compare-layout">${[a,b].map((t,i)=>`<section class="panel compare-picker team-accent-card" ${teamAccentAttr(t.id)}>
-    <div class="section-label">TEAM ${i?'B':'A'}</div><h2>${teamNameMarkup(t.id, t.name)}</h2>
-    <p class="compare-team-context">${record(t)} · ${rank(nationalRank(t))} ${achievementName()}</p>
-    <label><span class="sr-only">Team ${i?'B':'A'}</span><select id="compare-${i?'b':'a'}">${compareOptions(t.id,i ? a.id : b.id)}</select></label>
-    <p class="compare-team-strength">Strength <strong>${number(t.strength,2)} pts</strong> · ${rank(strengthRank(t))}</p></section>`).join('')}
+    <div class="compare-layout">${[[a,b,'a'],[b,a,'b']].map(([team,opponent,side]) => matchupTeamCard({
+      side, heading:teamNameMarkup(team.id,team.name), attributes:teamAccentAttr(team.id),
+      context:`${record(team)} · ${rank(nationalRank(team))} ${achievementName()}`,
+      picker:`<label><span class="sr-only">Team ${side.toUpperCase()}</span><select id="compare-${side}">${compareOptions(team.id,opponent.id)}</select></label>`,
+      strength:`Strength <strong>${number(team.strength,2)} pts</strong> · ${rank(strengthRank(team))}`,
+    })).join('')}
     <section class="panel prediction-card gd-matchup-estimate" data-matchup-results><div class="eyebrow">${matchup ? 'Historically calibrated odds' : 'Experimental model estimate'}</div><h2>${edge === 0 ? 'Even matchup' : `${esc(edge > 0 ? a.name : b.name)} edge`}</h2>
     <div class="prediction-number">${number(Math.abs(edge),1)}<span> pts</span></div><p>Bounded-model margin estimate</p>
     <div class="probability-track" aria-hidden="true"><span style="width:${probability*100}%"></span></div>

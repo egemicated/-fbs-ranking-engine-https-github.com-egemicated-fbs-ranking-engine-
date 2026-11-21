@@ -135,21 +135,6 @@
   color: #3c5878;
 }
 
-.compare-venue button {
-  min-height: 44px;
-  white-space: normal;
-}
-
-.compare-team-strength {
-  margin-block-start: 12px;
-  padding-block-start: 9px;
-  border-top: 1px solid var(--line);
-}
-
-.compare-picker select {
-  min-height: 44px;
-}
-
 .weekly-day + .weekly-day {
   margin-block-start: 22px;
 }
