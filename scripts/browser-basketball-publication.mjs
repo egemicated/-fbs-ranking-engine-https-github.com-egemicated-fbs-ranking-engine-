@@ -87,6 +87,9 @@ try {
   await page.goto(origin+'/#home');
   await page.waitForURL('**/football/');
   await page.locator('.home-hero').waitFor();
+  await page.getByText('Account controls could not load.',{exact:true}).waitFor();
+  await page.locator('[data-gd-sport-link="basketball"]').click();
+  await page.waitForURL('**/basketball/');
   await page.locator('.gd-brand').click();
   await page.waitForURL(origin+'/');
   await page.locator('.fc-portal-grid').waitFor();
