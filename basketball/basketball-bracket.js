@@ -156,7 +156,7 @@ export function mountBasketballBracket(root, {
   function methodNote() {
     const at = Number.isFinite(Date.parse(modelAsOf)) ? ' Data cutoff ' + stadiumDate.format(new Date(modelAsOf)) + ' MT.' : '';
     return '<details class="bb-bracket-method"><summary>How we project the field</summary>' +
-      '<p>We assume each conference’s eligible SOR leader wins its automatic bid, then add 44 at-large teams by SOR. ' +
+      '<p>We assume the eligible SOR leader from each of 32 conferences wins an automatic bid, then add 44 at-large teams by SOR. ' +
       'The lowest 12 in each bid group start in the Opening Round. We place two automatic matchups on seed line 15 ' +
       'and four on line 16, then spread the remaining slots across regions by SOR.' + esc(at) + '</p>' +
       '<p>This early-season scenario uses the eligibility information available in the preview. It leaves conference tournament outcomes, ' +
@@ -237,21 +237,20 @@ export function mountBasketballBracket(root, {
     const titleText = title ? title + ' region' : 'National rounds';
     const selectors = '<div class="bb-bracket-filters">' +
       '<label>Region<select data-bracket-select="region">' +
-        regions.map(region => choice(region.id, region.name, state.region)).join('') + choice('national', 'Final Four and championship', state.region) + '</select></label>' +
+        regions.map(region => choice(region.id, region.name, state.region)).join('') + choice('national', 'National rounds', state.region) + '</select></label>' +
       '<label>Round<select data-bracket-select="round">' +
-        rounds.map(r => choice(r, roundName(r, bracket), state.round)).join('') + '</select></label>' +
-      '<button type="button" data-bracket-action="national">Go to Final Four</button></div>';
-    return selectors + '<h3 class="bb-bracket-region-title">' + esc(titleText) + '</h3>' +
+      rounds.map(r => choice(r, roundName(r, bracket), state.round)).join('') + '</select></label></div>';
+    return selectors + '<div class="bb-bracket-region-bar"><h3>' + esc(titleText) + '</h3>' +
+      '<button type="button" data-bracket-action="national">Go to Final Four</button></div>' +
       '<div class="bb-bracket-board">' +
       '<section class="bb-bracket-column" aria-label="' + esc(roundName(round, bracket)) + '">' +
-        '<h4>' + esc(roundName(round, bracket)) + '</h4><div class="bb-bracket-round-games">' +
+        '<div class="bb-bracket-round-games">' +
         regionalGames.filter(game => game.round === round).map(game => card(game, bracket, picks, editing)).join('') +
         '</div></section></div>';
   }
 
   function renderMap(bracket, picks, editing, layout) {
     const {positions, regions, height} = layout;
-    const title = editing ? 'Practice tournament' : state.mode === 'projection' ? 'Projected tournament' : 'Official tournament';
     const path = bracket.games.flatMap(game => game.sides.flatMap((slot, index) => {
       if (!slot.from) return [];
       const incoming = picks[slot.from];
@@ -274,27 +273,26 @@ export function mountBasketballBracket(root, {
         esc(game.round === 5 ? 'Final Four' : 'Championship') + '</h4>';
     }).join('');
     return '<section class="bb-map" aria-label="Tournament map">' +
-      '<div class="bb-map-header"><div><h3>' + title + '</h3><p id="bb-map-help">Drag to pan. Scroll to zoom. Use the controls or keyboard to explore.</p></div>' +
-      '<div class="bb-map-jumps"><label>Jump to<select data-bracket-map-select>' +
-      choice('', 'Select a region', camera.jump) +
+      '<div class="bb-map-header"><div class="bb-map-jumps"><select aria-label="Jump to region or round" data-bracket-map-select>' +
+      choice('', 'Jump to region', camera.jump) +
       bracket.field.regions.map(region => choice(region.id, region.name + ' region', camera.jump)).join('') +
-      choice('national', 'Final Four', camera.jump) + choice('championship', 'Championship', camera.jump) + '</select></label>' +
-      '<button type="button" data-bracket-action="national">Go to Final Four</button></div></div>' +
-      '<div class="bb-map-frame">' +
+      choice('national', 'Final Four', camera.jump) + choice('championship', 'Championship', camera.jump) + '</select>' +
+      '<button type="button" data-bracket-action="national">Go to Final Four</button></div>' +
+      '<p id="bb-map-help">Drag to pan · Scroll to zoom<span class="bb-sr-only">. Use the arrow keys to pan, plus or minus to zoom, and zero to fit.</span></p>' +
       '<div class="bb-map-tools" role="group" aria-label="Bracket view controls">' +
       '<button type="button" data-bracket-view="zoom-in" aria-label="Zoom in">+</button>' +
       '<button type="button" data-bracket-view="zoom-out" aria-label="Zoom out">−</button>' +
       '<button type="button" data-bracket-view="fit" aria-label="Fit entire bracket">Fit</button>' +
       '<button type="button" data-bracket-view="reset" aria-label="Reset view">Reset view</button>' +
       '<button type="button" data-bracket-view="expand" aria-label="Fullscreen bracket">Fullscreen</button>' +
-      '<span class="bb-map-scale" aria-hidden="true"></span></div>' +
+      '<span class="bb-map-scale" aria-hidden="true"></span></div></div>' +
       '<div class="bb-map-viewport" tabindex="0" role="region" aria-label="Interactive tournament bracket" aria-describedby="bb-map-help" ' +
       'aria-keyshortcuts="+ - 0 ArrowLeft ArrowRight ArrowUp ArrowDown">' +
       '<div class="bb-map-world" style="--map-width:' + mapWidth + 'px;--map-height:' + height + 'px;--card-width:' +
       mapCardWidth + 'px;--card-height:' + mapCardHeight + 'px">' +
       '<svg class="bb-map-connectors" viewBox="0 0 ' + mapWidth + ' ' + height + '" aria-hidden="true">' + path + '</svg>' +
       labels + national + bracket.games.map(game => card(game, bracket, picks, editing, positions.get(game.id))).join('') +
-      '</div></div></div></section>';
+      '</div></div></section>';
   }
 
   function fitScale() {
@@ -477,17 +475,17 @@ export function mountBasketballBracket(root, {
       const href = officialSource(bracket.field.sourceUrl);
       const complete = Object.keys(bracket.results).length === bracket.games.length;
       const winner = complete && bracket.teams[bracket.results.championship?.winner]?.name;
-      return '<div class="bb-bracket-intro"><p class="bb-bracket-kicker">' + (complete ? 'Verified historical results' : 'Official NCAA field') + '</p>' +
-        '<h2>' + bracket.field.year + ' NCAA bracket</h2><p>' + bracket.teamCount + ' teams · ' + bracket.games.length + ' games' +
+      return '<div class="bb-bracket-intro"><div class="bb-bracket-field-title"><p class="bb-bracket-kicker">' + (complete ? 'Verified historical results' : 'Official NCAA field') + '</p>' +
+        '<h2>' + bracket.field.year + ' NCAA bracket</h2></div><p>' + bracket.teamCount + ' teams · ' + bracket.games.length + ' games' +
         (winner ? ' · Champion <strong>' + esc(winner) + '</strong>' : '') +
         (href ? ' · <a href="' + esc(href) + '">NCAA bracket source</a>' : '') + '</p></div>';
     }
     if (!editing) {
       const winner = bracket.teams[picks.championship]?.name;
-      return '<div class="bb-bracket-intro"><p class="bb-bracket-kicker">Unofficial projection</p><h2>GD projected field</h2>' +
-        '<p>32 projected automatic bids · 44 at-large teams · 12 Opening Round games</p>' +
-        (winner ? '<p>Neutral-site model favorite to advance through this field: <strong>' + esc(winner) + '</strong></p>' : '') +
-        methodNote() + '</div>';
+      return '<div class="bb-bracket-intro"><div class="bb-bracket-field-title"><p class="bb-bracket-kicker">Unofficial projection</p><h2>GD projected field</h2></div>' +
+        '<div><p>' + bracket.teamCount + ' teams · ' + bracket.games.filter(game => game.round === 0).length + ' Opening Round games</p>' +
+        (winner ? '<p>Neutral-site model favorite: <strong>' + esc(winner) + '</strong></p>' : '') +
+        '</div></div>';
     }
     const title = bracket === practice ? '2027 format demonstration' : bracket === officialArchive ? '2026 historical practice' :
       bracket === official ? 'Practice the official field' : 'Practice a GD projection';
@@ -500,17 +498,15 @@ export function mountBasketballBracket(root, {
     const {graded, correct} = gradeBasketballBracket(bracket, picks);
     const champ = picks.championship ? bracket.teams[picks.championship]?.name : null;
     const canFill = bracket.games.some(game => reasonableChance(probability(bracket, ...bracketTeams(game, picks))));
-    return '<div class="bb-bracket-intro"><p class="bb-bracket-kicker">Private practice</p><h2>' + title + '</h2><p>' + context +
-      '</p><p class="bb-bracket-progress"><strong>' + completed + ' / ' + bracket.games.length + '</strong> picks' +
+    return '<div class="bb-bracket-intro bb-bracket-practice"><div class="bb-bracket-field-title"><p class="bb-bracket-kicker">Private practice</p>' +
+      '<h2>' + title + '</h2><p>' + context + '</p></div><div><p class="bb-bracket-progress"><strong>' + completed + ' / ' + bracket.games.length + '</strong> picks' +
       (graded ? ' <span>· ' + correct + ' / ' + graded + ' correct</span>' : '') +
       (champ ? ' <span>· Champion: <strong>' + esc(champ) + '</strong></span>' : '') + '</p>' +
-      '<progress aria-label="Bracket completion" max="' + bracket.games.length + '" value="' + completed + '"></progress>' +
+      '<progress aria-label="Bracket completion" max="' + bracket.games.length + '" value="' + completed + '"></progress></div>' +
       '<div class="bb-bracket-actions">' + (canFill ? '<button type="button" class="bb-bracket-primary" data-bracket-action="fill">Pick model favorites</button>' : '') +
       '<button type="button" data-bracket-action="reset"' + (completed ? '' : ' disabled') + '>Reset picks</button>' +
       (profileId && storage ? '<button type="button" data-bracket-action="save">Save practice bracket</button>' +
-        '<button type="button" data-bracket-action="reopen">Reopen saved draft</button>' : '') + '</div>' +
-      '<p class="bb-bracket-note">' + (profileId && storage ? 'Saved drafts stay in this browser under the current preview profile. ' : '') +
-      'Practice picks have no entry deadline or standings. An official contest would lock at the first tipoff.</p>' + '</div>';
+        '<button type="button" data-bracket-action="reopen">Reopen saved draft</button>' : '') + '</div></div>';
   }
 
   function render(focus) {
@@ -522,11 +518,11 @@ export function mountBasketballBracket(root, {
     const picks = !bracket ? {} : editing ? load(bracket) : state.mode === 'projection'
       ? fillBasketballBracket(bracket, (a,b) => probability(bracket,a,b))
       : Object.fromEntries(Object.entries(bracket.results).map(([id, result]) => [id, result.winner]));
-    const modes = [['official', 'Official bracket'], ['projection', 'GD projected bracket'], ['mine', 'My bracket']];
+    const modes = [['official', 'Official', 'Official bracket'], ['projection', 'Projected', 'GD projected bracket'], ['mine', 'My bracket', 'My bracket']];
     root.innerHTML = '<section class="bb-bracket" aria-label="Men’s basketball tournament bracket">' +
-      '<div class="bb-bracket-modes" role="group" aria-label="Bracket mode">' +
-        modes.map(([mode, label]) => '<button type="button" data-bracket-mode="' + mode + '" aria-pressed="' +
-          (mode === state.mode) + '">' + label + '</button>').join('') + '</div>' +
+      '<header class="bb-bracket-topbar"><h1>March Madness</h1><div class="bb-bracket-modes" role="group" aria-label="Bracket mode">' +
+        modes.map(([mode, label, accessibleLabel]) => '<button type="button" data-bracket-mode="' + mode + '" aria-label="' + accessibleLabel +
+          '" aria-pressed="' + (mode === state.mode) + '">' + label + '</button>').join('') + '</div></header>' +
       (state.mode === 'official' ? '<label class="bb-bracket-field">Tournament<select data-bracket-select="field">' +
         choice('current', '2027 official bracket', state.field) + choice('archive', '2026 NCAA archive', state.field) + '</select></label>' : '') +
       (editing ? '<label class="bb-bracket-field">Practice field<select data-bracket-select="practiceField">' +
@@ -537,7 +533,10 @@ export function mountBasketballBracket(root, {
       '<p class="bb-bracket-notice" role="status" aria-live="polite">' + esc(state.notice) + '</p>' +
       (bracket ? heading(bracket, editing, picks) + (layout ? renderMap(bracket, picks, editing, layout) : buildBoard(bracket, picks, editing))
         : introductoryState()) +
-      '<p class="bb-bracket-source"><a href="' + ncaaRules + '">NCAA selection and seeding rules</a></p></section>';
+      '<footer class="bb-bracket-footer">' + (bracket && state.mode === 'projection' ? methodNote() : '') +
+      (editing ? '<p class="bb-bracket-note">' + (profileId && storage ? 'Saved drafts stay in this browser under the current preview profile. ' : '') +
+        'Practice picks have no entry deadline or standings. An official contest would lock at the first tipoff.</p>' : '') +
+      '<p class="bb-bracket-source"><a href="' + ncaaRules + '">NCAA selection and seeding rules</a></p></footer></section>';
     if (layout) bindMap(layout);
     if (focus) [...root.querySelectorAll('button,select')].find(element =>
       Object.keys(focus).every(key => element.dataset[key] === focus[key]) && !element.disabled)?.focus({preventScroll:true});

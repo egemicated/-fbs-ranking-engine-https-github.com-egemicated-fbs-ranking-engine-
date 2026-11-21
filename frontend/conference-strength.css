@@ -26,6 +26,15 @@
 .conference-table tbody th { letter-spacing: 0; text-transform: none; font-size: 13px; color: var(--ink); }
 .conference-table td a { color: #175aaf; font-weight: 750; text-decoration: underline; }
 .conference-records tbody th { min-width: 112px; }
+.conference-records thead th { padding: 0; background: #eef4fc; }
+.conference-records thead th[aria-sort] { background: #dceafb; }
+.conference-records thead button {
+  display: flex; align-items: center; gap: 6px; width: 100%; min-height: 44px; padding: 6px 12px;
+  border: 0; background: transparent; color: #174779; font: inherit; letter-spacing: inherit;
+  text-transform: inherit; white-space: nowrap; text-align: left; cursor: pointer;
+}
+.conference-records thead button:hover { background: #e1edfb; }
+.conference-records thead button:focus-visible { outline-offset: -3px; }
 .conference-matrix { width: max-content; min-width: 100%; border-collapse: separate; border-spacing: 0; }
 .conference-matrix :is(th, td):not(:first-child) { text-align: center; }
 .conference-matrix :is(th, td) { padding: 2px 4px; }

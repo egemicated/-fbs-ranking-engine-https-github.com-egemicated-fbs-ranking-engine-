@@ -25,5 +25,5 @@ try {
     },
   });
 } catch {
-  root.textContent='Bracket data could not load. Reload the local page to retry.';
+  (root.querySelector('[data-bracket-loading]') ?? root).textContent='Bracket data could not load. Reload the local page to retry.';
 }

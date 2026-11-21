@@ -144,8 +144,52 @@ function matrixBand(row) {
   return percent < .75 ? 'high' : 'higher';
 }
 
-function recordsView(data, state) {
-  const { summaries, matrix, groups, fcs } = conferenceRecords(data);
+const played = row => row?.games ? row : null;
+const recordColumns = [
+  ['conference', 'Conference', item => item.name],
+  ['wins', 'FBS wins', item => played(item.fbs)?.wins],
+  ['losses', 'FBS losses', item => played(item.fbs)?.losses],
+  ['ties', 'FBS ties', item => played(item.fbs)?.ties],
+  ['percentage', 'Win %', item => item.fbs?.winningPercentage],
+  ['winMargin', 'Avg. win margin', item => item.fbs?.averageVictoryMargin],
+  ['lossMargin', 'Avg. loss margin', item => item.fbs?.averageDefeatMargin],
+  ['powerFour', 'vs. Power Four', item => played(item.fbs?.powerFourGames)],
+  ['fcs', 'vs. FCS', item => played(item.fcs)],
+];
+
+function compareRecordValues(a, b) {
+  if (typeof a === 'string') return a.localeCompare(b);
+  if (typeof a === 'number') return a - b;
+  return a.wins - b.wins || b.losses - a.losses || a.ties - b.ties;
+}
+
+function recordsTable(data, state, { summaries, fcs }) {
+  const rows = data.conferences.map(({ id, name }) => ({ id, name, fbs: summaries[id], fcs: fcs[id] }));
+  const showTies = rows.some(row => row.fbs?.ties);
+  const columns = showTies ? recordColumns : recordColumns.filter(([key]) => key !== 'ties');
+  const [sort, , value] = columns.find(([key]) => key === state.recordSort) ?? columns[0];
+  const direction = sort === state.recordSort && state.recordDirection === 'descending' ? 'descending' : 'ascending';
+  rows.sort((a,b) => {
+    const x = value(a), y = value(b);
+    const alphabetical = a.name.localeCompare(b.name);
+    if (x == null || y == null) return Number(x == null) - Number(y == null) || alphabetical;
+    return (direction === 'descending' ? -1 : 1) * compareRecordValues(x,y) || alphabetical;
+  });
+  return `<caption class="sr-only">Records against other FBS conferences. Select a column heading to sort.</caption>
+    <thead><tr>${columns.map(([key, label]) =>
+    `<th scope="col"${sort === key ? ` aria-sort="${direction}"` : ''}><button type="button" data-conference-record-sort="${key}">${label}
+      <span aria-hidden="true">${sort === key ? direction === 'descending' ? '↓' : '↑' : '↕'}</span></button></th>`).join('')}</tr></thead>
+    <tbody>${rows.map(({ id, name, fbs:row, fcs:lower }) =>
+      `<tr><th scope="row">${escapeHtml(name)}</th><td>${row?.wins ?? '—'}</td><td>${row?.losses ?? '—'}</td>
+        ${showTies ? `<td>${row?.ties ?? '—'}</td>` : ''}<td>${percent(row?.winningPercentage)}</td>
+        <td>${number(row?.averageVictoryMargin)}</td><td>${number(row?.averageDefeatMargin)}</td>
+        <td>${record(row?.powerFourGames)}</td>
+        <td>${lower?.games ? recordLink(state,id,'FCS',record(lower),name+' vs. FCS '+record(lower)) : record(lower)}</td></tr>`
+    ).join('')}</tbody>`;
+}
+
+function recordsView(data, state, records = conferenceRecords(data)) {
+  const { matrix, groups } = records;
   const independents = data.conferences.find(item => item.group === 'independent');
   const six = data.conferences.some(item => item.group === 'group-of-six');
   const columns = data.conferences.map(item => `<th scope="col" aria-label="${escapeHtml(item.name)}" title="${escapeHtml(item.name)}">${escapeHtml(shortNames.get(item.name) ?? item.name)}</th>`).join('');
@@ -158,18 +202,9 @@ function recordsView(data, state) {
         <p><span>Group of ${six ? 'Six' : 'Five'} vs. Power Four</span><strong>${record(six ? groups.groupSixVsPowerFour : groups.groupFiveVsPowerFour)}</strong></p>
         ${independents ? `<p><span>Conferences vs. Independents</span><strong>${record(groups.vsIndependents)}</strong></p>` : ''}
       </div>
-      <div class="conference-scroll" role="region" aria-label="Interconference records table" tabindex="0"><table class="conference-table conference-records"><caption class="sr-only">Records against other FBS conferences. FCS records are separate.</caption>
-        <thead><tr><th scope="col">Conference</th><th scope="col">FBS W–L</th><th scope="col">Win %</th>
-        <th scope="col">Avg. win margin</th><th scope="col">Avg. loss margin</th><th scope="col">vs. Power Four</th><th scope="col">vs. FCS</th></tr></thead>
-        <tbody>${data.conferences.map(({ id, name }) => {
-          const row = summaries[id];
-          const lower = fcs[id];
-          return `<tr><th scope="row">${escapeHtml(name)}</th><td><b>${record(row)}</b></td>
-            <td>${percent(row?.winningPercentage)}</td><td>${number(row?.averageVictoryMargin)}</td><td>${number(row?.averageDefeatMargin)}</td>
-            <td>${record(row?.powerFourGames)}</td>
-            <td>${lower?.games ? recordLink(state,id,'FCS',record(lower),name+' vs. FCS '+record(lower)) : record(lower)}</td></tr>`;
-        }).join('')}</tbody></table></div>
-      <div class="panel-body"><p class="compact-note">Each FBS matchup contributes to both conferences’ records. FCS games appear in their own column. Margins are shown in points.</p>
+      <div class="conference-scroll" role="region" aria-label="Interconference records table" tabindex="0"><table class="conference-table conference-records">
+        ${recordsTable(data,state,records)}</table></div>
+      <div class="panel-body"><p class="compact-note">Each FBS matchup contributes to both conferences’ records. FCS games appear in their own column. Margins are shown in points. Power Four and FCS records sort by wins first.</p>
       ${data.coverage?.excludedFbsGames ? `<p class="compact-note">${data.coverage.excludedFbsGames} other covered FBS games were against unclassified or lower-division opponents.</p>` : ''}</div>
     </section>
     <section class="panel"><div class="panel-head"><h3>Conference matchup matrix</h3></div>
@@ -327,9 +362,9 @@ function display(container, state, content) {
   container.innerHTML = `<div class="conference-strength">${header(state)}${content}</div>`;
 }
 
-export function conferenceStrengthMarkup(data, state) {
+export function conferenceStrengthMarkup(data, state, records) {
   const body = state.view === 'compare' ? compareView(data,state) :
-    state.view === 'quality' ? qualityView(data,state) : recordsView(data,state);
+    state.view === 'quality' ? qualityView(data,state) : recordsView(data,state,records);
   return `<div class="conference-strength">${header(state)}${state.view === 'records' ? '' : controls(data,state)}${body}</div>`;
 }
 
@@ -346,13 +381,13 @@ function read(url) {
 export function mountConferenceStrength(container, { view = 'records', season, a, b, dataRoot = '/data', onNavigate } = {}) {
   const state = { view: views.some(([key]) => key === view) ? view : 'records', season };
   let active = true;
-  let data;
+  let data, records;
   const navigate = next => onNavigate ? onNavigate(next) : window.location.assign(route(next));
   function render(focusedId) {
     if (!active || !container.isConnected) return;
     const expanded = new Set([...container.querySelectorAll('[data-conference-expansion][open]')]
       .map(detail => detail.dataset.conferenceExpansion));
-    container.innerHTML = conferenceStrengthMarkup(data,state);
+    container.innerHTML = conferenceStrengthMarkup(data,state,records);
     for (const detail of container.querySelectorAll('[data-conference-expansion]')) {
       if (expanded.has(detail.dataset.conferenceExpansion)) detail.open = true;
     }
@@ -378,6 +413,7 @@ export function mountConferenceStrength(container, { view = 'records', season, a
         throw new Error('Conference dataset is invalid');
       }
       if (!active || !container.isConnected) return;
+      if (state.view === 'records') records = conferenceRecords(data);
       const ids = data.conferences.map(item => item.id);
       const preferred = preferences.get(state.season) ?? {};
       const wantedA = a || preferred.a;
@@ -387,7 +423,8 @@ export function mountConferenceStrength(container, { view = 'records', season, a
         ids.includes('Big Ten') && state.a !== 'Big Ten' ? 'Big Ten' : ids.find(id => id !== state.a);
       preferences.set(state.season, { ...preferred, a:state.a, b:state.b });
       const firstAvailable = methods.find(([id]) => data.rankings?.[id]?.available)?.[0] ?? 'sor';
-      Object.assign(state, { opponents:'all',rankScope:'all',result:'all',sort:'newest',qualitySort:'score' },
+      Object.assign(state, { opponents:'all',rankScope:'all',result:'all',sort:'newest',qualitySort:'score',
+        recordSort:'conference',recordDirection:'ascending' },
         Object.fromEntries(Object.entries(preferred).filter(([key]) => !['a','b'].includes(key))));
       state.method = data.rankings?.[preferred.method]?.available ? preferred.method : firstAvailable;
       render(focusOnLoad);
@@ -415,6 +452,18 @@ export function mountConferenceStrength(container, { view = 'records', season, a
     render(event.target.id);
   }
   function click(event) {
+    const sort = event.target.closest('[data-conference-record-sort]')?.dataset.conferenceRecordSort;
+    if (sort) {
+      const direction = sort === state.recordSort ? (state.recordDirection === 'ascending' ? 'descending' : 'ascending')
+        : sort === 'conference' ? 'ascending' : 'descending';
+      state.recordSort = sort;
+      state.recordDirection = direction;
+      preferences.set(state.season, { ...preferences.get(state.season), recordSort:sort, recordDirection:direction });
+      const table = container.querySelector('.conference-records');
+      table.innerHTML = recordsTable(data,state,records);
+      table.querySelector(`[data-conference-record-sort="${sort}"]`)?.focus({ preventScroll:true });
+      return;
+    }
     if (event.target.closest('[data-conference-swap]')) navigate({ view:'compare',season:state.season,a:state.b,b:state.a });
     if (event.target.closest('[data-conference-retry]')) void load();
     if (event.target.closest('[data-conference-pair-link]')) {

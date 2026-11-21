@@ -555,6 +555,8 @@ export function renderBasketball(ctx, view, query, pickBoard) {
   if (view==='ranking-history') return history(ctx,query);
   if (view==='methodology') return methodology(ctx);
   if (view==='contest') return banner('Beat the Model','Basketball picks use a separate local practice profile.')+content(ctx,pickBoard);
-  if (view==='march-madness') return banner('March Madness','Explore the official, projected, and practice brackets.')+content(ctx,'<div id="full-court-bracket"></div>');
+  if (view==='march-madness') return `<div class="wrap bb-bracket-page" id="full-court-bracket">
+    <header class="bb-bracket-topbar"><h1>March Madness</h1></header>
+    <p role="status" data-bracket-loading>Loading bracket…</p></div>`;
   return null;
 }

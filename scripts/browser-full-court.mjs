@@ -124,6 +124,10 @@ try {
       await page.locator('.bb-bracket button[data-bracket-action="national"]').waitFor();
       await widthDoesFit(page);
       await page.evaluate(()=>document.fonts.ready);
+      const bracket = width === 1440 ? page.locator('.bb-map-viewport') : page.locator('.bb-bracket-game').first();
+      const bottom = await bracket.evaluate(element => element.getBoundingClientRect().bottom);
+      assert.ok(bottom <= page.viewportSize().height + 1, 'The bracket overview or first phone matchup fits without scrolling');
+      await page.locator('.bb-bracket-topbar').getByRole('button',{name:'GD projected bracket'}).waitFor();
       await page.screenshot({path:join(screenshots,`projected-bracket-${width}.png`)});
       await page.getByRole('button',{name:'My bracket',exact:true}).click();
       await page.locator('[data-bracket-select="practiceField"]').selectOption('format');

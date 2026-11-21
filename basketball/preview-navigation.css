@@ -156,7 +156,7 @@
 }
 .gd-nav-inner::after { inset: 0 -15px 0 auto; transform: skew(28deg); border-left: 0; border-right: 2px solid #47bfff; }
 .gd-nav-list, .gd-mega ul { list-style: none; margin: 0; padding: 0; }
-.gd-nav-list { display: flex; justify-content: space-between; gap: clamp(1px, .45vw, 9px); }
+.gd-nav-list { display: flex; justify-content: center; gap: 0; }
 .gd-nav-list > li { min-width: 0; }
 .gd-nav-list > li > a, .gd-nav-group > summary {
   position: relative;
@@ -164,7 +164,7 @@
   align-items: center;
   gap: clamp(3px, .7vw, 11px);
   min-height: 49px;
-  padding: 0 clamp(5px, 1vw, 14px);
+  padding: 0 clamp(5px, .7vw, 10px);
   white-space: nowrap;
   color: var(--gd-ink);
   font: 700 clamp(.84rem, 1.26vw, 1.15rem)/1.15 Barlow, 'Arial Narrow', sans-serif;

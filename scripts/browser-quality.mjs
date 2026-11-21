@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { chromium } from 'playwright';
 import { routeHref } from '../frontend/clean-routes.js';
+import { conferenceRecords } from '../frontend/conference-metrics.js';
 
 const directory = resolve('static-dist');
 const types = {'.js':'text/javascript','.json':'application/json','.css':'text/css','.html':'text/html','.svg':'image/svg+xml','.woff2':'font/woff2','.png':'image/png','.webp':'image/webp','.xml':'application/xml'};
@@ -22,6 +23,61 @@ const address = (route) => new URL(routeHref(route), base).href;
 const openRoute = (page, route, options) => page.goto(address(route), options);
 const isolate = context => context.route('**/*', route =>
   new URL(route.request().url()).origin === localOrigin ? route.continue() : route.abort());
+const conferenceFixture = season => readFile(`static-dist/data/conferences/${season}.json`,'utf8').then(JSON.parse);
+const conferenceRecordsRegion = page => page.getByRole('region',{name:'Interconference records table'});
+const recordSortButton = (region, key) => region.locator(`button[data-conference-record-sort="${key}"]`);
+
+async function verifyConferenceRecordsSort(page, data) {
+  const region = conferenceRecordsRegion(page);
+  const { summaries, fcs } = conferenceRecords(data);
+  const countOrder = (id, key) => summaries[id].games ? [summaries[id][key]] : null;
+  const recordOrder = record => record?.games ? [record.wins,-record.losses,record.ties] : null;
+  const keys = new Map([
+    ['conference', () => null], ['wins', id => countOrder(id,'wins')],
+    ['losses', id => countOrder(id,'losses')], ['ties', id => countOrder(id,'ties')],
+    ['percentage', id => [summaries[id].winningPercentage]],
+    ['winMargin', id => [summaries[id].averageVictoryMargin]],
+    ['lossMargin', id => [summaries[id].averageDefeatMargin]],
+    ['powerFour', id => recordOrder(summaries[id].powerFourGames)],
+    ['fcs', id => recordOrder(fcs[id])],
+  ]);
+  const hasTies = Object.values(summaries).some(row=>row.ties>0);
+  const names = () => region.getByRole('rowheader').allTextContents();
+  const rowContent = () => region.locator('tbody tr').evaluateAll(rows=>Object.fromEntries(rows.map(row=>[
+    row.cells[0].textContent, [[...row.cells].map(cell=>cell.textContent.trim()),
+      [...row.querySelectorAll('a')].map(link=>link.getAttribute('href'))],
+  ])));
+  const matrix = page.locator('.conference-matrix tbody');
+  const originalRows = await rowContent();
+  const originalMatrix = await matrix.innerHTML();
+  const alphabetical = data.conferences.map(conference=>conference.name).sort((a,b)=>a.localeCompare(b));
+  assert.deepEqual(await names(),alphabetical);
+  assert.equal(await recordSortButton(region,'ties').count(),Number(hasTies));
+
+  for (const [key,value] of keys) {
+    if (key === 'ties' && !hasTies) continue;
+    const button = recordSortButton(region,key);
+    for (const direction of ['descending','ascending']) {
+      await button.focus();
+      await button.press('Enter');
+      await region.locator(`th[aria-sort="${direction}"] [data-conference-record-sort="${key}"]`).waitFor();
+      assert.equal(await button.evaluate(element=>element===document.activeElement),true,key+' focus');
+      const sign = direction === 'ascending' ? 1 : -1;
+      const expected = data.conferences.slice().sort((a,b)=>{
+        const byName = a.name.localeCompare(b.name);
+        if (key === 'conference') return sign*byName;
+        const left = value(a.id), right = value(b.id);
+        const leftMissing = left?.[0] == null, rightMissing = right?.[0] == null;
+        if (leftMissing || rightMissing) return Number(leftMissing)-Number(rightMissing) || byName;
+        const difference = left.map((part,index)=>part-right[index]).find(delta=>delta!==0) ?? 0;
+        return sign*difference || byName;
+      }).map(conference=>conference.name);
+      assert.deepEqual(await names(),expected,`${data.season} ${key} ${direction}`);
+      assert.deepEqual(await rowContent(),originalRows,key+' row data and links');
+    }
+  }
+  assert.equal(await matrix.innerHTML(),originalMatrix);
+}
 const browser = await chromium.launch({headless:true, ...(process.env.QUALITY_BROWSER ? {executablePath:process.env.QUALITY_BROWSER}:{}), args:['--no-sandbox']});
 const snapshot=JSON.parse(await readFile('static-dist/data/rankings.json','utf8'));
 const fcs=snapshot.fcsRankings[0], fbs=snapshot.rankings[0];
@@ -57,6 +113,17 @@ try {
       assert.deepEqual(missingLabels,[],route+' unlabeled controls');
       assert.ok(!await page.locator('main').innerText().then(text=>/\bundefined\b|NaN%/.test(text)),route+' invalid displayed values');
       assert.equal(await page.locator('main .logo, main .bracket-team-logo, main img[src*="espncdn"]').count(),0,route+' school image placeholders');
+      if (route === 'conference-strength/records' && width === 390) {
+        const region = conferenceRecordsRegion(page);
+        const fcsSort = recordSortButton(region,'fcs');
+        await fcsSort.scrollIntoViewIfNeeded();
+        const tableOffset = await region.evaluate(element=>element.scrollLeft);
+        assert.ok(tableOffset > 0,'Mobile users can scroll to the FCS column');
+        await fcsSort.click();
+        await region.locator('th[aria-sort="descending"] [data-conference-record-sort="fcs"]').waitFor();
+        assert.equal(await region.evaluate(element=>element.scrollLeft),tableOffset,'Sort preserves horizontal scroll');
+        assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),dimensions.width,'Sorted conference table overflow');
+      }
       if (route === 'teams/fcs') {
         const wedges = await page.locator('.team-card.team-accent-card').evaluateAll(cards => cards.map(card => {
           const corner = getComputedStyle(card, '::after');
@@ -136,6 +203,26 @@ try {
   await page.locator('.edition-panel').waitFor();
   assert.match(await page.locator('.edition-panel').innerText(),/exact game cutoff has not been verified/);
   assert.ok((await page.locator('.poll-rank-table tbody tr td:first-of-type').allTextContents()).every(text=>text.trim()==='—'));
+  const conferenceIndex = JSON.parse(await readFile('static-dist/data/conferences/index.json','utf8'));
+  for (const season of conferenceIndex.seasons) {
+    await openRoute(page,`conference-strength/records/${season}`);
+    await page.locator('.conference-matrix').waitFor();
+    await verifyConferenceRecordsSort(page,await conferenceFixture(season));
+  }
+  const sparse = await conferenceFixture(conferenceIndex.seasons[0]);
+  const fbsGame = sparse.games.find(game=>sparse.teams[game.home]?.division==='fbs' &&
+    sparse.teams[game.away]?.division==='fbs' && sparse.teams[game.home].conference!==sparse.teams[game.away].conference);
+  const fcsGame = sparse.games.find(game=>{
+    const divisions = [sparse.teams[game.home]?.division,sparse.teams[game.away]?.division];
+    return divisions.includes('fbs') && divisions.includes('fcs');
+  });
+  assert.ok(fbsGame && fcsGame,'Conference fixture includes FBS and FCS games');
+  sparse.games = [{...fbsGame,homePoints:fbsGame.awayPoints},fcsGame];
+  await page.route(`**/data/conferences/${sparse.season}.json`,request=>request.fulfill({json:sparse}));
+  await openRoute(page,`conference-strength/records/${sparse.season}`);
+  await page.locator('.conference-matrix').waitFor();
+  await verifyConferenceRecordsSort(page,sparse);
+  await page.unroute(`**/data/conferences/${sparse.season}.json`);
   await openRoute(page,'conference-strength/quality/2025');
   await page.locator('[data-conference-field="method"]').selectOption('ap');
   await page.locator('[data-conference-field="rankScope"]').selectOption('pregame');
@@ -210,7 +297,7 @@ try {
   await page.locator('#my-teams-signed-test [data-my-teams-remove="252"]').click();
   await page.waitForFunction(()=>document.querySelectorAll('#my-teams-signed-test .my-teams-card').length===1);
   await context.close();
-  console.log('Browser quality gate passed '+checks+' responsive routes, direct and legacy entry, refresh, browser history, 404s, metadata, duplicate matchup rejection, labels, JSON, scoreboard filters and private request UI.');
+  console.log('Browser quality gate passed '+checks+' responsive routes, direct and legacy entry, refresh, browser history, 404s, metadata, duplicate matchup rejection, labels, JSON, conference sorting, scoreboard filters and private request UI.');
 } finally {
   await browser.close();
   server.close();
