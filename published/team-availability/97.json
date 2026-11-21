@@ -10,8 +10,8 @@
       "opponentName": "Pittsburgh",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-20T01:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:06.549Z",
+      "reportAt": "2026-11-21T01:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.566Z",
       "final": false,
       "players": [
         {
@@ -40,7 +40,7 @@
           "name": "Cason Henry",
           "position": "OL",
           "jersey": 71,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5278090",
@@ -61,7 +61,7 @@
           "name": "Jabari Mack",
           "position": "DB",
           "jersey": 1,
-          "status": "Probable"
+          "status": "Questionable"
         },
         {
           "playerId": "5153258",
@@ -75,7 +75,7 @@
           "name": "Keyjuan Brown",
           "position": "RB",
           "jersey": 5,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5160483",
@@ -103,7 +103,7 @@
           "name": "Travis Egan",
           "position": "TE",
           "jersey": 44,
-          "status": "Questionable"
+          "status": "Out"
         }
       ]
     },

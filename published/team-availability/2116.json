@@ -10,16 +10,16 @@
       "opponentName": "Iowa State",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-19T03:00:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.336Z",
-      "final": false,
+      "reportAt": "2026-11-20T21:30:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.296Z",
+      "final": true,
       "players": [
         {
           "playerId": "5148656",
           "name": "Caden Piening",
           "position": "TE",
           "jersey": 18,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4808748",
@@ -33,28 +33,28 @@
           "name": "DJ Bell",
           "position": "DB",
           "jersey": 5,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5136049",
           "name": "Duke Watson",
           "position": "RB",
           "jersey": 26,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4875126",
           "name": "Horace Lockett",
           "position": "DT",
           "jersey": 0,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "4708164",
           "name": "Jayden Jennings",
           "position": "LB",
           "jersey": 38,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5331180",
@@ -68,7 +68,7 @@
           "name": "Waden Charles",
           "position": "WR",
           "jersey": 9,
-          "status": "Probable"
+          "status": "Available"
         }
       ]
     },

@@ -10,9 +10,9 @@
       "opponentName": "Michigan State",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-19T01:00:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.155Z",
-      "final": false,
+      "reportAt": "2026-11-20T23:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.257Z",
+      "final": true,
       "players": [
         {
           "playerId": "5079428",
@@ -26,7 +26,7 @@
           "name": "Bear Alexander",
           "position": "DL",
           "jersey": 1,
-          "status": "Probable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5079670",
@@ -50,11 +50,18 @@
           "status": "Out"
         },
         {
+          "playerId": "4912286",
+          "name": "Iverson Hooks",
+          "position": "WR",
+          "jersey": 2,
+          "status": "Out"
+        },
+        {
           "playerId": "5041962",
           "name": "Jerry Mixon",
           "position": "ILB",
           "jersey": 6,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "5141423",

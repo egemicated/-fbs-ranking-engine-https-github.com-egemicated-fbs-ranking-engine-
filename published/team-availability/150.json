@@ -10,16 +10,16 @@
       "opponentName": "Clemson",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-19T01:00:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.466Z",
-      "final": false,
+      "reportAt": "2026-11-20T22:30:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.566Z",
+      "final": true,
       "players": [
         {
           "playerId": "5141404",
           "name": "Bryce Davis",
           "position": "DE",
           "jersey": 12,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5214461",
@@ -40,14 +40,14 @@
           "name": "David Anderson",
           "position": "DT",
           "jersey": 44,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4602921",
           "name": "Dylan Flowers",
           "position": "CB",
           "jersey": 0,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5214935",
@@ -61,14 +61,14 @@
           "name": "Evan Smith",
           "position": "CB",
           "jersey": 4,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5372139",
           "name": "Jack Gaskins",
           "position": "TE",
           "jersey": 84,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5208403",
@@ -96,28 +96,28 @@
           "name": "Kevin O'Connor",
           "position": "DE",
           "jersey": 15,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5077406",
           "name": "Kimari Robinson",
           "position": "CB",
           "jersey": 5,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5225215",
           "name": "Kyon Loud",
           "position": "CB",
           "jersey": 1,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4816323",
           "name": "Nate Kurisky",
           "position": "TE",
           "jersey": 44,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5082164",

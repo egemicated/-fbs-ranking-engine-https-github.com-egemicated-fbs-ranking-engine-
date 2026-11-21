@@ -10,30 +10,30 @@
       "opponentName": "Vanderbilt",
       "source": "SEC",
       "sourceUrl": "https://www.secsports.com/fbreports",
-      "reportAt": "2026-11-20T01:10:00.000Z",
-      "checkedAt": "2026-11-20T11:55:06.309Z",
-      "final": false,
+      "reportAt": "2026-11-21T15:30:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.444Z",
+      "final": true,
       "players": [
         {
           "playerId": "5125593",
           "name": "Bailey Stockton",
           "position": "WR",
           "jersey": 3,
-          "status": "Questionable"
+          "status": "Available"
         },
         {
           "playerId": "4870995",
           "name": "Bryce Thornton",
           "position": "S",
           "jersey": 1,
-          "status": "Questionable"
+          "status": "Available"
         },
         {
           "playerId": "4899671",
           "name": "Dijon Johnson",
           "position": "CB",
           "jersey": 27,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "5159672",

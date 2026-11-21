@@ -10,8 +10,8 @@
       "opponentName": "Texas A&M",
       "source": "SEC",
       "sourceUrl": "https://www.secsports.com/fbreports",
-      "reportAt": "2026-11-20T01:10:00.000Z",
-      "checkedAt": "2026-11-20T11:55:06.309Z",
+      "reportAt": "2026-11-21T01:10:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.444Z",
       "final": false,
       "players": [
         {
@@ -26,7 +26,7 @@
           "name": "Danny Okoye",
           "position": "DL",
           "jersey": 16,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5156434",
@@ -54,14 +54,14 @@
           "name": "Kenny Ozowalu",
           "position": "DL",
           "jersey": 94,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5293827",
           "name": "Manny Choice",
           "position": "WR",
           "jersey": 0,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5195701",

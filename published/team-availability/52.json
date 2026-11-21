@@ -10,8 +10,8 @@
       "opponentName": "NC State",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-20T01:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:06.549Z",
+      "reportAt": "2026-11-21T01:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.566Z",
       "final": false,
       "players": [
         {
@@ -33,21 +33,21 @@
           "name": "Caleb LaVallee",
           "position": "LB",
           "jersey": 29,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5145824",
           "name": "Chavez Thompson",
           "position": "OL",
           "jersey": 52,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5332530",
           "name": "Conor McAneney",
           "position": "K",
           "jersey": 93,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5271218",
@@ -61,7 +61,7 @@
           "name": "Deante McCray",
           "position": "DL",
           "jersey": 8,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4870922",
@@ -89,7 +89,7 @@
           "name": "Jamari Howard",
           "position": "DB",
           "jersey": 18,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5085107",
@@ -110,7 +110,7 @@
           "name": "Ma'Khi Jones",
           "position": "DB",
           "jersey": 14,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5291010",
@@ -131,7 +131,7 @@
           "name": "Quindarrius Jones",
           "position": "DB",
           "jersey": 0,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "4871076",
@@ -145,7 +145,7 @@
           "name": "Rylan Kennedy",
           "position": "DL",
           "jersey": 15,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "4870955",

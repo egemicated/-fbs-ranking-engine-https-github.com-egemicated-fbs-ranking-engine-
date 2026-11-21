@@ -10,9 +10,9 @@
       "opponentName": "Nebraska",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-20T01:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:05.340Z",
-      "final": false,
+      "reportAt": "2026-11-21T15:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.257Z",
+      "final": true,
       "players": [
         {
           "playerId": "5150711",
@@ -26,7 +26,7 @@
           "name": "Brenten \"Inky\" Jones",
           "position": "S",
           "jersey": 21,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5161804",
@@ -47,7 +47,7 @@
           "name": "Eli Lee",
           "position": "LB",
           "jersey": 33,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5151892",
@@ -89,14 +89,14 @@
           "name": "Phillip Daniels",
           "position": "OL",
           "jersey": 70,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "4869820",
           "name": "Terry Moore",
           "position": "S",
           "jersey": 11,
-          "status": "Questionable"
+          "status": "Out"
         }
       ]
     },

@@ -10,8 +10,8 @@
       "opponentName": "Miami",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-20T01:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:06.549Z",
+      "reportAt": "2026-11-21T01:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.566Z",
       "final": false,
       "players": [
         {
@@ -19,7 +19,7 @@
           "name": "Davion Brown",
           "position": "WR",
           "jersey": 11,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5150880",
@@ -33,14 +33,14 @@
           "name": "Justin Terry",
           "position": "OL",
           "jersey": 72,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5079755",
           "name": "Kenny Woseley Jr.",
           "position": "CB",
           "jersey": 22,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5192898",
@@ -54,14 +54,14 @@
           "name": "Luke Stuewe",
           "position": "WR",
           "jersey": 83,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": null,
           "name": "Marcellous Hawkins",
           "position": "RB",
           "jersey": 27,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5271187",
@@ -75,7 +75,7 @@
           "name": "Montavious Cunningham",
           "position": "OL",
           "jersey": 66,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5214476",
@@ -89,7 +89,7 @@
           "name": "Thomas Williams",
           "position": "CB",
           "jersey": 23,
-          "status": "Questionable"
+          "status": "Out"
         }
       ]
     },

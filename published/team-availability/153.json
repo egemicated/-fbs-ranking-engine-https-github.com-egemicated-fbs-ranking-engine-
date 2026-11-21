@@ -10,30 +10,30 @@
       "opponentName": "Virginia",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-20T01:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:06.549Z",
-      "final": false,
+      "reportAt": "2026-11-21T15:30:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.566Z",
+      "final": true,
       "players": [
         {
           "playerId": "4812367",
           "name": "Ade Willie",
           "position": "DB",
           "jersey": 3,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5079308",
           "name": "Aidan Banfield",
           "position": "OL",
           "jersey": 68,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "4592532",
           "name": "Billy Edwards Jr.",
           "position": "QB",
           "jersey": 9,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": null,
@@ -47,7 +47,7 @@
           "name": "Henry Martello",
           "position": "DL",
           "jersey": 47,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5153465",
@@ -82,7 +82,7 @@
           "name": "Kymistrii Young",
           "position": "WR",
           "jersey": 81,
-          "status": "Questionable"
+          "status": "Available"
         },
         {
           "playerId": "5086966",
@@ -117,7 +117,7 @@
           "name": "Zamaurious Robertson",
           "position": "WR",
           "jersey": 16,
-          "status": "Questionable"
+          "status": "Available"
         }
       ]
     },

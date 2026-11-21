@@ -10,8 +10,8 @@
       "opponentName": "TCU",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-20T03:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:05.591Z",
+      "reportAt": "2026-11-21T03:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.296Z",
       "final": false,
       "players": [
         {
@@ -19,7 +19,7 @@
           "name": "Karson Kaufusi",
           "position": "DT",
           "jersey": 51,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5084830",
@@ -54,7 +54,7 @@
           "name": "Wayshawn Parker",
           "position": "RB",
           "jersey": 1,
-          "status": "Probable"
+          "status": "Available"
         }
       ]
     },

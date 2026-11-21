@@ -10,9 +10,9 @@
       "opponentName": "Wake Forest",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-20T01:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:06.549Z",
-      "final": false,
+      "reportAt": "2026-11-21T15:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.566Z",
+      "final": true,
       "players": [
         {
           "playerId": "4870781",
@@ -33,7 +33,7 @@
           "name": "Chris Elko",
           "position": "WR",
           "jersey": 89,
-          "status": "Doubtful"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5289797",
@@ -69,6 +69,13 @@
           "position": "DE",
           "jersey": 8,
           "status": "Out"
+        },
+        {
+          "playerId": "5141633",
+          "name": "Josh Petty",
+          "position": "OL",
+          "jersey": 77,
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5155744",
@@ -131,7 +138,7 @@
           "name": "Shymeik Jones",
           "position": "DT",
           "jersey": 96,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5276054",

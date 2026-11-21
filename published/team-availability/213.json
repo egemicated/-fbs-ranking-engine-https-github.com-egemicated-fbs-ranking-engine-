@@ -10,8 +10,8 @@
       "opponentName": "Rutgers",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-20T01:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:05.340Z",
+      "reportAt": "2026-11-21T01:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.257Z",
       "final": false,
       "players": [
         {
@@ -26,7 +26,7 @@
           "name": "Alijah Carnell",
           "position": "DT",
           "jersey": 56,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5081877",
@@ -40,7 +40,7 @@
           "name": "Carson Hansen",
           "position": "RB",
           "jersey": 21,
-          "status": "Questionable"
+          "status": "Doubtful"
         },
         {
           "playerId": "5079496",
@@ -57,6 +57,13 @@
           "status": "Doubtful"
         },
         {
+          "playerId": "4950395",
+          "name": "Jamison Patton",
+          "position": "S",
+          "jersey": 3,
+          "status": "Questionable"
+        },
+        {
           "playerId": "5141525",
           "name": "Koby Howard",
           "position": "WR",
@@ -68,7 +75,7 @@
           "name": "Lucas Tenbrock",
           "position": "P",
           "jersey": 96,
-          "status": "Questionable"
+          "status": "Doubtful"
         },
         {
           "playerId": "5141483",
@@ -82,7 +89,7 @@
           "name": "Tyler Armstead",
           "position": "CB",
           "jersey": 35,
-          "status": "Probable"
+          "status": "Available"
         }
       ]
     },

@@ -10,9 +10,9 @@
       "opponentName": "Boston College",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-20T01:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:06.549Z",
-      "final": false,
+      "reportAt": "2026-11-21T15:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.566Z",
+      "final": true,
       "players": [
         {
           "playerId": "5153782",
@@ -68,7 +68,7 @@
           "name": "Shavane Anderson Jr.",
           "position": "RB",
           "jersey": 23,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5210060",
@@ -82,7 +82,14 @@
           "name": "Trevion Mack",
           "position": "OL",
           "jersey": 75,
-          "status": "Doubtful"
+          "status": "Out"
+        },
+        {
+          "playerId": "5121471",
+          "name": "Tyshawn Russell",
+          "position": "WR",
+          "jersey": 8,
+          "status": "Out"
         }
       ]
     },

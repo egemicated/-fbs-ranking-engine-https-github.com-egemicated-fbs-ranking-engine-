@@ -10,8 +10,8 @@
       "opponentName": "Georgia",
       "source": "SEC",
       "sourceUrl": "https://www.secsports.com/fbreports",
-      "reportAt": "2026-11-20T01:10:00.000Z",
-      "checkedAt": "2026-11-20T11:55:06.309Z",
+      "reportAt": "2026-11-21T01:10:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.444Z",
       "final": false,
       "players": [
         {
@@ -19,7 +19,7 @@
           "name": "Anthony Addison",
           "position": "EDG",
           "jersey": 40,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "5120838",
@@ -61,7 +61,7 @@
           "name": "Judge Collier",
           "position": "DB",
           "jersey": 8,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "5167710",
@@ -82,7 +82,7 @@
           "name": "Mazeo Bennett Jr.",
           "position": "WR",
           "jersey": 3,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "5130792",
@@ -96,7 +96,7 @@
           "name": "Nyck Harbor",
           "position": "WR",
           "jersey": 8,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4876261",

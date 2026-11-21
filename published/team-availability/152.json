@@ -10,8 +10,8 @@
       "opponentName": "Florida State",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-20T01:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:06.549Z",
+      "reportAt": "2026-11-21T01:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.566Z",
       "final": false,
       "players": [
         {
@@ -68,14 +68,14 @@
           "name": "Nick Konieczynski",
           "position": "K",
           "jersey": 91,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4870590",
           "name": "Popo Aguirre",
           "position": "ILB",
           "jersey": 0,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4870806",

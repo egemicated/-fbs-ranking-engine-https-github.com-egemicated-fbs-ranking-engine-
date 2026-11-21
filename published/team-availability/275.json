@@ -10,16 +10,16 @@
       "opponentName": "Purdue",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-20T01:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:05.340Z",
-      "final": false,
+      "reportAt": "2026-11-21T15:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.257Z",
+      "final": true,
       "players": [
         {
           "playerId": "4869243",
           "name": "Barrett Nelson",
           "position": "OL",
           "jersey": 70,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5084664",
@@ -33,14 +33,14 @@
           "name": "Carson Van Dinter",
           "position": "S",
           "jersey": 11,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5146771",
           "name": "Emerson Mandell",
           "position": "OL",
           "jersey": 75,
-          "status": "Questionable"
+          "status": "Available"
         },
         {
           "playerId": "5212589",
@@ -54,14 +54,14 @@
           "name": "Jai'mier Scott",
           "position": "CB",
           "jersey": 6,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4896318",
           "name": "Javan Robinson",
           "position": "CB",
           "jersey": 2,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "5110459",
@@ -82,14 +82,14 @@
           "name": "Nate Palmer",
           "position": "RB",
           "jersey": 15,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5210475",
           "name": "Ryan Hopkins",
           "position": "QB",
           "jersey": 10,
-          "status": "Questionable"
+          "status": "Available"
         },
         {
           "playerId": "4685314",

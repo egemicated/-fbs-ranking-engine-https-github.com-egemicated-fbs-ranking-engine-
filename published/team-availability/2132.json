@@ -10,23 +10,23 @@
       "opponentName": "Colorado",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-20T03:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:05.591Z",
-      "final": false,
+      "reportAt": "2026-11-21T15:30:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.296Z",
+      "final": true,
       "players": [
         {
           "playerId": "5149057",
           "name": "Chidera Otutu",
           "position": "DL",
           "jersey": 11,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5107875",
           "name": "Cole Tabb",
           "position": "RB",
           "jersey": 3,
-          "status": "Questionable"
+          "status": "Available"
         },
         {
           "playerId": "5151511",
@@ -40,14 +40,14 @@
           "name": "Gi'Bran Payne",
           "position": "RB",
           "jersey": 6,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "4912182",
           "name": "Jacob Finley",
           "position": "CB",
           "jersey": 0,
-          "status": "Questionable"
+          "status": "Out"
         }
       ]
     },

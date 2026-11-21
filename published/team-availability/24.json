@@ -10,8 +10,8 @@
       "opponentName": "California",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-20T04:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:06.549Z",
+      "reportAt": "2026-11-21T04:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.566Z",
       "final": false,
       "players": [
         {
@@ -68,7 +68,7 @@
           "name": "Ernest Cooper",
           "position": "OLB",
           "jersey": 44,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5209298",

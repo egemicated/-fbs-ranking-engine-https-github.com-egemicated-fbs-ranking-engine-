@@ -10,15 +10,22 @@
       "opponentName": "Minnesota",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-20T01:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:05.340Z",
-      "final": false,
+      "reportAt": "2026-11-21T15:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.257Z",
+      "final": true,
       "players": [
         {
           "playerId": "5075805",
           "name": "Aidan Chiles",
           "position": "QB",
           "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "5295998",
+          "name": "Brennan Saxe",
+          "position": "WR",
+          "jersey": 16,
           "status": "Out"
         },
         {
@@ -47,14 +54,14 @@
           "name": "Josh Fussell",
           "position": "DB",
           "jersey": 13,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5147071",
           "name": "Matthew Smith",
           "position": "LB",
           "jersey": 32,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5291097",
@@ -75,7 +82,7 @@
           "name": "Ore Adeyi",
           "position": "DB",
           "jersey": 7,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5193589",

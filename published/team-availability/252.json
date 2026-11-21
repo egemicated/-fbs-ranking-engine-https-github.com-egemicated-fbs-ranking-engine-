@@ -10,16 +10,16 @@
       "opponentName": "Kansas",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-20T03:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:05.591Z",
-      "final": false,
+      "reportAt": "2026-11-21T15:30:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.296Z",
+      "final": true,
       "players": [
         {
           "playerId": "4917351",
           "name": "Evan Johnson",
           "position": "CB",
           "jersey": 0,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "5080697",
@@ -29,11 +29,18 @@
           "status": "Out"
         },
         {
+          "playerId": "4912270",
+          "name": "Keanu Tanuvasa",
+          "position": "DT",
+          "jersey": 57,
+          "status": "Out"
+        },
+        {
           "playerId": "5130407",
           "name": "Roger Saleapaga II",
           "position": "TE",
           "jersey": 2,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "5219689",

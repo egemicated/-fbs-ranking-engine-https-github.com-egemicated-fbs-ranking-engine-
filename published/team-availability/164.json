@@ -10,8 +10,8 @@
       "opponentName": "Penn State",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-20T01:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:05.340Z",
+      "reportAt": "2026-11-21T01:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.257Z",
       "final": false,
       "players": [
         {
@@ -26,7 +26,7 @@
           "name": "AJ Surace",
           "position": "QB",
           "jersey": 10,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5092802",
@@ -40,14 +40,14 @@
           "name": "Dylan Lonergan",
           "position": "QB",
           "jersey": 12,
-          "status": "Doubtful"
+          "status": "Questionable"
         },
         {
           "playerId": "5158988",
           "name": "Dyzier Carter",
           "position": "WR",
           "jersey": 0,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5273551",
@@ -89,7 +89,7 @@
           "name": "Sage Clawges",
           "position": "DB",
           "jersey": 27,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "5172031",
@@ -110,7 +110,7 @@
           "name": "Tyler Needham",
           "position": "OL",
           "jersey": 56,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5154001",

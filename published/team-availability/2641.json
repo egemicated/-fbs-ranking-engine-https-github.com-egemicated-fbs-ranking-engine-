@@ -10,8 +10,8 @@
       "opponentName": "Baylor",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-20T03:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:05.591Z",
+      "reportAt": "2026-11-21T03:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.296Z",
       "final": false,
       "players": [
         {
@@ -19,13 +19,20 @@
           "name": "Ansel Nedore",
           "position": "OLB",
           "jersey": 33,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4870867",
           "name": "Brenden Jordan",
           "position": "S",
           "jersey": 7,
+          "status": "Available"
+        },
+        {
+          "playerId": "5075540",
+          "name": "Brice Pollock",
+          "position": "CB",
+          "jersey": 14,
           "status": "Probable"
         },
         {
@@ -33,7 +40,7 @@
           "name": "Coy Eakin",
           "position": "WR",
           "jersey": 3,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5227057",
@@ -47,21 +54,21 @@
           "name": "Kenny Johnson",
           "position": "WR",
           "jersey": 2,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5280093",
           "name": "LaDamion Guyton",
           "position": "OLB",
           "jersey": 32,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "5186738",
           "name": "Leyton Stone",
           "position": "WR",
           "jersey": 17,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5079492",

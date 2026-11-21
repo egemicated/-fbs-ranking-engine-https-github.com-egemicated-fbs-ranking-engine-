@@ -10,8 +10,8 @@
       "opponentName": "Illinois",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-20T01:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:05.340Z",
+      "reportAt": "2026-11-21T01:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.257Z",
       "final": false,
       "players": [
         {
@@ -36,11 +36,25 @@
           "status": "Out"
         },
         {
+          "playerId": "5196816",
+          "name": "Carson Cooney",
+          "position": "LB",
+          "jersey": 15,
+          "status": "Out"
+        },
+        {
+          "playerId": "5195570",
+          "name": "Cody Haddad",
+          "position": "DB",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
           "playerId": "5178088",
           "name": "Jacob Wallace",
           "position": "DB",
           "jersey": 11,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5093886",
@@ -61,7 +75,7 @@
           "name": "Tony Diaz",
           "position": "WR",
           "jersey": 14,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5193099",
@@ -82,7 +96,7 @@
           "name": "Zach Lutmer",
           "position": "DB",
           "jersey": 6,
-          "status": "Questionable"
+          "status": "Probable"
         }
       ]
     },

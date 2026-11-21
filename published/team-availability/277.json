@@ -10,8 +10,8 @@
       "opponentName": "Houston",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-20T03:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:05.591Z",
+      "reportAt": "2026-11-21T03:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.296Z",
       "final": false,
       "players": [
         {
@@ -19,7 +19,7 @@
           "name": "Amare Grayson",
           "position": "OL",
           "jersey": 54,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5197058",
@@ -61,7 +61,7 @@
           "name": "Michael Hawkins Jr.",
           "position": "QB",
           "jersey": 3,
-          "status": "Probable"
+          "status": "Available"
         }
       ]
     },

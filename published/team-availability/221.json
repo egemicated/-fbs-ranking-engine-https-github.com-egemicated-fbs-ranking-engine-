@@ -10,8 +10,8 @@
       "opponentName": "Louisville",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-20T01:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:06.549Z",
+      "reportAt": "2026-11-21T01:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.566Z",
       "final": false,
       "players": [
         {
@@ -33,14 +33,14 @@
           "name": "Elijah Lagg",
           "position": "TE",
           "jersey": 17,
-          "status": "Out"
+          "status": "Questionable"
         },
         {
           "playerId": "5122153",
           "name": "Eliyt Nairne",
           "position": "DL",
           "jersey": 16,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "4714300",
@@ -54,6 +54,13 @@
           "name": "Isaac Patterson",
           "position": "DB",
           "jersey": 41,
+          "status": "Out"
+        },
+        {
+          "playerId": "5218427",
+          "name": "Jordan Fields",
+          "position": "TE",
+          "jersey": 49,
           "status": "Out"
         },
         {
@@ -89,7 +96,14 @@
           "name": "Sean FitzSimmons",
           "position": "DL",
           "jersey": 55,
-          "status": "Questionable"
+          "status": "Out"
+        },
+        {
+          "playerId": "5075536",
+          "name": "Shadarian Harrison",
+          "position": "DB",
+          "jersey": 21,
+          "status": "Out"
         },
         {
           "playerId": "5196024",

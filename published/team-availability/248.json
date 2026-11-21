@@ -10,8 +10,8 @@
       "opponentName": "West Virginia",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-20T03:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:05.591Z",
+      "reportAt": "2026-11-21T03:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.296Z",
       "final": false,
       "players": [
         {
@@ -20,6 +20,13 @@
           "position": "OL",
           "jersey": 50,
           "status": "Out"
+        },
+        {
+          "playerId": "4685574",
+          "name": "Conner Weigman",
+          "position": "QB",
+          "jersey": 1,
+          "status": "Questionable"
         },
         {
           "playerId": "4918458",

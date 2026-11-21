@@ -10,9 +10,9 @@
       "opponentName": "Oregon",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-19T01:00:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.155Z",
-      "final": false,
+      "reportAt": "2026-11-20T23:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.257Z",
+      "final": true,
       "players": [
         {
           "playerId": "5146670",
@@ -33,7 +33,7 @@
           "name": "Brennan Parachek",
           "position": "TE",
           "jersey": 82,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5086034",
@@ -47,14 +47,14 @@
           "name": "Cam Fancher",
           "position": "QB",
           "jersey": 2,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5093392",
           "name": "Conner Moore",
           "position": "OL",
           "jersey": 58,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5153819",
@@ -82,7 +82,7 @@
           "name": "Jaziun Patterson",
           "position": "RB",
           "jersey": 4,
-          "status": "Questionable"
+          "status": "Available"
         },
         {
           "playerId": "5264656",
@@ -110,27 +110,34 @@
           "name": "Michael Richard",
           "position": "S",
           "jersey": 7,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5260691",
           "name": "Rodney Bullard Jr.",
           "position": "WR",
           "jersey": 3,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5086080",
           "name": "Tre Bell",
           "position": "CB",
           "jersey": 3,
-          "status": "Questionable"
+          "status": "Available"
         },
         {
           "playerId": "5290642",
           "name": "Tristan Comer",
           "position": "OL",
           "jersey": 79,
+          "status": "Out"
+        },
+        {
+          "playerId": "5225872",
+          "name": "Tyran Chappell",
+          "position": "CB",
+          "jersey": 22,
           "status": "Out"
         }
       ]

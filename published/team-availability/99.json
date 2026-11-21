@@ -10,8 +10,8 @@
       "opponentName": "Tennessee",
       "source": "SEC",
       "sourceUrl": "https://www.secsports.com/fbreports",
-      "reportAt": "2026-11-20T01:10:00.000Z",
-      "checkedAt": "2026-11-20T11:55:06.309Z",
+      "reportAt": "2026-11-21T01:10:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.444Z",
       "final": false,
       "players": [
         {
@@ -19,7 +19,7 @@
           "name": "Aidan Anding",
           "position": "CB",
           "jersey": 23,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5201881",
@@ -47,7 +47,7 @@
           "name": "Jhase Thomas",
           "position": "S",
           "jersey": 28,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5149484",
@@ -82,7 +82,7 @@
           "name": "Winston Watkins Jr.",
           "position": "WR",
           "jersey": 6,
-          "status": "Questionable"
+          "status": "Out"
         }
       ]
     },

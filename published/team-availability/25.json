@@ -10,8 +10,8 @@
       "opponentName": "Stanford",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-20T04:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:06.549Z",
+      "reportAt": "2026-11-21T04:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.566Z",
       "final": false,
       "players": [
         {
@@ -27,6 +27,13 @@
           "position": "DB",
           "jersey": 14,
           "status": "Questionable"
+        },
+        {
+          "playerId": "5192899",
+          "name": "Ashten Emory",
+          "position": "RB",
+          "jersey": 20,
+          "status": "Probable"
         },
         {
           "playerId": "5218832",
@@ -57,11 +64,18 @@
           "status": "Out"
         },
         {
+          "playerId": "5110101",
+          "name": "EJ Caminong",
+          "position": "QB",
+          "jersey": 2,
+          "status": "Probable"
+        },
+        {
           "playerId": "5075390",
           "name": "Ian Strong",
           "position": "WR",
           "jersey": 9,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5218740",
@@ -75,7 +89,7 @@
           "name": "Jacob Arop",
           "position": "OL",
           "jersey": 75,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5164313",
@@ -96,7 +110,7 @@
           "name": "JD McKinley",
           "position": "ILB",
           "jersey": 33,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "4899704",
@@ -104,6 +118,13 @@
           "position": "WR",
           "jersey": 4,
           "status": "Out"
+        },
+        {
+          "playerId": "4950549",
+          "name": "Jordan Sanford",
+          "position": "DB",
+          "jersey": 17,
+          "status": "Probable"
         },
         {
           "playerId": "4568099",
@@ -120,6 +141,20 @@
           "status": "Out"
         },
         {
+          "playerId": "5196843",
+          "name": "Khamani Hudson",
+          "position": "DB",
+          "jersey": 25,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5165154",
+          "name": "Mason Mini",
+          "position": "TE",
+          "jersey": 85,
+          "status": "Probable"
+        },
+        {
           "playerId": "4685281",
           "name": "Nate Burrell",
           "position": "DL",
@@ -131,14 +166,14 @@
           "name": "Rico Walker",
           "position": "TE",
           "jersey": 8,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "5160397",
           "name": "Tyson Ruffins",
           "position": "OL",
           "jersey": 56,
-          "status": "Probable"
+          "status": "Available"
         }
       ]
     },

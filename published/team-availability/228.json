@@ -10,9 +10,9 @@
       "opponentName": "Duke",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-19T01:00:00.000Z",
-      "checkedAt": "2026-11-19T11:53:43.466Z",
-      "final": false,
+      "reportAt": "2026-11-20T22:30:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.566Z",
+      "final": true,
       "players": [
         {
           "playerId": "5258042",
@@ -26,7 +26,7 @@
           "name": "Champ Thompson",
           "position": "DT",
           "jersey": 29,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "4899369",
@@ -68,35 +68,35 @@
           "name": "Easton Ware",
           "position": "OL",
           "jersey": 63,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "4871026",
           "name": "Elliot Washington II",
           "position": "CB",
           "jersey": 3,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5141422",
           "name": "Gideon Davidson",
           "position": "RB",
           "jersey": 8,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4870945",
           "name": "Harris Sewell",
           "position": "OL",
           "jersey": 55,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4685243",
           "name": "Jeremiah Alexander",
           "position": "LB",
           "jersey": 7,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5121586",
@@ -138,7 +138,7 @@
           "name": "Tyler Brown",
           "position": "WR",
           "jersey": 6,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "4870643",

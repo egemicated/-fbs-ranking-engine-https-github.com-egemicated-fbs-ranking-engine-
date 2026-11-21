@@ -10,16 +10,16 @@
       "opponentName": "Cincinnati",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-20T03:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:05.591Z",
-      "final": false,
+      "reportAt": "2026-11-21T15:30:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.296Z",
+      "final": true,
       "players": [
         {
           "playerId": "5280400",
           "name": "Alex Ward",
           "position": "WR",
           "jersey": 32,
-          "status": "Doubtful"
+          "status": "Available"
         },
         {
           "playerId": "5281120",
@@ -33,7 +33,7 @@
           "name": "Carson Crawford",
           "position": "LB",
           "jersey": 51,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5210723",
@@ -47,7 +47,7 @@
           "name": "Cree Thomas",
           "position": "DB",
           "jersey": 20,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "5152815",
@@ -61,7 +61,7 @@
           "name": "Dylan Manuel",
           "position": "DL",
           "jersey": 99,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": null,
@@ -75,7 +75,7 @@
           "name": "Kaleb Mathis",
           "position": "WR",
           "jersey": 13,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5078018",

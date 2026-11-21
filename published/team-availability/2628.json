@@ -10,8 +10,8 @@
       "opponentName": "Utah",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-20T03:00:00.000Z",
-      "checkedAt": "2026-11-20T11:55:05.591Z",
+      "reportAt": "2026-11-21T03:00:00.000Z",
+      "checkedAt": "2026-11-21T15:38:23.296Z",
       "final": false,
       "players": [
         {
@@ -40,7 +40,7 @@
           "name": "Jaden Craig",
           "position": "QB",
           "jersey": 1,
-          "status": "Probable"
+          "status": "Doubtful"
         },
         {
           "playerId": "5147339",
