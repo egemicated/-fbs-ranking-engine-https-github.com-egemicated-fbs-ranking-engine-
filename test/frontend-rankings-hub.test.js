@@ -208,8 +208,9 @@ test('search and conference controls use the selected tier', async () => {
   assert.doesNotMatch(rankingTable(searched), /Cedar College|Beta State/);
   page.search('');
   page.select('conference-filter', 'FCS East');
-  assert.match(rankingTable(page.html()), /Cedar College/);
-  assert.doesNotMatch(rankingTable(page.html()), /Dogwood College/);
+  const filtered = page.node('#ranking-results').innerHTML;
+  assert.match(rankingTable(filtered), /Cedar College/);
+  assert.doesNotMatch(rankingTable(filtered), /Dogwood College/);
   const fbs = await page.go('#rankings');
   assertTeams(fbs, 'Alpha State', 'Beta State', /Cedar College|Dogwood College/);
 });

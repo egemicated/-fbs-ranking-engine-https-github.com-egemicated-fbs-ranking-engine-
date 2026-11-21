@@ -3,6 +3,8 @@ import {
   CONFERENCE_QUALITY, conferenceGames, conferenceRecords, conferenceSummary, conferenceFilterCoverage,
 } from './conference-metrics.js?v=accuracy-20261118';
 import { formatNumber, formatProbability, formatRecord } from './format.js?v=1';
+import { conferenceDataCell, conferenceNameCell, conferenceSortArrow, conferenceSortControl,
+  conferenceViewTabs, nextConferenceSort, orderConferenceRows } from './conference-display.js';
 
 const views = [
   ['records', 'Conference Records'], ['quality', 'Quality Rankings'], ['compare', 'Compare Conferences'],
@@ -46,8 +48,8 @@ function route({ view, season, a, b }) {
 }
 
 function header({ view, season, a, b }) {
-  return `<nav class="conference-view-nav" aria-label="Conference Strength views">${views.map(([key, label]) =>
-    `<a href="${route({ view: key, season, a, b })}"${view === key ? ' aria-current="page"' : ''}>${label}</a>`).join('')}</nav>`;
+  return conferenceViewTabs('Conference Strength views',views.map(([key,label]) =>
+    [key,label,route({view:key,season,a,b})]),view);
 }
 
 function select(id, label, options, value) {
@@ -157,34 +159,33 @@ const recordColumns = [
   ['fcs', 'vs. FCS', item => played(item.fcs)],
 ];
 
-function compareRecordValues(a, b) {
-  if (typeof a === 'string') return a.localeCompare(b);
-  if (typeof a === 'number') return a - b;
-  return a.wins - b.wins || b.losses - a.losses || a.ties - b.ties;
+function recordColumnsFor({ summaries }) {
+  return Object.values(summaries).some(row => row.ties)
+    ? recordColumns : recordColumns.filter(([key]) => key !== 'ties');
 }
 
-function recordsTable(data, state, { summaries, fcs }) {
-  const rows = data.conferences.map(({ id, name }) => ({ id, name, fbs: summaries[id], fcs: fcs[id] }));
-  const showTies = rows.some(row => row.fbs?.ties);
-  const columns = showTies ? recordColumns : recordColumns.filter(([key]) => key !== 'ties');
+function recordsTable(data, state, records) {
+  const { summaries, fcs } = records;
+  const columns = recordColumnsFor(records);
+  const showTies = columns.some(([key]) => key === 'ties');
   const [sort, , value] = columns.find(([key]) => key === state.recordSort) ?? columns[0];
   const direction = sort === state.recordSort && state.recordDirection === 'descending' ? 'descending' : 'ascending';
-  rows.sort((a,b) => {
-    const x = value(a), y = value(b);
-    const alphabetical = a.name.localeCompare(b.name);
-    if (x == null || y == null) return Number(x == null) - Number(y == null) || alphabetical;
-    return (direction === 'descending' ? -1 : 1) * compareRecordValues(x,y) || alphabetical;
-  });
+  const rows = orderConferenceRows(data.conferences.map(({ id, name }) => ({ id, name, fbs: summaries[id], fcs: fcs[id] })),value,direction);
+  const recordPart = {recordPart:true};
   return `<caption class="sr-only">Records against other FBS conferences. Select a column heading to sort.</caption>
-    <thead><tr>${columns.map(([key, label]) =>
+    <thead role="rowgroup"><tr role="row">${columns.map(([key, label]) =>
     `<th scope="col"${sort === key ? ` aria-sort="${direction}"` : ''}><button type="button" data-conference-record-sort="${key}">${label}
-      <span aria-hidden="true">${sort === key ? direction === 'descending' ? '↓' : '↑' : '↕'}</span></button></th>`).join('')}</tr></thead>
-    <tbody>${rows.map(({ id, name, fbs:row, fcs:lower }) =>
-      `<tr><th scope="row">${escapeHtml(name)}</th><td>${row?.wins ?? '—'}</td><td>${row?.losses ?? '—'}</td>
-        ${showTies ? `<td>${row?.ties ?? '—'}</td>` : ''}<td>${percent(row?.winningPercentage)}</td>
-        <td>${number(row?.averageVictoryMargin)}</td><td>${number(row?.averageDefeatMargin)}</td>
-        <td>${record(row?.powerFourGames)}</td>
-        <td>${lower?.games ? recordLink(state,id,'FCS',record(lower),name+' vs. FCS '+record(lower)) : record(lower)}</td></tr>`
+      <span aria-hidden="true">${conferenceSortArrow(key,sort,direction)}</span></button></th>`).join('')}</tr></thead>
+    <tbody role="rowgroup">${rows.map(({ id, name, fbs:row, fcs:lower }) =>
+      `<tr role="row">${conferenceNameCell(escapeHtml(name), {label:'FBS record',value:record(row)})}
+        ${conferenceDataCell('FBS wins',row?.wins ?? '—',recordPart)}
+        ${conferenceDataCell('FBS losses',row?.losses ?? '—',recordPart)}
+        ${showTies ? conferenceDataCell('FBS ties',row?.ties ?? '—',recordPart) : ''}
+        ${conferenceDataCell('Win %',percent(row?.winningPercentage))}
+        ${conferenceDataCell('Avg. win margin',number(row?.averageVictoryMargin))}
+        ${conferenceDataCell('Avg. loss margin',number(row?.averageDefeatMargin))}
+        ${conferenceDataCell('vs. Power Four',record(row?.powerFourGames))}
+        ${conferenceDataCell('vs. FCS',lower?.games ? recordLink(state,id,'FCS',record(lower),name+' vs. FCS '+record(lower)) : record(lower))}</tr>`
     ).join('')}</tbody>`;
 }
 
@@ -202,7 +203,9 @@ function recordsView(data, state, records = conferenceRecords(data)) {
         <p><span>Group of ${six ? 'Six' : 'Five'} vs. Power Four</span><strong>${record(six ? groups.groupSixVsPowerFour : groups.groupFiveVsPowerFour)}</strong></p>
         ${independents ? `<p><span>Conferences vs. Independents</span><strong>${record(groups.vsIndependents)}</strong></p>` : ''}
       </div>
-      <div class="conference-scroll" role="region" aria-label="Interconference records table" tabindex="0"><table class="conference-table conference-records">
+      <div class="conference-scroll gd-conference-records-region" role="region" aria-label="Interconference records table" tabindex="0">
+        ${conferenceSortControl(recordColumnsFor(records),state.recordSort ?? 'conference',state.recordDirection ?? 'ascending')}
+        <table class="conference-table conference-records gd-conference-cards" role="table">
         ${recordsTable(data,state,records)}</table></div>
       <div class="panel-body"><p class="compact-note">Each FBS matchup contributes to both conferences’ records. FCS games appear in their own column. Margins are shown in points. Power Four and FCS records sort by wins first.</p>
       ${data.coverage?.excludedFbsGames ? `<p class="compact-note">${data.coverage.excludedFbsGames} other covered FBS games were against unclassified or lower-division opponents.</p>` : ''}</div>
@@ -437,7 +440,22 @@ export function mountConferenceStrength(container, { view = 'records', season, a
       if (active && container.isConnected) container.removeAttribute('aria-busy');
     }
   }
+  function applyRecordSort(sort, direction, focusHeader = false) {
+    if (!recordColumnsFor(records).some(([key]) => key === sort)) return;
+    state.recordSort = sort;
+    state.recordDirection = direction;
+    preferences.set(state.season, { ...preferences.get(state.season), recordSort:sort, recordDirection:direction });
+    const table = container.querySelector('.conference-records');
+    table.innerHTML = recordsTable(data,state,records);
+    container.querySelector('[data-gd-conference-sort]').value = sort + ':' + direction;
+    if (focusHeader) table.querySelector(`[data-conference-record-sort="${sort}"]`)?.focus({ preventScroll:true });
+  }
   function change(event) {
+    if (event.target.dataset.gdConferenceSort !== undefined) {
+      const [sort,direction] = event.target.value.split(':');
+      applyRecordSort(sort,direction);
+      return;
+    }
     const field = event.target.dataset.conferenceField;
     if (!field) return;
     const value = event.target.value;
@@ -454,14 +472,7 @@ export function mountConferenceStrength(container, { view = 'records', season, a
   function click(event) {
     const sort = event.target.closest('[data-conference-record-sort]')?.dataset.conferenceRecordSort;
     if (sort) {
-      const direction = sort === state.recordSort ? (state.recordDirection === 'ascending' ? 'descending' : 'ascending')
-        : sort === 'conference' ? 'ascending' : 'descending';
-      state.recordSort = sort;
-      state.recordDirection = direction;
-      preferences.set(state.season, { ...preferences.get(state.season), recordSort:sort, recordDirection:direction });
-      const table = container.querySelector('.conference-records');
-      table.innerHTML = recordsTable(data,state,records);
-      table.querySelector(`[data-conference-record-sort="${sort}"]`)?.focus({ preventScroll:true });
+      applyRecordSort(sort,nextConferenceSort(sort,state.recordSort,state.recordDirection),true);
       return;
     }
     if (event.target.closest('[data-conference-swap]')) navigate({ view:'compare',season:state.season,a:state.b,b:state.a });

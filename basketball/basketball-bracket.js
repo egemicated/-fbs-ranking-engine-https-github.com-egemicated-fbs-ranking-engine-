@@ -19,6 +19,8 @@ const internalHref = value => typeof value === 'string' && /^\/basketball(?:\/|[
 const mapWidth = 3280;
 const mapCardWidth = 220;
 const mapCardHeight = 102;
+const nationalLabelLift = 79;
+const nationalRoundSpacing = mapCardHeight + 30;
 
 function bracketLayout(bracket) {
   const positions = new Map();
@@ -61,6 +63,9 @@ function bracketLayout(bracket) {
     const [first, second] = game.sides.map(slot => positions.get(slot.from));
     positions.set(game.id, {x: (mapWidth - mapCardWidth) / 2, y: (first.y + second.y) / 2});
   }
+  const center = positions.get('championship').y;
+  positions.get('semifinal-1').y = center - nationalRoundSpacing;
+  positions.get('semifinal-2').y = center + nationalRoundSpacing;
   return {positions, regions, height: top};
 }
 
@@ -269,7 +274,7 @@ export function mountBasketballBracket(root, {
     }).join('');
     const national = bracket.games.filter(game => game.round >= 5).map(game => {
       const {x,y} = positions.get(game.id);
-      return '<h4 class="bb-map-round bb-map-national-label" style="--label-x:' + x + 'px;--label-y:' + (y - 100) + 'px">' +
+      return '<h4 class="bb-map-round bb-map-national-label" style="--label-x:' + x + 'px;--label-y:' + (y - nationalLabelLift) + 'px">' +
         esc(game.round === 5 ? 'Final Four' : 'Championship') + '</h4>';
     }).join('');
     return '<section class="bb-map" aria-label="Tournament map">' +
@@ -358,21 +363,28 @@ export function mountBasketballBracket(root, {
 
   function jumpTo(name) {
     if (!name) return fitView();
-    const {layout, viewport} = activeMap;
+    const {layout, viewport, readableScale} = activeMap;
     const region = layout.regions.get(name);
     camera.jump = name;
     if (region) {
-      const regionX = (region.xAt(0) + region.xAt(4) + mapCardWidth) / 2;
-      const regionGames = region.games.filter(game => game.round === 1);
-      const regionY = (layout.positions.get(regionGames.at(-1).id).y + region.top) / 2;
-      const width = Math.abs(region.xAt(4) - region.xAt(0)) + mapCardWidth;
-      const height = 2 * (regionY - region.top) + mapCardHeight;
-      centerOn(regionX, regionY, Math.min(1.12, (viewport.clientWidth - 42) / width, (viewport.clientHeight - 42) / height));
+      const firstRound = Math.min(...region.games.map(game => game.round));
+      const left = Math.min(region.xAt(firstRound), region.xAt(4));
+      const right = Math.max(region.xAt(firstRound), region.xAt(4)) + mapCardWidth;
+      const bottom = Math.max(...region.games.map(game => layout.positions.get(game.id).y)) + mapCardHeight / 2;
+      const inset = 16;
+      const scale = Math.max(readableScale, Math.min(1.12, (viewport.clientWidth - 2 * inset) / (right - left),
+        (viewport.clientHeight - 2 * inset) / (bottom - region.top)));
+      const halfWidth = (viewport.clientWidth / 2 - inset) / scale;
+      const halfHeight = (viewport.clientHeight / 2 - inset) / scale;
+      // Start at the entry round when the readable region is larger than the viewport.
+      const x = right - left <= halfWidth * 2 ? (left + right) / 2 : region.side ? right - halfWidth : left + halfWidth;
+      centerOn(x, Math.min((region.top + bottom) / 2, region.top + halfHeight), scale);
     } else if (name === 'national') {
-      const final = layout.positions.get('championship');
-      const semifinal = layout.positions.get('semifinal-2');
-      const height = 2 * Math.abs(semifinal.y - final.y) + 180;
-      centerOn(mapWidth / 2, final.y - 25, Math.min(.9, (viewport.clientHeight - 45) / height));
+      const top = layout.positions.get('semifinal-1').y - nationalLabelLift;
+      const bottom = layout.positions.get('semifinal-2').y + mapCardHeight / 2;
+      const scale = Math.min(1.12, (viewport.clientHeight - 20) / (bottom - top),
+        (viewport.clientWidth - 20) / mapCardWidth);
+      centerOn(mapWidth / 2, (top + bottom) / 2, scale);
     } else if (name === 'championship') {
       centerOn(mapWidth / 2, layout.positions.get('championship').y - 30, 1.35);
     }
@@ -406,7 +418,8 @@ export function mountBasketballBracket(root, {
   function bindMap(layout) {
     const viewport = root.querySelector('.bb-map-viewport');
     const world = viewport.querySelector('.bb-map-world');
-    activeMap = {layout, viewport, world, status: root.querySelector('.bb-map-scale'),
+    const teamFont = parseFloat(window.getComputedStyle(world.querySelector('.bb-bracket-team')).fontSize);
+    activeMap = {layout, viewport, world, readableScale: 12 / teamFont, status: root.querySelector('.bb-map-scale'),
       jumpSelect: root.querySelector('[data-bracket-map-select]'), expandButton: root.querySelector('[data-bracket-view=expand]')};
     let drag;
     viewport.addEventListener('wheel', event => {

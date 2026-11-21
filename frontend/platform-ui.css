@@ -1,0 +1,186 @@
+/* Page, type and control tokens shared by every sport. */
+.gd-page-shell {
+  --gd-max-width: 1456px;
+  --gd-gutter: 32px;
+  --gd-gap: 16px;
+  --gd-panel-spacing: clamp(12px, 1.2vw, 17px);
+  --gd-panel-radius: 12px;
+  --gd-control-radius: 8px;
+  --gd-control-height: 44px;
+  --gd-display: Barlow, "Arial Narrow", sans-serif;
+  --gd-home-title: clamp(48px, 6vw, 88px);
+  --gd-page-title: clamp(38px, 4.3vw, 64px);
+  --gd-tool-title: clamp(36px, 3.7vw, 54px);
+  --gd-section-title: clamp(23px, 2.15vw, 28px);
+  --gd-data-size: clamp(24px, 2.4vw, 34px);
+  --gd-support-size: 13px;
+  --gd-label-size: 12px;
+  --gd-ink: #102443;
+  --gd-support: #405b78;
+  --gd-border: #cfdded;
+  --gd-surface: #fff;
+  --gd-panel-tint: #f6f9fd;
+  --gd-control-line: #a8c0da;
+  --gd-action: #085fca;
+  --gd-action-hover: #084b9e;
+  --gd-link: #0755aa;
+  --gd-fill: #edf4fc;
+  --gd-card-shadow: 0 3px 12px #102b5010;
+
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100vh;
+  min-block-size: 100dvh;
+}
+
+.gd-page-shell [id="main"] { flex: 1 0 auto; min-inline-size: 0; }
+.gd-page-shell #main .wrap { width: min(var(--gd-max-width), calc(100% - var(--gd-gutter) * 2)); }
+.gd-page-shell #main :is(.page-content, .fc-content) { padding-block: clamp(18px, 2.2vw, 32px) clamp(32px, 3vw, 48px); }
+
+.gd-page-hero {
+  --gd-hero-art: none;
+  --gd-hero-position: center 59%;
+  color: #fff;
+  background:
+    linear-gradient(95deg, #05162bec, #0a2342c9 53%, #0d244966 93%),
+    var(--gd-hero-art) var(--gd-hero-position) / cover no-repeat,
+    #0a2342;
+  isolation: isolate;
+  min-inline-size: 0;
+}
+.gd-page-hero[data-hero-sport="football"] { --gd-hero-art: url('/assets/stadium.webp'); }
+.gd-page-hero[data-hero-sport="basketball"] { --gd-hero-art: url('/basketball-preview/arena.webp'); }
+.gd-hero-layout {
+  display: grid;
+  align-items: center;
+  gap: clamp(18px, 4vw, 70px);
+  min-block-size: clamp(126px, 12vw, 177px);
+  padding-block: clamp(18px, 2.3vw, 32px);
+}
+.gd-hero-layout--split { grid-template-columns: minmax(0, 1fr) minmax(250px, 365px); }
+.gd-hero-text { display: grid; gap: 7px; align-content: center; min-inline-size: 0; }
+.gd-page-hero h1 {
+  font: italic 700 var(--gd-page-title)/.98 var(--gd-display);
+  letter-spacing: -.012em;
+  margin: 0;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+}
+.gd-page-hero h1 em { display: block; color: #30d3ff; font-style: inherit; }
+.gd-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: .7em;
+  color: #9be8ff;
+  letter-spacing: .15em;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.gd-eyebrow::before { content: ''; flex: 0 0 20px; block-size: 2px; background: #32d3ff; }
+.gd-hero-description { max-inline-size: 70ch; font-size: 15px; line-height: 1.55; color: #e3effd; }
+.gd-hero-meta { color: #c9ddef; font-size: var(--gd-support-size); }
+.gd-hero-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-block-start: 5px; }
+.gd-page-hero--tool .gd-hero-layout { min-block-size: clamp(110px, 10.5vw, 150px); padding-block: clamp(15px, 1.9vw, 27px); }
+.gd-page-hero--tool h1 { font-size: var(--gd-tool-title); }
+.gd-page-hero--home .gd-hero-layout { min-block-size: clamp(360px, 33vw, 466px); padding-block: clamp(24px, 4vw, 55px); }
+.gd-page-hero--home h1 { font-size: var(--gd-home-title); max-width: none; }
+.gd-page-hero--home .gd-hero-text { gap: 12px; }
+.gd-page-hero--home .gd-hero-description { max-inline-size: 58ch; }
+.gd-page-hero--profile .gd-hero-layout--split { grid-template-columns: minmax(0,1fr) auto; }
+.gd-page-hero--profile { border-block-end: 4px solid var(--team-accent, #1689c1); }
+.gd-page-hero--profile h1 :is(.fc-team-name > span, .team-school) { color: #c8e4fb; font-size: .73em; }
+.gd-page-hero--profile h1 :is(.fc-team-name > strong, .team-nickname) { color: #fff; font-size: 1em; }
+.gd-page-hero--profile h1 :is(.fc-team-name,.team-name) { flex-direction: column; align-items: flex-start; }
+
+.gd-page-shell #main :is(.panel, .fc-panel) {
+  border-color: var(--gd-border);
+  border-radius: var(--gd-panel-radius);
+  box-shadow: var(--gd-card-shadow);
+  min-inline-size: 0;
+}
+.gd-page-shell #main :is(.panel-head, .fc-panel > header) {
+  padding: var(--gd-panel-spacing);
+  background: var(--gd-panel-tint);
+  border-radius: calc(var(--gd-panel-radius) - 1px) calc(var(--gd-panel-radius) - 1px) 0 0;
+  border-color: var(--gd-border);
+}
+.gd-page-shell #main :is(.panel-head, .fc-panel > header) :is(h2,h3) {
+  font: 700 var(--gd-section-title)/1.12 var(--gd-display);
+}
+.gd-page-shell #main :is(.panel-head, .fc-panel > header) p { font-size: var(--gd-support-size); color: var(--gd-support); }
+.gd-page-shell #main :is(.panel-body, .fc-panel-body) { padding: var(--gd-panel-spacing); }
+.gd-page-shell #main :where(.stack, .fc-stack, .fc-grid, .two-column, .method-grid) { gap: var(--gd-gap); }
+.gd-page-shell #main :is(.metric strong, .fc-metric strong, .intelligence-stat-grid dd) {
+  font: 700 var(--gd-data-size)/1 var(--gd-display);
+  font-variant-numeric: tabular-nums;
+}
+.gd-page-shell #main :is(.fc-fresh, .compact-note, .fc-note, .scoreboard-source) { font-size: var(--gd-support-size); color: var(--gd-support); }
+.gd-page-shell #main :is(.fc-fresh, .scoreboard-source) { margin-block: 0 12px; }
+.gd-page-shell #main :is(.fc-chip, .scoreboard-game-status) { font-size: var(--gd-label-size); border-radius: 5px; }
+.gd-page-shell #main :is(.fc-table, .conference-table, .gd-ranking-table) {
+  font-variant-numeric: tabular-nums;
+}
+.gd-page-shell #main :is(.fc-table, .conference-table, .gd-ranking-table) thead th {
+  color: #294866;
+  font-size: var(--gd-label-size);
+  letter-spacing: .045em;
+}
+.gd-page-shell #main :is(.gd-ranking-table,.fc-ranking-table) :is(th,td) { padding-block: 8px; }
+.gd-page-shell #main :is(.fc-game, .scoreboard-game) {
+  border-color: var(--gd-border);
+  border-radius: var(--gd-control-radius);
+}
+
+.gd-page-shell #main :is(.button:not(.small), .fc-action, .fc-form button) {
+  min-block-size: var(--gd-control-height);
+  border-radius: var(--gd-control-radius);
+  font-size: var(--gd-support-size);
+}
+.gd-page-shell #main :is(.button:not(.light,.outline), .fc-action:not(.fc-secondary), .fc-form button) {
+  background: var(--gd-action);
+  color: #fff;
+  border-color: #2e78ce;
+}
+.gd-page-shell #main :is(.button:not(.light,.outline), .fc-action:not(.fc-secondary), .fc-form button):hover {
+  background: var(--gd-action-hover);
+}
+.gd-page-shell #main :is(.button.light,.fc-secondary) { background: var(--gd-fill); border-color: var(--gd-control-line); color: #153d67; }
+.gd-page-shell #main .gd-page-hero :is(.button.outline, .fc-secondary) { background: #0e2c4ad9; border-color: #8cb0d2; color: #fff; }
+.gd-page-shell #main :is(.fc-form, .compare-picker, .team-filter-bar, .scoreboard-toolbar, .conference-controls)
+  :is(input:not([type="checkbox"],[type="radio"]),select) {
+  min-block-size: var(--gd-control-height);
+  border-color: var(--gd-control-line);
+  border-radius: var(--gd-control-radius);
+}
+.gd-page-shell #main :is(.text-link, .fc-view-link) { color: var(--gd-link); text-underline-offset: .2em; }
+.gd-page-shell #main :is(.text-link, .fc-view-link):hover { text-decoration: underline; }
+.gd-page-shell #main :is(a,button,input,select,summary):focus-visible { outline: 2px solid #126fca; outline-offset: 2px; }
+.gd-page-shell #main .gd-page-hero :is(a,button):focus-visible { outline-color: #9de9ff; outline-offset: -3px; }
+
+.gd-empty, .gd-page-shell #main :is(.scoreboard-warning, .scoreboard-empty):not([hidden],:empty) {
+  color: var(--gd-support);
+  background: var(--gd-panel-tint);
+  padding: 12px var(--gd-panel-spacing);
+  border: 1px dashed var(--gd-control-line);
+  border-radius: var(--gd-control-radius);
+  font-size: var(--gd-support-size);
+  line-height: 1.5;
+}
+
+@media (max-width: 1200px) {
+  .gd-page-shell { --gd-gutter: 20px; }
+}
+@media (max-width: 800px) {
+  .gd-page-hero[data-hero-sport="football"] { --gd-hero-art: url('/assets/stadium-mobile.webp'); }
+  .gd-page-hero[data-hero-sport="basketball"] { --gd-hero-art: url('/basketball-preview/arena-mobile.webp'); }
+}
+@media (max-width: 700px) {
+  .gd-page-shell { --gd-gutter: 14px; --gd-gap: 12px; --gd-home-title: clamp(39px, 11.3vw, 68px); }
+  .gd-hero-layout--split, .gd-page-hero--profile .gd-hero-layout--split { grid-template-columns: minmax(0,1fr); gap: 15px; }
+  .gd-hero-description { font-size: 14px; }
+  .gd-page-hero--home .gd-hero-layout { min-block-size: 0; }
+  .gd-page-hero--home .gd-hero-text { gap: 8px; }
+  .gd-page-hero .top-five { margin-block-start: 0; }
+  .gd-hero-actions :is(.button,.fc-action) { padding-inline: 12px; }
+}

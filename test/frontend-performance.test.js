@@ -66,7 +66,7 @@ async function browser({ snapshot, performance, performanceStatus = 200, rejectP
     search(value) { for (const listener of listeners.get('input') || []) listener({ target: { id: 'team-search', value } });
       return node('#ranking-results').innerHTML; },
     conference(value) { for (const listener of listeners.get('change') || []) listener({ target: { id: 'conference-filter', value } });
-      return node('#main').innerHTML; }
+      return node('#ranking-results').innerHTML; }
   };
 }
 

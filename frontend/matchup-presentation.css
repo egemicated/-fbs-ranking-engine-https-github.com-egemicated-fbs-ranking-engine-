@@ -1,0 +1,74 @@
+.gd-matchup-estimate .prediction-number > span {
+  font-size: .42em;
+}
+
+.gd-matchup-estimate .probability-track,
+.gd-matchup-estimate .matchup-win-chances {
+  inline-size: min(100%, 34rem);
+  margin-inline: auto;
+}
+
+.gd-matchup-estimate .probability-track {
+  margin-block: 13px 8px;
+}
+
+.matchup-win-chances {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-block-end: 6px;
+}
+
+.matchup-win-chance {
+  display: grid;
+  align-content: start;
+  gap: 2px;
+  overflow-wrap: anywhere;
+  color: #e5f1ff;
+}
+
+.matchup-win-chance + .matchup-win-chance {
+  border-inline-start: 1px solid #bcd4ef43;
+}
+
+.matchup-win-chance strong {
+  font: 700 clamp(22px, 4vw, 29px)/1 Barlow, sans-serif;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+}
+
+.matchup-win-chance small {
+  color: #bed3ef;
+}
+
+.matchup-win-chance a:hover {
+  text-decoration: underline;
+}
+
+.gd-matchup-estimate .prediction-odds-description {
+  margin-block: 6px 2px;
+  color: #9ce8ff;
+}
+
+.gd-matchup-inputs:where(form) {
+  display: grid;
+  grid-template-columns: minmax(90px, .58fr) repeat(2, minmax(135px, 1fr)) minmax(120px, .68fr) auto;
+  align-items: end;
+}
+
+.gd-matchup-inputs .searchable-team-select > label:not(.sr-only) {
+  display: grid;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-matchup-refresh] { animation: gd-matchup-in 180ms ease-out; }
+  @keyframes gd-matchup-in {
+    from { opacity: .74; }
+    to { opacity: 1; }
+  }
+}
+
+@media (max-width: 760px) {
+  .gd-matchup-inputs:where(form) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gd-matchup-inputs > label:has([name="season"]) { grid-column: 1 / -1; }
+}

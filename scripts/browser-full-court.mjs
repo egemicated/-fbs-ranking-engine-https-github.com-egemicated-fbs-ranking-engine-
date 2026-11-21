@@ -27,7 +27,7 @@ const rival=[...active.teams.values()].find(t=>t.id!==team.id&&t.sorRank);
 const teamRoute=`/basketball/teams/${encodeURIComponent(team.id)}/`;
 const matchupRoute='/basketball/matchup-lab/?'+new URLSearchParams({a:team.id,b:rival.id,venue:'neutral'});
 const basketballRoutes = [
-  ['/basketball/','College','basketball-home'], ['/basketball/rankings/','Basketball rankings','rankings'],
+  ['/basketball/','College','basketball-home'], ['/basketball/rankings/','Rankings','rankings'],
   ['/basketball/teams/','Teams','teams'], [teamRoute,team.name,'team-profile'], [matchupRoute,'Matchup Lab','matchup'],
   ['/basketball/scoreboard/','Scoreboard','scoreboard'], ['/basketball/picks/','Daily Picks','daily-picks'],
   ['/basketball/conferences/','Conference Strength','conferences'], ['/basketball/model-reports/','Model Report Card','model-reports'],
@@ -48,7 +48,7 @@ const routes = [
   ...footballRoutes.map(([route,name])=>[route,null,name,'football']),
 ];
 try {
-  for(const width of [320,375,390,430,768,1024,1100,1440,1920]) {
+  for(const width of [320,360,375,390,430,768,1024,1100,1440,1920]) {
     const context=await browser.newContext({viewport:{width,height:900},reducedMotion:'reduce'});
     await context.addInitScript(()=>{
       let score=0;

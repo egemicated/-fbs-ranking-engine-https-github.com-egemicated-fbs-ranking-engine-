@@ -359,12 +359,13 @@
   letter-spacing: .06em;
 }
 .bb-map .bb-map-national-label {
-  padding: .22em .15em;
+  padding: 2px .15em;
   border: 2px solid #4a90b8;
   border-radius: 6px;
   color: #a9edff;
   background: #102c47;
-  font-size: 21px;
+  font-size: 16px;
+  line-height: 1;
 }
 .bb-map .bb-bracket-game {
   position: absolute;

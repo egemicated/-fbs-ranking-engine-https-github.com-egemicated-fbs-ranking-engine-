@@ -1,0 +1,140 @@
+.gd-conference-tabs {
+  display: grid;
+  grid-auto-columns: minmax(0,1fr);
+  grid-auto-flow: column;
+  gap: 5px;
+  padding: 5px;
+  border: 1px solid var(--gd-border,#cfdded);
+  border-radius: var(--gd-panel-radius,12px);
+  background: var(--gd-fill,#e3edf7);
+}
+.gd-conference-tabs a {
+  display: grid;
+  place-items: center;
+  min-height: var(--gd-control-height,44px);
+  padding: 5px 8px;
+  border-radius: var(--gd-control-radius,8px);
+  color: var(--gd-ink,#102443);
+  text-align: center;
+  font-size: 13px;
+  font-weight: 750;
+  line-height: 1.25;
+}
+.gd-conference-tabs a[aria-current="page"] { color: #fff; background: #1856a1; box-shadow: var(--gd-card-shadow); }
+.gd-conference-tabs a:not([aria-current="page"]):hover { background: var(--gd-surface,#fff); }
+@media (max-width: 430px) {
+  .gd-conference-tabs[data-tab-count="4"] { grid-auto-flow: row; grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+
+.gd-conference-sort-control,
+.gd-conference-cell-label,
+.gd-conference-card-record { display: none; }
+
+.gd-conference-cards thead th { padding: 0; background: #eef4fc; }
+.gd-conference-cards thead th[aria-sort] { background: #dceafb; }
+.gd-conference-cards thead th > :is(a,button) {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 44px;
+  padding: 6px 12px;
+  border: 0;
+  background: transparent;
+  color: #174779;
+  font: inherit;
+  font-weight: 750;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  white-space: nowrap;
+  text-align: left;
+  cursor: pointer;
+}
+.gd-conference-cards thead th > :is(a,button):hover { background: #e1edfb; }
+.gd-conference-cards thead th > :is(a,button):focus-visible { outline-offset: -3px; }
+.gd-conference-cards thead th > :is(a,button) > span { min-inline-size: 11px; text-align: center; }
+
+@media (max-width: 768px) {
+  .gd-conference-records-region:has(.gd-conference-cards) { overflow: visible; border: 0; }
+  .gd-conference-sort-control {
+    display: grid;
+    align-items: center;
+    grid-template-columns: minmax(0,auto) minmax(0,1fr);
+    gap: .6rem;
+    margin-block-end: .7rem;
+    font-size: .8125rem;
+    font-weight: 700;
+    color: #173e71;
+  }
+  .gd-conference-sort-control select {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    min-height: 44px;
+    padding: 5px 8px;
+    border: 1px solid var(--gd-control-line,#bdcede);
+    border-radius: var(--gd-control-radius,7px);
+    background: var(--gd-surface,#fff);
+    color: #173e71;
+    font: inherit;
+  }
+  .gd-conference-cards { display: block; border: 0; }
+  .gd-conference-cards thead { display: none; }
+  .gd-conference-cards tbody { display: grid; gap: 8px; }
+  .gd-conference-cards tbody > tr {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: .4rem .7rem;
+    padding: .6rem .75rem;
+    border: 1px solid var(--gd-border,#cedceb);
+    border-radius: var(--gd-control-radius,8px);
+    background: var(--gd-surface,#fff);
+    min-width: 0;
+  }
+  .gd-conference-cards tbody tr > :is(th,td) {
+    display: grid;
+    align-content: start;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    white-space: normal;
+    word-break: normal;
+  }
+  .gd-conference-cards tbody tr > th {
+    grid-column: 1/-1;
+    position: static;
+    gap: 3px;
+    padding-bottom: .35rem;
+    border-bottom: 1px solid var(--gd-border,#cedceb);
+    font-size: .95rem;
+    letter-spacing: normal;
+    text-transform: none;
+    overflow-wrap: break-word;
+  }
+  .gd-conference-cards tbody tr > .gd-conference-card-record-part { display: none; }
+  .gd-conference-cell-label, .gd-conference-card-record {
+    display: block;
+    color: #395673;
+    font-size: .75rem;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  .gd-conference-card-record { color: #173e71; font-weight: 750; }
+  .gd-conference-card-record > span { color: #395673; font-weight: 600; }
+  .gd-conference-cards td > .gd-conference-cell-value {
+    color: #102b50;
+    font-size: .875rem;
+    font-weight: 750;
+    line-height: 1.4;
+    overflow-wrap: break-word;
+  }
+  .gd-conference-cell-value > a { display: inline-flex; align-items: center; min-block-size: 24px; }
+}
+@media (min-width: 540px) and (max-width: 768px) {
+  .gd-conference-cards tbody { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .gd-conference-sort-control { width: min(26rem,100%); }
+}
+@media (max-width: 430px) {
+  .gd-conference-sort-control { grid-template-columns: minmax(0,1fr); gap: .25rem; }
+}

@@ -1,6 +1,7 @@
 import { fillScenarioFavorites, predictScenarioGame } from './cfp-scenario-model.js';
 import { CFP_RULES_URL, SCENARIO_CFP_SEASON, SCENARIO_CFP_SELECTION_AT, SCENARIO_CHAMPION_CONFERENCES, selectScenarioField } from './cfp-scenario-field.js';
 import { teamAccentAttr, teamDisplayName, teamNameMarkup } from './team-identity.js';
+import { pageHero } from './platform-presentation.js';
 
 const escape = value => String(value ?? '').replace(/[&<>"']/g, character => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -171,8 +172,8 @@ export async function renderCfpScenario(main, { snapshot, inputUrl, workerUrl } 
   unmountCfpScenario();
   const abort = new AbortController();
   let worker, debounce, timeout, active = true;
-  main.innerHTML = `<section class="hero page-banner"><div class="wrap"><h1>CFP Scenario Builder</h1>
-    <p>Explore an unofficial playoff field built from our Strength of Record rankings. Choose hypothetical game winners to see how the field changes.</p></div></section>
+  main.innerHTML = `${pageHero({sport:'football',category:'postseason',variant:'tool',title:'CFP Scenario Builder',
+    eyebrow:'College Football Playoff',description:'Choose hypothetical game winners to see how our unofficial SOR playoff field changes.'})}
     <div class="wrap page-content scenario-page" data-scenario-page><p role="status">Loading the scenario schedule…</p></div>`;
   const root = main.querySelector('[data-scenario-page]');
   const current = () => active && root.isConnected;

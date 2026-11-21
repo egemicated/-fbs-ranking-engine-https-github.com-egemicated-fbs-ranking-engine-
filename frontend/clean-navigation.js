@@ -2,14 +2,17 @@ import { legacyRouteFromHash, routeFromUrl, routeHref } from './clean-routes.js'
 
 export const APP_NAVIGATION_EVENT = 'app:navigate';
 
-export function navigateApp(route, { replace = false, render = true } = {}, browser = window) {
+export function navigateApp(route, { replace = false, render = true, query = {} } = {}, browser = window) {
   const href = routeHref(route);
   if (!href) return false;
   const previousUrl = browser.location.href;
   const target = new URL(href, previousUrl);
+  for (const [name, value] of Object.entries(query)) {
+    if (value) target.searchParams.set(name, value);
+  }
   if (target.href === previousUrl) return false;
   const method = replace ? 'replaceState' : 'pushState';
-  browser.history[method](browser.history.state, '', href);
+  browser.history[method](browser.history.state, '', target.pathname + target.search + target.hash);
   browser.dispatchEvent(new browser.CustomEvent(APP_NAVIGATION_EVENT, {
     detail: { previousUrl, route: routeFromUrl(target), render },
   }));

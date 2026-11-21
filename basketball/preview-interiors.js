@@ -1,47 +1,86 @@
-const directory = document.querySelector('[data-team-browser]');
+const list = document.querySelector('[data-team-browser],[data-ranking-browser],[data-view-refresh]');
 
-if (directory) {
-  const form = directory.querySelector('[data-team-filters]');
-  const announcement = directory.querySelector('[data-team-announcement]');
-  const error = directory.querySelector('[data-team-error]');
-  let results = directory.querySelector('[data-team-results]');
-  let pending = null;
+if (list) {
+  const scope = list.hasAttribute('data-view-refresh') ? 'view' : 'team';
+  const part = name => `[data-${scope}-${name}]`;
+  let form = list.querySelector(part('filters'));
+  const announcement = list.querySelector(part('announcement'));
+  const error = list.querySelector(part('error'));
+  let results = list.querySelector(part('results'));
+  let pending;
   let debounce;
+
+  list.dataset[`${scope}Enhanced`] = '';
 
   function filterUrl() {
     const url = new URL(form.action);
     url.search = '';
+    url.hash = '';
     for (const [key,value] of new FormData(form)) {
       if (value !== '') url.searchParams.set(key,value);
     }
     return url;
   }
 
-  async function update(url, {letter = null, more = false} = {}) {
+  function syncFilters(nextForm, restore) {
+    if (scope === 'view') {
+      if (restore) {
+        const tabs = nextForm.closest('[data-view-refresh]')?.querySelector('[data-view-tabs]');
+        if (tabs) list.querySelector('[data-view-tabs]')?.replaceWith(tabs);
+        form.replaceWith(nextForm);
+        form = nextForm;
+      }
+      return;
+    }
+    if (restore) {
+      for (const control of form.elements) {
+        if (!control.name || control.type === 'hidden') continue;
+        const next = nextForm.elements.namedItem(control.name);
+        if (next && control.type === 'checkbox') control.checked = next.checked;
+        else if (next) control.value = next.value;
+      }
+    }
+    if (!list.hasAttribute('data-ranking-browser')) return;
+    for (const name of ['model','all']) {
+      const previous = form.elements.namedItem(name);
+      const next = nextForm.elements.namedItem(name);
+      if (previous && next) previous.value = next.value;
+      else if (previous) previous.remove();
+      else if (next) form.append(next.cloneNode());
+    }
+    for (const selector of ['[data-ranking-tabs]','[data-ranking-action]','[data-ranking-heading]','[data-ranking-context]']) {
+      const next = nextForm.closest('[data-ranking-browser]')?.querySelector(selector);
+      const previous = list.querySelector(selector);
+      if (next && previous?.innerHTML !== next.innerHTML) previous?.replaceWith(next);
+    }
+  }
+
+  async function update(url, {historyMethod = 'replaceState', focusSelector, more = false, restoreFilters = false} = {}) {
     clearTimeout(debounce);
     pending?.abort();
     const request = new AbortController();
     pending = request;
     results.setAttribute('aria-busy','true');
-    error.hidden = true;
+    if (error) error.hidden = true;
     const previousCount = more ? results.querySelectorAll('[data-team-card]').length : 0;
     try {
       const response = await fetch(url,{signal:request.signal});
-      if (!response.ok) throw new Error('Directory request failed');
+      if (!response.ok) throw new Error('Could not refresh team results');
       const page = new DOMParser().parseFromString(await response.text(),'text/html');
-      const replacement = page.querySelector('[data-team-results]');
-      if (!replacement) throw new Error('Directory results missing');
+      const replacement = page.querySelector(part('results'));
+      const nextForm = page.querySelector(part('filters'));
+      if (!replacement || !nextForm) throw new Error('Team results were missing from the response');
       if (request.signal.aborted) return;
+      syncFilters(nextForm, restoreFilters);
       results.replaceWith(replacement);
       results = replacement;
-      history.replaceState(history.state,'',url);
-      announcement.textContent = replacement.querySelector('[data-team-count]').textContent;
+      if (historyMethod && url.href !== location.href) history[historyMethod](history.state,'',url);
+      if (announcement) announcement.textContent = replacement.querySelector(part('count'))?.textContent ?? 'Results updated.';
+      if (scope === 'view') list.dispatchEvent(new CustomEvent('gd:view-updated',{bubbles:true}));
       if (more) replacement.querySelectorAll('[data-team-card]')[previousCount]?.focus();
-      if (letter !== null) {
-        replacement.querySelector(`[data-team-letter="${CSS.escape(letter)}"]`)?.focus({preventScroll:true});
-      }
+      else if (focusSelector) list.querySelector(focusSelector)?.focus({preventScroll:true});
     } catch {
-      if (!request.signal.aborted) error.hidden = false;
+      if (!request.signal.aborted && error) error.hidden = false;
     } finally {
       if (pending === request) {
         pending = null;
@@ -50,30 +89,64 @@ if (directory) {
     }
   }
 
-  form.addEventListener('submit',event=>{
+  list.addEventListener('submit',event=>{
+    if (event.target !== form) return;
     event.preventDefault();
-    void update(filterUrl());
+    const explicit = form.hasAttribute('data-view-explicit');
+    void update(filterUrl(),{historyMethod:explicit ? 'pushState' : 'replaceState',restoreFilters:explicit,
+      focusSelector:explicit ? '[data-view-filters] button' : undefined});
   });
-  form.addEventListener('input',event=>{
-    if (event.target.name !== 'q') return;
+  list.addEventListener('input',event=>{
+    if (event.target.form !== form || event.target.name !== 'q') return;
     pending?.abort();
     clearTimeout(debounce);
     debounce = setTimeout(()=>void update(filterUrl()),140);
   });
-  form.addEventListener('change',event=>{
-    if (!(event.target instanceof HTMLSelectElement)) return;
+  list.addEventListener('change',event=>{
+    if (event.target.form !== form) return;
+    if (!(event.target instanceof HTMLSelectElement) &&
+        !(scope === 'view' && ['date','checkbox'].includes(event.target.type))) return;
+    const url = filterUrl();
     if (event.target.name === 'season') {
-      const url = filterUrl();
       url.searchParams.delete('conf');
       location.assign(url);
-      return;
+    } else if (!form.hasAttribute('data-view-explicit')) {
+      void update(url,{historyMethod:event.target.name === 'date' ? 'pushState' : 'replaceState'});
     }
-    void update(filterUrl());
   });
-  directory.addEventListener('click',event=>{
-    const link = event.target.closest('[data-team-letter],[data-team-more]');
+  list.addEventListener('click',event=>{
+    const link = event.target.closest('[data-team-letter],[data-team-more],[data-ranking-model],[data-ranking-action] a,[data-view-link]');
     if (!link || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const destination = new URL(link.href);
+    if (destination.origin !== location.origin || destination.pathname !== new URL(form.action).pathname) return;
     event.preventDefault();
-    void update(new URL(link.href),{letter:link.dataset.teamLetter ?? null,more:link.hasAttribute('data-team-more')});
+    const url = filterUrl();
+    if (link.hasAttribute('data-ranking-model')) {
+      const model = link.dataset.rankingModel;
+      url.searchParams.set('model',model);
+      void update(url,{historyMethod:'pushState',focusSelector:`[data-ranking-model="${CSS.escape(model)}"]`});
+    } else if (link.hasAttribute('data-view-link')) {
+      const key = link.dataset.viewLink;
+      const selector = key ? `[data-view-link="${CSS.escape(key)}"]` :
+        `[data-view-link][href="${CSS.escape(link.getAttribute('href'))}"]`;
+      void update(destination,{historyMethod:'pushState',focusSelector:selector,restoreFilters:true});
+    } else if (link.closest('[data-ranking-action]')) {
+      void update(destination,{historyMethod:'pushState',focusSelector:'[data-ranking-action] a',restoreFilters:true});
+    } else if (link.hasAttribute('data-team-more')) {
+      void update(destination,{more:true});
+    } else {
+      const letter = link.dataset.teamLetter;
+      if (letter) url.searchParams.set('letter',letter);
+      void update(url,{focusSelector:`[data-team-letter="${CSS.escape(letter)}"]`});
+    }
+  });
+  window.addEventListener('popstate',()=>{
+    const url = new URL(location.href);
+    clearTimeout(debounce);
+    pending?.abort();
+    if (scope === 'view' && !list.dispatchEvent(new CustomEvent('gd:view-restore',{
+      bubbles:true, cancelable:true, detail:{url},
+    }))) return;
+    void update(url,{historyMethod:null,restoreFilters:true});
   });
 }

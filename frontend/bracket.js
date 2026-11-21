@@ -1,6 +1,7 @@
 import { routeFromUrl, routeHref } from './clean-routes.js';
 import { loadBracketClient } from './bracket-auth.js?v=clean-routes';
 import { mountBracketBoard, renderBracketBoard } from './bracket-board.js?v=2';
+import { pageHero } from './platform-presentation.js';
 
 const season = 2026;
 const pointsByRound = [1, 2, 4, 8];
@@ -217,8 +218,9 @@ export async function renderBracket(main, teams) {
   const view = bracketView();
   if (main.querySelector('[data-bracket-view]')?.dataset.bracketView === view) return;
   unmountBracket();
-  main.innerHTML = `<section class="hero page-banner"><div class="wrap"><div class="eyebrow">College Football Playoff · ${view === 'demo' ? '2025 demo' : `${season} season`}</div>
-    <h1>Playoff Bracket</h1><p>Pick the winners, follow the results, and see where your bracket stands.</p></div></section>
+  main.innerHTML = `${pageHero({sport:'football', category:'postseason', variant:'tool', title:'Playoff Bracket',
+    eyebrow:`College Football Playoff · ${view === 'demo' ? '2025 demo' : `${season} season`}`,
+    description:'Pick the winners, follow the results, and see where your bracket stands.'})}
     <div class="wrap page-content bracket-page" data-bracket-view="${view}"><nav class="matchup-views bracket-tabs" aria-label="Playoff bracket">
     ${[['entry', 'My bracket'], ['leaderboard', 'Leaderboard'], ['demo', '2025 demo']].map(([tab, label]) => `<a href="${routeHref(`bracket/${tab}`)}"${tab === view ? ' aria-current="page"' : ''}>${label}</a>`).join('')}
     <a href="/cfp-scenarios/">CFP Scenario Builder</a>

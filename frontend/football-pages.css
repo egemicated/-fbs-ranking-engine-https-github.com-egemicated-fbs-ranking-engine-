@@ -150,46 +150,6 @@
   min-height: 44px;
 }
 
-.prediction-card .prediction-number > span {
-  font-size: .42em;
-}
-
-.prediction-card .probability-track {
-  margin-block: 13px 8px;
-}
-
-.matchup-win-chances {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.matchup-win-chance {
-  display: grid;
-  gap: 2px;
-  overflow-wrap: anywhere;
-  color: #e5f1ff;
-}
-
-.matchup-win-chance + .matchup-win-chance {
-  border-inline-start: 1px solid #bcd4ef43;
-}
-
-.matchup-win-chance strong {
-  font: 700 clamp(22px, 4vw, 29px)/1 Barlow, sans-serif;
-  color: #fff;
-  font-variant-numeric: tabular-nums;
-}
-
-.matchup-win-chance small {
-  color: #bed3ef;
-}
-
-.prediction-card .prediction-odds-description {
-  margin-block: 6px 2px;
-  color: #9ce8ff;
-}
-
 .weekly-day + .weekly-day {
   margin-block-start: 22px;
 }

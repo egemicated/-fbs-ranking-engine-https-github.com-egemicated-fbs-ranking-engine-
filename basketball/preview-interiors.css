@@ -1,3 +1,5 @@
+@import url('/conference-display.css');
+
 .fc-visually-hidden {
   position: absolute;
   inline-size: 1px;
@@ -8,6 +10,7 @@
 }
 
 .fc-interior-anchor { scroll-margin-top: 15px; min-width: 0; }
+.fc-interior-anchor > .gd-conference-tabs { margin-block-end: 12px; }
 .fc-view-tabs {
   display: grid;
   grid-auto-columns: minmax(min-content, 1fr);
@@ -91,22 +94,12 @@
 
 .fc-conference-table :is(th, td) { white-space: nowrap; }
 .fc-conference-table tbody > tr:nth-child(even) { background: #f5f8fd; }
-.fc-conference-table :is(thead, tbody) th:first-child {
+.fc-conference-table:not(.gd-conference-cards) :is(thead, tbody) th:first-child {
   position: sticky;
   left: 0;
   z-index: 1;
   border-inline-end: 1px solid #d0ddea;
 }
-.fc-conference-table thead th > a {
-  display: inline-flex;
-  place-items: center;
-  gap: 6px;
-  min-block-size: 28px;
-  color: #173e71;
-}
-.fc-conference-table th[aria-sort] { background: #dbeaff; }
-.fc-conference-table th[aria-sort] > a { color: #0b4e9d; }
-.fc-conference-table thead th > a > span { min-inline-size: 11px; text-align: center; }
 .fc-win-rate { display: inline-grid; grid-template-columns: minmax(3.25em, auto) 42px; gap: 6px; align-items: center; }
 .fc-win-rate > span, .fc-win-rate i { height: 5px; border-radius: 4px; display: block; }
 .fc-win-rate > span { background: #dce8f5; }

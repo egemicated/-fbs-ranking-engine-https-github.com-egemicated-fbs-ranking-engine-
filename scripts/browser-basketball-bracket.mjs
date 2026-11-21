@@ -39,9 +39,9 @@ let browser;
 try {
   const executablePath = process.env.QUALITY_BROWSER;
   browser = await chromium.launch(executablePath ? {executablePath} : {});
-  for (const width of [390, 768, 1440, 1920]) {
+  for (const width of [390, 768, 1024, 1440, 1920]) {
     const desktop = width > 860;
-    const page = await browser.newPage({viewport:{width,height:900}});
+    const page = await browser.newPage({viewport:{width,height:width === 1024 ? 768 : 900}});
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(url);
@@ -87,6 +87,10 @@ try {
       const jump = page.locator('[data-bracket-map-select]');
       await jump.selectOption('east');
       assert.ok(await scale() > fit);
+      await assertReadableJump(viewport,'[data-bracket-slot^="east-"]',4);
+      await page.getByRole('button',{name:'Go to Final Four'}).click();
+      await assertReadableJump(viewport,'.bb-map-national-game',3);
+      await sameProgress(0);
       await page.getByRole('button',{name:'Fit entire bracket'}).click();
       assert.equal(await scale(),fit);
       await viewport.press('+');
@@ -166,10 +170,24 @@ try {
     assert.equal(await page.getByRole('button',{name:'GD projected bracket'}).getAttribute('aria-pressed'),'true');
     await page.close();
   }
-  console.log('Basketball tournament browser checks passed at 390, 768, 1440 and 1920 px.');
+  console.log('Basketball tournament browser checks passed at 390, 768, 1024, 1440 and 1920 px.');
 } finally {
   await browser?.close();
   server.close();
+}
+
+async function assertReadableJump(viewport, selector, minimumGames) {
+  const measured = await viewport.evaluate((view,selector) => {
+    const bounds = view.getBoundingClientRect();
+    const games = [...view.querySelectorAll(selector)].filter(game => {
+      const box = game.getBoundingClientRect();
+      return box.left >= bounds.left && box.top >= bounds.top && box.right <= bounds.right && box.bottom <= bounds.bottom;
+    });
+    const text = games[0]?.querySelector('.bb-bracket-team');
+    return {games:games.length,pixels:text ? parseFloat(getComputedStyle(text).fontSize) * Number(view.dataset.scale) : 0};
+  },selector);
+  assert.ok(measured.games >= minimumGames,selector+' fits enough complete matchup cards');
+  assert.ok(measured.pixels >= 11.9,selector+' matchup text is at least 12 px');
 }
 
 async function assertGeometry(page, games, openers) {

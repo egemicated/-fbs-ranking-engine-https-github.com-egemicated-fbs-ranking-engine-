@@ -94,7 +94,7 @@ test('home, national table and directory display published SOR ranks and scores 
   assert.match(ranking, /table-rank top">1<\/span>.*?href="\/team\/101\/"/s);
   assert.match(ranking, /average FBS Colley rating/);
   assert.match(ranking, /SOS · Colley/);
-  assert.match(page.go('#teams'), /team-card-rank">#1<\/span>.*?<h3>Alpha<\/h3>.*?2\.3456 SOR/s);
+  assert.match(page.go('#teams'), /<h3>Alpha<\/h3>.*?2\.3456 SOR.*?aria-label="Rank 1">#1<\/span>/s);
   assert.equal(JSON.stringify(snapshot), before);
 });
 
@@ -337,13 +337,12 @@ test('FCS directory uses its own rows and preserves subdivision search state', a
   const { snapshot, details } = separatedFixture(true);
   const page = await browser(snapshot, lookupDetails(details));
   const fcs = page.go('#teams/fcs');
-  assert.match(fcs, /1 of 1 FCS teams/);
+  assert.match(fcs, /<h2>FCS teams<\/h2>.*?1 of 1 teams/s);
   assert.match(fcs, /Gamma/);
   assert.doesNotMatch(fcs, /class="team-school">(?:Alpha|Beta)</);
-  page.ui.state.search = 'no such team';
-  assert.match(page.go('#teams/fcs'), /No teams match these filters/);
+  assert.match(page.go('/teams/fcs/?q=no+such+team'), /No teams match these filters/);
   const fbs = page.go('#teams');
-  assert.match(fbs, /2 of 2 FBS teams/);
+  assert.match(fbs, /<h2>FBS teams<\/h2>.*?2 of 2 teams/s);
   assert.doesNotMatch(fbs, />Gamma<\/a>/);
   assert.match(fbs, /href="\/teams\/fcs\/"/);
 });

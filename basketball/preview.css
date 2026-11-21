@@ -1,26 +1,10 @@
 .fc-preview { background:#ebf1f8; color:#112745; }
 .fc-preview main :is(a,button,input,select,summary):focus-visible { outline:3px solid #a96802; outline-offset:3px; }
-.fc-hero,.fc-banner { color:#fff; background:linear-gradient(115deg,#071530,#0e2e56 75%,#143c68); position:relative; isolation:isolate; overflow:hidden; }
-.fc-hero:before { content:''; position:absolute; z-index:-1; inset:0;
-  background:radial-gradient(ellipse at 68% 4%,#438eda52,transparent 55%),linear-gradient(100deg,#061325 18%,transparent 65%); }
-.fc-hero:after { content:''; position:absolute; z-index:-1; right:-10vw; top:0; width:min(860px,80vw); height:100%;
-  opacity:.43; transform:perspective(360px) rotateX(35deg) skewX(-8deg);
-  background:linear-gradient(90deg,transparent 49.8%,#69c1fc 50%,transparent 50.4%),radial-gradient(circle,transparent 22%,#69c1fc 22.3%,transparent 23%),repeating-linear-gradient(0deg,transparent 0 24%,#77c7f74d 24.3%,transparent 24.8%); }
-.fc-hero-content { display:grid; grid-template-columns:minmax(0,1.65fr) minmax(260px,1fr); gap:clamp(24px,6vw,92px); align-items:center;
-  padding-block:clamp(28px,7vw,88px); }
-.fc-hero h1,.fc-banner h1 { font:700 italic clamp(44px,6.4vw,90px)/.93 Barlow,'Arial Narrow',sans-serif;
-  margin:.20em 0 .23em; text-transform:uppercase; overflow-wrap:anywhere; }
-.fc-hero h1 span { color:#3dd6ff; display:block; }
-.fc-banner { padding:clamp(22px,4vw,52px) 0; }
-.fc-banner h1 { font-size:clamp(39px,5vw,65px); }
-.fc-banner p:last-child,.fc-hero p:not(.fc-kicker) { color:#e2edfa; line-height:1.65; max-width:550px; font-size:15px; }
 .fc-kicker { font-weight:800; text-transform:uppercase; letter-spacing:.17em; color:#8bdfff; font-size:11px; }
 .fc-action,.fc-form button { min-height:44px; display:inline-flex; align-items:center; justify-content:center; text-align:center;
   border-radius:8px; border:1px solid #086be3; padding:9px 16px; background:#075fc9; color:#fff; font-weight:750; font-size:14px; cursor:pointer; }
 .fc-action:hover,.fc-form button:hover { background:#084da4; }
-.fc-hero .fc-action { background:#0566dc; border-color:#4595f2; }
 .fc-action.fc-secondary { background:#edf5ff;color:#123d70;border-color:#b4cee9; }
-.fc-hero .fc-secondary { color:#fff; background:#113256; border-color:#81acd8; }
 .fc-actions { display:flex; flex-wrap:wrap; gap:10px; margin-block:20px 0; }
 .fc-content { padding-block:clamp(18px,3vw,36px) 50px; }
 .fc-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
@@ -70,11 +54,6 @@
 .fc-metric { display:grid; gap:4px; padding:13px; min-width:0; background:#f1f6fd; border-radius:8px; border:1px solid #d2e1ef; }
 .fc-metric span,.fc-metric small { color:#435c79; font-size:12px; font-weight:650; line-height:1.15; }
 .fc-metric strong { font:700 29px/1 Barlow; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
-.fc-average { display:block; margin:8px 0; color:#fff; background:#133963; border-radius:9px; padding:20px; }
-.fc-average > div { display:flex; flex-wrap:wrap; gap:14px; justify-content:space-between; }
-.fc-average strong { font:700 35px/1 Barlow; }
-.fc-probability { display:flex; height:11px; border-radius:6px; margin:13px 0; overflow:hidden; background:#afd0ed; }
-.fc-probability span { height:100%; background:#2b9dff; }
 .fc-page-nav { display:flex; align-items:center; justify-content:flex-end; gap:10px; padding:12px 0 0; }
 .fc-page-nav a { min-height:44px; display:flex; align-items:center; color:#0755ad; text-decoration:underline; }
 .fc-page-nav .fc-action { color:#0755ad; }
@@ -104,8 +83,7 @@
  .fc-cards { grid-template-columns:repeat(3,minmax(0,1fr)); }
 }
 @media(max-width:650px) {
- .fc-hero-content,.fc-grid { grid-template-columns:minmax(0,1fr); gap:14px; }
- .fc-hero h1 { max-width:470px; }
+ .fc-grid { grid-template-columns:minmax(0,1fr); gap:14px; }
  .fc-form label { flex:1 1 min(130px,100%); }
  .fc-form :is(input,select) { width:100%; }
  .fc-cards { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }

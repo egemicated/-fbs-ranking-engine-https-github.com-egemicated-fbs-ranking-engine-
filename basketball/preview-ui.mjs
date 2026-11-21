@@ -1,4 +1,6 @@
 import { destination, groups, primarySection, sportHref } from './preview-navigation-routes.mjs';
+import { pageHero, platformEmpty } from '../frontend/platform-presentation.js';
+export { pageHero } from '../frontend/platform-presentation.js';
 
 export const competition = Object.freeze({
   id: 'ncaam-d1', name: 'College Basketball', label: 'NCAA Division I · Men’s Basketball', entry: '/basketball/',
@@ -138,15 +140,16 @@ export function html({ title, active = 'basketball', current, season, profile, b
 <meta name="robots" content="noindex,nofollow,noarchive"><meta name="theme-color" content="#091833">
 <meta name="description" content="${escape(description ?? title)}"><title>${escape(title)} · The Games Decide</title>
 <link rel="icon" href="/assets/the-games-decide-icon.png"><link rel="stylesheet" href="/styles.css">
-<link rel="stylesheet" href="/basketball-preview/preview.css"><link rel="stylesheet" href="/basketball-preview/reconstruction.css">${sharedNavigationAssets}${interiors}${script}</head><body class="fc-preview">
+<link rel="stylesheet" href="/basketball-preview/preview.css"><link rel="stylesheet" href="/basketball-preview/reconstruction.css">${sharedNavigationAssets}${interiors}
+<link rel="stylesheet" href="/platform-ui.css"><link rel="stylesheet" href="/team-discovery.css"><link rel="stylesheet" href="/matchup-presentation.css">${script}</head><body class="fc-preview gd-page-shell">
 <a class="skip-link" href="#main">Skip to content</a>${shell(active, current, season, profile, {pathname, publication, query})}
 <main id="main" tabindex="-1">${body}</main>${previewFooter(active, season)}</body></html>`;
 }
-export const banner = (title, summary, kicker = competition.label) => `<header class="fc-banner"><div class="wrap">
-  <p class="fc-kicker">${escape(kicker)}</p><h1>${escape(title)}</h1><p>${escape(summary)}</p></div></header>`;
+export const banner = (title, description, eyebrow = competition.label, variant = 'interior') =>
+  pageHero({ sport:eyebrow === 'The Games Decide' ? '' : 'basketball', title, description, eyebrow, variant });
 export const panel = (heading, contents, note = '') => `<section class="fc-panel">
   <header><h2>${escape(heading)}</h2>${note ? `<p>${escape(note)}</p>` : ''}</header><div class="fc-panel-body">${contents}</div></section>`;
-export const empty = message => `<p class="fc-empty">${escape(message)}</p>`;
+export const empty = platformEmpty;
 export const metric = (label, value, note = '') => `<div class="fc-metric"><span>${escape(label)}</span>
 <strong>${escape(value)}</strong>${note ? `<small>${escape(note)}</small>` : ''}</div>`;
 export const option = (value,label,selected) =>

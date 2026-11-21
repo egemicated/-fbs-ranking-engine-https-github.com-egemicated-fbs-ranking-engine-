@@ -1,5 +1,6 @@
 import { navigateApp } from './clean-navigation.js';
 import { routeHref } from './clean-routes.js';
+import { pageHero } from './platform-presentation.js';
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
 }[character]));
@@ -91,7 +92,9 @@ export function rankingHistoryMarkup(comparison, search = '') {
   const previousLabel = previous ? `${editionLabel(previous)}${previous.kind === 'replay' ? ' replay' : ''}` : '';
   const filtered = rows.filter(row => row.team.toLowerCase().includes(search.toLowerCase()));
   const membership = (title, members, text) => `<section class="panel history-card"><h2>${title}</h2>${members.length ? `<ul class="history-members">${members.map(row => `<li>${teamName(row)}<span>${rankLabel(row.previousRank)} → ${rankLabel(row.rank)}</span></li>`).join('')}</ul>` : `<p class="compact-note">${text}</p>`}</section>`;
-  return `<section class="hero page-banner"><div class="wrap"><div class="eyebrow">${String(current.gamesThrough).slice(0, 4)} · Weekly SOR</div><h1>WHAT CHANGED?</h1><p>Follow the rankings, the teams entering the Top 25, and the game results behind each week.</p></div></section>
+  return `${pageHero({sport:'football',category:'history',title:'Ranking History',
+    eyebrow:`${String(current.gamesThrough).slice(0,4)} · Weekly SOR`,
+    description:'Follow team movement, Top 25 changes, and the game results behind each weekly edition.'})}
     <div class="wrap page-content history-page">
       <section class="panel history-card history-toolbar"><label for="history-week">View edition</label><select id="history-week">${[...editions].reverse().map(edition => `<option value="${editionKey(edition)}" ${editionKey(edition) === editionKey(current) ? 'selected' : ''}>${editionLabel(edition)}${edition.kind === 'replay' ? ' · replay' : ''}${edition.complete === false ? ' · partial' : ''}</option>`).join('')}</select><a class="text-link" href="/rankings">Current rankings →</a></section>
       <details class="panel history-card history-archive-note"><summary>About this ranking archive</summary><p>${savedEditions.length} saved weekly ${savedEditions.length === 1 ? 'edition' : 'editions'}${firstSaved ? `, beginning ${date(firstSaved)}` : ''}; ${replayEditions.length} retrospective ${replayEditions.length === 1 ? 'replay' : 'replays'}.${publicationCount ? ` ${publicationCount} saved observations are retained separately for pregame evidence; this view shows the latest edition per week.` : ''} Earlier game archives used for model research are not weekly rankings published at the time. Replays stay separate from saved pregame evidence. Previous-season game and poll comparisons are available in <a href="/conference-strength/">Conference Strength</a>.</p></details>

@@ -42,9 +42,9 @@ async function verifyConferenceRecordsSort(page, data) {
     ['fcs', id => recordOrder(fcs[id])],
   ]);
   const hasTies = Object.values(summaries).some(row=>row.ties>0);
-  const names = () => region.getByRole('rowheader').allTextContents();
+  const names = () => region.locator('tbody th .gd-conference-cell-value').allTextContents();
   const rowContent = () => region.locator('tbody tr').evaluateAll(rows=>Object.fromEntries(rows.map(row=>[
-    row.cells[0].textContent, [[...row.cells].map(cell=>cell.textContent.trim()),
+    row.cells[0].querySelector('.gd-conference-cell-value').textContent, [[...row.cells].map(cell=>cell.textContent.trim()),
       [...row.querySelectorAll('a')].map(link=>link.getAttribute('href'))],
   ])));
   const matrix = page.locator('.conference-matrix tbody');
@@ -95,7 +95,7 @@ const routes = [
 ];
 let checks=0;
 try {
-    for (const width of [320,375,390,430,768,1024,1440,1600]) {
+    for (const width of [320,360,375,390,430,768,1024,1440,1600]) {
     const context=await browser.newContext({viewport:{width,height:960},reducedMotion:'reduce'});
     await isolate(context);
     const page=await context.newPage();
@@ -113,16 +113,20 @@ try {
       assert.deepEqual(missingLabels,[],route+' unlabeled controls');
       assert.ok(!await page.locator('main').innerText().then(text=>/\bundefined\b|NaN%/.test(text)),route+' invalid displayed values');
       assert.equal(await page.locator('main .logo, main .bracket-team-logo, main img[src*="espncdn"]').count(),0,route+' school image placeholders');
-      if (route === 'conference-strength/records' && width === 390) {
+      if (route === 'conference-strength/records' && width <= 768) {
         const region = conferenceRecordsRegion(page);
-        const fcsSort = recordSortButton(region,'fcs');
-        await fcsSort.scrollIntoViewIfNeeded();
-        const tableOffset = await region.evaluate(element=>element.scrollLeft);
-        assert.ok(tableOffset > 0,'Mobile users can scroll to the FCS column');
-        await fcsSort.click();
-        await region.locator('th[aria-sort="descending"] [data-conference-record-sort="fcs"]').waitFor();
-        assert.equal(await region.evaluate(element=>element.scrollLeft),tableOffset,'Sort preserves horizontal scroll');
-        assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),dimensions.width,'Sorted conference table overflow');
+        const sort = region.getByLabel('Sort conferences');
+        await sort.focus();
+        await sort.selectOption('fcs:descending');
+        assert.equal(await region.locator('th[aria-sort="descending"] [data-conference-record-sort="fcs"]').count(),1);
+        const cards = region.locator('tbody tr');
+        assert.ok(await cards.evaluateAll(rows=>rows.every(row=>{
+          const text = row.querySelector('.gd-conference-card-record');
+          const fcs = row.lastElementChild.getBoundingClientRect();
+          return text.clientHeight > 0 && fcs.width > 0 && fcs.right <= row.getBoundingClientRect().right;
+        })),'Football conference cards expose the previously scrollable FCS statistic');
+        assert.equal(await region.evaluate(element=>element.scrollWidth),await region.evaluate(element=>element.clientWidth));
+        assert.deepEqual(await sort.evaluate(element=>element===document.activeElement),true);
       }
       if (route === 'teams/fcs') {
         const wedges = await page.locator('.team-card.team-accent-card').evaluateAll(cards => cards.map(card => {

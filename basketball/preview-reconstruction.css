@@ -73,37 +73,18 @@
 .fc-portal-leader > span:last-child { color: #74cfff; }
 .fc-sports-portal :is(.fc-action,.fc-portal-leader):focus-visible { outline: 2px solid #91e5ff; outline-offset: -3px; }
 
-@media (min-width: 950px) {
-  [data-gd-sport="football"] + main .home-hero h1 { max-width: none; text-wrap: wrap; }
-  [data-gd-sport="football"] + main .home-hero .hero-copy { max-width: 62ch; }
-}
-
-.fc-hoops-hero {
-  background: linear-gradient(95deg, #06142bf0 0%, #071c37a8 49%, #06132658 86%),
-    url('/basketball-preview/arena.webp') center 59% / cover, #081c37;
-}
-.fc-hoops-hero::before, .fc-hoops-hero::after { display: none; }
-.fc-hoops-hero .fc-hero-content {
-  grid-template-columns: minmax(0,1.3fr) minmax(290px,.75fr);
-  padding-block: clamp(25px,4vw,56px);
-}
-.fc-hoops-hero h1 { font-size: clamp(56px, 7vw, 96px); }
-.fc-hoops-hero .fc-snapshot-line { margin: 14px 0 0; font-size: 12px; color: #d4e6f5; }
 .fc-hoops-hero .fc-top { background: #091d39f2; overflow: hidden; }
-.fc-hoops-hero .fc-top h2 { text-transform: uppercase; }
-.fc-hoops-hero .fc-top :is(h2,.fc-top-row) { padding-block: 9px; }
+.fc-top-title {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 12px 15px; border-bottom: 1px solid #3f5e83;
+}
+.fc-top-title h2 { padding: 0; border: 0; text-transform: uppercase; }
+.fc-top-title :is(time,span) { display: block; text-align: right; color: #b9d5f0; font-size: 11px; }
+.fc-hoops-hero .fc-top-row { padding-block: 9px; }
 .fc-hoops-hero .fc-top-row { min-height: 44px; font-variant-numeric: tabular-nums; }
 .fc-hoops-hero .fc-top-row:hover, .fc-top-all:hover { color: #fff; background: #1b416b; }
 .fc-top-all { display: block; min-height: 44px; padding: 13px; text-align: center; font-size: 13px; font-weight: 700; border-top: 1px solid #3f5e83; }
 .fc-hoops-hero :is(a,button):focus-visible { outline: 2px solid #91e5ff; outline-offset: -3px; }
-
-.fc-preview .fc-banner {
-  padding-block: clamp(20px, 2vw, 34px);
-  background: linear-gradient(93deg,#081b35 26%,#0b2242e8 55%,#0b254590), url('/basketball-preview/arena.webp') center 53% / cover, #0b2446;
-}
-.fc-preview .fc-banner h1 { font-size: clamp(38px, 4.4vw, 62px); }
-.fc-banner .fc-kicker { margin: 0 0 6px; }
-.fc-banner .wrap > p:last-child { margin: 9px 0 0; }
 
 .fc-hoops-dashboard { display: grid; gap: 15px; }
 .fc-dashboard-panel > header { display: flex; align-items: center; justify-content: space-between; gap: 7px 15px; flex-wrap: wrap; }
@@ -176,22 +157,17 @@
   .fc-sport-panel { min-height: 298px; }
   .fc-sport-panel-football { --fc-sport-art: url('/assets/stadium-mobile.webp'); }
   .fc-sport-panel-basketball { --fc-sport-art: url('/basketball-preview/arena-mobile.webp'); }
-  .fc-hoops-hero, .fc-preview .fc-banner, .fc-home-tournament {
+  .fc-home-tournament {
     background-image: linear-gradient(100deg,#07162be8 10%,#071b37a8 75%,#07162b95), url('/basketball-preview/arena-mobile.webp');
   }
-  .fc-hoops-hero .fc-hero-content { grid-template-columns: minmax(0,1fr) minmax(244px,.75fr); gap: 20px; }
 }
 
 @media (max-width: 650px) {
-  .fc-portal-grid, .fc-hoops-hero .fc-hero-content, .fc-activity-grid, .fc-basketball-more { grid-template-columns: minmax(0,1fr); }
+  .fc-portal-grid, .fc-activity-grid, .fc-basketball-more { grid-template-columns: minmax(0,1fr); }
   .fc-portal-intro .fc-kicker { font-size: 10px; }
   .fc-portal-intro > p:last-child { font-size: 14px; line-height: 1.4; }
   .fc-sport-panel { min-height: 254px; }
   .fc-portal-story h2 { font-size: clamp(35px, 9vw, 52px); }
-  .fc-hoops-hero h1 { font-size: clamp(52px,11vw,70px); }
-  .fc-hoops-hero .fc-hero-content { gap: 17px; }
-  .fc-hoops-hero .fc-snapshot-line { margin-top: 10px; }
-  .fc-hoops-hero .fc-top :is(h2,.fc-top-row) { padding-block: 7px; }
   .fc-featured-game { grid-template-columns: minmax(0,1fr) auto; padding: 10px 12px; gap: 8px; }
   .fc-featured-game > div:first-child { grid-column: 1 / -1; }
   .fc-featured-prediction { border: 0; padding: 0; }

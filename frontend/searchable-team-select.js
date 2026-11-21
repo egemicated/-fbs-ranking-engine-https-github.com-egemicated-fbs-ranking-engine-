@@ -1,14 +1,14 @@
 // Progressive enhancement: keep the native, labeled select and its existing
 // form/change/validation rules. Typing filters its options; it never saves a team.
-const selectors = '#my-team-select,#my-teams-team,#compare-a,#compare-b,select[data-sor-field="a"],select[data-sor-field="b"]';
+const selectors = '#my-team-select,#my-teams-team,#compare-a,#compare-b,select[data-sor-field="a"],select[data-sor-field="b"],select[data-matchup-team]';
 let sequence = 0;
 const normalize = value => String(value ?? '').normalize('NFD').replace(/\p{Diacritic}/gu, '').toLocaleLowerCase('en-US').trim();
 
 export function enhanceTeamSelect(select) {
   if (select.dataset.teamSearchEnhanced || select.disabled) return;
   select.dataset.teamSearchEnhanced = 'true';
-  const name = select.id === 'compare-a' || select.dataset.sorField === 'a' ? 'Team A' :
-    select.id === 'compare-b' || select.dataset.sorField === 'b' ? 'Team B' : 'team';
+  const side = select.dataset.matchupTeam ?? select.dataset.sorField ?? select.id.slice(-1);
+  const name = side === 'a' ? 'Team A' : side === 'b' ? 'Team B' : 'team';
   const entries = [...select.children].map(node => ({ node, options:node.tagName === 'OPTGROUP' ? [...node.children] : null }));
   const wrapper = document.createElement('div');
   wrapper.className = 'searchable-team-select';

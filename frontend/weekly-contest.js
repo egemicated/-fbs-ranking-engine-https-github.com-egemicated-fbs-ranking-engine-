@@ -2,6 +2,7 @@ import { navigateApp } from './clean-navigation.js';
 import { loadBracketClient } from './bracket-auth.js?v=clean-routes';
 import { renderWeeklyTeamStats } from './weekly-team-stats.js';
 import { teamAccentAttr, teamNameMarkup } from './team-identity.js';
+import { pageHero } from './platform-presentation.js';
 import {
   contestGames, contestGameLocked, contestGameWinner, contestPickChanges,
   contestWeekKey, contestWeekLabel, defaultContestWeek, scoreContestPicks,
@@ -179,8 +180,8 @@ export async function renderWeeklyContest(main, options = {}) {
   const preview = ['localhost', '127.0.0.1', '[::1]'].includes(globalThis.location?.hostname) ? options.preview : null;
   if (main.querySelector('[data-weekly-contest]')) return;
   unmountWeeklyContest();
-  main.innerHTML = `<section class="hero page-banner"><div class="wrap"><div class="eyebrow">Weekly picks · ${escape(season)}</div>
-    <h1>Beat the Model</h1><p>Make your weekly picks and compare your results with the model.</p></div></section>
+  main.innerHTML = `${pageHero({sport:'football',category:'contest',variant:'tool',title:'Beat the Model',
+    eyebrow:`Weekly football picks · ${season}`,description:'Make your weekly picks and compare your results with the model.'})}
     <div class="wrap page-content contest-page" data-weekly-contest><div data-contest-content><p role="status">Loading the weekly contest…</p></div></div>`;
   const root = main.querySelector('[data-contest-content]');
   let active = true, timer, subscription;
