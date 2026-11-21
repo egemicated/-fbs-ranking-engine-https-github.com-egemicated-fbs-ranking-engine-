@@ -1,4 +1,4 @@
-import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { access, cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { join, relative, resolve } from 'node:path';
 import { execFile } from 'node:child_process';
 import { parseArgs, promisify } from 'node:util';
@@ -20,7 +20,9 @@ import { assertPublicationBundle } from '../src/publication-integrity.js';
 import { applySecurityMetadata } from '../src/security-policy.js';
 
 const root = resolve(import.meta.dirname, '..');
-const { values: options } = parseArgs({ options: { 'build-only': { type: 'boolean' } } });
+const { values: options } = parseArgs({ options: {
+  'build-only': { type: 'boolean' }, 'basketball-publication': { type: 'string' }, 'output-dir': { type: 'string' },
+} });
 const releaseChecks = await requireRenderReleaseChecks();
 // Render's existing build command invokes this file directly. Install the
 // lockfile's build dependencies when the platform has not installed them.
@@ -49,7 +51,7 @@ if (!releaseChecks && !options['build-only']) {
 }
 const frontend = join(root, 'frontend');
 const published = join(root, 'published');
-const output = join(root, 'static-dist');
+const output = resolve(root, options['output-dir'] ?? 'static-dist');
 const data = join(output, 'data');
 const teamDirectory = join(data, 'teams');
 const sourceOnlyFiles = [
@@ -150,4 +152,15 @@ const publicPages = await prerenderPublicPages({ root, output, snapshot, teams: 
   html: html.replace(marker, '<meta name="publication-data-root" content="/data">'),
   fbsPicks, fcsPicks, conferenceDatasets: (await conferencePublication).datasets });
 console.log(`Prerendered ${publicPages.pages} public pages and social previews`);
+const basketballDirectory = resolve(root, options['basketball-publication'] ?? 'published/basketball-site');
+const basketballExists = await access(join(basketballDirectory, 'manifest.json')).then(()=>true,error=>{
+  if (error.code === 'ENOENT' && !options['basketball-publication']) return false;
+  throw error;
+});
+if (basketballExists) {
+  const {addBasketballSite} = await import('./prepare-basketball-static.mjs');
+  const basketball = await addBasketballSite({root, output, publicationDirectory:basketballDirectory,
+    football:publicSnapshot, authUrl:accountConfig.url});
+  console.log(`Prerendered ${basketball.pages} basketball and shared pages from publication ${basketball.version}`);
+}
 console.log(`Ready: ${snapshot.season} static rankings for ${snapshot.fbsTeams} FBS and ${snapshot.fcsTeams ?? 0} FCS teams${performance ? ' with experimental Performance' : ''}`);

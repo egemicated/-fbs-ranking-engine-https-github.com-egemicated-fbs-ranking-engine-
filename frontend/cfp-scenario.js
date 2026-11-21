@@ -119,7 +119,7 @@ function baseMarkup(input, teams, baseline, publishedAt) {
     <div class="scenario-layout"><div class="scenario-editor">
     <section class="panel" aria-labelledby="scenario-games-title"><div class="panel-body">
       <h2 id="scenario-games-title" tabindex="-1">Remaining games</h2>
-      <p class="compact-note">These games had no final result at the saved data cutoff, ${publicationTime(input.asOf)}. For newer results, check the <a href="/scoreboard">Live Scoreboard</a>. Win chances use the saved model.</p>
+      <p class="compact-note">These games had no final result at the saved data cutoff, ${publicationTime(input.asOf)}. Find published scores and Gamecast links on the <a href="/scoreboard">Scoreboard</a>. Win chances use the saved model.</p>
       <div class="scenario-filter"><label for="scenario-week">Week<select id="scenario-week">
         ${[...weeks].map(([key, label]) => `<option value="${escape(key)}">${escape(label)}</option>`).join('')}<option value="all">All weeks</option></select></label>
       <label for="scenario-team">Filter by team<select id="scenario-team"><option value="">All teams</option>${options}</select></label></div>

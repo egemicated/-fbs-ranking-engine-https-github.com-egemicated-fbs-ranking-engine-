@@ -64,7 +64,7 @@ const prefixAliases = [
 const slashless = path => path === '/' || path.endsWith('//') ? path : path.replace(/\/$/, '');
 const paths = new Map(routes.map(definition => [slashless(definition.path), definition]));
 for (const [alias, path] of [['/teams', '/teams/fbs'], ['/polls', '/polls/ap'], ['/model-reports', '/model-reports/fbs'],
-  ['/weekly-picks/fbs', '/weekly-picks']]) {
+  ['/weekly-picks/fbs', '/weekly-picks'], ['/football', '/']]) {
   paths.set(alias, paths.get(path));
 }
 

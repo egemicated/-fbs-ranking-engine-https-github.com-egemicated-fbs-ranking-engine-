@@ -232,19 +232,17 @@ try {
   await page.locator('[data-conference-field="rankScope"]').selectOption('pregame');
   assert.match(await page.locator('main').innerText(),/Pregame ranking coverage · 245 of 245 eligible games/);
   const slate=JSON.parse(await readFile('static-dist/data/weekly-picks.json','utf8'));
-  const names=new Map(slate.teams.map(team=>[team.id,team.name]));
   const sampleWeek=slate.games.find(game=>game.seasonType==='regular')?.week;
   const samples=slate.games.filter(game=>game.week===sampleWeek&&game.seasonType==='regular').slice(0,4);
-  const feed={season:{year:slate.season,type:2},week:{number:sampleWeek},leagues:[{calendar:[]}],events:samples.map((game,index)=>({
-    id:game.id,date:game.startDate,competitions:[{date:game.startDate,dateValid:true,timeValid:true,
-      status:{type:index===0?{state:'in',description:'Live',shortDetail:'3rd quarter'}:index===1?{state:'post',completed:true,name:'STATUS_FINAL',shortDetail:'Final'}:{state:'pre',shortDetail:'Scheduled'}},
-      broadcasts:[{names:['ESPN']}],competitors:['away','home'].map(side=>({homeAway:side,score:index<2?'14':undefined,team:{id:game[side],displayName:names.get(game[side]),abbreviation:'TEST'}}))}]}))};
-  await page.route('https://site.api.espn.com/**/scoreboard?*',request=>request.fulfill({json:feed}));
+  const publishedGames = { ...slate, games: samples.map((game,index)=>({ ...game,
+    status: index===0?'final':'scheduled', awayPoints:index===0?21:null, homePoints:index===0?14:null })) };
+  const scoreboardFixture = '**/data/weekly-picks.json';
+  await page.route(scoreboardFixture,request=>request.fulfill({json:publishedGames}));
   await openRoute(page,'scoreboard');
   await page.locator('[data-game-id]').first().waitFor();
   assert.equal(await page.locator('[data-game-id]').count(),4);
   assert.equal(await page.locator('.scoreboard-team img').count(),0);
-  await page.locator('[data-game-filter="status"]').selectOption('live');
+  await page.locator('[data-game-filter="status"]').selectOption('final');
   assert.equal(await page.locator('[data-game-id]').count(),1);
   await page.locator('[data-game-filter="status"]').selectOption('all');
   assert.equal(await page.locator('[data-game-id]').count(),4);
@@ -256,6 +254,7 @@ try {
   await page.locator('[data-game-filter="scope"]').selectOption('mine');
   assert.equal(await page.locator('[data-game-id]').count(),0);
   assert.match(await page.locator('[data-scoreboard-filters]').innerText(),/Sign in and choose teams/);
+  await page.unroute(scoreboardFixture);
   await openRoute(page,'support');
   await page.locator('[data-connected-feature] .platform-info').first().waitFor();
   await page.evaluate(async()=>{

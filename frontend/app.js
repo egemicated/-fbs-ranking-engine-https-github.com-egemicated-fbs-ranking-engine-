@@ -256,6 +256,9 @@ function renderHeader() {
   const snapshotBadges = state.snapshot ? `<div class="engine-badge">${icon('check')}<div><strong>Published rankings</strong><small>CFBD snapshot · ${snapshotDate()}</small></div></div><div class="season-badge">${state.snapshot.season}<small>SEASON SNAPSHOT</small></div>` : '';
   const header = document.querySelector('#header');
   const account = header.querySelector?.('[data-header-account]');
+  const sportSwitch = document.querySelector('meta[name="basketball-site"]')?.content === 'available'
+    ? '<nav class="football-sport-switch" aria-label="Switch sport"><a href="/sports/">All sports</a><a href="/" aria-current="location">Football</a><a href="/basketball/">Basketball</a></nav>'
+    : '';
   header.innerHTML = `<div class="masthead"><div class="wrap masthead-inner">${brand()}<span class="brand-divider"></span><div class="masthead-tag">THE INDEPENDENT COLLEGE FOOTBALL RANKING ENGINE<strong>DATA &nbsp; › &nbsp; OPPONENTS &nbsp; › &nbsp; EVIDENCE</strong></div><div class="header-right">${snapshotBadges}<div class="header-account" data-header-account><button class="header-account-button" type="button" disabled>${icon('teams')}<span>Sign in</span></button></div></div></div></div>
     <nav class="nav" aria-label="Main navigation"><div class="wrap nav-inner">
       ${mainLinks.map(item => link(item, primaryPages.includes(item[0]) ? 'nav-primary' : 'nav-desktop-link')).join('')}
@@ -264,6 +267,7 @@ function renderHeader() {
         <div class="nav-more-links">${moreLinks.map(item => link(item, desktopPages.includes(item[0]) ? 'nav-more-mobile-link' : '')).join('')}</div>
       </details>
     </div></nav>`;
+  if (sportSwitch) header.innerHTML = sportSwitch + header.innerHTML;
   const slot = header.querySelector?.('[data-header-account]');
   if (account && slot?.isConnected) slot.replaceWith(account);
   else if (slot?.isConnected) void import('./bracket-auth.js?v=clean-routes').then(({ mountHeaderAccount }) => {
@@ -1303,7 +1307,7 @@ function renderWeeklyPicks(picks) {
   if (status === 'ready') {
     const cutoff = Number.isFinite(picksTime(data.source?.scheduleAsOf)) ? data.source.scheduleAsOf : data.asOf;
     const provider = data.source?.provider === 'cfbd' ? 'CollegeFootballData' : data.source?.provider === 'sportsdataverse' ? 'sportsdataverse' : '';
-    body = `<p class="compact-note">Published schedule and results${provider ? ` from ${provider}` : ''} as of <time datetime="${esc(cutoff)}">${picksTimestamp.format(picksTime(cutoff))} MT</time>.${data.source?.extraScoreProvider === 'ESPN' ? ' Some final scores are from ESPN.' : ''} <a href="/scoreboard">Live Scoreboard</a> may be newer; this page grades saved picks after published results refresh.</p>
+    body = `<p class="compact-note">Published schedule and results${provider ? ` from ${provider}` : ''} as of <time datetime="${esc(cutoff)}">${picksTimestamp.format(picksTime(cutoff))} MT</time>.${data.source?.extraScoreProvider === 'ESPN' ? ' Some final scores are from ESPN.' : ''} The <a href="/scoreboard">Scoreboard</a> shows published scores and links to Gamecast.</p>
       <p class="compact-note">${fcs
         ? 'Predictive Strength picks cover games between two FCS teams. The record grades picks saved before kickoff. Historical replays appear separately.'
         : 'Predictive Strength picks cover FBS–FBS and FBS–FCS games. FBS–FCS win chances are uncalibrated estimates. Each refresh can save picks up to seven days ahead. The record grades picks saved before kickoff. Historical replays and preview odds are separate.'}</p>
@@ -1681,10 +1685,10 @@ function renderScoreboardPage() {
     scoreboardPage?.updateRankings();
     return;
   }
-  main.innerHTML = banner('College football · FBS', 'Scoreboard', 'Kickoff times, ESPN live scores and final results in Mountain Time.') +
+  main.innerHTML = banner('College football · FBS', 'Scoreboard', 'Published kickoff times and final scores for FBS games.') +
     '<div class="wrap page-content" data-scoreboard><p role="status">Loading the scoreboard…</p></div>';
   const target = main.querySelector('[data-scoreboard]');
-  scoreboardModule ??= import('./scoreboard.js?v=football-experience');
+  scoreboardModule ??= import('./scoreboard.js?v=published-schedule');
   scoreboardModule.then(({ mountScoreboard }) => {
     if (route()[0] !== 'scoreboard' || !target.isConnected) return;
     scoreboardPage = mountScoreboard(target, (teamId, season) => {

@@ -25,7 +25,7 @@ export function contentSecurityPolicy({ authUrl, allowLocalAuth = false } = {}) 
     "style-src 'self' 'unsafe-inline'",
     "font-src 'self'",
     "img-src 'self' data: blob:",
-    `connect-src 'self' ${auth} ${websocket} https://site.api.espn.com`,
+    `connect-src 'self' ${auth} ${websocket}`,
     "worker-src 'self'",
     "object-src 'none'",
     "base-uri 'none'",

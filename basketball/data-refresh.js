@@ -8,7 +8,11 @@ import {
 
 const DAY = 24 * 60 * 60_000;
 const CORRECTION_DAYS = 14;
+const SCHEDULE_LOOKAHEAD_DAYS = 14;
 const BOX_GAME_BATCH = 900; // Two perspective rows per game plus room for source duplicates.
+const PLAYER_ROW_CAP = 1000;
+const PLAYER_GAME_BATCH = 450; // Provider has returned a capped 1,000 team-side rows in a window.
+const PLAYER_WINDOW_VERSION = 1;
 const apiProvider = 'CollegeBasketballData';
 const exporterUrl = 'https://www.collegebasketballdata.com/exporter';
 const iso = epoch => new Date(epoch).toISOString();
@@ -29,7 +33,7 @@ export function scheduleWindows(season, { since } = {}) {
   return [minimum, ...breaks].slice(0, -1).map((start, index) => [iso(start), iso(breaks[index])]);
 }
 
-export function boxWindows(games, start, end) {
+export function boxWindows(games, start, end, gameBatch = BOX_GAME_BATCH) {
   const finalsByDay = new Map();
   for (const game of games) {
     const date = basketballTipoff(game.startDate);
@@ -41,7 +45,7 @@ export function boxWindows(games, start, end) {
   let count = 0;
   for (const day of [...finalsByDay.keys()].sort()) {
     const gamesThatDay = finalsByDay.get(day);
-    if (!boundaries.length || count + gamesThatDay > BOX_GAME_BATCH) {
+    if (!boundaries.length || count + gamesThatDay > gameBatch) {
       boundaries.push(day < start ? start : day);
       count = 0;
     }
@@ -76,20 +80,35 @@ export async function fetchBasketballDateWindows(client, endpoint, season, windo
   return rows;
 }
 
-export function planBasketballSeason({ season, previous, now, full = false, boxes = true }) {
+export function planBasketballSeason({
+  season, previous, now, full = false, boxes = true, players = false, rolling = false, refreshTeams = false,
+}) {
   const end = basketballSeasonBounds(season)[1];
   const ended = Date.parse(end) <= now.getTime();
   if (previous && ended && !full && previous.source?.fullSchedule) {
-    return { season, mode: 'cached', schedule: [], estimatedCalls: 0, boxes };
+    return { season, mode: 'cached', schedule: [], estimatedCalls: 0, boxes, players };
   }
   const since = !full && previous?.source?.fullSchedule
     ? iso(Date.parse(previous.source.checkedAt ?? previous.source.asOf) - CORRECTION_DAYS * DAY) : null;
-  const schedule = scheduleWindows(season, { since });
-  const mode = since ? 'incremental' : 'full';
+  const bounded = rolling && since && Date.parse(since) < Date.parse(end);
+  const schedule = bounded
+    ? [[iso(Math.max(Date.parse(since), Date.parse(basketballSeasonBounds(season)[0]))),
+      iso(Math.min(now.getTime() + SCHEDULE_LOOKAHEAD_DAYS * DAY, Date.parse(end)))]]
+    : scheduleWindows(season, { since });
+  const mode = bounded ? 'rolling' : since ? 'incremental' : 'full';
+  const fetchTeams = mode !== 'rolling' || refreshTeams;
   const estimatedBoxCalls = !boxes ? 0 : since
     ? Math.max(1, Math.ceil(previous.games.filter(game => game.completed && game.startDate >= since).length / BOX_GAME_BATCH) + 1)
     : ended ? 9 : 3;
-  return { season, mode, schedule, estimatedCalls: 1 + schedule.length + estimatedBoxCalls, boxes, since };
+  const playerSince = full || !previous?.source?.playerAsOf || previous.source.playerWindowVersion !== PLAYER_WINDOW_VERSION
+    ? basketballSeasonBounds(season)[0]
+    : iso(Math.max(Date.parse(basketballSeasonBounds(season)[0]),
+      Math.min(Date.parse(schedule[0][0]), Date.parse(previous.source.playerAsOf) - CORRECTION_DAYS * DAY)));
+  const estimatedPlayerCalls = !players ? 0 : previous
+    ? boxWindows(previous.games, playerSince, now.toISOString(), PLAYER_GAME_BATCH).length + 1
+    : ended ? 18 : 4;
+  return { season, mode, schedule, estimatedCalls: Number(fetchTeams) + schedule.length + estimatedBoxCalls + estimatedPlayerCalls,
+    boxes, players, since, playerSince, fetchTeams };
 }
 
 export function mergeBasketballWindows(previousRows, acquiredRows, windows, { identity, requireFinals = false }) {
@@ -114,10 +133,11 @@ export function mergeBasketballWindows(previousRows, acquiredRows, windows, { id
 export async function loadBasketballPrevious(season, artifactsDir, cacheDir) {
   const artifact = await readOptionalJson(join(artifactsDir, season + '.json'));
   const checkpoint = await readOptionalJson(join(cacheDir, season + '-checked.json'));
-  const raw = artifact?.source?.rawSha256
-    ? await readOptionalJson(join(cacheDir, artifact.source.rawSha256 + '.json')) : null;
-  if (artifact && raw && checkpoint?.sha256 === artifact.source.sha256) {
-    artifact.source.checkedAt = checkpoint.checkedAt;
+  const matched = artifact && checkpoint?.sha256 === artifact.source.sha256;
+  const rawSha256 = (matched ? checkpoint.rawSha256 : null) ?? artifact?.source?.rawSha256;
+  const raw = rawSha256 ? await readOptionalJson(join(cacheDir, rawSha256 + '.json')) : null;
+  if (raw && matched) {
+    Object.assign(artifact.source, checkpoint.verification, { checkedAt: checkpoint.checkedAt, rawSha256 });
   }
   return { artifact, raw };
 }
@@ -138,6 +158,7 @@ async function writeBasketballArtifact({ artifact, raw, previous, artifactsDir, 
   }
   await atomicJson(join(cacheDir, season + '-checked.json'), {
     sha256: artifact.source.sha256, checkedAt: source.asOf, rawSha256: source.rawSha256 ?? null,
+    verification: { registryAsOf: source.registryAsOf, playerAsOf: source.playerAsOf, playerWindowVersion: source.playerWindowVersion },
     knownCoverage: artifact.coverage, observations: source.observations ?? [],
   });
   return { changed, coverage: artifact.coverage, season, sourceAsOf: changed ? source.asOf : previous.source.asOf };
@@ -145,14 +166,15 @@ async function writeBasketballArtifact({ artifact, raw, previous, artifactsDir, 
 
 export async function acquireBasketballSeason({
   client, season, now, artifactsDir, cacheDir, full = false, boxes = true,
+  players = false, rolling = false, refreshTeams = false,
 }) {
   const { artifact: previous, raw: previousRaw } = await loadBasketballPrevious(season, artifactsDir, cacheDir);
-  const plan = planBasketballSeason({ season, previous: previousRaw ? previous : null, now, full, boxes });
+  const plan = planBasketballSeason({ season, previous: previousRaw ? previous : null, now, full, boxes, players, rolling, refreshTeams });
   if (plan.mode === 'cached') return { changed: false, season, coverage: previous.coverage, mode: 'cached' };
   const ended = Date.parse(basketballSeasonBounds(season)[1]) <= now.getTime();
   const purpose = full ? 'correction' : ended ? 'historical' : 'current';
   const started = client.observations.length;
-  const teamRows = await client.request('/teams', { season }, purpose);
+  const teamRows = plan.fetchTeams ? await client.request('/teams', { season }, purpose) : previousRaw.teamRows;
   if (!Array.isArray(teamRows) || teamRows.length < 250 || (previous && teamRows.length < previous.teams.length * 0.9)) {
     throw new Error(`Basketball ${season} registry appears incomplete. Prior data preserved.`);
   }
@@ -164,10 +186,21 @@ export async function acquireBasketballSeason({
   const boxRanges = !boxes ? [] : boxWindows(gameRows, plan.schedule[0][0], until);
   const acquiredBoxes = await fetchBasketballDateWindows(client, '/games/teams', season, boxRanges, purpose);
   const boxRows = mergeBasketballWindows(previousRaw?.boxRows ?? [], acquiredBoxes, boxRanges, { identity: 'gameId' });
-  const raw = { teamRows, gameRows, boxRows };
+  const playerRanges = players ? boxWindows(gameRows, plan.playerSince, until, PLAYER_GAME_BATCH) : [];
+  const acquiredPlayers = await fetchBasketballDateWindows(client, '/games/players', season, playerRanges, purpose, {
+    cap: PLAYER_ROW_CAP,
+  });
+  const playerRows = players || previousRaw?.playerRows
+    ? mergeBasketballWindows(previousRaw?.playerRows ?? [], acquiredPlayers, playerRanges, { identity: 'gameId' })
+    : undefined;
+  const raw = { teamRows, gameRows, boxRows, ...(playerRows ? { playerRows } : {}) };
   const source = {
     provider: apiProvider, method: 'partitioned-api', asOf: until,
     fullSchedule: true, scheduleWindows: plan.schedule, boxWindows: boxRanges,
+    registryAsOf: plan.fetchTeams ? until : previous.source.registryAsOf ?? previous.source.asOf,
+    ...(players ? { playerAsOf: until, playerWindows: playerRanges, playerWindowVersion: PLAYER_WINDOW_VERSION }
+      : previous?.source.playerAsOf
+        ? { playerAsOf: previous.source.playerAsOf, playerWindowVersion: previous.source.playerWindowVersion } : {}),
     observations: client.observations.slice(started),
   };
   const artifact = normalizeBasketballSeason({ season, ...raw, source, previous });

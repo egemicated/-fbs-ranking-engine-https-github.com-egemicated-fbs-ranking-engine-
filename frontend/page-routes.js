@@ -10,7 +10,7 @@ const routeTitles = {
   teams: 'Team directory',
   team: 'Team profile',
   methodology: 'Ranking methodology',
-  scoreboard: 'Live Scoreboard',
+  scoreboard: 'Scoreboard',
   'beat-the-model': 'Beat the Model',
   compare: 'Matchup Lab',
   'compare/weekly': 'FBS weekly picks',

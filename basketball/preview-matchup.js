@@ -116,9 +116,12 @@ function mountMatchup(lab) {
     results.setAttribute('aria-busy', 'true');
     status.textContent = 'Updating matchup…';
     try {
-      const response = await fetch(url, { signal: request.signal });
-      if (!response.ok) throw Error('Matchup request failed');
-      const page = new DOMParser().parseFromString(await response.text(), 'text/html');
+      const page = document.querySelector('meta[name="basketball-publication"]')
+        ? await import('/basketball/site-client.mjs').then(({viewDocument})=>viewDocument(url,request.signal))
+        : await fetch(url,{signal:request.signal}).then(async response=>{
+          if (!response.ok) throw Error('Matchup request failed');
+          return new DOMParser().parseFromString(await response.text(),'text/html');
+        });
       if (!request.signal.aborted) apply(page, url, { submit, retryFocus });
     } catch {
       if (request.signal.aborted) return;

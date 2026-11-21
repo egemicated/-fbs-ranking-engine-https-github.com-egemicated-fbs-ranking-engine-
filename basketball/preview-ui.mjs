@@ -75,7 +75,7 @@ function withSeason(href, season) {
   if (!season || !href.startsWith('/basketball/')) return href;
   return `${href}${href.includes('?') ? '&' : '?'}season=${season}`;
 }
-function sportNav(active, pathname, season) {
+function sportNav(active, pathname, season, publicSite) {
   if (!active) return '';
   const activeGroup = primarySection(active, pathname);
   return `<nav class="gd-nav" aria-label="${active === 'football' ? 'Football' : 'Basketball'} sections"><div class="wrap gd-nav-inner">
@@ -87,7 +87,7 @@ function sportNav(active, pathname, season) {
       return `<li><details class="gd-nav-group" data-gd-disclosure>
         <summary data-nav-section="${id}"${attrs}>${navIcon(id)}<span>${label}</span>${navIcon('chevron')}</summary>
         <div class="gd-mega${sections.length === 1 ? ' gd-mega-short' : ''}">${sections.map(([heading, links]) =>
-          `<div class="gd-mega-column"><p>${heading}</p><ul>${links.map(([name, link]) => {
+          `<div class="gd-mega-column"><p>${heading}</p><ul>${links.filter(([,link])=>!publicSite || link !== '/basketball/contest/').map(([name, link]) => {
             const path = link.split('?')[0];
             return `<li><a data-gd-route href="${escape(withSeason(link, season))}"${path.replace(/\/$/, '') === pathname.replace(/\/$/, '') && !link.includes('?') ? ' aria-current="page"' : ''}>${name}</a></li>`;
           }).join('')}</ul></div>`).join('')}</div></details></li>`;
@@ -95,7 +95,7 @@ function sportNav(active, pathname, season) {
   </div></nav>`;
 }
 export const sharedNavigationAssets = '<link rel="stylesheet" href="/basketball-preview/navigation.css"><script type="module" src="/basketball-preview/navigation.js"></script>';
-export function shell(active, current = '', season, profile = null, { pathname, publication, query = '' } = {}) {
+export function shell(active, current = '', season, profile = null, { pathname, publication, query = '', publicSite = false } = {}) {
   pathname ??= active === 'basketball' ? basketballHref(current) : active === 'football' ? '/football/' : '/';
   const snapshot = publication?.asOf;
   return `<header class="fc-masthead gd-masthead" data-gd-masthead data-gd-sport="${active ?? ''}">
@@ -105,7 +105,7 @@ export function shell(active, current = '', season, profile = null, { pathname, 
         return `<a href="${escape(href)}" data-gd-sport-link="${sport.id}"${active === sport.id ? ' aria-current="location"' : ''}>
           ${navIcon(sport.id)}<span>${sport.name}<small>${sport.id === 'football' ? 'NCAA FBS / FCS' : 'NCAA Division I'}</small></span></a>`;
       }).join('')}</nav>
-      <a class="gd-brand" href="/"><img src="/assets/the-games-decide-logo.webp" alt="The Games Decide" width="780" height="260" fetchpriority="high"></a>
+      <a class="gd-brand" href="${publicSite ? '/sports/' : '/'}"><img src="/assets/the-games-decide-logo.webp" alt="The Games Decide" width="780" height="260" fetchpriority="high"></a>
       <div class="gd-utilities">
         <details class="gd-utility gd-search" data-gd-disclosure>
           <summary aria-label="Find a team">${navIcon('search')}</summary>
@@ -116,15 +116,15 @@ export function shell(active, current = '', season, profile = null, { pathname, 
             <button type="submit">Search</button></div>
           </form>
         </details>
-        <details class="gd-utility gd-account" data-gd-disclosure>
+        ${publicSite ? `<a class="header-account-button" href="/account" aria-label="Your account at The Games Decide">${navIcon('account')}<span>Account</span></a>` : `<details class="gd-utility gd-account" data-gd-disclosure>
           <summary aria-label="${profile ? 'Practice profile' : 'Account'}">${navIcon('account')}<span>${profile ? 'My Profile' : 'Account'}</span>${navIcon('chevron')}</summary>
           <div class="gd-account-panel">
             <a href="/preview-profile/">${profile ? 'Manage practice profile' : 'Open practice profile'}</a>
             ${snapshot ? `<p><strong>${active === 'football' ? 'Published football rankings' : 'Basketball data snapshot'}</strong><time datetime="${escape(snapshot)}">${escape(stamp(snapshot))}</time></p>` : ''}
           </div>
-        </details>
+        </details>`}
       </div>
-    </div></div>${sportNav(active, pathname, season)}
+    </div></div>${sportNav(active, pathname, season, publicSite)}
   </header>`;
 }
 export function previewFooter(active, season) {
@@ -133,16 +133,20 @@ export function previewFooter(active, season) {
   ${active ? '' : '<a href="/basketball/methodology/">Basketball methodology</a>'}<a href="/about/">About</a><a href="/privacy/">Privacy</a>
   <a href="/terms/">Terms</a><a href="/support">Support</a></nav></div></footer>`;
 }
-export function html({ title, active = 'basketball', current, season, profile, body, script = '', description, publication, pathname, query }) {
-  const interiors = active === 'basketball' ? '<link rel="stylesheet" href="/basketball-preview/preview-interiors.css"><script type="module" src="/basketball-preview/preview-interiors.js"></script>' : '';
+export function html({ title, active = 'basketball', current, season, profile, body, script = '', description, publication, pathname, query, publicVersion }) {
+  const interiors = active === 'basketball' ? '<link rel="stylesheet" href="/basketball-preview/preview-interiors.css">'
+    + (publicVersion ? '' : '<script type="module" src="/basketball-preview/preview-interiors.js"></script>') : '';
+  const metadata = publicVersion
+    ? `<meta name="basketball-publication" content="${escape(publicVersion)}"><link rel="canonical" href="https://www.thegamesdecide.com${escape(pathname)}">`
+    : '<meta name="robots" content="noindex,nofollow,noarchive">';
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex,nofollow,noarchive"><meta name="theme-color" content="#091833">
+${metadata}<meta name="theme-color" content="#091833">
 <meta name="description" content="${escape(description ?? title)}"><title>${escape(title)} · The Games Decide</title>
 <link rel="icon" href="/assets/the-games-decide-icon.png"><link rel="stylesheet" href="/styles.css">
 <link rel="stylesheet" href="/basketball-preview/preview.css"><link rel="stylesheet" href="/basketball-preview/reconstruction.css">${sharedNavigationAssets}${interiors}
 <link rel="stylesheet" href="/platform-ui.css"><link rel="stylesheet" href="/team-discovery.css"><link rel="stylesheet" href="/matchup-presentation.css">${script}</head><body class="fc-preview gd-page-shell">
-<a class="skip-link" href="#main">Skip to content</a>${shell(active, current, season, profile, {pathname, publication, query})}
+<a class="skip-link" href="#main">Skip to content</a>${shell(active, current, season, profile, {pathname, publication, query, publicSite: Boolean(publicVersion)})}
 <main id="main" tabindex="-1">${body}</main>${previewFooter(active, season)}</body></html>`;
 }
 export const banner = (title, description, eyebrow = competition.label, variant = 'interior') =>

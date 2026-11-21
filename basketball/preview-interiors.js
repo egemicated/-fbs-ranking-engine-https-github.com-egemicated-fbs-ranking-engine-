@@ -64,9 +64,12 @@ if (list) {
     if (error) error.hidden = true;
     const previousCount = more ? results.querySelectorAll('[data-team-card]').length : 0;
     try {
-      const response = await fetch(url,{signal:request.signal});
-      if (!response.ok) throw new Error('Could not refresh team results');
-      const page = new DOMParser().parseFromString(await response.text(),'text/html');
+      const page = document.querySelector('meta[name="basketball-publication"]')
+        ? await import('/basketball/site-client.mjs').then(({viewDocument})=>viewDocument(url,request.signal))
+        : await fetch(url,{signal:request.signal}).then(async response=>{
+          if (!response.ok) throw Error('Could not refresh team results');
+          return new DOMParser().parseFromString(await response.text(),'text/html');
+        });
       const replacement = page.querySelector(part('results'));
       const nextForm = page.querySelector(part('filters'));
       if (!replacement || !nextForm) throw new Error('Team results were missing from the response');

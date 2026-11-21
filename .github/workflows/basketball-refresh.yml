@@ -1,0 +1,116 @@
+name: Basketball source refresh
+run-name: ${{ github.event_name == 'schedule' && format('Basketball refresh ({0} Mountain)', github.event.schedule) || format('Basketball refresh ({0})', inputs.mode) }}
+on:
+  schedule:
+    - cron: '15 4 * 1-4,11-12 *'
+      timezone: 'America/Denver'
+    - cron: '15 6 * 1-4,11-12 *'
+      timezone: 'America/Denver'
+    - cron: '15 10 * 1-4,11-12 *'
+      timezone: 'America/Denver'
+    - cron: '45 22 * 3-4 *'
+      timezone: 'America/Denver'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Install the approved private cache or reconcile the current season
+        type: choice
+        options: [seed, manual]
+        default: seed
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: production-basketball-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    if: github.ref == 'refs/heads/main' && vars.BASKETBALL_REFRESH_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Restore encrypted working state
+        uses: actions/cache/restore@v4
+        with:
+          path: research/cache/basketball/managed-refresh.encrypted.json
+          key: basketball-refresh-sealed-v1-${{ runner.os }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: basketball-refresh-sealed-v1-${{ runner.os }}-
+      - name: Recover cache or calculate a coherent candidate
+        id: refresh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REFRESH_CRON: ${{ github.event.schedule }}
+          REFRESH_MODE: ${{ inputs.mode }}
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+          CBBD_API_KEY: ${{ secrets.CBBD_API_KEY }}
+          BASKETBALL_SHARED_ACCOUNT_VERIFIED: ${{ vars.BASKETBALL_SHARED_ACCOUNT_VERIFIED }}
+          BASKETBALL_REFRESH_CACHE_KEY: ${{ secrets.BASKETBALL_REFRESH_CACHE_KEY }}
+          BASKETBALL_REFRESH_SEED_URL: ${{ inputs.mode == 'seed' && secrets.BASKETBALL_REFRESH_SEED_URL || '' }}
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == schedule ]]; then
+            created_at=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq .created_at)
+            node scripts/run-basketball-refresh.mjs --mode scheduled --cron "$REFRESH_CRON" --queued "$created_at"
+          else
+            node scripts/run-basketball-refresh.mjs --mode "$REFRESH_MODE"
+          fi
+      # Save debited call reservations and immutable forecasts even if a later
+      # validation/deployment step fails. Raw and normalized data stay sealed.
+      - name: Retain authenticated working state
+        if: always() && hashFiles('research/cache/basketball/managed-refresh.encrypted.json') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: research/cache/basketball/managed-refresh.encrypted.json
+          key: basketball-refresh-sealed-v1-${{ runner.os }}-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Validate the candidate with the production build
+        if: steps.refresh.outputs.candidate == 'true'
+        run: node scripts/prepare-static.js
+      - name: Submit validated display files to the existing exact-revision test gate
+        if: steps.refresh.outputs.candidate == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -- published/basketball-site/
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Publish basketball results and model evidence'
+          # Football can publish while this builds. Retry non-fast-forward races
+          # briefly without forcing main or rerunning the metered acquisition.
+          for attempt in 1 2 3; do
+            git fetch --no-tags origin main
+            if ! git rebase origin/main; then git rebase --abort; exit 1; fi
+            if git push origin HEAD:main; then
+              revision=$(git rev-parse HEAD)
+              run_id=$(gh api --method POST -H 'X-GitHub-Api-Version: 2026-03-10' \
+                "repos/$GITHUB_REPOSITORY/actions/workflows/test.yml/dispatches" -f ref=main --jq .workflow_run_id)
+              [[ "$run_id" =~ ^[0-9]+$ ]]
+              checked_revision=""
+              for check_attempt in 1 2 3; do
+                if checked_revision=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run_id" --jq .head_sha); then break; fi
+                sleep "$check_attempt"
+              done
+              [[ "$checked_revision" =~ ^[a-f0-9]{40}$ ]]
+              if [[ "$checked_revision" != "$revision" ]]; then
+                # A football publication may advance main between push and
+                # dispatch. The newer exact SHA must contain this same edition.
+                git fetch --no-tags origin main
+                git merge-base --is-ancestor "$revision" "$checked_revision"
+                manifest=published/basketball-site/manifest.json
+                [[ "$(git rev-parse "$checked_revision:$manifest")" == "$(git rev-parse "$revision:$manifest")" ]]
+                printf '\nMain advanced from %s during dispatch. The checked descendant contains the identical basketball publication.\n' "$revision" >> "$GITHUB_STEP_SUMMARY"
+              fi
+              printf '\nSubmitted %s for required Engine checks (run %s). Render retains the previous deployment until an exact checked revision passes.\n' "$checked_revision" "$run_id" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+          done
+          exit 1

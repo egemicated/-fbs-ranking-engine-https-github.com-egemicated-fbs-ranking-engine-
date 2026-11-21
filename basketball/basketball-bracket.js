@@ -94,20 +94,22 @@ function officialSource(value) {
   return null;
 }
 
-/** Mount only from the private preview app. Hooks accept the basketball namespace. */
+/** Render tournament fields and locally stored practice picks. */
 export function mountBasketballBracket(root, {
   season = 2027, rankings = [], modelAsOf, forecast, teamHref, matchupHref,
-  previewProfile, storage, officialBracket, excludedTeamIds = [],
+  previewProfile, storage, officialBracket, excludedTeamIds = [], publicPractice = false,
 } = {}) {
   const officialArchive = buildBracket(historicalBasketballField(2026));
   const projected = projectBasketballField(season, rankings, {excludedTeamIds});
   const projection = projected ? buildBracket(projected) : null;
-  const practice = buildBracket(practiceBasketballField(2027));
+  const practice = publicPractice ? null : buildBracket(practiceBasketballField(2027));
   const official = officialBracket?.mode === 'official' && officialBracket.year === season &&
     officialSource(officialBracket.sourceUrl) && Number.isFinite(Date.parse(officialBracket.announcedAt)) &&
     Date.parse(officialBracket.announcedAt) <= Date.now() ? buildBracket(officialBracket) : null;
   const profileId = typeof previewProfile?.id === 'string' && /^[\w-]{1,100}$/.test(previewProfile.id) ? previewProfile.id : null;
-  const savedKey = bracket => profileId ? 'gd-private-preview:mbb:' + profileId + ':' + bracketEdition(bracket) : null;
+  const savedKey = bracket => publicPractice ? 'gd-bracket:mbb:' + bracketEdition(bracket)
+    : profileId ? 'gd-private-preview:mbb:' + profileId + ':' + bracketEdition(bracket) : null;
+  const canSave = (publicPractice || profileId) && storage;
   const memory = new Map();
   const document = root.ownerDocument;
   const window = document.defaultView;
@@ -115,7 +117,7 @@ export function mountBasketballBracket(root, {
   const requestedMode = new URLSearchParams(window.location.search).get('mode');
   const state = {
     mode: requestedMode === 'projection' || (requestedMode !== 'official' && !official && projection) ? 'projection' : 'official',
-    field: season === 2026 ? 'archive' : 'current', practiceField: projection ? 'projection' : 'format',
+    field: season === 2026 ? 'archive' : 'current', practiceField: projection ? 'projection' : publicPractice ? 'archive' : 'format',
     region: 'east', round: 'all', notice: '',
   };
   const camera = {x: 0, y: 0, scale: 0, fit: true, expanded: false, jump: ''};
@@ -164,7 +166,7 @@ export function mountBasketballBracket(root, {
       '<p>We assume the eligible SOR leader from each of 32 conferences wins an automatic bid, then add 44 at-large teams by SOR. ' +
       'The lowest 12 in each bid group start in the Opening Round. We place two automatic matchups on seed line 15 ' +
       'and four on line 16, then spread the remaining slots across regions by SOR.' + esc(at) + '</p>' +
-      '<p>This early-season scenario uses the eligibility information available in the preview. It leaves conference tournament outcomes, ' +
+      '<p>This early-season scenario uses available eligibility information. It leaves conference tournament outcomes, ' +
       'travel rules, crowd considerations and rematch protections unresolved. Game odds use neutral-site GD forecasts.</p></details>';
   }
 
@@ -506,7 +508,7 @@ export function mountBasketballBracket(root, {
       'The numbered teams are synthetic. Pick through all 75 games to test the 76-team format.' :
       bracket === officialArchive ? 'Replay the verified 2026 field. We grade your selections against the actual results.' :
         bracket === official ? 'Try the official matchups with private practice picks.' :
-        'Explore a hypothetical 2027 field with forecasts from the preview’s basketball model.';
+        'Explore a hypothetical 2027 field with forecasts from the GD basketball model.';
     const completed = Object.keys(picks).length;
     const {graded, correct} = gradeBasketballBracket(bracket, picks);
     const champ = picks.championship ? bracket.teams[picks.championship]?.name : null;
@@ -518,7 +520,7 @@ export function mountBasketballBracket(root, {
       '<progress aria-label="Bracket completion" max="' + bracket.games.length + '" value="' + completed + '"></progress></div>' +
       '<div class="bb-bracket-actions">' + (canFill ? '<button type="button" class="bb-bracket-primary" data-bracket-action="fill">Pick model favorites</button>' : '') +
       '<button type="button" data-bracket-action="reset"' + (completed ? '' : ' disabled') + '>Reset picks</button>' +
-      (profileId && storage ? '<button type="button" data-bracket-action="save">Save practice bracket</button>' +
+      (canSave ? '<button type="button" data-bracket-action="save">Save practice bracket</button>' +
         '<button type="button" data-bracket-action="reopen">Reopen saved draft</button>' : '') + '</div></div>';
   }
 
@@ -541,13 +543,13 @@ export function mountBasketballBracket(root, {
       (editing ? '<label class="bb-bracket-field">Practice field<select data-bracket-select="practiceField">' +
         (official ? choice('official', '2027 official field (practice)', state.practiceField) : '') +
         (projection ? choice('projection', 'GD projected field', state.practiceField) : '') +
-        choice('format', '2027 format demonstration', state.practiceField) +
+        (practice ? choice('format', '2027 format demonstration', state.practiceField) : '') +
         choice('archive', '2026 verified historical field', state.practiceField) + '</select></label>' : '') +
       '<p class="bb-bracket-notice" role="status" aria-live="polite">' + esc(state.notice) + '</p>' +
       (bracket ? heading(bracket, editing, picks) + (layout ? renderMap(bracket, picks, editing, layout) : buildBoard(bracket, picks, editing))
         : introductoryState()) +
       '<footer class="bb-bracket-footer">' + (bracket && state.mode === 'projection' ? methodNote() : '') +
-      (editing ? '<p class="bb-bracket-note">' + (profileId && storage ? 'Saved drafts stay in this browser under the current preview profile. ' : '') +
+      (editing ? '<p class="bb-bracket-note">' + (canSave ? 'Saved drafts stay in this browser. ' : '') +
         'Practice picks have no entry deadline or standings. An official contest would lock at the first tipoff.</p>' : '') +
       '<p class="bb-bracket-source"><a href="' + ncaaRules + '">NCAA selection and seeding rules</a></p></footer></section>';
     if (layout) bindMap(layout);
@@ -598,13 +600,13 @@ export function mountBasketballBracket(root, {
         render({bracketGame: game, bracketTeam: team});
       } else if (action === 'reset') {
         memory.set(bracket, {});
-        state.notice = profileId && storage ? 'Practice picks cleared. Your saved draft remains available until you save again.' : 'Practice picks cleared.';
+        state.notice = canSave ? 'Practice picks cleared. Your saved draft remains available until you save again.' : 'Practice picks cleared.';
         render({bracketSelect: activeMap ? 'practiceField' : 'region'});
       } else if (action === 'fill') {
         memory.set(bracket, fillBasketballBracket(bracket, (a,b) => probability(bracket,a,b)));
         state.notice = 'Model favorites filled wherever a forecast was available.';
         render({bracketAction: action});
-      } else if (action === 'save' && profileId && storage) {
+      } else if (action === 'save' && canSave) {
         try {
           storage.setItem(savedKey(bracket), JSON.stringify({edition: bracketEdition(bracket), picks}));
           state.notice = 'Practice bracket saved in this browser.';
@@ -612,7 +614,7 @@ export function mountBasketballBracket(root, {
           state.notice = 'The browser could not save this draft.';
         }
         render({bracketAction: action});
-      } else if (action === 'reopen' && profileId && storage) {
+      } else if (action === 'reopen' && canSave) {
         const draft = readDraft(bracket);
         if (Object.keys(draft).length) {
           memory.set(bracket, draft);

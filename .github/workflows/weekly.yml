@@ -13,7 +13,7 @@ on:
         type: boolean
         default: false
       kickoff_sync_only:
-        description: Update confirmed ESPN kickoffs from the saved slate without pulling CFBD
+        description: Reconcile TBD kickoff flags from the saved slate without requesting provider data
         type: boolean
         default: false
   push:
@@ -107,7 +107,7 @@ jobs:
         id: fcs-weekly-picks
         if: steps.primary-publish.outcome == 'success'
         run: node scripts/publish-weekly-picks.js --cohort fcs --season "data/seasons/${RANKING_SEASON}.json" --snapshot published/latest.json --output published/weekly-fcs-picks.json
-      - name: Verify confirmed kickoffs from the saved slate without pulling CFBD
+      - name: Check saved kickoff flags without requesting provider data
         id: kickoff-check
         if: steps.refresh-needed.outputs.needed == 'false' && (github.event_name == 'schedule' || steps.refresh-needed.outputs.kickoff_only == 'true')
         continue-on-error: true

@@ -59,9 +59,12 @@ jobs:
         run: node scripts/account-browser-quality.mjs
       - name: Followed-team carousel browser regressions
         run: node scripts/my-team-carousel-browser-quality.mjs
-      - name: Live-score freshness browser regressions
+      - name: Published scoreboard freshness browser regressions
         run: node scripts/scoreboard-browser-quality.mjs
       - name: Navigation, metadata and searchable teams
         run: node scripts/site-polish-browser-quality.mjs
       - name: Browser security policy enforcement
         run: node scripts/check-security-policy-browser.mjs
+      - name: Basketball publication and browser regressions
+        if: hashFiles('published/basketball-site/manifest.json') != ''
+        run: node scripts/browser-basketball-publication.mjs

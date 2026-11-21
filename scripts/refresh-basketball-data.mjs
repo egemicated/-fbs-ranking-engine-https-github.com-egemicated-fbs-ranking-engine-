@@ -19,6 +19,7 @@ async function main() {
     options: {
       season: { type: 'string', multiple: true }, info: { type: 'boolean' }, 'dry-run': { type: 'boolean' },
       'max-calls': { type: 'string' }, 'no-boxes': { type: 'boolean' }, full: { type: 'boolean' },
+      players: { type: 'boolean' }, rolling: { type: 'boolean' }, 'refresh-teams': { type: 'boolean' },
       'teams-csv': { type: 'string' }, 'games-csv': { type: 'string', multiple: true },
       'boxes-csv': { type: 'string', multiple: true },
     },
@@ -35,6 +36,8 @@ async function main() {
   }
   const csv = values['teams-csv'] || values['games-csv'] || values['boxes-csv'];
   const token = process.env.CBBD_API_KEY || process.env.CFBD_API_KEY;
+  const options = { full: values.full, boxes: !values['no-boxes'], players: values.players,
+    rolling: values.rolling, refreshTeams: values['refresh-teams'] };
   if (csv) {
     if (!values['teams-csv'] || !values['games-csv']?.length || seasons.length !== 1 || values.info || values['dry-run']) {
       throw new Error('CSV import requires exactly one season, --teams-csv FILE and at least one --games-csv FILE');
@@ -48,7 +51,7 @@ async function main() {
 
   const plans = await Promise.all(seasons.map(async season => {
     const { artifact, raw } = await loadBasketballPrevious(season, artifactsDir, cacheDir);
-    return planBasketballSeason({ season, previous: raw ? artifact : null, now, full: values.full, boxes: !values['no-boxes'] });
+    return planBasketballSeason({ season, previous: raw ? artifact : null, now, ...options });
   }));
   if (values.info || values['dry-run']) {
     const ledger = await readBasketballLedger(ledgerPath);
@@ -71,7 +74,7 @@ async function main() {
     const results = [];
     for (const season of seasons) {
       const result = await acquireBasketballSeason({
-        client, season, now, artifactsDir, cacheDir, full: values.full, boxes: !values['no-boxes'],
+        client, season, now, artifactsDir, cacheDir, ...options,
       });
       results.push(result);
       safeJsonLog(result);

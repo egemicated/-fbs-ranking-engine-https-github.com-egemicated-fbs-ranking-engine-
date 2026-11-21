@@ -1,78 +1,83 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readScoreboardSlate, reconcileScoreboardSlate, loadScoreboard, scoreboardDelayedGames, scoreboardSignature, scoreboardTimestamp } from '../frontend/scoreboard.js';
+import { readScoreboardSlate, reconcileScoreboardSlate, loadScoreboard, scoreboardDelayedGames, scoreboardTimestamp } from '../frontend/scoreboard.js';
 
-const start='2026-11-19T00:00:00Z';
-function event({id='401866467',state='pre',name='STATUS_SCHEDULED',completed=false,scores=[undefined,undefined],date=start,timeValid=true}={}){
-  return{id,date,competitions:[{date,timeValid,dateValid:true,status:{type:{state,name,completed,shortDetail:completed?'Final':'Scheduled'}},competitors:['away','home'].map((homeAway,index)=>({homeAway,score:scores[index],team:{id:index?'113':'2006',displayName:index?'Massachusetts':'Akron'}}))}]};
-}
-const feed=events=>({season:{year:2026,type:2},week:{number:12},leagues:[{calendar:[]}],events});
+const start = '2026-11-19T00:00:00Z';
+const cutoff = '2026-11-19T13:00:00Z';
+const teams = [
+  { id: '1', name: 'Home', division: 'fbs' },
+  { id: '2', name: 'Away', division: 'fbs' },
+  { id: '3', name: 'FCS visitor', division: 'fcs' },
+  { id: '4', name: 'FCS host', division: 'fcs' },
+];
+const game = (overrides = {}) => ({
+  id: '401866467', home: '1', away: '2', startDate: start, startTimeTbd: false,
+  status: 'scheduled', seasonType: 'regular', week: 12, ...overrides,
+});
+const publication = (games, scheduleAsOf = cutoff) => ({ season: 2026, teams, games, asOf: cutoff, source: { provider: 'cfbd', scheduleAsOf } });
 
-test('scoreboard distinguishes scheduled, live, final, postponement and incomplete final scores',()=>{
-  const slate=readScoreboardSlate(feed([
-    event(),event({id:'2',state:'in',name:'STATUS_IN_PROGRESS'}),
-    event({id:'3',state:'post',name:'STATUS_FINAL',completed:true,scores:['34','33']}),
-    event({id:'4',name:'STATUS_POSTPONED'}),event({id:'5',state:'post',name:'STATUS_FINAL',completed:true}),
-    event({id:'6',state:'post',name:'STATUS_FINAL',completed:true,scores:['0','0']}),
+test('publishes only FBS games from the current slate and retains a real 0–0 final', () => {
+  const slate = readScoreboardSlate(publication([
+    game(), game({ id: '2', status: 'postponed' }), game({ id: '3', status: 'final' }),
+    game({ id: '4', status: 'final', homePoints: 0, awayPoints: 0 }),
+    game({ id: '5', home: '4', away: '3' }), game({ id: '6', away: '3' }),
+    game({ id: '7', week: 13, startDate: '2026-11-22T00:00:00Z' }),
   ]));
-  assert.deepEqual(slate.games.map(game=>game.state),['upcoming','live','final','changed','changed','final']);
-  assert.equal(slate.games[4].detail,'Final score not reported');
-  assert.deepEqual(slate.games[2].teams.map(team=>team.score),['34','33']);
-  assert.equal(slate.needsPlay,true);
+  assert.equal(slate.label, 'Week 12');
+  assert.deepEqual(slate.games.map(row => row.state), ['upcoming', 'changed', 'changed', 'final', 'upcoming']);
+  assert.equal(slate.games[1].detail, 'Postponed');
+  assert.equal(slate.games[2].detail, 'Final score not reported');
+  assert.deepEqual(slate.games[3].teams.map(team => team.score), [0, 0]);
 });
 
-test('a final may be corrected but a stale scheduled/live response cannot undo the same confirmed final',()=>{
-  const previous=readScoreboardSlate(feed([event({state:'post',name:'STATUS_FINAL',completed:true,scores:['34','33']})]));
-  for(const incoming of [event(),event({state:'in',name:'STATUS_IN_PROGRESS',scores:['7','3']})]){
-    const reconciled=reconcileScoreboardSlate(readScoreboardSlate(feed([incoming])),previous);
-    assert.equal(reconciled.games[0].state,'final');assert.equal(reconciled.retainedFinals,1);
-    assert.deepEqual(reconciled.games[0].teams.map(team=>team.score),['34','33']);
-    assert.equal(reconciled.needsPlay,false);
+test('a fresh final can correct a score while a stale status cannot overwrite the same confirmed final', () => {
+  const final = game({ status: 'final', awayPoints: 34, homePoints: 33 });
+  const previous = readScoreboardSlate(publication([final]));
+  const slate = reconcileScoreboardSlate(readScoreboardSlate(publication([game()])), previous);
+  assert.equal(slate.games[0].state, 'final');
+  assert.equal(slate.retainedFinals, 1);
+  assert.deepEqual(slate.games[0].teams.map(team => team.score), [34, 33]);
+  const corrected = reconcileScoreboardSlate(readScoreboardSlate(publication([{ ...final, awayPoints: 35 }])), previous);
+  assert.equal(corrected.games[0].teams[0].score, 35);
+  const moved = reconcileScoreboardSlate(readScoreboardSlate(publication([game({ startDate: '2026-11-20T00:00:00Z' })])), previous);
+  assert.equal(moved.games[0].state, 'upcoming');
+});
+
+test('past confirmed kickoff gets a delay notice while missing and TBD times do not', () => {
+  const slate = readScoreboardSlate(publication([
+    game(), game({ id: '2', startTimeTbd: true }), game({ id: '3', startTimeTbd: undefined }),
+    game({ id: '4', startDate: '2026-11-20T00:00:00Z' }),
+  ]));
+  assert.deepEqual(scoreboardDelayedGames(slate, Date.parse(cutoff)).map(row => row.id), ['401866467']);
+  assert.equal(scoreboardDelayedGames(slate, Date.parse(start) + 15 * 60_000).length, 0);
+});
+
+test('refresh revalidates the existing local publication, separately records receipt and rejects stale or empty snapshots', async () => {
+  const calls = [], received = '2026-11-19T13:15:00.000Z', path = '/data/weekly-picks.json';
+  const options = { path, now: () => Date.parse(received), fetcher: async (url, input) => {
+    calls.push({ url, input });
+    return { ok: true, json: async () => publication([game()]) };
+  } };
+  const slate = await loadScoreboard(undefined, undefined, options);
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].url, path);
+  assert.equal(calls[0].input.cache, 'no-cache');
+  assert.equal(slate.receivedAt, received);
+  assert.equal(slate.source.scheduleAsOf, cutoff);
+  for (const invalid of [publication([]), publication([game()], start)]) {
+    await assert.rejects(loadScoreboard(undefined, slate, { ...options, fetcher: async () => ({
+      ok: true, json: async () => invalid,
+    }) }), /temporarily unavailable/);
   }
-  const correction=reconcileScoreboardSlate(readScoreboardSlate(feed([event({state:'post',name:'STATUS_FINAL',completed:true,scores:['35','33']})])),previous);
-  assert.equal(correction.games[0].teams[0].score,'35');
-  const rescheduled=reconcileScoreboardSlate(readScoreboardSlate(feed([event({date:'2026-11-20T00:00:00Z'})])),previous);
-  assert.equal(rescheduled.games[0].state,'upcoming');
+  assert.equal(scoreboardTimestamp(null), 'Not reported');
+  assert.match(scoreboardTimestamp(cutoff), /6:00:00 AM MST/);
+  assert.match(scoreboardTimestamp('2026-07-19T13:00:00Z'), /7:00:00 AM MDT/);
 });
 
-test('confirmed past kickoffs warn about delayed source status but TBD times and future games do not',()=>{
-  const slate=readScoreboardSlate(feed([event(),event({id:'2',timeValid:false}),event({id:'3',date:'2026-11-20T00:00:00Z'})]));
-  assert.deepEqual(scoreboardDelayedGames(slate,Date.parse('2026-11-19T01:00:00Z')).map(game=>game.id),['401866467']);
-  assert.equal(scoreboardDelayedGames(slate,Date.parse(start)+15*60_000).length,0);
-});
-
-test('polls request an uncached feed and record response receipt separately from source update time',async()=>{
-  const calls=[],timestamp=Date.parse('2026-11-19T13:00:00Z');
-  const slate=await loadScoreboard(undefined,undefined,{now:()=>timestamp,fetcher:async(url,options)=>{
-    calls.push({url,options});return{ok:true,json:async()=>feed([event()])};
-  }});
-  assert.equal(calls.length,1);assert.equal(calls[0].options.cache,'no-store');
-  assert.equal(slate.receivedAt,'2026-11-19T13:00:00.000Z');
-  assert.equal(slate.sourceUpdatedAt,undefined);
-  assert.equal(scoreboardTimestamp(null),'Not reported');
-  assert.match(scoreboardTimestamp(timestamp),/6:00:00 AM MST/);
-  assert.match(scoreboardTimestamp('2026-07-19T13:00:00Z'),/7:00:00 AM MDT/);
-});
-
-test('duplicate and malformed events are counted without inventing results; response ordering is not a score change',()=>{
-  const a=event(),b=event({id:'2'});
-  const slate=readScoreboardSlate(feed([a,b,a,{id:'invalid',competitions:[]}]));
-  assert.equal(slate.games.length,2);assert.equal(slate.duplicateEvents,1);assert.equal(slate.invalidEvents,1);
-  assert.equal(scoreboardSignature(slate),scoreboardSignature({...slate,games:[...slate.games].reverse()}));
-  assert.notEqual(scoreboardSignature(slate),scoreboardSignature(readScoreboardSlate(feed([event({state:'in'}),b]))));
-});
-
-test('completed slates also retain finals across default-feed regressions and reject temporary empty responses',async()=>{
-  const previous=readScoreboardSlate(feed([event({state:'post',name:'STATUS_FINAL',completed:true,scores:['34','33']})]));
-  const options={now:()=>Date.parse('2026-11-19T13:00:00Z'),fetcher:async()=>({ok:true,json:async()=>feed([event()])})};
-  const result=await loadScoreboard(undefined,previous,options);
-  assert.equal(result.games[0].state,'final');assert.equal(result.retainedFinals,1);
-  await assert.rejects(loadScoreboard(undefined,previous,{...options,fetcher:async()=>({ok:true,json:async()=>feed([])})}),/temporarily empty/);
-});
-
-test('an absent ESPN time-confirmation flag stays TBD instead of implying a confirmed kickoff',()=>{
-  const game=event();delete game.competitions[0].timeValid;
-  const slate=readScoreboardSlate(feed([game]));
-  assert.equal(slate.games[0].timeTbd,true);
-  assert.deepEqual(scoreboardDelayedGames(slate,Date.parse('2026-11-19T13:00:00Z')),[]);
+test('unknown team, duplicate ID and unsupported provider are rejected without making up games', () => {
+  const slate = readScoreboardSlate(publication([game(), game(), game({ id: '2', away: 'unknown' })]));
+  assert.equal(slate.duplicateEvents, 1);
+  assert.equal(slate.invalidEvents, 1);
+  assert.equal(slate.games.length, 1);
+  assert.throws(() => readScoreboardSlate({ ...publication([]), source: { provider: 'espn', scheduleAsOf: cutoff } }), /Missing published/);
 });

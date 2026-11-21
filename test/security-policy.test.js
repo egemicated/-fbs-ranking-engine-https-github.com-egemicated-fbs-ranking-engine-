@@ -9,7 +9,8 @@ test('static policy allows only the pinned SDK and required existing network hos
   const script = policy.split('; ').find(row => row.startsWith('script-src '));
   assert.equal(script, `script-src 'self' ${SUPABASE_BROWSER_SCRIPT}`);
   assert.ok(!/unsafe-inline|unsafe-eval|\*/.test(script));
-  assert.match(policy, /connect-src 'self' https:\/\/egxyfyorggwnrnmirrax\.supabase\.co wss:\/\/egxyfyorggwnrnmirrax\.supabase\.co https:\/\/site\.api\.espn\.com/);
+  const connect = policy.split('; ').find(row => row.startsWith('connect-src '));
+  assert.equal(connect, `connect-src 'self' ${options.authUrl} ${options.authUrl.replace(/^https/, 'wss')}`);
   assert.match(policy, /worker-src 'self'/);
   assert.match(policy, /img-src 'self' data: blob:/);
   assert.match(policy, /font-src 'self'/);

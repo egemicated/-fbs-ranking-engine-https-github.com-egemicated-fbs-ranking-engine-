@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { parseCsv } from '../src/ingest.js';
+import { basketballPlayerStats } from './player-stats.js';
 
 export const BASKETBALL_COMPETITION = 'ncaam-d1';
 export const BASKETBALL_DATA_VERSION = 1;
@@ -109,8 +110,10 @@ function normalizeBox(stats) {
     freeThrowsAttempted: nonnegative(stats.freeThrows?.attempted),
     offensiveRebounds: nonnegative(stats.rebounds?.offensive),
     defensiveRebounds: nonnegative(stats.rebounds?.defensive),
+    totalRebounds: nonnegative(stats.rebounds?.total),
     turnovers: nonnegative(stats.turnovers?.total ?? stats.turnovers?.teamTotal),
     assists: nonnegative(stats.assists), steals: nonnegative(stats.steals), blocks: nonnegative(stats.blocks),
+    fouls: nonnegative(stats.fouls?.total),
   };
   for (const name of ['fieldGoals', 'threePoints', 'freeThrows']) {
     const attempts = value[`${name}Attempted`];
@@ -126,7 +129,7 @@ function sameResult(prior, next) {
     && prior.startDate === next.startDate;
 }
 
-export function normalizeBasketballSeason({ season, teamRows, gameRows, boxRows = [], source, previous }) {
+export function normalizeBasketballSeason({ season, teamRows, gameRows, boxRows = [], playerRows, source, previous }) {
   const bounds = basketballSeasonBounds(season);
   const cutoff = basketballTipoff(source?.asOf);
   if (!cutoff || !Array.isArray(teamRows) || !teamRows.length || !Array.isArray(gameRows) || !Array.isArray(boxRows)) {
@@ -205,11 +208,13 @@ export function normalizeBasketballSeason({ season, teamRows, gameRows, boxRows 
   }
   const sortedTeams = [...teams.values()].sort((a, b) => a.id.localeCompare(b.id));
   const sortedGames = [...games.values()].sort((a, b) => a.startDate.localeCompare(b.startDate) || a.id.localeCompare(b.id));
+  const playerData = Array.isArray(playerRows)
+    ? basketballPlayerStats({ season, teams: sortedTeams, games: sortedGames, playerRows }) : null;
   return assembleBasketballSeason({ season, teams: sortedTeams, games: sortedGames, source, coverage,
-    corrections: [...(previous?.corrections ?? []), ...corrections] });
+    playerData, corrections: [...(previous?.corrections ?? []), ...corrections] });
 }
 
-export function assembleBasketballSeason({ season, teams, games, source, coverage = {}, corrections = [] }) {
+export function assembleBasketballSeason({ season, teams, games, source, coverage = {}, playerData, corrections = [] }) {
   const teamGames = new Set(games.flatMap(game => [game.home, game.away]));
   const finals = games.filter(game => game.completed);
   const eligibleFinals = finals.filter(game => game.divisionOne);
@@ -224,9 +229,10 @@ export function assembleBasketballSeason({ season, teams, games, source, coverag
     if (duplicateFixtures.has(key)) throw new Error(`Duplicate basketball fixture ${duplicateFixtures.get(key)} and ${game.id}`);
     duplicateFixtures.set(key, game.id);
   }
-  const content = { version: BASKETBALL_DATA_VERSION, competition: BASKETBALL_COMPETITION, season, teams, games };
+  const content = { version: BASKETBALL_DATA_VERSION, competition: BASKETBALL_COMPETITION, season, teams, games,
+    ...(playerData ? { playerStats: playerData.playerStats } : {}) };
   return { ...content, source: { ...source, sha256: dataHash(content) }, coverage: {
-    ...coverage, teams: teams.length, games: games.length, finals: finals.length,
+    ...coverage, ...playerData?.coverage, teams: teams.length, games: games.length, finals: finals.length,
     divisionOneFinals: eligibleFinals.length, otherFinals: finals.length - eligibleFinals.length,
     postseasonFinals: finals.filter(game => game.seasonType === 'postseason').length,
     divisionOneFinalsWithBoxes: boxes.length, missingFinalBoxes: eligibleFinals.length - boxes.length,

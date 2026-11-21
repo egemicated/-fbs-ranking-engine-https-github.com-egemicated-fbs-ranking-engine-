@@ -10,9 +10,11 @@ const read = async file => {
   try { return JSON.parse(await readFile(file, 'utf8')); }
   catch (error) { if(error.code !== 'ENOENT') throw error; return null; }
 };
-export async function loadPreviewStore(root, clock = Date.now()) {
+export async function loadPreviewStore(root, clock = Date.now(), {
+  stateDir = join(root, 'research', 'cache', 'basketball', 'preview'),
+  capture = true,
+} = {}) {
   const sourceDir = join(root, 'data', 'seasons', 'basketball');
-  const stateDir = join(root, 'research', 'cache', 'basketball', 'preview');
   await mkdir(stateDir, { recursive:true });
   const sourceFiles = await readdir(sourceDir).catch(error=>{if(error.code!=='ENOENT') throw error;return [];});
   const seasons = new Map();
@@ -30,9 +32,9 @@ export async function loadPreviewStore(root, clock = Date.now()) {
       const editionFile = join(stateDir, `${year}-editions.json`);
       const ledger = (await read(forecastFile)) ?? [];
       const editions = (await read(editionFile)) ?? [];
-      const nextLedger = historical ? ledger : captureBasketballForecasts(dataset,snapshot,ledger,clock);
+      const nextLedger = historical || !capture ? ledger : captureBasketballForecasts(dataset,snapshot,ledger,clock);
       if (nextLedger.length!==ledger.length) await atomicJson(forecastFile,nextLedger,{spacing:0});
-      if (!historical && !editions.some(edition=>edition.snapshotHash===snapshot.snapshotHash)) {
+      if (capture && !historical && !editions.some(edition=>edition.snapshotHash===snapshot.snapshotHash)) {
         editions.push({ asOf:snapshot.asOf, publishedAt:new Date(clock).toISOString(),gamesUsed:snapshot.gamesUsed,
           modelVersion:snapshot.modelVersion,snapshotHash:snapshot.snapshotHash,
           teams:Object.fromEntries(snapshot.teams.filter(team=>team.sorRank).map(team=>[team.id,team.sorRank])) });

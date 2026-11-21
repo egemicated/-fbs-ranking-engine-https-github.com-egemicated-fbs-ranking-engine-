@@ -44,7 +44,7 @@ try {
   const referrers = [];
   await page.route('https://**/*', async route => {
     const url = route.request().url();
-    if (url.startsWith('https://unapproved.example.invalid/') || url.includes('/unapproved-package/')) blockedRequests.push(url);
+    if (url.startsWith('https://unapproved.example.invalid/') || url.startsWith('https://site.api.espn.com/') || url.includes('/unapproved-package/')) blockedRequests.push(url);
     if (url === SUPABASE_BROWSER_SCRIPT) return route.fulfill({status:200,contentType:'text/javascript',body:'window.approvedSdkLoaded=true;'});
     referrers.push(route.request().headers().referer ?? null);
     return route.fulfill({status:200,contentType:'application/json',headers:{'Access-Control-Allow-Origin':'*'},body:'{}'});
@@ -61,11 +61,11 @@ try {
   assert.equal(result.handlerSucceeded,false);
   assert.equal(result.evalSucceeded,false);
   assert.equal(result.evalBlocked,true);
-  assert.equal(result.auth,true); assert.equal(result.scoreboard,true);
+  assert.equal(result.auth,true); assert.equal(result.scoreboard,false);
   assert.equal(result.evil,false); assert.equal(result.unapprovedScriptBlocked,true);
   assert.equal(result.worker,true); assert.equal(result.dataImage,true);
   assert.equal(result.referrerPolicy,'no-referrer');
-  assert.deepEqual(referrers,[null,null]); assert.deepEqual(blockedRequests,[]);
+  assert.deepEqual(referrers,[null]); assert.deepEqual(blockedRequests,[]);
   console.log(JSON.stringify({passed:true,result,
     scope:'Isolated real-browser CSP checks with mocked external transport; not a managed-Auth or production-header test'}));
 } finally {

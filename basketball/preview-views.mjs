@@ -52,7 +52,7 @@ const refreshedView = (ctx, view, fields, contents, submit = 'Apply filters') =>
     <p class="sr-only" data-view-announcement role="status"></p><p class="gd-empty" data-view-error role="alert" hidden></p>
     <div data-view-results>${contents}</div>
   </div>`);
-const noData = () => empty('This season has no validated basketball data in the private cache.');
+const noData = () => empty('No validated basketball data is available for this season.');
 const form = (fields, label = 'Apply filters') => `<form class="fc-form" method="get">${fields}<button>${label}</button></form>`;
 const seasonField = ctx => selector('season','Season',ctx.seasons.map(year => [year,seasonLabel(year)]),ctx.year);
 const yearField = ({year}) => `<input type="hidden" name="season" value="${year}">`;
@@ -82,6 +82,7 @@ function gameTable(ctx,games,{picks=false,subject=null,compact=false}={}) {
     const winner = game.completed && scored && game.homePoints !== game.awayPoints
       ? (game.homePoints > game.awayPoints ? 'home' : 'away') : '';
     const gameStatus = game.completed ? 'Final'
+      : game.status === 'in_progress' ? 'In progress at last update'
       : game.status === 'scheduled' && !game.startTimeTbd && Date.parse(game.startDate) < Date.now()
         ? 'Awaiting final' : game.status === 'scheduled' ? 'Scheduled' : String(game.status ?? 'Unconfirmed').replaceAll('_',' ');
     const time = game.startTimeTbd
@@ -101,9 +102,17 @@ function gameTable(ctx,games,{picks=false,subject=null,compact=false}={}) {
           <small>Saved ${stamp(record.capturedAt)}${grade}</small>`
         : '<small>No saved pre-tipoff forecast</small>';
     const matchup = home.id && away.id ? `<a href="${matchupHref(home.id,away.id,ctx.year,game.neutral?'neutral':'home')}">Matchup Lab</a>` : '';
-    const box = !compact && game.completed && game.box?.away && game.box?.home ? `<details class="fc-box">
-      <summary>Team box score</summary><dl>${[['possessions','Possessions'],['offensiveRebounds','Off. rebounds'],
-      ['defensiveRebounds','Def. rebounds'],['turnovers','Turnovers']].map(([key,label])=>
+    const boxStats = [['possessions','Possessions'],['fieldGoalsMade','Field goals made'],
+      ['fieldGoalsAttempted','Field goals attempted'],['threePointsMade','3-pointers made'],['freeThrowsMade','Free throws made'],
+      ['offensiveRebounds','Off. rebounds'],['defensiveRebounds','Def. rebounds'],['assists','Assists'],
+      ['turnovers','Turnovers'],['steals','Steals'],['blocks','Blocks'],['fouls','Fouls']];
+    const evidence = game.boxEvidence;
+    const box = !compact && evidence ? `<details class="fc-box"><summary>Team box-score evidence</summary>
+      <dl>${[['shooting','Effective field goal %'],['reboundShare','Offensive rebound %'],['turnoverRate','Turnover rate']].map(([key,label]) =>
+        `<dt>${label}</dt><dd>${pct(evidence.away[key])} / ${pct(evidence.home[key])}</dd>`).join('')}</dl>
+      <small>Away / home</small></details>`
+      : !compact && game.completed && game.box?.away && game.box?.home ? `<details class="fc-box">
+      <summary>Team box score</summary><dl>${boxStats.map(([key,label])=>
         `<dt>${label}</dt><dd>${amount(game.box.away[key])} / ${amount(game.box.home[key])}</dd>`).join('')}</dl>
       <small>Away / home</small></details>` : '';
     const subjectWon = subject && winner ? game[winner] === subject : null;
@@ -304,11 +313,14 @@ function teamPage(ctx,t) {
     metadata:`${teamRecord(t)} overall${t.provisional ? ' · Provisional ranks' : ''}`})
     + content(ctx,evidence+`<div class="fc-actions fc-date-links" aria-label="Team seasons">${ctx.teamSeasons(t.id)
       .filter(year=>year!==ctx.year).map(year=>action(teamHref(t.id,year),seasonLabel(year),true)).join('')}</div>
-    <div class="fc-grid"><div class="fc-stack">${panel('Completed games',gameTable(ctx,finals,{picks:true,subject:t.id}))}
-    ${panel('Upcoming games',gameTable(ctx,upcoming,{picks:true,subject:t.id}))}</div><div class="fc-stack">
+    <div class="fc-grid"><div class="fc-stack">${panel(ctx.publicSite ? 'Recent completed games' : 'Completed games',gameTable(ctx,finals,{picks:true,subject:t.id}))}
+    ${panel('Upcoming games',gameTable(ctx,upcoming,{picks:true,subject:t.id}))}
+    ${panel('Player leaders',playerLeaders(ctx,t,false))}</div><div class="fc-stack">
     ${panel('Efficiency and tempo',`<div class="fc-metrics">${metric('Adj. offense',fmt(t.adjustedOffense),'Points per 100')}
       ${metric('Adj. defense',fmt(t.adjustedDefense),'Points allowed per 100')}${metric('Tempo',fmt(t.tempo),'Possessions')}
       ${metric('Box score coverage',amount(t.boxGames))}</div>`)}
+    ${fourFactors(t)}
+    ${teamStatDetails(ctx.dataset.teamStats?.[t.id])}
     ${panel('Strength of Record evidence',`<div class="fc-metrics">${metric('D-I record',`${t.diWins??0}–${t.diLosses??0}`)}
       ${metric('Reference expected wins',fmt(t.expectedWins,2))}${metric('Opponent Colley',fmt(t.scheduleStrength,3))}
       ${metric('Chance to match record',pct(t.sorOpponentWinProbability))}</div>
@@ -319,6 +331,69 @@ function teamPage(ctx,t) {
       editions.map(ed=>values([`<a href="${link('ranking-history',{season:ctx.year,edition:ed.asOf})}">${stamp(ed.asOf)}</a>`,ordinal(ed.teams[t.id])])))
       : empty('No timestamped editions were saved for this historical season.'))}
     </div></div>`);
+}
+
+function teamStatDetails(stats) {
+  if (!stats) return '';
+  const {scoring, record, divisionOne, possessions, tempo, adjustedNet} = stats;
+  const average = total => scoring.games ? fmt(total/scoring.games) : '—';
+  const locationRecord = key => teamRecord(record.venue[key]);
+  const counts = [['totalRebounds','Rebounds'],['assists','Assists'],['steals','Steals'],['blocks','Blocks'],['fouls','Fouls']];
+  const percentages = [['fieldGoalPct','Field goal %'],['threePointPct','3-point %'],['freeThrowPct','Free throw %'],
+    ['trueShootingPct','True shooting %'],['threePointAttemptRate','3-point attempt rate'],['defensiveReboundPct','Defensive rebound %']];
+  const compare = (side, type, key) => {
+    const sample = divisionOne[side][type][key];
+    if (!sample?.games) return '—';
+    const value = type === 'ratios' ? pct(sample.value) : fmt(sample.total/sample.games);
+    return `${value} <small>${sample.games} games</small>`;
+  };
+  return panel('Team statistics',
+    `<div class="fc-metrics">${metric('Home',locationRecord('home'))}${metric('Road',locationRecord('road'))}
+      ${metric('Neutral',locationRecord('neutral'))}${metric('Points / game',average(scoring.points))}
+      ${metric('Allowed / game',average(scoring.pointsAllowed))}${metric('Margin / game',average(scoring.margin))}
+      ${metric('Adjusted net efficiency',fmt(adjustedNet),'Per 100 possessions')}
+      ${metric('Pace per 40 minutes',fmt(tempo.value),`${tempo.games} games with verified duration`)}
+      ${metric('Possession coverage',amount(possessions.games),`${possessions.estimatedGames} estimated`)}</div>
+      <details><summary>Box-score averages and rates</summary>
+      ${table('Division I box-score averages',['Measure','Team','Opponents'],[
+        ...counts.map(([key,label])=>values([label,compare('team','totals',key),compare('opponent','totals',key)])),
+        ...percentages.map(([key,label])=>values([label,compare('team','ratios',key),compare('opponent','ratios',key)])),
+      ])}</details>`,`${divisionOne.boxGames} games with a paired Division I box score`);
+}
+
+function fourFactors(team) {
+  const factors = [
+    ['effectiveFieldGoalRate','Effective field goal %'],['turnoverRate','Turnover rate'],
+    ['offensiveReboundRate','Offensive rebound %'],['freeThrowRate','Free throw attempt rate'],
+  ];
+  const shown = side => name => {
+    const value = team.fourFactors?.[side]?.[name];
+    return Number.isFinite(value?.rate) ? `${pct(value.rate)} <small>${amount(value.games)} games</small>` : '—';
+  };
+  return panel('Four Factors',factors.some(([id])=>team.fourFactors?.offense?.[id] || team.fourFactors?.defense?.[id])
+    ? table('Box-score-based Four Factors',['Measure','Team offense','Opponent offense'],factors.map(([id,label])=>
+      values([e(label),shown('offense')(id),shown('defense')(id)])))
+    : empty('No qualifying paired team box scores are available.'), 'Rates use covered Division I games.');
+}
+
+function playerLeaders(ctx,team,compact) {
+  const players = ctx.dataset.playerStats?.[team.id] ?? [];
+  if (!players.length) return empty('No player box scores are available for this team.');
+  const coverage = 'Averages per recorded appearance. Coverage can vary by game. Availability is unverified.';
+  if (compact) {
+    const leaders = [['Points','points'],['Rebounds','rebounds'],['Assists','assists']].flatMap(([label,key])=>{
+      const player = [...players].filter(row=>Number.isFinite(row[key])).sort((a,b)=>b[key]-a[key])[0];
+      return player ? [values([label,e(player.name),fmt(player[key]),amount(player.games)])] : [];
+    });
+    return table('Player leaders',['Stat','Player','Per game','Games'],leaders)+`<p class="fc-note">${coverage}</p>`;
+  }
+  const recent = player => (player.recent ?? []).map(game=>
+    `${fmt(game.points,0)} pts · ${fmt(game.rebounds,0)} reb · ${fmt(game.assists,0)} ast`).join(' / ');
+  return table('Player season leaders',['Player','Games','Minutes','Points','Rebounds','Assists','TS%'],players.slice(0,10).map(player=>
+    values([`<strong>${e(player.name)}</strong>${player.position ? `<small> · ${e(player.position)}</small>` : ''}
+      ${recent(player) ? `<details><summary>Recent games</summary><p>${e(recent(player))}</p></details>` : ''}`,
+      amount(player.games),fmt(player.minutes),fmt(player.points),fmt(player.rebounds),fmt(player.assists),pct(player.trueShootingPct)])))
+    + `<p class="fc-note">${coverage}</p>`;
 }
 
 function basketballMatchupTeam(side, team, opponent, teams) {
@@ -393,16 +468,17 @@ function matchupResults(ctx,h,a,venue) {
       Hypothetical matchup.</p>`;
   const details = `<div class="fc-grid fc-gap">${panel('Team evidence',table('Matchup statistics',['Metric',h.name,a.name],fields.map(([label,format])=>
       values([e(label),format(h),format(a)]))))}
-    ${panel('Head-to-head this season', gameTable(ctx,paired)+`<div class="fc-actions">${action(link('methodology',{season:ctx.year}),'How forecasts work',true)}</div>`)}</div>${matchupPlayers([h,a])}`;
+    ${panel(ctx.publicSite ? 'Recent head-to-head' : 'Head-to-head this season', (paired.length ? gameTable(ctx,paired) :
+       empty('No meeting appears in the available game details.'))+`<div class="fc-actions">${action(link('methodology',{season:ctx.year}),'How forecasts work',true)}</div>`)}</div>${matchupPlayers(ctx,[h,a])}`;
   return { estimate:estimateMarkup, details };
 }
 
-function matchupPlayers(teams) {
+function matchupPlayers(ctx,teams) {
   return `<details class="panel player-fold matchup-players" data-matchup-players>
       <summary>Players to know</summary>
       <div class="panel-body">
         <div class="matchup-player-grid">${teams.map(team=>`<section class="matchup-player-team" style="--team-player-accent:${accent(team)}">
-          <h3>${e(team.name)}</h3><p class="players-empty">No player stats or availability reports published for this season.</p>
+          <h3>${e(team.name)}</h3>${playerLeaders(ctx,team,true)}
         </section>`).join('')}</div>
       </div>
     </details>`;
@@ -467,6 +543,9 @@ const conferenceRecords = (ctx,query,href) => {
 };
 
 function conferenceGames(ctx,a,b) {
+  if (ctx.publicSite) return ctx.dataset.games.filter(game=>!b ||
+    ctx.teams.get(game.home)?.conference === b || ctx.teams.get(game.away)?.conference === b)
+    .slice().reverse();
   const evidence = new Map([...ctx.teams].map(([id,team])=>[id,new Map((team.schedule??[]).map(game=>[game.gameId,game]))]));
   return ctx.dataset.games.filter(game => {
     if (!game.completed || game.divisionOne === false || game.seasonType === 'preseason' || game.conferenceGame === true) return false;
@@ -488,10 +567,10 @@ function conferenceHead(ctx,query,a,b,href) {
       ${metric('Win percentage',pct(stats.winRate))}${metric('Games rated for opponent quality',`${stats.sample} / ${stats.games}`)}
       ${metric('Opponent-adjusted win surplus',fmt(stats.winSurplus,2))}</div>
       ${b ? `<div class="fc-compare-swap">${conferenceTitle('Swap conferences',href({a:b,b:a}),true)}</div>` : ''}
-      ${gameTable(ctx,games.slice(0,limit))}
+      ${games.length ? gameTable(ctx,games.slice(0,limit)) : empty('Individual game details are outside the published evidence window.')}
       ${limit < games.length ? `<div class="fc-show-more">${conferenceTitle('Show more games',href({limit:limit+12}),true)}</div>` : ''}`
     : empty('No completed Division I games match this conference pairing.'),
-    stats?.games ? `Showing ${limit} of ${stats.games} games, most recent first` : '') : '';
+    stats?.games ? `Showing ${limit} of ${stats.games} games, most recent first${ctx.publicSite && limit < stats.games ? ' · Limited display coverage' : ''}` : '') : '';
   const matrix = table('Head-to-head conference record',['Conference',...ctx.conferences],ctx.conferences.map(x =>
     `<tr><th scope="row"><span>${e(x)}</span></th>${ctx.conferences.map(y=>{
       const row=quality.matrix[x]?.[y];
@@ -585,7 +664,8 @@ function slate(ctx, query, picks=false) {
   return banner(picks?'Daily Picks':'Scoreboard',picks?'Saved basketball forecasts captured before a confirmed tipoff.':'Provider-published schedules and final results. Times shown in Mountain Time.')
     +refreshedView(ctx,view,seasonField(ctx)+input('date','Game date',date,'date')+confFilter(ctx,conf),
       `<div class="fc-actions fc-date-links">${dateLink(-1,'Previous day')}${dateLink(1,'Next day')}</div>`
-      +panel(date??'Games',rows.length ? gameTable(ctx,rows,{picks}) : empty(conf
+      +panel(date??'Games',rows.length ? gameTable(ctx,rows,{picks}) : empty(ctx.publicSite && !ctx.slateDates?.includes(date)
+        ? 'This date is outside the published daily scoreboard window.' : conf
         ? 'No published games match this date and conference. Choose another day or conference.'
         : 'No games appear in the published data for this date. Choose another day.'),
       `${rows.length} ${rows.length===1?'game':'games'} · Provider snapshot ${stamp(ctx.snapshot.asOf)}`));
@@ -617,7 +697,7 @@ function modelReport(ctx) {
       ${metric('Brier score',fmt(past.brier,4))}${metric('Log loss',fmt(past.logLoss,4))}
       ${metric('Margin MAE',fmt(past.marginMae,2))}${metric('Calibration gap',pct(past.calibrationError))}</div>${rows(past)}
       <p class="fc-note">Replayed using only information available before each game. These predictions are separate from the saved forecast record.</p>`
-      : empty('Reproducible historical validation is not available in the local artifact yet.'))}</div>`,'Show season');
+      : empty('Reproducible historical validation is unavailable.'))}</div>`,'Show season');
 }
 function history(ctx,query) {
   const selected=ctx.editions.find(ed=>ed.asOf===query.get('edition'))??ctx.editions.at(-1);

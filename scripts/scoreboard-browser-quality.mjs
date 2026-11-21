@@ -1,4 +1,4 @@
-// Real browser/production components with explicit ESPN transport fixtures.
+// Real browser/production components with an explicit publication fixture.
 // No real account, contest mutation, CFBD pull or live-result publication.
 import assert from 'node:assert/strict';
 import {createServer} from 'node:http';
@@ -20,28 +20,33 @@ const base=`http://127.0.0.1:${server.address().port}/`;
 const source=JSON.parse(await readFile(resolve(directory,'data/weekly-picks.json'),'utf8'));
 const samples=source.games.filter(g=>['401866467','401866469'].includes(g.id));
 assert.equal(samples.length,2,'Retained fixture games required for the regression');
-const names=new Map(source.teams.map(t=>[t.id,t.name]));
-const fixture=final=>({season:{year:2026,type:2},week:{number:12},leagues:[{calendar:[]}],events:samples.map((g,index)=>({id:g.id,date:g.startDate,
-  competitions:[{date:g.startDate,dateValid:true,timeValid:true,status:{type:final?{state:'post',completed:true,name:'STATUS_FINAL',shortDetail:'Final'}:{state:'pre',name:'STATUS_SCHEDULED',shortDetail:'Scheduled'}},
-    competitors:['away','home'].map((side,i)=>({homeAway:side,score:final?(index===0?[34,33]:[21,40])[i].toString():undefined,
-      team:{id:g[side],displayName:names.get(g[side]),abbreviation:'TEST'}}))}]}))});
+const fixture=mode=>({ ...source, games:mode==='empty'?[]:samples.map((game,index)=>({ ...game,
+  status:mode==='final'?'final':'scheduled', startTimeTbd:false,
+  awayPoints:mode==='final'?(index===0?34:21):null, homePoints:mode==='final'?(index===0?33:40):null,
+})) });
 const browser=await chromium.launch({headless:true,...(process.env.QUALITY_BROWSER?{executablePath:process.env.QUALITY_BROWSER}:{}),args:['--no-sandbox']});
 const checks=[];
 try{
   for(const width of [320,375,390,768,1024,1440]){
     const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'}),page=await context.newPage(),errors=[];
     page.on('pageerror',error=>errors.push(error.message));
-    await context.route('**/*',route=>route.request().url().startsWith(base)?route.continue():route.abort());
+    const espnRequests=[];
+    await context.route('**/*',route=>{
+      const url=route.request().url();
+      if(new URL(url).hostname==='site.api.espn.com')espnRequests.push(url);
+      return url.startsWith(base)?route.continue():route.abort();
+    });
     await page.clock.install({time:new Date('2026-11-19T13:00:00Z')});
     let mode='scheduled';
-    await page.route('https://site.api.espn.com/**/scoreboard?*',route=>route.fulfill(mode==='failure'?{status:503,body:'Unavailable'}:{json:mode==='empty'?{...fixture(false),events:[]}:fixture(mode==='final')}));
+    const publicationRoute='**/data/weekly-picks.json';
+    await page.route(publicationRoute,route=>route.fulfill(mode==='failure'?{status:503,body:'Unavailable'}:{json:fixture(mode)}));
     for(const name of ['scoreboard.js','scoreboard.css'])await page.route(`**/${name}*`,async route=>route.fulfill({contentType:types[extname(name)],body:await readFile(resolve('frontend',name))}));
     await page.goto(base+'scoreboard',{waitUntil:'domcontentloaded'});
     await page.locator('[data-game-id]').first().waitFor();
     await page.locator('.scoreboard-warning').filter({hasText:'still marked Scheduled'}).waitFor();
     await page.getByText('Data times and coverage',{exact:true}).click();
-    assert.equal(await page.getByText('Not reported by ESPN',{exact:true}).count(),1);
-    assert.match(await page.locator('[data-scoreboard-checked]').innerText(),/^Last successful ESPN response/);
+    assert.equal(await page.locator('[data-game-filter="status"] option[value="live"]').count(),0);
+    assert.match(await page.locator('[data-scoreboard-checked]').innerText(),/^Schedule as of/);
     await page.locator('[data-scoreboard-time="schedule"]').filter({hasNotText:'Not reported'}).waitFor();
     const link=page.locator(`[data-game-id="${samples[0].id}"] a`).filter({hasText:'Saved prediction'});
     await link.waitFor();
@@ -54,16 +59,19 @@ try{
     mode='scheduled';await page.locator('[data-scoreboard-refresh]').click();
     await page.locator('.scoreboard-warning').filter({hasText:'previously final'}).waitFor();
     assert.equal(await page.locator('[data-game-id][data-state="final"]').count(),2);
-    const completedLabel=await page.locator('[data-scoreboard-checked]').innerText();
+    const completedLabel=await page.locator('[data-scoreboard-time="received"]').innerText();
     mode='failure';await page.locator('[data-scoreboard-refresh]').click();
     await page.locator('.scoreboard-warning').filter({hasText:'refresh failed'}).waitFor();
-    assert.equal(await page.locator('[data-scoreboard-checked]').innerText(),completedLabel);
-    mode='empty';await Promise.all([page.waitForResponse(response=>response.url().includes('/scoreboard?')&&response.status()===200),page.locator('[data-scoreboard-refresh]').click()]);
+    assert.equal(await page.locator('[data-scoreboard-time="received"]').innerText(),completedLabel);
+    mode='empty';await Promise.all([page.waitForResponse(response=>response.url().includes('/data/weekly-picks.json')&&response.status()===200),page.locator('[data-scoreboard-refresh]').click()]);
     await page.evaluate(()=>new Promise(requestAnimationFrame));
     await page.locator('[data-scoreboard][data-scoreboard-health="unavailable"]').waitFor();
     assert.equal(await page.locator('[data-game-id][data-state="final"]').count(),2);
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),width,'Page overflow at '+width);
+    assert.match(await page.locator(`[data-game-id="${samples[0].id}"] a`).filter({hasText:'Gamecast'}).getAttribute('href'),/https:\/\/www\.espn\.com\/college-football\/game\//);
+    assert.deepEqual(espnRequests,[]);
     // Follow the actual existing deep link into its retained weekly snapshot.
+    await page.unroute(publicationRoute);
     await page.locator(`[data-game-id="${samples[0].id}"] a`).filter({hasText:'Saved prediction'}).click();
     await page.locator(`#weekly-game-${samples[0].id}`).waitFor();
     assert.equal(page.url(),new URL(savedPrediction,base).href);
@@ -73,5 +81,5 @@ try{
     checks.push({width,sourceTimesHonest:true,delayedStatusWarning:true,eagerSavedGameLink:true,finalTransition:true,regressionGuard:true,failedRefreshPreservesReceipt:true,temporaryEmptyRetainsFinals:true,deepLink:true,noOverflow:true});
     await context.close();
   }
-  console.log(JSON.stringify({passed:true,scope:'Real local browser and published data; explicit ESPN transport fixtures, no live provider or contest mutation',checks},null,2));
+  console.log(JSON.stringify({passed:true,scope:'Real local browser and a published schedule fixture, no provider calls or contest mutation',checks},null,2));
 }finally{await browser.close();await new Promise(done=>server.close(done));}
