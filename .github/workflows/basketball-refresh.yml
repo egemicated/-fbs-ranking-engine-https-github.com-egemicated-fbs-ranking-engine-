@@ -1,15 +1,6 @@
 name: Basketball source refresh
-run-name: ${{ github.event_name == 'schedule' && format('Basketball refresh ({0} Mountain)', github.event.schedule) || format('Basketball refresh ({0})', inputs.mode) }}
+run-name: ${{ format('Basketball refresh ({0})', inputs.mode) }}
 on:
-  schedule:
-    - cron: '15 4 * 1-4,11-12 *'
-      timezone: 'America/Denver'
-    - cron: '15 6 * 1-4,11-12 *'
-      timezone: 'America/Denver'
-    - cron: '15 10 * 1-4,11-12 *'
-      timezone: 'America/Denver'
-    - cron: '45 22 * 3-4 *'
-      timezone: 'America/Denver'
   workflow_dispatch:
     inputs:
       mode:
@@ -28,7 +19,7 @@ concurrency:
 
 jobs:
   refresh:
-    if: github.ref == 'refs/heads/main' && ((github.event_name == 'workflow_dispatch' && inputs.mode == 'seed') || vars.BASKETBALL_REFRESH_ENABLED == 'true')
+    if: github.ref == 'refs/heads/main' && (inputs.mode == 'seed' || vars.BASKETBALL_REFRESH_ENABLED == 'true')
     runs-on: ubuntu-latest
     timeout-minutes: 14
     steps:
@@ -49,7 +40,6 @@ jobs:
         id: refresh
         env:
           GH_TOKEN: ${{ github.token }}
-          REFRESH_CRON: ${{ github.event.schedule }}
           REFRESH_MODE: ${{ inputs.mode }}
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
           CBBD_API_KEY: ${{ secrets.CBBD_API_KEY }}
@@ -57,23 +47,20 @@ jobs:
           BASKETBALL_REFRESH_CACHE_KEY: ${{ secrets.BASKETBALL_REFRESH_CACHE_KEY }}
           BASKETBALL_REFRESH_SEED_URL: ${{ inputs.mode == 'seed' && secrets.BASKETBALL_REFRESH_SEED_URL || '' }}
         run: |
-          cron="$REFRESH_CRON"
-          if [[ "$GITHUB_EVENT_NAME" == workflow_dispatch ]]; then
-            case "$REFRESH_MODE" in
-              primary) cron='15 4 * 1-4,11-12 *' ;;
-              recovery) cron='15 6 * 1-4,11-12 *' ;;
-              pregame) cron='15 10 * 1-4,11-12 *' ;;
-              postseason) cron='45 22 * 3-4 *' ;;
-              seed|manual)
-                node scripts/run-basketball-refresh.mjs --mode "$REFRESH_MODE"
-                exit 0
-                ;;
-              *)
-                echo '::error::Unsupported basketball refresh mode.'
-                exit 1
-                ;;
-            esac
-          fi
+          case "$REFRESH_MODE" in
+            primary) cron='15 4 * 1-4,11-12 *' ;;
+            recovery) cron='15 6 * 1-4,11-12 *' ;;
+            pregame) cron='15 10 * 1-4,11-12 *' ;;
+            postseason) cron='45 22 * 3-4 *' ;;
+            seed|manual)
+              node scripts/run-basketball-refresh.mjs --mode "$REFRESH_MODE"
+              exit 0
+              ;;
+            *)
+              echo '::error::Unsupported basketball refresh mode.'
+              exit 1
+              ;;
+          esac
           created_at=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq .created_at)
           node scripts/run-basketball-refresh.mjs --mode scheduled --cron "$cron" --queued "$created_at"
       # Save debited call reservations and immutable forecasts even if a later

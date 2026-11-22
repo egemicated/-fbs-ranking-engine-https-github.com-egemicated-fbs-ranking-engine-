@@ -249,7 +249,8 @@ function rankings(ctx,query) {
     ${action(link('methodology',{season:ctx.year}),'See how rankings are calculated',true)}`);
   return banner('Rankings','Compare what teams have earned, how they project and how they have performed.')
     + content(ctx,`<section id="${resultsId}" class="fc-interior-anchor" data-ranking-browser>
-      ${tabs}<div class="fc-ranking-heading" data-ranking-heading><h2>${name}</h2><p>${description}</p></div>
+      ${tabs}<div class="fc-ranking-heading" data-ranking-heading><h2>${name}</h2><p>${description}</p>
+      ${ctx.publicSite && !ctx.historical ? '<p><a href="/basketball/polls/">View AP and Coaches polls</a></p>' : ''}</div>
       <div class="fc-rank-layout gd-team-rank-layout"><div>${filters}
         <p class="fc-visually-hidden" data-team-announcement role="status"></p>
         <p class="fc-empty" data-team-error role="alert" hidden></p>

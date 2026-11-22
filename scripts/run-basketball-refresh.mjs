@@ -7,7 +7,7 @@ import { atomicJson } from '../src/ingest.js';
 import { createBasketballClient, readBasketballLedger } from '../basketball/data-client.js';
 import { acquireBasketballSeason, loadBasketballPrevious, planBasketballSeason, readOptionalJson } from '../basketball/data-refresh.js';
 import { CAPTURE_HOURS } from '../basketball/model-ledger.js';
-import { localRefreshDay, localRefreshSlot } from '../basketball/refresh-orchestration.js';
+import { localRefreshDay } from '../basketball/refresh-orchestration.js';
 import {
   activeBasketballYear, assembleBasketballState, basketballRefreshPaths, basketballScheduleEvent, checkBasketballDeployment,
   decideManagedBasketballRefresh, openBasketballState, readBasketballSeed, reconcileSharedBasketballQuota,
@@ -52,16 +52,6 @@ function outputDate(date) {
   return Number.isFinite(Date.parse(date)) ? new Date(date).toISOString() : 'Unavailable';
 }
 
-function nextPrimary(now) {
-  for (let days = 0; days <= 214; days++) {
-    const date = new Date(Date.parse(localRefreshDay(now)) + days * 24 * HOUR).toISOString().slice(0, 10);
-    if ([5, 6, 7, 8, 9, 10].includes(Number(date.slice(5, 7)))) continue;
-    const at = localRefreshSlot(date, '04:15');
-    if (at > now) return new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', dateStyle: 'medium', timeStyle: 'short' }).format(at) + ' Mountain';
-  }
-  return 'Unavailable';
-}
-
 async function monitor(ops, detail = {}, now = new Date()) {
   const football = await readOptionalJson(join(root, 'published', 'latest.json'));
   const deployment = await checkBasketballDeployment(detail.committed?.version);
@@ -78,9 +68,9 @@ async function monitor(ops, detail = {}, now = new Date()) {
     `- Production verification: ${deployment}`,
     `- Games reconciled in this run: ${detail.reconciled ?? 0}. Cached elapsed games awaiting results: ${detail.pending ?? 'unknown'}.`,
     `- Shared quota: ${detail.quotaVerified ? 'verified before acquisition' : 'no metered acquisition started or quota could not be verified'}. Basketball attempts this run: ${detail.metered ?? 0}.`,
-    `- Next primary check: ${nextPrimary(now)}`,
+    '- Scheduled refresh: 7:30 a.m. MST on eligible days.',
     ...(basketballAge > 34 && [1, 2, 3, 4, 11, 12].includes(Number(localRefreshDay(now).slice(5, 7)))
-      ? ['- Basketball source check is late. Review the overnight and recovery runs.'] : []),
+      ? ['- Basketball source check is late. Review the latest daily refresh.'] : []),
     '',
   ].join('\n');
   console.log(dashboard);

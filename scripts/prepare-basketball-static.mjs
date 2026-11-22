@@ -1,7 +1,8 @@
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { applySecurityMetadata } from '../src/security-policy.js';
-import { html, nav, panel, previewFooter, sharedNavigationAssets, shell } from '../basketball/preview-ui.mjs';
+import { banner, escape, html, nav, panel, previewFooter, sharedNavigationAssets, shell } from '../basketball/preview-ui.mjs';
+import { BASKETBALL_POLLS, readBasketballPolls } from '../basketball/poll-publication.mjs';
 import { portal } from '../basketball/preview-views.mjs';
 import { basketballPublicView } from '../basketball/site-view.mjs';
 import { readBasketballSitePublication } from '../basketball/site-publication.mjs';
@@ -90,6 +91,32 @@ export async function addBasketballSite({ root, output, publicationDirectory, fo
   for (const [path,year] of teamPaths) await buildPage(path,year);
 
   const basketball = { snapshot: record(index.currentSeason + '/season.json').snapshot };
+  const pollPath = '/basketball/polls/';
+  const pollTeams = new Map(basketball.snapshot.teams.map(team=>[team.id,team]));
+  const savedPolls = await readFile(join(root,'published','basketball-polls.json'),'utf8').then(JSON.parse).catch(error=>{
+    if (error.code !== 'ENOENT') throw error;
+    return null;
+  });
+  const {polls} = readBasketballPolls(savedPolls,pollTeams,index.currentSeason);
+  const pollDay = new Intl.DateTimeFormat('en-US',{timeZone:'UTC',dateStyle:'long'});
+  const pollTime = new Intl.DateTimeFormat('en-US',{timeZone:'America/Denver',dateStyle:'medium',timeStyle:'short'});
+  const pollPanels = Object.entries(BASKETBALL_POLLS).map(([type,source])=>{
+    const poll = polls[type];
+    const sourceLink = '<p><a href="' + source.url + '">Published poll</a></p>';
+    if (!poll) return panel(source.name,'<p>No verified edition is available yet.</p>' + sourceLink);
+    const rows = poll.ranks.map(({id,rank})=>'<tr><td>' + rank + '</td><th scope="row"><a href="/basketball/teams/' +
+      id.split(':')[1] + '/">' + escape(pollTeams.get(id).name) + '</a></th></tr>').join('');
+    return panel(source.name,'<p>Poll dated ' + pollDay.format(new Date(poll.pollDate + 'T00:00:00Z')) +
+      ' · First observed ' + pollTime.format(new Date(poll.observedAt)) + ' MT</p>' +
+      '<table class="fc-table"><thead><tr><th scope="col">Rank</th><th scope="col">Team</th></tr></thead><tbody>' + rows +
+      '</tbody></table>' + sourceLink);
+  }).join('');
+  const pollBody = banner('AP and Coaches polls','Separate ballots from the AP and USA TODAY. See our rankings for the GD models.','National polls · Men’s basketball') +
+    '<div class="wrap fc-content"><p><a href="/basketball/rankings/">Back to GD rankings</a></p><div class="fc-grid">' +
+    pollPanels + '</div><p>Poll data provided by CollegeBasketballData.com.</p></div>';
+  await write(pageName(pollPath)+'index.html',applySecurityMetadata(cleanAssets(html({ title:'AP and Coaches polls',
+    pathname:pollPath,publicVersion,season:index.currentSeason,current:'rankings',body:pollBody })),{authUrl}));
+  paths.push(pollPath);
   const portalBody = portal({football,basketball});
   const searchBody = '<div class="wrap fc-content"><h1>Find a team</h1>' +
     '<form class="fc-form" action="/find-team/"><label>School or mascot<input name="q" type="search" required maxlength="80"></label>' +

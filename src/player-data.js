@@ -107,7 +107,7 @@ function getPlayer(team, playerId, name) {
   return team.players.get(playerId);
 }
 
-export function normalizePlayerData(cache, schedule) {
+export function normalizePlayerData(cache, schedule, { allowIncompleteCache = false } = {}) {
   const { season, games, teams, scheduleAsOf } = schedule;
   const collectedAt = time(cache?.asOf);
   if (cache?.schemaVersion !== 1 || cache.source !== 'cfbd' || cache.season !== season || !Number.isFinite(collectedAt) ||
@@ -179,7 +179,7 @@ export function normalizePlayerData(cache, schedule) {
       }
     }
   }
-  if (reusedCache) {
+  if (reusedCache && !allowIncompleteCache) {
     // A newer schedule can recognize a final that the already collected boxes include.
     let missing = 0;
     for (const team of groups.values()) missing += team.expected.size - team.matched.size;

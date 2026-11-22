@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { buildPlayerPublications, normalizePlayerData, playerSchedule } from '../src/player-data.js';
-import { playerRefreshWeeks } from '../scripts/refresh-team-players.js';
+import { dailyPlayerRefreshPlan, playerRefreshWeeks } from '../scripts/refresh-team-players.js';
 
 const source = { provider: 'cfbd', snapshotHash: 'test-snapshot', scheduleAsOf: '2026-11-15T18:00:00Z' };
 const fbs = { id: '102', name: 'Home State', division: 'fbs' };
@@ -87,4 +87,37 @@ test('weekly source request includes the latest week and stays within three game
   const previous = { weeks: [{ week: 11, rows: [{ id: 11 }] }, { week: 9, rows: [{ id: 9 }] }] };
   assert.deepEqual(playerRefreshWeeks({ games }, previous), [11, 10, 8]);
   assert.deepEqual(playerRefreshWeeks({ games }, null, true), [11, 10, 9, 8, 7]);
+});
+
+test('daily player refresh skips covered games and republishes from cache only if coverage is absent', async () => {
+  const schedule = playerSchedule(weekly, weeklyFcs);
+  const categories = [{ name: 'rushing', types: [{ name: 'YDS', athletes: [{ id: '500', name: 'Taylor Martin', stat: '70' }] }] }];
+  const boxes = [
+    { homeAway: 'home', team: fbs.name, points: 24, categories },
+    { homeAway: 'away', team: fcs.name, points: 14, categories },
+  ];
+  const cache = { schemaVersion: 1, source: 'cfbd', season: 2026, asOf: '2026-11-15T17:00:00Z',
+    roster: { rows: [] }, totals: { rows: [] }, weeks: [{ week: 11, rows: [{ id: game.id, teams: boxes }] }] };
+  const published = buildPlayerPublications(normalizePlayerData(cache, schedule));
+  const page = async id => published.get(id);
+
+  assert.deepEqual(await dailyPlayerRefreshPlan(schedule, cache, page), { weeks: [], publishCached: false });
+  assert.deepEqual(await dailyPlayerRefreshPlan(schedule, cache, async () => null), { weeks: [], publishCached: true });
+
+  const corrected = { ...schedule, games: new Map([[game.id, { ...game, awayPoints: 17 }]]) };
+  assert.deepEqual(await dailyPlayerRefreshPlan(corrected, cache, page), { weeks: [11], publishCached: false });
+
+  const games = new Map(schedule.games);
+  for (const week of [12, 13, 14, 15]) {
+    const id = String(301 + week);
+    games.set(id, { ...game, id, week, startDate: `2026-11-${week + 3}T17:00:00Z` });
+  }
+  const expanded = { ...schedule, games, scheduleAsOf: '2026-11-19T18:00:00Z' };
+  assert.deepEqual(await dailyPlayerRefreshPlan(expanded, cache, page), { weeks: [15, 14, 13], publishCached: false });
+
+  const partial = { ...cache, asOf: '2026-11-15T18:01:00Z',
+    weeks: [{ week: 11, rows: [{ id: game.id, teams: boxes.slice(0, 1) }] }] };
+  const savedPartial = buildPlayerPublications(normalizePlayerData(partial, schedule));
+  assert.deepEqual(await dailyPlayerRefreshPlan(schedule, partial, async id => savedPartial.get(id)),
+    { weeks: [], publishCached: false });
 });

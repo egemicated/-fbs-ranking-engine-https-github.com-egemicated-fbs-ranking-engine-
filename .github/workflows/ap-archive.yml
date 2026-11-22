@@ -1,11 +1,41 @@
-name: Archive published AP editions
+name: Football polls
+run-name: Football polls (${{ inputs.scope }})
 on:
-  schedule:
-    # Includes Monday/delayed and postseason releases, using one free public
-    # distributor request. No CFBD key, quota, or model calculation is used.
-    - cron: '47 15 * 8-12,1 *'
-      timezone: 'America/Denver'
   workflow_dispatch:
+    inputs:
+      scope:
+        description: Check all football polls, AP and Coaches, or CFP only
+        type: choice
+        options: [all, weekend, cfp]
+        default: all
+      release_date:
+        description: Optional known CFP release date (YYYY-MM-DD)
+        type: string
+      weekend_poll:
+        description: Optional rescheduled poll (ap or coaches)
+        type: string
+      weekend_release_at:
+        description: Official delayed release time in ISO 8601 with UTC offset
+        type: string
+      weekend_source_url:
+        description: First-party notice confirming the delayed poll release
+        type: string
+  workflow_call:
+    inputs:
+      scope:
+        type: string
+        default: all
+      release_date:
+        type: string
+      weekend_poll:
+        type: string
+      weekend_release_at:
+        type: string
+      weekend_source_url:
+        type: string
+    secrets:
+      CFBD_API_KEY:
+        required: false
 permissions:
   contents: write
   actions: write
@@ -13,28 +43,73 @@ concurrency:
   group: published-poll-archive
   cancel-in-progress: false
 jobs:
-  archive:
+  publish:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - name: Observe the current complete AP edition
-        run: node scripts/archive-ap-history.js
-      - name: Validate and retain a new edition
+      - name: Check for complete, dated poll editions
+        id: polls
+        env:
+          SCOPE: ${{ inputs.scope }}
+          RELEASE_DATE: ${{ inputs.release_date }}
+          WEEKEND_POLL: ${{ inputs.weekend_poll }}
+          WEEKEND_RELEASE_AT: ${{ inputs.weekend_release_at }}
+          WEEKEND_SOURCE_URL: ${{ inputs.weekend_source_url }}
+          CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
+        run: |
+          node scripts/publish-football-polls.js --scope "$SCOPE" --release-date "$RELEASE_DATE" \
+            --weekend-poll "$WEEKEND_POLL" --weekend-release-at "$WEEKEND_RELEASE_AT" --weekend-source-url "$WEEKEND_SOURCE_URL"
+      - name: Summarize the source checks
+        env:
+          RESULTS: ${{ steps.polls.outputs.results }}
+        run: |
+          printf '### Football poll checks\n\n`%s`\n' "$RESULTS" >> "$GITHUB_STEP_SUMMARY"
+      - name: Validate and publish the new editions
+        if: steps.polls.outputs.saved == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          git add published/poll-history frontend/ranking-editions.json
-          if git diff --cached --quiet; then exit 0; fi
           node scripts/prepare-static.js
+          git add -- published/poll-history/ frontend/ranking-editions.json
+          if git diff --cached --quiet; then exit 0; fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Archive verified AP edition'
-          git pull --rebase origin main
-          git push origin HEAD:main
-          gh workflow run test.yml --ref main
+          git commit -m 'Publish verified football poll editions'
+          for attempt in 1 2 3; do
+            git fetch --no-tags origin main
+            if ! git rebase origin/main; then git rebase --abort; exit 1; fi
+            if git push origin HEAD:main; then
+              revision=$(git rev-parse HEAD)
+              run_id=$(gh api --method POST -H 'X-GitHub-Api-Version: 2026-03-10' \
+                "repos/$GITHUB_REPOSITORY/actions/workflows/test.yml/dispatches" -f ref=main --jq .workflow_run_id)
+              [[ "$run_id" =~ ^[0-9]+$ ]]
+              checked_revision=""
+              for check_attempt in 1 2 3; do
+                if checked_revision=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$run_id" --jq .head_sha); then break; fi
+                sleep "$check_attempt"
+              done
+              [[ "$checked_revision" =~ ^[a-f0-9]{40}$ ]]
+              if [[ "$checked_revision" != "$revision" ]]; then
+                git fetch --no-tags origin main
+                git merge-base --is-ancestor "$revision" "$checked_revision"
+                git diff --quiet "$revision" "$checked_revision" -- published/poll-history/
+                pushed=$(git show "$revision:frontend/ranking-editions.json" | jq -cS .polls)
+                checked=$(git show "$checked_revision:frontend/ranking-editions.json" | jq -cS .polls)
+                [[ "$checked" == "$pushed" ]]
+              fi
+              printf '\nSubmitted %s to the existing protected Render release gate (Engine run %s).\n' "$checked_revision" "$run_id" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+          done
+          exit 1
+      - name: Report source failures after publishing independent successes
+        if: steps.polls.outputs.failed == 'true'
+        run: exit 1

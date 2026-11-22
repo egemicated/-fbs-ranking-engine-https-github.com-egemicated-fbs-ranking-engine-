@@ -22,7 +22,7 @@ const decision = (mode, checks, now, games = dataset.games) => decideManagedBask
   dataset: { ...dataset, games }, now,
 });
 
-test('workflow slots and operational guard agree across Denver DST and delayed starts', async () => {
+test('workflow dispatch slots and operational guard agree across Denver DST and delayed starts', async () => {
   const workflow = await readFile(new URL('../.github/workflows/basketball-refresh.yml', import.meta.url), 'utf8');
   const slots = Object.entries(managedBasketballSlots).map(([cron, { mode }]) => [mode, cron]);
   const dispatchSlots = [...workflow.matchAll(/^\s+(\w+)\) cron='([^']+)' ;;/gm)]
@@ -30,13 +30,14 @@ test('workflow slots and operational guard agree across Denver DST and delayed s
   assert.deepEqual(dispatchSlots, slots);
   assert.deepEqual(workflow.match(/options: \[([^\]]+)\]/)?.[1].split(', '),
     ['seed', 'manual', ...slots.map(([mode]) => mode)]);
-  assert.ok(workflow.includes('cron="$REFRESH_CRON"'));
+  assert.doesNotMatch(workflow, /^  schedule:/m);
   assert.ok(workflow.includes('created_at=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq .created_at)'));
   assert.ok(workflow.includes('node scripts/run-basketball-refresh.mjs --mode scheduled --cron "$cron" --queued "$created_at"'));
-  for (const cron of Object.keys(managedBasketballSlots)) {
-    assert.ok(workflow.includes(`cron: '${cron}'\n      timezone: 'America/Denver'`));
-  }
   const cron = Object.keys(managedBasketballSlots)[0];
+  const daily = basketballScheduleEvent(cron, date('2027-03-11T14:30:00Z'), date('2027-03-11T14:30:00Z'));
+  const dailyWithDst = basketballScheduleEvent(cron, date('2027-03-15T14:30:00Z'), date('2027-03-15T14:30:00Z'));
+  assert.equal(daily.mode, 'primary');
+  assert.equal(dailyWithDst.mode, 'primary');
   assert.equal(basketballScheduleEvent(cron, date('2026-03-08T10:16:00Z'), date('2026-03-08T10:25:00Z')).at.toISOString(),
     '2026-03-08T10:15:00.000Z');
   assert.equal(basketballScheduleEvent(cron, date('2026-11-01T11:18:00Z'), date('2026-11-01T11:20:00Z')).at.toISOString(),

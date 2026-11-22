@@ -113,6 +113,19 @@ test('a recovered poll with unknown results cutoff never borrows a same-week SOR
   assert.doesNotMatch(html, /SOR published|Forge ballot reconstructed|Jan 1, 1970|Invalid Date/);
 });
 
+test('an observed Coaches edition labels its observation date without implying a verified release or cutoff', async () => {
+  const page = await browser(fixture());
+  const ranking = { week: 1, released: '2026-09-14', gamesThrough: '2026-09-13', rows: [{ team: 'Alpha', rank: 1 }] };
+  const observed = { ...ranking, releaseDateBasis: 'observed', gamesThrough: null, observedAt: '2026-09-14T16:00:00Z',
+    url: 'https://www.afca.com/polls/' };
+  const html = page.ui.renderPollComparison({ sor: [ranking], forge: [ranking], polls: {
+    ap: [], coaches: [observed], cfp: [],
+  } }, 'coaches', '1');
+  assert.match(html, /Coaches Poll first observed Sep 14, 2026/);
+  assert.match(html, /SOR comparison unavailable.*cutoff is unverified/);
+  assert.doesNotMatch(html, /Coaches Poll released|SOR published|Forge ballot reconstructed/);
+});
+
 test('team, opponent evidence, conference and model sections distinguish SOR from retained Colley calculations', async () => {
   const page = await browser(fixture()), html = page.go('#team/101');
   assert.match(html, /<b>#1<\/b> Strength of Record/); assert.match(html, /<span>#1 in conference<\/span>/);

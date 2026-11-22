@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises';
+import { pathToFileURL } from 'node:url';
 import { readCfpEdition, saveCfpEdition } from '../src/cfp-poll.js';
 import { archiveCfpHistory } from './archive-cfp-history.js';
 
@@ -14,27 +15,48 @@ const releases = [
   { week: 13, gamesThrough: null, released: '2026-12-01' },
   { week: 14, gamesThrough: null, released: '2026-12-06' },
 ];
-const mountainDate = new Intl.DateTimeFormat('en-CA', {
-  timeZone: 'America/Denver', year: 'numeric', month: '2-digit', day: '2-digit',
+const easternDate = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit',
 });
-const today = mountainDate.format(new Date());
-const date = process.env.CFP_RELEASE_DATE?.trim() || today;
-const release = releases.find(item => item.released === date);
+const readJson = path => readFile(path, 'utf8').then(JSON.parse);
 
-if (!release || date > today) {
-  if (process.env.CFP_RELEASE_DATE?.trim()) throw new Error(`No CFP release due on ${date}`);
-  console.log(`No CFP release scheduled for ${date}`);
-} else {
-  const snapshot = JSON.parse(await readFile('published/latest.json', 'utf8'));
-  const teamNames = snapshot.rankings.map(team => team.name);
+export async function publishCfpPoll({ snapshot, comparisonPath = 'frontend/ranking-editions.json',
+  historyPath = `published/poll-history/${snapshot.season}.json`, releaseDate = '', now = new Date(), fetcher = fetch }) {
+  const [comparison, history] = await Promise.all([readJson(comparisonPath), readJson(historyPath).catch(error => {
+    if (error.code !== 'ENOENT') throw error;
+    return null;
+  })]);
+  if (comparison.season !== snapshot.season || !Array.isArray(comparison.polls?.cfp) ||
+      history && (history.season !== snapshot.season || !Array.isArray(history.editions?.cfp))) {
+    throw Error('CFP publication season mismatch');
+  }
+
+  const today = easternDate.format(now);
+  const checkedAt = now.toISOString();
+  const due = releases.filter(release => release.released.startsWith(`${snapshot.season}-`) && release.released <= today);
+  const complete = release => comparison.polls.cfp.some(row => row.released === release.released) &&
+    history?.editions.cfp.some(row => row.released === release.released);
+  const explicit = releaseDate ? due.find(release => release.released === releaseDate) : undefined;
+  if (releaseDate && !explicit) throw Error(`No CFP release due on ${releaseDate}`);
+  const release = explicit ?? due.findLast(row => !complete(row));
+  if (!release || complete(release)) {
+    return { poll: 'cfp', status: due.length ? 'current' : 'no-due', checkedAt, released: (release ?? due.at(-1))?.released ?? null };
+  }
+
   let html;
-  const edition = await readCfpEdition(release, teamNames, async (...args) => {
-    const response = await fetch(...args);
+  const edition = await readCfpEdition(release, snapshot.rankings.map(team => team.name), async (...args) => {
+    const response = await fetcher(...args);
     html = await response.text();
     return new Response(html, { status: response.status });
   });
-  if (!edition) throw new Error(`No verified CFP Top 25 for ${date}`);
-  const changed = await saveCfpEdition('frontend/ranking-editions.json', edition);
-  await archiveCfpHistory({ html, snapshot });
-  console.log(changed ? `Saved CFP Week ${edition.week} (${date})` : `CFP Week ${edition.week} is already current`);
+  if (!edition) return { poll: 'cfp', status: 'not-yet-released', checkedAt, released: release.released };
+
+  const changed = await saveCfpEdition(comparisonPath, edition);
+  const archived = await archiveCfpHistory({ html, snapshot, path: historyPath, now: checkedAt });
+  return { poll: 'cfp', status: changed || archived ? 'saved' : 'current', checkedAt, released: edition.released };
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  const snapshot = await readJson('published/latest.json');
+  console.log(JSON.stringify(await publishCfpPoll({ snapshot, releaseDate: process.env.CFP_RELEASE_DATE?.trim() })));
 }

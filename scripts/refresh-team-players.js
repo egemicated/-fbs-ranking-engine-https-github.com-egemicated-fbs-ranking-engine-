@@ -6,6 +6,7 @@ import { gzipSync, gunzipSync } from 'node:zlib';
 import { collectPlayerSources } from '../research/player-data-cache.mjs';
 import { atomicJson } from '../src/ingest.js';
 import { loadPlayerSchedule, publishPlayerPages, readTeamPage } from '../src/player-publication.js';
+import { normalizePlayerData } from '../src/player-data.js';
 
 const dateOnly = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Denver', dateStyle: 'short' });
 const weekday = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Denver', weekday: 'short' });
@@ -44,12 +45,39 @@ export function playerRefreshWeeks(schedule, previous, bootstrap = false) {
   return [...weeks];
 }
 
+export async function dailyPlayerRefreshPlan(schedule, cache, readPage) {
+  const data = normalizePlayerData(cache, schedule, { allowIncompleteCache: true });
+  const uncovered = new Set();
+  let hasPublishedCoverage = false;
+  let publicMatches = true;
+  let checkedThisSnapshot = true;
+  for (const team of data.groups.values()) {
+    for (const id of team.expected) if (!team.matched.has(id)) uncovered.add(id);
+    if (!team.players.size && !team.expected.size) continue;
+    const page = await readPage(team.id);
+    if (!team.players.size && !page) continue;
+    hasPublishedCoverage ||= Boolean(page);
+    publicMatches &&= page?.asOf === cache.asOf && page.coverage?.boxGames === team.matched.size &&
+      page.coverage?.expectedGames === team.expected.size;
+    checkedThisSnapshot &&= page?.scheduleAsOf === schedule.scheduleAsOf;
+  }
+  if (hasPublishedCoverage && publicMatches && (!uncovered.size || checkedThisSnapshot)) {
+    return { weeks: [], publishCached: false };
+  }
+  if (!uncovered.size) return { weeks: [], publishCached: true };
+  const games = [...uncovered].map(id => schedule.games.get(id))
+    .sort((a, b) => Date.parse(b.startDate) - Date.parse(a.startDate));
+  return { weeks: [...new Set(games.map(game => game.week))].slice(0, 3), publishCached: false };
+}
+
 async function main() {
   const [mode] = process.argv.slice(2);
-  if (mode && !['--manual', '--bootstrap'].includes(mode)) throw new Error('Invalid player refresh mode');
+  if (mode && !['--manual', '--bootstrap', '--daily'].includes(mode)) throw new Error('Invalid player refresh mode');
   const now = new Date();
+  const daily = mode === '--daily';
   if (!mode && weekday.format(now) !== 'Sun') { console.log('Player refresh is scheduled on Sunday Mountain Time.'); return; }
   const schedule = await loadPlayerSchedule('published');
+  if (daily && !schedule.games.size) { console.log('No completed games in the saved player schedule.'); return; }
   if (!mode && dateOnly.format(now) !== dateOnly.format(new Date(schedule.scheduleAsOf))) {
     console.log('Waiting for today’s Sunday CFBD publication.'); return;
   }
@@ -77,7 +105,21 @@ async function main() {
   if (!previous && mode === '--manual') {
     console.log('Use the bootstrap option to initialize a missing player cache manually.'); return;
   }
-  const weeks = playerRefreshWeeks(schedule, previous, mode === '--bootstrap' || !previous);
+  if (daily && !previous) throw new Error('The daily update requires an authenticated player cache. Bootstrap is a separate manual operation.');
+  const plan = daily ? await dailyPlayerRefreshPlan(schedule, previous,
+    id => readTeamPage('published', 'team-players', id, schedule.season))
+    : { weeks: playerRefreshWeeks(schedule, previous, mode === '--bootstrap' || !previous), publishCached: false };
+  const { weeks } = plan;
+  if (plan.publishCached) {
+    await publishPlayerPages({ cache: previous, schedule, directory: 'published' });
+    if (process.env.GITHUB_OUTPUT) await appendFile(process.env.GITHUB_OUTPUT, 'refreshed=true\n');
+    console.log('Published matching player coverage from the authenticated cache. No CFBD requests.');
+    return;
+  }
+  if (daily && !weeks.length) {
+    console.log('Player coverage is current or this football snapshot was already checked. No CFBD requests.');
+    return;
+  }
   if (!weeks.length) { console.log('No completed games in the saved player schedule.'); return; }
   const { facts, evidence } = await collectPlayerSources({ season: schedule.season, weeks, apiKey: secret });
   if (previous) {

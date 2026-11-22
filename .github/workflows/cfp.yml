@@ -1,47 +1,16 @@
 name: CFP committee rankings
 on:
-  schedule:
-    # Check at 8:00 p.m. Mountain, with one backup at 8:05 p.m.
-    - cron: '0,5 20 3,10,17,24 11 *'
-      timezone: 'America/Denver'
-    - cron: '0,5 20 1,6 12 *'
-      timezone: 'America/Denver'
   workflow_dispatch:
     inputs:
       release_date:
-        description: 'CFP release date (YYYY-MM-DD). Defaults to today in Mountain Time.'
+        description: 'Optional CFP release date (YYYY-MM-DD). Defaults to the latest due unsaved edition.'
         type: string
 permissions:
   contents: write
   actions: write
-concurrency:
-  group: published-poll-archive
-  cancel-in-progress: false
 jobs:
   publish:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: main
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '24'
-      - name: Check for the official CFP Top 25
-        env:
-          CFP_RELEASE_DATE: ${{ inputs.release_date }}
-        run: node scripts/publish-cfp-poll.js
-      - name: Publish the committee edition to the comparison page
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          git add frontend/ranking-editions.json published/poll-history
-          if git diff --cached --quiet; then exit 0; fi
-          node scripts/prepare-static.js
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m 'Publish CFP committee rankings'
-          git pull --rebase origin main
-          git push origin HEAD:main
-          gh workflow run test.yml --ref main
+    uses: ./.github/workflows/ap-archive.yml
+    with:
+      scope: cfp
+      release_date: ${{ inputs.release_date }}

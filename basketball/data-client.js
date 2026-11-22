@@ -3,7 +3,7 @@ import { dirname, join } from 'node:path';
 import { setTimeout as wait } from 'node:timers/promises';
 import { dataHash } from './data.js';
 
-const endpoints = new Set(['/info', '/teams', '/games', '/games/teams', '/games/players']);
+const endpoints = new Set(['/info', '/teams', '/games', '/games/teams', '/games/players', '/rankings']);
 const host = 'https://api.collegebasketballdata.com';
 const retryLimit = 2;
 

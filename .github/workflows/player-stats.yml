@@ -1,10 +1,15 @@
 name: Weekly player stats
+run-name: ${{ inputs.daily && 'Forge daily player stats' || github.workflow }}
 on:
-  workflow_run:
-    workflows: ['Weekly CFBD rankings']
-    types: [completed]
   workflow_dispatch:
     inputs:
+      daily:
+        description: Incrementally update uncovered games after the daily football refresh
+        type: boolean
+        default: false
+      football_run_id:
+        description: Successful football source run ID (required in daily mode)
+        type: string
       bootstrap:
         description: Build the current-season encrypted cache (up to 16 requests)
         type: boolean
@@ -17,60 +22,59 @@ concurrency:
   cancel-in-progress: false
 jobs:
   update:
-    if: >-
-      github.event_name == 'workflow_dispatch' || (github.event.workflow_run.head_branch == 'main' &&
-      (github.event.workflow_run.event == 'schedule' || github.event.workflow_run.event == 'workflow_dispatch') &&
-      github.event.workflow_run.conclusion == 'success')
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
-      - name: Check for a Sunday results publication
-        id: due
+      - name: Verify the daily football source publication
+        if: inputs.daily
         env:
-          EVENT: ${{ github.event_name }}
-          UPSTREAM_EVENT: ${{ github.event.workflow_run.event }}
-          UPSTREAM_TITLE: ${{ github.event.workflow_run.display_title }}
-          UPSTREAM_RUN: ${{ github.event.workflow_run.id }}
-          UPSTREAM_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+          UPSTREAM_RUN: ${{ inputs.football_run_id }}
+          BOOTSTRAP: ${{ inputs.bootstrap }}
           GH_TOKEN: ${{ github.token }}
         run: |
-          if [[ "$EVENT" != workflow_dispatch ]]; then
-            if [[ "$(TZ=America/Denver date +%u)" != 7 ]]; then exit 0; fi
-            if [[ "$UPSTREAM_EVENT" == schedule || "$UPSTREAM_TITLE" == 'Forge overnight fallback' ]]; then
-              published=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$UPSTREAM_RUN/attempts/$UPSTREAM_ATTEMPT/jobs" \
-                --jq 'any(.jobs[].steps[]; .name == "Fetch CFBD and calculate rankings" and .conclusion == "success")')
-              if [[ "$published" != true ]]; then exit 0; fi
-            fi
+          if [[ ! "$UPSTREAM_RUN" =~ ^[1-9][0-9]*$ || "$BOOTSTRAP" == true ]]; then
+            echo '::error::Daily stats require a football run ID and standard incremental mode.'
+            exit 1
           fi
-          echo 'run=true' >> "$GITHUB_OUTPUT"
+          metadata=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$UPSTREAM_RUN" \
+            --jq 'select(.head_branch == "main" and .path == ".github/workflows/weekly.yml" and .conclusion == "success") | [.run_attempt, .created_at] | @tsv')
+          read -r attempt created_at <<< "$metadata"
+          if [[ ! "$attempt" =~ ^[1-9][0-9]*$ || -z "$created_at" || \
+              "$(TZ=Etc/GMT+7 date -d "$created_at" +%F)" != "$(TZ=Etc/GMT+7 date +%F)" ]]; then
+            echo '::error::Daily stats require a successful football run from this morning.'
+            exit 1
+          fi
+          published=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$UPSTREAM_RUN/attempts/$attempt/jobs" \
+            --jq '[.jobs[].steps[] | select(.conclusion == "success") | .name] | index("Fetch CFBD and calculate rankings") != null and index("Save the weekly snapshot") != null')
+          if [[ "$published" != true ]]; then
+            echo '::error::The football run did not refresh the saved provider snapshot.'
+            exit 1
+          fi
       - uses: actions/checkout@v4
-        if: steps.due.outputs.run == 'true'
         with:
           ref: main
       - uses: actions/setup-node@v4
-        if: steps.due.outputs.run == 'true'
         with:
           node-version: '24'
       - uses: actions/cache/restore@v4
-        if: steps.due.outputs.run == 'true'
         with:
           path: research/cache/player-inputs/season-cache.encrypted.json
           key: player-source-v1-${{ runner.os }}-${{ github.run_id }}
           restore-keys: player-source-v1-${{ runner.os }}-
       - name: Update player pages from the saved schedule
         id: refresh
-        if: steps.due.outputs.run == 'true'
         env:
-          EVENT: ${{ github.event_name }}
+          DAILY: ${{ inputs.daily }}
           BOOTSTRAP: ${{ inputs.bootstrap }}
           CFBD_API_KEY: ${{ secrets.CFBD_API_KEY }}
         run: |
           if [[ "$BOOTSTRAP" == true ]]; then
             node scripts/refresh-team-players.js --bootstrap
-          elif [[ "$EVENT" == workflow_dispatch ]]; then
-            node scripts/refresh-team-players.js --manual
+          elif [[ "$DAILY" == true ]]; then
+            node scripts/refresh-team-players.js --daily
           else
-            node scripts/refresh-team-players.js
+            node scripts/refresh-team-players.js --manual
           fi
       - name: Publish the player page summaries
         if: steps.refresh.outputs.refreshed == 'true'

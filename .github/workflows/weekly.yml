@@ -1,11 +1,6 @@
 name: Weekly CFBD rankings
-run-name: ${{ github.event_name == 'schedule' && format('Scheduled update ({0})', github.event.schedule) || inputs.scheduled_fallback && 'Forge overnight fallback' || github.workflow }}
+run-name: ${{ inputs.scheduled_fallback && 'Forge overnight fallback' || github.workflow }}
 on:
-  schedule:
-    - cron: '45 2 * * *'
-      timezone: 'America/New_York'
-    - cron: '45 4 * * *'
-      timezone: 'America/New_York'
   workflow_dispatch:
     inputs:
       scheduled_fallback:
@@ -31,6 +26,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   refresh:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     env:
@@ -44,14 +40,14 @@ jobs:
           node-version: '24'
       - name: Skip a duplicate overnight update
         id: schedule
-        if: github.event_name == 'schedule' || inputs.scheduled_fallback
+        if: inputs.scheduled_fallback
         env:
           GH_TOKEN: ${{ github.token }}
           SCHEDULED_FALLBACK: ${{ inputs.scheduled_fallback }}
         run: node scripts/scheduled-update-needed.mjs results
       - name: Check whether the scheduled refresh is needed
         id: refresh-needed
-        if: (github.event_name != 'schedule' && !inputs.scheduled_fallback) || steps.schedule.outputs.needed == 'true'
+        if: ${{ !inputs.scheduled_fallback || steps.schedule.outputs.needed == 'true' }}
         env:
           EVENT_NAME: ${{ github.event_name }}
           SCHEDULED_FALLBACK: ${{ inputs.scheduled_fallback }}
@@ -71,7 +67,7 @@ jobs:
           fi
           if [[ "$CONTEST_SYNC_ONLY" == true || "$KICKOFF_SYNC_ONLY" == true ]]; then
             needed=false
-          elif [[ "$EVENT_NAME" != schedule && "$SCHEDULED_FALLBACK" != true ]]; then
+          elif [[ "$SCHEDULED_FALLBACK" != true ]]; then
             needed=true
           else
             needed=$(node scripts/weekly-refresh-needed.js)
@@ -115,7 +111,7 @@ jobs:
         run: node scripts/publish-weekly-picks.js --cohort fcs --season "data/seasons/${RANKING_SEASON}.json" --snapshot published/latest.json --output published/weekly-fcs-picks.json
       - name: Check saved kickoff flags without requesting provider data
         id: kickoff-check
-        if: steps.refresh-needed.outputs.needed == 'false' && (github.event_name == 'schedule' || inputs.scheduled_fallback || steps.refresh-needed.outputs.kickoff_only == 'true')
+        if: steps.refresh-needed.outputs.needed == 'false' && (inputs.scheduled_fallback || steps.refresh-needed.outputs.kickoff_only == 'true')
         continue-on-error: true
         run: node scripts/refresh-published-kickoffs.js
       - name: Record frozen achievement comparison
@@ -230,7 +226,7 @@ jobs:
           CFP_SUPABASE_SECRET_KEY: ${{ secrets.CFP_SUPABASE_SECRET_KEY }}
         run: node scripts/sync-cfp-bracket.js
       - name: Retry configured support-request notifications
-        if: ${{ !cancelled() && ((github.event_name != 'schedule' && !inputs.scheduled_fallback) || steps.schedule.outputs.needed == 'true') }}
+        if: ${{ !cancelled() && (!inputs.scheduled_fallback || steps.schedule.outputs.needed == 'true') }}
         continue-on-error: true
         env:
           SUPPORT_DISPATCH_SECRET: ${{ secrets.SUPPORT_DISPATCH_SECRET }}

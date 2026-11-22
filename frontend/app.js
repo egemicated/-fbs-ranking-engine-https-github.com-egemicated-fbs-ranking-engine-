@@ -286,7 +286,7 @@ function renderHeader() {
   else if (slot?.isConnected) mountFootballAccount(slot);
   document.querySelector('#footer').innerHTML = `<div class="footer"><div class="wrap footer-inner"><div><div class="footer-brand">${BRAND.toUpperCase()}</div><p>Independent FBS and FCS rankings calculated from game data.</p></div><div class="footer-links"><a href="/methodology/">${icon('layers')}Model methodology</a><a href="/about/">About</a><a href="/privacy/">Privacy and accounts</a><a href="/terms/">Terms of use</a><a href="/support">Support and data discrepancies</a><a href="/account">Account settings</a><a href="${esc(publicationPath('rankings'))}" target="_blank" rel="noopener">${icon('database')}Published data</a>${state.snapshot ? `<span>Ranking engine · v${esc(state.snapshot.modelVersion)}</span>` : ''}</div></div></div>`;
 }
-function schedulePanel() { return `<section class="panel schedule-card"><div class="panel-head"><div class="panel-head-title">${icon('calendar')}<h2>Results updates</h2></div></div><div class="panel-body"><div class="section-label">Eastern Time</div><div class="schedule-title">DAILY</div><p>FBS and FCS results are checked at <strong>2:45 a.m.</strong> A <strong>4:45 a.m.</strong> backup checks for results if the first update was missed or failed.</p><p style="margin-top:12px">Last publication <strong>${snapshotDate({ hour:'numeric', minute:'2-digit' })} MT</strong></p></div></section>`; }
+function schedulePanel() { return `<section class="panel schedule-card"><div class="panel-head"><div class="panel-head-title">${icon('calendar')}<h2>Results updates</h2></div></div><div class="panel-body"><div class="section-label">Mountain Standard Time</div><div class="schedule-title">DAILY</div><p>FBS and FCS results are checked at <strong>7:30 a.m.</strong></p><p style="margin-top:12px">Last publication <strong>${snapshotDate({ hour:'numeric', minute:'2-digit' })} MT</strong></p></div></section>`; }
 function coveragePanel() { return `<section class="panel"><div class="panel-head"><div class="panel-head-title">${icon('shield')}<h2>Behind the rankings</h2></div><span class="tag green">CFBD</span></div><div class="panel-body"><p>${usesSor()?'We ask how often a team with the average FBS Colley rating would match this win total against the same opponents in the same places. The harder it is to match, the higher the rank.':'The Colley model links results across the opponent network.'}</p><div class="fact-list"><div class="fact-row"><span>FBS teams in this snapshot</span><strong>${state.snapshot.fbsTeams}</strong></div><div class="fact-row"><span>Game records modeled</span><strong>${state.snapshot.gamesUsed.toLocaleString()}</strong></div><div class="fact-row"><span>Human poll inputs</span><strong>Zero</strong></div></div></div><a class="method-link" href="/methodology/">See how we calculate each rank ${icon('arrow')}</a></section>`; }
 function movementWeek(type, week) {
   return type === 'postseason' ? `Postseason Week ${week}` : `Week ${week}`;
@@ -1457,6 +1457,7 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
   const latestSource = sourceEditions.at(-1);
   const week = weeks.includes(parsedWeek) ? parsedWeek : latestSource?.week ?? weeks[0];
   const poll = sourceEditions.find(edition => edition.week === week);
+  const observedDate = poll?.releaseDateBasis === 'observed';
   const weekSor = data.sor.find(edition => edition.week === week);
   const weekReplay = replays.find(edition => edition.week === week);
   const weekCheckpoints = checkpoints.filter(edition => edition.week === week);
@@ -1480,7 +1481,7 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
     .filter(row => Number.isInteger(row.rank) && row.rank >= 1 && row.rank <= 25));
   const shared = (left, right) => left.filter(row => right.some(other => other.team === row.team)).length;
   const editionLink = poll
-    ? `<a class="text-link" href="${esc(poll.url)}">Read the ${source.name} edition ${icon('external')}</a>`
+    ? `<a class="text-link" href="${esc(poll.url)}">${observedDate ? 'Open the' : 'Read the'} ${source.name}${observedDate ? '' : ' edition'} ${icon('external')}</a>`
     : `<a class="text-link" href="${source.url}">Open ${source.name} ${icon('external')}</a>`;
   const tabs = `<nav class="matchup-views edition-tabs" aria-label="Poll source">${Object.entries(pollSources)
     .map(([id, item]) => `<a href="${routeHref(`polls/${id}/${week}`)}"${id === key ? ' aria-current="page"' : ''}>${item.name}</a>`).join('')}</nav>`;
@@ -1497,7 +1498,7 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
   }).join('');
   return `<section class="panel edition-panel"><div class="panel-body">
     ${tabs}<div class="edition-controls">${editionPicker(weeks, week)}${editionLink}</div>
-    <h2>${editionLabel(week)}</h2><p>${gamesThrough ? `Games through ${editionDate(gamesThrough)}.` : 'The poll’s exact game cutoff has not been verified.'}${poll ? ` ${source.name} released ${editionDate(poll.released)}.` : ''}${official ? ` SOR published ${editionDate(official.released)}.` : ''}${forge ? ` Forge ballot reconstructed ${editionDate(forge.released)}.` : ''}</p>
+    <h2>${editionLabel(week)}</h2><p>${gamesThrough ? `Games through ${editionDate(gamesThrough)}.` : 'The poll’s exact game cutoff has not been verified.'}${poll ? ` ${source.name} ${observedDate ? 'first observed' : 'released'} ${editionDate(poll.released)}.` : ''}${official ? ` SOR published ${editionDate(official.released)}.` : ''}${forge ? ` Forge ballot reconstructed ${editionDate(forge.released)}.` : ''}</p>
     ${separateForgeBallot ? `<p class="compact-note edition-context">Forge’s ballot covers games through ${editionDate(weekForge.gamesThrough)}. ${poll && gamesThrough ? `The ${source.name} covers games through ${editionDate(gamesThrough)}. ` : ''}The table only compares editions with matching cutoffs. <a class="text-link" href="${forgeBallotHref(week)}">View Forge’s ballot for this week ${icon('arrow')}</a></p>` : ''}
     ${savedCheckpoint ? '<p class="compact-note edition-context">This saved SOR checkpoint covers games through the same date as the poll. The full week includes later games.</p>' : ''}
     ${usesForgeCheckpoint ? '<p class="compact-note edition-context">Forge’s cutoff ballot was reconstructed using only games through the Coaches Poll cutoff shown above.</p>' : ''}

@@ -1,15 +1,14 @@
 import { appendFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
-import { UPDATE_SCHEDULE } from '../src/refresh-schedule.js';
 import { RELEASE_REPOSITORY } from './require-release-checks.mjs';
 
 const workflows = {
-  results: { file: 'weekly.yml', crons: [UPDATE_SCHEDULE.cron, UPDATE_SCHEDULE.backup.cron] },
+  results: { file: 'weekly.yml', crons: ['45 2 * * *', '45 4 * * *'] },
   availability: { file: 'player-availability.yml', crons: ['45 2 * 8-12,1 *', '45 4 * 8-12,1 *'] },
 };
 const fallbackTitle = 'Forge overnight fallback';
-const easternDay = new Intl.DateTimeFormat('en-CA', {
-  timeZone: UPDATE_SCHEDULE.timeZone, year: 'numeric', month: '2-digit', day: '2-digit',
+const refreshDay = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'Etc/GMT+7', year: 'numeric', month: '2-digit', day: '2-digit',
 });
 
 export async function scheduledUpdateNeeded(kind, { runId, token, now = new Date(), fetcher = fetch } = {}) {
@@ -36,15 +35,14 @@ export async function scheduledUpdateNeeded(kind, { runId, token, now = new Date
     throw new Error('The scheduled update history was incomplete.');
   }
 
-  const today = easternDay.format(now);
-  // The workflows serialize both slots, so either can recognize a completed run
-  // from the other slot, including when GitHub starts the earlier slot late.
+  const today = refreshDay.format(now);
+  // Keep recognizing completed GitHub cron runs during the scheduler handoff.
   return !runs.some(run => run.id !== runId && run.head_branch === 'main' &&
     run.path === `.github/workflows/${file}` &&
     ((run.event === 'schedule' && titles.has(run.display_title)) ||
      (run.event === 'workflow_dispatch' && run.display_title === fallbackTitle)) &&
     run.status === 'completed' && run.conclusion === 'success' &&
-    Number.isFinite(Date.parse(run.created_at)) && easternDay.format(new Date(run.created_at)) === today);
+    Number.isFinite(Date.parse(run.created_at)) && refreshDay.format(new Date(run.created_at)) === today);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

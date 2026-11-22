@@ -48,6 +48,8 @@ test('another day, a manual run, or a run with an old schedule does not suppress
   ];
   assert.equal(await check('results', ignored), true);
   assert.equal(await check('results', [{ ...resultRun, created_at: '2026-07-01T06:45:00Z' }],
+    new Date('2026-07-01T08:45:00Z')), true);
+  assert.equal(await check('results', [{ ...resultRun, created_at: '2026-07-01T07:00:00Z' }],
     new Date('2026-07-01T08:45:00Z')), false);
   assert.equal(await check('results', [{ ...resultRun, created_at: '2026-03-08T07:01:00Z' }],
     new Date('2026-03-08T08:45:00Z')), false);
@@ -80,25 +82,25 @@ test('the guard queries the correct GitHub page and stops provider pulls if hist
   })), /incomplete/);
 });
 
-test('the work after a skipped backup cannot pull a provider or trigger a Sunday stats refresh', async () => {
-  const [weekly, availability, stats] = await Promise.all(['weekly', 'player-availability', 'player-stats'].map(name =>
+test('the daily dispatch retains provider guards and stats require a completed football source refresh', async () => {
+  const [weekly, availability, stats, bracket] = await Promise.all(['weekly', 'player-availability', 'player-stats', 'cfp-bracket'].map(name =>
     readFile(new URL(`../.github/workflows/${name}.yml`, import.meta.url), 'utf8')));
-  const crons = workflow => [...workflow.matchAll(/cron: '([^']+)'\s+timezone: '([^']+)'/g)]
-    .map(([, cron, zone]) => [cron, zone]);
-  assert.deepEqual(crons(availability), [
-    ['45 2 * 8-12,1 *', 'America/New_York'], ['45 4 * 8-12,1 *', 'America/New_York'],
-  ]);
+  for (const workflow of [weekly, availability, stats, bracket]) {
+    assert.doesNotMatch(workflow, /^  (?:schedule|workflow_run):/m);
+    assert.match(workflow, /^  workflow_dispatch:/m);
+  }
   for (const workflow of [weekly, availability]) {
-    assert.match(workflow, /format\('Scheduled update \(\{0\}\)', github.event.schedule\)/);
     assert.match(workflow, /'Forge overnight fallback'/);
     assert.match(workflow, /concurrency:\s+group: [\w-]+\s+cancel-in-progress: false/);
     assert.match(workflow, /SCHEDULED_FALLBACK:/);
-    assert.match(workflow, /if: \(github.event_name != 'schedule' && .+\) \|\| steps.schedule.outputs.needed == 'true'/);
   }
   assert.match(weekly, /scheduled_fallback:\s+description: Apply the scheduled freshness and duplicate checks/);
   assert.match(availability, /options: \[bootstrap, nightly, game-day, overnight\]/);
   assert.match(weekly, /needed=\$\(node scripts\/weekly-refresh-needed\.js\)/);
   assert.match(weekly, /name: Retry configured support-request notifications\s+if:[^\n]+steps.schedule.outputs.needed == 'true'/);
-  assert.match(stats, /\[\[ "\$UPSTREAM_EVENT" == schedule \|\| "\$UPSTREAM_TITLE" == 'Forge overnight fallback' \]\]/);
-  assert.match(stats, /Fetch CFBD and calculate rankings" and .conclusion == "success"/);
+  assert.match(stats, /football_run_id:/);
+  assert.match(stats, /index\("Fetch CFBD and calculate rankings"\) != null and index\("Save the weekly snapshot"\) != null/);
+  assert.match(stats, /node scripts\/refresh-team-players\.js --daily/);
+  assert.match(bracket, /\bpush\) mode=selection/);
+  assert.match(weekly, /node scripts\/sync-cfp-bracket\.js/);
 });
