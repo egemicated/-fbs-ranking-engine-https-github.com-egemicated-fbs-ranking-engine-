@@ -183,13 +183,13 @@ try {
     assert.equal(await trend.locator('tbody tr').count(),seasonCount);
 
     await visit('scoreboard',{date:dayKey(game.startDate)});
-    const completedGame = page.locator('.fc-game').filter({has:page.getByText('Team box score',{exact:true})})
+    const completedGame = page.locator('.scoreboard-game').filter({has:page.getByText('Team box score',{exact:true})})
       .filter({has:page.getByRole('link',{name:'Matchup Lab'})}).first();
     const boxScore = completedGame.getByText('Team box score',{exact:true});
     await boxScore.click();
     await boxScore.locator('..').getByText('Possessions',{exact:true}).waitFor();
-    assert.equal(await completedGame.locator('.fc-game-score').count(),2);
-    assert.equal(await completedGame.locator('.fc-game-winner').count(),1);
+    assert.equal(await completedGame.locator('.scoreboard-score').count(),2);
+    assert.equal(await completedGame.locator('.scoreboard-winner').count(),1);
     await completedGame.getByRole('link',{name:'Matchup Lab'}).waitFor();
     await assertFits(page);
     await save('scoreboard-game',completedGame);

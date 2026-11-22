@@ -1,4 +1,4 @@
-import { destination, groups, primarySection, sportHref } from './preview-navigation-routes.mjs';
+import { basketballPollRoutes, destination, groups, primarySection, sportHref } from './preview-navigation-routes.mjs';
 import { pageHero, platformEmpty } from '../frontend/platform-presentation.js';
 export { pageHero } from '../frontend/platform-presentation.js';
 
@@ -31,12 +31,35 @@ export const fmt = (value, digits = 1) => Number.isFinite(value) ? value.toFixed
 export const pct = value => Number.isFinite(value) ? `${(value * 100).toFixed(1)}%` : '—';
 export const ordinal = value => Number.isFinite(value) ? `#${value}` : '—';
 export const teamRecord = team => team ? `${team.wins ?? 0}–${team.losses ?? 0}` : '—';
+export function gameBoxScore(game) {
+  const evidence = game.boxEvidence;
+  const box = game.box;
+  if (!evidence?.home || !evidence?.away) {
+    if (!game.completed || !box?.home || !box?.away) return '';
+    const stats = [['possessions','Possessions'],['fieldGoalsMade','Field goals made'],['fieldGoalsAttempted','Field goals attempted'],
+      ['threePointsMade','3-pointers made'],['freeThrowsMade','Free throws made'],['offensiveRebounds','Off. rebounds'],
+      ['defensiveRebounds','Def. rebounds'],['assists','Assists'],['turnovers','Turnovers'],['steals','Steals'],['blocks','Blocks'],['fouls','Fouls']];
+    return `<details class="fc-box"><summary>Team box score</summary><dl>${stats.map(([key,label]) =>
+      `<dt>${label}</dt><dd>${fmt(box.away[key],0)} / ${fmt(box.home[key],0)}</dd>`).join('')}</dl><small>Away / home</small></details>`;
+  }
+  const stats = [['shooting','Effective field goal %'],['reboundShare','Offensive rebound %'],['turnoverRate','Turnover rate']];
+  return `<details class="fc-box"><summary>Team box-score evidence</summary><dl>${stats.map(([key,label]) =>
+    `<dt>${label}</dt><dd>${pct(evidence.away[key])} / ${pct(evidence.home[key])}</dd>`).join('')}</dl><small>Away / home</small></details>`;
+}
 export const has = (row, value) => `${row?.name ?? ''} ${row?.mascot ?? ''} ${row?.conference ?? ''}`.toLocaleLowerCase()
   .includes(value.toLocaleLowerCase());
 export const accent = team => /^#[0-9a-f]{6}$/i.test(team?.color) ? team.color : '#1689c1';
 export function basketballHref(view = '', params = {}) {
   const query = new URLSearchParams(Object.entries(params).filter(([,value]) => value !== undefined && value !== null && value !== ''));
   return `/basketball/${view ? view.replace(/\/$/, '') + '/' : ''}${query.size ? '?' + query : ''}`;
+}
+export function basketballRankingsNavigation(current, year) {
+  const items = [
+    ['rankings', 'Rankings', basketballHref('rankings', { season: year })],
+    ['polls', 'Compare Rankings', basketballPollRoutes.ap],
+  ];
+  return `<nav class="rankings-hub-nav rankings-hub-nav--pair" aria-label="Ranking views">${items.map(([id, label, href]) =>
+    `<a href="${escape(href)}"${id === current ? ' aria-current="page"' : ''}>${label}</a>`).join('')}</nav>`;
 }
 export const teamHref = (id, season) => basketballHref('teams/' + encodeURIComponent(id), { season });
 export const matchupHref = (a, b, season, venue = 'neutral') => basketballHref('matchup-lab', { a,b,season,venue });
@@ -139,6 +162,9 @@ export function previewFooter(active, season, { footballApp = false } = {}) {
 export function html({ title, active = 'basketball', current, season, profile, body, script = '', description, publication, pathname, query, publicVersion, bootNavigation = true, portalPage = false }) {
   const interiors = active === 'basketball' ? '<link rel="stylesheet" href="/basketball-preview/preview-interiors.css">'
     + (publicVersion ? '' : '<script type="module" src="/basketball-preview/preview-interiors.js"></script>') : '';
+  const rankingTransition = active === 'basketball' && ['rankings', 'polls'].includes(current)
+    ? '<style>@view-transition{navigation:auto}::view-transition-group(root){animation-duration:170ms}' +
+      '@media(prefers-reduced-motion:reduce){::view-transition-group(root),::view-transition-old(root),::view-transition-new(root){animation:none}}</style>' : '';
   const metadata = publicVersion
     ? `<meta name="basketball-publication" content="${escape(publicVersion)}"><link rel="canonical" href="https://www.thegamesdecide.com${escape(pathname)}">`
     : '<meta name="robots" content="noindex,nofollow,noarchive">';
@@ -148,12 +174,15 @@ ${metadata}<meta name="theme-color" content="#091833">
 <meta name="description" content="${escape(description ?? title)}"><title>${escape(title)} · The Games Decide</title>
 <link rel="icon" href="/assets/the-games-decide-icon.png"><link rel="stylesheet" href="/base.css">${portalPage ? '' : '<link rel="stylesheet" href="/styles.css?v=shared-base">'}
 <link rel="stylesheet" href="/basketball-preview/preview.css"><link rel="stylesheet" href="/basketball-preview/reconstruction.css">${bootNavigation ? sharedNavigationAssets : sharedNavigationStyles}${interiors}
-<link rel="stylesheet" href="/platform-ui.css">${portalPage ? '' : '<link rel="stylesheet" href="/team-discovery.css"><link rel="stylesheet" href="/matchup-presentation.css">'}${script}</head><body class="fc-preview gd-page-shell">
+<link rel="stylesheet" href="/platform-ui.css">${portalPage ? '' : '<link rel="stylesheet" href="/team-discovery.css"><link rel="stylesheet" href="/matchup-presentation.css">'}${rankingTransition}${script}</head><body class="fc-preview gd-page-shell">
 <a class="skip-link" href="#main">Skip to content</a>${shell(active, current, season, profile, {pathname, publication, query, publicSite: Boolean(publicVersion)})}
 <main id="main" tabindex="-1">${body}</main>${previewFooter(active, season)}</body></html>`;
 }
 export const banner = (title, description, eyebrow = competition.label, variant = 'interior') =>
   pageHero({ sport:eyebrow === 'The Games Decide' ? '' : 'basketball', title, description, eyebrow, variant });
+export const basketballRankingsPage = (current, view, season) =>
+  banner('Rankings', 'Explore Division I men’s basketball rankings and national polls.') +
+  `<div class="wrap fc-content rankings-hub">${basketballRankingsNavigation(current, season)}${view}</div>`;
 export const panel = (heading, contents, note = '') => `<section class="fc-panel">
   <header><h2>${escape(heading)}</h2>${note ? `<p>${escape(note)}</p>` : ''}</header><div class="fc-panel-body">${contents}</div></section>`;
 export const empty = platformEmpty;

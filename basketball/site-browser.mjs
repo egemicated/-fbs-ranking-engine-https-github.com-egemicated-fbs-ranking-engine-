@@ -32,11 +32,13 @@ async function search() {
 async function start() {
   if (route === '/find-team') return search();
   if (!route.startsWith('/basketball')) return;
+  if (route === '/basketball/scoreboard') return import('./scoreboard.mjs');
   let page;
   if (url.search || route.endsWith('/march-madness')) {
     page = await publicView(url);
     if (!page?.markup) throw Error('The requested season or team is unavailable');
     main.innerHTML = page.markup;
+    if (/^#basketball-game-\d+$/.test(url.hash)) document.getElementById(url.hash.slice(1))?.scrollIntoView();
   }
   await import('./preview-interiors.js');
   if (route.endsWith('/conferences')) await import('./conference.js');

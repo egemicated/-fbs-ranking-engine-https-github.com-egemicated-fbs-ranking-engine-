@@ -44,7 +44,7 @@ async function open(page,path,withHero = false) {
   if (withHero) await page.locator('main > .gd-page-hero').waitFor();
   if (path === '/scoreboard') {
     await page.locator('[data-scoreboard-health=unavailable]').waitFor();
-    await page.getByRole('button',{name:'Refresh now'}).waitFor();
+    await page.getByRole('button',{name:'Check for updates'}).waitFor();
   }
   await page.evaluate(()=>document.fonts.ready);
 }
@@ -70,6 +70,8 @@ try {
   for (const width of [320,360,390,768,1024,1440,1920]) {
     const context = await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'});
     await context.route('**/*',route=>new URL(route.request().url()).origin===base ? route.continue() : route.abort());
+    await context.route(url=>['/weekly-picks','/data/weekly-picks.json'].includes(url.pathname),route=>
+      route.request().resourceType()==='fetch' ? route.fulfill({status:503}) : route.fallback());
     const page = await context.newPage();
     for (const [name,football,basketball] of pairs) {
       await open(page,football,true);

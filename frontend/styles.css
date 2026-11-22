@@ -65,7 +65,7 @@
 }
 .rankings-hub-nav {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 7px;
   margin-bottom: 18px;
   padding: 6px;
@@ -92,6 +92,7 @@
   box-shadow: 0 2px 5px #09254d2e;
 }
 .rankings-hub-nav a:focus-visible { outline: 2px solid #1365c8; outline-offset: 2px; }
+.rankings-hub-nav--pair { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .rankings-hub .ranking-views { margin-bottom: 18px; }
 .rankings-hub .ranking-views button { min-height: 44px; }
 .rankings-view-heading { margin-bottom: 16px; }
@@ -104,7 +105,6 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 4px;
   }
-  .rankings-hub-nav [data-ranking-section="conference-strength"] { grid-column: 1 / -1; }
   .rankings-hub .ranking-views { width: 100%; }
   .rankings-hub .ranking-views button { padding-inline: 6px; font-size: 11px; }
 }

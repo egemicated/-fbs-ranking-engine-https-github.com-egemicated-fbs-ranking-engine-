@@ -2,7 +2,7 @@ import { matchupTeamCard } from '../frontend/platform-presentation.js';
 import { predictBasketball } from './model-forecast.js';
 import { conferenceDataCell, conferenceNameCell, conferenceSortArrow, conferenceSortControl,
   conferenceViewTabs, nextConferenceSort, orderConferenceRows } from '../frontend/conference-display.js';
-import { action, accent, banner, basketballHref as link, dayKey, empty, escape as e, fmt, has, input, matchupHref, mtDate, pageHero,
+import { action, accent, banner, basketballHref as link, basketballRankingsPage, dayKey, empty, escape as e, fmt, gameBoxScore, has, input, matchupHref, mtDate, pageHero,
   metric, ordinal, panel, pct, seasonLabel, selector, stamp, teamHref, teamIdentity, teamLink, teamRecord } from './preview-ui.mjs';
 
 const models = {
@@ -103,22 +103,11 @@ function gameTable(ctx,games,{picks=false,subject=null,compact=false}={}) {
           <small>Saved ${stamp(record.capturedAt)}${grade}</small>`
         : '<small>No saved pre-tipoff forecast</small>';
     const matchup = home.id && away.id ? `<a href="${matchupHref(home.id,away.id,ctx.year,game.neutral?'neutral':'home')}">Matchup Lab</a>` : '';
-    const boxStats = [['possessions','Possessions'],['fieldGoalsMade','Field goals made'],
-      ['fieldGoalsAttempted','Field goals attempted'],['threePointsMade','3-pointers made'],['freeThrowsMade','Free throws made'],
-      ['offensiveRebounds','Off. rebounds'],['defensiveRebounds','Def. rebounds'],['assists','Assists'],
-      ['turnovers','Turnovers'],['steals','Steals'],['blocks','Blocks'],['fouls','Fouls']];
-    const evidence = game.boxEvidence;
-    const box = !compact && evidence ? `<details class="fc-box"><summary>Team box-score evidence</summary>
-      <dl>${[['shooting','Effective field goal %'],['reboundShare','Offensive rebound %'],['turnoverRate','Turnover rate']].map(([key,label]) =>
-        `<dt>${label}</dt><dd>${pct(evidence.away[key])} / ${pct(evidence.home[key])}</dd>`).join('')}</dl>
-      <small>Away / home</small></details>`
-      : !compact && game.completed && game.box?.away && game.box?.home ? `<details class="fc-box">
-      <summary>Team box score</summary><dl>${boxStats.map(([key,label])=>
-        `<dt>${label}</dt><dd>${amount(game.box.away[key])} / ${amount(game.box.home[key])}</dd>`).join('')}</dl>
-      <small>Away / home</small></details>` : '';
+    const box = compact ? '' : gameBoxScore(game);
     const subjectWon = subject && winner ? game[winner] === subject : null;
     const result = subjectWon === null ? '' : `<span class="${subjectWon?'fc-win':'fc-loss'}">${subjectWon?'Win':'Loss'}</span>`;
-    return `<li class="fc-game"><div class="fc-game-tipoff"><span class="fc-chip${game.completed ? ' fc-final' : ''}">${e(gameStatus)}</span>
+    const anchor = picks && /^ncaam-d1:\d+$/.test(game.id) ? ` id="basketball-game-${game.id.split(':')[1]}"` : '';
+    return `<li class="fc-game"${anchor}><div class="fc-game-tipoff"><span class="fc-chip${game.completed ? ' fc-final' : ''}">${e(gameStatus)}</span>
       <small>${e(time)}</small>${game.neutral ? '<small>Neutral court</small>' : ''}${result}</div>
       <div class="fc-game-teams">${teamLine(away,'away',game.awayPoints)}${teamLine(home,'home',game.homePoints)}</div>
       ${picks || matchup || box ? `<div class="fc-game-actions">${picks ? `<div>${pick}</div>` : ''}${matchup}${box}</div>` : ''}</li>`;
@@ -247,16 +236,15 @@ function rankings(ctx,query) {
     <dt>Completed games used</dt><dd>${amount(ctx.snapshot.gamesUsed)}</dd>
     <dt>Model version</dt><dd data-ranking-model-version>${e(ctx.snapshot.modelVersion ?? '—')}</dd></dl>
     ${action(link('methodology',{season:ctx.year}),'See how rankings are calculated',true)}`);
-  return banner('Rankings','Compare what teams have earned, how they project and how they have performed.')
-    + content(ctx,`<section id="${resultsId}" class="fc-interior-anchor" data-ranking-browser>
-      ${tabs}<div class="fc-ranking-heading" data-ranking-heading><h2>${name}</h2><p>${description}</p>
-      ${ctx.publicSite && !ctx.historical ? '<p><a href="/basketball/polls/">View AP and Coaches polls</a></p>' : ''}</div>
+  return basketballRankingsPage('rankings',`${fresh(ctx)}
+    <section id="${resultsId}" class="fc-interior-anchor" data-ranking-browser>
+      ${tabs}<div class="fc-ranking-heading" data-ranking-heading><h2>${name}</h2><p>${description}</p></div>
       <div class="fc-rank-layout gd-team-rank-layout"><div>${filters}
         <p class="fc-visually-hidden" data-team-announcement role="status"></p>
         <p class="fc-empty" data-team-error role="alert" hidden></p>
         <div data-team-results>${panel(tableTitle,tableBody,`${shown.length} teams shown${movementNote}`)}
           <span data-team-count class="fc-visually-hidden">${shown.length} teams shown. ${name}.</span></div>
-      </div><aside data-ranking-context>${context}</aside></div></section>`);
+      </div><aside data-ranking-context>${context}</aside></div></section>`,ctx.historical ? ctx.year : undefined);
 }
 
 function directory(ctx,query) {
@@ -652,7 +640,7 @@ function conferences(ctx,query) {
       <div data-view-results>${detail}</div></section>`);
 }
 
-function slate(ctx, query, picks=false) {
+function slate(ctx, query) {
   const valid = /^\d{4}-\d{2}-\d{2}$/.test(query.get('date')??'') && Number.isFinite(Date.parse(query.get('date')));
   const today = dayKey(Date.now());
   const latest = [...new Set(dateLabels(ctx.dataset.games.filter(g=>g.completed)))].sort().at(-1);
@@ -660,18 +648,24 @@ function slate(ctx, query, picks=false) {
   const conf=orderFilter(query.get('conf')??'');
   const day = date ? new Date(date+'T12:00:00Z') : new Date();
   const adjacent = step=>new Date(+day+step*86_400_000).toISOString().slice(0,10);
-  const view=picks?'picks':'scoreboard';
+  const view='picks';
   const rows = ctx.dataset.games.filter(g=>g.startDate&&dayKey(g.startDate)===date&&(!conf ||
     ctx.teams.get(g.home)?.conference===conf||ctx.teams.get(g.away)?.conference===conf));
   const dateLink = (step,label) => `<a class="fc-action fc-secondary" data-view-link="${step < 0 ? 'previous-day' : 'next-day'}" href="${e(link(view,{season:ctx.year,date:adjacent(step),conf}))}">${label}</a>`;
-  return banner(picks?'Daily Picks':'Scoreboard',picks?'Saved basketball forecasts captured before a confirmed tipoff.':'Provider-published schedules and final results. Times shown in Mountain Time.')
+  return banner('Daily Picks','Saved basketball forecasts captured before a confirmed tipoff.')
     +refreshedView(ctx,view,seasonField(ctx)+input('date','Game date',date,'date')+confFilter(ctx,conf),
       `<div class="fc-actions fc-date-links">${dateLink(-1,'Previous day')}${dateLink(1,'Next day')}</div>`
-      +panel(date??'Games',rows.length ? gameTable(ctx,rows,{picks}) : empty(ctx.publicSite && !ctx.slateDates?.includes(date)
-        ? 'This date is outside the published daily scoreboard window.' : conf
+      +panel(date??'Games',rows.length ? gameTable(ctx,rows,{picks:true}) : empty(ctx.publicSite && !ctx.slateDates?.includes(date)
+        ? 'This date is outside the published daily picks window.' : conf
         ? 'No published games match this date and conference. Choose another day or conference.'
         : 'No games appear in the published data for this date. Choose another day.'),
       `${rows.length} ${rows.length===1?'game':'games'} · Provider snapshot ${stamp(ctx.snapshot.asOf)}`));
+}
+
+function scoreboard(ctx) {
+  const preview=ctx.scoreboardPreview ? ` data-scoreboard-preview="${e(ctx.scoreboardPreview)}"` : '';
+  return banner('Scoreboard','Published tipoff times and final scores for Division I men’s basketball.')
+    +`<div class="wrap page-content" data-scoreboard data-basketball-scoreboard${preview}><p role="status">Loading the scoreboard…</p></div>`;
 }
 
 function modelReport(ctx) {
@@ -738,8 +732,8 @@ export function renderBasketball(ctx, view, query, pickBoard) {
   if (view==='teams') return directory(ctx,query);
   if (view==='matchup-lab') return matchup(ctx,query);
   if (view==='conferences') return conferences(ctx,query);
-  if (view==='scoreboard') return slate(ctx,query);
-  if (view==='picks') return slate(ctx,query,true);
+  if (view==='scoreboard') return scoreboard(ctx);
+  if (view==='picks') return slate(ctx,query);
   if (view==='model-reports') return modelReport(ctx);
   if (view==='ranking-history') return history(ctx,query);
   if (view==='methodology') return methodology(ctx);

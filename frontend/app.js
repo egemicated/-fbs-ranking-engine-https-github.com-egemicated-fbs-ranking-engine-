@@ -4,7 +4,7 @@ import { ACCOUNT_ROUTE_EVENT, isAccountCallbackUrl, pendingAccountRoute, safeAcc
 import { routeFromUrl, routeHref } from './clean-routes.js';
 import { APP_NAVIGATION_EVENT, internalNavigationTarget, navigateApp, replaceLegacyAppUrl } from './clean-navigation.js';
 import { formatNumber, formatProbability, formatRecord, formatSorScore, indefiniteArticle, sorEligibleRecord } from './format.js?v=sor-transparency';
-import { matchupTeamCard, pageHero } from './platform-presentation.js';
+import { matchupTeamCard, pageHero, rankingComparisonTable } from './platform-presentation.js';
 
 const BRAND = 'The Games Decide';
 const main = document.querySelector('#main');
@@ -62,7 +62,6 @@ const localPreview = ['localhost', '127.0.0.1', '[::1]'].includes(window.locatio
 const rankingsHubTabs = [
   ['fbs', '/rankings', 'FBS'], ['fcs', '/rankings/fcs/', 'FCS'],
   ['polls', '/polls/ap/', 'Compare Rankings'], ['forge-top-25', '/forge-rankings/', 'Forge’s Rankings'],
-  ['conference-strength', '/conference-strength/', 'Conference Strength'],
 ];
 const pollSources = {
   ap: { name: 'AP Top 25', short: 'AP', url: 'https://apnews.com/hub/ap-top-25-college-football-poll' },
@@ -1435,12 +1434,6 @@ function editionTeamLink(name, teams) {
 function forgeBallotHref(week, through) {
   return routeHref(`forge-top-25/${week}${through ? `/${through}` : ''}`);
 }
-function pollRankCell(column, position, teams) {
-  const ranked = column.filter(row => row.rank === position);
-  return `<td>${ranked.map(row =>
-    `<div class="poll-ranked-team">${editionTeamLink(row.team, teams)}<small>${esc(row.record)}</small></div>`
-  ).join('') || '—'}</td>`;
-}
 function renderPollComparison(data, sourceKey, requestedWeek) {
   const key = Object.hasOwn(pollSources, sourceKey) ? sourceKey : 'ap';
   const source = pollSources[key];
@@ -1492,10 +1485,11 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
     !sor ? poll && !gamesThrough ? 'SOR comparison unavailable: this poll’s exact game cutoff is unverified' : 'No matching published SOR snapshot' : '',
     !poll ? `${source.name} edition unavailable for this week` : ''
   ].filter(Boolean);
-  const rows = Array.from({ length: 25 }, (_, index) => {
-    const position = index + 1;
-    return `<tr><th scope="row">${position}</th>${columns.map(column => pollRankCell(column, position, teams)).join('')}</tr>`;
-  }).join('');
+  const table = rankingComparisonTable({
+    caption: `Ranking comparison for ${editionLabel(week)}`,
+    columns: [sorLabel, 'Forge', source.short].map((label, index) => ({ label, teams: columns[index] })),
+    renderTeam: row => `<div class="poll-ranked-team">${editionTeamLink(row.team, teams)}<small>${esc(row.record)}</small></div>`,
+  });
   return `<section class="panel edition-panel"><div class="panel-body">
     ${tabs}<div class="edition-controls">${editionPicker(weeks, week)}${editionLink}</div>
     <h2>${editionLabel(week)}</h2><p>${gamesThrough ? `Games through ${editionDate(gamesThrough)}.` : 'The poll’s exact game cutoff has not been verified.'}${poll ? ` ${source.name} ${observedDate ? 'first observed' : 'released'} ${editionDate(poll.released)}.` : ''}${official ? ` SOR published ${editionDate(official.released)}.` : ''}${forge ? ` Forge ballot reconstructed ${editionDate(forge.released)}.` : ''}</p>
@@ -1506,9 +1500,7 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
     ${summary.length ? `<p class="edition-notice">${summary.join(' · ')}.</p>` : ''}
     ${!poll && latestSource ? `<a class="text-link" href="${routeHref(`polls/${key}/${latestSource.week}`)}">View the ${editionDate(latestSource.released)} edition ${icon('arrow')}</a>` : ''}
     ${!sor && latestSor && latestSor.week !== week ? `<a class="text-link" href="${routeHref(`polls/${key}/${latestSor.week}`)}">Compare SOR and Forge after Week ${latestSor.week} ${icon('arrow')}</a>` : ''}
-    </div><div class="table-scroll"><table class="edition-table poll-rank-table">
-    <caption class="sr-only">Ranking comparison for ${editionLabel(week)}</caption>
-    <thead><tr><th scope="col">Rank</th><th scope="col">${sorLabel}</th><th scope="col">Forge</th><th scope="col">${source.short}</th></tr></thead><tbody>${rows}</tbody></table></div>
+    </div>${table}
     <div class="panel-body"><p class="compact-note">Tied teams share a cell. A dash marks a skipped rank or an unavailable edition.</p>${forge ? `<a class="text-link edition-ballot-link" href="${forgeBallotHref(week, usesForgeCheckpoint ? forge.gamesThrough : undefined)}">${usesForgeCheckpoint ? 'View Forge’s cutoff ballot' : 'Forge’s full ballot for this week'} ${icon('arrow')}</a>` : ''}</div>
     </section>`;
 }

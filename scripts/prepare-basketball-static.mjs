@@ -1,10 +1,12 @@
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { applySecurityMetadata } from '../src/security-policy.js';
-import { banner, escape, html, nav, panel, previewFooter, sharedNavigationAssets, shell } from '../basketball/preview-ui.mjs';
+import { html, nav, panel, previewFooter, sharedNavigationAssets, shell } from '../basketball/preview-ui.mjs';
+import { basketballPollRoutes } from '../basketball/preview-navigation-routes.mjs';
 import { BASKETBALL_POLLS, readBasketballPolls } from '../basketball/poll-publication.mjs';
+import { renderBasketballRankingComparison } from '../basketball/poll-comparison.mjs';
 import { portal } from '../basketball/preview-views.mjs';
-import { basketballPublicView } from '../basketball/site-view.mjs';
+import { basketballPublicView, publicBasketballLinks } from '../basketball/site-view.mjs';
 import { readBasketballSitePublication } from '../basketball/site-publication.mjs';
 import { socialMetadata } from './prerender-pages.js';
 
@@ -32,6 +34,7 @@ const assets = {
   'basketball/site-view.mjs':'basketball/site-view.mjs',
   'basketball/site-client.mjs':'basketball/site-client.mjs',
   'basketball/site-browser.mjs':'basketball/site-browser.mjs',
+  'basketball/scoreboard.mjs':'basketball/scoreboard.mjs',
   'basketball/portal-entry.js':'basketball/portal-entry.js',
 };
 const getTitle = new Map(nav.map(([label,view]) => [view,label]));
@@ -64,6 +67,7 @@ export async function addBasketballSite({ root, output, publicationDirectory, fo
   const index = record('index.json');
   const render = basketballPublicView(record,index);
   for (const [path, bytes] of files) await write('basketball-data/' + publicVersion + '/' + path, bytes);
+  await write('basketball-data/latest.json',JSON.stringify({version:publicVersion}));
 
   const paths = ['/basketball/', ...[...getTitle.keys()].filter(view=>view && view !== 'contest')
     .map(view=>'/basketball/'+view+'/')];
@@ -80,7 +84,8 @@ export async function addBasketballSite({ root, output, publicationDirectory, fo
     if (!page?.markup) throw Error('Basketball public route could not render: ' + pathname);
     const title = page.title ?? getTitle.get(page.view) ?? 'Men’s college basketball';
     const stylesheet = page.view === 'march-madness' ? '<link rel="stylesheet" href="/basketball-bracket.css">'
-      : page.view === 'matchup-lab' ? '<link rel="stylesheet" href="/team-identity.css"><link rel="stylesheet" href="/team-players.css">' : '';
+      : page.view === 'matchup-lab' ? '<link rel="stylesheet" href="/team-identity.css"><link rel="stylesheet" href="/team-players.css">'
+      : page.view === 'scoreboard' ? '<link rel="stylesheet" href="/scoreboard.css"><link rel="stylesheet" href="/game-discovery.css"><link rel="stylesheet" href="/team-identity.css">' : '';
     const pageHtml = html({
       title, pathname, publicVersion, season:year, current:page.view, publication:page.ctx.snapshot,
       body:page.markup, description:'Division I men’s basketball · ' + title, script:stylesheet + scripts,
@@ -91,32 +96,19 @@ export async function addBasketballSite({ root, output, publicationDirectory, fo
   for (const [path,year] of teamPaths) await buildPage(path,year);
 
   const basketball = { snapshot: record(index.currentSeason + '/season.json').snapshot };
-  const pollPath = '/basketball/polls/';
   const pollTeams = new Map(basketball.snapshot.teams.map(team=>[team.id,team]));
   const savedPolls = await readFile(join(root,'published','basketball-polls.json'),'utf8').then(JSON.parse).catch(error=>{
     if (error.code !== 'ENOENT') throw error;
     return null;
   });
   const {polls} = readBasketballPolls(savedPolls,pollTeams,index.currentSeason);
-  const pollDay = new Intl.DateTimeFormat('en-US',{timeZone:'UTC',dateStyle:'long'});
-  const pollTime = new Intl.DateTimeFormat('en-US',{timeZone:'America/Denver',dateStyle:'medium',timeStyle:'short'});
-  const pollPanels = Object.entries(BASKETBALL_POLLS).map(([type,source])=>{
-    const poll = polls[type];
-    const sourceLink = '<p><a href="' + source.url + '">Published poll</a></p>';
-    if (!poll) return panel(source.name,'<p>No verified edition is available yet.</p>' + sourceLink);
-    const rows = poll.ranks.map(({id,rank})=>'<tr><td>' + rank + '</td><th scope="row"><a href="/basketball/teams/' +
-      id.split(':')[1] + '/">' + escape(pollTeams.get(id).name) + '</a></th></tr>').join('');
-    return panel(source.name,'<p>Poll dated ' + pollDay.format(new Date(poll.pollDate + 'T00:00:00Z')) +
-      ' · First observed ' + pollTime.format(new Date(poll.observedAt)) + ' MT</p>' +
-      '<table class="fc-table"><thead><tr><th scope="col">Rank</th><th scope="col">Team</th></tr></thead><tbody>' + rows +
-      '</tbody></table>' + sourceLink);
-  }).join('');
-  const pollBody = banner('AP and Coaches polls','Separate ballots from the AP and USA TODAY. See our rankings for the GD models.','National polls · Men’s basketball') +
-    '<div class="wrap fc-content"><p><a href="/basketball/rankings/">Back to GD rankings</a></p><div class="fc-grid">' +
-    pollPanels + '</div><p>Poll data provided by CollegeBasketballData.com.</p></div>';
-  await write(pageName(pollPath)+'index.html',applySecurityMetadata(cleanAssets(html({ title:'AP and Coaches polls',
-    pathname:pollPath,publicVersion,season:index.currentSeason,current:'rankings',body:pollBody })),{authUrl}));
-  paths.push(pollPath);
+  for (const [type, pathname] of Object.entries(basketballPollRoutes)) {
+    const body = publicBasketballLinks(renderBasketballRankingComparison(basketball.snapshot, polls, type));
+    const pageHtml = html({ title: `Compare Basketball Rankings · ${BASKETBALL_POLLS[type].name}`,
+      pathname, publicVersion, season: index.currentSeason, current: 'polls', body });
+    await write(pageName(pathname) + 'index.html', applySecurityMetadata(cleanAssets(pageHtml), { authUrl }));
+    paths.push(pathname);
+  }
   const portalBody = portal({football,basketball});
   const searchBody = '<div class="wrap fc-content"><h1>Find a team</h1>' +
     '<form class="fc-form" action="/find-team/"><label>School or mascot<input name="q" type="search" required maxlength="80"></label>' +

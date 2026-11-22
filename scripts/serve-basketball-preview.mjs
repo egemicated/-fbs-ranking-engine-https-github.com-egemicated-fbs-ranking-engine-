@@ -5,7 +5,11 @@ import { pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
 import { createPreviewAccounts } from '../basketball/preview-accounts.mjs';
 import { loadPreviewStore } from '../basketball/preview-store.mjs';
-import { action, banner, empty, escape, html, nav, panel, previewFooter, sharedNavigationAssets, shell, teamHref } from '../basketball/preview-ui.mjs';
+import { basketballPollRoutes } from '../basketball/preview-navigation-routes.mjs';
+import { basketballScoreboardSelection } from '../basketball/scoreboard.mjs';
+import { BASKETBALL_POLLS, readBasketballPolls } from '../basketball/poll-publication.mjs';
+import { renderBasketballRankingComparison } from '../basketball/poll-comparison.mjs';
+import { action, banner, dayKey, empty, escape, html, nav, panel, previewFooter, sharedNavigationAssets, shell, teamHref } from '../basketball/preview-ui.mjs';
 import { contestBoard, profilePage } from '../basketball/preview-profile-ui.mjs';
 import { portal, renderBasketball } from '../basketball/preview-views.mjs';
 import { teamDisplayName } from '../frontend/team-identity.js';
@@ -26,6 +30,8 @@ const localFiles = {
   '/basketball-preview/navigation.css':'basketball/preview-navigation.css',
   '/basketball-preview/navigation.js':'basketball/preview-navigation.js',
   '/basketball-preview/navigation-routes.mjs':'basketball/preview-navigation-routes.mjs',
+  '/basketball-preview/preview-ui.mjs':'basketball/preview-ui.mjs',
+  '/basketball-preview/scoreboard.mjs':'basketball/scoreboard.mjs',
   '/basketball-preview/arena.webp':'basketball/assets/arena.webp',
   '/basketball-preview/arena-mobile.webp':'basketball/assets/arena-mobile.webp',
   '/basketball-preview/masthead-football.webp':'basketball/assets/masthead-football.webp',
@@ -166,7 +172,10 @@ export async function createBasketballPreview({root=project,clock=Date.now(),acc
       if (path==='/sitemap.xml'||path.startsWith('/.well-known/')) { send(res,404,textType,'Not available in this local preview'); return; }
       if (path==='/bracket-config.json') { send(res,200,dataType,'{"enabled":false}'); return; }
       if (Object.hasOwn(localFiles,path)) {
-        send(res,200,types[extname(path)],await readFile(join(root,localFiles[path])));
+        const bytes=await readFile(join(root,localFiles[path]));
+        const content=['/basketball-preview/scoreboard.mjs','/basketball-preview/preview-ui.mjs'].includes(path)
+          ? bytes.toString('utf8').replaceAll("'../frontend/","'../").replaceAll("'./preview-navigation-routes.mjs'","'./navigation-routes.mjs'") : bytes;
+        send(res,200,types[extname(path)],content);
         return;
       }
       const profile=()=>accounts.profile(req);
@@ -195,12 +204,44 @@ export async function createBasketballPreview({root=project,clock=Date.now(),acc
         send(res,200,dataType,JSON.stringify({snapshot:sanitizeBracketData(current.snapshot),profile:await profile()}));
         return;
       }
+      if (path==='/basketball-preview/scoreboard-data.json') {
+        const years=[...seasons.keys()].sort((a,b)=>b-a);
+        const latest=seasons.get(activeYear);
+        if (!latest?.snapshot) { send(res,404,dataType,'{}'); return; }
+        const slate=latest?.dataset?.games.filter(game=>Number.isFinite(Date.parse(game.startDate))) ?? [];
+        const dates=[...new Set(slate.map(game=>dayKey(game.startDate)))].sort();
+        const directory=Object.fromEntries(years.map(year=>[year,{dates:year===activeYear ? dates : [],historical:seasons.get(year).historical}]));
+        const selection=basketballScoreboardSelection({years,currentSeason:activeYear,directory},incoming.searchParams);
+        const context=seasons.get(selection.year);
+        if (!context?.snapshot) { send(res,404,dataType,'{}'); return; }
+        const {season,asOf}=context.snapshot;
+        const teams=context.snapshot.teams.map(({id,name,mascot,conference,color,sorRank,wins,losses})=>({id,name,mascot,conference,color,sorRank,wins,losses}));
+        const games=selection.historical ? [] : slate.filter(game=>dayKey(game.startDate)===selection.date);
+        const records=source=>games.filter(game=>source.has(game.id)).map(game=>[game.id,source.get(game.id)]);
+        send(res,200,dataType,JSON.stringify({selection,snapshot:{season,asOf,teams},group:{games,
+          forecasts:records(context.forecasts),grades:records(context.forecastReportById)}}));
+        return;
+      }
       if (path==='/' || path==='/preview-profile/' || path==='/preview-profile') {
         const owner=await profile();
         const isProfile=path!=='/';
         send(res,200,htmlType,html({active:null,title:isProfile?'Practice profile':'College sports intelligence',profile:owner,
           body:isProfile?profilePage(owner,incoming.searchParams):portal({football:await getFootballPublication(),basketball:seasons.get(activeYear)}),
           script:isProfile?'':scriptTag('/basketball-preview/portal.js')}));
+        return;
+      }
+      const poll = Object.keys(basketballPollRoutes).find(key => basketballPollRoutes[key] === path.replace(/\/?$/, '/'));
+      if (poll) {
+        const current = seasons.get(activeYear);
+        if (!current?.snapshot) { send(res,404,htmlType,notFound(await profile())); return; }
+        const saved = await readFile(join(root,'published','basketball-polls.json'),'utf8').then(JSON.parse).catch(error => {
+          if (error.code !== 'ENOENT') throw error;
+          return null;
+        });
+        const {polls} = readBasketballPolls(saved,current.teams,activeYear);
+        send(res,200,htmlType,html({title:`Compare Basketball Rankings · ${BASKETBALL_POLLS[poll].name}`,
+          current:'polls',pathname:path,season:activeYear,profile:await profile(),publication:current.snapshot,
+          body:renderBasketballRankingComparison(current.snapshot,polls,poll)}));
         return;
       }
       if (path==='/basketball' || path.startsWith('/basketball/')) {
@@ -210,7 +251,7 @@ export async function createBasketballPreview({root=project,clock=Date.now(),acc
           send(res,404,htmlType,notFound(await profile())); return;
         }
         const knownSeasons=[...seasons.keys()].sort((a,b)=>b-a);
-        const owner=await profile(), ctx={year,profile:owner,seasons:knownSeasons,
+        const owner=await profile(), ctx={year,profile:owner,seasons:knownSeasons,scoreboardPreview:'/basketball-preview/scoreboard-data.json',
           conferenceHistory:knownSeasons.map(season=>({season,historical:seasons.get(season).historical,quality:seasons.get(season).conferenceQuality})),
           teamSeasons:id=>knownSeasons.filter(season=>seasons.get(season).teams.has(id)),...seasons.get(year)};
         const picks=view==='contest'&&ctx.snapshot ? await contestBoard(accounts,req,ctx,incoming.searchParams) : '';
@@ -219,7 +260,8 @@ export async function createBasketballPreview({root=project,clock=Date.now(),acc
         if (!body) { send(res,404,htmlType,notFound(owner)); return; }
         const scripts = view === 'march-madness' ? '<link rel="stylesheet" href="/basketball-bracket.css">'+scriptTag('/basketball-preview/bracket-page.js')
           : view === 'matchup-lab' ? '<link rel="stylesheet" href="/team-identity.css"><link rel="stylesheet" href="/team-players.css">'+scriptTag('/basketball-preview/matchup.js')
-            : view === 'conferences' ? scriptTag('/basketball-preview/conference.js') : '';
+            : view === 'conferences' ? scriptTag('/basketball-preview/conference.js')
+            : view === 'scoreboard' ? '<link rel="stylesheet" href="/scoreboard.css"><link rel="stylesheet" href="/game-discovery.css"><link rel="stylesheet" href="/team-identity.css">'+scriptTag('/basketball-preview/scoreboard.mjs') : '';
         send(res,200,htmlType,html({title:title??'Basketball',description:`Division I men’s basketball · ${title??'The Games Decide'}`,
           current:view,pathname:path,season:year,profile:owner,publication:ctx.snapshot,body,script:scripts}));
         return;

@@ -37,7 +37,7 @@ export function basketballPublicView(fetchRecord, index) {
       slateDates: directory.dates,
     };
     let group = emptyGames;
-    if (view === 'scoreboard' || view === 'picks') {
+    if (view === 'picks') {
       const date = query.get('date') ?? (directory.dates.includes(dayKey(Date.now())) ? dayKey(Date.now()) : undefined);
       if (date && directory.dates.includes(date)) group = await fetchRecord(year + '/slate/' + date + '.json');
     } else if (view.startsWith('teams/')) {

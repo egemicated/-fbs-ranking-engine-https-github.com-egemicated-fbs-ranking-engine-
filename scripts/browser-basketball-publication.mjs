@@ -37,9 +37,11 @@ assert.ok(index.years.length >= 1 && teamA && teamB && picksDate);
 const pages = [
   ['/', '.fc-portal-grid','sports'], ['/sports/', '.fc-portal-grid','sports-alias'], ['/football/', '.home-hero','football'],
   ['/basketball/', '.fc-hoops-hero','basketball'], ['/basketball/rankings/','[data-ranking-browser]','rankings'],
+  ['/basketball/polls/','[data-basketball-ranking-comparison]','ap-comparison'],
+  ['/basketball/polls/coaches/','[data-basketball-ranking-comparison]','coaches-comparison'],
   ['/basketball/teams/','[data-team-browser]','teams'], [teamPath(teamA), '.fc-content','team'],
   [matchup,'[data-matchup-form][data-matchup-enhanced]','matchup'], ['/basketball/conferences/','[data-gd-basketball-conferences]','conference'],
-  ['/basketball/scoreboard/?date='+picksDate,'.fc-games','scoreboard'],
+  ['/basketball/scoreboard/?date='+picksDate,'.scoreboard-game','scoreboard'],
   ['/basketball/picks/?date='+picksDate,'.fc-games','picks'],
   ['/basketball/model-reports/','[data-view-results]','reports'],
   ['/basketball/ranking-history/','[data-view-results]','history'],
@@ -173,6 +175,125 @@ async function verifyRankings(page) {
   assert.equal(await notice.isHidden(),true);
 }
 
+async function verifyRankingComparison(page) {
+  const hub = page.getByRole('navigation', { name: 'Ranking views' });
+  const source = page.getByRole('navigation', { name: 'Poll source' });
+  const comparison = page.locator('[data-basketball-ranking-comparison]');
+  await page.goto(origin + '/basketball/rankings/');
+  assert.equal(await hub.getByRole('link', { name: 'Rankings', exact: true }).getAttribute('aria-current'), 'page');
+  await hub.getByRole('link', { name: 'Compare Rankings' }).click();
+  await page.waitForURL(origin + '/basketball/polls/');
+  await comparison.waitFor();
+  assert.equal(await hub.getByRole('link', { name: 'Compare Rankings' }).getAttribute('aria-current'), 'page');
+  assert.equal(await source.getByRole('link', { name: 'AP Top 25' }).getAttribute('aria-current'), 'page');
+  const leader = sourceSeason.snapshot.teams.find(team => team.sorRank === 1);
+  assert.ok(leader);
+  const top = comparison.locator('tbody tr').first().locator('td').first();
+  await top.locator(`a[href^="${teamPath(leader)}"]`).waitFor();
+  assert.equal(await comparison.locator('tbody tr').count(), 25);
+
+  await source.getByRole('link', { name: 'USA TODAY Coaches Poll' }).click();
+  await page.waitForURL(origin + '/basketball/polls/coaches/');
+  await comparison.getByRole('columnheader', { name: 'USA TODAY Coaches Poll' }).waitFor();
+  assert.equal(await source.getByRole('link', { name: 'USA TODAY Coaches Poll' }).getAttribute('aria-current'), 'page');
+  await page.goBack();
+  await comparison.getByRole('columnheader', { name: 'AP Top 25' }).waitFor();
+  await page.goBack();
+  await page.locator('[data-ranking-browser]').waitFor();
+}
+
+async function verifyScoreboard(page) {
+  let date, slate;
+  for (const candidate of index.directory[index.currentSeason].dates.slice().reverse()) {
+    const record = await source('slate/'+candidate+'.json');
+    if (record.games.filter(game=>game.completed).length>=2) { date=candidate; slate=record; break; }
+  }
+  assert.ok(slate,'Published basketball verification needs two saved finals on one game day');
+  const nextDay = new Date(Date.parse(date)+86_400_000).toISOString().slice(0,10);
+  const sample = slate.games.find(game=>game.completed);
+  const alternate = version === 'f'.repeat(24) ? 'e'.repeat(24) : 'f'.repeat(24);
+  const newer = new Date(Date.parse(sourceSeason.snapshot.asOf)+1_000).toISOString();
+  const alternateRoot = '**/basketball-data/'+alternate+'/';
+  let mode = 'baseline';
+  const routes = [
+    ['**/basketball-data/latest.json',route=>mode==='unavailable' ? route.fulfill({status:503,body:'Unavailable'})
+      : route.fulfill({json:{version:mode==='newer' ? alternate : version}})],
+    [alternateRoot+'index.json',route=>route.fulfill({json:index})],
+    [alternateRoot+index.currentSeason+'/season.json',route=>route.fulfill({json:{...sourceSeason,
+      snapshot:{...sourceSeason.snapshot,asOf:newer}}})],
+    [alternateRoot+index.currentSeason+'/slate/'+date+'.json',route=>route.fulfill({json:{...slate,
+      games:slate.games.map(game=>game.id===sample.id ? {...game,homePoints:game.homePoints+1} : game)}})],
+  ];
+  for (const [path,handler] of routes) await page.route(path,handler);
+  try {
+    const boardUrl=origin+'/basketball/scoreboard/?date='+date;
+    await page.goto(boardUrl);
+    const cards=page.locator('[data-scoreboard-section="final"] article');
+    const direct=page.locator(`[data-game-id="${sample.id}"]`);
+    const refresh=page.getByRole('button',{name:'Check for updates'});
+    const next=page.getByRole('link',{name:'Next day'});
+    const dateInput=page.getByLabel('Game date');
+    await direct.waitFor();
+    assert.equal(await cards.count(),slate.games.filter(game=>game.completed).length);
+    assert.equal(await direct.locator('.scoreboard-score').last().textContent(),String(sample.homePoints));
+    assert.equal(await page.getByRole('link',{name:/Gamecast/}).count(),0);
+    assert.equal(await page.locator('[data-game-filter="scope"]').count(),0);
+    await page.evaluate(()=>{window.basketballScoreboardTest=true;});
+    await next.click();
+    await page.waitForURL(url=>url.searchParams.get('date')===nextDay);
+    assert.equal(await dateInput.inputValue(),nextDay);
+    assert.equal(await next.evaluate(node=>node===document.activeElement),true);
+    await page.goBack();
+    await page.waitForFunction(value=>document.querySelector('input[name=date]')?.value===value,date);
+    assert.equal(await page.evaluate(()=>window.basketballScoreboardTest),true);
+
+    const first=await cards.first().getAttribute('data-game-id');
+    await cards.first().focus();
+    await page.keyboard.press('Alt+ArrowDown');
+    assert.equal(await cards.nth(1).getAttribute('data-game-id'),first);
+    await page.getByRole('button',{name:'Reset order'}).click();
+    assert.equal(await cards.first().getAttribute('data-game-id'),first);
+    await page.getByRole('button',{name:'Collapse completed games'}).click();
+    await cards.first().waitFor({state:'hidden'});
+    await page.getByRole('button',{name:'Show completed games'}).click();
+    await cards.first().waitFor();
+
+    await page.getByLabel('Status',{exact:true}).selectOption('final');
+    await page.getByLabel('Close matchups').check();
+    const close=slate.games.filter(game=>game.completed && Math.abs(game.homePoints-game.awayPoints)<=7);
+    assert.equal(await cards.count(),close.length);
+    await page.getByLabel('Close matchups').uncheck();
+    await page.getByLabel('SOR Top 25 teams').check();
+    const ranked=new Set(sourceSeason.snapshot.teams.filter(team=>team.sorRank>0 && team.sorRank<=25).map(team=>team.id));
+    const expectedRanked=slate.games.filter(game=>game.completed && (ranked.has(game.home)||ranked.has(game.away)));
+    assert.equal(await cards.count(),expectedRanked.length);
+    await page.getByLabel('SOR Top 25 teams').uncheck();
+    await page.getByLabel('Status',{exact:true}).selectOption('all');
+
+    mode='newer';
+    await refresh.click();
+    await direct.locator('.scoreboard-score').last().filter({hasText:new RegExp('^'+(sample.homePoints+1)+'$')}).waitFor();
+    mode='unavailable';
+    await refresh.click();
+    await page.locator('.scoreboard-warning').filter({hasText:'The refresh failed'}).waitFor();
+    assert.equal(await direct.locator('.scoreboard-score').last().textContent(),String(sample.homePoints+1));
+    await dateInput.fill(nextDay);
+    await page.waitForFunction(value=>document.querySelector('input[name=date]')?.value===value,date);
+    assert.equal(await direct.locator('.scoreboard-score').last().textContent(),String(sample.homePoints+1));
+    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);
+
+    const pick=page.locator('[data-game-id] a').filter({hasText:'Saved prediction'}).first();
+    if (await pick.count()) {
+      const anchor = new URL(await pick.getAttribute('href'),origin).hash;
+      await pick.click();
+      await page.locator(anchor).waitFor();
+      assert.equal(new URL(page.url()).hash,anchor);
+    }
+  } finally {
+    for (const [path,handler] of routes) await page.unroute(path,handler);
+  }
+}
+
 const browser = await chromium.launch({headless:true,
   ...(process.env.QUALITY_BROWSER ? {executablePath:process.env.QUALITY_BROWSER} : {}),args:['--no-sandbox']});
 try {
@@ -194,7 +315,7 @@ try {
       assert.equal(await page.locator('footer.gd-footer').count(),1,path+' shared footer');
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true,width+' '+path);
       assert.equal(await page.locator('a[href*="/preview-profile/"]').count(),0);
-      if (evidence && [390,1440].includes(width) && ['sports','football','basketball','rankings','team','matchup','bracket'].includes(name)) {
+      if (evidence && [390,1440].includes(width) && ['sports','football','basketball','rankings','team','matchup','scoreboard','bracket'].includes(name)) {
         await page.screenshot({path:resolve(evidence,name+'-'+width+'.png'),animations:'disabled'});
       }
     }
@@ -242,6 +363,8 @@ try {
   await verifyMatchupHistory(page,true);
   await verifyMatchupHistory(page,false);
   await verifyRankings(page);
+  await verifyRankingComparison(page);
+  await verifyScoreboard(page);
 
   const [primary] = sourceSeason.conferenceQuality.rows.filter(row=>row.nonconference.games>0);
   await page.goto(origin+'/basketball/conferences/?'+new URLSearchParams({view:'head',a:primary.conference}));
@@ -268,6 +391,8 @@ try {
   const desktopPage = await desktop.newPage();
   await verifyMatchupHistory(desktopPage,true);
   await verifyMatchupHistory(desktopPage,false);
+  await verifyRankingComparison(desktopPage);
+  await verifyScoreboard(desktopPage);
   await desktop.close();
   for (const path of ['/basketball/contest/','/preview-profile/','/basketball-preview/bracket-data.json','/basketball/preview-accounts.mjs','/.env.basketball.local']) {
     assert.equal((await fetch(origin+path)).status,404,path);

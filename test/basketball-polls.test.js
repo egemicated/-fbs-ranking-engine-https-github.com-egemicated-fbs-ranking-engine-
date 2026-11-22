@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { basketballPollCheckDue, basketballPollWeek, readBasketballPolls, updateBasketballPolls } from '../basketball/poll-publication.mjs';
+import { renderBasketballRankingComparison } from '../basketball/poll-comparison.mjs';
 
 const season=2027, observedAt='2026-11-23T19:06:00Z';
 const teams=new Map(Array.from({length:30},(_,i)=>['ncaam-d1:'+(i+1),{name:'School '+(i+1)}]));
@@ -55,4 +56,32 @@ test('uses the Eastern week for primary and conditional recovery across DST',()=
   assert.equal(basketballPollCheckDue(new Date('2026-11-24T14:30:00Z'),'recovery'),true);
   assert.equal(basketballPollCheckDue(new Date('2027-03-15T18:00:00Z'),'primary'),true);
   assert.equal(basketballPollCheckDue(new Date('2027-03-16T13:30:00Z'),'recovery'),true);
+});
+
+const snapshot = { season, asOf: '2026-11-24T14:30:00Z', teams: [...teams].map(([id, team], index) => ({
+  id, name: team.name, sorRank: index < 2 ? 1 : index + 1, wins: 2, losses: 1,
+})) };
+
+test('basketball comparison displays distinct dates, verified ties and matching team counts', () => {
+  const ap = rows('ap');
+  ap[1].ranking = 1;
+  const { polls } = updateBasketballPolls(null, ap, opts);
+  const html = renderBasketballRankingComparison(snapshot, polls, 'ap');
+  const firstRow = html.match(/<th scope="row">1<\/th>(.*?)<\/tr>/s)?.[1];
+  assert.match(html, /GD SOR snapshot <time datetime="2026-11-24T14:30:00Z">/);
+  assert.match(html, /AP Top 25 dated <time datetime="2026-11-23">November 23, 2026<\/time>/);
+  assert.match(html, /poll’s exact game cutoff is unverified/);
+  assert.match(html, /25 teams appear in both Top 25 lists/);
+  assert.match(firstRow, /<td>.*School 1.*School 2.*<\/td><td>.*School 1.*School 2.*<\/td>/s);
+  assert.equal((firstRow.match(/2–1/g) ?? []).length, 2, 'records appear only on the dated SOR snapshot side');
+  assert.match(html, /<th scope="row">2<\/th><td>—<\/td><td>—<\/td>/);
+});
+
+test('basketball comparison retains current SOR when the selected poll has no verified edition', () => {
+  const { polls } = updateBasketballPolls(null, rows('ap'), opts);
+  const html = renderBasketballRankingComparison(snapshot, polls, 'coaches');
+  assert.match(html, /No verified USA TODAY Coaches Poll edition is available yet/);
+  assert.match(html, /\/basketball\/polls\/coaches\/" aria-current="page"/);
+  assert.match(html, /<th scope="row">1<\/th><td>.*School 1.*School 2.*<\/td><td>—<\/td>/s);
+  assert.doesNotMatch(html, /appear\w* in both Top 25 lists|First observed/);
 });

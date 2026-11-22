@@ -1,12 +1,14 @@
+export const basketballPollRoutes = Object.freeze({ ap: '/basketball/polls/', coaches: '/basketball/polls/coaches/' });
+
 export const destination = {
   football: {
-    home: '/football/', rankings: '/rankings', scoreboard: '/scoreboard', teams: '/teams/fbs/',
+    home: '/football/', rankings: '/rankings', polls: '/polls/ap/', scoreboard: '/scoreboard', teams: '/teams/fbs/',
     matchup: '/matchup-lab', conferences: '/conference-strength/', picks: '/weekly-picks',
     contest: '/beat-the-model/', reports: '/model-reports/fbs/', history: '/ranking-history/',
     methodology: '/methodology/', postseason: '/playoff-bracket/',
   },
   basketball: {
-    home: '/basketball/', rankings: '/basketball/rankings/', scoreboard: '/basketball/scoreboard/', teams: '/basketball/teams/',
+    home: '/basketball/', rankings: '/basketball/rankings/', polls: basketballPollRoutes.ap, scoreboard: '/basketball/scoreboard/', teams: '/basketball/teams/',
     matchup: '/basketball/matchup-lab/', conferences: '/basketball/conferences/', picks: '/basketball/picks/',
     contest: '/basketball/contest/', reports: '/basketball/model-reports/', history: '/basketball/ranking-history/',
     methodology: '/basketball/methodology/', postseason: '/basketball/march-madness/',
@@ -44,7 +46,7 @@ export const groups = {
     rankings: [
       ['Ranking models', [['Strength of Record', '/basketball/rankings/'], ['Predictive Strength', '/basketball/rankings/?model=predictive'],
         ['Experimental Performance', '/basketball/rankings/?model=performance']]],
-      ['Changes over time', [['Ranking History', '/basketball/ranking-history/']]],
+      ['Other views', [['Compare Rankings', basketballPollRoutes.ap], ['Ranking History', '/basketball/ranking-history/']]],
     ],
     conferences: [
       ['Conference evidence', [['Conference Strength', '/basketball/conferences/']]],
@@ -65,7 +67,7 @@ export const groups = {
 };
 
 const footballAliases = {
-  team: 'teams', 'my-teams': 'teams', polls: 'rankings', 'forge-rankings': 'rankings',
+  team: 'teams', 'my-teams': 'teams', 'forge-rankings': 'rankings',
   'sor-compare': 'research', 'weekly-picks': 'picks', 'beat-the-model': 'contest', 'conference-strength': 'conferences',
   'cfp-scenarios': 'postseason', 'playoff-bracket': 'postseason', 'model-reports': 'reports', 'ranking-history': 'history',
   'matchup-lab': 'matchup',
@@ -79,7 +81,7 @@ export function sectionAt(sport, pathname) {
   return footballAliases[first] ?? (first === 'football' || !first ? 'home' : first);
 }
 
-const sectionGroup = {picks: 'predictions', contest: 'predictions', reports: 'research', history: 'research', methodology: 'research'};
+const sectionGroup = {polls: 'rankings', picks: 'predictions', contest: 'predictions', reports: 'research', history: 'research', methodology: 'research'};
 export function primarySection(sport, pathname) {
   const current = sectionAt(sport, pathname);
   return sectionGroup[current] ?? current;

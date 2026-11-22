@@ -21,6 +21,7 @@ const checkTime = new Intl.DateTimeFormat('en-US', {
   timeZone: 'America/Denver', month:'short', day:'numeric', year:'numeric', hour: 'numeric', minute: '2-digit', second: '2-digit', timeZoneName: 'short',
 });
 const sections = [
+  ['live', 'In progress at last update', 'No games were in progress at the last update.'],
   ['upcoming', 'Upcoming', 'No upcoming games on this slate.'],
   ['changed', 'Schedule changes', ''],
   ['final', 'Final', 'No final scores yet.'],
@@ -31,7 +32,7 @@ function escapeHtml(value) {
 }
 
 function sameSlate(a, b) {
-  return a && b && a.year === b.year && a.type === b.type && a.week === b.week;
+  return a && b && slateId(a) === slateId(b);
 }
 
 export function readScoreboardSlate(data) {
@@ -79,7 +80,7 @@ export function reconcileScoreboardSlate(slate, previous) {
   let retainedFinals=0;
   const games=slate.games.map(game=>{
     const old=prior.get(game.id);
-    if(old?.state!=='final'||game.state!=='upcoming'||old.start!==game.start||
+    if(old?.state!=='final'||!['upcoming','live'].includes(game.state)||old.start!==game.start||
       old.teams.some((team,index)=>team.id!==game.teams[index].id))return game;
     retainedFinals++;
     return {...old,retainedFinal:true};
@@ -105,16 +106,17 @@ export async function loadScoreboard(signal, previous, { path, fetcher = fetch, 
   return { ...current, receivedAt: new Date(now()).toISOString() };
 }
 
-function kickoff(game) {
-  if (!Number.isFinite(game.start)) return 'Kickoff TBD';
-  return game.timeTbd ? `${gameDateOnly.format(game.start)} · Time TBD` : `${gameDate.format(game.start)} · ${gameTime.format(game.start)}`;
+function startLabel(game, { startTerm, timeTbdDay }) {
+  if (!Number.isFinite(game.start)) return `${startTerm} TBD`;
+  return game.timeTbd ? `${timeTbdDay?.(game) ?? gameDateOnly.format(game.start)} · Time TBD`
+    : `${gameDate.format(game.start)} · ${gameTime.format(game.start)}`;
 }
 
-function teamLine(team, game, winner) {
-  return `<div class="scoreboard-team team-accent-row${winner ? ' scoreboard-winner' : ''}" ${teamAccentAttr(team.id)}>
+function teamLine(team, winner) {
+  return `<div class="scoreboard-team team-accent-row${winner ? ' scoreboard-winner' : ''}" ${teamAccentAttr(team.id,team.color)}>
     <span class="scoreboard-team-rank" data-scoreboard-rank="${escapeHtml(team.id)}"></span>
-    <div class="scoreboard-team-name">${teamNameMarkup(team.id, team.schoolName ?? team.name)}${team.record ? `<small>${escapeHtml(team.record)}</small>` : ''}</div>
-    ${game.state === 'final' ? `<div class="scoreboard-score-line"><strong class="scoreboard-score">${escapeHtml(team.score)}</strong>${winner ? '<small>Winner</small>' : ''}</div>` : ''}
+    <div class="scoreboard-team-name">${teamNameMarkup(team.id, team.schoolName ?? team.name,team.mascot)}${team.record ? `<small>${escapeHtml(team.record)}</small>` : ''}</div>
+    ${team.score == null ? '' : `<div class="scoreboard-score-line"><strong class="scoreboard-score">${escapeHtml(team.score)}</strong>${winner ? '<small>Winner</small>' : ''}</div>`}
   </div>`;
 }
 
@@ -122,24 +124,45 @@ function gameName(game) {
   return game.teams.map(team => team.name).join(' vs. ');
 }
 
-function gameDetails(game) {
-  const detail = game.state === 'upcoming' ? kickoff(game) : game.detail || sections.find(([id]) => id === game.state)[1];
-  const note = game.state === 'final' ? kickoff(game) : '';
-  const status = { upcoming: 'Scheduled', final: 'Final', changed: 'Schedule update' }[game.state];
+const footballFormat = {
+  title:'FBS schedule', startTerm:'Kickoff', articleOrderKey:orderStorageKey,
+  sourceNote:'Published scores and kickoff times from CollegeFootballData. Times use Mountain Time. Follow Gamecast for in-game updates and TV listings.',
+  diagnosticsNote:'<p><a href="/weekly-picks">Weekly Picks</a> grades saved predictions against published results. <a href="/beat-the-model/">Beat the Model</a> shows its contest update separately.</p>',
+  delayNote:'Check Gamecast for the latest status.',
+  formatRank:rank=>Number.isInteger(rank) && rank >= 1 && rank <= 25 ? `CFP #${rank}` : '',
+  external:game=>({href:`https://www.espn.com/college-football/game/_/gameId/${game.id}`,label:'Gamecast'}),
+  links(game) {
+    const links=game.teams.filter(team=>team.published).map(team=>({href:routeHref(`team/${team.id}`),label:team.name}));
+    if (game.teams.every(team=>team.published)) links.push(
+      {href:routeHref(`compare/matchup/${game.teams[1].id}/${game.teams[0].id}/${game.row.neutral ? 'neutral' : 'home'}`),label:'Matchup Lab'},
+      {href:routeHref(`compare/weekly/${game.row.seasonType}:${game.row.week}/${game.id}`),label:game.row.pick?'Saved prediction':'Weekly picks'},
+    );
+    return [...links,{href:'/beat-the-model/',label:'Make picks'}];
+  },
+};
+
+function gameDetails(game, format) {
+  const detail = game.state === 'upcoming' ? startLabel(game,format) : game.detail || sections.find(([id]) => id === game.state)[1];
+  const note = ['final','live'].includes(game.state) ? startLabel(game,format) : '';
+  const status = { upcoming:'Scheduled', final:'Final', changed:'Schedule update', live:'In progress at last update' }[game.state];
+  const siteLink = format.external?.(game);
+  const metadata = [note, format.venue?.(game)].filter(Boolean).join(' · ');
+  const close = game.close && game.state !== 'changed';
   return `<div class="scoreboard-game-top"><div class="scoreboard-game-kickoff"><span class="scoreboard-game-status">${status}</span>
       ${detail && String(detail).toLowerCase() !== status.toLowerCase() ? `<strong>${escapeHtml(detail)}</strong>` : ''}</div></div>
-    <div class="scoreboard-teams">${game.teams.map((team, index) => teamLine(team, game, game.state === 'final' && team.score != null && game.teams[1 - index].score != null && Number(team.score) > Number(game.teams[1 - index].score))).join('')}</div>
-    <div class="scoreboard-game-bottom">${note ? `<span>${escapeHtml(note)}</span>` : ''}${game.close && game.state !== 'changed' ? `<span class="scoreboard-close-label">${game.state === 'upcoming' ? 'Close forecast' : 'Within 7 points'}</span>` : ''}<a href="https://www.espn.com/college-football/game/_/gameId/${game.id}" target="_blank" rel="noopener">Gamecast<span class="sr-only"> for ${escapeHtml(gameName(game))}</span></a></div>
-    <div class="scoreboard-game-links">${game.teams.filter(team => team.published).map(team => `<a href="${routeHref(`team/${team.id}`)}">${escapeHtml(team.name)}</a>`).join('')}${game.teams.every(team => team.published) ? `<a href="${routeHref(`compare/matchup/${game.teams[1].id}/${game.teams[0].id}/${game.row.neutral ? 'neutral' : 'home'}`)}">Matchup Lab</a><a href="${game.predictionHref}">${game.hasSavedPrediction?'Saved prediction':'Weekly picks'}</a>` : ''}<a href="/beat-the-model/">Make picks</a></div>`;
+    <div class="scoreboard-teams">${game.teams.map((team, index) => teamLine(team, game.state === 'final' && team.score != null && game.teams[1 - index].score != null && Number(team.score) > Number(game.teams[1 - index].score))).join('')}</div>
+    ${metadata || close || siteLink ? `<div class="scoreboard-game-bottom">${metadata ? `<span>${escapeHtml(metadata)}</span>` : ''}${close ? `<span class="scoreboard-close-label">${game.state === 'upcoming' ? 'Close forecast' : 'Within 7 points'}</span>` : ''}${siteLink ? `<a href="${escapeHtml(siteLink.href)}" target="_blank" rel="noopener">${escapeHtml(siteLink.label)}<span class="sr-only"> for ${escapeHtml(gameName(game))}</span></a>` : ''}</div>` : ''}
+    <div class="scoreboard-game-links">${format.links(game).map(({href,label})=>`<a href="${escapeHtml(href)}">${escapeHtml(label)}</a>`).join('')}</div>
+    ${format.details?.(game) ?? ''}`;
 }
 
-function readOrder() {
+function readOrder(storageKey) {
   try {
-    const saved = JSON.parse(sessionStorage.getItem(orderStorageKey));
+    const saved = JSON.parse(sessionStorage.getItem(storageKey));
     if (typeof saved?.slate !== 'string') return null;
     const groups = Object.fromEntries(sections.flatMap(([key]) => {
       const ids = saved.groups?.[key];
-      return Array.isArray(ids) ? [[key, ids.filter(id => typeof id === 'string' && /^\d+$/.test(id))]] : [];
+      return Array.isArray(ids) ? [[key, ids.filter(id => typeof id === 'string')]] : [];
     }));
     return { slate: saved.slate, groups };
   } catch {
@@ -147,17 +170,17 @@ function readOrder() {
   }
 }
 
-function saveOrder(order) {
+function saveOrder(order, storageKey) {
   try {
-    if (Object.keys(order.groups).length) sessionStorage.setItem(orderStorageKey, JSON.stringify(order));
-    else sessionStorage.removeItem(orderStorageKey);
+    if (Object.keys(order.groups).length) sessionStorage.setItem(storageKey, JSON.stringify(order));
+    else sessionStorage.removeItem(storageKey);
   } catch {
     // The current page can still keep the order in memory.
   }
 }
 
 function slateId(slate) {
-  return `${slate.year}:${slate.type}:${slate.week}`;
+  return slate.key ?? `${slate.year}:${slate.type}:${slate.week}`;
 }
 
 function sectionGames(slate, key, order) {
@@ -178,7 +201,7 @@ function newCard(id) {
   return card;
 }
 
-function updateCard(card, game, count) {
+function updateCard(card, game, count, format) {
   const name = gameName(game);
   card.dataset.state = game.state;
   card.toggleAttribute('data-close-game', game.close);
@@ -194,14 +217,17 @@ function updateCard(card, game, count) {
     card.removeAttribute('aria-keyshortcuts');
   }
   const details = card.querySelector('.scoreboard-game-details');
-  const markup = gameDetails(game);
+  const markup = gameDetails(game, format);
   if (details.scoreboardMarkup !== markup) {
+    const expanded = details.querySelector('details')?.open;
     details.innerHTML = markup;
+    const disclosure = details.querySelector('details');
+    if (expanded && disclosure) disclosure.open = true;
     details.scoreboardMarkup = markup;
   }
 }
 
-function drawSlate(root, slate, order, cards, filtered = false) {
+function drawSlate(root, slate, order, cards, format, filtered = false) {
   const focused = document.activeElement;
   const focusedCard = focused?.closest('[data-game-id]');
   const present = new Set(slate.games.map(game => game.id));
@@ -211,25 +237,25 @@ function drawSlate(root, slate, order, cards, filtered = false) {
     cards.delete(id);
   }
   const title = root.querySelector('[data-scoreboard-slate]');
-  title.textContent = slate.label ? [`${slate.year} ${slate.label}`, slate.dates].filter(Boolean).join(' · ') : 'FBS schedule';
+  title.textContent = slate.title ?? (slate.label ? [`${slate.year} ${slate.label}`, slate.dates].filter(Boolean).join(' · ') : format.title);
   for (const [key, label, empty] of sections) {
     const section = root.querySelector(`[data-scoreboard-section="${key}"]`);
     const games = sectionGames(slate, key, order);
-    section.hidden = key === 'changed' && !games.length;
+    section.hidden = ['changed','live'].includes(key) && !games.length;
     const heading = section.querySelector('h2');
     const headingText = `${label} (${games.length})`;
     if (heading.textContent !== headingText) heading.textContent = headingText;
     const content = section.querySelector('[data-scoreboard-games]');
     const placeholder = section.querySelector('.scoreboard-empty');
     placeholder.hidden = games.length > 0;
-    placeholder.textContent = filtered ? 'No games match these filters.' : empty;
+    placeholder.textContent = filtered ? 'No games match these filters.' : slate.empty?.[key] ?? empty;
     games.forEach((game, index) => {
       let card = cards.get(game.id);
       if (!card) {
         card = newCard(game.id);
         cards.set(game.id, card);
       }
-      updateCard(card, game, games.length);
+      updateCard(card, game, games.length, format);
       if (content.children[index] !== card) content.insertBefore(card, content.children[index] ?? null);
     });
   }
@@ -306,7 +332,7 @@ function mountCardDrag(list, move) {
   }
 
   function begin(target, point, id, touch) {
-    if (gesture || target.closest('a, button, select, input, textarea')) return;
+    if (gesture || target.closest('a, button, select, input, textarea, summary')) return;
     const card = target.closest('[data-movable]');
     if (!card) return;
     const bounds = card.getBoundingClientRect();
@@ -379,10 +405,14 @@ function mountCardDrag(list, move) {
   };
 }
 
-export function mountScoreboard(root, rankForTeam = () => undefined, { getTeams = () => new Map(), getPublication = () => null } = {}) {
-  root.innerHTML = `<p class="scoreboard-source">Published scores and kickoff times from CollegeFootballData. Times use Mountain Time. Follow Gamecast for in-game updates and TV listings.</p>
+export function mountScoreboard(root, rankForTeam = () => undefined, {
+  getTeams = () => new Map(), getPublication = () => null, format = footballFormat,
+  loadSlate, initialQuery, initialFilters, onFiltersChange,
+} = {}) {
+  const {articleOrderKey:storageKey, favorites = true, filterOptions = {includeLive:false}} = format;
+  root.innerHTML = `<p class="scoreboard-source">${escapeHtml(format.sourceNote)}</p>
   <div class="scoreboard-toolbar">
-    <div><h2 data-scoreboard-slate>FBS schedule</h2><p data-scoreboard-checked>Loading the published schedule…</p></div>
+    <div><h2 data-scoreboard-slate>${escapeHtml(format.title)}</h2><p data-scoreboard-checked>Loading the published schedule…</p></div>
     <button class="button light small" type="button" data-scoreboard-refresh>Check for updates</button>
   </div>
   <details class="scoreboard-diagnostics" data-scoreboard-diagnostics><summary>Data times and coverage</summary><dl>
@@ -390,9 +420,9 @@ export function mountScoreboard(root, rankForTeam = () => undefined, { getTeams 
     <div><dt>Last refresh attempt</dt><dd data-scoreboard-time="attempt">Not reported</dd></div>
     <div><dt>Published ranking/model snapshot</dt><dd data-scoreboard-time="model">Not reported</dd></div>
     <div><dt>Published schedule and results</dt><dd data-scoreboard-time="schedule">Not reported</dd></div>
-    <div><dt>Saved prediction publication</dt><dd data-scoreboard-time="picks">Not reported</dd></div>
+    <div><dt>${escapeHtml(format.savedTimeLabel ?? 'Saved prediction publication')}</dt><dd data-scoreboard-time="picks">Not reported</dd></div>
     <div><dt>Schedule coverage</dt><dd data-scoreboard-time="coverage">Waiting for data</dd></div>
-  </dl><p><a href="/weekly-picks">Weekly Picks</a> grades saved predictions against published results. <a href="/beat-the-model/">Beat the Model</a> shows its contest update separately.</p></details>
+  </dl>${format.diagnosticsNote}</details>
   <div data-scoreboard-filters></div>
   <div class="scoreboard-order-help" data-scoreboard-order-help hidden>
     <p><span class="scoreboard-touch-tip">Touch and hold a game, then drag to move it.</span><span class="scoreboard-mouse-tip">Drag a game to move it.</span></p>
@@ -412,18 +442,23 @@ export function mountScoreboard(root, rankForTeam = () => undefined, { getTeams 
   const diagnostics = root.querySelector('[data-scoreboard-diagnostics]');
   const sectionList = root.querySelector('.scoreboard-sections');
   const cards = new Map();
-  let order = readOrder();
+  let order = readOrder(storageKey);
   let previous;
   let controller;
   let timer;
   let closed = false;
-  let filters = { ...defaultGameFilters };
+  let filters = { ...defaultGameFilters, ...initialFilters };
+  let activeQuery = initialQuery;
   let filtersMarkup = '';
   let lastAttemptAt = null, feedFailed = false;
   let finalsCollapsed = false;
   const filterRoot = root.querySelector('[data-scoreboard-filters]');
   const dataRoot = document.querySelector('meta[name="publication-data-root"]')?.content;
   const path = dataRoot ? dataRoot + '/weekly-picks.json' : '/weekly-picks';
+  const fetchSlate = loadSlate ?? ((signal,prior)=>loadScoreboard(signal,prior,{path}));
+  const selectionTeams = () => previous?.teams ?? getTeams();
+  const chosenTeams = () => favorites ? getMyTeamIds() : [];
+  const selectionOptions = () => ({teams:selectionTeams(),myTeamIds:chosenTeams(),rankedDivisions:filterOptions.rankedDivisions});
 
   function normalizedGames() {
     return previous.games.map(game => ({
@@ -434,7 +469,8 @@ export function mountScoreboard(root, rankForTeam = () => undefined, { getTeams 
   }
 
   function drawFilters(games, teams) {
-    const markup = gameFilterControls({ filters, games, teams, myTeamIds: getMyTeamIds(), idPrefix: 'scoreboard', includeLive: false });
+    const markup = gameFilterControls({ filters, games, teams, myTeamIds:chosenTeams(), idPrefix:'scoreboard', ...filterOptions,
+      contextControls:format.filterControls?.(previous,filters) });
     if (markup === filtersMarkup) return;
     const focused = filterRoot.contains(document.activeElement) ? document.activeElement.id : null;
     filterRoot.innerHTML = markup;
@@ -444,13 +480,13 @@ export function mountScoreboard(root, rankForTeam = () => undefined, { getTeams 
 
   function updateFreshness() {
     if(closed)return;
-    const publication=getPublication(),samePublishedSeason=String(publication?.season)===previous?.year;
-    checked.textContent=previous?`Schedule as of ${scoreboardTimestamp(previous.source.scheduleAsOf)}`:'Waiting for game data';
+    const publication=previous?.publication ?? getPublication(),samePublishedSeason=String(publication?.season)===previous?.year;
+    checked.textContent=previous?`Schedule as of ${scoreboardTimestamp(previous.source.scheduleAsOf)}`:feedFailed?'Waiting for game data':'Loading the published schedule…';
     const fields={received:scoreboardTimestamp(previous?.receivedAt),attempt:scoreboardTimestamp(lastAttemptAt),
       model:scoreboardTimestamp(samePublishedSeason?publication.asOf:previous?.source.rankingAsOf),
       schedule:scoreboardTimestamp(previous?.source.scheduleAsOf),
       picks:scoreboardTimestamp(previous?.asOf),
-      coverage:previous?`${previous.games.length} games · ${previous.invalidEvents??0} incomplete events excluded · ${previous.duplicateEvents??0} duplicate IDs removed`:'Waiting for data'};
+      coverage:previous?previous.coverage ?? `${previous.games.length} games · ${previous.invalidEvents??0} incomplete events excluded · ${previous.duplicateEvents??0} duplicate IDs removed`:'Waiting for data'};
     for(const [key,text]of Object.entries(fields)){
       const node=diagnostics.querySelector(`[data-scoreboard-time="${key}"]`);
       if(node.textContent!==text)node.textContent=text;
@@ -458,7 +494,7 @@ export function mountScoreboard(root, rankForTeam = () => undefined, { getTeams 
     const messages=[];
     if(feedFailed)messages.push(previous?'The refresh failed. The most recent available schedule is still shown.':'The published schedule is temporarily unavailable.');
     const delayed=scoreboardDelayedGames(previous);
-    if(delayed.length)messages.push(`${delayed.length} ${delayed.length===1?'game is':'games are'} still marked Scheduled more than 15 minutes after confirmed kickoff. Check Gamecast for the latest status.`);
+    if(delayed.length)messages.push(`${delayed.length} ${delayed.length===1?'game is':'games are'} still marked Scheduled more than 15 minutes after confirmed ${format.startTerm.toLowerCase()}. ${format.delayNote}`);
     if(previous?.retainedFinals)messages.push(`This publication returned an earlier status for ${previous.retainedFinals} previously final ${previous.retainedFinals===1?'game':'games'}. The last confirmed final from this visit is retained.`);
     if(previous?.invalidEvents)messages.push('Some published games have incomplete details and cannot be displayed.');
     warning.textContent=messages.join(' ');warning.hidden=!messages.length;
@@ -468,8 +504,8 @@ export function mountScoreboard(root, rankForTeam = () => undefined, { getTeams 
   function updateRankings() {
     if (!previous) return;
     for (const cell of sectionList.querySelectorAll('[data-scoreboard-rank]')) {
-      const rank = rankForTeam(cell.dataset.scoreboardRank, previous.year);
-      const label = Number.isInteger(rank) && rank >= 1 && rank <= 25 ? `CFP #${rank}` : '';
+      const rank = rankForTeam(cell.dataset.scoreboardRank,previous.year,previous);
+      const label = format.formatRank(rank);
       if (cell.textContent !== label) cell.textContent = label;
     }
     updateFreshness();
@@ -477,21 +513,21 @@ export function mountScoreboard(root, rankForTeam = () => undefined, { getTeams 
 
   function renderGames() {
     if (!previous || closed) return;
-    const teams = getTeams();
-    const sameSeason = String(getPublication()?.season) === previous.year;
+    const teams = selectionTeams();
+    const sameSeason = String((previous.publication ?? getPublication())?.season) === previous.year;
     const normalized = normalizedGames();
-    const eligible = new Set(filterGames(normalized, filters, { teams, myTeamIds: getMyTeamIds() }).map(game => game.id));
+    const eligible = new Set(filterGames(normalized,filters,selectionOptions()).map(game=>game.id));
     const closeGames = new Set(filterGames(normalized, { close: true }).map(game => game.id));
     const games = previous.games.filter(game => eligible.has(game.id)).map(game => {
-      const predictionHref = routeHref(`compare/weekly/${game.row.seasonType}:${game.row.week}/${game.id}`);
-      return { ...game, predictionHref, hasSavedPrediction:!!game.row.pick, close: closeGames.has(game.id),
+      return { ...game, close: closeGames.has(game.id),
         teams: game.teams.map(team => {
           const ranked = teams.get(team.id);
-          return { ...team, published: !!ranked, schoolName: ranked?.name,
+          return { ...team, published: !!ranked, schoolName: ranked?.name, mascot:ranked?.mascot,
             record: sameSeason && Number.isInteger(ranked?.wins) && Number.isInteger(ranked?.losses) ? formatRecord(ranked) : '' };
         }) };
     });
-    drawSlate(root, { ...previous, games }, order, cards, Object.entries(filters).some(([key, value]) => value !== defaultGameFilters[key]));
+    drawSlate(root,{...previous,games},order,cards,format,
+      previous.games.length > 0 && Object.entries(filters).some(([key,value])=>value!==defaultGameFilters[key]));
     drawFilters(normalized, teams);
     root.querySelector('[data-scoreboard-section="final"] [data-scoreboard-games]').hidden = finalsCollapsed;
     updateRankings();
@@ -510,13 +546,13 @@ export function mountScoreboard(root, rankForTeam = () => undefined, { getTeams 
     const visibleIds = new Set(games.map(game => game.id));
     const movedIds = games.map(game => game.id);
     order.groups[group] = sectionGames(previous, group, order).map(game => visibleIds.has(game.id) ? movedIds.shift() : game.id);
-    saveOrder(order);
+    saveOrder(order,storageKey);
     renderGames();
     moveStatus.textContent = `${gameName(moved)} moved to position ${to + 1} of ${games.length}.`;
   }
 
   function visibleSectionGames(group) {
-    const included = new Set(filterGames(normalizedGames(), filters, { teams: getTeams(), myTeamIds: getMyTeamIds() }).map(game => game.id));
+    const included = new Set(filterGames(normalizedGames(),filters,selectionOptions()).map(game=>game.id));
     return sectionGames(previous, group, order).filter(game => included.has(game.id));
   }
 
@@ -525,36 +561,44 @@ export function mountScoreboard(root, rankForTeam = () => undefined, { getTeams 
     moveGame(card, games.findIndex(game => game.id === target.dataset.gameId));
   });
 
-  async function update() {
-    if (controller || closed || document.hidden) return;
+  async function update(selection) {
+    if (closed || document.hidden || (controller && !selection)) return;
     clearTimeout(timer);
+    if (selection) controller?.abort();
     controller = new AbortController();
     const request = controller;
     const started = Date.now();
     lastAttemptAt=new Date(started).toISOString();updateFreshness();
     const deadline = setTimeout(() => request.abort(), 10_000);
     try {
-      const slate = await loadScoreboard(request.signal, previous, { path });
-      if (closed) return;
+      const slate = await fetchSlate(request.signal,previous,selection?.query ?? activeQuery);
+      if (closed || request !== controller || request.signal.aborted) return;
       const key = slateId(slate);
       if (order?.slate !== key) {
         drag.cancel();
         order = { slate: key, groups: {} };
-        saveOrder(order);
+        saveOrder(order,storageKey);
       }
       if (drag.source && !slate.games.some(game => game.id === drag.source.dataset.gameId && game.state === drag.source.dataset.state)) drag.cancel();
       previous = slate;
+      if (selection) {
+        activeQuery = selection.query;
+        filters = { ...filters,...selection.filters };
+      }
       feedFailed=false;
       renderGames();
       sectionList.hidden = false;
       updateFreshness();
+      return true;
     } catch {
-      if (closed) return;
+      if (closed || request !== controller) return;
       feedFailed=true;updateFreshness();
     } finally {
       clearTimeout(deadline);
-      controller = undefined;
-      if (!closed && !document.hidden) timer = setTimeout(update, Math.max(1000, pollInterval - (Date.now() - started)));
+      if (request === controller) {
+        controller = undefined;
+        if (!closed && !document.hidden) timer = setTimeout(update, Math.max(1000, pollInterval - (Date.now() - started)));
+      }
     }
   }
 
@@ -562,13 +606,15 @@ export function mountScoreboard(root, rankForTeam = () => undefined, { getTeams 
     if (document.hidden) clearTimeout(timer);
     else update();
   }
-  refresh.addEventListener('click', update);
+  const refreshNow = () => void update();
+  refresh.addEventListener('click', refreshNow);
   const onFilters = event => {
     const next = readGameFilterChange(filters, event);
     if (!next) return;
     filters = next;
     drag.cancel();
     renderGames();
+    onFiltersChange?.(filters);
   };
   filterRoot.addEventListener('change', onFilters);
   const collapse = root.querySelector('[data-scoreboard-collapse]');
@@ -578,12 +624,12 @@ export function mountScoreboard(root, rankForTeam = () => undefined, { getTeams 
     collapse.textContent = finalsCollapsed ? 'Show completed games' : 'Collapse completed games';
     renderGames();
   });
-  const stopFavorites = subscribeMyTeams(() => renderGames());
-  void loadMyTeams().then(() => renderGames()).catch(() => {});
+  const stopFavorites = favorites ? subscribeMyTeams(renderGames) : null;
+  if (favorites) void loadMyTeams().then(renderGames).catch(() => {});
   resetButton.addEventListener('click', () => {
     drag.cancel();
     order.groups = {};
-    saveOrder(order);
+    saveOrder(order,storageKey);
     refresh.focus({ preventScroll: true });
     renderGames();
     moveStatus.textContent = 'Default game order restored.';
@@ -598,19 +644,20 @@ export function mountScoreboard(root, rankForTeam = () => undefined, { getTeams 
     card.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   });
   document.addEventListener('visibilitychange', onVisibility);
-  window.addEventListener('online', update);
+  window.addEventListener('online', refreshNow);
   update();
   return {
     // Published teams may load after the scoreboard. Refresh links and ranks when they arrive.
     updateRankings:renderGames,
+    selectSlate:(query,filters)=>update({query,filters}),
     unmount() {
       closed = true;
-      stopFavorites();
+      stopFavorites?.();
       drag.unmount();
       clearTimeout(timer);
       controller?.abort();
       document.removeEventListener('visibilitychange', onVisibility);
-      window.removeEventListener('online', update);
+      window.removeEventListener('online', refreshNow);
     },
   };
 }

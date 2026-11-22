@@ -1,6 +1,6 @@
 .game-filters { display:flex; flex-wrap:wrap; align-items:end; gap:12px; padding:16px; border:1px solid var(--line, #d2dfed); border-radius:12px; background:var(--white, #fff); margin:16px 0; }
 .game-filters > label { display:grid; gap:5px; flex:1 1 140px; min-width:0; font-size:12px; font-weight:600; }
-.game-filters select { width:100%; min-height:44px; min-width:0; padding:8px; border:1px solid #c8d8e8; border-radius:7px; background:#fff; color:#132e4f; font:inherit; }
+.game-filters :is(select,input[type="date"]) { width:100%; min-height:44px; min-width:0; padding:8px; border:1px solid #c8d8e8; border-radius:7px; background:#fff; color:#132e4f; font:inherit; }
 .game-filter-checks { display:flex; flex-wrap:wrap; gap:6px 16px; align-items:center; }
 .game-filter-check { display:flex; align-items:center; gap:7px; min-height:44px; font-size:12px; }
 .game-filter-check input { width:17px; height:17px; accent-color:#0c5ab6; }

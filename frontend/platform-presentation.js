@@ -24,6 +24,17 @@ export function pageHero({
 
 export const platformEmpty = message => `<p class="gd-empty">${escapeHtml(message)}</p>`;
 
+export function rankingComparisonTable({ caption, columns, renderTeam }) {
+  const rows = Array.from({ length: 25 }, (_, index) => {
+    const rank = index + 1;
+    const cells = columns.map(({ teams }) => `<td>${teams.filter(team => team.rank === rank).map(renderTeam).join('') || '—'}</td>`);
+    return `<tr><th scope="row">${rank}</th>${cells.join('')}</tr>`;
+  }).join('');
+  return `<div class="table-scroll"><table class="edition-table poll-rank-table">
+    <caption class="sr-only">${escapeHtml(caption)}</caption>
+    <thead><tr><th scope="col">Rank</th>${columns.map(({ label }) => `<th scope="col">${escapeHtml(label)}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+
 export function matchupTeamCard({ side, heading, context = '', picker, strength = '', attributes = '' }) {
   return `<section class="panel compare-picker team-accent-card" data-matchup-side="${side}"${attributes ? ' ' + attributes : ''}>
     <div class="section-label">Team ${side.toUpperCase()}</div><h2>${heading}</h2>

@@ -22,7 +22,13 @@ export function gameDay(game) {
   return game.startTimeTbd === true ? game.startDate.slice(0, 10) : mountainDay.format(value);
 }
 
-export function filterGames(games, selection = {}, { teams, myTeamIds } = {}) {
+const footballDivisions = ['fbs', 'fcs'];
+const isRanked = (team, divisions) => {
+  const rank = team?.displayRank ?? team?.sorRank;
+  return divisions.includes(team?.division) && Number.isInteger(rank) && rank > 0 && rank <= 25;
+};
+
+export function filterGames(games, selection = {}, { teams, myTeamIds, rankedDivisions = footballDivisions } = {}) {
   const filters = { ...defaultGameFilters, ...selection };
   const byId = teamMap(teams);
   const favorites = favoriteIds(myTeamIds);
@@ -34,11 +40,7 @@ export function filterGames(games, selection = {}, { teams, myTeamIds } = {}) {
     const status = game.status === 'final' ? 'final' : game.status === 'live' ? 'live'
       : ['scheduled', 'pending'].includes(game.status) ? 'upcoming' : game.status;
     if (filters.status !== 'all' && filters.status !== status) return false;
-    if (filters.ranked && !sides.some(id => {
-      const team = byId.get(id);
-      const rank = team?.displayRank ?? team?.sorRank;
-      return ['fbs', 'fcs'].includes(team?.division) && Number.isInteger(rank) && rank > 0 && rank <= 25;
-    })) return false;
+    if (filters.ranked && !sides.some(id => isRanked(byId.get(id), rankedDivisions))) return false;
     if (filters.close) {
       if (status === 'live' || status === 'final') {
         if (![game.homePoints, game.awayPoints].every(Number.isFinite) || Math.abs(game.homePoints - game.awayPoints) > 7) return false;
@@ -51,24 +53,28 @@ export function filterGames(games, selection = {}, { teams, myTeamIds } = {}) {
   });
 }
 
-export function gameFilterControls({ filters = {}, teams, games = [], myTeamIds = [], rankLabel = 'SOR', idPrefix = 'games', includeLive = true } = {}) {
+export function gameFilterControls({ filters = {}, teams, games = [], myTeamIds = [], rankLabel = 'SOR', idPrefix = 'games',
+  includeLive = true, liveLabel = 'Live', includeMyTeams = true, includeDay = true, includeChanges = false,
+  rankedDivisions = footballDivisions, contextControls = '' } = {}) {
   const chosen = { ...defaultGameFilters, ...filters };
   const byId = teamMap(teams);
   const conferences = [...new Set([...byId.values()].map(team => team.conference).filter(Boolean))].sort();
   const days = [...new Set(games.map(gameDay).filter(Boolean))].sort();
   const options = (rows, value) => rows.map(([key, label]) => `<option value="${escapeHtml(key)}"${String(value) === String(key) ? ' selected' : ''}>${escapeHtml(label)}</option>`).join('');
   const select = (key, label, rows) => `<label><span>${label}</span><select id="${escapeHtml(idPrefix)}-${key}" data-game-filter="${key}">${options(rows, chosen[key])}</select></label>`;
-  const check = (key, label) => `<label class="game-filter-check"><input type="checkbox" data-game-filter="${key}"${chosen[key] ? ' checked' : ''}><span>${label}</span></label>`;
-  const coverage = [...byId.values()].some(team => Number.isInteger(team.displayRank ?? team.sorRank));
-  const statuses = [['all', 'All games'], ['upcoming', 'Upcoming'], ...(includeLive ? [['live', 'Live']] : []), ['final', 'Final']];
+  const check = (key, label) => `<label class="game-filter-check"><input id="${escapeHtml(idPrefix)}-${key}" type="checkbox" data-game-filter="${key}"${chosen[key] ? ' checked' : ''}><span>${label}</span></label>`;
+  const coverage = [...byId.values()].some(team => isRanked(team, rankedDivisions));
+  const statuses = [['all', 'All games'], ['upcoming', 'Upcoming'], ...(includeLive ? [['live', liveLabel]] : []),
+    ['final', 'Final'], ...(includeChanges ? [['changed', 'Schedule changes']] : [])];
   return `<div class="game-filters" aria-label="Game filters">
-    ${select('scope', 'Teams', [['all', 'All teams'], ['mine', 'My Teams']])}
+    ${contextControls}
+    ${includeMyTeams ? select('scope', 'Teams', [['all', 'All teams'], ['mine', 'My Teams']]) : ''}
     ${select('conference', 'Conference', [['', 'All conferences'], ...conferences.map(name => [name, name])])}
-    ${select('day', 'Game day', [['', 'All days'], ...days.map(day => [day, dayLabel.format(new Date(day + 'T12:00:00Z'))])])}
+    ${includeDay ? select('day', 'Game day', [['', 'All days'], ...days.map(day => [day, dayLabel.format(new Date(day + 'T12:00:00Z'))])]) : ''}
     ${select('status', 'Status', statuses)}
     <div class="game-filter-checks">${check('close', 'Close matchups')}${coverage ? check('ranked', `${rankLabel} Top 25 teams`) : ''}</div>
-    ${chosen.scope === 'mine' && !myTeamIds.length ? '<p class="compact-note game-filter-note">Sign in and choose teams in <a href="/my-teams">My Teams</a> to use this filter.</p>' : ''}
-    ${chosen.close ? `<p class="compact-note game-filter-note">Upcoming games use a 35–65% model win chance. ${includeLive ? 'Live and final' : 'Final'} games use a margin of seven points or fewer. Games without the required evidence are excluded.</p>` : ''}
+    ${includeMyTeams && chosen.scope === 'mine' && !myTeamIds.length ? '<p class="compact-note game-filter-note">Sign in and choose teams in <a href="/my-teams">My Teams</a> to use this filter.</p>' : ''}
+    ${chosen.close ? `<p class="compact-note game-filter-note">Upcoming games use a 35–65% model win chance. ${includeLive ? escapeHtml(liveLabel) + ' and final' : 'Final'} games use a margin of seven points or fewer. Games without the required evidence are excluded.</p>` : ''}
   </div>`;
 }
 

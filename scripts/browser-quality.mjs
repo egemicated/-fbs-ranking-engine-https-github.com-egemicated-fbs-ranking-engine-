@@ -126,6 +126,11 @@ try {
         assert.equal(await page.locator('footer.gd-footer').count(),1,route+' shared footer');
         assert.equal(await page.locator('.football-sport-switch').count(),0,route+' legacy sport switch');
       }
+      if (route === 'rankings' || route === 'rankings/fcs') {
+        const tabs = page.locator('.rankings-hub-nav a');
+        assert.deepEqual(await tabs.allTextContents(), ['FBS', 'FCS', 'Compare Rankings', 'Forge’s Rankings']);
+        if (unifiedSite) assert.equal(await page.locator('nav.gd-nav a[href="/conference-strength/"]').count(), 1);
+      }
       const dimensions=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
       assert.equal(dimensions.scroll,dimensions.width,route+' overflow at '+width);
       const missingLabels=await page.locator('main').evaluate(main=>[...main.querySelectorAll('select,textarea,input:not([type="hidden"]):not([type="submit"])')].filter(control=>!control.labels?.length&&!control.getAttribute('aria-label')&&!control.getAttribute('aria-labelledby')).map(control=>control.id));

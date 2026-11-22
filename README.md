@@ -1,10 +1,11 @@
 # The Games Decide
 
-[The Games Decide](https://www.thegamesdecide.com/) publishes independent college football and men’s Division I basketball rankings, team evidence, and saved pregame forecasts. Strength of Record (SOR) ranks achieved results. Predictive Strength estimates future matchups. Football also publishes comparison views for human polls and Forge’s AI-authored ballot.
+[The Games Decide](https://www.thegamesdecide.com/) publishes independent college football and men’s Division I basketball rankings, team evidence, and saved pregame forecasts. Strength of Record (SOR) ranks achieved results. Predictive Strength estimates future matchups. Both sports compare their rankings with human polls. Football also publishes Forge’s AI-authored ballot.
 
 ## Architecture
 
 - **Website** — The All Sports portal is at `/`, football is at `/football/`, and basketball is at `/basketball/`. Both sports use the same masthead, footer, and base styles. Football routes and account behavior live in `frontend/`. Basketball pages and shared navigation live in `basketball/`. Public rankings and team evidence are available without an account.
+- **Shared views** — `frontend/scoreboard.js` provides the game cards, filters, and refresh behavior. Sport-specific adapters provide schedules, labels, and links. Both sports use `frontend/platform-presentation.js` for the poll comparison table.
 - **Publication** — The football engine in `src/` and basketball engine in `basketball/` produce independent snapshots, predictions, and source evidence. `scripts/prepare-static.js` builds crawlable pages, social previews, and versioned data from committed publications. Render serves the generated `static-dist/` directory. Cloudflare manages the public domain.
 - **Accounts** — Supabase Auth handles email verification, password recovery, Google sign-in, and user sessions. Database policies and functions enforce account ownership, contest deadlines, and administrative access. Private support requests use Supabase and a server-side email notification path. See the [database runbook](supabase/README.md) and [account release evidence](reports/account-platform-release-2026-11-18.md).
 - **Research** — `research/` and `reports/` retain experiments, validation evidence, and data lineage. Frozen challenger forecasts and retrospective replays have their own evidence. Production SOR and its approved parameters are documented in [METHODOLOGY.md](METHODOLOGY.md).

@@ -37,6 +37,10 @@
   font-size: 13px;
 }
 .scoreboard-order-help button { cursor: pointer; min-height: 44px; }
+.scoreboard-day-links { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
+.scoreboard-day-links a { min-height: 44px; }
+.scoreboard-game-details > details { margin: 0 12px 12px; }
+.scoreboard-game-details > details summary { cursor: pointer; }
 [data-scoreboard] [hidden] { display: none; }
 .scoreboard-sections > section { margin-block: 20px 27px; }
 .scoreboard-sections h2 { margin-bottom: 9px; }
@@ -69,6 +73,7 @@
   .scoreboard-toolbar { gap: 8px; }
   .scoreboard-toolbar h2 { font-size: 18px; line-height: 1.15; }
   .scoreboard-toolbar button { padding-inline: 8px; }
+  .scoreboard-day-links { flex-basis: 100%; }
 }
 .scoreboard-game-top, .scoreboard-game-bottom {
   display: flex;

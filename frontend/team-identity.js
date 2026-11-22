@@ -29,8 +29,9 @@ export function teamDisplayName(id, name) {
   return nickname ? `${school} ${nickname}` : school;
 }
 
-export function teamNameMarkup(id, name) {
-  const { school, nickname } = teamNameParts(id, name);
+export function teamNameMarkup(id, name, mascot) {
+  const { school, nickname } = typeof name === 'string' && typeof mascot === 'string' && mascot
+    ? { school: name, nickname: mascot } : teamNameParts(id, name);
   if (!nickname) return escape(school);
   return `<span class="team-identity-name"><span class="team-school">${escape(school)}</span> <strong class="team-nickname">${escape(nickname)}</strong></span>`;
 }
@@ -40,6 +41,6 @@ export function teamAccent(id) {
   return /^#[0-9a-f]{6}$/i.test(color ?? '') ? color : defaultAccent;
 }
 
-export function teamAccentAttr(id) {
-  return `style="--team-accent:${teamAccent(id)}"`;
+export function teamAccentAttr(id, color) {
+  return `style="--team-accent:${/^#[0-9a-f]{6}$/i.test(color ?? '') ? color : teamAccent(id)}"`;
 }
