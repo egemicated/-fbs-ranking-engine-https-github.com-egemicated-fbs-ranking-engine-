@@ -13,9 +13,9 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: Install the approved private cache or reconcile the current season
+        description: Run a guarded schedule slot, reconcile the current season, or install the approved private cache
         type: choice
-        options: [seed, manual]
+        options: [seed, manual, primary, recovery, pregame, postseason]
         default: seed
 
 permissions:
@@ -57,12 +57,25 @@ jobs:
           BASKETBALL_REFRESH_CACHE_KEY: ${{ secrets.BASKETBALL_REFRESH_CACHE_KEY }}
           BASKETBALL_REFRESH_SEED_URL: ${{ inputs.mode == 'seed' && secrets.BASKETBALL_REFRESH_SEED_URL || '' }}
         run: |
-          if [[ "$GITHUB_EVENT_NAME" == schedule ]]; then
-            created_at=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq .created_at)
-            node scripts/run-basketball-refresh.mjs --mode scheduled --cron "$REFRESH_CRON" --queued "$created_at"
-          else
-            node scripts/run-basketball-refresh.mjs --mode "$REFRESH_MODE"
+          cron="$REFRESH_CRON"
+          if [[ "$GITHUB_EVENT_NAME" == workflow_dispatch ]]; then
+            case "$REFRESH_MODE" in
+              primary) cron='15 4 * 1-4,11-12 *' ;;
+              recovery) cron='15 6 * 1-4,11-12 *' ;;
+              pregame) cron='15 10 * 1-4,11-12 *' ;;
+              postseason) cron='45 22 * 3-4 *' ;;
+              seed|manual)
+                node scripts/run-basketball-refresh.mjs --mode "$REFRESH_MODE"
+                exit 0
+                ;;
+              *)
+                echo '::error::Unsupported basketball refresh mode.'
+                exit 1
+                ;;
+            esac
           fi
+          created_at=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq .created_at)
+          node scripts/run-basketball-refresh.mjs --mode scheduled --cron "$cron" --queued "$created_at"
       # Save debited call reservations and immutable forecasts even if a later
       # validation/deployment step fails. Raw and normalized data stay sealed.
       - name: Retain authenticated working state

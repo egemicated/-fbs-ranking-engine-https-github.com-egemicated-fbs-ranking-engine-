@@ -53,13 +53,23 @@ test('another day, a manual run, or a run with an old schedule does not suppress
     new Date('2026-03-08T08:45:00Z')), false);
 });
 
+test('the hosted fallback shares the overnight guard with the native schedule', async () => {
+  const fallback = { ...resultRun, event: 'workflow_dispatch', display_title: 'Forge overnight fallback' };
+  assert.equal(await check('results', [fallback]), false);
+  assert.equal(await check('availability', [fallback]), true);
+  assert.equal(await check('results', [{ ...fallback, status: 'in_progress', conclusion: null }]), true);
+  assert.equal(await check('results', [{ ...fallback, conclusion: 'failure' }]), true);
+  assert.equal(await check('results', [{ ...fallback, id: 2 }]), true);
+  assert.equal(await check('availability', [{ ...fallback, path: availabilityRun.path }]), false);
+});
+
 test('the guard queries the correct GitHub page and stops provider pulls if history cannot be verified', async () => {
   const checkWith = fetcher => scheduledUpdateNeeded('results', { now, runId: 2, token: 'test-only', fetcher });
   assert.equal(await checkWith(async (url, options) => {
     assert.equal(url.hostname, 'api.github.com');
     assert.match(url.pathname, /\/actions\/workflows\/weekly\.yml\/runs$/);
     assert.equal(url.searchParams.get('branch'), 'main');
-    assert.equal(url.searchParams.get('event'), 'schedule');
+    assert.equal(url.searchParams.has('event'), false);
     assert.match(url.searchParams.get('created'), /^>=2026-11-18/);
     assert.equal(options.redirect, 'error');
     return history([])();
@@ -80,10 +90,15 @@ test('the work after a skipped backup cannot pull a provider or trigger a Sunday
   ]);
   for (const workflow of [weekly, availability]) {
     assert.match(workflow, /format\('Scheduled update \(\{0\}\)', github.event.schedule\)/);
+    assert.match(workflow, /'Forge overnight fallback'/);
     assert.match(workflow, /concurrency:\s+group: [\w-]+\s+cancel-in-progress: false/);
-    assert.match(workflow, /if: github.event_name != 'schedule' \|\| steps.schedule.outputs.needed == 'true'/);
+    assert.match(workflow, /SCHEDULED_FALLBACK:/);
+    assert.match(workflow, /if: \(github.event_name != 'schedule' && .+\) \|\| steps.schedule.outputs.needed == 'true'/);
   }
+  assert.match(weekly, /scheduled_fallback:\s+description: Apply the scheduled freshness and duplicate checks/);
+  assert.match(availability, /options: \[bootstrap, nightly, game-day, overnight\]/);
   assert.match(weekly, /needed=\$\(node scripts\/weekly-refresh-needed\.js\)/);
   assert.match(weekly, /name: Retry configured support-request notifications\s+if:[^\n]+steps.schedule.outputs.needed == 'true'/);
+  assert.match(stats, /\[\[ "\$UPSTREAM_EVENT" == schedule \|\| "\$UPSTREAM_TITLE" == 'Forge overnight fallback' \]\]/);
   assert.match(stats, /Fetch CFBD and calculate rankings" and .conclusion == "success"/);
 });

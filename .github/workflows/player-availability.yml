@@ -1,5 +1,5 @@
 name: Official player availability
-run-name: ${{ github.event_name == 'schedule' && format('Scheduled update ({0})', github.event.schedule) || github.workflow }}
+run-name: ${{ github.event_name == 'schedule' && format('Scheduled update ({0})', github.event.schedule) || inputs.mode == 'overnight' && 'Forge overnight fallback' || github.workflow }}
 on:
   schedule:
     - cron: '45 2 * 8-12,1 *'
@@ -11,7 +11,7 @@ on:
       mode:
         description: Official report window to check
         type: choice
-        options: [bootstrap, nightly, game-day]
+        options: [bootstrap, nightly, game-day, overnight]
         default: bootstrap
 permissions:
   contents: write
@@ -32,19 +32,20 @@ jobs:
           node-version: '24'
       - name: Check whether the scheduled availability update is needed
         id: schedule
-        if: github.event_name == 'schedule'
+        if: github.event_name == 'schedule' || inputs.mode == 'overnight'
         env:
           GH_TOKEN: ${{ github.token }}
+          SCHEDULED_FALLBACK: ${{ inputs.mode == 'overnight' }}
         run: node scripts/scheduled-update-needed.mjs availability
       - name: Check official conference reports
         id: reports
-        if: github.event_name != 'schedule' || steps.schedule.outputs.needed == 'true'
+        if: (github.event_name != 'schedule' && inputs.mode != 'overnight') || steps.schedule.outputs.needed == 'true'
         env:
           MANUAL_MODE: ${{ inputs.mode }}
         run: |
           node scripts/publish-player-availability.js --mode "${MANUAL_MODE:-overnight}"
       - name: Commit changed availability reports
-        if: github.event_name != 'schedule' || steps.schedule.outputs.needed == 'true'
+        if: (github.event_name != 'schedule' && inputs.mode != 'overnight') || steps.schedule.outputs.needed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

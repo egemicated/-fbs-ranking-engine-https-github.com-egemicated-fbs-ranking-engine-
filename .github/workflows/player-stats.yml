@@ -29,13 +29,14 @@ jobs:
         env:
           EVENT: ${{ github.event_name }}
           UPSTREAM_EVENT: ${{ github.event.workflow_run.event }}
+          UPSTREAM_TITLE: ${{ github.event.workflow_run.display_title }}
           UPSTREAM_RUN: ${{ github.event.workflow_run.id }}
           UPSTREAM_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
           GH_TOKEN: ${{ github.token }}
         run: |
           if [[ "$EVENT" != workflow_dispatch ]]; then
             if [[ "$(TZ=America/Denver date +%u)" != 7 ]]; then exit 0; fi
-            if [[ "$UPSTREAM_EVENT" == schedule ]]; then
+            if [[ "$UPSTREAM_EVENT" == schedule || "$UPSTREAM_TITLE" == 'Forge overnight fallback' ]]; then
               published=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$UPSTREAM_RUN/attempts/$UPSTREAM_ATTEMPT/jobs" \
                 --jq 'any(.jobs[].steps[]; .name == "Fetch CFBD and calculate rankings" and .conclusion == "success")')
               if [[ "$published" != true ]]; then exit 0; fi

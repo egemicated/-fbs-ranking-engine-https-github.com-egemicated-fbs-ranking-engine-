@@ -24,6 +24,15 @@ const decision = (mode, checks, now, games = dataset.games) => decideManagedBask
 
 test('workflow slots and operational guard agree across Denver DST and delayed starts', async () => {
   const workflow = await readFile(new URL('../.github/workflows/basketball-refresh.yml', import.meta.url), 'utf8');
+  const slots = Object.entries(managedBasketballSlots).map(([cron, { mode }]) => [mode, cron]);
+  const dispatchSlots = [...workflow.matchAll(/^\s+(\w+)\) cron='([^']+)' ;;/gm)]
+    .map(([, mode, cron]) => [mode, cron]);
+  assert.deepEqual(dispatchSlots, slots);
+  assert.deepEqual(workflow.match(/options: \[([^\]]+)\]/)?.[1].split(', '),
+    ['seed', 'manual', ...slots.map(([mode]) => mode)]);
+  assert.ok(workflow.includes('cron="$REFRESH_CRON"'));
+  assert.ok(workflow.includes('created_at=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" --jq .created_at)'));
+  assert.ok(workflow.includes('node scripts/run-basketball-refresh.mjs --mode scheduled --cron "$cron" --queued "$created_at"'));
   for (const cron of Object.keys(managedBasketballSlots)) {
     assert.ok(workflow.includes(`cron: '${cron}'\n      timezone: 'America/Denver'`));
   }

@@ -7,6 +7,7 @@ const workflows = {
   results: { file: 'weekly.yml', crons: [UPDATE_SCHEDULE.cron, UPDATE_SCHEDULE.backup.cron] },
   availability: { file: 'player-availability.yml', crons: ['45 2 * 8-12,1 *', '45 4 * 8-12,1 *'] },
 };
+const fallbackTitle = 'Forge overnight fallback';
 const easternDay = new Intl.DateTimeFormat('en-CA', {
   timeZone: UPDATE_SCHEDULE.timeZone, year: 'numeric', month: '2-digit', day: '2-digit',
 });
@@ -21,7 +22,6 @@ export async function scheduledUpdateNeeded(kind, { runId, token, now = new Date
   const url = new URL(`https://api.github.com/repos/${RELEASE_REPOSITORY}/actions/workflows/${file}/runs`);
   url.search = new URLSearchParams({
     branch: 'main',
-    event: 'schedule',
     created: `>=${new Date(now.getTime() - 36 * 60 * 60_000).toISOString()}`,
     per_page: '100',
   });
@@ -39,15 +39,19 @@ export async function scheduledUpdateNeeded(kind, { runId, token, now = new Date
   const today = easternDay.format(now);
   // The workflows serialize both slots, so either can recognize a completed run
   // from the other slot, including when GitHub starts the earlier slot late.
-  return !runs.some(run => run.id !== runId && run.event === 'schedule' && run.head_branch === 'main' &&
-    run.path === `.github/workflows/${file}` && titles.has(run.display_title) &&
+  return !runs.some(run => run.id !== runId && run.head_branch === 'main' &&
+    run.path === `.github/workflows/${file}` &&
+    ((run.event === 'schedule' && titles.has(run.display_title)) ||
+     (run.event === 'workflow_dispatch' && run.display_title === fallbackTitle)) &&
     run.status === 'completed' && run.conclusion === 'success' &&
     Number.isFinite(Date.parse(run.created_at)) && easternDay.format(new Date(run.created_at)) === today);
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   try {
-    if (process.env.GITHUB_EVENT_NAME !== 'schedule' || process.env.GITHUB_REF !== 'refs/heads/main' ||
+    const event = process.env.GITHUB_EVENT_NAME;
+    const isFallback = event === 'workflow_dispatch' && process.env.SCHEDULED_FALLBACK === 'true';
+    if ((event !== 'schedule' && !isFallback) || process.env.GITHUB_REF !== 'refs/heads/main' ||
         process.env.GITHUB_REPOSITORY !== RELEASE_REPOSITORY || !process.env.GITHUB_OUTPUT) {
       throw new Error('A scheduled update on the production branch is required.');
     }
