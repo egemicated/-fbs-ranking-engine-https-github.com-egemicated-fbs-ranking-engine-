@@ -5,11 +5,11 @@
   "frozenAt": "2026-11-16T14:53:35.000Z",
   "season": 2026,
   "status": "awaiting-first-scored-game",
-  "asOf": "2026-11-21T15:38:18.357Z",
-  "generatedAt": "2026-11-21T15:38:20.854Z",
-  "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
-  "observationsRead": 3,
-  "selectedForecasts": 16,
+  "asOf": "2026-11-22T14:39:11.294Z",
+  "generatedAt": "2026-11-22T14:39:13.487Z",
+  "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+  "observationsRead": 4,
+  "selectedForecasts": 59,
   "duplicateCheckpoints": 0,
   "pending": [
     {
@@ -25,6 +25,34 @@
       "reason": "awaiting-confirmed-final"
     },
     {
+      "gameId": "401856763",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401856873",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401856874",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401856875",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401856876",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401856877",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401856878",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
       "gameId": "401856879",
       "reason": "awaiting-confirmed-final"
     },
@@ -33,7 +61,47 @@
       "reason": "awaiting-confirmed-final"
     },
     {
+      "gameId": "401858311",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401858313",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401858314",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401858315",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401858317",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
       "gameId": "401858536",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401858537",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401858539",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401858540",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401858542",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401858543",
       "reason": "awaiting-confirmed-final"
     },
     {
@@ -41,7 +109,35 @@
       "reason": "awaiting-confirmed-final"
     },
     {
+      "gameId": "401860926",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401860927",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401860928",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401860929",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401861969",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401862837",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
       "gameId": "401862838",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401862839",
       "reason": "awaiting-confirmed-final"
     },
     {
@@ -49,11 +145,35 @@
       "reason": "awaiting-confirmed-final"
     },
     {
+      "gameId": "401862841",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401862842",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401862843",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
       "gameId": "401864546",
       "reason": "awaiting-confirmed-final"
     },
     {
+      "gameId": "401864547",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401864548",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
       "gameId": "401864549",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401864550",
       "reason": "awaiting-confirmed-final"
     },
     {
@@ -73,7 +193,59 @@
       "reason": "awaiting-confirmed-final"
     },
     {
+      "gameId": "401866474",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401866475",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
       "gameId": "401869930",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401869939",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401869947",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401869954",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401869959",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401870804",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401871062",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401871063",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401871082",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401871083",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401871102",
+      "reason": "awaiting-confirmed-final"
+    },
+    {
+      "gameId": "401871103",
       "reason": "awaiting-confirmed-final"
     }
   ],
@@ -106,5 +278,5 @@
   },
   "evaluated": [],
   "interpretation": "Compare the same FBS vs. FBS outcomes from the first valid paired pregame forecast for each game. A 50% forecast receives half credit for accuracy. Brier score and log loss reward the probabilities themselves, with lower values better. Early summaries are descriptive.",
-  "reportSha256": "34148b84866daef9a92d3dc5110113dcb490289eb9da6f4f028414c446be9b88"
+  "reportSha256": "781dc773047498467c2744fb86788216e5518b1ef0136e462ba0992327c91bfd"
 }

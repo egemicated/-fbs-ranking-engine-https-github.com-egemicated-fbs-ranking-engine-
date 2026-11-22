@@ -4,47 +4,30 @@
   "frozenManifestSha256": "a0ca4661ef41d8e014afad1fee760bd85d5ddb1bb4d6e5d440cd716659bd231f",
   "frozenAt": "2026-11-19T00:17:44.341Z",
   "season": 2026,
-  "evaluatedAt": "2026-11-21T15:38:20.294Z",
-  "asOf": "2026-11-21T15:38:18.357Z",
-  "resultScheduleAsOf": "2026-11-21T15:38:17.294Z",
-  "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
-  "resultSnapshotHash": "fd7b592b680086422f7cdd1bb51613ad03ca780f54c454f7d456ec71647fd076",
-  "status": "awaiting-first-scored-game",
+  "evaluatedAt": "2026-11-22T14:39:13.013Z",
+  "asOf": "2026-11-22T14:39:11.294Z",
+  "resultScheduleAsOf": "2026-11-22T14:39:10.448Z",
+  "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+  "resultSnapshotHash": "a425e007e2ebb5b25005f4fba5349c00ea5707844d1126e9fea99c8d6e52b423",
+  "status": "collecting-prospective-evidence",
   "observationsRead": 4,
   "otherSeasonObservations": 0,
   "selectedForecasts": 4,
   "duplicateCheckpoints": 12,
-  "pending": [
-    {
-      "gameId": "401856746",
-      "reason": "awaiting-confirmed-final"
-    },
-    {
-      "gameId": "401856747",
-      "reason": "awaiting-confirmed-final"
-    },
-    {
-      "gameId": "401856749",
-      "reason": "awaiting-confirmed-final"
-    },
-    {
-      "gameId": "401856750",
-      "reason": "awaiting-confirmed-final"
-    }
-  ],
+  "pending": [],
   "excluded": [],
   "selectionRule": "First valid immutable capture per current-season game, selected independently of outcomes. Subsequent identity or eligibility failures exclude that first capture; later captures do not replace it.",
   "scores": {
-    "games": 0,
+    "games": 4,
     "baseline": {
-      "correct": 0,
+      "correct": 4,
       "incorrect": 0,
       "probabilityTies": 0,
-      "accuracy": null,
-      "brier": null,
-      "logLoss": null,
-      "meanFbsWinProbability": null,
-      "observedFbsWinRate": null,
+      "accuracy": 1,
+      "brier": 0.07041651979200038,
+      "logLoss": 0.28701024844343825,
+      "meanFbsWinProbability": 0.7601353908113961,
+      "observedFbsWinRate": 1,
       "reliability": [
         {
           "lower": 0,
@@ -94,11 +77,11 @@
         {
           "lower": 0.5,
           "upper": 0.6,
-          "games": 0,
-          "probabilitySum": 0,
-          "fbsWins": 0,
-          "meanFbsProbability": null,
-          "observedFbsWinRate": null
+          "games": 1,
+          "probabilitySum": 0.5644438555326065,
+          "fbsWins": 1,
+          "meanFbsProbability": 0.5644438555326065,
+          "observedFbsWinRate": 1
         },
         {
           "lower": 0.6,
@@ -121,11 +104,11 @@
         {
           "lower": 0.8,
           "upper": 0.9,
-          "games": 0,
-          "probabilitySum": 0,
-          "fbsWins": 0,
-          "meanFbsProbability": null,
-          "observedFbsWinRate": null
+          "games": 3,
+          "probabilitySum": 2.476097707712978,
+          "fbsWins": 3,
+          "meanFbsProbability": 0.8253659025709927,
+          "observedFbsWinRate": 1
         },
         {
           "lower": 0.9,
@@ -139,14 +122,14 @@
       ]
     },
     "candidate": {
-      "correct": 0,
+      "correct": 4,
       "incorrect": 0,
       "probabilityTies": 0,
-      "accuracy": null,
-      "brier": null,
-      "logLoss": null,
-      "meanFbsWinProbability": null,
-      "observedFbsWinRate": null,
+      "accuracy": 1,
+      "brier": 0.001523154408270593,
+      "logLoss": 0.023361667119754,
+      "meanFbsWinProbability": 0.9774414619625235,
+      "observedFbsWinRate": 1,
       "reliability": [
         {
           "lower": 0,
@@ -232,27 +215,144 @@
         {
           "lower": 0.9,
           "upper": 1,
-          "games": 0,
-          "probabilitySum": 0,
-          "fbsWins": 0,
-          "meanFbsProbability": null,
-          "observedFbsWinRate": null
+          "games": 4,
+          "probabilitySum": 3.909765847850094,
+          "fbsWins": 4,
+          "meanFbsProbability": 0.9774414619625235,
+          "observedFbsWinRate": 1
         }
       ]
     },
     "changedFavorites": 0,
     "candidateMinusBaseline": {
-      "accuracy": null,
-      "brier": null,
-      "logLoss": null
+      "accuracy": 0,
+      "brier": -0.06889336538372978,
+      "logLoss": -0.26364858132368424
     }
   },
-  "evaluated": [],
+  "evaluated": [
+    {
+      "gameId": "401856746",
+      "week": 12,
+      "seasonType": "regular",
+      "home": "333",
+      "away": "236",
+      "homeTeam": "Alabama",
+      "awayTeam": "Chattanooga",
+      "homeDivision": "fbs",
+      "awayDivision": "fcs",
+      "neutral": false,
+      "kickoff": "2026-11-21T19:00:00.000Z",
+      "homeMargin": 23.358715644190898,
+      "baselineHomeProbability": 0.8413730189402343,
+      "candidateHomeProbability": 0.9968501502559,
+      "capturedAt": "2026-11-19T00:17:45.238Z",
+      "sourceAsOf": "2026-11-18T12:30:14.250Z",
+      "sourceFetchedAt": "2026-11-18T12:30:09.923Z",
+      "snapshotHash": "a36df50d7f94c050e03b2d5df03cba802067d8dd2a1732f715a3ea3cc57dc4c1",
+      "sourceHash": "caf17786cbac28cbf5b90dabc621c845e89561152a3b5038fd3d136e9cfad8bb",
+      "observationSha256": "7d454ae060a75248f33352270ceb5f216aae3975132b51d72a65521ebca1f446",
+      "resultKickoff": "2026-11-21T19:00:00.000Z",
+      "correctedKickoff": false,
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "resultSnapshotHash": "a425e007e2ebb5b25005f4fba5349c00ea5707844d1126e9fea99c8d6e52b423",
+      "homePoints": 47,
+      "awayPoints": 0,
+      "outcome": 1
+    },
+    {
+      "gameId": "401856747",
+      "week": 12,
+      "seasonType": "regular",
+      "home": "2",
+      "away": "2535",
+      "homeTeam": "Auburn",
+      "awayTeam": "Samford",
+      "homeDivision": "fbs",
+      "awayDivision": "fcs",
+      "neutral": false,
+      "kickoff": "2026-11-21T20:30:00.000Z",
+      "homeMargin": 20.389790200745505,
+      "baselineHomeProbability": 0.810983529117025,
+      "candidateHomeProbability": 0.9948478256142992,
+      "capturedAt": "2026-11-19T00:17:45.238Z",
+      "sourceAsOf": "2026-11-18T12:30:14.250Z",
+      "sourceFetchedAt": "2026-11-18T12:30:09.923Z",
+      "snapshotHash": "a36df50d7f94c050e03b2d5df03cba802067d8dd2a1732f715a3ea3cc57dc4c1",
+      "sourceHash": "caf17786cbac28cbf5b90dabc621c845e89561152a3b5038fd3d136e9cfad8bb",
+      "observationSha256": "7d454ae060a75248f33352270ceb5f216aae3975132b51d72a65521ebca1f446",
+      "resultKickoff": "2026-11-21T20:30:00.000Z",
+      "correctedKickoff": false,
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "resultSnapshotHash": "a425e007e2ebb5b25005f4fba5349c00ea5707844d1126e9fea99c8d6e52b423",
+      "homePoints": 59,
+      "awayPoints": 17,
+      "outcome": 1
+    },
+    {
+      "gameId": "401856749",
+      "week": 12,
+      "seasonType": "regular",
+      "home": "145",
+      "away": "2747",
+      "homeTeam": "Ole Miss",
+      "awayTeam": "Wofford",
+      "homeDivision": "fbs",
+      "awayDivision": "fcs",
+      "neutral": false,
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "homeMargin": 21.586638577191984,
+      "baselineHomeProbability": 0.823741159655719,
+      "candidateHomeProbability": 0.9957743386675163,
+      "capturedAt": "2026-11-19T00:17:45.238Z",
+      "sourceAsOf": "2026-11-18T12:30:14.250Z",
+      "sourceFetchedAt": "2026-11-18T12:30:09.923Z",
+      "snapshotHash": "a36df50d7f94c050e03b2d5df03cba802067d8dd2a1732f715a3ea3cc57dc4c1",
+      "sourceHash": "caf17786cbac28cbf5b90dabc621c845e89561152a3b5038fd3d136e9cfad8bb",
+      "observationSha256": "7d454ae060a75248f33352270ceb5f216aae3975132b51d72a65521ebca1f446",
+      "resultKickoff": "2026-11-21T17:00:00.000Z",
+      "correctedKickoff": false,
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "resultSnapshotHash": "a425e007e2ebb5b25005f4fba5349c00ea5707844d1126e9fea99c8d6e52b423",
+      "homePoints": 59,
+      "awayPoints": 17,
+      "outcome": 1
+    },
+    {
+      "gameId": "401856750",
+      "week": 12,
+      "seasonType": "regular",
+      "home": "344",
+      "away": "2635",
+      "homeTeam": "Mississippi State",
+      "awayTeam": "Tennessee Tech",
+      "homeDivision": "fbs",
+      "awayDivision": "fcs",
+      "neutral": false,
+      "kickoff": "2026-11-21T18:00:00.000Z",
+      "homeMargin": 3.6290409728599453,
+      "baselineHomeProbability": 0.5644438555326065,
+      "candidateHomeProbability": 0.9222935333123784,
+      "capturedAt": "2026-11-19T00:17:45.238Z",
+      "sourceAsOf": "2026-11-18T12:30:14.250Z",
+      "sourceFetchedAt": "2026-11-18T12:30:09.923Z",
+      "snapshotHash": "a36df50d7f94c050e03b2d5df03cba802067d8dd2a1732f715a3ea3cc57dc4c1",
+      "sourceHash": "caf17786cbac28cbf5b90dabc621c845e89561152a3b5038fd3d136e9cfad8bb",
+      "observationSha256": "7d454ae060a75248f33352270ceb5f216aae3975132b51d72a65521ebca1f446",
+      "resultKickoff": "2026-11-21T18:00:00.000Z",
+      "correctedKickoff": false,
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "resultSnapshotHash": "a425e007e2ebb5b25005f4fba5349c00ea5707844d1126e9fea99c8d6e52b423",
+      "homePoints": 34,
+      "awayPoints": 16,
+      "outcome": 1
+    }
+  ],
   "interpretation": "Only confirmed decisive finals with matching identity, subdivision, venue and a corrected kickoff strictly after capture within seven days are graded. Both models retain the same captured Strength graph. No graded games means evidence is pending, not success. Saved public picks and retrospective replays are not included; no automatic promotion.",
-  "reportSha256": "615c0e6f50d77dcbdd1d29b61fe8df921165fbefab51a7e2c542441d4c0b7da7",
+  "reportSha256": "646b974fbcc802fa86839a0871cf00b49f36c97e375c07a05a57c42dc31a91bd",
   "inputSha256": {
-    "snapshot": "f7741018cfdc0c6ab81afbd88443675850f7b2e548cd859e886586965cbd1ac5",
-    "weekly": "0b56e7a505e868516e3872a8eb1f570f6b7a8746221cfcafb5b7171ebc0bd080",
+    "snapshot": "00686c305bdac809c54e54301841c1db6ab0bf98a48e7e9f873ba70c3d90c947",
+    "weekly": "0f073192269b2f5b21f773b6e9e8f57c9fc16428ff12a7c3eec3f76a2f672343",
     "evaluatorManifest": "544d400bc96ad715603b39c7bcc7f9285f79541b7f2dafe8a60adc2764e10bc8"
   }
 }

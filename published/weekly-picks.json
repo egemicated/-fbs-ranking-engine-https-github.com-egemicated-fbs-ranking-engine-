@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "season": 2026,
-  "asOf": "2026-11-21T15:38:20.057Z",
-  "kickoffVerificationAsOf": "2026-11-21T15:38:20.057Z",
+  "asOf": "2026-11-22T14:39:12.822Z",
+  "kickoffVerificationAsOf": "2026-11-22T14:39:12.822Z",
   "source": {
     "provider": "cfbd",
-    "scheduleAsOf": "2026-11-21T15:38:17.294Z",
-    "rankingAsOf": "2026-11-21T15:38:18.357Z",
-    "snapshotHash": "fd7b592b680086422f7cdd1bb51613ad03ca780f54c454f7d456ec71647fd076",
+    "scheduleAsOf": "2026-11-22T14:39:10.448Z",
+    "rankingAsOf": "2026-11-22T14:39:11.294Z",
+    "snapshotHash": "a425e007e2ebb5b25005f4fba5349c00ea5707844d1126e9fea99c8d6e52b423",
     "modelVersion": "0.2.0",
     "probabilityScale": 6.147406563247917,
     "calibrated": true,
@@ -16247,10 +16247,10 @@
       "away": "238",
       "startDate": "2026-11-21T17:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 34,
+      "awayPoints": 27,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.7625895660494579,
@@ -16267,10 +16267,10 @@
       "away": "2747",
       "startDate": "2026-11-21T17:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 59,
+      "awayPoints": 17,
       "pick": {
         "capturedAt": "2026-11-15T16:15:58.335Z",
         "homeWinProbability": 0.8304734620502491,
@@ -16287,10 +16287,10 @@
       "away": "252",
       "startDate": "2026-11-21T17:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 29,
+      "awayPoints": 31,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.24528564139647047,
@@ -16307,10 +16307,10 @@
       "away": "38",
       "startDate": "2026-11-21T17:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 35,
+      "awayPoints": 28,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.7510631665120493,
@@ -16327,10 +16327,10 @@
       "away": "183",
       "startDate": "2026-11-21T17:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 27,
+      "awayPoints": 15,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.4754486386767801,
@@ -16347,10 +16347,10 @@
       "away": "154",
       "startDate": "2026-11-21T17:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 29,
+      "awayPoints": 50,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.13891793159185237,
@@ -16367,10 +16367,10 @@
       "away": "77",
       "startDate": "2026-11-21T17:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 20,
+      "awayPoints": 17,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.3205476407819051,
@@ -16387,10 +16387,10 @@
       "away": "194",
       "startDate": "2026-11-21T17:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 31,
+      "awayPoints": 28,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.38189750220007795,
@@ -16407,10 +16407,10 @@
       "away": "275",
       "startDate": "2026-11-21T17:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 10,
+      "awayPoints": 42,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.34624500883868803,
@@ -16427,10 +16427,10 @@
       "away": "151",
       "startDate": "2026-11-21T17:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 6,
+      "awayPoints": 10,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.6215247617620271,
@@ -16447,10 +16447,10 @@
       "away": "235",
       "startDate": "2026-11-21T17:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 38,
+      "awayPoints": 34,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.35770813716659605,
@@ -16467,10 +16467,10 @@
       "away": "249",
       "startDate": "2026-11-21T17:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 28,
+      "awayPoints": 24,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.2136214466191471,
@@ -16487,10 +16487,10 @@
       "away": "153",
       "startDate": "2026-11-21T17:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 41,
+      "awayPoints": 24,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.4914422197399795,
@@ -16507,10 +16507,10 @@
       "away": "2635",
       "startDate": "2026-11-21T18:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 34,
+      "awayPoints": 16,
       "pick": {
         "capturedAt": "2026-11-15T16:15:58.335Z",
         "homeWinProbability": 0.5636440709308352,
@@ -16527,10 +16527,10 @@
       "away": "248",
       "startDate": "2026-11-21T18:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 31,
+      "awayPoints": 34,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.3472220325757519,
@@ -16547,10 +16547,10 @@
       "away": "98",
       "startDate": "2026-11-21T18:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 45,
+      "awayPoints": 14,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.8965668610793102,
@@ -16567,10 +16567,10 @@
       "away": "236",
       "startDate": "2026-11-21T19:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 47,
+      "awayPoints": 0,
       "pick": {
         "capturedAt": "2026-11-15T16:15:58.335Z",
         "homeWinProbability": 0.8413488650527147,
@@ -16587,10 +16587,10 @@
       "away": "2429",
       "startDate": "2026-11-21T19:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 42,
+      "awayPoints": 14,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.9311821305071641,
@@ -16607,10 +16607,10 @@
       "away": "2623",
       "startDate": "2026-11-21T19:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 25,
+      "awayPoints": 20,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.8212601575137258,
@@ -16627,10 +16627,10 @@
       "away": "2393",
       "startDate": "2026-11-21T19:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 28,
+      "awayPoints": 31,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.3381090567082868,
@@ -16647,10 +16647,10 @@
       "away": "2294",
       "startDate": "2026-11-21T19:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 17,
+      "awayPoints": 34,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.39814233280995237,
@@ -16667,10 +16667,10 @@
       "away": "58",
       "startDate": "2026-11-21T19:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 35,
+      "awayPoints": 14,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.3929140799401431,
@@ -16687,10 +16687,10 @@
       "away": "2433",
       "startDate": "2026-11-21T19:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 17,
+      "awayPoints": 16,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.8564252411728978,
@@ -16707,10 +16707,10 @@
       "away": "324",
       "startDate": "2026-11-21T20:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 38,
+      "awayPoints": 24,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.8064609231570411,
@@ -16727,10 +16727,10 @@
       "away": "48",
       "startDate": "2026-11-21T20:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 30,
+      "awayPoints": 42,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.3613262746877003,
@@ -16747,10 +16747,10 @@
       "away": "2229",
       "startDate": "2026-11-21T20:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 35,
+      "awayPoints": 24,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.6280872247520362,
@@ -16767,10 +16767,10 @@
       "away": "2535",
       "startDate": "2026-11-21T20:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 59,
+      "awayPoints": 17,
       "pick": {
         "capturedAt": "2026-11-15T16:15:58.335Z",
         "homeWinProbability": 0.8116043140785973,
@@ -16787,10 +16787,10 @@
       "away": "99",
       "startDate": "2026-11-21T20:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 27,
+      "awayPoints": 13,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.6368216599366966,
@@ -16807,10 +16807,10 @@
       "away": "8",
       "startDate": "2026-11-21T20:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 45,
+      "awayPoints": 3,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.8973868985880608,
@@ -16827,10 +16827,10 @@
       "away": "2641",
       "startDate": "2026-11-21T20:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 10,
+      "awayPoints": 20,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.4967636038897351,
@@ -16847,10 +16847,10 @@
       "away": "152",
       "startDate": "2026-11-21T20:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 10,
+      "awayPoints": 28,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.79655738744201,
@@ -16867,10 +16867,10 @@
       "away": "26",
       "startDate": "2026-11-21T20:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 18,
+      "awayPoints": 16,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.34439270102302705,
@@ -16887,10 +16887,10 @@
       "away": "164",
       "startDate": "2026-11-21T20:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 24,
+      "awayPoints": 25,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.9293857074379699,
@@ -16907,10 +16907,10 @@
       "away": "84",
       "startDate": "2026-11-21T20:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 27,
+      "awayPoints": 24,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.30038466583563156,
@@ -16927,10 +16927,10 @@
       "away": "295",
       "startDate": "2026-11-21T20:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 29,
+      "awayPoints": 21,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.8307554231994241,
@@ -16947,10 +16947,10 @@
       "away": "245",
       "startDate": "2026-11-21T20:45:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 28,
+      "awayPoints": 7,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.5906041455485643,
@@ -16967,10 +16967,10 @@
       "away": "2459",
       "startDate": "2026-11-21T21:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 31,
+      "awayPoints": 25,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.9785994692869754,
@@ -16987,10 +16987,10 @@
       "away": "290",
       "startDate": "2026-11-21T21:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 7,
+      "awayPoints": 45,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.29235888518315084,
@@ -17007,10 +17007,10 @@
       "away": "2247",
       "startDate": "2026-11-21T21:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 28,
+      "awayPoints": 27,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.4776232800412809,
@@ -17027,10 +17027,10 @@
       "away": "6",
       "startDate": "2026-11-21T21:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 35,
+      "awayPoints": 40,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.3664684781049355,
@@ -17047,10 +17047,10 @@
       "away": "265",
       "startDate": "2026-11-21T23:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 42,
+      "awayPoints": 14,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.8467023547107945,
@@ -17067,10 +17067,10 @@
       "away": "120",
       "startDate": "2026-11-21T23:15:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 35,
+      "awayPoints": 21,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.8970577685285743,
@@ -17087,10 +17087,10 @@
       "away": "12",
       "startDate": "2026-11-22T00:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 28,
+      "awayPoints": 35,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.2348658806416665,
@@ -17107,10 +17107,10 @@
       "away": "259",
       "startDate": "2026-11-22T00:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 28,
+      "awayPoints": 20,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.9412167905537754,
@@ -17127,10 +17127,10 @@
       "away": "2439",
       "startDate": "2026-11-22T00:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 22,
+      "awayPoints": 24,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.36835652163732835,
@@ -17147,10 +17147,10 @@
       "away": "2032",
       "startDate": "2026-11-22T00:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 48,
+      "awayPoints": 3,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.8593964952355154,
@@ -17167,10 +17167,10 @@
       "away": "96",
       "startDate": "2026-11-22T00:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 28,
+      "awayPoints": 14,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.6396757492130483,
@@ -17187,10 +17187,10 @@
       "away": "61",
       "startDate": "2026-11-22T00:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 6,
+      "awayPoints": 34,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.1783566996156994,
@@ -17207,10 +17207,10 @@
       "away": "221",
       "startDate": "2026-11-22T00:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 42,
+      "awayPoints": 10,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.8048391114474349,
@@ -17227,10 +17227,10 @@
       "away": "2567",
       "startDate": "2026-11-22T00:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 24,
+      "awayPoints": 3,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.906563051663325,
@@ -17247,10 +17247,10 @@
       "away": "24",
       "startDate": "2026-11-22T00:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 28,
+      "awayPoints": 44,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.43348515353627076,
@@ -17267,10 +17267,10 @@
       "away": "36",
       "startDate": "2026-11-22T00:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 49,
+      "awayPoints": 42,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.8930973952883933,
@@ -17287,10 +17287,10 @@
       "away": "2636",
       "startDate": "2026-11-22T01:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 17,
+      "awayPoints": 19,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.2752566931020566,
@@ -17307,10 +17307,10 @@
       "away": "254",
       "startDate": "2026-11-22T02:00:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 17,
+      "awayPoints": 38,
       "pick": {
         "capturedAt": "2026-11-14T17:02:40.824Z",
         "homeWinProbability": 0.24740581042331333,
@@ -17327,10 +17327,10 @@
       "away": "21",
       "startDate": "2026-11-22T02:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 20,
+      "awayPoints": 22,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.9266178653719571,
@@ -17347,10 +17347,10 @@
       "away": "197",
       "startDate": "2026-11-22T03:15:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 27,
+      "awayPoints": 30,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.4810557557365845,
@@ -17367,10 +17367,10 @@
       "away": "328",
       "startDate": "2026-11-22T03:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 31,
+      "awayPoints": 24,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.7779610659833889,
@@ -17387,10 +17387,10 @@
       "away": "62",
       "startDate": "2026-11-22T03:30:00.000Z",
       "neutral": false,
-      "status": "scheduled",
+      "status": "final",
       "startTimeTbd": false,
-      "homePoints": null,
-      "awayPoints": null,
+      "homePoints": 16,
+      "awayPoints": 8,
       "pick": {
         "capturedAt": "2026-11-15T14:39:16.239Z",
         "homeWinProbability": 0.7101870584424473,
@@ -17720,201 +17720,21 @@
       "replay": null
     },
     {
-      "id": "401856757",
-      "week": 13,
-      "seasonType": "regular",
-      "home": "333",
-      "away": "2",
-      "startDate": "2026-11-28T05:00:00.000Z",
-      "neutral": false,
-      "status": "scheduled",
-      "startTimeTbd": true,
-      "homePoints": null,
-      "awayPoints": null,
-      "pick": {
-        "capturedAt": "2026-11-21T15:38:20.057Z",
-        "homeWinProbability": 0.8983199481735852,
-        "favored": "home"
-      },
-      "estimate": null,
-      "replay": null
-    },
-    {
-      "id": "401856758",
-      "week": 13,
-      "seasonType": "regular",
-      "home": "8",
-      "away": "99",
-      "startDate": "2026-11-28T05:00:00.000Z",
-      "neutral": false,
-      "status": "scheduled",
-      "startTimeTbd": true,
-      "homePoints": null,
-      "awayPoints": null,
-      "pick": {
-        "capturedAt": "2026-11-21T15:38:20.057Z",
-        "homeWinProbability": 0.2283552929315559,
-        "favored": "away"
-      },
-      "estimate": null,
-      "replay": null
-    },
-    {
-      "id": "401856760",
-      "week": 13,
-      "seasonType": "regular",
-      "home": "61",
-      "away": "59",
-      "startDate": "2026-11-28T05:00:00.000Z",
-      "neutral": false,
-      "status": "scheduled",
-      "startTimeTbd": true,
-      "homePoints": null,
-      "awayPoints": null,
-      "pick": {
-        "capturedAt": "2026-11-21T15:38:20.057Z",
-        "homeWinProbability": 0.9735834704598104,
-        "favored": "home"
-      },
-      "estimate": null,
-      "replay": null
-    },
-    {
       "id": "401856761",
       "week": 13,
       "seasonType": "regular",
       "home": "96",
       "away": "97",
-      "startDate": "2026-11-28T05:00:00.000Z",
+      "startDate": "2026-11-28T17:00:00.000Z",
       "neutral": false,
       "status": "scheduled",
-      "startTimeTbd": true,
+      "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
       "pick": {
         "capturedAt": "2026-11-21T15:38:20.057Z",
         "homeWinProbability": 0.4636969281738732,
         "favored": "away"
-      },
-      "estimate": null,
-      "replay": null
-    },
-    {
-      "id": "401856764",
-      "week": 13,
-      "seasonType": "regular",
-      "home": "228",
-      "away": "2579",
-      "startDate": "2026-11-28T05:00:00.000Z",
-      "neutral": false,
-      "status": "scheduled",
-      "startTimeTbd": true,
-      "homePoints": null,
-      "awayPoints": null,
-      "pick": {
-        "capturedAt": "2026-11-21T15:38:20.057Z",
-        "homeWinProbability": 0.5124438721912588,
-        "favored": "home"
-      },
-      "estimate": null,
-      "replay": null
-    },
-    {
-      "id": "401856765",
-      "week": 13,
-      "seasonType": "regular",
-      "home": "238",
-      "away": "2633",
-      "startDate": "2026-11-28T05:00:00.000Z",
-      "neutral": false,
-      "status": "scheduled",
-      "startTimeTbd": true,
-      "homePoints": null,
-      "awayPoints": null,
-      "pick": {
-        "capturedAt": "2026-11-21T15:38:20.057Z",
-        "homeWinProbability": 0.16217472977197628,
-        "favored": "away"
-      },
-      "estimate": null,
-      "replay": null
-    },
-    {
-      "id": "401858312",
-      "week": 13,
-      "seasonType": "regular",
-      "home": "154",
-      "away": "150",
-      "startDate": "2026-11-28T05:00:00.000Z",
-      "neutral": false,
-      "status": "scheduled",
-      "startTimeTbd": true,
-      "homePoints": null,
-      "awayPoints": null,
-      "pick": {
-        "capturedAt": "2026-11-21T15:38:20.057Z",
-        "homeWinProbability": 0.7717310865622431,
-        "favored": "home"
-      },
-      "estimate": null,
-      "replay": null
-    },
-    {
-      "id": "401858316",
-      "week": 13,
-      "seasonType": "regular",
-      "home": "24",
-      "away": "2567",
-      "startDate": "2026-11-28T05:00:00.000Z",
-      "neutral": false,
-      "status": "scheduled",
-      "startTimeTbd": true,
-      "homePoints": null,
-      "awayPoints": null,
-      "pick": {
-        "capturedAt": "2026-11-21T15:38:20.057Z",
-        "homeWinProbability": 0.2721223285489584,
-        "favored": "away"
-      },
-      "estimate": null,
-      "replay": null
-    },
-    {
-      "id": "401858538",
-      "week": 13,
-      "seasonType": "regular",
-      "home": "84",
-      "away": "2509",
-      "startDate": "2026-11-28T05:00:00.000Z",
-      "neutral": false,
-      "status": "scheduled",
-      "startTimeTbd": true,
-      "homePoints": null,
-      "awayPoints": null,
-      "pick": {
-        "capturedAt": "2026-11-21T15:38:20.057Z",
-        "homeWinProbability": 0.9304600232427662,
-        "favored": "home"
-      },
-      "estimate": null,
-      "replay": null
-    },
-    {
-      "id": "401858541",
-      "week": 13,
-      "seasonType": "regular",
-      "home": "2483",
-      "away": "264",
-      "startDate": "2026-11-28T05:00:00.000Z",
-      "neutral": false,
-      "status": "scheduled",
-      "startTimeTbd": true,
-      "homePoints": null,
-      "awayPoints": null,
-      "pick": {
-        "capturedAt": "2026-11-21T15:38:20.057Z",
-        "homeWinProbability": 0.843811394505913,
-        "favored": "home"
       },
       "estimate": null,
       "replay": null
@@ -17931,7 +17751,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.965184109228397,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -17947,7 +17771,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.7295918068248967,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -17963,7 +17791,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.07144325099592518,
+        "favored": "away"
+      },
       "estimate": null,
       "replay": null
     },
@@ -17979,7 +17811,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.8829133956962292,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -17995,7 +17831,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.4121779895415249,
+        "favored": "away"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18011,7 +17851,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.16688768871941448,
+        "favored": "away"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18027,7 +17871,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.38704555740328467,
+        "favored": "away"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18043,7 +17891,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.5458440411385357,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18059,7 +17911,31 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.7116163260059093,
+        "favored": "home"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
+      "id": "401856758",
+      "week": 13,
+      "seasonType": "regular",
+      "home": "8",
+      "away": "99",
+      "startDate": "2026-11-28T17:45:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-21T15:38:20.057Z",
+        "homeWinProbability": 0.2283552929315559,
+        "favored": "away"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18075,7 +17951,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.656887680524272,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18091,7 +17971,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.47892487594082905,
+        "favored": "away"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18107,7 +17991,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.3566799627596167,
+        "favored": "away"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18123,7 +18011,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.7113573007656824,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18139,7 +18031,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.4989817140265658,
+        "favored": "away"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18155,7 +18051,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.6877079241652064,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18171,7 +18071,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.2901402783139104,
+        "favored": "away"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18187,7 +18091,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.9037553484730386,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18203,7 +18111,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.39953339054328557,
+        "favored": "away"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18219,7 +18131,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.16310626823030355,
+        "favored": "away"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18235,7 +18151,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.8470047768768079,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18251,7 +18171,31 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.712985019597708,
+        "favored": "home"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
+      "id": "401856764",
+      "week": 13,
+      "seasonType": "regular",
+      "home": "228",
+      "away": "2579",
+      "startDate": "2026-11-28T20:00:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-21T15:38:20.057Z",
+        "homeWinProbability": 0.5124438721912588,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18267,7 +18211,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.4410494495932855,
+        "favored": "away"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18283,7 +18231,31 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.649568795305968,
+        "favored": "home"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
+      "id": "401856760",
+      "week": 13,
+      "seasonType": "regular",
+      "home": "61",
+      "away": "59",
+      "startDate": "2026-11-28T20:30:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-21T15:38:20.057Z",
+        "homeWinProbability": 0.9735834704598104,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18299,7 +18271,51 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.8653687123211643,
+        "favored": "home"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
+      "id": "401858312",
+      "week": 13,
+      "seasonType": "regular",
+      "home": "154",
+      "away": "150",
+      "startDate": "2026-11-28T20:30:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-21T15:38:20.057Z",
+        "homeWinProbability": 0.7717310865622431,
+        "favored": "home"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
+      "id": "401858316",
+      "week": 13,
+      "seasonType": "regular",
+      "home": "24",
+      "away": "2567",
+      "startDate": "2026-11-28T20:30:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-21T15:38:20.057Z",
+        "homeWinProbability": 0.2721223285489584,
+        "favored": "away"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18315,7 +18331,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.25919887536976444,
+        "favored": "away"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18331,7 +18351,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.6611852528264319,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18347,7 +18371,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.7585750792736478,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18363,7 +18391,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.66905580195737,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18379,7 +18411,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.6186531902604683,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18395,7 +18431,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.5361004296870048,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18411,7 +18451,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.8604813104310209,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18427,7 +18471,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.6361918074690304,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18443,7 +18491,31 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.4344981132752774,
+        "favored": "away"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
+      "id": "401860926",
+      "week": 13,
+      "seasonType": "regular",
+      "home": "36",
+      "away": "68",
+      "startDate": "2026-11-28T23:00:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.08832746739019853,
+        "favored": "away"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18459,7 +18531,91 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.6959321077626727,
+        "favored": "home"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
+      "id": "401860929",
+      "week": 13,
+      "seasonType": "regular",
+      "home": "265",
+      "away": "21",
+      "startDate": "2026-11-28T23:30:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.5263049722851619,
+        "favored": "home"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
+      "id": "401856765",
+      "week": 13,
+      "seasonType": "regular",
+      "home": "238",
+      "away": "2633",
+      "startDate": "2026-11-29T00:00:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-21T15:38:20.057Z",
+        "homeWinProbability": 0.16217472977197628,
+        "favored": "away"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
+      "id": "401858538",
+      "week": 13,
+      "seasonType": "regular",
+      "home": "84",
+      "away": "2509",
+      "startDate": "2026-11-29T00:00:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-21T15:38:20.057Z",
+        "homeWinProbability": 0.9304600232427662,
+        "favored": "home"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
+      "id": "401856757",
+      "week": 13,
+      "seasonType": "regular",
+      "home": "333",
+      "away": "2",
+      "startDate": "2026-11-29T00:30:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-21T15:38:20.057Z",
+        "homeWinProbability": 0.8983199481735852,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18475,7 +18631,31 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.21767581852358317,
+        "favored": "away"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
+      "id": "401858541",
+      "week": 13,
+      "seasonType": "regular",
+      "home": "2483",
+      "away": "264",
+      "startDate": "2026-11-29T00:30:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-21T15:38:20.057Z",
+        "homeWinProbability": 0.843811394505913,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18491,7 +18671,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.8325073181132898,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18507,7 +18691,11 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.6939944892437081,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18523,7 +18711,51 @@
       "startTimeTbd": false,
       "homePoints": null,
       "awayPoints": null,
-      "pick": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.6324516302632753,
+        "favored": "home"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
+      "id": "401860928",
+      "week": 13,
+      "seasonType": "regular",
+      "home": "328",
+      "away": "326",
+      "startDate": "2026-11-29T02:30:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.278250387245038,
+        "favored": "away"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
+      "id": "401860927",
+      "week": 13,
+      "seasonType": "regular",
+      "home": "278",
+      "away": "204",
+      "startDate": "2026-11-29T03:00:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.5698460296543522,
+        "favored": "home"
+      },
       "estimate": null,
       "replay": null
     },
@@ -18535,6 +18767,58 @@
       "away": "16",
       "startDate": "2026-11-29T04:00:00.000Z",
       "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": {
+        "capturedAt": "2026-11-22T14:39:12.822Z",
+        "homeWinProbability": 0.8297255281655941,
+        "favored": "home"
+      },
+      "estimate": null,
+      "replay": null
+    },
+    {
+      "id": "401869535",
+      "week": 14,
+      "seasonType": "regular",
+      "home": "2335",
+      "away": "55",
+      "startDate": "2026-12-05T00:00:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": null,
+      "estimate": null,
+      "replay": null
+    },
+    {
+      "id": "401869542",
+      "week": 14,
+      "seasonType": "regular",
+      "home": "68",
+      "away": "21",
+      "startDate": "2026-12-05T01:00:00.000Z",
+      "neutral": false,
+      "status": "scheduled",
+      "startTimeTbd": false,
+      "homePoints": null,
+      "awayPoints": null,
+      "pick": null,
+      "estimate": null,
+      "replay": null
+    },
+    {
+      "id": "401858318",
+      "week": 14,
+      "seasonType": "regular",
+      "home": "2390",
+      "away": "154",
+      "startDate": "2026-12-05T17:00:00.000Z",
+      "neutral": true,
       "status": "scheduled",
       "startTimeTbd": false,
       "homePoints": null,

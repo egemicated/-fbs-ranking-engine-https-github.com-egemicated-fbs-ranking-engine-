@@ -4,46 +4,26 @@
   "protocolSha256": "667669f3315fabd1eb9c0ee28642f05e6f8d475971f68410cf320a982fd4b5eb",
   "frozenAt": "2026-11-06T22:49:59.146Z",
   "season": 2026,
-  "asOf": "2026-11-21T15:38:18.357Z",
-  "generatedAt": "2026-11-21T15:38:45.432Z",
-  "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+  "asOf": "2026-11-22T14:39:11.294Z",
+  "generatedAt": "2026-11-22T14:39:31.190Z",
+  "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
   "selectionRule": "First valid immutable captured-before-kickoff forecast per season/game; choose before reading eventual outcomes or rescheduling exclusions.",
-  "observationsRead": 12,
+  "observationsRead": 13,
   "ignoredOtherSeasonObservations": 0,
   "ignoredAfterResultCutoffObservations": 1,
-  "eligibleForecasts": 136,
-  "duplicateCheckpoints": 601,
+  "eligibleForecasts": 159,
+  "duplicateCheckpoints": 658,
   "pending": [
     {
-      "gameId": "401856748",
+      "gameId": "401856756",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
-      "gameId": "401856751",
+      "gameId": "401856759",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
-      "gameId": "401856753",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401856754",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401856755",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401856866",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401856867",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401856870",
+      "gameId": "401856762",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
@@ -51,103 +31,31 @@
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
-      "gameId": "401858304",
+      "gameId": "401856880",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
-      "gameId": "401858305",
+      "gameId": "401858536",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
-      "gameId": "401858307",
+      "gameId": "401858544",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
-      "gameId": "401858308",
+      "gameId": "401862838",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
-      "gameId": "401858309",
+      "gameId": "401862840",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
-      "gameId": "401858310",
+      "gameId": "401864546",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
-      "gameId": "401858527",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401858530",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401858531",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401858532",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401858533",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401858534",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401860918",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401860919",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401860920",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401860925",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401861968",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401862831",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401862832",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401862833",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401862834",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401862835",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401864541",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401864543",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401864544",
+      "gameId": "401864549",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
@@ -159,53 +67,45 @@
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
-      "gameId": "401869929",
+      "gameId": "401866472",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
-      "gameId": "401869938",
+      "gameId": "401866473",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     },
     {
-      "gameId": "401869946",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401869953",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401869958",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401871077",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401871078",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401871079",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401871080",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401871081",
-      "reason": "unfinished-or-not-yet-at-result-cutoff"
-    },
-    {
-      "gameId": "401871101",
+      "gameId": "401869930",
       "reason": "unfinished-or-not-yet-at-result-cutoff"
     }
   ],
   "excluded": [
     {
       "gameId": "401856752",
+      "reason": "rescheduled-outside-seven-day-window"
+    },
+    {
+      "gameId": "401856757",
+      "reason": "rescheduled-outside-seven-day-window"
+    },
+    {
+      "gameId": "401856758",
+      "reason": "rescheduled-outside-seven-day-window"
+    },
+    {
+      "gameId": "401856760",
+      "reason": "rescheduled-outside-seven-day-window"
+    },
+    {
+      "gameId": "401856761",
+      "reason": "rescheduled-outside-seven-day-window"
+    },
+    {
+      "gameId": "401856764",
+      "reason": "rescheduled-outside-seven-day-window"
+    },
+    {
+      "gameId": "401856765",
       "reason": "rescheduled-outside-seven-day-window"
     },
     {
@@ -237,11 +137,27 @@
       "reason": "rescheduled-outside-seven-day-window"
     },
     {
+      "gameId": "401858312",
+      "reason": "rescheduled-outside-seven-day-window"
+    },
+    {
+      "gameId": "401858316",
+      "reason": "rescheduled-outside-seven-day-window"
+    },
+    {
       "gameId": "401858528",
       "reason": "rescheduled-outside-seven-day-window"
     },
     {
       "gameId": "401858535",
+      "reason": "rescheduled-outside-seven-day-window"
+    },
+    {
+      "gameId": "401858538",
+      "reason": "rescheduled-outside-seven-day-window"
+    },
+    {
+      "gameId": "401858541",
       "reason": "rescheduled-outside-seven-day-window"
     },
     {
@@ -251,9 +167,9 @@
   ],
   "trackingCoverage": {
     "rule": "All currently sourced confirmed-completed FBS-FBS games with corrected kickoff from protocol freeze through result asOf; no claim of complete contemporaneous schedule availability.",
-    "completedFbsFbsGamesSinceFreeze": 134,
-    "scored": 78,
-    "selectedButExcluded": 1,
+    "completedFbsFbsGamesSinceFreeze": 188,
+    "scored": 122,
+    "selectedButExcluded": 11,
     "selectedButPending": 0,
     "noSavedForecastCount": 55,
     "noSavedForecast": [
@@ -283,12 +199,7 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401858285",
-        "kickoff": "2026-11-07T17:00:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401856853",
+        "gameId": "401858289",
         "kickoff": "2026-11-07T17:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -298,12 +209,17 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401858512",
+        "gameId": "401862822",
         "kickoff": "2026-11-07T17:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401858292",
+        "gameId": "401858285",
+        "kickoff": "2026-11-07T17:00:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858512",
         "kickoff": "2026-11-07T17:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -313,22 +229,22 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401858289",
+        "gameId": "401858292",
         "kickoff": "2026-11-07T17:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401862822",
+        "gameId": "401856853",
         "kickoff": "2026-11-07T17:00:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401858286",
-        "kickoff": "2026-11-07T17:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
         "gameId": "401858515",
+        "kickoff": "2026-11-07T17:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858286",
         "kickoff": "2026-11-07T17:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -338,12 +254,12 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401856854",
+        "gameId": "401869945",
         "kickoff": "2026-11-07T18:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401869945",
+        "gameId": "401856854",
         "kickoff": "2026-11-07T18:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -353,12 +269,12 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401869936",
+        "gameId": "401871073",
         "kickoff": "2026-11-07T20:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401871073",
+        "gameId": "401869936",
         "kickoff": "2026-11-07T20:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -368,17 +284,7 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401856851",
-        "kickoff": "2026-11-07T20:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401862819",
-        "kickoff": "2026-11-07T20:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401858516",
+        "gameId": "401862820",
         "kickoff": "2026-11-07T20:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -388,17 +294,22 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401871076",
-        "kickoff": "2026-11-07T20:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
         "gameId": "401869951",
         "kickoff": "2026-11-07T20:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401862820",
+        "gameId": "401871076",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858516",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401862819",
         "kickoff": "2026-11-07T20:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -408,12 +319,17 @@
         "reason": "no-valid-saved-forecast"
       },
       {
+        "gameId": "401856851",
+        "kickoff": "2026-11-07T20:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
         "gameId": "401856850",
         "kickoff": "2026-11-07T20:45:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401862821",
+        "gameId": "401864534",
         "kickoff": "2026-11-07T21:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -428,7 +344,7 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401864534",
+        "gameId": "401862821",
         "kickoff": "2026-11-07T21:00:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -463,7 +379,12 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401858291",
+        "gameId": "401858511",
+        "kickoff": "2026-11-08T00:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401858513",
         "kickoff": "2026-11-08T00:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -478,22 +399,17 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401858511",
-        "kickoff": "2026-11-08T00:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401862823",
-        "kickoff": "2026-11-08T00:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401858513",
+        "gameId": "401858291",
         "kickoff": "2026-11-08T00:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
         "gameId": "401858287",
+        "kickoff": "2026-11-08T00:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
+        "gameId": "401862823",
         "kickoff": "2026-11-08T00:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
@@ -508,6 +424,11 @@
         "reason": "no-valid-saved-forecast"
       },
       {
+        "gameId": "401864532",
+        "kickoff": "2026-11-08T02:30:00.000Z",
+        "reason": "no-valid-saved-forecast"
+      },
+      {
         "gameId": "401856856",
         "kickoff": "2026-11-08T02:30:00.000Z",
         "reason": "no-valid-saved-forecast"
@@ -518,17 +439,12 @@
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401864532",
-        "kickoff": "2026-11-08T02:30:00.000Z",
-        "reason": "no-valid-saved-forecast"
-      },
-      {
-        "gameId": "401864535",
+        "gameId": "401860912",
         "kickoff": "2026-11-08T03:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       },
       {
-        "gameId": "401860912",
+        "gameId": "401864535",
         "kickoff": "2026-11-08T03:30:00.000Z",
         "reason": "no-valid-saved-forecast"
       }
@@ -536,186 +452,186 @@
   },
   "scores": {
     "primary": {
-      "games": 78,
+      "games": 122,
       "models": {
         "sor": {
-          "accuracy": 0.6923076923076923,
+          "accuracy": 0.7049180327868853,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.6666666666666666,
-          "brier": 0.2162453860078213,
-          "logLoss": 0.6228199580289293,
-          "probabilityError": 0.052966289514304814
+          "probabilityAccuracy": 0.7131147540983607,
+          "brier": 0.2056405900607627,
+          "logLoss": 0.6008836066549529,
+          "probabilityError": 0.023582557739730454
         },
         "strength": {
-          "accuracy": 0.717948717948718,
+          "accuracy": 0.7213114754098361,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.6923076923076923,
-          "brier": 0.2045266983268253,
-          "logLoss": 0.5909555502441288,
-          "probabilityError": 0.06480970949795452
+          "probabilityAccuracy": 0.7131147540983607,
+          "brier": 0.2001878259273922,
+          "logLoss": 0.5903105926396843,
+          "probabilityError": 0.03510011291241314
         },
         "performance": {
-          "accuracy": 0.6538461538461539,
+          "accuracy": 0.639344262295082,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.6153846153846154,
-          "brier": 0.22071659751034445,
-          "logLoss": 0.6291541931607497,
-          "probabilityError": 0.0689594439846127
+          "probabilityAccuracy": 0.6475409836065574,
+          "brier": 0.21772700816108784,
+          "logLoss": 0.6307119388977349,
+          "probabilityError": 0.040238780705389644
         },
         "triple": {
-          "accuracy": 0.7243589743589743,
-          "rankingTies": 1,
-          "probabilityAccuracy": 0.6923076923076923,
-          "brier": 0.2087249472526961,
-          "logLoss": 0.6023221874423211,
-          "probabilityError": 0.06052361232083993
+          "accuracy": 0.7131147540983607,
+          "rankingTies": 2,
+          "probabilityAccuracy": 0.7295081967213115,
+          "brier": 0.20275322788408134,
+          "logLoss": 0.5980727231225255,
+          "probabilityError": 0.032170236940431335
         },
         "sor+strength": {
-          "accuracy": 0.6666666666666666,
+          "accuracy": 0.6721311475409836,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.7307692307692307,
-          "brier": 0.20820492933727103,
-          "logLoss": 0.6040502765444712,
-          "probabilityError": 0.057324402877151494
+          "probabilityAccuracy": 0.7459016393442623,
+          "brier": 0.20076340320484926,
+          "logLoss": 0.5925330146420531,
+          "probabilityError": 0.02824524158727937
         },
         "sor+performance": {
-          "accuracy": 0.6794871794871795,
+          "accuracy": 0.6885245901639344,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.6794871794871795,
-          "brier": 0.21414886863408691,
-          "logLoss": 0.6139705604296704,
-          "probabilityError": 0.058442716597584835
+          "probabilityAccuracy": 0.7049180327868853,
+          "brier": 0.20679953125697342,
+          "logLoss": 0.6056159066457485,
+          "probabilityError": 0.030348223169732715
         },
         "strength+performance": {
-          "accuracy": 0.7051282051282052,
+          "accuracy": 0.6967213114754098,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.6410256410256411,
-          "brier": 0.20821932329974102,
-          "logLoss": 0.5990814996899574,
-          "probabilityError": 0.06736644685735312
+          "probabilityAccuracy": 0.6639344262295082,
+          "brier": 0.20506093895465663,
+          "logLoss": 0.6036656864204771,
+          "probabilityError": 0.039229250446704535
         }
       }
     },
     "allEligible": {
-      "games": 78,
+      "games": 122,
       "models": {
         "sor": {
-          "accuracy": 0.6923076923076923,
+          "accuracy": 0.7049180327868853,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.6666666666666666,
-          "brier": 0.2162453860078213,
-          "logLoss": 0.6228199580289293,
-          "probabilityError": 0.052966289514304814
+          "probabilityAccuracy": 0.7131147540983607,
+          "brier": 0.2056405900607627,
+          "logLoss": 0.6008836066549529,
+          "probabilityError": 0.023582557739730454
         },
         "strength": {
-          "accuracy": 0.717948717948718,
+          "accuracy": 0.7213114754098361,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.6923076923076923,
-          "brier": 0.2045266983268253,
-          "logLoss": 0.5909555502441288,
-          "probabilityError": 0.06480970949795452
+          "probabilityAccuracy": 0.7131147540983607,
+          "brier": 0.2001878259273922,
+          "logLoss": 0.5903105926396843,
+          "probabilityError": 0.03510011291241314
         },
         "performance": {
-          "accuracy": 0.6538461538461539,
+          "accuracy": 0.639344262295082,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.6153846153846154,
-          "brier": 0.22071659751034445,
-          "logLoss": 0.6291541931607497,
-          "probabilityError": 0.0689594439846127
+          "probabilityAccuracy": 0.6475409836065574,
+          "brier": 0.21772700816108784,
+          "logLoss": 0.6307119388977349,
+          "probabilityError": 0.040238780705389644
         },
         "triple": {
-          "accuracy": 0.7243589743589743,
-          "rankingTies": 1,
-          "probabilityAccuracy": 0.6923076923076923,
-          "brier": 0.2087249472526961,
-          "logLoss": 0.6023221874423211,
-          "probabilityError": 0.06052361232083993
+          "accuracy": 0.7131147540983607,
+          "rankingTies": 2,
+          "probabilityAccuracy": 0.7295081967213115,
+          "brier": 0.20275322788408134,
+          "logLoss": 0.5980727231225255,
+          "probabilityError": 0.032170236940431335
         },
         "sor+strength": {
-          "accuracy": 0.6666666666666666,
+          "accuracy": 0.6721311475409836,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.7307692307692307,
-          "brier": 0.20820492933727103,
-          "logLoss": 0.6040502765444712,
-          "probabilityError": 0.057324402877151494
+          "probabilityAccuracy": 0.7459016393442623,
+          "brier": 0.20076340320484926,
+          "logLoss": 0.5925330146420531,
+          "probabilityError": 0.02824524158727937
         },
         "sor+performance": {
-          "accuracy": 0.6794871794871795,
+          "accuracy": 0.6885245901639344,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.6794871794871795,
-          "brier": 0.21414886863408691,
-          "logLoss": 0.6139705604296704,
-          "probabilityError": 0.058442716597584835
+          "probabilityAccuracy": 0.7049180327868853,
+          "brier": 0.20679953125697342,
+          "logLoss": 0.6056159066457485,
+          "probabilityError": 0.030348223169732715
         },
         "strength+performance": {
-          "accuracy": 0.7051282051282052,
+          "accuracy": 0.6967213114754098,
           "rankingTies": 0,
-          "probabilityAccuracy": 0.6410256410256411,
-          "brier": 0.20821932329974102,
-          "logLoss": 0.5990814996899574,
-          "probabilityError": 0.06736644685735312
+          "probabilityAccuracy": 0.6639344262295082,
+          "brier": 0.20506093895465663,
+          "logLoss": 0.6036656864204771,
+          "probabilityError": 0.039229250446704535
         }
       }
     },
     "groups": {
       "regular": {
-        "games": 78,
+        "games": 122,
         "models": {
           "sor": {
-            "accuracy": 0.6923076923076923,
+            "accuracy": 0.7049180327868853,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6666666666666666,
-            "brier": 0.2162453860078213,
-            "logLoss": 0.6228199580289293,
-            "probabilityError": 0.052966289514304814
+            "probabilityAccuracy": 0.7131147540983607,
+            "brier": 0.2056405900607627,
+            "logLoss": 0.6008836066549529,
+            "probabilityError": 0.023582557739730454
           },
           "strength": {
-            "accuracy": 0.717948717948718,
+            "accuracy": 0.7213114754098361,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6923076923076923,
-            "brier": 0.2045266983268253,
-            "logLoss": 0.5909555502441288,
-            "probabilityError": 0.06480970949795452
+            "probabilityAccuracy": 0.7131147540983607,
+            "brier": 0.2001878259273922,
+            "logLoss": 0.5903105926396843,
+            "probabilityError": 0.03510011291241314
           },
           "performance": {
-            "accuracy": 0.6538461538461539,
+            "accuracy": 0.639344262295082,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6153846153846154,
-            "brier": 0.22071659751034445,
-            "logLoss": 0.6291541931607497,
-            "probabilityError": 0.0689594439846127
+            "probabilityAccuracy": 0.6475409836065574,
+            "brier": 0.21772700816108784,
+            "logLoss": 0.6307119388977349,
+            "probabilityError": 0.040238780705389644
           },
           "triple": {
-            "accuracy": 0.7243589743589743,
-            "rankingTies": 1,
-            "probabilityAccuracy": 0.6923076923076923,
-            "brier": 0.2087249472526961,
-            "logLoss": 0.6023221874423211,
-            "probabilityError": 0.06052361232083993
+            "accuracy": 0.7131147540983607,
+            "rankingTies": 2,
+            "probabilityAccuracy": 0.7295081967213115,
+            "brier": 0.20275322788408134,
+            "logLoss": 0.5980727231225255,
+            "probabilityError": 0.032170236940431335
           },
           "sor+strength": {
-            "accuracy": 0.6666666666666666,
+            "accuracy": 0.6721311475409836,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.7307692307692307,
-            "brier": 0.20820492933727103,
-            "logLoss": 0.6040502765444712,
-            "probabilityError": 0.057324402877151494
+            "probabilityAccuracy": 0.7459016393442623,
+            "brier": 0.20076340320484926,
+            "logLoss": 0.5925330146420531,
+            "probabilityError": 0.02824524158727937
           },
           "sor+performance": {
-            "accuracy": 0.6794871794871795,
+            "accuracy": 0.6885245901639344,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6794871794871795,
-            "brier": 0.21414886863408691,
-            "logLoss": 0.6139705604296704,
-            "probabilityError": 0.058442716597584835
+            "probabilityAccuracy": 0.7049180327868853,
+            "brier": 0.20679953125697342,
+            "logLoss": 0.6056159066457485,
+            "probabilityError": 0.030348223169732715
           },
           "strength+performance": {
-            "accuracy": 0.7051282051282052,
+            "accuracy": 0.6967213114754098,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6410256410256411,
-            "brier": 0.20821932329974102,
-            "logLoss": 0.5990814996899574,
-            "probabilityError": 0.06736644685735312
+            "probabilityAccuracy": 0.6639344262295082,
+            "brier": 0.20506093895465663,
+            "logLoss": 0.6036656864204771,
+            "probabilityError": 0.039229250446704535
           }
         }
       },
@@ -728,191 +644,506 @@
         "models": {}
       },
       "homeVenue": {
-        "games": 78,
+        "games": 122,
         "models": {
           "sor": {
-            "accuracy": 0.6923076923076923,
+            "accuracy": 0.7049180327868853,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6666666666666666,
-            "brier": 0.2162453860078213,
-            "logLoss": 0.6228199580289293,
-            "probabilityError": 0.052966289514304814
+            "probabilityAccuracy": 0.7131147540983607,
+            "brier": 0.2056405900607627,
+            "logLoss": 0.6008836066549529,
+            "probabilityError": 0.023582557739730454
           },
           "strength": {
-            "accuracy": 0.717948717948718,
+            "accuracy": 0.7213114754098361,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6923076923076923,
-            "brier": 0.2045266983268253,
-            "logLoss": 0.5909555502441288,
-            "probabilityError": 0.06480970949795452
+            "probabilityAccuracy": 0.7131147540983607,
+            "brier": 0.2001878259273922,
+            "logLoss": 0.5903105926396843,
+            "probabilityError": 0.03510011291241314
           },
           "performance": {
-            "accuracy": 0.6538461538461539,
+            "accuracy": 0.639344262295082,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6153846153846154,
-            "brier": 0.22071659751034445,
-            "logLoss": 0.6291541931607497,
-            "probabilityError": 0.0689594439846127
+            "probabilityAccuracy": 0.6475409836065574,
+            "brier": 0.21772700816108784,
+            "logLoss": 0.6307119388977349,
+            "probabilityError": 0.040238780705389644
           },
           "triple": {
-            "accuracy": 0.7243589743589743,
-            "rankingTies": 1,
-            "probabilityAccuracy": 0.6923076923076923,
-            "brier": 0.2087249472526961,
-            "logLoss": 0.6023221874423211,
-            "probabilityError": 0.06052361232083993
+            "accuracy": 0.7131147540983607,
+            "rankingTies": 2,
+            "probabilityAccuracy": 0.7295081967213115,
+            "brier": 0.20275322788408134,
+            "logLoss": 0.5980727231225255,
+            "probabilityError": 0.032170236940431335
           },
           "sor+strength": {
-            "accuracy": 0.6666666666666666,
+            "accuracy": 0.6721311475409836,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.7307692307692307,
-            "brier": 0.20820492933727103,
-            "logLoss": 0.6040502765444712,
-            "probabilityError": 0.057324402877151494
+            "probabilityAccuracy": 0.7459016393442623,
+            "brier": 0.20076340320484926,
+            "logLoss": 0.5925330146420531,
+            "probabilityError": 0.02824524158727937
           },
           "sor+performance": {
-            "accuracy": 0.6794871794871795,
+            "accuracy": 0.6885245901639344,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6794871794871795,
-            "brier": 0.21414886863408691,
-            "logLoss": 0.6139705604296704,
-            "probabilityError": 0.058442716597584835
+            "probabilityAccuracy": 0.7049180327868853,
+            "brier": 0.20679953125697342,
+            "logLoss": 0.6056159066457485,
+            "probabilityError": 0.030348223169732715
           },
           "strength+performance": {
-            "accuracy": 0.7051282051282052,
+            "accuracy": 0.6967213114754098,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6410256410256411,
-            "brier": 0.20821932329974102,
-            "logLoss": 0.5990814996899574,
-            "probabilityError": 0.06736644685735312
+            "probabilityAccuracy": 0.6639344262295082,
+            "brier": 0.20506093895465663,
+            "logLoss": 0.6036656864204771,
+            "probabilityError": 0.039229250446704535
           }
         }
       },
       "componentTop25": {
-        "games": 26,
+        "games": 41,
         "models": {
           "sor": {
-            "accuracy": 0.8461538461538461,
+            "accuracy": 0.7804878048780488,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.7307692307692307,
-            "brier": 0.18500758418087912,
-            "logLoss": 0.5504726852970788,
-            "probabilityError": 0.057633087733104174
+            "probabilityAccuracy": 0.7317073170731707,
+            "brier": 0.197008020874802,
+            "logLoss": 0.5804321244620935,
+            "probabilityError": 0.019933938272621292
           },
           "strength": {
-            "accuracy": 0.8076923076923077,
+            "accuracy": 0.7804878048780488,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6923076923076923,
-            "brier": 0.1873651052656625,
-            "logLoss": 0.5547656117124438,
-            "probabilityError": 0.03793042275410591
+            "probabilityAccuracy": 0.7073170731707317,
+            "brier": 0.19361760441191148,
+            "logLoss": 0.5785548052065166,
+            "probabilityError": 0.013746931275043965
           },
           "performance": {
-            "accuracy": 0.7307692307692307,
+            "accuracy": 0.6829268292682927,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6538461538461539,
-            "brier": 0.18718215887448014,
-            "logLoss": 0.5523225956357536,
-            "probabilityError": 0.07554364926529915
+            "probabilityAccuracy": 0.6829268292682927,
+            "brier": 0.19562525675664094,
+            "logLoss": 0.5920289517972284,
+            "probabilityError": 0.0425688075842548
           },
           "triple": {
-            "accuracy": 0.8076923076923077,
-            "rankingTies": 0,
-            "probabilityAccuracy": 0.7692307692307693,
-            "brier": 0.18102806533377877,
-            "logLoss": 0.5406351297118227,
-            "probabilityError": 0.055659117944816754
+            "accuracy": 0.7439024390243902,
+            "rankingTies": 1,
+            "probabilityAccuracy": 0.7560975609756098,
+            "brier": 0.19175337117335947,
+            "logLoss": 0.5795194377996781,
+            "probabilityError": 0.020060270318577447
           },
           "sor+strength": {
-            "accuracy": 0.8076923076923077,
+            "accuracy": 0.7560975609756098,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.7692307692307693,
-            "brier": 0.18228605202862266,
-            "logLoss": 0.5455264104107539,
-            "probabilityError": 0.04732295494184432
+            "probabilityAccuracy": 0.7317073170731707,
+            "brier": 0.19381847058809354,
+            "logLoss": 0.5775057272697464,
+            "probabilityError": 0.014464015861253844
           },
           "sor+performance": {
-            "accuracy": 0.8076923076923077,
+            "accuracy": 0.7317073170731707,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.7692307692307693,
-            "brier": 0.17995399640820775,
-            "logLoss": 0.537121406723765,
-            "probabilityError": 0.06505002471545543
+            "probabilityAccuracy": 0.7317073170731707,
+            "brier": 0.19187236756212925,
+            "logLoss": 0.5793811163006948,
+            "probabilityError": 0.0250343023947889
           },
           "strength+performance": {
-            "accuracy": 0.7692307692307693,
+            "accuracy": 0.7073170731707317,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6923076923076923,
-            "brier": 0.18510136631059854,
-            "logLoss": 0.5474073355572732,
-            "probabilityError": 0.05715121938538195
+            "probabilityAccuracy": 0.7073170731707317,
+            "brier": 0.1920443772329901,
+            "logLoss": 0.5839838560619373,
+            "probabilityError": 0.026586241796909625
           }
         }
       },
       "componentsDisagree": {
-        "games": 23,
+        "games": 32,
         "models": {
           "sor": {
-            "accuracy": 0.5652173913043478,
+            "accuracy": 0.625,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6086956521739131,
-            "brier": 0.23631171005693935,
-            "logLoss": 0.668362708879085,
-            "probabilityError": 0.050098378898237525
+            "probabilityAccuracy": 0.71875,
+            "brier": 0.21243883319977316,
+            "logLoss": 0.6181905176447756,
+            "probabilityError": 0.004172150606293983
           },
           "strength": {
-            "accuracy": 0.6521739130434783,
+            "accuracy": 0.6875,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.6521739130434783,
-            "brier": 0.23144774695087628,
-            "logLoss": 0.6528981439617206,
-            "probabilityError": 0.0790363518823616
+            "probabilityAccuracy": 0.65625,
+            "brier": 0.21994062358115132,
+            "logLoss": 0.6291625192177845,
+            "probabilityError": 0.020268735506051207
           },
           "performance": {
-            "accuracy": 0.43478260869565216,
+            "accuracy": 0.375,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.5217391304347826,
-            "brier": 0.2797292573185294,
-            "logLoss": 0.759341461561165,
-            "probabilityError": 0.05200385974938898
+            "probabilityAccuracy": 0.5,
+            "brier": 0.27837944771054984,
+            "logLoss": 0.7550709757917401,
+            "probabilityError": 0.014495021491714655
           },
           "triple": {
-            "accuracy": 0.6739130434782609,
-            "rankingTies": 1,
-            "probabilityAccuracy": 0.5652173913043478,
-            "brier": 0.23702918191993022,
-            "logLoss": 0.6653668473377199,
-            "probabilityError": 0.06194189273703265
+            "accuracy": 0.65625,
+            "rankingTies": 2,
+            "probabilityAccuracy": 0.6875,
+            "brier": 0.2225898699613189,
+            "logLoss": 0.6361689153164676,
+            "probabilityError": 0.013343106241281686
           },
           "sor+strength": {
-            "accuracy": 0.4782608695652174,
+            "accuracy": 0.5,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.7391304347826086,
-            "brier": 0.22779219071714413,
-            "logLoss": 0.6491842704815898,
-            "probabilityError": 0.06337712856190017
+            "probabilityAccuracy": 0.8125,
+            "brier": 0.20847909709814358,
+            "logLoss": 0.6087782976219508,
+            "probabilityError": 0.010757490353047213
           },
           "sor+performance": {
-            "accuracy": 0.5217391304347826,
+            "accuracy": 0.5625,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.5652173913043478,
-            "brier": 0.2464824092592669,
-            "logLoss": 0.6846441721167666,
-            "probabilityError": 0.052122965387717275
+            "probabilityAccuracy": 0.625,
+            "brier": 0.23113197823444168,
+            "logLoss": 0.6535773798186777,
+            "probabilityError": 0.009261028053146035
           },
           "strength+performance": {
-            "accuracy": 0.6086956521739131,
+            "accuracy": 0.59375,
             "rankingTies": 0,
-            "probabilityAccuracy": 0.4782608695652174,
-            "brier": 0.2502967002839357,
-            "logLoss": 0.6923054114596993,
-            "probabilityError": 0.06790964381449215
+            "probabilityAccuracy": 0.5,
+            "brier": 0.24356598539866756,
+            "logLoss": 0.6785734087818677,
+            "probabilityError": 0.019498824164536223
           }
         }
       }
     }
   },
   "evaluated": [
+    {
+      "season": 2026,
+      "gameId": "401856748",
+      "home": "57",
+      "away": "238",
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-14T17:02:39.519Z",
+      "forecastCapturedAt": "2026-11-14T17:03:14.860Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 33.57664233576642,
+          "homeWinProbability": 0.7951946668919502,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 21.167883211678827,
+          "homeWinProbability": 0.7742901209842229,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 27.737226277372258,
+          "homeWinProbability": 0.7934666103757578,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 27.493917274939186,
+          "homeWinProbability": 0.8211676003838937,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 27.372262773722625,
+          "homeWinProbability": 0.8020676072970353,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 30.65693430656934,
+          "homeWinProbability": 0.8288729823698714,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 24.452554744525543,
+          "homeWinProbability": 0.8055316829538893,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "b7300f183977484ce41bbacd56e268804053448d3b6515496a57a2ac18de4b3a",
+      "snapshotHash": "c7ef6d507962037bded501411f4abbe0ac8e6b84476d37f882d6172192ca92f3",
+      "sourceHash": "98fffdc9c78c84be9db58a841d47f16cea00e3f073ebaa46faa56c385fbec488",
+      "performancePublicationHash": "89dfdd81f71add169c6c994ba938750f1c2215f78640b45ac58ef2b15f097b24",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T17:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401856751",
+      "home": "142",
+      "away": "96",
+      "kickoff": "2026-11-22T00:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": -13.138686131386848,
+          "homeWinProbability": 0.5110873111614119,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": 2.919708029197082,
+          "homeWinProbability": 0.6312505744174051,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": -9.489051094890513,
+          "homeWinProbability": 0.5193168245251448,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -6.569343065693417,
+          "homeWinProbability": 0.5415484233564543,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -5.109489051094883,
+          "homeWinProbability": 0.5608631757645715,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -11.31386861313868,
+          "homeWinProbability": 0.49902035423539615,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -3.2846715328467155,
+          "homeWinProbability": 0.5720294232897788,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": true,
+      "componentDisagreement": true,
+      "outcome": 1,
+      "resultKickoff": "2026-11-22T00:30:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401856753",
+      "home": "2579",
+      "away": "61",
+      "kickoff": "2026-11-22T00:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": -24.08759124087591,
+          "homeWinProbability": 0.4345813085616206,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -23.357664233576642,
+          "homeWinProbability": 0.3861857741602408,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -24.81751824817519,
+          "homeWinProbability": 0.3905319171449282,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -24.08759124087591,
+          "homeWinProbability": 0.37012791696963987,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -23.722627737226276,
+          "homeWinProbability": 0.39724452035560565,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -24.452554744525543,
+          "homeWinProbability": 0.3777705964599489,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -24.087591240875923,
+          "homeWinProbability": 0.3639670587093875,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": true,
+      "componentDisagreement": false,
+      "outcome": 0,
+      "resultKickoff": "2026-11-22T00:30:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401856754",
+      "home": "2633",
+      "away": "99",
+      "kickoff": "2026-11-21T20:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 10.21897810218978,
+          "homeWinProbability": 0.6682857100036149,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 2.189781021897815,
+          "homeWinProbability": 0.6247551612997946,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": -12.408759124087595,
+          "homeWinProbability": 0.4944513068622449,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": 0,
+          "homeWinProbability": 0.6054963223222631,
+          "pick": "tie"
+        },
+        "sor+strength": {
+          "indexDifference": 6.204379562043798,
+          "homeWinProbability": 0.6562958659119565,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": -1.0948905109489147,
+          "homeWinProbability": 0.5941532417751768,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -5.109489051094883,
+          "homeWinProbability": 0.5537222487810533,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": true,
+      "componentDisagreement": true,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T20:30:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401856755",
+      "home": "251",
+      "away": "8",
+      "kickoff": "2026-11-21T20:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 49.63503649635037,
+          "homeWinProbability": 0.85906982189904,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 34.30656934306569,
+          "homeWinProbability": 0.849818195134098,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 36.496350364963504,
+          "homeWinProbability": 0.8381400482545076,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 40.14598540145985,
+          "homeWinProbability": 0.8837639418067702,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 41.970802919708035,
+          "homeWinProbability": 0.8719363893991458,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 43.065693430656935,
+          "homeWinProbability": 0.8854676138402551,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 35.40145985401459,
+          "homeWinProbability": 0.866194132455591,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": true,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T20:30:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
     {
       "season": 2026,
       "gameId": "401856857",
@@ -972,7 +1203,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-14T22:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -1035,7 +1266,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-15T00:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -1098,7 +1329,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-14T17:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -1161,7 +1392,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T03:15:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -1224,7 +1455,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -1287,7 +1518,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T19:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -1350,7 +1581,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-15T02:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -1413,9 +1644,135 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-15T03:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
+    },
+    {
+      "season": 2026,
+      "gameId": "401856866",
+      "home": "2305",
+      "away": "252",
+      "kickoff": "2026-11-21T05:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-14T17:02:39.519Z",
+      "forecastCapturedAt": "2026-11-14T17:03:14.860Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -70.07299270072994,
+          "homeWinProbability": 0.1743866966322967,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -38.686131386861305,
+          "homeWinProbability": 0.2597503100571743,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -8.02919708029198,
+          "homeWinProbability": 0.5317214631661953,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -38.92944038929441,
+          "homeWinProbability": 0.24541124831917188,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -54.379562043795616,
+          "homeWinProbability": 0.18142899420358022,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -39.05109489051097,
+          "homeWinProbability": 0.2593909885066942,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -23.35766423357665,
+          "homeWinProbability": 0.3708851763347779,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "b7300f183977484ce41bbacd56e268804053448d3b6515496a57a2ac18de4b3a",
+      "snapshotHash": "c7ef6d507962037bded501411f4abbe0ac8e6b84476d37f882d6172192ca92f3",
+      "sourceHash": "98fffdc9c78c84be9db58a841d47f16cea00e3f073ebaa46faa56c385fbec488",
+      "performancePublicationHash": "89dfdd81f71add169c6c994ba938750f1c2215f78640b45ac58ef2b15f097b24",
+      "componentTop25": true,
+      "componentDisagreement": false,
+      "outcome": 0,
+      "resultKickoff": "2026-11-21T17:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401856867",
+      "home": "2132",
+      "away": "38",
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-14T17:02:39.519Z",
+      "forecastCapturedAt": "2026-11-14T17:03:14.860Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 10,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 19.708029197080286,
+          "homeWinProbability": 0.7245164197912779,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 21.167883211678834,
+          "homeWinProbability": 0.7742901209842229,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": -9.489051094890506,
+          "homeWinProbability": 0.5193168245251448,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": 10.462287104622867,
+          "homeWinProbability": 0.6996071816378959,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 20.43795620437956,
+          "homeWinProbability": 0.7600182257265959,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 5.109489051094897,
+          "homeWinProbability": 0.6490714867843671,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 5.839416058394164,
+          "homeWinProbability": 0.6597560896115422,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "b7300f183977484ce41bbacd56e268804053448d3b6515496a57a2ac18de4b3a",
+      "snapshotHash": "c7ef6d507962037bded501411f4abbe0ac8e6b84476d37f882d6172192ca92f3",
+      "sourceHash": "98fffdc9c78c84be9db58a841d47f16cea00e3f073ebaa46faa56c385fbec488",
+      "performancePublicationHash": "89dfdd81f71add169c6c994ba938750f1c2215f78640b45ac58ef2b15f097b24",
+      "componentTop25": false,
+      "componentDisagreement": true,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T17:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
     },
     {
       "season": 2026,
@@ -1476,7 +1833,70 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-20T23:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401856870",
+      "home": "9",
+      "away": "197",
+      "kickoff": "2026-11-22T03:15:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": -9.489051094890513,
+          "homeWinProbability": 0.5366515991643594,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -11.678832116788321,
+          "homeWinProbability": 0.4953743886103442,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -26.277372262773724,
+          "homeWinProbability": 0.3787569672094089,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -15.81508515815085,
+          "homeWinProbability": 0.44968565500468577,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -10.583941605839414,
+          "homeWinProbability": 0.5125149349125956,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -17.88321167883211,
+          "homeWinProbability": 0.4374616776061592,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -18.978102189781026,
+          "homeWinProbability": 0.41342438285511834,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": true,
+      "componentDisagreement": false,
+      "outcome": 0,
+      "resultKickoff": "2026-11-22T03:15:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 12
     },
@@ -1539,7 +1959,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-15T00:45:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -1602,7 +2022,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -1665,7 +2085,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T23:15:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -1728,7 +2148,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-15T00:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -1791,7 +2211,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-14T21:15:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -1854,7 +2274,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T20:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -1917,7 +2337,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T17:45:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -1980,7 +2400,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T00:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -2043,7 +2463,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -2106,7 +2526,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -2169,7 +2589,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T17:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -2232,7 +2652,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T17:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -2295,7 +2715,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-15T00:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -2358,7 +2778,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-15T00:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -2421,7 +2841,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T17:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -2484,7 +2904,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T17:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -2547,7 +2967,385 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-21T00:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401858304",
+      "home": "52",
+      "away": "152",
+      "kickoff": "2026-11-21T20:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 26.277372262773724,
+          "homeWinProbability": 0.7597848598118885,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 28.46715328467154,
+          "homeWinProbability": 0.8191709141349011,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 19.7080291970803,
+          "homeWinProbability": 0.745037933153822,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 24.81751824817519,
+          "homeWinProbability": 0.8049621665674264,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 27.372262773722625,
+          "homeWinProbability": 0.8020676072970353,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 22.992700729927016,
+          "homeWinProbability": 0.7839525935215569,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 24.08759124087591,
+          "homeWinProbability": 0.8031896709160861,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 0,
+      "resultKickoff": "2026-11-21T20:30:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401858305",
+      "home": "258",
+      "away": "153",
+      "kickoff": "2026-11-21T17:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": -25.547445255474457,
+          "homeWinProbability": 0.42453382348959207,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -9.48905109489052,
+          "homeWinProbability": 0.5162218806184979,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -11.678832116788328,
+          "homeWinProbability": 0.5006699198100296,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -15.571776155717771,
+          "homeWinProbability": 0.4520867222490218,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -17.518248175182492,
+          "homeWinProbability": 0.45105282644770633,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -18.6131386861314,
+          "homeWinProbability": 0.43070487011269454,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -10.583941605839414,
+          "homeWinProbability": 0.4981197085133813,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T17:30:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401858307",
+      "home": "87",
+      "away": "2567",
+      "kickoff": "2026-11-22T00:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 24.81751824817519,
+          "homeWinProbability": 0.7522213919181222,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 27.00729927007299,
+          "homeWinProbability": 0.8107869344301449,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 24.817518248175176,
+          "homeWinProbability": 0.7766843716894714,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 25.547445255474443,
+          "homeWinProbability": 0.809489316367423,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 25.912408759124077,
+          "homeWinProbability": 0.7937001712568859,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 24.817518248175176,
+          "homeWinProbability": 0.7953718019765712,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 25.912408759124077,
+          "homeWinProbability": 0.8146880588169791,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": true,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-22T00:30:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401858308",
+      "home": "25",
+      "away": "24",
+      "kickoff": "2026-11-22T00:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": -34.30656934306569,
+          "homeWinProbability": 0.3658131967366009,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -18.97810218978102,
+          "homeWinProbability": 0.42640175756605336,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": 11.678832116788321,
+          "homeWinProbability": 0.6896944780215937,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": -13.868613138686133,
+          "homeWinProbability": 0.46895050970628294,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -26.642335766423358,
+          "homeWinProbability": 0.37267827912873147,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -11.313868613138684,
+          "homeWinProbability": 0.49902035423539615,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -3.649635036496349,
+          "homeWinProbability": 0.5683820816676084,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": true,
+      "outcome": 0,
+      "resultKickoff": "2026-11-22T00:30:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401858309",
+      "home": "103",
+      "away": "183",
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-14T17:02:39.519Z",
+      "forecastCapturedAt": "2026-11-14T17:03:14.860Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -5.839416058394157,
+          "homeWinProbability": 0.5620246688284416,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -8.759124087591246,
+          "homeWinProbability": 0.5231620929029841,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -10.21897810218978,
+          "homeWinProbability": 0.5131046006457605,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -8.272506082725066,
+          "homeWinProbability": 0.52465319130404,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -7.299270072992705,
+          "homeWinProbability": 0.5416104496472425,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -8.029197080291965,
+          "homeWinProbability": 0.5299284783700888,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -9.489051094890513,
+          "homeWinProbability": 0.5092807779731162,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "b7300f183977484ce41bbacd56e268804053448d3b6515496a57a2ac18de4b3a",
+      "snapshotHash": "c7ef6d507962037bded501411f4abbe0ac8e6b84476d37f882d6172192ca92f3",
+      "sourceHash": "98fffdc9c78c84be9db58a841d47f16cea00e3f073ebaa46faa56c385fbec488",
+      "performancePublicationHash": "89dfdd81f71add169c6c994ba938750f1c2215f78640b45ac58ef2b15f097b24",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T17:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401858310",
+      "home": "59",
+      "away": "154",
+      "kickoff": "2026-11-21T05:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-14T17:02:39.519Z",
+      "forecastCapturedAt": "2026-11-14T17:03:14.860Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -78.10218978102189,
+          "homeWinProbability": 0.1442561459176706,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -56.934306569343065,
+          "homeWinProbability": 0.14901121642462115,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -52.55474452554745,
+          "homeWinProbability": 0.1993533659878922,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -62.530413625304135,
+          "homeWinProbability": 0.11265238879687492,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -67.51824817518249,
+          "homeWinProbability": 0.12198928570218313,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -65.32846715328468,
+          "homeWinProbability": 0.11513369346084384,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -54.74452554744526,
+          "homeWinProbability": 0.14083800483578954,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "b7300f183977484ce41bbacd56e268804053448d3b6515496a57a2ac18de4b3a",
+      "snapshotHash": "c7ef6d507962037bded501411f4abbe0ac8e6b84476d37f882d6172192ca92f3",
+      "sourceHash": "98fffdc9c78c84be9db58a841d47f16cea00e3f073ebaa46faa56c385fbec488",
+      "performancePublicationHash": "89dfdd81f71add169c6c994ba938750f1c2215f78640b45ac58ef2b15f097b24",
+      "componentTop25": true,
+      "componentDisagreement": false,
+      "outcome": 0,
+      "resultKickoff": "2026-11-21T17:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 12
     },
@@ -2610,7 +3408,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -2673,7 +3471,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-15T00:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -2736,7 +3534,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T17:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -2799,7 +3597,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-14T22:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -2862,7 +3660,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T17:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -2925,7 +3723,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -2988,7 +3786,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-15T00:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -3051,7 +3849,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T17:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -3114,9 +3912,72 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T02:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
+    },
+    {
+      "season": 2026,
+      "gameId": "401858527",
+      "home": "356",
+      "away": "2294",
+      "kickoff": "2026-11-21T19:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": -16.058394160583944,
+          "homeWinProbability": 0.4905875769835796,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -13.868613138686129,
+          "homeWinProbability": 0.4745429685677656,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -16.058394160583944,
+          "homeWinProbability": 0.46342233460608034,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -15.328467153284663,
+          "homeWinProbability": 0.45449002185493553,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -14.96350364963503,
+          "homeWinProbability": 0.47362290999682516,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -16.058394160583944,
+          "homeWinProbability": 0.45445018209100546,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -14.963503649635044,
+          "homeWinProbability": 0.4536049679261719,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": true,
+      "componentDisagreement": false,
+      "outcome": 0,
+      "resultKickoff": "2026-11-21T19:30:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
     },
     {
       "season": 2026,
@@ -3177,7 +4038,322 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-21T01:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401858530",
+      "home": "135",
+      "away": "77",
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-14T17:02:39.519Z",
+      "forecastCapturedAt": "2026-11-14T17:03:14.860Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -13.868613138686129,
+          "homeWinProbability": 0.505963180191239,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -31.386861313868607,
+          "homeWinProbability": 0.31664732616709246,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -28.467153284671532,
+          "homeWinProbability": 0.36136288928313404,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -24.57420924574209,
+          "homeWinProbability": 0.36561763263275915,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -22.627737226277368,
+          "homeWinProbability": 0.4065996041801414,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -21.167883211678827,
+          "homeWinProbability": 0.40727402957202863,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -29.92700729927006,
+          "homeWinProbability": 0.31081481199635963,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "b7300f183977484ce41bbacd56e268804053448d3b6515496a57a2ac18de4b3a",
+      "snapshotHash": "c7ef6d507962037bded501411f4abbe0ac8e6b84476d37f882d6172192ca92f3",
+      "sourceHash": "98fffdc9c78c84be9db58a841d47f16cea00e3f073ebaa46faa56c385fbec488",
+      "performancePublicationHash": "89dfdd81f71add169c6c994ba938750f1c2215f78640b45ac58ef2b15f097b24",
+      "componentTop25": true,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T17:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401858531",
+      "home": "158",
+      "away": "194",
+      "kickoff": "2026-11-21T05:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-14T17:02:39.519Z",
+      "forecastCapturedAt": "2026-11-14T17:03:14.860Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -34.306569343065696,
+          "homeWinProbability": 0.36581319673660084,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -13.138686131386862,
+          "homeWinProbability": 0.48148051963167116,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -10.948905109489061,
+          "homeWinProbability": 0.5068883255118097,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -19.4647201946472,
+          "homeWinProbability": 0.41401093237106085,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -23.72262773722629,
+          "homeWinProbability": 0.3972445203556055,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -22.627737226277375,
+          "homeWinProbability": 0.3940648700417909,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -12.043795620437976,
+          "homeWinProbability": 0.48324311832471706,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "b7300f183977484ce41bbacd56e268804053448d3b6515496a57a2ac18de4b3a",
+      "snapshotHash": "c7ef6d507962037bded501411f4abbe0ac8e6b84476d37f882d6172192ca92f3",
+      "sourceHash": "98fffdc9c78c84be9db58a841d47f16cea00e3f073ebaa46faa56c385fbec488",
+      "performancePublicationHash": "89dfdd81f71add169c6c994ba938750f1c2215f78640b45ac58ef2b15f097b24",
+      "componentTop25": true,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T17:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401858532",
+      "home": "213",
+      "away": "164",
+      "kickoff": "2026-11-21T20:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 56.93430656934307,
+          "homeWinProbability": 0.8821149381297436,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 61.31386861313868,
+          "homeWinProbability": 0.9405841222988027,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 39.416058394160586,
+          "homeWinProbability": 0.8511887529641925,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 52.554744525547434,
+          "homeWinProbability": 0.9257494013079355,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 59.12408759124088,
+          "homeWinProbability": 0.9260762705056265,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 48.17518248175182,
+          "homeWinProbability": 0.9035928372856801,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 50.364963503649626,
+          "homeWinProbability": 0.922579095273459,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 0,
+      "resultKickoff": "2026-11-21T20:30:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401858533",
+      "home": "2509",
+      "away": "275",
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-14T17:02:39.519Z",
+      "forecastCapturedAt": "2026-11-14T17:03:14.860Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -54.01459854014598,
+          "homeWinProbability": 0.2490299367703795,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -31.386861313868614,
+          "homeWinProbability": 0.31664732616709235,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -21.167883211678827,
+          "homeWinProbability": 0.4205051476882651,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -35.52311435523114,
+          "homeWinProbability": 0.27141258457834766,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -42.7007299270073,
+          "homeWinProbability": 0.2513249749044254,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -37.591240875912405,
+          "homeWinProbability": 0.27009811365548647,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -26.277372262773724,
+          "homeWinProbability": 0.3435567030024139,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "b7300f183977484ce41bbacd56e268804053448d3b6515496a57a2ac18de4b3a",
+      "snapshotHash": "c7ef6d507962037bded501411f4abbe0ac8e6b84476d37f882d6172192ca92f3",
+      "sourceHash": "98fffdc9c78c84be9db58a841d47f16cea00e3f073ebaa46faa56c385fbec488",
+      "performancePublicationHash": "89dfdd81f71add169c6c994ba938750f1c2215f78640b45ac58ef2b15f097b24",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 0,
+      "resultKickoff": "2026-11-21T17:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401858534",
+      "home": "30",
+      "away": "120",
+      "kickoff": "2026-11-21T23:15:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 54.74452554744526,
+          "homeWinProbability": 0.8755670016139846,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 50.36496350364963,
+          "homeWinProbability": 0.9125258594764394,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 42.33576642335766,
+          "homeWinProbability": 0.8633570077507661,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 49.14841849148418,
+          "homeWinProbability": 0.915860482347799,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 52.554744525547434,
+          "homeWinProbability": 0.9084128369024282,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 48.54014598540146,
+          "homeWinProbability": 0.9047842563165268,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 46.35036496350364,
+          "homeWinProbability": 0.9100466640034088,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": true,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T23:15:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 12
     },
@@ -3240,7 +4416,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T23:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -3303,7 +4479,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-15T02:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -3366,7 +4542,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T21:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -3429,9 +4605,261 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-15T03:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
+    },
+    {
+      "season": 2026,
+      "gameId": "401860918",
+      "home": "278",
+      "away": "36",
+      "kickoff": "2026-11-22T00:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 19.70802919708029,
+          "homeWinProbability": 0.7245164197912779,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 45.98540145985402,
+          "homeWinProbability": 0.8982606980157642,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 18.97810218978102,
+          "homeWinProbability": 0.7402839659374015,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 28.22384428223844,
+          "homeWinProbability": 0.8254001849683296,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 32.846715328467155,
+          "homeWinProbability": 0.8311589242635888,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 19.343065693430656,
+          "homeWinProbability": 0.7597523112160274,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 32.48175182481752,
+          "homeWinProbability": 0.8517832270194906,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-22T00:30:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401860919",
+      "home": "204",
+      "away": "328",
+      "kickoff": "2026-11-22T03:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 13.868613138686129,
+          "homeWinProbability": 0.6906062475152779,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 25.54744525547445,
+          "homeWinProbability": 0.8021081432796761,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 40.14598540145985,
+          "homeWinProbability": 0.8543121801732092,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 26.520681265206804,
+          "homeWinProbability": 0.8153998902442104,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 19.70802919708029,
+          "homeWinProbability": 0.7552540288641059,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 27.00729927007299,
+          "homeWinProbability": 0.8084751232515788,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 32.846715328467155,
+          "homeWinProbability": 0.8536523462276565,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-22T03:30:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401860920",
+      "home": "326",
+      "away": "265",
+      "kickoff": "2026-11-21T23:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 60.583941605839414,
+          "homeWinProbability": 0.8923646366667651,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 35.76642335766423,
+          "homeWinProbability": 0.8567782122215727,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 32.84671532846715,
+          "homeWinProbability": 0.8205498071357791,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 43.065693430656935,
+          "homeWinProbability": 0.8951951042428595,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 48.17518248175182,
+          "homeWinProbability": 0.8946110473068732,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 46.715328467153284,
+          "homeWinProbability": 0.8986930840331074,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 34.30656934306569,
+          "homeWinProbability": 0.8609341522501204,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T23:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401860925",
+      "home": "68",
+      "away": "21",
+      "kickoff": "2026-11-22T02:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 57.66423357664234,
+          "homeWinProbability": 0.8842303258873959,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 55.47445255474453,
+          "homeWinProbability": 0.9268652247633933,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 77.37226277372262,
+          "homeWinProbability": 0.9542386591535416,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 63.503649635036496,
+          "homeWinProbability": 0.9507134473075979,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 56.56934306569343,
+          "homeWinProbability": 0.9196138065862074,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 67.51824817518248,
+          "homeWinProbability": 0.9510468769356868,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 66.42335766423358,
+          "homeWinProbability": 0.9582241011188778,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": true,
+      "componentDisagreement": false,
+      "outcome": 0,
+      "resultKickoff": "2026-11-22T02:30:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
     },
     {
       "season": 2026,
@@ -3492,9 +4920,72 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T17:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
+    },
+    {
+      "season": 2026,
+      "gameId": "401861968",
+      "home": "41",
+      "away": "295",
+      "kickoff": "2026-11-21T20:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 18.248175182481752,
+          "homeWinProbability": 0.7162571885895149,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 32.846715328467155,
+          "homeWinProbability": 0.8425820922368122,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 13.868613138686129,
+          "homeWinProbability": 0.7054355192553757,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 21.654501216545015,
+          "homeWinProbability": 0.7844059678796174,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 25.547445255474457,
+          "homeWinProbability": 0.7915678667857954,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 16.05839416058394,
+          "homeWinProbability": 0.7364399114400167,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 23.35766423357664,
+          "homeWinProbability": 0.7984419283038855,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T20:30:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
     },
     {
       "season": 2026,
@@ -3555,7 +5046,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-13T01:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -3618,7 +5109,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T18:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -3681,7 +5172,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-15T00:15:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -3744,7 +5235,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-15T02:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -3807,7 +5298,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-14T21:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -3870,7 +5361,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-14T18:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -3933,7 +5424,322 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-20T00:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401862831",
+      "home": "349",
+      "away": "151",
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-14T17:02:39.519Z",
+      "forecastCapturedAt": "2026-11-14T17:03:14.860Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": 12.408759124087595,
+          "homeWinProbability": 0.681776897532367,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 6.569343065693431,
+          "homeWinProbability": 0.6629811442493808,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 8.759124087591239,
+          "homeWinProbability": 0.6680081356340017,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 9.24574209245742,
+          "homeWinProbability": 0.6893192581883162,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 9.489051094890513,
+          "homeWinProbability": 0.6821322068007352,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 10.58394160583942,
+          "homeWinProbability": 0.6945023147463787,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 7.664233576642339,
+          "homeWinProbability": 0.6762566863453942,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "b7300f183977484ce41bbacd56e268804053448d3b6515496a57a2ac18de4b3a",
+      "snapshotHash": "c7ef6d507962037bded501411f4abbe0ac8e6b84476d37f882d6172192ca92f3",
+      "sourceHash": "98fffdc9c78c84be9db58a841d47f16cea00e3f073ebaa46faa56c385fbec488",
+      "performancePublicationHash": "89dfdd81f71add169c6c994ba938750f1c2215f78640b45ac58ef2b15f097b24",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 0,
+      "resultKickoff": "2026-11-21T17:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401862832",
+      "home": "202",
+      "away": "2429",
+      "kickoff": "2026-11-21T19:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 42.33576642335767,
+          "homeWinProbability": 0.8323757346247659,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 48.175182481751825,
+          "homeWinProbability": 0.9056344719281529,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 47.44525547445255,
+          "homeWinProbability": 0.8826309802625851,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 45.98540145985402,
+          "homeWinProbability": 0.9056221293800137,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 45.25547445255475,
+          "homeWinProbability": 0.884417719583734,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 44.89051094890511,
+          "homeWinProbability": 0.8922586466368987,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 47.81021897810219,
+          "homeWinProbability": 0.9148025126877145,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T19:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401862833",
+      "home": "2226",
+      "away": "58",
+      "kickoff": "2026-11-21T19:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 6.569343065693431,
+          "homeWinProbability": 0.6451822242793838,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": -23.357664233576642,
+          "homeWinProbability": 0.3861857741602408,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": 4.379562043795623,
+          "homeWinProbability": 0.6341211371452743,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": -4.136253041362522,
+          "homeWinProbability": 0.5655103345220921,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -8.394160583941606,
+          "homeWinProbability": 0.5319335983471761,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": 5.4744525547445235,
+          "homeWinProbability": 0.6521976242049058,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": -9.489051094890506,
+          "homeWinProbability": 0.5092807779731163,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": true,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T19:30:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401862834",
+      "home": "2426",
+      "away": "235",
+      "kickoff": "2026-11-21T17:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-14T17:02:39.519Z",
+      "forecastCapturedAt": "2026-11-14T17:03:14.860Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 10,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": -60.583941605839414,
+          "homeWinProbability": 0.21613787195005055,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -26.277372262773724,
+          "homeWinProbability": 0.36017803951409944,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -1.459854014598534,
+          "homeWinProbability": 0.586844243439631,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -29.440389294403886,
+          "homeWinProbability": 0.3219071658351818,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -43.43065693430656,
+          "homeWinProbability": 0.24647450584537806,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -31.021897810218974,
+          "homeWinProbability": 0.32156842363483434,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -13.868613138686122,
+          "homeWinProbability": 0.4646921312520131,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "b7300f183977484ce41bbacd56e268804053448d3b6515496a57a2ac18de4b3a",
+      "snapshotHash": "c7ef6d507962037bded501411f4abbe0ac8e6b84476d37f882d6172192ca92f3",
+      "sourceHash": "98fffdc9c78c84be9db58a841d47f16cea00e3f073ebaa46faa56c385fbec488",
+      "performancePublicationHash": "89dfdd81f71add169c6c994ba938750f1c2215f78640b45ac58ef2b15f097b24",
+      "componentTop25": true,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T17:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401862835",
+      "home": "2655",
+      "away": "249",
+      "kickoff": "2026-11-21T05:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-14T17:02:39.519Z",
+      "forecastCapturedAt": "2026-11-14T17:03:14.860Z",
+      "primaryEligible": true,
+      "homeGames": 9,
+      "awayGames": 9,
+      "homeMeasuredGames": 9,
+      "awayMeasuredGames": 9,
+      "models": {
+        "sor": {
+          "indexDifference": -45.98540145985402,
+          "homeWinProbability": 0.2935377812273761,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -47.44525547445256,
+          "homeWinProbability": 0.200861311181197,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -62.043795620437955,
+          "homeWinProbability": 0.15268177557116883,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -51.82481751824818,
+          "homeWinProbability": 0.1628431337700184,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -46.715328467153284,
+          "homeWinProbability": 0.22543639265014578,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -54.01459854014598,
+          "homeWinProbability": 0.1661719989551478,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -54.74452554744526,
+          "homeWinProbability": 0.14083800483578954,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "b7300f183977484ce41bbacd56e268804053448d3b6515496a57a2ac18de4b3a",
+      "snapshotHash": "c7ef6d507962037bded501411f4abbe0ac8e6b84476d37f882d6172192ca92f3",
+      "sourceHash": "98fffdc9c78c84be9db58a841d47f16cea00e3f073ebaa46faa56c385fbec488",
+      "performancePublicationHash": "89dfdd81f71add169c6c994ba938750f1c2215f78640b45ac58ef2b15f097b24",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T17:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 12
     },
@@ -3996,7 +5802,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -4059,7 +5865,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-15T04:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -4122,7 +5928,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-15T00:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -4185,7 +5991,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-15T00:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -4248,9 +6054,72 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-15T03:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
+    },
+    {
+      "season": 2026,
+      "gameId": "401864541",
+      "home": "2440",
+      "away": "62",
+      "kickoff": "2026-11-22T03:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 9.489051094890513,
+          "homeWinProbability": 0.6637251053580692,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 11.678832116788321,
+          "homeWinProbability": 0.7050033697287846,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 13.13868613138686,
+          "homeWinProbability": 0.7002402303389318,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 11.435523114355236,
+          "homeWinProbability": 0.7076958279707632,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 10.583941605839419,
+          "homeWinProbability": 0.6905105160873706,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 11.313868613138688,
+          "homeWinProbability": 0.700306754423312,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 12.408759124087592,
+          "homeWinProbability": 0.7170953551685689,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-22T03:30:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
     },
     {
       "season": 2026,
@@ -4311,7 +6180,133 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-21T02:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401864543",
+      "home": "2449",
+      "away": "2459",
+      "kickoff": "2026-11-21T21:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 78.83211678832117,
+          "homeWinProbability": 0.9326226766222193,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 78.1021897810219,
+          "homeWinProbability": 0.9677495518824426,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 35.76642335766424,
+          "homeWinProbability": 0.8347369747784132,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 64.23357664233576,
+          "homeWinProbability": 0.952058958040797,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 78.46715328467154,
+          "homeWinProbability": 0.9614132119841551,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 57.2992700729927,
+          "homeWinProbability": 0.9296692637757281,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 56.934306569343065,
+          "homeWinProbability": 0.9396761499909293,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T21:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401864544",
+      "home": "23",
+      "away": "2439",
+      "kickoff": "2026-11-22T00:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 11,
+      "awayGames": 10,
+      "homeMeasuredGames": 11,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": -39.416058394160586,
+          "homeWinProbability": 0.33320174420263005,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -22.62773722627737,
+          "homeWinProbability": 0.3927972072191346,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -20.43795620437956,
+          "homeWinProbability": 0.4265784873043027,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -27.49391727493917,
+          "homeWinProbability": 0.3390707245975614,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -31.021897810218977,
+          "homeWinProbability": 0.3370606566612558,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -29.927007299270073,
+          "homeWinProbability": 0.3306349483189762,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -21.532846715328468,
+          "homeWinProbability": 0.38840849487115114,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 0,
+      "resultKickoff": "2026-11-22T00:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 12
     },
@@ -4374,7 +6369,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-21T01:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 12
     },
@@ -4437,7 +6432,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-11T00:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -4500,7 +6495,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-11T00:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -4563,7 +6558,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-11T01:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -4626,7 +6621,7 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-12T00:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -4689,7 +6684,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-12T00:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -4752,7 +6747,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-12T00:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -4815,7 +6810,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-18T00:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 12
     },
@@ -4878,7 +6873,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-17T23:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 12
     },
@@ -4941,7 +6936,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-18T00:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 12
     },
@@ -5004,7 +6999,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-19T00:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 12
     },
@@ -5067,7 +7062,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-21T00:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 12
     },
@@ -5130,7 +7125,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-19T00:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 12
     },
@@ -5193,9 +7188,72 @@
       "componentDisagreement": true,
       "outcome": 0,
       "resultKickoff": "2026-11-14T23:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
+    },
+    {
+      "season": 2026,
+      "gameId": "401869929",
+      "home": "2026",
+      "away": "2433",
+      "kickoff": "2026-11-21T19:30:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 30.656934306569344,
+          "homeWinProbability": 0.781514893767245,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 18.978102189781023,
+          "homeWinProbability": 0.7593799124519095,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 16.05839416058394,
+          "homeWinProbability": 0.7207014182176389,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 21.8978102189781,
+          "homeWinProbability": 0.7860414806418593,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 24.817518248175183,
+          "homeWinProbability": 0.7872546795394914,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 23.357664233576642,
+          "homeWinProbability": 0.7862728314558626,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 17.51824817518248,
+          "homeWinProbability": 0.7573965890019271,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T19:30:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
     },
     {
       "season": 2026,
@@ -5256,9 +7314,135 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T18:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
+    },
+    {
+      "season": 2026,
+      "gameId": "401869938",
+      "home": "2348",
+      "away": "2032",
+      "kickoff": "2026-11-22T00:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 66.42335766423358,
+          "homeWinProbability": 0.9071352057166281,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 41.605839416058394,
+          "homeWinProbability": 0.8819700927072276,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 13.138686131386862,
+          "homeWinProbability": 0.7002402303389318,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 40.38929440389295,
+          "homeWinProbability": 0.8847564551429876,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 54.01459854014598,
+          "homeWinProbability": 0.9126396837561316,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 39.78102189781021,
+          "homeWinProbability": 0.8723036570331298,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 27.372262773722632,
+          "homeWinProbability": 0.8235077730449604,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-22T00:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401869946",
+      "home": "309",
+      "away": "324",
+      "kickoff": "2026-11-21T20:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 40.14598540145985,
+          "homeWinProbability": 0.8236174565615653,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 27.73722627737226,
+          "homeWinProbability": 0.8150156388392358,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 37.22627737226278,
+          "homeWinProbability": 0.8414863532263607,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 35.03649635036497,
+          "homeWinProbability": 0.8611544645678825,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 33.94160583941606,
+          "homeWinProbability": 0.8365504266286518,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 38.68613138686131,
+          "homeWinProbability": 0.8676368390644164,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 32.48175182481752,
+          "homeWinProbability": 0.8517832270194906,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T20:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
     },
     {
       "season": 2026,
@@ -5319,9 +7503,135 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
+    },
+    {
+      "season": 2026,
+      "gameId": "401869953",
+      "home": "2653",
+      "away": "290",
+      "kickoff": "2026-11-21T21:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": -34.30656934306569,
+          "homeWinProbability": 0.3658131967366009,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -35.76642335766424,
+          "homeWinProbability": 0.28169911221995275,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -43.065693430656935,
+          "homeWinProbability": 0.2559814482187126,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -37.71289537712896,
+          "homeWinProbability": 0.25450115047902655,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -35.03649635036496,
+          "homeWinProbability": 0.3059496118905359,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -38.68613138686132,
+          "homeWinProbability": 0.2620417439963193,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -39.416058394160586,
+          "homeWinProbability": 0.2344652757555373,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 0,
+      "resultKickoff": "2026-11-21T21:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401869958",
+      "home": "276",
+      "away": "2247",
+      "kickoff": "2026-11-21T21:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 6.569343065693431,
+          "homeWinProbability": 0.6451822242793838,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": -13.868613138686133,
+          "homeWinProbability": 0.4745429685677656,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -17.518248175182485,
+          "homeWinProbability": 0.4510762285309504,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -8.272506082725066,
+          "homeWinProbability": 0.52465319130404,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -3.6496350364963526,
+          "homeWinProbability": 0.5736009118573321,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -5.474452554744531,
+          "homeWinProbability": 0.5538224663003658,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -15.69343065693431,
+          "homeWinProbability": 0.44623832610637587,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": true,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T21:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
     },
     {
       "season": 2026,
@@ -5382,7 +7692,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-13T02:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -5445,7 +7755,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -5508,7 +7818,7 @@
       "componentDisagreement": false,
       "outcome": 0,
       "resultKickoff": "2026-11-14T19:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -5571,7 +7881,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-14T20:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -5634,7 +7944,7 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-14T20:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -5697,9 +8007,324 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T20:30:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
+    },
+    {
+      "season": 2026,
+      "gameId": "401871077",
+      "home": "166",
+      "away": "48",
+      "kickoff": "2026-11-21T20:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": -18.248175182481752,
+          "homeWinProbability": 0.47522976095093344,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -22.62773722627737,
+          "homeWinProbability": 0.3927972072191346,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": -10.94890510948905,
+          "homeWinProbability": 0.5068883255118098,
+          "pick": "away"
+        },
+        "triple": {
+          "indexDifference": -17.27493917274939,
+          "homeWinProbability": 0.43533223939396193,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -20.43795620437956,
+          "homeWinProbability": 0.425508067141741,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -14.598540145985401,
+          "homeWinProbability": 0.4681197152562081,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -16.78832116788321,
+          "homeWinProbability": 0.43523347425870973,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 0,
+      "resultKickoff": "2026-11-21T20:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401871078",
+      "home": "338",
+      "away": "2229",
+      "kickoff": "2026-11-21T20:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": -5.109489051094892,
+          "homeWinProbability": 0.5670648738334644,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": 1.459854014598541,
+          "homeWinProbability": 0.618214532381492,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 16.05839416058394,
+          "homeWinProbability": 0.7207014182176389,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 4.136253041362533,
+          "homeWinProbability": 0.6441182105229671,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": -1.8248175182481745,
+          "homeWinProbability": 0.5893849538518465,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": 5.4744525547445235,
+          "homeWinProbability": 0.6521976242049058,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 8.759124087591243,
+          "homeWinProbability": 0.6859538356221953,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": true,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T20:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401871079",
+      "home": "55",
+      "away": "2623",
+      "kickoff": "2026-11-21T19:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 43.7956204379562,
+          "homeWinProbability": 0.8380193506524217,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 28.467153284671536,
+          "homeWinProbability": 0.8191709141349011,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 41.605839416058394,
+          "homeWinProbability": 0.8603958065471001,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 37.956204379562045,
+          "homeWinProbability": 0.8744933722212498,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 36.13138686131387,
+          "homeWinProbability": 0.8469167586661502,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 42.7007299270073,
+          "homeWinProbability": 0.8840654598201854,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 35.03649635036497,
+          "homeWinProbability": 0.8644597610963645,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T19:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401871080",
+      "home": "2335",
+      "away": "98",
+      "kickoff": "2026-11-21T18:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": 63.503649635036496,
+          "homeWinProbability": 0.8999920494957783,
+          "pick": "home"
+        },
+        "strength": {
+          "indexDifference": 45.98540145985401,
+          "homeWinProbability": 0.8982606980157642,
+          "pick": "home"
+        },
+        "performance": {
+          "indexDifference": 58.3941605839416,
+          "homeWinProbability": 0.9161165054719124,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": 55.961070559610704,
+          "homeWinProbability": 0.9345591212038225,
+          "pick": "home"
+        },
+        "sor+strength": {
+          "indexDifference": 54.74452554744525,
+          "homeWinProbability": 0.9146863004503459,
+          "pick": "home"
+        },
+        "sor+performance": {
+          "indexDifference": 60.94890510948905,
+          "homeWinProbability": 0.9381471491315851,
+          "pick": "home"
+        },
+        "strength+performance": {
+          "indexDifference": 52.18978102189781,
+          "homeWinProbability": 0.9277299289533406,
+          "pick": "home"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": true,
+      "componentDisagreement": false,
+      "outcome": 1,
+      "resultKickoff": "2026-11-21T18:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
+    },
+    {
+      "season": 2026,
+      "gameId": "401871081",
+      "home": "2534",
+      "away": "2393",
+      "kickoff": "2026-11-21T19:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": -26.27737226277372,
+          "homeWinProbability": 0.4195328360951869,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -10.94890510948905,
+          "homeWinProbability": 0.5023253463032132,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": 1.4598540145985401,
+          "homeWinProbability": 0.6107429496569926,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": -11.922141119221411,
+          "homeWinProbability": 0.4883083563343314,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -18.613138686131386,
+          "homeWinProbability": 0.4414358166786035,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -12.408759124087588,
+          "homeWinProbability": 0.488707625020902,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -4.744525547445255,
+          "homeWinProbability": 0.5573970045070545,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": true,
+      "outcome": 0,
+      "resultKickoff": "2026-11-21T19:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
     },
     {
       "season": 2026,
@@ -5760,7 +8385,7 @@
       "componentDisagreement": false,
       "outcome": 1,
       "resultKickoff": "2026-11-14T22:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
     },
@@ -5823,11 +8448,74 @@
       "componentDisagreement": true,
       "outcome": 1,
       "resultKickoff": "2026-11-15T00:00:00.000Z",
-      "resultSourceHash": "dfc9e3ae7666d92d9531573ec446b33c9a065b26d419b1d954ea009fc6274631",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
       "seasonType": "regular",
       "week": 11
+    },
+    {
+      "season": 2026,
+      "gameId": "401871101",
+      "home": "2572",
+      "away": "6",
+      "kickoff": "2026-11-21T21:00:00.000Z",
+      "neutral": false,
+      "asOf": "2026-11-15T14:39:14.774Z",
+      "forecastCapturedAt": "2026-11-15T14:39:35.427Z",
+      "primaryEligible": true,
+      "homeGames": 10,
+      "awayGames": 10,
+      "homeMeasuredGames": 10,
+      "awayMeasuredGames": 10,
+      "models": {
+        "sor": {
+          "indexDifference": -24.087591240875916,
+          "homeWinProbability": 0.4345813085616206,
+          "pick": "away"
+        },
+        "strength": {
+          "indexDifference": -22.62773722627737,
+          "homeWinProbability": 0.3927972072191346,
+          "pick": "away"
+        },
+        "performance": {
+          "indexDifference": 3.649635036496351,
+          "homeWinProbability": 0.6283307460139381,
+          "pick": "home"
+        },
+        "triple": {
+          "indexDifference": -14.355231143552308,
+          "homeWinProbability": 0.4641233370629361,
+          "pick": "away"
+        },
+        "sor+strength": {
+          "indexDifference": -23.357664233576642,
+          "homeWinProbability": 0.4003549071069936,
+          "pick": "away"
+        },
+        "sor+performance": {
+          "indexDifference": -10.218978102189784,
+          "homeWinProbability": 0.509333917021761,
+          "pick": "away"
+        },
+        "strength+performance": {
+          "indexDifference": -9.48905109489051,
+          "homeWinProbability": 0.5092807779731163,
+          "pick": "away"
+        }
+      },
+      "observationSha256": "4d700ec4c713ace873f379f8a24283df087ad131d61fee6466fcea77a435f4da",
+      "snapshotHash": "b6b8bac6fa07783cb96922e74f272f03c106b584fd2c1a2b6e638a07ffa6551e",
+      "sourceHash": "4d0ae45283e0754863836799ea8b200ec0a7e0159531d39cd01d1a310528583e",
+      "performancePublicationHash": "41218f84ee236e39e61d1d3adb2b9f2983bde32f091a3704fe348031e229858b",
+      "componentTop25": false,
+      "componentDisagreement": true,
+      "outcome": 0,
+      "resultKickoff": "2026-11-21T21:00:00.000Z",
+      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
+      "seasonType": "regular",
+      "week": 12
     }
   ],
   "interpretation": "Only immutable forecasts actually captured before kickoff count. No scored games means evidence is pending. This is future-game ordering/probability evidence, not proof of the correct earned-achievement order. Local capture timestamps and public repository history are retained; this is not an external trusted timestamp service.",
-  "reportSha256": "b8ac35510cc7e179ed9b9eb705d6d7eae60337305656c3e29a81fd2724324478"
+  "reportSha256": "4729b8f3b051409370104586e716737d0db4412c5319ac9f6949bcbbbc166484"
 }
