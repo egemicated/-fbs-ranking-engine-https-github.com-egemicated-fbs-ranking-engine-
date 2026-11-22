@@ -1731,6 +1731,174 @@
           "isFinal": null,
           "verification": "All team/rank pairs match independently dated corroboration; dates are never inferred from provider weeks."
         }
+      },
+      {
+        "released": "2026-11-22",
+        "observedAt": "2026-11-22T21:04:40.899Z",
+        "kind": "weekly",
+        "url": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/rankings",
+        "publication": {
+          "precision": "observed",
+          "sourceUrl": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/rankings",
+          "note": "Verified distributor observation; original AP release instant is not asserted."
+        },
+        "rows": [
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 1,
+            "record": "10-1"
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 2,
+            "record": "11-0"
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 3,
+            "record": "10-1"
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 4,
+            "record": "10-1"
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 5,
+            "record": "9-2"
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 6,
+            "record": "9-2"
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 7,
+            "record": "9-2"
+          },
+          {
+            "id": "154",
+            "team": "Wake Forest",
+            "rank": 8,
+            "record": "10-1"
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 9,
+            "record": "10-1"
+          },
+          {
+            "id": "26",
+            "team": "UCLA",
+            "rank": 10,
+            "record": "10-1"
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 11,
+            "record": "9-2"
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 12,
+            "record": "9-2"
+          },
+          {
+            "id": "2294",
+            "team": "Iowa",
+            "rank": 13,
+            "record": "9-2"
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 14,
+            "record": "8-3"
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 15,
+            "record": "8-3"
+          },
+          {
+            "id": "12",
+            "team": "Arizona",
+            "rank": 16,
+            "record": "8-3"
+          },
+          {
+            "id": "248",
+            "team": "Houston",
+            "rank": 17,
+            "record": "8-3"
+          },
+          {
+            "id": "97",
+            "team": "Louisville",
+            "rank": 18,
+            "record": "8-3"
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 19,
+            "record": "7-4"
+          },
+          {
+            "id": "57",
+            "team": "Florida",
+            "rank": 20,
+            "record": "7-4"
+          },
+          {
+            "id": "2335",
+            "team": "Liberty",
+            "rank": 21,
+            "record": "10-1"
+          },
+          {
+            "id": "68",
+            "team": "Boise State",
+            "rank": 22,
+            "record": "9-2"
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 23,
+            "record": "7-4"
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 24,
+            "record": "7-4"
+          },
+          {
+            "id": "194",
+            "team": "Ohio State",
+            "rank": 25,
+            "record": "7-4"
+          }
+        ],
+        "provenance": {
+          "provider": "ESPN AP Top 25 distributor",
+          "responseSha256": "3af41acf7cbf62fd9766e0e6028ff1242ac23cfbb1b559f6cba31c12774efebb",
+          "fetchedAt": "2026-11-22T21:04:40.899Z"
+        }
       }
     ],
     "cfp": [
@@ -2157,6 +2325,154 @@
           "provider": "College Football Playoff"
         }
       }
+    ],
+    "coaches": [
+      {
+        "week": 12,
+        "released": "2026-11-22",
+        "releaseDateBasis": "observed",
+        "gamesThrough": null,
+        "observedAt": "2026-11-22T21:04:41.670Z",
+        "kind": "weekly",
+        "url": "https://www.afca.com/polls/",
+        "publication": {
+          "precision": "observed",
+          "sourceUrl": "https://api.collegefootballdata.com/rankings?year=2026&seasonType=regular&week=13"
+        },
+        "provenance": {
+          "provider": "CollegeFootballData",
+          "providerWeek": 13,
+          "providerSeasonType": "regular",
+          "responseSha256": "08e04ce3fe4b63672ac7adb6cedd01266bfea7bfe52531b5c6dd00c15d1f7ea5"
+        },
+        "rows": [
+          {
+            "id": "61",
+            "team": "Georgia",
+            "rank": 1
+          },
+          {
+            "id": "254",
+            "team": "Utah",
+            "rank": 2
+          },
+          {
+            "id": "87",
+            "team": "Notre Dame",
+            "rank": 3
+          },
+          {
+            "id": "2390",
+            "team": "Miami",
+            "rank": 4
+          },
+          {
+            "id": "333",
+            "team": "Alabama",
+            "rank": 5
+          },
+          {
+            "id": "251",
+            "team": "Texas",
+            "rank": 6
+          },
+          {
+            "id": "2633",
+            "team": "Tennessee",
+            "rank": 7
+          },
+          {
+            "id": "154",
+            "team": "Wake Forest",
+            "rank": 8
+          },
+          {
+            "id": "2641",
+            "team": "Texas Tech",
+            "rank": 9
+          },
+          {
+            "id": "26",
+            "team": "UCLA",
+            "rank": 10
+          },
+          {
+            "id": "252",
+            "team": "BYU",
+            "rank": 11
+          },
+          {
+            "id": "84",
+            "team": "Indiana",
+            "rank": 12
+          },
+          {
+            "id": "2294",
+            "team": "Iowa",
+            "rank": 13
+          },
+          {
+            "id": "2483",
+            "team": "Oregon",
+            "rank": 14
+          },
+          {
+            "id": "30",
+            "team": "USC",
+            "rank": 15
+          },
+          {
+            "id": "12",
+            "team": "Arizona",
+            "rank": 16
+          },
+          {
+            "id": "248",
+            "team": "Houston",
+            "rank": 17
+          },
+          {
+            "id": "97",
+            "team": "Louisville",
+            "rank": 18
+          },
+          {
+            "id": "145",
+            "team": "Ole Miss",
+            "rank": 19
+          },
+          {
+            "id": "57",
+            "team": "Florida",
+            "rank": 20
+          },
+          {
+            "id": "68",
+            "team": "Boise State",
+            "rank": 21
+          },
+          {
+            "id": "201",
+            "team": "Oklahoma",
+            "rank": 22
+          },
+          {
+            "id": "142",
+            "team": "Missouri",
+            "rank": 23
+          },
+          {
+            "id": "2335",
+            "team": "Liberty",
+            "rank": 24
+          },
+          {
+            "id": "96",
+            "team": "Kentucky",
+            "rank": 25
+          }
+        ]
+      }
     ]
   },
   "releases": {
@@ -2256,6 +2572,16 @@
           "precision": "date",
           "sourceUrl": "https://apnews.com/live/top-25-college-football-poll-11-16-2026"
         }
+      },
+      {
+        "released": "2026-11-22",
+        "kind": "weekly",
+        "observedAt": "2026-11-22T21:04:40.899Z",
+        "publication": {
+          "precision": "observed",
+          "sourceUrl": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/rankings",
+          "note": "Verified distributor observation; original AP release instant is not asserted."
+        }
       }
     ],
     "cfp": [
@@ -2283,6 +2609,19 @@
           "sourceUrl": "https://collegefootballplayoff.com/rankings"
         }
       }
+    ],
+    "coaches": [
+      {
+        "released": "2026-11-22",
+        "releaseDateBasis": "observed",
+        "kind": "weekly",
+        "week": 12,
+        "observedAt": "2026-11-22T21:04:41.670Z",
+        "publication": {
+          "precision": "observed",
+          "sourceUrl": "https://api.collegefootballdata.com/rankings?year=2026&seasonType=regular&week=13"
+        }
+      }
     ]
   },
   "sourceHashes": [
@@ -2307,6 +2646,16 @@
       "provider": "College Football Playoff",
       "url": "https://collegefootballplayoff.com/rankings",
       "sha256": "65632d4f4ec360aca2a762ae6b1a1a17639f6efbd038fae30ed9e44e7de20295"
+    },
+    {
+      "provider": "ESPN AP Top 25 distributor",
+      "url": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/rankings",
+      "sha256": "3af41acf7cbf62fd9766e0e6028ff1242ac23cfbb1b559f6cba31c12774efebb"
+    },
+    {
+      "provider": "CollegeFootballData",
+      "url": "https://api.collegefootballdata.com/rankings?year=2026&seasonType=regular&week=13",
+      "sha256": "08e04ce3fe4b63672ac7adb6cedd01266bfea7bfe52531b5c6dd00c15d1f7ea5"
     }
   ]
 }
