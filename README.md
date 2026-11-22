@@ -1,6 +1,6 @@
 # The Games Decide
 
-[The Games Decide](https://www.thegamesdecide.com/) publishes independent college football and men’s Division I basketball rankings, team evidence, and saved pregame forecasts. Strength of Record (SOR) ranks achieved results. Predictive Strength estimates future matchups. Both sports compare their rankings with human polls. Football also publishes Forge’s AI-authored ballot.
+[The Games Decide](https://www.thegamesdecide.com/) publishes independent college football and men’s Division I basketball rankings, team evidence, and saved pregame forecasts. Strength of Record (SOR) ranks achieved results. Predictive Strength estimates future matchups. Both sports offer human poll comparisons and Forge’s separate AI-authored ballot.
 
 ## Architecture
 
@@ -43,7 +43,7 @@ The workflow saves forecasts before confirmed kickoff, grades final results, and
 
 Basketball shares the provider quota with football. Its daily workflow authenticates an encrypted working cache, budgets calls against the football reserve, saves eligible forecasts before tipoff, and publishes only when meaningful data changes. The [basketball operations runbook](reports/basketball-managed-refresh.md) documents the original rollout, budget controls, and recovery.
 
-The daily refresh also checks the football AP, Coaches, and CFP editions. Codex checks football AP and Coaches again on Sundays at **2:00 p.m. MST**, and CFP on Tuesdays at **10:00 p.m. MST**. An officially announced football AP or Coaches delay gets a one-time check at the announced time. If Tuesday evening’s expected CFP release is unavailable, Codex schedules one Wednesday check at **8:00 a.m. MST**. The basketball AP and Coaches check runs on Mondays at **2:00 p.m. Eastern** during the season. New editions are dated and published separately from the site’s own rankings.
+The daily refresh also checks the football AP, Coaches, and CFP editions. Codex checks football AP and Coaches again on Sundays at **2:00 p.m. MST** and prepares the independent Forge ballots for both sports during that same run. The ballots use verified results and record their game cutoffs. Codex checks CFP on Tuesdays at **10:00 p.m. MST**. An officially announced football AP or Coaches delay gets a one-time check at the announced time. If Tuesday evening’s expected CFP release is unavailable, Codex schedules one Wednesday check at **8:00 a.m. MST**. The basketball AP and Coaches check runs on Mondays at **2:00 p.m. Eastern** during the season. New editions are dated and published separately from the site’s own rankings.
 
 The Codex automations run in the local app and need the computer awake and online. Operators can still dispatch the existing workflows in GitHub when a scheduled check is missed.
 

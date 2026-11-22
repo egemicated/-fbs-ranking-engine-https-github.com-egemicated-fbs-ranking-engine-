@@ -1,4 +1,4 @@
-import { basketballPollRoutes, destination, groups, primarySection, sportHref } from './preview-navigation-routes.mjs';
+import { basketballForgePath, basketballPollRoutes, destination, groups, primarySection, sportHref } from './preview-navigation-routes.mjs';
 import { pageHero, platformEmpty } from '../frontend/platform-presentation.js';
 export { pageHero } from '../frontend/platform-presentation.js';
 
@@ -57,8 +57,9 @@ export function basketballRankingsNavigation(current, year) {
   const items = [
     ['rankings', 'Rankings', basketballHref('rankings', { season: year })],
     ['polls', 'Compare Rankings', basketballPollRoutes.ap],
+    ['forge-rankings', 'Forge’s Rankings', basketballForgePath],
   ];
-  return `<nav class="rankings-hub-nav rankings-hub-nav--pair" aria-label="Ranking views">${items.map(([id, label, href]) =>
+  return `<nav class="rankings-hub-nav" aria-label="Ranking views">${items.map(([id, label, href]) =>
     `<a href="${escape(href)}"${id === current ? ' aria-current="page"' : ''}>${label}</a>`).join('')}</nav>`;
 }
 export const teamHref = (id, season) => basketballHref('teams/' + encodeURIComponent(id), { season });
@@ -162,7 +163,7 @@ export function previewFooter(active, season, { footballApp = false } = {}) {
 export function html({ title, active = 'basketball', current, season, profile, body, script = '', description, publication, pathname, query, publicVersion, bootNavigation = true, portalPage = false }) {
   const interiors = active === 'basketball' ? '<link rel="stylesheet" href="/basketball-preview/preview-interiors.css">'
     + (publicVersion ? '' : '<script type="module" src="/basketball-preview/preview-interiors.js"></script>') : '';
-  const rankingTransition = active === 'basketball' && ['rankings', 'polls'].includes(current)
+  const rankingTransition = active === 'basketball' && ['rankings', 'polls', 'forge-rankings'].includes(current)
     ? '<style>@view-transition{navigation:auto}::view-transition-group(root){animation-duration:170ms}' +
       '@media(prefers-reduced-motion:reduce){::view-transition-group(root),::view-transition-old(root),::view-transition-new(root){animation:none}}</style>' : '';
   const metadata = publicVersion

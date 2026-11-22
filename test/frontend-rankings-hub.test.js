@@ -381,7 +381,7 @@ test('Coaches and full Forge ballots keep separate links when their cutoff dates
 });
 
 test('a published Coaches cutoff is available while the same week’s full ballot is pending', async () => {
-  const archive = { ...editions, forgeCheckpoints: [...editions.forgeCheckpoints, {
+  const archive = { ...editions, forge: editions.forge.filter(edition => edition.week < 12), forgeCheckpoints: [...editions.forgeCheckpoints, {
     week: 12, gamesThrough: '2026-11-21', released: '2026-11-22', rows: [{ team: 'Alpha State', record: '10–1' }],
   }] };
   const page = await browser({ ...fixture(), archive, initialRoute: '/forge-rankings/?week=12&through=2026-11-21' });
@@ -392,6 +392,13 @@ test('a published Coaches cutoff is available while the same week’s full ballo
   assert.match(pending, /href="\/forge-rankings\/\?week=12&through=2026-11-21"/);
   assert.equal(rankingTable(pending), '');
   assert.match(rankingTable(await page.go('/forge-rankings/')), /After Week 11/);
+});
+
+test('a regular Forge ballot shows its publication date and keeps reconstructed editions labeled', async () => {
+  const page = await browser({ ...fixture(), archive: editions, initialRoute: '/forge-rankings/?week=12' });
+  assert.match(page.html(), /Games through Nov 21, 2026\. Ballot published Nov 22, 2026\./);
+  const prior = await page.go('/forge-rankings/?week=11');
+  assert.match(prior, /Retrospective ballot reconstructed Nov 16, 2026\./);
 });
 
 test('the shared stylesheet disables animation and transitions for reduced motion', async () => {

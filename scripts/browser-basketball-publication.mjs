@@ -39,6 +39,7 @@ const pages = [
   ['/basketball/', '.fc-hoops-hero','basketball'], ['/basketball/rankings/','[data-ranking-browser]','rankings'],
   ['/basketball/polls/','[data-basketball-ranking-comparison]','ap-comparison'],
   ['/basketball/polls/coaches/','[data-basketball-ranking-comparison]','coaches-comparison'],
+  ['/basketball/forge-rankings/','[data-basketball-forge-ballot]','forge-rankings'],
   ['/basketball/teams/','[data-team-browser]','teams'], [teamPath(teamA), '.fc-content','team'],
   [matchup,'[data-matchup-form][data-matchup-enhanced]','matchup'], ['/basketball/conferences/','[data-gd-basketball-conferences]','conference'],
   ['/basketball/scoreboard/?date='+picksDate,'.scoreboard-game','scoreboard'],
@@ -200,6 +201,20 @@ async function verifyRankingComparison(page) {
   await comparison.getByRole('columnheader', { name: 'AP Top 25' }).waitFor();
   await page.goBack();
   await page.locator('[data-ranking-browser]').waitFor();
+
+  const forge = hub.getByRole('link', { name: 'Forge’s Rankings' });
+  await forge.click();
+  await page.waitForURL(origin + '/basketball/forge-rankings/');
+  assert.equal(await forge.getAttribute('aria-current'), 'page');
+  const ballot = page.locator('[data-basketball-forge-ballot]');
+  if (await ballot.locator('tbody').count()) {
+    assert.equal(await ballot.locator('tbody tr').count(), 25);
+    const cutoff = await ballot.locator('h3 time').getAttribute('datetime');
+    const dated = await page.goto(`${origin}/basketball/forge-rankings/${cutoff}/`);
+    assert.equal(dated.status(), 200);
+    assert.equal(await ballot.locator('h3 time').getAttribute('datetime'), cutoff);
+    assert.equal(await ballot.locator('tbody tr').count(), 25);
+  } else await ballot.getByRole('status').filter({ hasText: 'No Forge basketball ballot is available yet.' }).waitFor();
 }
 
 async function verifyScoreboard(page) {

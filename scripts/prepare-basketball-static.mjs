@@ -2,9 +2,10 @@ import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { applySecurityMetadata } from '../src/security-policy.js';
 import { html, nav, panel, previewFooter, sharedNavigationAssets, shell } from '../basketball/preview-ui.mjs';
-import { basketballPollRoutes } from '../basketball/preview-navigation-routes.mjs';
+import { basketballForgePath, basketballPollRoutes } from '../basketball/preview-navigation-routes.mjs';
 import { BASKETBALL_POLLS, readBasketballPolls } from '../basketball/poll-publication.mjs';
 import { renderBasketballRankingComparison } from '../basketball/poll-comparison.mjs';
+import { basketballForgeArchiveFile, basketballForgeEditionPath, readBasketballForgeBallots, renderBasketballForgeBallot } from '../basketball/forge-ballot.mjs';
 import { portal } from '../basketball/preview-views.mjs';
 import { basketballPublicView, publicBasketballLinks } from '../basketball/site-view.mjs';
 import { readBasketballSitePublication } from '../basketball/site-publication.mjs';
@@ -106,6 +107,19 @@ export async function addBasketballSite({ root, output, publicationDirectory, fo
     const body = publicBasketballLinks(renderBasketballRankingComparison(basketball.snapshot, polls, type));
     const pageHtml = html({ title: `Compare Basketball Rankings · ${BASKETBALL_POLLS[type].name}`,
       pathname, publicVersion, season: index.currentSeason, current: 'polls', body });
+    await write(pageName(pathname) + 'index.html', applySecurityMetadata(cleanAssets(pageHtml), { authUrl }));
+    paths.push(pathname);
+  }
+  const savedForge = await readFile(join(root, 'published', basketballForgeArchiveFile), 'utf8').then(JSON.parse).catch(error => {
+    if (error.code !== 'ENOENT') throw error;
+    return null;
+  });
+  const forge = readBasketballForgeBallots(savedForge, basketball.snapshot);
+  for (const cutoff of [undefined, ...forge.editions.map(edition => edition.gamesThrough)]) {
+    const pathname = cutoff ? basketballForgeEditionPath(cutoff) : basketballForgePath;
+    const body = publicBasketballLinks(renderBasketballForgeBallot(basketball.snapshot, forge, cutoff));
+    const pageHtml = html({ title: 'Forge’s Basketball Top 25', pathname, publicVersion,
+      season: index.currentSeason, current: 'forge-rankings', body });
     await write(pageName(pathname) + 'index.html', applySecurityMetadata(cleanAssets(pageHtml), { authUrl }));
     paths.push(pathname);
   }

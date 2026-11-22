@@ -66,6 +66,31 @@ async function layout(page) {
   });
 }
 
+async function checkRankingTabs(page, width) {
+  const nav = page.locator('.rankings-hub-nav');
+  await nav.waitFor();
+  const dimensions = await nav.evaluate(element=>{
+    const tabs = [...element.querySelectorAll('a')];
+    return {
+      width:element.getBoundingClientRect().width,
+      container:element.parentElement.clientWidth,
+      active:tabs.filter(tab=>tab.getAttribute('aria-current')==='page').length,
+      sizes:tabs.map(tab=>[tab.getBoundingClientRect().width,tab.getBoundingClientRect().height]),
+    };
+  });
+  assert.equal(dimensions.active,1,'Exactly one ranking tab is selected');
+  assert.ok(dimensions.width<=dimensions.container,'Ranking tabs fit the content area');
+  assert.ok(dimensions.sizes.every(([tabWidth,tabHeight])=>tabWidth>=44 && tabHeight>=44),'Ranking tab touch targets');
+  if (width>=1024) assert.ok(dimensions.width<dimensions.container/2,'Ranking tabs are compact on desktop');
+  if ([390,1440].includes(width)) {
+    const tabs = nav.getByRole('link');
+    await tabs.first().focus();
+    await page.keyboard.press('Tab');
+    assert.ok(await tabs.nth(1).evaluate(tab=>tab===document.activeElement && tab.matches(':focus-visible')),
+      'Ranking tabs show keyboard focus');
+  }
+}
+
 try {
   for (const width of [320,360,390,768,1024,1440,1920]) {
     const context = await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'});
@@ -76,8 +101,10 @@ try {
     for (const [name,football,basketball] of pairs) {
       await open(page,football,true);
       const left = await layout(page);
+      if (name==='rankings') await checkRankingTabs(page,width);
       await open(page,basketball,true);
       const right = await layout(page);
+      if (name==='rankings') await checkRankingTabs(page,width);
       assert.equal(left.heading,right.heading,`${width} ${name} left margin`);
       assert.equal(left.font,right.font,`${width} ${name} title typography`);
       assert.equal(left.variant,right.variant,`${width} ${name} header variant`);

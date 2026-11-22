@@ -5,10 +5,11 @@ import { pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
 import { createPreviewAccounts } from '../basketball/preview-accounts.mjs';
 import { loadPreviewStore } from '../basketball/preview-store.mjs';
-import { basketballPollRoutes } from '../basketball/preview-navigation-routes.mjs';
+import { basketballForgePath, basketballPollRoutes } from '../basketball/preview-navigation-routes.mjs';
 import { basketballScoreboardSelection } from '../basketball/scoreboard.mjs';
 import { BASKETBALL_POLLS, readBasketballPolls } from '../basketball/poll-publication.mjs';
 import { renderBasketballRankingComparison } from '../basketball/poll-comparison.mjs';
+import { basketballForgeArchiveFile, readBasketballForgeBallots, renderBasketballForgeBallot } from '../basketball/forge-ballot.mjs';
 import { action, banner, dayKey, empty, escape, html, nav, panel, previewFooter, sharedNavigationAssets, shell, teamHref } from '../basketball/preview-ui.mjs';
 import { contestBoard, profilePage } from '../basketball/preview-profile-ui.mjs';
 import { portal, renderBasketball } from '../basketball/preview-views.mjs';
@@ -242,6 +243,23 @@ export async function createBasketballPreview({root=project,clock=Date.now(),acc
         send(res,200,htmlType,html({title:`Compare Basketball Rankings · ${BASKETBALL_POLLS[poll].name}`,
           current:'polls',pathname:path,season:activeYear,profile:await profile(),publication:current.snapshot,
           body:renderBasketballRankingComparison(current.snapshot,polls,poll)}));
+        return;
+      }
+      const canonicalPath = path.replace(/\/?$/, '/');
+      const forgeCutoff = canonicalPath.slice(basketballForgePath.length).match(/^(\d{4}-\d{2}-\d{2})\/$/)?.[1];
+      if (canonicalPath === basketballForgePath || canonicalPath.startsWith(basketballForgePath) && forgeCutoff) {
+        const current = seasons.get(activeYear);
+        if (!current?.snapshot) { send(res,404,htmlType,notFound(await profile())); return; }
+        const saved = await readFile(join(root, 'published', basketballForgeArchiveFile), 'utf8').then(JSON.parse).catch(error => {
+          if (error.code !== 'ENOENT') throw error;
+          return null;
+        });
+        const forge = readBasketballForgeBallots(saved, current.snapshot);
+        if (forgeCutoff && !forge.editions.some(edition => edition.gamesThrough === forgeCutoff)) {
+          send(res,404,htmlType,notFound(await profile())); return;
+        }
+        send(res,200,htmlType,html({ title:'Forge’s Basketball Top 25', current:'forge-rankings', pathname:canonicalPath,
+          season:activeYear, profile:await profile(), publication:current.snapshot, body:renderBasketballForgeBallot(current.snapshot, forge, forgeCutoff) }));
         return;
       }
       if (path==='/basketball' || path.startsWith('/basketball/')) {

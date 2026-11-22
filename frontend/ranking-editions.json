@@ -1731,6 +1731,153 @@
         "Utah kept No. 1 after its 40–39 road win over Arizona. UCLA stayed No. 2 at 10–0 after beating Illinois. Georgia led the one-loss teams after beating Missouri 48–21.",
         "Wake Forest rose seven spots to No. 10 after a 49–7 road win over SMU. Florida entered at No. 18 after beating Kentucky on the road, and Oklahoma entered after beating Ole Miss 24–17 on Sunday."
       ]
+    },
+    {
+      "week": 12,
+      "gamesThrough": "2026-11-21",
+      "released": "2026-11-22",
+      "kind": "weekly",
+      "rows": [
+        {
+          "team": "Utah",
+          "record": "11–0",
+          "game": "W 38–17 at TCU"
+        },
+        {
+          "team": "Georgia",
+          "record": "10–1",
+          "game": "W 34–6 at South Carolina"
+        },
+        {
+          "team": "Notre Dame",
+          "record": "10–1",
+          "game": "W 24–3 vs SMU"
+        },
+        {
+          "team": "Miami",
+          "record": "10–1",
+          "game": "W 28–20 vs Virginia Tech"
+        },
+        {
+          "team": "Texas",
+          "record": "9–2",
+          "game": "W 45–3 vs Arkansas"
+        },
+        {
+          "team": "Texas Tech",
+          "record": "10–1",
+          "game": "W 20–10 at Baylor"
+        },
+        {
+          "team": "Wake Forest",
+          "record": "10–1",
+          "game": "W 50–29 at Georgia Tech"
+        },
+        {
+          "team": "UCLA",
+          "record": "10–1",
+          "game": "L 16–18 at Michigan"
+        },
+        {
+          "team": "Tennessee",
+          "record": "9–2",
+          "game": "W 27–13 vs LSU"
+        },
+        {
+          "team": "Alabama",
+          "record": "9–2",
+          "game": "W 47–0 vs Chattanooga"
+        },
+        {
+          "team": "BYU",
+          "record": "9–2",
+          "game": "W 31–29 at Kansas"
+        },
+        {
+          "team": "Oregon",
+          "record": "8–3",
+          "game": "W 45–7 at Michigan State"
+        },
+        {
+          "team": "Iowa",
+          "record": "9–2",
+          "game": "W 34–17 at Illinois"
+        },
+        {
+          "team": "Indiana",
+          "record": "9–2",
+          "game": "L 24–27 at Washington"
+        },
+        {
+          "team": "Arizona",
+          "record": "8–3",
+          "game": "W 35–28 at Kansas State"
+        },
+        {
+          "team": "Boise State",
+          "record": "9–2",
+          "game": "L 20–22 vs San Diego State"
+        },
+        {
+          "team": "Houston",
+          "record": "8–3",
+          "game": "W 34–31 at West Virginia"
+        },
+        {
+          "team": "USC",
+          "record": "8–3",
+          "game": "W 35–21 vs Maryland"
+        },
+        {
+          "team": "Oklahoma",
+          "record": "7–4",
+          "game": "W 28–7 vs Texas A&M"
+        },
+        {
+          "team": "Missouri",
+          "record": "7–4",
+          "game": "W 28–14 vs Kentucky"
+        },
+        {
+          "team": "Florida",
+          "record": "7–4",
+          "game": "W 34–27 vs Vanderbilt"
+        },
+        {
+          "team": "UTSA",
+          "record": "9–2",
+          "game": "W 19–17 at UAB"
+        },
+        {
+          "team": "Ole Miss",
+          "record": "7–4",
+          "game": "W 59–17 vs Wofford"
+        },
+        {
+          "team": "Ohio State",
+          "record": "7–4",
+          "game": "L 28–31 at Nebraska"
+        },
+        {
+          "team": "Louisville",
+          "record": "8–3",
+          "game": "W 42–10 vs Pittsburgh"
+        }
+      ],
+      "notes": [
+        "I weigh the season résumé first, using opponent quality and road or neutral-site results for context. Head-to-head helps separate close teams. Scoring margin helps explain how a game was played.",
+        "Utah stays No. 1 at 11–0 after winning 38–17 at TCU. Georgia moves to No. 2 after winning 34–6 at South Carolina. Notre Dame stays ahead of Miami on its 31–24 head-to-head win.",
+        "UCLA falls to No. 8 after its first loss, 18–16 at Michigan. Texas rises to No. 5 after beating Arkansas 45–3, backed by its wins over Ohio State, UTSA and Tennessee. Tennessee’s 26–10 win over Alabama breaks a close call between two 9–2 teams.",
+        "Houston and Missouri enter at No. 17 and No. 20. Missouri beat Kentucky 28–14 this week and already had a 45–17 win over Florida."
+      ],
+      "evidence": {
+        "sourceCommit": "6c416b314959a04902042b435d2a6d3348f83cee",
+        "snapshotHash": "a425e007e2ebb5b25005f4fba5349c00ea5707844d1126e9fea99c8d6e52b423",
+        "publicationHash": "62ec2f905e84ef74b113b233ce9b021b7c36999cb615725f6e117f8707541989",
+        "checkpointPublishedAt": "2026-11-22T14:39:11.342Z",
+        "completedWeekGames": 70,
+        "timeZone": "America/Denver"
+      }
     }
   ],
   "sor": [

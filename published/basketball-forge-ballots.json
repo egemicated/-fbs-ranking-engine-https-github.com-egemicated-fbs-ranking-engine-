@@ -1,0 +1,169 @@
+{
+  "schema": 1,
+  "season": 2027,
+  "editions": [
+    {
+      "gamesThrough": "2026-11-21",
+      "released": "2026-11-22",
+      "snapshotAsOf": "2026-11-22T14:39:54.630Z",
+      "snapshotHash": "050cefdf61c83a2e63fb451a3482804339671318f02a33c8b07bf661b7941cf6",
+      "notes": [
+        "For this first ballot, I gave the most weight to wins over strong opponents, especially away from home. Head-to-head and scoring margins help separate similar résumés. Most teams have played only a handful of games.",
+        "Houston starts at No. 1 after neutral-court wins over Florida (86–76) and Kansas (92–83). Florida is No. 2 with wins over Miami, Notre Dame and Florida State. Virginia is No. 3 at 7–0, with a neutral-court win over Arkansas and a road win at Maryland.",
+        "Texas Tech is No. 4 after its 84–78 win over Illinois. USC is No. 6 with wins over Wichita State on a neutral court and California on the road. Pittsburgh and Minnesota round out the top 10 after going 6–0 with a road win apiece."
+      ],
+      "rows": [
+        {
+          "id": "ncaam-d1:113",
+          "team": "Houston",
+          "wins": 6,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:87",
+          "team": "Florida",
+          "wins": 6,
+          "losses": 1
+        },
+        {
+          "id": "ncaam-d1:339",
+          "team": "Virginia",
+          "wins": 7,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:298",
+          "team": "Texas Tech",
+          "wins": 5,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:131",
+          "team": "Kansas",
+          "wins": 5,
+          "losses": 1
+        },
+        {
+          "id": "ncaam-d1:323",
+          "team": "USC",
+          "wins": 5,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:293",
+          "team": "Texas A&M",
+          "wins": 6,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:336",
+          "team": "Vanderbilt",
+          "wins": 6,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:229",
+          "team": "Pittsburgh",
+          "wins": 6,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:173",
+          "team": "Minnesota",
+          "wins": 6,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:118",
+          "team": "Illinois",
+          "wins": 5,
+          "losses": 1
+        },
+        {
+          "id": "ncaam-d1:136",
+          "team": "LSU",
+          "wins": 6,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:313",
+          "team": "UCLA",
+          "wins": 5,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:98",
+          "team": "Georgia",
+          "wins": 6,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:121",
+          "team": "Indiana",
+          "wins": 6,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:295",
+          "team": "Texas",
+          "wins": 5,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:188",
+          "team": "Nebraska",
+          "wins": 5,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:5",
+          "team": "Alabama",
+          "wins": 5,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:279",
+          "team": "St. John's",
+          "wins": 5,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:11",
+          "team": "Arizona",
+          "wins": 4,
+          "losses": 1
+        },
+        {
+          "id": "ncaam-d1:18",
+          "team": "BYU",
+          "wins": 5,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:109",
+          "team": "High Point",
+          "wins": 6,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:213",
+          "team": "Notre Dame",
+          "wins": 6,
+          "losses": 1
+        },
+        {
+          "id": "ncaam-d1:340",
+          "team": "Virginia Tech",
+          "wins": 6,
+          "losses": 0
+        },
+        {
+          "id": "ncaam-d1:224",
+          "team": "Oregon State",
+          "wins": 6,
+          "losses": 0
+        }
+      ]
+    }
+  ]
+}

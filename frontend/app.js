@@ -1492,7 +1492,7 @@ function renderPollComparison(data, sourceKey, requestedWeek) {
   });
   return `<section class="panel edition-panel"><div class="panel-body">
     ${tabs}<div class="edition-controls">${editionPicker(weeks, week)}${editionLink}</div>
-    <h2>${editionLabel(week)}</h2><p>${gamesThrough ? `Games through ${editionDate(gamesThrough)}.` : 'The poll’s exact game cutoff has not been verified.'}${poll ? ` ${source.name} ${observedDate ? 'first observed' : 'released'} ${editionDate(poll.released)}.` : ''}${official ? ` SOR published ${editionDate(official.released)}.` : ''}${forge ? ` Forge ballot reconstructed ${editionDate(forge.released)}.` : ''}</p>
+    <h2>${editionLabel(week)}</h2><p>${gamesThrough ? `Games through ${editionDate(gamesThrough)}.` : 'The poll’s exact game cutoff has not been verified.'}${poll ? ` ${source.name} ${observedDate ? 'first observed' : 'released'} ${editionDate(poll.released)}.` : ''}${official ? ` SOR published ${editionDate(official.released)}.` : ''}${forge ? ` Forge ballot ${forge.kind === 'weekly' ? 'published' : 'reconstructed'} ${editionDate(forge.released)}.` : ''}</p>
     ${separateForgeBallot ? `<p class="compact-note edition-context">Forge’s ballot covers games through ${editionDate(weekForge.gamesThrough)}. ${poll && gamesThrough ? `The ${source.name} covers games through ${editionDate(gamesThrough)}. ` : ''}The table only compares editions with matching cutoffs. <a class="text-link" href="${forgeBallotHref(week)}">View Forge’s ballot for this week ${icon('arrow')}</a></p>` : ''}
     ${savedCheckpoint ? '<p class="compact-note edition-context">This saved SOR checkpoint covers games through the same date as the poll. The full week includes later games.</p>' : ''}
     ${usesForgeCheckpoint ? '<p class="compact-note edition-context">Forge’s cutoff ballot was reconstructed using only games through the Coaches Poll cutoff shown above.</p>' : ''}
@@ -1535,7 +1535,7 @@ function renderForgeBallot(data, requestedWeek, through) {
   }).join('');
   return `<section class="panel edition-panel"><div class="panel-body">
     <div class="edition-controls">${editionPicker(weeks, edition.week)}${editionLinks}</div>
-    <h2>${editionTitle}</h2><p>${edition.week < 0 ? 'Preseason context as of' : 'Games through'} ${editionDate(edition.gamesThrough)}. Retrospective ballot reconstructed ${editionDate(edition.released)}.</p>
+    <h2>${editionTitle}</h2><p>${edition.week < 0 ? 'Preseason context as of' : 'Games through'} ${editionDate(edition.gamesThrough)}. ${edition.kind === 'weekly' ? 'Ballot published' : 'Retrospective ballot reconstructed'} ${editionDate(edition.released)}.</p>
     ${cutoffBallot ? '<p class="compact-note edition-context">This ballot uses only games through the date shown. Rank movement is measured from the previous week’s full ballot.</p>' : ''}
     ${edition.week === -1 ? '<p class="compact-note edition-context">Forge used 2025 results, roster and coaching context, and preseason AP and Coaches polls as background.</p>' : ''}
     ${edition.notes?.length ? `<ul class="edition-notice">${edition.notes.map(note => `<li>${esc(note)}</li>`).join('')}</ul>` : ''}
