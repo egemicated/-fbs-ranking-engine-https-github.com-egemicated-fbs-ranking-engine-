@@ -6462,7 +6462,7 @@
         "week": 12,
         "released": "2026-11-22",
         "releaseDateBasis": "observed",
-        "gamesThrough": null,
+        "gamesThrough": "2026-11-21",
         "observedAt": "2026-11-22T21:04:41.670Z",
         "kind": "weekly",
         "url": "https://www.afca.com/polls/",
@@ -6596,7 +6596,17 @@
             "team": "Kentucky",
             "rank": 25
           }
-        ]
+        ],
+        "cutoffEvidence": {
+          "officialTableUrl": "https://www.afca.com/polls/",
+          "datedEditionUrl": "https://sportsdata.usatoday.com/football/ncaaf/coaches-poll/2026/2026-11-22",
+          "publisherCoverageUrl": "https://www.aol.com/articles/college-football-rankings-week-12-174405000.html",
+          "verifiedAt": "2026-11-22T21:08:18.610Z",
+          "matchedPublishedTeamRecords": 25,
+          "completedWeekGames": 70,
+          "sundayFbsGames": 0,
+          "timeZone": "America/Denver"
+        }
       }
     ],
     "cfp": [
@@ -8617,6 +8627,159 @@
         "checkpointPublishedAt": "2026-11-15T18:04:41.489Z",
         "completedWeekGames": 66,
         "timeZone": "America/Denver"
+      }
+    },
+    {
+      "week": 12,
+      "gamesThrough": "2026-11-21",
+      "released": "2026-11-22",
+      "rows": [
+        {
+          "team": "Utah",
+          "record": "11–0",
+          "game": "W 38–17 at TCU"
+        },
+        {
+          "team": "Georgia",
+          "record": "10–1",
+          "game": "W 34–6 at South Carolina"
+        },
+        {
+          "team": "Notre Dame",
+          "record": "10–1",
+          "game": "W 24–3 vs SMU"
+        },
+        {
+          "team": "Miami",
+          "record": "10–1",
+          "game": "W 28–20 vs Virginia Tech"
+        },
+        {
+          "team": "Texas",
+          "record": "9–2",
+          "game": "W 45–3 vs Arkansas"
+        },
+        {
+          "team": "Texas Tech",
+          "record": "10–1",
+          "game": "W 20–10 at Baylor"
+        },
+        {
+          "team": "Wake Forest",
+          "record": "10–1",
+          "game": "W 50–29 at Georgia Tech"
+        },
+        {
+          "team": "UCLA",
+          "record": "10–1",
+          "game": "L 16–18 at Michigan"
+        },
+        {
+          "team": "Tennessee",
+          "record": "9–2",
+          "game": "W 27–13 vs LSU"
+        },
+        {
+          "team": "Alabama",
+          "record": "9–2",
+          "game": "W 47–0 vs Chattanooga"
+        },
+        {
+          "team": "BYU",
+          "record": "9–2",
+          "game": "W 31–29 at Kansas"
+        },
+        {
+          "team": "Oregon",
+          "record": "8–3",
+          "game": "W 45–7 at Michigan State"
+        },
+        {
+          "team": "Iowa",
+          "record": "9–2",
+          "game": "W 34–17 at Illinois"
+        },
+        {
+          "team": "Indiana",
+          "record": "9–2",
+          "game": "L 24–27 at Washington"
+        },
+        {
+          "team": "Arizona",
+          "record": "8–3",
+          "game": "W 35–28 at Kansas State"
+        },
+        {
+          "team": "Boise State",
+          "record": "9–2",
+          "game": "L 20–22 vs San Diego State"
+        },
+        {
+          "team": "Houston",
+          "record": "8–3",
+          "game": "W 34–31 at West Virginia"
+        },
+        {
+          "team": "USC",
+          "record": "8–3",
+          "game": "W 35–21 vs Maryland"
+        },
+        {
+          "team": "Oklahoma",
+          "record": "7–4",
+          "game": "W 28–7 vs Texas A&M"
+        },
+        {
+          "team": "Missouri",
+          "record": "7–4",
+          "game": "W 28–14 vs Kentucky"
+        },
+        {
+          "team": "Florida",
+          "record": "7–4",
+          "game": "W 34–27 vs Vanderbilt"
+        },
+        {
+          "team": "UTSA",
+          "record": "9–2",
+          "game": "W 19–17 at UAB"
+        },
+        {
+          "team": "Ole Miss",
+          "record": "7–4",
+          "game": "W 59–17 vs Wofford"
+        },
+        {
+          "team": "Ohio State",
+          "record": "7–4",
+          "game": "L 28–31 at Nebraska"
+        },
+        {
+          "team": "Louisville",
+          "record": "8–3",
+          "game": "W 42–10 vs Pittsburgh"
+        }
+      ],
+      "notes": [
+        "The Nov. 22 Coaches Poll and the full Forge ballot cover the same 70 completed Week 12 games through Saturday, Nov. 21. All 25 records in the published Coaches poll match the saved Saturday checkpoint. There were no Sunday FBS games in the week. The Forge order is the independent full-week ballot."
+      ],
+      "evidence": {
+        "sourceCommit": "6c416b314959a04902042b435d2a6d3348f83cee",
+        "snapshotHash": "a425e007e2ebb5b25005f4fba5349c00ea5707844d1126e9fea99c8d6e52b423",
+        "publicationHash": "62ec2f905e84ef74b113b233ce9b021b7c36999cb615725f6e117f8707541989",
+        "checkpointPublishedAt": "2026-11-22T14:39:11.342Z",
+        "completedWeekGames": 70,
+        "timeZone": "America/Denver",
+        "coachPoll": {
+          "officialTableUrl": "https://www.afca.com/polls/",
+          "datedEditionUrl": "https://sportsdata.usatoday.com/football/ncaaf/coaches-poll/2026/2026-11-22",
+          "publisherCoverageUrl": "https://www.aol.com/articles/college-football-rankings-week-12-174405000.html",
+          "verifiedAt": "2026-11-22T21:08:18.610Z",
+          "matchedPublishedTeamRecords": 25,
+          "completedWeekGames": 70,
+          "sundayFbsGames": 0,
+          "timeZone": "America/Denver"
+        }
       }
     }
   ]
