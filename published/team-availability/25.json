@@ -10,37 +10,37 @@
       "opponentName": "Stanford",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-21T04:00:00.000Z",
-      "checkedAt": "2026-11-21T15:38:23.566Z",
-      "final": false,
+      "reportAt": "2026-11-21T22:30:00.000Z",
+      "checkedAt": "2026-11-22T14:39:56.825Z",
+      "final": true,
       "players": [
         {
           "playerId": "5147861",
           "name": "Adam Mohammed",
           "position": "RB",
           "jersey": 24,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5141574",
           "name": "Aiden Manutai",
           "position": "DB",
           "jersey": 14,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5192899",
           "name": "Ashten Emory",
           "position": "RB",
           "jersey": 20,
-          "status": "Probable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5218832",
           "name": "Ashun Shepphard",
           "position": "DL",
           "jersey": 99,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5148905",
@@ -54,7 +54,7 @@
           "name": "Daniel Harris",
           "position": "DB",
           "jersey": 7,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "4908552",
@@ -68,21 +68,21 @@
           "name": "EJ Caminong",
           "position": "QB",
           "jersey": 2,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5075390",
           "name": "Ian Strong",
           "position": "WR",
           "jersey": 9,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5218740",
           "name": "Isaiah Crosby",
           "position": "DB",
           "jersey": 23,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5227960",
@@ -96,21 +96,21 @@
           "name": "Jaron-Keawe Sagapolutele",
           "position": "QB",
           "jersey": 3,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5194311",
           "name": "Jayden Williams",
           "position": "DL",
           "jersey": 51,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5209183",
           "name": "JD McKinley",
           "position": "ILB",
           "jersey": 33,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4899704",
@@ -124,14 +124,14 @@
           "name": "Jordan Sanford",
           "position": "DB",
           "jersey": 17,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4568099",
           "name": "Justin Beadles",
           "position": "OLB",
           "jersey": 4,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5084987",
@@ -145,14 +145,14 @@
           "name": "Khamani Hudson",
           "position": "DB",
           "jersey": 25,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5165154",
           "name": "Mason Mini",
           "position": "TE",
           "jersey": 85,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4685281",

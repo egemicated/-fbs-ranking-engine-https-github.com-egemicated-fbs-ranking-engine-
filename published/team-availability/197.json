@@ -10,9 +10,9 @@
       "opponentName": "Arizona State",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-21T03:00:00.000Z",
-      "checkedAt": "2026-11-21T15:38:23.296Z",
-      "final": false,
+      "reportAt": "2026-11-22T01:45:00.000Z",
+      "checkedAt": "2026-11-22T14:39:55.544Z",
+      "final": true,
       "players": [
         {
           "playerId": "5228041",
@@ -40,7 +40,7 @@
           "name": "Drew Mestemaker",
           "position": "QB",
           "jersey": 17,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "4912301",
@@ -61,7 +61,7 @@
           "name": "Morgan McPhaul",
           "position": "TE",
           "jersey": 45,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5092199",

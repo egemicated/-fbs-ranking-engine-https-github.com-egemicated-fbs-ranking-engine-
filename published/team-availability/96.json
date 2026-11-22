@@ -10,16 +10,16 @@
       "opponentName": "Missouri",
       "source": "SEC",
       "sourceUrl": "https://www.secsports.com/fbreports",
-      "reportAt": "2026-11-21T01:10:00.000Z",
-      "checkedAt": "2026-11-21T15:38:23.444Z",
-      "final": false,
+      "reportAt": "2026-11-21T23:00:00.000Z",
+      "checkedAt": "2026-11-22T14:39:55.688Z",
+      "final": true,
       "players": [
         {
           "playerId": "5125302",
           "name": "Ahmad Breaux",
           "position": "DT",
           "jersey": 6,
-          "status": "Probable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": null,
@@ -40,14 +40,14 @@
           "name": "Grant Grayton",
           "position": "DB",
           "jersey": 30,
-          "status": "Doubtful"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5276985",
           "name": "Isaiah McMillian",
           "position": "DB",
           "jersey": 27,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5147089",
@@ -82,7 +82,7 @@
           "name": "Thomas O'Hara",
           "position": "P",
           "jersey": 48,
-          "status": "Questionable"
+          "status": "Available"
         }
       ]
     },

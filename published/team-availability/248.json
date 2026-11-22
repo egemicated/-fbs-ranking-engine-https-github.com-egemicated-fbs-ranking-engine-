@@ -10,9 +10,9 @@
       "opponentName": "West Virginia",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-21T03:00:00.000Z",
-      "checkedAt": "2026-11-21T15:38:23.296Z",
-      "final": false,
+      "reportAt": "2026-11-21T16:30:00.000Z",
+      "checkedAt": "2026-11-22T14:39:55.544Z",
+      "final": true,
       "players": [
         {
           "playerId": "5265300",
@@ -26,14 +26,14 @@
           "name": "Conner Weigman",
           "position": "QB",
           "jersey": 1,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "4918458",
           "name": "De'Marion Thomas",
           "position": "DL",
           "jersey": 90,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4918436",
@@ -47,7 +47,7 @@
           "name": "JD Rhym",
           "position": "DB",
           "jersey": 3,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5093979",

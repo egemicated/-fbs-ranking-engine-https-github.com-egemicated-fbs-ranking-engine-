@@ -10,9 +10,9 @@
       "opponentName": "UCLA",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-21T01:00:00.000Z",
-      "checkedAt": "2026-11-21T15:38:23.257Z",
-      "final": false,
+      "reportAt": "2026-11-21T18:30:00.000Z",
+      "checkedAt": "2026-11-22T14:39:55.493Z",
+      "final": true,
       "players": [
         {
           "playerId": "5391402",
@@ -26,7 +26,7 @@
           "name": "Andrew Marsh",
           "position": "WR",
           "jersey": 3,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5079729",
@@ -47,7 +47,7 @@
           "name": "Brady Norton",
           "position": "OL",
           "jersey": 70,
-          "status": "Questionable"
+          "status": "Available"
         },
         {
           "playerId": "5224470",
@@ -61,21 +61,28 @@
           "name": "Channing Goodwin",
           "position": "WR",
           "jersey": 9,
-          "status": "Questionable"
+          "status": "Available"
+        },
+        {
+          "playerId": "4870704",
+          "name": "Enow Etta",
+          "position": "DT",
+          "jersey": 17,
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5156349",
           "name": "Jalen Hoffman",
           "position": "TE",
           "jersey": 42,
-          "status": "Questionable"
+          "status": "Available"
         },
         {
           "playerId": "5209416",
           "name": "Jaylen Pile",
           "position": "WR",
           "jersey": 20,
-          "status": "Probable"
+          "status": "Out"
         },
         {
           "playerId": "5214557",
@@ -89,7 +96,14 @@
           "name": "John Henry Daley",
           "position": "DE",
           "jersey": 90,
-          "status": "Questionable"
+          "status": "Available"
+        },
+        {
+          "playerId": "5079574",
+          "name": "Jordan Marshall",
+          "position": "RB",
+          "jersey": 23,
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5199856",
@@ -103,7 +117,7 @@
           "name": "Kendrick Bell",
           "position": "WR",
           "jersey": 0,
-          "status": "Questionable"
+          "status": "Available"
         },
         {
           "playerId": "5079546",
@@ -113,11 +127,18 @@
           "status": "Out"
         },
         {
+          "playerId": "5141534",
+          "name": "Nate Marshall",
+          "position": "DE",
+          "jersey": 94,
+          "status": "Out"
+        },
+        {
           "playerId": null,
           "name": "Rod Moore",
           "position": "S",
           "jersey": 1,
-          "status": "Questionable"
+          "status": "Available"
         }
       ]
     },

@@ -10,9 +10,9 @@
       "opponentName": "Baylor",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-21T03:00:00.000Z",
-      "checkedAt": "2026-11-21T15:38:23.296Z",
-      "final": false,
+      "reportAt": "2026-11-21T19:00:00.000Z",
+      "checkedAt": "2026-11-22T14:39:55.544Z",
+      "final": true,
       "players": [
         {
           "playerId": "4918133",
@@ -33,14 +33,14 @@
           "name": "Brice Pollock",
           "position": "CB",
           "jersey": 14,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4916941",
           "name": "Coy Eakin",
           "position": "WR",
           "jersey": 3,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5227057",
@@ -54,7 +54,7 @@
           "name": "Kenny Johnson",
           "position": "WR",
           "jersey": 2,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5280093",
@@ -75,7 +75,7 @@
           "name": "Micah Hudson",
           "position": "WR",
           "jersey": 1,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5077501",
@@ -89,7 +89,7 @@
           "name": "Peyton Morgan",
           "position": "S",
           "jersey": 3,
-          "status": "Questionable"
+          "status": "Available"
         },
         {
           "playerId": "4917949",

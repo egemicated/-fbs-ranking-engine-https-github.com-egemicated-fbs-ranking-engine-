@@ -10,16 +10,16 @@
       "opponentName": "Miami",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-21T01:00:00.000Z",
-      "checkedAt": "2026-11-21T15:38:23.566Z",
-      "final": false,
+      "reportAt": "2026-11-21T22:00:00.000Z",
+      "checkedAt": "2026-11-22T14:39:56.825Z",
+      "final": true,
       "players": [
         {
           "playerId": "5158951",
           "name": "Davion Brown",
           "position": "WR",
           "jersey": 11,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5150880",
@@ -33,14 +33,14 @@
           "name": "Justin Terry",
           "position": "OL",
           "jersey": 72,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5079755",
           "name": "Kenny Woseley Jr.",
           "position": "CB",
           "jersey": 22,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5192898",

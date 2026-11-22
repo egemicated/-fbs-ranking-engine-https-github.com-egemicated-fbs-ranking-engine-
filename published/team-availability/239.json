@@ -10,9 +10,9 @@
       "opponentName": "Texas Tech",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-21T03:00:00.000Z",
-      "checkedAt": "2026-11-21T15:38:23.296Z",
-      "final": false,
+      "reportAt": "2026-11-21T19:00:00.000Z",
+      "checkedAt": "2026-11-22T14:39:55.544Z",
+      "final": true,
       "players": [
         {
           "playerId": "5164359",
@@ -33,7 +33,7 @@
           "name": "Daniel Cobbs",
           "position": "S",
           "jersey": 14,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "4912039",
@@ -68,7 +68,7 @@
           "name": "Kyland Reed",
           "position": "LB",
           "jersey": 10,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5160471",
@@ -82,7 +82,7 @@
           "name": "Taz Williams Jr.",
           "position": "WR",
           "jersey": 18,
-          "status": "Probable"
+          "status": "Available"
         }
       ]
     },

@@ -10,9 +10,9 @@
       "opponentName": "Indiana",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-21T01:00:00.000Z",
-      "checkedAt": "2026-11-21T15:38:23.257Z",
-      "final": false,
+      "reportAt": "2026-11-21T18:30:00.000Z",
+      "checkedAt": "2026-11-22T14:39:55.493Z",
+      "final": true,
       "players": [
         {
           "playerId": "4709669",
@@ -33,28 +33,28 @@
           "name": "Dezmen Roebuck",
           "position": "WR",
           "jersey": 2,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5210472",
           "name": "Elijah Durr",
           "position": "CB",
           "jersey": 17,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5298207",
           "name": "Hunter McKee",
           "position": "K",
           "jersey": 38,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "5158960",
           "name": "Jordan Clay",
           "position": "WR",
           "jersey": 11,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5219119",
@@ -75,7 +75,7 @@
           "name": "Logan George",
           "position": "EDG",
           "jersey": 12,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5209302",

@@ -10,9 +10,9 @@
       "opponentName": "Illinois",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-21T01:00:00.000Z",
-      "checkedAt": "2026-11-21T15:38:23.257Z",
-      "final": false,
+      "reportAt": "2026-11-21T17:30:00.000Z",
+      "checkedAt": "2026-11-22T14:39:55.493Z",
+      "final": true,
       "players": [
         {
           "playerId": "5272774",
@@ -54,7 +54,7 @@
           "name": "Jacob Wallace",
           "position": "DB",
           "jersey": 11,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5093886",
@@ -75,7 +75,7 @@
           "name": "Tony Diaz",
           "position": "WR",
           "jersey": 14,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5193099",
@@ -96,7 +96,7 @@
           "name": "Zach Lutmer",
           "position": "DB",
           "jersey": 6,
-          "status": "Probable"
+          "status": "Available"
         }
       ]
     },

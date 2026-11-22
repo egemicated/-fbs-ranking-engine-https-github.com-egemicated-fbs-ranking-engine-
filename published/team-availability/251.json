@@ -10,16 +10,16 @@
       "opponentName": "Arkansas",
       "source": "SEC",
       "sourceUrl": "https://www.secsports.com/fbreports",
-      "reportAt": "2026-11-21T01:10:00.000Z",
-      "checkedAt": "2026-11-21T15:38:23.444Z",
-      "final": false,
+      "reportAt": "2026-11-21T19:00:00.000Z",
+      "checkedAt": "2026-11-22T14:39:55.688Z",
+      "final": true,
       "players": [
         {
           "playerId": "5079689",
           "name": "Colin Simmons",
           "position": "EDG",
           "jersey": 1,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "4868356",
@@ -40,7 +40,7 @@
           "name": "Laurence Seymore III",
           "position": "OL",
           "jersey": 50,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5195299",
@@ -68,7 +68,7 @@
           "name": "Warren Roberson",
           "position": "DB",
           "jersey": 24,
-          "status": "Probable"
+          "status": "Available"
         }
       ]
     },

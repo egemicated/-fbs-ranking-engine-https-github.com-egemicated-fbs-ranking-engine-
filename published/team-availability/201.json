@@ -10,16 +10,16 @@
       "opponentName": "Texas A&M",
       "source": "SEC",
       "sourceUrl": "https://www.secsports.com/fbreports",
-      "reportAt": "2026-11-21T01:10:00.000Z",
-      "checkedAt": "2026-11-21T15:38:23.444Z",
-      "final": false,
+      "reportAt": "2026-11-21T19:15:00.000Z",
+      "checkedAt": "2026-11-22T14:39:55.688Z",
+      "final": true,
       "players": [
         {
           "playerId": "5079447",
           "name": "Dakoda Fields",
           "position": "DB",
           "jersey": 9,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5110453",
@@ -68,7 +68,7 @@
           "name": "Ryan Fodje",
           "position": "OL",
           "jersey": 70,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5125365",
@@ -82,7 +82,7 @@
           "name": "Tory Blaylock",
           "position": "RB",
           "jersey": 6,
-          "status": "Probable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "4912130",
