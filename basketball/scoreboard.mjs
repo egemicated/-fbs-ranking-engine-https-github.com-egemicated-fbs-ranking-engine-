@@ -77,7 +77,7 @@ function slateControls(slate,filters) {
       season:slate.year,date:dateOffset(slate.date,offset),conf:filters.conference,
     }))}">${label}</a>`).join('');
   const seasons=slate.years.map(year=>`<option value="${year}"${String(year)===slate.year?' selected':''}>${seasonLabel(year)}</option>`).join('');
-  return `<label for="scoreboard-season"><span>Season</span><select id="scoreboard-season" name="season">${seasons}</select></label>
+  return `<label for="scoreboard-season"><span id="scoreboard-season-label">Season</span><select id="scoreboard-season" name="season" aria-labelledby="scoreboard-season-label">${seasons}</select></label>
     <label for="scoreboard-date"><span>Game date</span><input id="scoreboard-date" type="date" name="date" value="${slate.date}"></label>
     <div class="scoreboard-day-links">${days}</div>`;
 }

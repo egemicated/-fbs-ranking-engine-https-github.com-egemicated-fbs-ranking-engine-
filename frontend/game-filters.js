@@ -61,7 +61,10 @@ export function gameFilterControls({ filters = {}, teams, games = [], myTeamIds 
   const conferences = [...new Set([...byId.values()].map(team => team.conference).filter(Boolean))].sort();
   const days = [...new Set(games.map(gameDay).filter(Boolean))].sort();
   const options = (rows, value) => rows.map(([key, label]) => `<option value="${escapeHtml(key)}"${String(value) === String(key) ? ' selected' : ''}>${escapeHtml(label)}</option>`).join('');
-  const select = (key, label, rows) => `<label><span>${label}</span><select id="${escapeHtml(idPrefix)}-${key}" data-game-filter="${key}">${options(rows, chosen[key])}</select></label>`;
+  const select = (key, label, rows) => {
+    const id = `${escapeHtml(idPrefix)}-${key}`;
+    return `<label><span id="${id}-label">${label}</span><select id="${id}" aria-labelledby="${id}-label" data-game-filter="${key}">${options(rows, chosen[key])}</select></label>`;
+  };
   const check = (key, label) => `<label class="game-filter-check"><input id="${escapeHtml(idPrefix)}-${key}" type="checkbox" data-game-filter="${key}"${chosen[key] ? ' checked' : ''}><span>${label}</span></label>`;
   const coverage = [...byId.values()].some(team => isRanked(team, rankedDivisions));
   const statuses = [['all', 'All games'], ['upcoming', 'Upcoming'], ...(includeLive ? [['live', liveLabel]] : []),
