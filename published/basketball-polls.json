@@ -1,0 +1,222 @@
+{
+  "schema": 1,
+  "season": 2027,
+  "polls": {
+    "ap": {
+      "pollDate": "2026-11-23",
+      "seasonType": "regular",
+      "week": 4,
+      "observedAt": "2026-11-24T14:34:31.835Z",
+      "ranks": [
+        {
+          "id": "ncaam-d1:113",
+          "rank": 1
+        },
+        {
+          "id": "ncaam-d1:339",
+          "rank": 2
+        },
+        {
+          "id": "ncaam-d1:87",
+          "rank": 3
+        },
+        {
+          "id": "ncaam-d1:118",
+          "rank": 4
+        },
+        {
+          "id": "ncaam-d1:298",
+          "rank": 5
+        },
+        {
+          "id": "ncaam-d1:313",
+          "rank": 6
+        },
+        {
+          "id": "ncaam-d1:295",
+          "rank": 7
+        },
+        {
+          "id": "ncaam-d1:11",
+          "rank": 8
+        },
+        {
+          "id": "ncaam-d1:292",
+          "rank": 9
+        },
+        {
+          "id": "ncaam-d1:314",
+          "rank": 10
+        },
+        {
+          "id": "ncaam-d1:169",
+          "rank": 11
+        },
+        {
+          "id": "ncaam-d1:131",
+          "rank": 12
+        },
+        {
+          "id": "ncaam-d1:279",
+          "rank": 13
+        },
+        {
+          "id": "ncaam-d1:336",
+          "rank": 14
+        },
+        {
+          "id": "ncaam-d1:5",
+          "rank": 15
+        },
+        {
+          "id": "ncaam-d1:72",
+          "rank": 16
+        },
+        {
+          "id": "ncaam-d1:168",
+          "rank": 17
+        },
+        {
+          "id": "ncaam-d1:323",
+          "rank": 18
+        },
+        {
+          "id": "ncaam-d1:18",
+          "rank": 19
+        },
+        {
+          "id": "ncaam-d1:136",
+          "rank": 20
+        },
+        {
+          "id": "ncaam-d1:188",
+          "rank": 21
+        },
+        {
+          "id": "ncaam-d1:102",
+          "rank": 22
+        },
+        {
+          "id": "ncaam-d1:121",
+          "rank": 23
+        },
+        {
+          "id": "ncaam-d1:163",
+          "rank": 24
+        },
+        {
+          "id": "ncaam-d1:150",
+          "rank": 25
+        }
+      ]
+    },
+    "coaches": {
+      "pollDate": "2026-11-23",
+      "seasonType": "regular",
+      "week": 4,
+      "observedAt": "2026-11-24T14:34:31.835Z",
+      "ranks": [
+        {
+          "id": "ncaam-d1:113",
+          "rank": 1
+        },
+        {
+          "id": "ncaam-d1:339",
+          "rank": 2
+        },
+        {
+          "id": "ncaam-d1:87",
+          "rank": 3
+        },
+        {
+          "id": "ncaam-d1:118",
+          "rank": 4
+        },
+        {
+          "id": "ncaam-d1:295",
+          "rank": 5
+        },
+        {
+          "id": "ncaam-d1:298",
+          "rank": 6
+        },
+        {
+          "id": "ncaam-d1:314",
+          "rank": 7
+        },
+        {
+          "id": "ncaam-d1:11",
+          "rank": 8
+        },
+        {
+          "id": "ncaam-d1:313",
+          "rank": 9
+        },
+        {
+          "id": "ncaam-d1:169",
+          "rank": 10
+        },
+        {
+          "id": "ncaam-d1:292",
+          "rank": 11
+        },
+        {
+          "id": "ncaam-d1:131",
+          "rank": 12
+        },
+        {
+          "id": "ncaam-d1:279",
+          "rank": 13
+        },
+        {
+          "id": "ncaam-d1:336",
+          "rank": 14
+        },
+        {
+          "id": "ncaam-d1:5",
+          "rank": 15
+        },
+        {
+          "id": "ncaam-d1:72",
+          "rank": 16
+        },
+        {
+          "id": "ncaam-d1:168",
+          "rank": 17
+        },
+        {
+          "id": "ncaam-d1:188",
+          "rank": 18
+        },
+        {
+          "id": "ncaam-d1:323",
+          "rank": 19
+        },
+        {
+          "id": "ncaam-d1:102",
+          "rank": 20
+        },
+        {
+          "id": "ncaam-d1:18",
+          "rank": 21
+        },
+        {
+          "id": "ncaam-d1:136",
+          "rank": 22
+        },
+        {
+          "id": "ncaam-d1:150",
+          "rank": 23
+        },
+        {
+          "id": "ncaam-d1:121",
+          "rank": 24
+        },
+        {
+          "id": "ncaam-d1:163",
+          "rank": 25
+        }
+      ]
+    }
+  }
+}
