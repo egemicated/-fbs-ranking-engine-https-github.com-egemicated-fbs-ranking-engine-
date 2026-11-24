@@ -4,6 +4,61 @@
   "teamId": "2628",
   "reports": [
     {
+      "gameId": "401856879",
+      "kickoff": "2026-11-27T01:00:00.000Z",
+      "opponentId": "2641",
+      "opponentName": "Texas Tech",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-24T03:00:00.000Z",
+      "checkedAt": "2026-11-24T14:31:31.016Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5101112",
+          "name": "Ansel Din-Mbuh",
+          "position": "DT",
+          "jersey": 92,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5280795",
+          "name": "G'Ivori Graham",
+          "position": "RB",
+          "jersey": 20,
+          "status": "Out"
+        },
+        {
+          "playerId": "5083569",
+          "name": "Jaden Craig",
+          "position": "QB",
+          "jersey": 1,
+          "status": "Out"
+        },
+        {
+          "playerId": "5391236",
+          "name": "Kari Ashley",
+          "position": "TE",
+          "jersey": 81,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5147339",
+          "name": "Keylan Abrams",
+          "position": "LB",
+          "jersey": 23,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4918419",
+          "name": "Lafayette Kaiuway",
+          "position": "TE",
+          "jersey": 12,
+          "status": "Probable"
+        }
+      ]
+    },
+    {
       "gameId": "401856872",
       "kickoff": "2026-11-22T02:00:00.000Z",
       "opponentId": "254",

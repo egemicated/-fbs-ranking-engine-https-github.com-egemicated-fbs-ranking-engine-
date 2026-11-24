@@ -4,6 +4,103 @@
   "teamId": "2641",
   "reports": [
     {
+      "gameId": "401856879",
+      "kickoff": "2026-11-27T01:00:00.000Z",
+      "opponentId": "2628",
+      "opponentName": "TCU",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-24T03:00:00.000Z",
+      "checkedAt": "2026-11-24T14:31:31.016Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5075540",
+          "name": "Brice Pollock",
+          "position": "CB",
+          "jersey": 14,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5219124",
+          "name": "Bryce Butler",
+          "position": "DL",
+          "jersey": 92,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5156431",
+          "name": "Cash Cleveland",
+          "position": "OL",
+          "jersey": 52,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4916941",
+          "name": "Coy Eakin",
+          "position": "WR",
+          "jersey": 3,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5227057",
+          "name": "Jalen Jones",
+          "position": "WR",
+          "jersey": 6,
+          "status": "Out"
+        },
+        {
+          "playerId": "4923295",
+          "name": "Kenny Johnson",
+          "position": "WR",
+          "jersey": 2,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5280093",
+          "name": "LaDamion Guyton",
+          "position": "OLB",
+          "jersey": 32,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "4921233",
+          "name": "Marcus Ramon-Edwards",
+          "position": "S",
+          "jersey": 22,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5079492",
+          "name": "Micah Hudson",
+          "position": "WR",
+          "jersey": 1,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5077501",
+          "name": "Miquel Dingle Jr.",
+          "position": "S",
+          "jersey": 21,
+          "status": "Out"
+        },
+        {
+          "playerId": "5110451",
+          "name": "Peyton Morgan",
+          "position": "S",
+          "jersey": 3,
+          "status": "Probable"
+        },
+        {
+          "playerId": "4917949",
+          "name": "Quinten Joyner",
+          "position": "RB",
+          "jersey": 0,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856871",
       "kickoff": "2026-11-21T20:30:00.000Z",
       "opponentId": "239",
