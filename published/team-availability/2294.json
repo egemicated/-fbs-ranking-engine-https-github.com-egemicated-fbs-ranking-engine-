@@ -4,6 +4,75 @@
   "teamId": "2294",
   "reports": [
     {
+      "gameId": "401858536",
+      "kickoff": "2026-11-27T17:00:00.000Z",
+      "opponentId": "158",
+      "opponentName": "Nebraska",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-25T01:00:00.000Z",
+      "checkedAt": "2026-11-25T14:34:34.863Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5077405",
+          "name": "Cannon Leonard",
+          "position": "OL",
+          "jersey": 75,
+          "status": "Out"
+        },
+        {
+          "playerId": "5178088",
+          "name": "Jacob Wallace",
+          "position": "DB",
+          "jersey": 11,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5093886",
+          "name": "Kamari Moulton",
+          "position": "RB",
+          "jersey": 28,
+          "status": "Out"
+        },
+        {
+          "playerId": "5084300",
+          "name": "KJ Parker",
+          "position": "WR",
+          "jersey": 1,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5218925",
+          "name": "Kyler Gerardy",
+          "position": "DB",
+          "jersey": 19,
+          "status": "Out"
+        },
+        {
+          "playerId": "5300856",
+          "name": "Tony Diaz",
+          "position": "WR",
+          "jersey": 14,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5193099",
+          "name": "Tyler Brown",
+          "position": "DB",
+          "jersey": 2,
+          "status": "Out"
+        },
+        {
+          "playerId": "5227168",
+          "name": "Xavier Styles",
+          "position": "DB",
+          "jersey": 18,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401858527",
       "kickoff": "2026-11-21T19:30:00.000Z",
       "opponentId": "356",

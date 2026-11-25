@@ -4,6 +4,75 @@
   "teamId": "275",
   "reports": [
     {
+      "gameId": "401858544",
+      "kickoff": "2026-11-28T00:30:00.000Z",
+      "opponentId": "135",
+      "opponentName": "Minnesota",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-25T01:00:00.000Z",
+      "checkedAt": "2026-11-25T14:34:34.863Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4869243",
+          "name": "Barrett Nelson",
+          "position": "OL",
+          "jersey": 70,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5084664",
+          "name": "Cai Bates",
+          "position": "CB",
+          "jersey": 3,
+          "status": "Out"
+        },
+        {
+          "playerId": "5146814",
+          "name": "Carson Van Dinter",
+          "position": "S",
+          "jersey": 11,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5126464",
+          "name": "Deuce Adams",
+          "position": "QB",
+          "jersey": 8,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5212589",
+          "name": "Emmett Bork",
+          "position": "TE",
+          "jersey": 82,
+          "status": "Out"
+        },
+        {
+          "playerId": "4896318",
+          "name": "Javan Robinson",
+          "position": "CB",
+          "jersey": 2,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5110459",
+          "name": "Kevin Heywood",
+          "position": "OL",
+          "jersey": 55,
+          "status": "Out"
+        },
+        {
+          "playerId": "5260561",
+          "name": "Matthew Jung",
+          "position": "S",
+          "jersey": 29,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858533",
       "kickoff": "2026-11-21T17:00:00.000Z",
       "opponentId": "2509",

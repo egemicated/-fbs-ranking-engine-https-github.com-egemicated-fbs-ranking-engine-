@@ -4,6 +4,89 @@
   "teamId": "245",
   "reports": [
     {
+      "gameId": "401856756",
+      "kickoff": "2026-11-28T00:30:00.000Z",
+      "opponentId": "251",
+      "opponentName": "Texas",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-25T01:10:00.000Z",
+      "checkedAt": "2026-11-25T14:34:34.822Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5139057",
+          "name": "Ashton Bethel-Roman",
+          "position": "WR",
+          "jersey": 8,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079453",
+          "name": "Blake Ivy",
+          "position": "OL",
+          "jersey": 52,
+          "status": "Out"
+        },
+        {
+          "playerId": "5164648",
+          "name": "Kelshaun Johnson",
+          "position": "WR",
+          "jersey": 11,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5141651",
+          "name": "Landon Rink",
+          "position": "DT",
+          "jersey": 99,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141540",
+          "name": "Marco Jones",
+          "position": "DE",
+          "jersey": 10,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4950396",
+          "name": "Marcus Ratcliffe",
+          "position": "S",
+          "jersey": 3,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079326",
+          "name": "Terry Bussey",
+          "position": "WR",
+          "jersey": 6,
+          "status": "Out"
+        },
+        {
+          "playerId": "5164360",
+          "name": "TK Norman",
+          "position": "WR",
+          "jersey": 18,
+          "status": "Out"
+        },
+        {
+          "playerId": "4923031",
+          "name": "Trovon Baugh",
+          "position": "OL",
+          "jersey": 76,
+          "status": "Out"
+        },
+        {
+          "playerId": null,
+          "name": "Tylan Wilson",
+          "position": "S",
+          "jersey": 15,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401856752",
       "kickoff": "2026-11-21T20:45:00.000Z",
       "opponentId": "201",

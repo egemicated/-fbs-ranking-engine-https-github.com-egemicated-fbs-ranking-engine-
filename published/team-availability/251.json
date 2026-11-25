@@ -4,6 +4,75 @@
   "teamId": "251",
   "reports": [
     {
+      "gameId": "401856756",
+      "kickoff": "2026-11-28T00:30:00.000Z",
+      "opponentId": "245",
+      "opponentName": "Texas A&M",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-25T01:10:00.000Z",
+      "checkedAt": "2026-11-25T14:34:34.822Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4919036",
+          "name": "Andre Cojoe",
+          "position": "OL",
+          "jersey": 77,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5079689",
+          "name": "Colin Simmons",
+          "position": "EDG",
+          "jersey": 1,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4868356",
+          "name": "Hero Kanu",
+          "position": "DL",
+          "jersey": 93,
+          "status": "Out"
+        },
+        {
+          "playerId": "4871053",
+          "name": "Hollywood Smothers",
+          "position": "RB",
+          "jersey": 2,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079331",
+          "name": "Kobe Black",
+          "position": "DB",
+          "jersey": 6,
+          "status": "Out"
+        },
+        {
+          "playerId": "5195299",
+          "name": "Nick Townsend",
+          "position": "TE",
+          "jersey": 81,
+          "status": "Out"
+        },
+        {
+          "playerId": "5273266",
+          "name": "Richard Wesley",
+          "position": "EDG",
+          "jersey": 99,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4918430",
+          "name": "Trevor Goosby",
+          "position": "OL",
+          "jersey": 74,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856755",
       "kickoff": "2026-11-21T20:30:00.000Z",
       "opponentId": "8",

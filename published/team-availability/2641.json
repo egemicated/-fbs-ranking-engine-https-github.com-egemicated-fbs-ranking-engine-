@@ -10,8 +10,8 @@
       "opponentName": "TCU",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-24T03:00:00.000Z",
-      "checkedAt": "2026-11-24T14:31:31.016Z",
+      "reportAt": "2026-11-25T03:00:00.000Z",
+      "checkedAt": "2026-11-25T14:34:34.507Z",
       "final": false,
       "players": [
         {
@@ -68,7 +68,7 @@
           "name": "Marcus Ramon-Edwards",
           "position": "S",
           "jersey": 22,
-          "status": "Questionable"
+          "status": "Doubtful"
         },
         {
           "playerId": "5079492",

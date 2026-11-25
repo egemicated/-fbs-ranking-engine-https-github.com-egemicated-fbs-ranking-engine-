@@ -4,6 +4,75 @@
   "teamId": "344",
   "reports": [
     {
+      "gameId": "401856762",
+      "kickoff": "2026-11-27T17:00:00.000Z",
+      "opponentId": "145",
+      "opponentName": "Ole Miss",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-25T01:10:00.000Z",
+      "checkedAt": "2026-11-25T14:34:34.822Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5081405",
+          "name": "AJ Swann",
+          "position": "QB",
+          "jersey": 17,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "4871088",
+          "name": "Ayden Williams",
+          "position": "WR",
+          "jersey": 11,
+          "status": "Out"
+        },
+        {
+          "playerId": null,
+          "name": "Diesel Moye",
+          "position": "DL",
+          "jersey": 99,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870972",
+          "name": "Isaac Smith",
+          "position": "S",
+          "jersey": 2,
+          "status": "Out"
+        },
+        {
+          "playerId": "4921320",
+          "name": "Jalen Smith",
+          "position": "LB",
+          "jersey": 10,
+          "status": "Out"
+        },
+        {
+          "playerId": "5177084",
+          "name": "Kamario Taylor",
+          "position": "QB",
+          "jersey": 1,
+          "status": "Out"
+        },
+        {
+          "playerId": "5214502",
+          "name": "Kyle Johnson",
+          "position": "CB",
+          "jersey": 17,
+          "status": "Out"
+        },
+        {
+          "playerId": "4869585",
+          "name": "Trevion Williams",
+          "position": "DL",
+          "jersey": 23,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856886",
       "kickoff": "2026-11-14T21:15:00.000Z",
       "opponentId": "2",

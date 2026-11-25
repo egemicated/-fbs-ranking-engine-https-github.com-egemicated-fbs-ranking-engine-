@@ -10,8 +10,8 @@
       "opponentName": "Texas Tech",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-24T03:00:00.000Z",
-      "checkedAt": "2026-11-24T14:31:31.016Z",
+      "reportAt": "2026-11-25T03:00:00.000Z",
+      "checkedAt": "2026-11-25T14:34:34.507Z",
       "final": false,
       "players": [
         {
@@ -36,6 +36,13 @@
           "status": "Out"
         },
         {
+          "playerId": "5157061",
+          "name": "Joseph Albright",
+          "position": "S",
+          "jersey": 24,
+          "status": "Out"
+        },
+        {
           "playerId": "5391236",
           "name": "Kari Ashley",
           "position": "TE",
@@ -47,7 +54,7 @@
           "name": "Keylan Abrams",
           "position": "LB",
           "jersey": 23,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "4918419",

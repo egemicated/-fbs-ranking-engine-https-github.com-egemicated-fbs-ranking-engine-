@@ -4,6 +4,75 @@
   "teamId": "277",
   "reports": [
     {
+      "gameId": "401856880",
+      "kickoff": "2026-11-28T02:00:00.000Z",
+      "opponentId": "254",
+      "opponentName": "Utah",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-25T03:00:00.000Z",
+      "checkedAt": "2026-11-25T14:34:34.507Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5166306",
+          "name": "Andrew Powdrell",
+          "position": "S",
+          "jersey": 0,
+          "status": "Probable"
+        },
+        {
+          "playerId": "4890881",
+          "name": "Cam Ball",
+          "position": "TE",
+          "jersey": 10,
+          "status": "Out"
+        },
+        {
+          "playerId": "5384829",
+          "name": "Darius Wiley",
+          "position": "DL",
+          "jersey": 91,
+          "status": "Out"
+        },
+        {
+          "playerId": "5278550",
+          "name": "Emory Snyder",
+          "position": "N/S",
+          "jersey": 23,
+          "status": "Out"
+        },
+        {
+          "playerId": "5145739",
+          "name": "Isaiah Patterson",
+          "position": "LB",
+          "jersey": 16,
+          "status": "Probable"
+        },
+        {
+          "playerId": "4683719",
+          "name": "Jaden Bray",
+          "position": "WR",
+          "jersey": 5,
+          "status": "Out"
+        },
+        {
+          "playerId": "5182123",
+          "name": "Matt Sieg",
+          "position": "S",
+          "jersey": 3,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5079465",
+          "name": "Michael Hawkins Jr.",
+          "position": "QB",
+          "jersey": 3,
+          "status": "Doubtful"
+        }
+      ]
+    },
+    {
       "gameId": "401856868",
       "kickoff": "2026-11-21T18:00:00.000Z",
       "opponentId": "248",
