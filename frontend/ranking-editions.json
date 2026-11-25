@@ -6933,6 +6933,114 @@
             "record": "6–4"
           }
         ]
+      },
+      {
+        "week": 12,
+        "gamesThrough": null,
+        "released": "2026-11-24",
+        "url": "https://collegefootballplayoff.com/rankings",
+        "rows": [
+          {
+            "team": "Georgia",
+            "record": "10–1"
+          },
+          {
+            "team": "Utah",
+            "record": "11–0"
+          },
+          {
+            "team": "Texas",
+            "record": "9–2"
+          },
+          {
+            "team": "Notre Dame",
+            "record": "10–1"
+          },
+          {
+            "team": "Tennessee",
+            "record": "9–2"
+          },
+          {
+            "team": "Alabama",
+            "record": "9–2"
+          },
+          {
+            "team": "Miami",
+            "record": "10–1"
+          },
+          {
+            "team": "Wake Forest",
+            "record": "10–1"
+          },
+          {
+            "team": "UCLA",
+            "record": "10–1"
+          },
+          {
+            "team": "BYU",
+            "record": "9–2"
+          },
+          {
+            "team": "Texas Tech",
+            "record": "10–1"
+          },
+          {
+            "team": "Oregon",
+            "record": "8–3"
+          },
+          {
+            "team": "Iowa",
+            "record": "9–2"
+          },
+          {
+            "team": "Indiana",
+            "record": "9–2"
+          },
+          {
+            "team": "USC",
+            "record": "8–3"
+          },
+          {
+            "team": "Arizona",
+            "record": "8–3"
+          },
+          {
+            "team": "Oklahoma",
+            "record": "7–4"
+          },
+          {
+            "team": "Houston",
+            "record": "8–3"
+          },
+          {
+            "team": "Louisville",
+            "record": "8–3"
+          },
+          {
+            "team": "Florida",
+            "record": "7–4"
+          },
+          {
+            "team": "Ohio State",
+            "record": "7–4"
+          },
+          {
+            "team": "Ole Miss",
+            "record": "7–4"
+          },
+          {
+            "team": "Missouri",
+            "record": "7–4"
+          },
+          {
+            "team": "Washington",
+            "record": "7–4"
+          },
+          {
+            "team": "Nebraska",
+            "record": "7–4"
+          }
+        ]
       }
     ]
   },
