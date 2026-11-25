@@ -10642,6 +10642,1718 @@
           ]
         }
       ]
+    },
+    {
+      "week": 13,
+      "seasonType": "regular",
+      "kind": "saved",
+      "complete": false,
+      "weekGamesAvailable": true,
+      "gamesThrough": "2026-11-24",
+      "released": "2026-11-25",
+      "asOf": "2026-11-25T14:30:36.788Z",
+      "snapshotHash": "e2237467849d8e22f61e33698c9c3dca21b28feed282ef254dea6968555848c5",
+      "publicationHash": "3455ce3c88114f95632f06a4ba0ade9bda946d28cf8f21f2fd6d0620f14244a1",
+      "modelId": "division-sor-v2",
+      "modelVersion": "0.2.0",
+      "rows": [
+        {
+          "id": "254",
+          "team": "Utah",
+          "rank": 1,
+          "sor": 4.229696159973333,
+          "wins": 11,
+          "losses": 0,
+          "ties": 0,
+          "games": 11,
+          "record": "11–0",
+          "weekGames": []
+        },
+        {
+          "id": "61",
+          "team": "Georgia",
+          "rank": 2,
+          "sor": 3.5668532503128914,
+          "wins": 10,
+          "losses": 1,
+          "ties": 0,
+          "games": 11,
+          "record": "10–1",
+          "weekGames": []
+        },
+        {
+          "id": "2390",
+          "team": "Miami",
+          "rank": 3,
+          "sor": 3.0921913231763636,
+          "wins": 10,
+          "losses": 1,
+          "ties": 0,
+          "games": 11,
+          "record": "10–1",
+          "weekGames": []
+        },
+        {
+          "id": "251",
+          "team": "Texas",
+          "rank": 4,
+          "sor": 3.080293724239418,
+          "wins": 9,
+          "losses": 2,
+          "ties": 0,
+          "games": 11,
+          "record": "9–2",
+          "weekGames": []
+        },
+        {
+          "id": "2641",
+          "team": "Texas Tech",
+          "rank": 5,
+          "sor": 2.783619047386598,
+          "wins": 10,
+          "losses": 1,
+          "ties": 0,
+          "games": 11,
+          "record": "10–1",
+          "weekGames": []
+        },
+        {
+          "id": "87",
+          "team": "Notre Dame",
+          "rank": 6,
+          "sor": 2.7218517864291365,
+          "wins": 10,
+          "losses": 1,
+          "ties": 0,
+          "games": 11,
+          "record": "10–1",
+          "weekGames": []
+        },
+        {
+          "id": "154",
+          "team": "Wake Forest",
+          "rank": 7,
+          "sor": 2.427496156702029,
+          "wins": 10,
+          "losses": 1,
+          "ties": 0,
+          "games": 11,
+          "record": "10–1",
+          "weekGames": []
+        },
+        {
+          "id": "26",
+          "team": "UCLA",
+          "rank": 8,
+          "sor": 2.3953755152598917,
+          "wins": 10,
+          "losses": 1,
+          "ties": 0,
+          "games": 11,
+          "record": "10–1",
+          "weekGames": []
+        },
+        {
+          "id": "333",
+          "team": "Alabama",
+          "rank": 9,
+          "sor": 2.3737038606977903,
+          "wins": 9,
+          "losses": 2,
+          "ties": 0,
+          "games": 11,
+          "record": "9–2",
+          "weekGames": []
+        },
+        {
+          "id": "2633",
+          "team": "Tennessee",
+          "rank": 10,
+          "sor": 2.1276706606246036,
+          "wins": 9,
+          "losses": 2,
+          "ties": 0,
+          "games": 11,
+          "record": "9–2",
+          "weekGames": []
+        },
+        {
+          "id": "252",
+          "team": "BYU",
+          "rank": 11,
+          "sor": 2.1113952276146524,
+          "wins": 9,
+          "losses": 2,
+          "ties": 0,
+          "games": 11,
+          "record": "9–2",
+          "weekGames": []
+        },
+        {
+          "id": "2483",
+          "team": "Oregon",
+          "rank": 12,
+          "sor": 1.7353382001409983,
+          "wins": 8,
+          "losses": 3,
+          "ties": 0,
+          "games": 11,
+          "record": "8–3",
+          "weekGames": []
+        },
+        {
+          "id": "2294",
+          "team": "Iowa",
+          "rank": 13,
+          "sor": 1.6815646515735447,
+          "wins": 9,
+          "losses": 2,
+          "ties": 0,
+          "games": 11,
+          "record": "9–2",
+          "weekGames": []
+        },
+        {
+          "id": "84",
+          "team": "Indiana",
+          "rank": 14,
+          "sor": 1.6666747254039371,
+          "wins": 9,
+          "losses": 2,
+          "ties": 0,
+          "games": 11,
+          "record": "9–2",
+          "weekGames": []
+        },
+        {
+          "id": "2636",
+          "team": "UTSA",
+          "rank": 15,
+          "sor": 1.4965729000821053,
+          "wins": 9,
+          "losses": 2,
+          "ties": 0,
+          "games": 11,
+          "record": "9–2",
+          "weekGames": []
+        },
+        {
+          "id": "248",
+          "team": "Houston",
+          "rank": 16,
+          "sor": 1.4597247247322136,
+          "wins": 8,
+          "losses": 3,
+          "ties": 0,
+          "games": 11,
+          "record": "8–3",
+          "weekGames": []
+        },
+        {
+          "id": "68",
+          "team": "Boise State",
+          "rank": 17,
+          "sor": 1.4261598481558047,
+          "wins": 9,
+          "losses": 2,
+          "ties": 0,
+          "games": 11,
+          "record": "9–2",
+          "weekGames": []
+        },
+        {
+          "id": "57",
+          "team": "Florida",
+          "rank": 18,
+          "sor": 1.3644005051116297,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "145",
+          "team": "Ole Miss",
+          "rank": 19,
+          "sor": 1.3080525257602167,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "201",
+          "team": "Oklahoma",
+          "rank": 20,
+          "sor": 1.2905918880362508,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "30",
+          "team": "USC",
+          "rank": 21,
+          "sor": 1.2089869605000565,
+          "wins": 8,
+          "losses": 3,
+          "ties": 0,
+          "games": 11,
+          "record": "8–3",
+          "weekGames": []
+        },
+        {
+          "id": "12",
+          "team": "Arizona",
+          "rank": 22,
+          "sor": 1.15825639524139,
+          "wins": 8,
+          "losses": 3,
+          "ties": 0,
+          "games": 11,
+          "record": "8–3",
+          "weekGames": []
+        },
+        {
+          "id": "96",
+          "team": "Kentucky",
+          "rank": 23,
+          "sor": 1.1466911061530336,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "194",
+          "team": "Ohio State",
+          "rank": 24,
+          "sor": 1.099197743208448,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "97",
+          "team": "Louisville",
+          "rank": 25,
+          "sor": 0.98942651740312,
+          "wins": 8,
+          "losses": 3,
+          "ties": 0,
+          "games": 11,
+          "record": "8–3",
+          "weekGames": []
+        },
+        {
+          "id": "142",
+          "team": "Missouri",
+          "rank": 26,
+          "sor": 0.9893365975219996,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "167",
+          "team": "New Mexico",
+          "rank": 27,
+          "sor": 0.9338631689180167,
+          "wins": 9,
+          "losses": 2,
+          "ties": 0,
+          "games": 11,
+          "record": "9–2",
+          "weekGames": []
+        },
+        {
+          "id": "2",
+          "team": "Auburn",
+          "rank": 28,
+          "sor": 0.9172034273180959,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "2335",
+          "team": "Liberty",
+          "rank": 29,
+          "sor": 0.8786801132748713,
+          "wins": 10,
+          "losses": 1,
+          "ties": 0,
+          "games": 11,
+          "record": "10–1",
+          "weekGames": []
+        },
+        {
+          "id": "197",
+          "team": "Oklahoma State",
+          "rank": 30,
+          "sor": 0.8449199405325638,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "2449",
+          "team": "North Dakota State",
+          "rank": 31,
+          "sor": 0.8369980430287283,
+          "wins": 9,
+          "losses": 2,
+          "ties": 0,
+          "games": 11,
+          "record": "9–2",
+          "weekGames": []
+        },
+        {
+          "id": "2348",
+          "team": "Louisiana Tech",
+          "rank": 32,
+          "sor": 0.8269520274960412,
+          "wins": 9,
+          "losses": 2,
+          "ties": 0,
+          "games": 11,
+          "record": "9–2",
+          "weekGames": []
+        },
+        {
+          "id": "99",
+          "team": "LSU",
+          "rank": 33,
+          "sor": 0.7937546903656856,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "2005",
+          "team": "Air Force",
+          "rank": 34,
+          "sor": 0.7144968528318077,
+          "wins": 9,
+          "losses": 2,
+          "ties": 0,
+          "games": 11,
+          "record": "9–2",
+          "weekGames": []
+        },
+        {
+          "id": "275",
+          "team": "Wisconsin",
+          "rank": 35,
+          "sor": 0.6353232372538987,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "235",
+          "team": "Memphis",
+          "rank": 36,
+          "sor": 0.6229573045327427,
+          "wins": 8,
+          "losses": 3,
+          "ties": 0,
+          "games": 11,
+          "record": "8–3",
+          "weekGames": []
+        },
+        {
+          "id": "2579",
+          "team": "South Carolina",
+          "rank": 37,
+          "sor": 0.5703436101815713,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "326",
+          "team": "Texas State",
+          "rank": 38,
+          "sor": 0.5486064688068042,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "249",
+          "team": "North Texas",
+          "rank": 39,
+          "sor": 0.5370737146394292,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "228",
+          "team": "Clemson",
+          "rank": 40,
+          "sor": 0.5262771918505363,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "150",
+          "team": "Duke",
+          "rank": 41,
+          "sor": 0.5243618585488397,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "264",
+          "team": "Washington",
+          "rank": 42,
+          "sor": 0.5066853204828283,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "256",
+          "team": "James Madison",
+          "rank": 43,
+          "sor": 0.49400256707594403,
+          "wins": 8,
+          "losses": 3,
+          "ties": 0,
+          "games": 11,
+          "record": "8–3",
+          "weekGames": []
+        },
+        {
+          "id": "2649",
+          "team": "Toledo",
+          "rank": 44,
+          "sor": 0.49397218913783236,
+          "wins": 9,
+          "losses": 2,
+          "ties": 0,
+          "games": 11,
+          "record": "9–2",
+          "weekGames": []
+        },
+        {
+          "id": "158",
+          "team": "Nebraska",
+          "rank": 45,
+          "sor": 0.4927262706423058,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "130",
+          "team": "Michigan",
+          "rank": 46,
+          "sor": 0.46381109320208314,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "2567",
+          "team": "SMU",
+          "rank": 47,
+          "sor": 0.4572141758440895,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "2132",
+          "team": "Cincinnati",
+          "rank": 48,
+          "sor": 0.4375016647370915,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "239",
+          "team": "Baylor",
+          "rank": 49,
+          "sor": 0.4267953980761097,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "24",
+          "team": "Stanford",
+          "rank": 50,
+          "sor": 0.39650980382285295,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "2439",
+          "team": "UNLV",
+          "rank": 51,
+          "sor": 0.382823186595023,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "2711",
+          "team": "Western Michigan",
+          "rank": 52,
+          "sor": 0.3825462801077174,
+          "wins": 8,
+          "losses": 4,
+          "ties": 0,
+          "games": 12,
+          "record": "8–4",
+          "weekGames": [
+            {
+              "id": "401866471",
+              "opponentId": "193",
+              "opponentName": "Miami (OH)",
+              "result": "L",
+              "margin": -4,
+              "venue": "home",
+              "opponentRank": 56
+            }
+          ]
+        },
+        {
+          "id": "2084",
+          "team": "Buffalo",
+          "rank": 53,
+          "sor": 0.3823432361403061,
+          "wins": 8,
+          "losses": 3,
+          "ties": 0,
+          "games": 11,
+          "record": "8–3",
+          "weekGames": []
+        },
+        {
+          "id": "356",
+          "team": "Illinois",
+          "rank": 54,
+          "sor": 0.3612055377490865,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "135",
+          "team": "Minnesota",
+          "rank": 55,
+          "sor": 0.3488183956176386,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "193",
+          "team": "Miami (OH)",
+          "rank": 56,
+          "sor": 0.3407157171951143,
+          "wins": 8,
+          "losses": 4,
+          "ties": 0,
+          "games": 12,
+          "record": "8–4",
+          "weekGames": [
+            {
+              "id": "401866471",
+              "opponentId": "2711",
+              "opponentName": "Western Michigan",
+              "result": "W",
+              "margin": 4,
+              "venue": "away",
+              "opponentRank": 52
+            }
+          ]
+        },
+        {
+          "id": "195",
+          "team": "Ohio",
+          "rank": 57,
+          "sor": 0.32684755704203744,
+          "wins": 8,
+          "losses": 3,
+          "ties": 0,
+          "games": 11,
+          "record": "8–3",
+          "weekGames": []
+        },
+        {
+          "id": "77",
+          "team": "Northwestern",
+          "rank": 58,
+          "sor": 0.3178815302329056,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "309",
+          "team": "Louisiana",
+          "rank": 59,
+          "sor": 0.3076067191680589,
+          "wins": 8,
+          "losses": 3,
+          "ties": 0,
+          "games": 11,
+          "record": "8–3",
+          "weekGames": []
+        },
+        {
+          "id": "2226",
+          "team": "Florida Atlantic",
+          "rank": 60,
+          "sor": 0.30608555833924184,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "290",
+          "team": "Georgia Southern",
+          "rank": 61,
+          "sor": 0.3035769162399214,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "66",
+          "team": "Iowa State",
+          "rank": 62,
+          "sor": 0.300462227274969,
+          "wins": 5,
+          "losses": 6,
+          "ties": 0,
+          "games": 11,
+          "record": "5–6",
+          "weekGames": []
+        },
+        {
+          "id": "2116",
+          "team": "UCF",
+          "rank": 63,
+          "sor": 0.28232862396304415,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "55",
+          "team": "Jacksonville State",
+          "rank": 64,
+          "sor": 0.2758049857980951,
+          "wins": 8,
+          "losses": 3,
+          "ties": 0,
+          "games": 11,
+          "record": "8–3",
+          "weekGames": []
+        },
+        {
+          "id": "344",
+          "team": "Mississippi State",
+          "rank": 65,
+          "sor": 0.2560869089335812,
+          "wins": 5,
+          "losses": 6,
+          "ties": 0,
+          "games": 11,
+          "record": "5–6",
+          "weekGames": []
+        },
+        {
+          "id": "213",
+          "team": "Penn State",
+          "rank": 66,
+          "sor": 0.2539993176955861,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "21",
+          "team": "San Diego State",
+          "rank": 67,
+          "sor": 0.24775967829528142,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "153",
+          "team": "North Carolina",
+          "rank": 68,
+          "sor": 0.24385363470193389,
+          "wins": 5,
+          "losses": 6,
+          "ties": 0,
+          "games": 11,
+          "record": "5–6",
+          "weekGames": []
+        },
+        {
+          "id": "9",
+          "team": "Arizona State",
+          "rank": 69,
+          "sor": 0.21974481282100938,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "2751",
+          "team": "Wyoming",
+          "rank": 70,
+          "sor": 0.21849135861801008,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "221",
+          "team": "Pittsburgh",
+          "rank": 71,
+          "sor": 0.21397292303338675,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "204",
+          "team": "Oregon State",
+          "rank": 72,
+          "sor": 0.2015309252453763,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "202",
+          "team": "Tulsa",
+          "rank": 73,
+          "sor": 0.19496107251048472,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "151",
+          "team": "East Carolina",
+          "rank": 74,
+          "sor": 0.19421484322857702,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "8",
+          "team": "Arkansas",
+          "rank": 75,
+          "sor": 0.18841709849284546,
+          "wins": 4,
+          "losses": 7,
+          "ties": 0,
+          "games": 11,
+          "record": "4–7",
+          "weekGames": []
+        },
+        {
+          "id": "259",
+          "team": "Virginia Tech",
+          "rank": 76,
+          "sor": 0.175637359201492,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "278",
+          "team": "Fresno State",
+          "rank": 77,
+          "sor": 0.16870378968800423,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "2655",
+          "team": "Tulane",
+          "rank": 78,
+          "sor": 0.16197104485643724,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "258",
+          "team": "Virginia",
+          "rank": 79,
+          "sor": 0.1609478500531073,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "2026",
+          "team": "App State",
+          "rank": 80,
+          "sor": 0.13826456911893698,
+          "wins": 7,
+          "losses": 4,
+          "ties": 0,
+          "games": 11,
+          "record": "7–4",
+          "weekGames": []
+        },
+        {
+          "id": "277",
+          "team": "West Virginia",
+          "rank": 81,
+          "sor": 0.13641185684880652,
+          "wins": 5,
+          "losses": 6,
+          "ties": 0,
+          "games": 11,
+          "record": "5–6",
+          "weekGames": []
+        },
+        {
+          "id": "52",
+          "team": "Florida State",
+          "rank": 82,
+          "sor": 0.13619419734243715,
+          "wins": 5,
+          "losses": 6,
+          "ties": 0,
+          "games": 11,
+          "record": "5–6",
+          "weekGames": []
+        },
+        {
+          "id": "38",
+          "team": "Colorado",
+          "rank": 83,
+          "sor": 0.12579209821447981,
+          "wins": 4,
+          "losses": 7,
+          "ties": 0,
+          "games": 11,
+          "record": "4–7",
+          "weekGames": []
+        },
+        {
+          "id": "238",
+          "team": "Vanderbilt",
+          "rank": 84,
+          "sor": 0.12204043970565677,
+          "wins": 4,
+          "losses": 7,
+          "ties": 0,
+          "games": 11,
+          "record": "4–7",
+          "weekGames": []
+        },
+        {
+          "id": "6",
+          "team": "South Alabama",
+          "rank": 85,
+          "sor": 0.1126680812024437,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "349",
+          "team": "Army",
+          "rank": 86,
+          "sor": 0.1111785766924448,
+          "wins": 5,
+          "losses": 5,
+          "ties": 0,
+          "games": 10,
+          "record": "5–5",
+          "weekGames": []
+        },
+        {
+          "id": "245",
+          "team": "Texas A&M",
+          "rank": 87,
+          "sor": 0.10579298403023117,
+          "wins": 4,
+          "losses": 7,
+          "ties": 0,
+          "games": 11,
+          "record": "4–7",
+          "weekGames": []
+        },
+        {
+          "id": "2628",
+          "team": "TCU",
+          "rank": 88,
+          "sor": 0.1027595641994152,
+          "wins": 5,
+          "losses": 6,
+          "ties": 0,
+          "games": 11,
+          "record": "5–6",
+          "weekGames": []
+        },
+        {
+          "id": "183",
+          "team": "Syracuse",
+          "rank": 89,
+          "sor": 0.10254498621500246,
+          "wins": 5,
+          "losses": 6,
+          "ties": 0,
+          "games": 11,
+          "record": "5–6",
+          "weekGames": []
+        },
+        {
+          "id": "5",
+          "team": "UAB",
+          "rank": 90,
+          "sor": 0.0998047160001575,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "152",
+          "team": "NC State",
+          "rank": 91,
+          "sor": 0.0929854706147569,
+          "wins": 5,
+          "losses": 6,
+          "ties": 0,
+          "games": 11,
+          "record": "5–6",
+          "weekGames": []
+        },
+        {
+          "id": "58",
+          "team": "South Florida",
+          "rank": 92,
+          "sor": 0.08872340672920252,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "103",
+          "team": "Boston College",
+          "rank": 93,
+          "sor": 0.0815208297735136,
+          "wins": 5,
+          "losses": 6,
+          "ties": 0,
+          "games": 11,
+          "record": "5–6",
+          "weekGames": []
+        },
+        {
+          "id": "2426",
+          "team": "Navy",
+          "rank": 94,
+          "sor": 0.07285243232117299,
+          "wins": 4,
+          "losses": 6,
+          "ties": 0,
+          "games": 10,
+          "record": "4–6",
+          "weekGames": []
+        },
+        {
+          "id": "276",
+          "team": "Marshall",
+          "rank": 95,
+          "sor": 0.06102427615466609,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "2393",
+          "team": "Middle Tennessee",
+          "rank": 96,
+          "sor": 0.05206607155609437,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "127",
+          "team": "Michigan State",
+          "rank": 97,
+          "sor": 0.05154106914675231,
+          "wins": 3,
+          "losses": 8,
+          "ties": 0,
+          "games": 11,
+          "record": "3–8",
+          "weekGames": []
+        },
+        {
+          "id": "2117",
+          "team": "Central Michigan",
+          "rank": 98,
+          "sor": 0.050791992929372524,
+          "wins": 5,
+          "losses": 6,
+          "ties": 0,
+          "games": 11,
+          "record": "5–6",
+          "weekGames": []
+        },
+        {
+          "id": "2305",
+          "team": "Kansas",
+          "rank": 99,
+          "sor": 0.047690323268148774,
+          "wins": 4,
+          "losses": 7,
+          "ties": 0,
+          "games": 11,
+          "record": "4–7",
+          "weekGames": []
+        },
+        {
+          "id": "41",
+          "team": "UConn",
+          "rank": 100,
+          "sor": 0.04522652081508778,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "120",
+          "team": "Maryland",
+          "rank": 101,
+          "sor": 0.04410168597076456,
+          "wins": 4,
+          "losses": 7,
+          "ties": 0,
+          "games": 11,
+          "record": "4–7",
+          "weekGames": []
+        },
+        {
+          "id": "48",
+          "team": "Delaware",
+          "rank": 102,
+          "sor": 0.042327637349474284,
+          "wins": 6,
+          "losses": 5,
+          "ties": 0,
+          "games": 11,
+          "record": "6–5",
+          "weekGames": []
+        },
+        {
+          "id": "328",
+          "team": "Utah State",
+          "rank": 103,
+          "sor": 0.027025915654224596,
+          "wins": 4,
+          "losses": 7,
+          "ties": 0,
+          "games": 11,
+          "record": "4–7",
+          "weekGames": []
+        },
+        {
+          "id": "2509",
+          "team": "Purdue",
+          "rank": 104,
+          "sor": 0.025374088433631765,
+          "wins": 3,
+          "losses": 8,
+          "ties": 0,
+          "games": 11,
+          "record": "3–8",
+          "weekGames": []
+        },
+        {
+          "id": "2306",
+          "team": "Kansas State",
+          "rank": 105,
+          "sor": 0.024528645411482926,
+          "wins": 4,
+          "losses": 7,
+          "ties": 0,
+          "games": 11,
+          "record": "4–7",
+          "weekGames": []
+        },
+        {
+          "id": "2440",
+          "team": "Nevada",
+          "rank": 106,
+          "sor": 0.023666203081711926,
+          "wins": 5,
+          "losses": 6,
+          "ties": 0,
+          "games": 11,
+          "record": "5–6",
+          "weekGames": []
+        },
+        {
+          "id": "59",
+          "team": "Georgia Tech",
+          "rank": 107,
+          "sor": 0.016549098441389663,
+          "wins": 3,
+          "losses": 8,
+          "ties": 0,
+          "games": 11,
+          "record": "3–8",
+          "weekGames": []
+        },
+        {
+          "id": "25",
+          "team": "California",
+          "rank": 108,
+          "sor": 0.014995606206971799,
+          "wins": 3,
+          "losses": 8,
+          "ties": 0,
+          "games": 11,
+          "record": "3–8",
+          "weekGames": []
+        },
+        {
+          "id": "2247",
+          "team": "Georgia State",
+          "rank": 109,
+          "sor": 0.012563677789550774,
+          "wins": 5,
+          "losses": 6,
+          "ties": 0,
+          "games": 11,
+          "record": "5–6",
+          "weekGames": []
+        },
+        {
+          "id": "23",
+          "team": "San José State",
+          "rank": 110,
+          "sor": 0.01084606403793488,
+          "wins": 5,
+          "losses": 7,
+          "ties": 0,
+          "games": 12,
+          "record": "5–7",
+          "weekGames": []
+        },
+        {
+          "id": "338",
+          "team": "Kennesaw State",
+          "rank": 111,
+          "sor": 0.010726528381403075,
+          "wins": 5,
+          "losses": 6,
+          "ties": 0,
+          "games": 11,
+          "record": "5–6",
+          "weekGames": []
+        },
+        {
+          "id": "164",
+          "team": "Rutgers",
+          "rank": 112,
+          "sor": 0.00831192412068413,
+          "wins": 3,
+          "losses": 8,
+          "ties": 0,
+          "games": 11,
+          "record": "3–8",
+          "weekGames": []
+        },
+        {
+          "id": "36",
+          "team": "Colorado State",
+          "rank": 113,
+          "sor": 0.008141658074992784,
+          "wins": 3,
+          "losses": 8,
+          "ties": 0,
+          "games": 11,
+          "record": "3–8",
+          "weekGames": []
+        },
+        {
+          "id": "2199",
+          "team": "Eastern Michigan",
+          "rank": 114,
+          "sor": 0.007317548816981868,
+          "wins": 5,
+          "losses": 7,
+          "ties": 0,
+          "games": 12,
+          "record": "5–7",
+          "weekGames": [
+            {
+              "id": "401866470",
+              "opponentId": "2309",
+              "opponentName": "Kent State",
+              "result": "W",
+              "margin": 5,
+              "venue": "home",
+              "opponentRank": 129
+            }
+          ]
+        },
+        {
+          "id": "2229",
+          "team": "Florida International",
+          "rank": 115,
+          "sor": 0.006161669904996484,
+          "wins": 4,
+          "losses": 7,
+          "ties": 0,
+          "games": 11,
+          "record": "4–7",
+          "weekGames": []
+        },
+        {
+          "id": "98",
+          "team": "Western Kentucky",
+          "rank": 116,
+          "sor": 0.006025539857187397,
+          "wins": 4,
+          "losses": 7,
+          "ties": 0,
+          "games": 11,
+          "record": "4–7",
+          "weekGames": []
+        },
+        {
+          "id": "324",
+          "team": "Coastal Carolina",
+          "rank": 117,
+          "sor": 0.005637283485063513,
+          "wins": 4,
+          "losses": 7,
+          "ties": 0,
+          "games": 11,
+          "record": "4–7",
+          "weekGames": []
+        },
+        {
+          "id": "2653",
+          "team": "Troy",
+          "rank": 118,
+          "sor": 0.00466437372390276,
+          "wins": 4,
+          "losses": 7,
+          "ties": 0,
+          "games": 11,
+          "record": "4–7",
+          "weekGames": []
+        },
+        {
+          "id": "2032",
+          "team": "Arkansas State",
+          "rank": 119,
+          "sor": 0.003908411616259104,
+          "wins": 4,
+          "losses": 7,
+          "ties": 0,
+          "games": 11,
+          "record": "4–7",
+          "weekGames": []
+        },
+        {
+          "id": "113",
+          "team": "Massachusetts",
+          "rank": 120,
+          "sor": 0.0034603543554182067,
+          "wins": 5,
+          "losses": 6,
+          "ties": 0,
+          "games": 11,
+          "record": "5–6",
+          "weekGames": []
+        },
+        {
+          "id": "295",
+          "team": "Old Dominion",
+          "rank": 121,
+          "sor": 0.0019470433525199296,
+          "wins": 3,
+          "losses": 8,
+          "ties": 0,
+          "games": 11,
+          "record": "3–8",
+          "weekGames": []
+        },
+        {
+          "id": "189",
+          "team": "Bowling Green",
+          "rank": 122,
+          "sor": 0.0018367918098992607,
+          "wins": 3,
+          "losses": 8,
+          "ties": 0,
+          "games": 11,
+          "record": "3–8",
+          "weekGames": []
+        },
+        {
+          "id": "2050",
+          "team": "Ball State",
+          "rank": 123,
+          "sor": 0.0014102650885001844,
+          "wins": 3,
+          "losses": 8,
+          "ties": 0,
+          "games": 11,
+          "record": "3–8",
+          "weekGames": []
+        },
+        {
+          "id": "62",
+          "team": "Hawai'i",
+          "rank": 124,
+          "sor": 0.001342029038975398,
+          "wins": 3,
+          "losses": 8,
+          "ties": 0,
+          "games": 11,
+          "record": "3–8",
+          "weekGames": []
+        },
+        {
+          "id": "2623",
+          "team": "Missouri State",
+          "rank": 125,
+          "sor": 0.001141208925736136,
+          "wins": 4,
+          "losses": 7,
+          "ties": 0,
+          "games": 11,
+          "record": "4–7",
+          "weekGames": []
+        },
+        {
+          "id": "2572",
+          "team": "Southern Miss",
+          "rank": 126,
+          "sor": 0.0008706929763265159,
+          "wins": 3,
+          "losses": 8,
+          "ties": 0,
+          "games": 11,
+          "record": "3–8",
+          "weekGames": []
+        },
+        {
+          "id": "265",
+          "team": "Washington State",
+          "rank": 127,
+          "sor": 0.0006829402422866247,
+          "wins": 2,
+          "losses": 9,
+          "ties": 0,
+          "games": 11,
+          "record": "2–9",
+          "weekGames": []
+        },
+        {
+          "id": "242",
+          "team": "Rice",
+          "rank": 128,
+          "sor": 0.0005647895157607299,
+          "wins": 2,
+          "losses": 9,
+          "ties": 0,
+          "games": 11,
+          "record": "2–9",
+          "weekGames": []
+        },
+        {
+          "id": "2309",
+          "team": "Kent State",
+          "rank": 129,
+          "sor": 0.00014344960707621474,
+          "wins": 3,
+          "losses": 9,
+          "ties": 0,
+          "games": 12,
+          "record": "3–9",
+          "weekGames": [
+            {
+              "id": "401866470",
+              "opponentId": "2199",
+              "opponentName": "Eastern Michigan",
+              "result": "L",
+              "margin": -5,
+              "venue": "away",
+              "opponentRank": 114
+            }
+          ]
+        },
+        {
+          "id": "166",
+          "team": "New Mexico State",
+          "rank": 130,
+          "sor": 0.00012692257915938564,
+          "wins": 3,
+          "losses": 8,
+          "ties": 0,
+          "games": 11,
+          "record": "3–8",
+          "weekGames": []
+        },
+        {
+          "id": "2006",
+          "team": "Akron",
+          "rank": 131,
+          "sor": 0.0001233473840764887,
+          "wins": 2,
+          "losses": 9,
+          "ties": 0,
+          "games": 11,
+          "record": "2–9",
+          "weekGames": []
+        },
+        {
+          "id": "2433",
+          "team": "UL Monroe",
+          "rank": 132,
+          "sor": 0.0001206841259142855,
+          "wins": 2,
+          "losses": 9,
+          "ties": 0,
+          "games": 11,
+          "record": "2–9",
+          "weekGames": []
+        },
+        {
+          "id": "16",
+          "team": "Sacramento State",
+          "rank": 133,
+          "sor": 0.000009953060483902859,
+          "wins": 2,
+          "losses": 9,
+          "ties": 0,
+          "games": 11,
+          "record": "2–9",
+          "weekGames": []
+        },
+        {
+          "id": "218",
+          "team": "Temple",
+          "rank": 134,
+          "sor": 0.000009049302555525107,
+          "wins": 2,
+          "losses": 9,
+          "ties": 0,
+          "games": 11,
+          "record": "2–9",
+          "weekGames": []
+        },
+        {
+          "id": "2429",
+          "team": "Charlotte",
+          "rank": 135,
+          "sor": 0.000002155929478257812,
+          "wins": 1,
+          "losses": 10,
+          "ties": 0,
+          "games": 11,
+          "record": "1–10",
+          "weekGames": []
+        },
+        {
+          "id": "2638",
+          "team": "UTEP",
+          "rank": 136,
+          "sor": 0.0000014903051779804495,
+          "wins": 1,
+          "losses": 10,
+          "ties": 0,
+          "games": 11,
+          "record": "1–10",
+          "weekGames": []
+        },
+        {
+          "id": "2534",
+          "team": "Sam Houston",
+          "rank": 137,
+          "sor": 8.591996796504198e-8,
+          "wins": 1,
+          "losses": 10,
+          "ties": 0,
+          "games": 11,
+          "record": "1–10",
+          "weekGames": []
+        },
+        {
+          "id": "2459",
+          "team": "Northern Illinois",
+          "rank": 138,
+          "sor": 0,
+          "wins": 0,
+          "losses": 11,
+          "ties": 0,
+          "games": 11,
+          "record": "0–11",
+          "weekGames": []
+        }
+      ]
     }
   ],
   "publications": [
@@ -17490,6 +19202,575 @@
         {
           "id": "98",
           "rank": 115
+        },
+        {
+          "id": "99",
+          "rank": 33
+        }
+      ]
+    },
+    {
+      "kind": "saved",
+      "modelId": "division-sor-v2",
+      "modelVersion": "0.2.0",
+      "asOf": "2026-11-25T14:30:36.788Z",
+      "recordedAt": "2026-11-25T14:30:38.245Z",
+      "availableBefore": "2026-11-26T07:00:00.000Z",
+      "snapshotHash": "e2237467849d8e22f61e33698c9c3dca21b28feed282ef254dea6968555848c5",
+      "publicationHash": "3455ce3c88114f95632f06a4ba0ade9bda946d28cf8f21f2fd6d0620f14244a1",
+      "rowsHash": "e2d5a9a5011e76029102e769083fa56c485a120b642eff934daf7a9de6a3e0d8",
+      "source": {
+        "basis": "pipeline-recorded snapshot",
+        "path": "frontend/ranking-history.json"
+      },
+      "rows": [
+        {
+          "id": "103",
+          "rank": 93
+        },
+        {
+          "id": "113",
+          "rank": 120
+        },
+        {
+          "id": "12",
+          "rank": 22
+        },
+        {
+          "id": "120",
+          "rank": 101
+        },
+        {
+          "id": "127",
+          "rank": 97
+        },
+        {
+          "id": "130",
+          "rank": 46
+        },
+        {
+          "id": "135",
+          "rank": 55
+        },
+        {
+          "id": "142",
+          "rank": 26
+        },
+        {
+          "id": "145",
+          "rank": 19
+        },
+        {
+          "id": "150",
+          "rank": 41
+        },
+        {
+          "id": "151",
+          "rank": 74
+        },
+        {
+          "id": "152",
+          "rank": 91
+        },
+        {
+          "id": "153",
+          "rank": 68
+        },
+        {
+          "id": "154",
+          "rank": 7
+        },
+        {
+          "id": "158",
+          "rank": 45
+        },
+        {
+          "id": "16",
+          "rank": 133
+        },
+        {
+          "id": "164",
+          "rank": 112
+        },
+        {
+          "id": "166",
+          "rank": 130
+        },
+        {
+          "id": "167",
+          "rank": 27
+        },
+        {
+          "id": "183",
+          "rank": 89
+        },
+        {
+          "id": "189",
+          "rank": 122
+        },
+        {
+          "id": "193",
+          "rank": 56
+        },
+        {
+          "id": "194",
+          "rank": 24
+        },
+        {
+          "id": "195",
+          "rank": 57
+        },
+        {
+          "id": "197",
+          "rank": 30
+        },
+        {
+          "id": "2",
+          "rank": 28
+        },
+        {
+          "id": "2005",
+          "rank": 34
+        },
+        {
+          "id": "2006",
+          "rank": 131
+        },
+        {
+          "id": "201",
+          "rank": 20
+        },
+        {
+          "id": "202",
+          "rank": 73
+        },
+        {
+          "id": "2026",
+          "rank": 80
+        },
+        {
+          "id": "2032",
+          "rank": 119
+        },
+        {
+          "id": "204",
+          "rank": 72
+        },
+        {
+          "id": "2050",
+          "rank": 123
+        },
+        {
+          "id": "2084",
+          "rank": 53
+        },
+        {
+          "id": "21",
+          "rank": 67
+        },
+        {
+          "id": "2116",
+          "rank": 63
+        },
+        {
+          "id": "2117",
+          "rank": 98
+        },
+        {
+          "id": "213",
+          "rank": 66
+        },
+        {
+          "id": "2132",
+          "rank": 48
+        },
+        {
+          "id": "218",
+          "rank": 134
+        },
+        {
+          "id": "2199",
+          "rank": 114
+        },
+        {
+          "id": "221",
+          "rank": 71
+        },
+        {
+          "id": "2226",
+          "rank": 60
+        },
+        {
+          "id": "2229",
+          "rank": 115
+        },
+        {
+          "id": "2247",
+          "rank": 109
+        },
+        {
+          "id": "228",
+          "rank": 40
+        },
+        {
+          "id": "2294",
+          "rank": 13
+        },
+        {
+          "id": "23",
+          "rank": 110
+        },
+        {
+          "id": "2305",
+          "rank": 99
+        },
+        {
+          "id": "2306",
+          "rank": 105
+        },
+        {
+          "id": "2309",
+          "rank": 129
+        },
+        {
+          "id": "2335",
+          "rank": 29
+        },
+        {
+          "id": "2348",
+          "rank": 32
+        },
+        {
+          "id": "235",
+          "rank": 36
+        },
+        {
+          "id": "238",
+          "rank": 84
+        },
+        {
+          "id": "239",
+          "rank": 49
+        },
+        {
+          "id": "2390",
+          "rank": 3
+        },
+        {
+          "id": "2393",
+          "rank": 96
+        },
+        {
+          "id": "24",
+          "rank": 50
+        },
+        {
+          "id": "242",
+          "rank": 128
+        },
+        {
+          "id": "2426",
+          "rank": 94
+        },
+        {
+          "id": "2429",
+          "rank": 135
+        },
+        {
+          "id": "2433",
+          "rank": 132
+        },
+        {
+          "id": "2439",
+          "rank": 51
+        },
+        {
+          "id": "2440",
+          "rank": 106
+        },
+        {
+          "id": "2449",
+          "rank": 31
+        },
+        {
+          "id": "245",
+          "rank": 87
+        },
+        {
+          "id": "2459",
+          "rank": 138
+        },
+        {
+          "id": "248",
+          "rank": 16
+        },
+        {
+          "id": "2483",
+          "rank": 12
+        },
+        {
+          "id": "249",
+          "rank": 39
+        },
+        {
+          "id": "25",
+          "rank": 108
+        },
+        {
+          "id": "2509",
+          "rank": 104
+        },
+        {
+          "id": "251",
+          "rank": 4
+        },
+        {
+          "id": "252",
+          "rank": 11
+        },
+        {
+          "id": "2534",
+          "rank": 137
+        },
+        {
+          "id": "254",
+          "rank": 1
+        },
+        {
+          "id": "256",
+          "rank": 43
+        },
+        {
+          "id": "2567",
+          "rank": 47
+        },
+        {
+          "id": "2572",
+          "rank": 126
+        },
+        {
+          "id": "2579",
+          "rank": 37
+        },
+        {
+          "id": "258",
+          "rank": 79
+        },
+        {
+          "id": "259",
+          "rank": 76
+        },
+        {
+          "id": "26",
+          "rank": 8
+        },
+        {
+          "id": "2623",
+          "rank": 125
+        },
+        {
+          "id": "2628",
+          "rank": 88
+        },
+        {
+          "id": "2633",
+          "rank": 10
+        },
+        {
+          "id": "2636",
+          "rank": 15
+        },
+        {
+          "id": "2638",
+          "rank": 136
+        },
+        {
+          "id": "264",
+          "rank": 42
+        },
+        {
+          "id": "2641",
+          "rank": 5
+        },
+        {
+          "id": "2649",
+          "rank": 44
+        },
+        {
+          "id": "265",
+          "rank": 127
+        },
+        {
+          "id": "2653",
+          "rank": 118
+        },
+        {
+          "id": "2655",
+          "rank": 78
+        },
+        {
+          "id": "2711",
+          "rank": 52
+        },
+        {
+          "id": "275",
+          "rank": 35
+        },
+        {
+          "id": "2751",
+          "rank": 70
+        },
+        {
+          "id": "276",
+          "rank": 95
+        },
+        {
+          "id": "277",
+          "rank": 81
+        },
+        {
+          "id": "278",
+          "rank": 77
+        },
+        {
+          "id": "290",
+          "rank": 61
+        },
+        {
+          "id": "295",
+          "rank": 121
+        },
+        {
+          "id": "30",
+          "rank": 21
+        },
+        {
+          "id": "309",
+          "rank": 59
+        },
+        {
+          "id": "324",
+          "rank": 117
+        },
+        {
+          "id": "326",
+          "rank": 38
+        },
+        {
+          "id": "328",
+          "rank": 103
+        },
+        {
+          "id": "333",
+          "rank": 9
+        },
+        {
+          "id": "338",
+          "rank": 111
+        },
+        {
+          "id": "344",
+          "rank": 65
+        },
+        {
+          "id": "349",
+          "rank": 86
+        },
+        {
+          "id": "356",
+          "rank": 54
+        },
+        {
+          "id": "36",
+          "rank": 113
+        },
+        {
+          "id": "38",
+          "rank": 83
+        },
+        {
+          "id": "41",
+          "rank": 100
+        },
+        {
+          "id": "48",
+          "rank": 102
+        },
+        {
+          "id": "5",
+          "rank": 90
+        },
+        {
+          "id": "52",
+          "rank": 82
+        },
+        {
+          "id": "55",
+          "rank": 64
+        },
+        {
+          "id": "57",
+          "rank": 18
+        },
+        {
+          "id": "58",
+          "rank": 92
+        },
+        {
+          "id": "59",
+          "rank": 107
+        },
+        {
+          "id": "6",
+          "rank": 85
+        },
+        {
+          "id": "61",
+          "rank": 2
+        },
+        {
+          "id": "62",
+          "rank": 124
+        },
+        {
+          "id": "66",
+          "rank": 62
+        },
+        {
+          "id": "68",
+          "rank": 17
+        },
+        {
+          "id": "77",
+          "rank": 58
+        },
+        {
+          "id": "8",
+          "rank": 75
+        },
+        {
+          "id": "84",
+          "rank": 14
+        },
+        {
+          "id": "87",
+          "rank": 6
+        },
+        {
+          "id": "9",
+          "rank": 69
+        },
+        {
+          "id": "96",
+          "rank": 23
+        },
+        {
+          "id": "97",
+          "rank": 25
+        },
+        {
+          "id": "98",
+          "rank": 116
         },
         {
           "id": "99",

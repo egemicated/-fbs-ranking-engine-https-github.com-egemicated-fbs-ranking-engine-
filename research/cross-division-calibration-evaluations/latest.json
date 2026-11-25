@@ -4,11 +4,11 @@
   "frozenManifestSha256": "a0ca4661ef41d8e014afad1fee760bd85d5ddb1bb4d6e5d440cd716659bd231f",
   "frozenAt": "2026-11-19T00:17:44.341Z",
   "season": 2026,
-  "evaluatedAt": "2026-11-22T14:39:13.013Z",
-  "asOf": "2026-11-22T14:39:11.294Z",
-  "resultScheduleAsOf": "2026-11-22T14:39:10.448Z",
-  "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
-  "resultSnapshotHash": "a425e007e2ebb5b25005f4fba5349c00ea5707844d1126e9fea99c8d6e52b423",
+  "evaluatedAt": "2026-11-25T14:30:38.557Z",
+  "asOf": "2026-11-25T14:30:36.788Z",
+  "resultScheduleAsOf": "2026-11-25T14:30:32.157Z",
+  "resultSourceHash": "396fc55aead582d5f1a350e204ea91bc9a3786cfea732599f60413540bd89e69",
+  "resultSnapshotHash": "e2237467849d8e22f61e33698c9c3dca21b28feed282ef254dea6968555848c5",
   "status": "collecting-prospective-evidence",
   "observationsRead": 4,
   "otherSeasonObservations": 0,
@@ -254,8 +254,8 @@
       "observationSha256": "7d454ae060a75248f33352270ceb5f216aae3975132b51d72a65521ebca1f446",
       "resultKickoff": "2026-11-21T19:00:00.000Z",
       "correctedKickoff": false,
-      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
-      "resultSnapshotHash": "a425e007e2ebb5b25005f4fba5349c00ea5707844d1126e9fea99c8d6e52b423",
+      "resultSourceHash": "396fc55aead582d5f1a350e204ea91bc9a3786cfea732599f60413540bd89e69",
+      "resultSnapshotHash": "e2237467849d8e22f61e33698c9c3dca21b28feed282ef254dea6968555848c5",
       "homePoints": 47,
       "awayPoints": 0,
       "outcome": 1
@@ -283,8 +283,8 @@
       "observationSha256": "7d454ae060a75248f33352270ceb5f216aae3975132b51d72a65521ebca1f446",
       "resultKickoff": "2026-11-21T20:30:00.000Z",
       "correctedKickoff": false,
-      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
-      "resultSnapshotHash": "a425e007e2ebb5b25005f4fba5349c00ea5707844d1126e9fea99c8d6e52b423",
+      "resultSourceHash": "396fc55aead582d5f1a350e204ea91bc9a3786cfea732599f60413540bd89e69",
+      "resultSnapshotHash": "e2237467849d8e22f61e33698c9c3dca21b28feed282ef254dea6968555848c5",
       "homePoints": 59,
       "awayPoints": 17,
       "outcome": 1
@@ -312,8 +312,8 @@
       "observationSha256": "7d454ae060a75248f33352270ceb5f216aae3975132b51d72a65521ebca1f446",
       "resultKickoff": "2026-11-21T17:00:00.000Z",
       "correctedKickoff": false,
-      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
-      "resultSnapshotHash": "a425e007e2ebb5b25005f4fba5349c00ea5707844d1126e9fea99c8d6e52b423",
+      "resultSourceHash": "396fc55aead582d5f1a350e204ea91bc9a3786cfea732599f60413540bd89e69",
+      "resultSnapshotHash": "e2237467849d8e22f61e33698c9c3dca21b28feed282ef254dea6968555848c5",
       "homePoints": 59,
       "awayPoints": 17,
       "outcome": 1
@@ -341,18 +341,18 @@
       "observationSha256": "7d454ae060a75248f33352270ceb5f216aae3975132b51d72a65521ebca1f446",
       "resultKickoff": "2026-11-21T18:00:00.000Z",
       "correctedKickoff": false,
-      "resultSourceHash": "fdfcab8e6670a149bc6e869c9a17aff2000ff542bbdc61a2ac393ab08843620b",
-      "resultSnapshotHash": "a425e007e2ebb5b25005f4fba5349c00ea5707844d1126e9fea99c8d6e52b423",
+      "resultSourceHash": "396fc55aead582d5f1a350e204ea91bc9a3786cfea732599f60413540bd89e69",
+      "resultSnapshotHash": "e2237467849d8e22f61e33698c9c3dca21b28feed282ef254dea6968555848c5",
       "homePoints": 34,
       "awayPoints": 16,
       "outcome": 1
     }
   ],
   "interpretation": "Only confirmed decisive finals with matching identity, subdivision, venue and a corrected kickoff strictly after capture within seven days are graded. Both models retain the same captured Strength graph. No graded games means evidence is pending, not success. Saved public picks and retrospective replays are not included; no automatic promotion.",
-  "reportSha256": "646b974fbcc802fa86839a0871cf00b49f36c97e375c07a05a57c42dc31a91bd",
+  "reportSha256": "70c6ceb31952221b97ef8d7f6cf531bbc2fccefdb1382dc51a210c6c4de4065e",
   "inputSha256": {
-    "snapshot": "00686c305bdac809c54e54301841c1db6ab0bf98a48e7e9f873ba70c3d90c947",
-    "weekly": "0f073192269b2f5b21f773b6e9e8f57c9fc16428ff12a7c3eec3f76a2f672343",
+    "snapshot": "473e9227f828c154393ba00cf96afc5d3914c41361eed9d299a002a55e79308b",
+    "weekly": "733ef46e223bcc8c33034a5cea438138c0e4e7651883aa62faa08e75eb2f1eaf",
     "evaluatorManifest": "544d400bc96ad715603b39c7bcc7f9285f79541b7f2dafe8a60adc2764e10bc8"
   }
 }
