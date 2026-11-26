@@ -5969,9 +5969,9 @@
       },
       {
         "week": 12,
-        "gamesThrough": null,
+        "gamesThrough": "2026-11-21",
         "released": "2026-11-22",
-        "url": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/rankings",
+        "url": "https://apnews.com/live/top-25-college-football-poll-11-22-2026",
         "kind": "weekly",
         "publication": {
           "precision": "observed",
@@ -5979,6 +5979,13 @@
           "note": "Verified distributor observation; original AP release instant is not asserted."
         },
         "observedAt": "2026-11-22T21:04:40.899Z",
+        "cutoffEvidence": {
+          "datedEditionUrl": "https://apnews.com/live/top-25-college-football-poll-11-22-2026",
+          "matchedPublishedTeamRecords": 25,
+          "sundayFbsGames": 0,
+          "sundayFcsGames": 0,
+          "timeZone": "America/Denver"
+        },
         "rows": [
           {
             "id": "61",

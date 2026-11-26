@@ -299,6 +299,15 @@ test('same-week Coaches and AP polls use their own archived SOR cutoff', async (
   assert.match(ap, /Forge ballot reconstructed Nov 16, 2026/);
 });
 
+test('published Week 12 AP comparison shows the matching SOR and full Forge ballot', async () => {
+  const page = await browser({ ...fixture(), initialRoute: '/polls/ap/?week=12' });
+  const html = page.html();
+  assert.match(html, /Games through Nov 21, 2026\. AP Top 25 released Nov 22, 2026\. SOR published Nov 22, 2026\. Forge ballot published Nov 22, 2026\./);
+  assert.match(html, /href="https:\/\/apnews\.com\/live\/top-25-college-football-poll-11-22-2026"/);
+  assert.match(rankingTable(html), /<tr><th scope="row">1<\/th><td>.*?Utah.*?<\/td><td>.*?Utah.*?<\/td><td>.*?Georgia/);
+  assert.match(html, /23 of 25 shared by SOR and AP · 24 of 25 shared by Forge and AP/);
+});
+
 test('published Week 12 CFP comparison shows the matching SOR and full Forge ballot', async () => {
   const page = await browser({ ...fixture(), initialRoute: '/polls/cfp/?week=12' });
   const html = page.html();
