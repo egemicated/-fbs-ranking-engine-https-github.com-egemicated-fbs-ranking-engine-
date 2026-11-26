@@ -75,3 +75,44 @@ test('history enrichment preserves original results, membership, and independent
   assert.equal(enriched.teams['27'].strength, 9);
   assert.equal(enriched.games[0].startDate, source.games[0].startDate);
 });
+
+test('matching current comparison polls supply cutoffs without changing pregame availability', () => {
+  const ap = edition('2026-11-22');
+  const cfp = edition('2026-11-24', { kind: 'committee' });
+  const history = { schemaVersion: 1, season: 2026, editions: { ap: [ap], cfp: [cfp] }, releases: { ap: [ap], cfp: [cfp] } };
+  const originalHistory = structuredClone(history);
+  const dataset = { season: 2026, archived: false, teams: Object.fromEntries(membership.map(team => [team.id, team])),
+    games: [game('2026-11-22T20:30:00Z'), game('2026-11-24T20:30:00Z'), game('2026-11-25T20:30:00Z')], rankings: {} };
+  const comparison = { season: 2026, polls: {
+    ap: [{ ...ap, gamesThrough: '2026-11-21' }],
+    cfp: [{ released: cfp.released, gamesThrough: '2026-11-21', rows: cfp.rows.map(({ team }) => ({ team })) }],
+  } };
+  const baseline = attachPollHistory(dataset, history);
+  const enriched = attachPollHistory(dataset, history, comparison);
+  assert.deepEqual(enriched, { ...baseline, rankings: {
+    ap: { ...baseline.rankings.ap, gamesThrough: '2026-11-21' },
+    cfp: { ...baseline.rankings.cfp, gamesThrough: '2026-11-21' },
+  } });
+  assert.deepEqual(history, originalHistory);
+});
+
+test('comparison cutoffs require the same current season, release date, and ranked field', () => {
+  const cfp = edition('2026-11-24');
+  const history = { schemaVersion: 1, season: 2026, editions: { cfp: [cfp] } };
+  const dataset = { season: 2026, archived: false, teams: Object.fromEntries(membership.map(team => [team.id, team])),
+    games: [], rankings: {} };
+  const candidate = { ...cfp, gamesThrough: '2026-11-21' };
+  const mismatchedRanks = cfp.rows.map(row => ({ ...row, rank: row.rank <= 2 ? 3 - row.rank : row.rank }));
+  const mismatchedTeams = [...cfp.rows.slice(0, 24), { id: '26', team: 'Team 26', rank: 25 }];
+  const comparisons = (entry = candidate, season = 2026) => ({ season, polls: { cfp: [entry] } });
+
+  for (const reference of [comparisons(candidate, 2025), comparisons({ ...candidate, released: '2026-11-23' }),
+    comparisons({ ...candidate, rows: mismatchedRanks }), comparisons({ ...candidate, rows: mismatchedTeams }),
+    comparisons({ ...candidate, gamesThrough: '2026-11-25' })]) {
+    assert.equal(attachPollHistory(dataset, history, reference).rankings.cfp.gamesThrough, null);
+  }
+  assert.equal(attachPollHistory({ ...dataset, archived: true }, history, comparisons()).rankings.cfp.gamesThrough, null);
+
+  const datedHistory = { ...history, editions: { cfp: [{ ...cfp, gamesThrough: '2026-11-20' }] } };
+  assert.equal(attachPollHistory(dataset, datedHistory, comparisons()).rankings.cfp.gamesThrough, '2026-11-20');
+});

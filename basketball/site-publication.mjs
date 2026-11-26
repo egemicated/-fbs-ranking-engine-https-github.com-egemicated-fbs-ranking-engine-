@@ -29,6 +29,28 @@ const pick = (value, fields) => Object.fromEntries(fields.filter(key => value?.[
 const encode = value => JSON.stringify(value);
 const chronological = (a,b) => Date.parse(a.startDate) - Date.parse(b.startDate) || a.id.localeCompare(b.id);
 
+export function omitSupersededBasketballFixture(year, games, hasSavedEvidence) {
+  if (year !== 2027) return games;
+
+  // Seattle U played UC San Diego on Nov. 22 and Loyola Chicago on Nov. 23.
+  // https://goseattleu.com/sports/mens-basketball/schedule
+  // https://loyolaramblers.com/boxscore.aspx?id=7319&path=mbball
+  const placeholder = games.find(game => game.id === 'ncaam-d1:372907');
+  if (!placeholder || placeholder.home !== 'ncaam-d1:151' || placeholder.away !== 'ncaam-d1:262' ||
+      placeholder.status !== 'scheduled' || placeholder.completed !== false || placeholder.startTimeTbd !== true ||
+      placeholder.homePoints != null || placeholder.awayPoints != null ||
+      !Number.isFinite(Date.parse(placeholder.startDate)) || dayKey(placeholder.startDate) !== '2026-11-22' ||
+      hasSavedEvidence(placeholder.id)) return games;
+
+  const final = games.find(game => game.id === 'ncaam-d1:378701');
+  if (!final || final.home !== placeholder.away || final.away !== placeholder.home ||
+      final.status !== 'final' || final.completed !== true || final.startTimeTbd !== false ||
+      final.homePoints !== 76 || final.awayPoints !== 63 ||
+      !Number.isFinite(Date.parse(final.startDate)) || dayKey(final.startDate) !== '2026-11-23') return games;
+
+  return games.filter(game => game !== placeholder);
+}
+
 function gameDisplay(game) {
   const { completed, homePoints, awayPoints } = game;
   if (completed && ![homePoints, awayPoints].every(Number.isFinite)) {
@@ -100,8 +122,9 @@ export function buildBasketballSitePublication({ seasons, activeYear }, clock = 
   const directory = {};
   for (const [year, ctx] of seasons) {
     const { dataset, snapshot, teams, conferenceQuality, editions, report } = ctx;
-    const games = dataset.games.filter(game => game.startDate && Number.isFinite(Date.parse(game.startDate)))
-      .slice().sort(chronological);
+    const games = omitSupersededBasketballFixture(year, dataset.games, gameId =>
+      ctx.forecasts.has(gameId) || ctx.forecastReportById.has(gameId))
+      .filter(game => game.startDate && Number.isFinite(Date.parse(game.startDate))).sort(chronological);
     const now = Date.parse(snapshot.asOf);
     const slateStart = now - 21 * DAY;
     const slateEnd = now + 14 * DAY;

@@ -286,7 +286,7 @@ export async function loadConferencePublications({ root, snapshot, fbsPicks, per
   // poll history at read time, preserving games, memberships and model values.
   for (let index = 0; index < datasets.length; index++) {
     const history = await readOptionalJson(join(publicationDirectory, 'poll-history', `${datasets[index].season}.json`));
-    if (history) datasets[index] = attachPollHistory(datasets[index], history);
+    if (history) datasets[index] = attachPollHistory(datasets[index], history, rankingEditions);
   }
   datasets.sort((a, b) => b.season - a.season);
   return { manifest: { schemaVersion: 1, seasons: datasets.map(row => row.season) }, datasets };

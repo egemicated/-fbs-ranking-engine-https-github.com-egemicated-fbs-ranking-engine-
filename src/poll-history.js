@@ -80,7 +80,17 @@ export function selectPregamePoll(game, editions, releases = []) {
   return { status: 'available', edition };
 }
 
-export function attachPollHistory(dataset, history) {
+function matchingComparisonCutoff(edition, comparisons, membership) {
+  if (!edition || !Array.isArray(comparisons)) return null;
+  const matches = comparisons.filter(row => row?.released === edition.released);
+  if (matches.length !== 1) return null;
+  const [match] = normalizePollEditions(matches, membership);
+  if (!match?.gamesThrough || match.ranks.size !== edition.ranks.size) return null;
+  for (const [team, rank] of edition.ranks) if (match.ranks.get(team) !== rank) return null;
+  return match.gamesThrough;
+}
+
+export function attachPollHistory(dataset, history, comparison) {
   if (history?.schemaVersion !== 1 || history.season !== dataset.season) return dataset;
   const membership = Object.values(dataset.teams);
   const editions = Object.fromEntries(['ap', 'cfp'].map(key => [key, normalizePollEditions(history.editions?.[key], membership)]));
@@ -112,6 +122,10 @@ export function attachPollHistory(dataset, history) {
   for (const key of ['ap', 'cfp']) {
     if (!active(key)) continue;
     const current = editions[key].at(-1);
+    // The comparison can corroborate the current edition's game cutoff. Pregame
+    // availability still uses only the archived edition and release ledger.
+    const gamesThrough = current?.gamesThrough ?? (dataset.archived === false && comparison?.season === dataset.season
+      ? matchingComparisonCutoff(current, comparison.polls?.[key], membership) : null);
     for (const team of Object.values(teams)) team.ranks[key] = current?.ranks.get(team.id) ?? null;
     const counts = { ranked: 0, unranked: 0, noPollYet: 0, missing: 0, publicationTimeUncertain: 0 };
     for (const game of games) {
@@ -122,7 +136,7 @@ export function attachPollHistory(dataset, history) {
       else counts.missing++;
     }
     rankings[key] = { available: Boolean(current), asOf: current?.asOf ?? null, fullField: false, basis: 'poll',
-      historicalEditions: editions[key].length, gamesThrough: current?.gamesThrough ?? null,
+      historicalEditions: editions[key].length, gamesThrough,
       url: current?.publication?.sourceUrl ?? current?.url ?? null, kind: current?.kind ?? null, pregameCoverage: counts };
   }
   return { ...dataset, teams, games, rankings, pollHistory: { schemaVersion: history.schemaVersion, season: history.season,
