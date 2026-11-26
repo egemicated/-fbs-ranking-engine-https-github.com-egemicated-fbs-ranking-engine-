@@ -11,7 +11,8 @@ const releases = [
   { week: 10, gamesThrough: '2026-11-07', released: '2026-11-10' },
   // The Nov. 17 release included the postponed Sunday game.
   { week: 11, gamesThrough: '2026-11-15', released: '2026-11-17' },
-  { week: 12, gamesThrough: null, released: '2026-11-24' },
+  { week: 12, gamesThrough: '2026-11-21', released: '2026-11-24',
+    sourceUrl: 'https://collegefootballplayoff.com/news/2026/11/24/rankings' },
   { week: 13, gamesThrough: null, released: '2026-12-01' },
   { week: 14, gamesThrough: null, released: '2026-12-06' },
 ];
@@ -51,7 +52,7 @@ export async function publishCfpPoll({ snapshot, comparisonPath = 'frontend/rank
   });
   if (!edition) return { poll: 'cfp', status: 'not-yet-released', checkedAt, released: release.released };
 
-  const changed = await saveCfpEdition(comparisonPath, edition);
+  const changed = await saveCfpEdition(comparisonPath, { ...edition, url: release.sourceUrl ?? edition.url });
   const archived = await archiveCfpHistory({ html, snapshot, path: historyPath, now: checkedAt });
   return { poll: 'cfp', status: changed || archived ? 'saved' : 'current', checkedAt, released: edition.released };
 }

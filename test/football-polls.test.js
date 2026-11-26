@@ -150,7 +150,9 @@ test('CFP catches a missed edition after Eastern midnight and skips it once both
     assert.equal(pending.released, '2026-11-24');
     const [saved] = await publishFootballPolls({ ...run, fetcher: async () => cfp(['2026-11-24']) });
     assert.equal(saved.status, 'saved');
-    assert.equal((await compare()).polls.cfp.at(-1).gamesThrough, null);
+    const edition = (await compare()).polls.cfp.at(-1);
+    assert.equal(edition.gamesThrough, '2026-11-21');
+    assert.equal(edition.url, 'https://collegefootballplayoff.com/news/2026/11/24/rankings');
     assert.equal((await archive()).editions.cfp.at(-1).released, '2026-11-24');
     const [current] = await publishFootballPolls({ ...run, fetcher: () => assert.fail('Existing CFP edition should not be downloaded twice') });
     assert.equal(current.status, 'current');

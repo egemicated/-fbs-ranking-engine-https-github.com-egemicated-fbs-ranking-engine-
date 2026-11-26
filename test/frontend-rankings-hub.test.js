@@ -299,6 +299,15 @@ test('same-week Coaches and AP polls use their own archived SOR cutoff', async (
   assert.match(ap, /Forge ballot reconstructed Nov 16, 2026/);
 });
 
+test('published Week 12 CFP comparison shows the matching SOR and full Forge ballot', async () => {
+  const page = await browser({ ...fixture(), initialRoute: '/polls/cfp/?week=12' });
+  const html = page.html();
+  assert.match(html, /Games through Nov 21, 2026\. CFP Rankings released Nov 24, 2026\. SOR published Nov 22, 2026\. Forge ballot published Nov 22, 2026\./);
+  assert.match(html, /href="https:\/\/collegefootballplayoff\.com\/news\/2026\/11\/24\/rankings"/);
+  assert.match(rankingTable(html), /<tr><th scope="row">1<\/th><td>.*?Utah.*?<\/td><td>.*?Utah.*?<\/td><td>.*?Georgia/);
+  assert.doesNotMatch(html, /cutoff is unverified/);
+});
+
 test('Coaches uses the exact Forge cutoff ballot and the weekly ballot remains canonical', async () => {
   const cutoff = { week: 11, gamesThrough: '2026-11-14', released: '2026-11-19',
     rows: [{ team: 'Alpha State', record: '9–1', game: 'W 21–7' }] };
