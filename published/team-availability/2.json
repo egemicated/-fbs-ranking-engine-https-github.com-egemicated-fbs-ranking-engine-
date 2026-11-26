@@ -4,6 +4,47 @@
   "teamId": "2",
   "reports": [
     {
+      "gameId": "401856757",
+      "kickoff": "2026-11-29T00:30:00.000Z",
+      "opponentId": "333",
+      "opponentName": "Alabama",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-26T01:10:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.990Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5155759",
+          "name": "Bryce Deas",
+          "position": "LB",
+          "jersey": 16,
+          "status": "Out"
+        },
+        {
+          "playerId": "4880272",
+          "name": "Byrum Brown",
+          "position": "QB",
+          "jersey": 17,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5079688",
+          "name": "De'marcus Riddick",
+          "position": "LB",
+          "jersey": 6,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5214501",
+          "name": "Gavin Jenkins",
+          "position": "CB",
+          "jersey": 21,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856886",
       "kickoff": "2026-11-14T21:15:00.000Z",
       "opponentId": "344",

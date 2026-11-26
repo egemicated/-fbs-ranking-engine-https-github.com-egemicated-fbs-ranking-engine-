@@ -4,6 +4,54 @@
   "teamId": "2132",
   "reports": [
     {
+      "gameId": "401856876",
+      "kickoff": "2026-11-28T20:30:00.000Z",
+      "opponentId": "252",
+      "opponentName": "BYU",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-26T03:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.009Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5214495",
+          "name": "CJ Crite",
+          "position": "S",
+          "jersey": 20,
+          "status": "Out"
+        },
+        {
+          "playerId": "5151511",
+          "name": "Filip Maciorowski",
+          "position": "ILB",
+          "jersey": 12,
+          "status": "Probable"
+        },
+        {
+          "playerId": "4685509",
+          "name": "Gi'Bran Payne",
+          "position": "RB",
+          "jersey": 6,
+          "status": "Out"
+        },
+        {
+          "playerId": "4912182",
+          "name": "Jacob Finley",
+          "position": "CB",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "5147238",
+          "name": "Marqavious Saboor",
+          "position": "OLB",
+          "jersey": 5,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401856867",
       "kickoff": "2026-11-21T17:00:00.000Z",
       "opponentId": "38",

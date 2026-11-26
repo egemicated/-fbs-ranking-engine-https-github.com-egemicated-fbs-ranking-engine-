@@ -4,6 +4,103 @@
   "teamId": "201",
   "reports": [
     {
+      "gameId": "401856763",
+      "kickoff": "2026-11-28T21:15:00.000Z",
+      "opponentId": "142",
+      "opponentName": "Missouri",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-26T01:10:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.990Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4685378",
+          "name": "E'Marion Harris",
+          "position": "OL",
+          "jersey": 76,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5156434",
+          "name": "Fred Hinton",
+          "position": "OL",
+          "jersey": 72,
+          "status": "Out"
+        },
+        {
+          "playerId": "5081932",
+          "name": "Gunnar Allen",
+          "position": "OL",
+          "jersey": 57,
+          "status": "Out"
+        },
+        {
+          "playerId": "5114593",
+          "name": "Ivan Carreon",
+          "position": "WR",
+          "jersey": 82,
+          "status": "Out"
+        },
+        {
+          "playerId": "5223175",
+          "name": "Kenny Ozowalu",
+          "position": "DL",
+          "jersey": 94,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5079556",
+          "name": "Parker Livingstone",
+          "position": "WR",
+          "jersey": 3,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5143274",
+          "name": "Reggie Powers III",
+          "position": "DB",
+          "jersey": 3,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5195701",
+          "name": "Ryan Fodje",
+          "position": "OL",
+          "jersey": 70,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5125365",
+          "name": "Taylor Heim",
+          "position": "LB",
+          "jersey": 7,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141386",
+          "name": "Tory Blaylock",
+          "position": "RB",
+          "jersey": 6,
+          "status": "Probable"
+        },
+        {
+          "playerId": "4912130",
+          "name": "Trell Harris",
+          "position": "WR",
+          "jersey": 11,
+          "status": "Out"
+        },
+        {
+          "playerId": "5181572",
+          "name": "Trynae Washington",
+          "position": "TE",
+          "jersey": 22,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856752",
       "kickoff": "2026-11-21T20:45:00.000Z",
       "opponentId": "245",

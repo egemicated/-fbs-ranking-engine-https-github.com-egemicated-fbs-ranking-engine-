@@ -10,8 +10,8 @@
       "opponentName": "Texas Tech",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-25T03:00:00.000Z",
-      "checkedAt": "2026-11-25T14:34:34.507Z",
+      "reportAt": "2026-11-26T03:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.009Z",
       "final": false,
       "players": [
         {
@@ -47,7 +47,7 @@
           "name": "Kari Ashley",
           "position": "TE",
           "jersey": 81,
-          "status": "Probable"
+          "status": "Questionable"
         },
         {
           "playerId": "5147339",

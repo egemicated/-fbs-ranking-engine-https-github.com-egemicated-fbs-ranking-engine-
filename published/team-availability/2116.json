@@ -4,6 +4,68 @@
   "teamId": "2116",
   "reports": [
     {
+      "gameId": "401856875",
+      "kickoff": "2026-11-28T19:00:00.000Z",
+      "opponentId": "38",
+      "opponentName": "Colorado",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-26T03:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.009Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5295613",
+          "name": "Antonio Branch Jr.",
+          "position": "DB",
+          "jersey": 16,
+          "status": "Out"
+        },
+        {
+          "playerId": "4808748",
+          "name": "Demari Henderson",
+          "position": "DB",
+          "jersey": 8,
+          "status": "Out"
+        },
+        {
+          "playerId": "5091893",
+          "name": "Henry Tabansi",
+          "position": "OL",
+          "jersey": 73,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4708164",
+          "name": "Jayden Jennings",
+          "position": "LB",
+          "jersey": 38,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4870659",
+          "name": "Tackett Curtis",
+          "position": "LB",
+          "jersey": 24,
+          "status": "Out"
+        },
+        {
+          "playerId": "5085404",
+          "name": "Thomas Wadsworth",
+          "position": "TE",
+          "jersey": 84,
+          "status": "Out"
+        },
+        {
+          "playerId": "5142600",
+          "name": "Waden Charles",
+          "position": "WR",
+          "jersey": 9,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856869",
       "kickoff": "2026-11-20T23:00:00.000Z",
       "opponentId": "66",

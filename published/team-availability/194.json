@@ -4,6 +4,96 @@
   "teamId": "194",
   "reports": [
     {
+      "gameId": "401858540",
+      "kickoff": "2026-11-28T17:00:00.000Z",
+      "opponentId": "130",
+      "opponentName": "Michigan",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-26T01:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:57.896Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5150711",
+          "name": "Brennen Schramm",
+          "position": "WR",
+          "jersey": 34,
+          "status": "Out"
+        },
+        {
+          "playerId": "5120968",
+          "name": "Christian Alliegro",
+          "position": "LB",
+          "jersey": 14,
+          "status": "Out"
+        },
+        {
+          "playerId": "5179136",
+          "name": "Deshawn Stewart",
+          "position": "S",
+          "jersey": 29,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5151892",
+          "name": "Ja’Kobi Jackson",
+          "position": "RB",
+          "jersey": 24,
+          "status": "Out"
+        },
+        {
+          "playerId": "5375130",
+          "name": "Jaxon Powell",
+          "position": "OL",
+          "jersey": 60,
+          "status": "Out"
+        },
+        {
+          "playerId": "5276976",
+          "name": "Jay Timmons",
+          "position": "CB",
+          "jersey": 25,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5079712",
+          "name": "Julian Sayin",
+          "position": "QB",
+          "jersey": 10,
+          "status": "Out"
+        },
+        {
+          "playerId": "5159034",
+          "name": "Max Riley",
+          "position": "OL",
+          "jersey": 78,
+          "status": "Out"
+        },
+        {
+          "playerId": "5116115",
+          "name": "Maxence LeBlanc",
+          "position": "TE",
+          "jersey": 88,
+          "status": "Out"
+        },
+        {
+          "playerId": "4923217",
+          "name": "Phillip Daniels",
+          "position": "OL",
+          "jersey": 70,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4869820",
+          "name": "Terry Moore",
+          "position": "S",
+          "jersey": 11,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401858531",
       "kickoff": "2026-11-21T17:00:00.000Z",
       "opponentId": "158",

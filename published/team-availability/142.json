@@ -4,6 +4,61 @@
   "teamId": "142",
   "reports": [
     {
+      "gameId": "401856763",
+      "kickoff": "2026-11-28T21:15:00.000Z",
+      "opponentId": "201",
+      "opponentName": "Oklahoma",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-26T01:10:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.990Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5092247",
+          "name": "Brett Le Blanc",
+          "position": "LS",
+          "jersey": 49,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5109866",
+          "name": "Cameron Keys",
+          "position": "CB",
+          "jersey": 20,
+          "status": "Out"
+        },
+        {
+          "playerId": "5149008",
+          "name": "Gavin Hoffman",
+          "position": "TE",
+          "jersey": 88,
+          "status": "Out"
+        },
+        {
+          "playerId": "4612621",
+          "name": "Josh Atkins",
+          "position": "OL",
+          "jersey": 54,
+          "status": "Out"
+        },
+        {
+          "playerId": "5260012",
+          "name": "Langden Kitchen",
+          "position": "EDG",
+          "jersey": 11,
+          "status": "Out"
+        },
+        {
+          "playerId": "5225213",
+          "name": "Malae Fonoti",
+          "position": "RB",
+          "jersey": 21,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856751",
       "kickoff": "2026-11-22T00:30:00.000Z",
       "opponentId": "96",

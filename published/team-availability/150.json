@@ -4,6 +4,124 @@
   "teamId": "150",
   "reports": [
     {
+      "gameId": "401858312",
+      "kickoff": "2026-11-28T20:30:00.000Z",
+      "opponentId": "154",
+      "opponentName": "Wake Forest",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-26T01:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.055Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5146267",
+          "name": "Brett Elliott",
+          "position": "TE",
+          "jersey": 81,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5214461",
+          "name": "Cole Allen",
+          "position": "OL",
+          "jersey": 62,
+          "status": "Out"
+        },
+        {
+          "playerId": "5218791",
+          "name": "Cosme Salas",
+          "position": "K",
+          "jersey": 39,
+          "status": "Out"
+        },
+        {
+          "playerId": "5214935",
+          "name": "Elliott Schaper",
+          "position": "LB",
+          "jersey": 31,
+          "status": "Out"
+        },
+        {
+          "playerId": "5208403",
+          "name": "Jamien Little",
+          "position": "WR",
+          "jersey": 1,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5209010",
+          "name": "Kai Jacobowitz",
+          "position": "OL",
+          "jersey": 65,
+          "status": "Out"
+        },
+        {
+          "playerId": "5216844",
+          "name": "Kavon Simmons",
+          "position": "WR",
+          "jersey": 7,
+          "status": "Out"
+        },
+        {
+          "playerId": "5146896",
+          "name": "Kobe Smith",
+          "position": "DE",
+          "jersey": 18,
+          "status": "Out"
+        },
+        {
+          "playerId": "5225215",
+          "name": "Kyon Loud",
+          "position": "CB",
+          "jersey": 1,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5077267",
+          "name": "Luke Mergott",
+          "position": "LB",
+          "jersey": 34,
+          "status": "Out"
+        },
+        {
+          "playerId": "5082164",
+          "name": "Patrick Smith-Young",
+          "position": "S",
+          "jersey": 2,
+          "status": "Out"
+        },
+        {
+          "playerId": "5201874",
+          "name": "Qeanu Johnson",
+          "position": "WR",
+          "jersey": 21,
+          "status": "Out"
+        },
+        {
+          "playerId": "5075473",
+          "name": "Reagan McCranie",
+          "position": "OL",
+          "jersey": 74,
+          "status": "Out"
+        },
+        {
+          "playerId": "5215617",
+          "name": "Roman Fina",
+          "position": "OL",
+          "jersey": 79,
+          "status": "Out"
+        },
+        {
+          "playerId": "5211205",
+          "name": "Terry Walker III",
+          "position": "QB",
+          "jersey": 13,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858303",
       "kickoff": "2026-11-21T00:30:00.000Z",
       "opponentId": "228",

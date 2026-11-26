@@ -4,6 +4,124 @@
   "teamId": "153",
   "reports": [
     {
+      "gameId": "401858313",
+      "kickoff": "2026-11-28T17:00:00.000Z",
+      "opponentId": "152",
+      "opponentName": "NC State",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-26T01:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.055Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4812367",
+          "name": "Ade Willie",
+          "position": "DB",
+          "jersey": 3,
+          "status": "Out"
+        },
+        {
+          "playerId": "5159086",
+          "name": "Carson Sneed",
+          "position": "TE",
+          "jersey": 87,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5161953",
+          "name": "Dujuan Davis",
+          "position": "OL",
+          "jersey": 67,
+          "status": "Out"
+        },
+        {
+          "playerId": null,
+          "name": "Greg Smith",
+          "position": "DB",
+          "jersey": 1,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5153465",
+          "name": "Jacob Horvath",
+          "position": "P",
+          "jersey": 93,
+          "status": "Out"
+        },
+        {
+          "playerId": "4871039",
+          "name": "Jelani Thurman",
+          "position": "TE",
+          "jersey": 45,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5149828",
+          "name": "Jonathan Agumadu",
+          "position": "LB",
+          "jersey": 8,
+          "status": "Out"
+        },
+        {
+          "playerId": "5105850",
+          "name": "Jordan Hall",
+          "position": "OL",
+          "jersey": 66,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4918106",
+          "name": "Joseph Mupoyi",
+          "position": "DL",
+          "jersey": 25,
+          "status": "Out"
+        },
+        {
+          "playerId": "5212608",
+          "name": "Keeyun Chapman",
+          "position": "WR",
+          "jersey": 82,
+          "status": "Out"
+        },
+        {
+          "playerId": "5086966",
+          "name": "Melkart Abou Jaoude",
+          "position": "DL",
+          "jersey": 9,
+          "status": "Out"
+        },
+        {
+          "playerId": "5222240",
+          "name": "Tarvorise Brown",
+          "position": "DL",
+          "jersey": 14,
+          "status": "Out"
+        },
+        {
+          "playerId": "5078061",
+          "name": "Tre Miller",
+          "position": "DB",
+          "jersey": 6,
+          "status": "Out"
+        },
+        {
+          "playerId": "5162998",
+          "name": "Viliami Moala",
+          "position": "DL",
+          "jersey": 56,
+          "status": "Out"
+        },
+        {
+          "playerId": "5161006",
+          "name": "Vodney Cleveland",
+          "position": "DL",
+          "jersey": 88,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858305",
       "kickoff": "2026-11-21T17:30:00.000Z",
       "opponentId": "258",

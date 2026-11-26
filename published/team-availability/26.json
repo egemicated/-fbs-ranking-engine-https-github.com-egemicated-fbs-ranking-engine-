@@ -4,6 +4,103 @@
   "teamId": "26",
   "reports": [
     {
+      "gameId": "401858543",
+      "kickoff": "2026-11-28T20:30:00.000Z",
+      "opponentId": "30",
+      "opponentName": "USC",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-26T01:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:57.896Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4918114",
+          "name": "Ashton Sanders",
+          "position": "DL",
+          "jersey": 44,
+          "status": "Out"
+        },
+        {
+          "playerId": "4832818",
+          "name": "Hall Schmidt",
+          "position": "OL",
+          "jersey": 65,
+          "status": "Out"
+        },
+        {
+          "playerId": "5221316",
+          "name": "Jalen Saint Paul",
+          "position": "WR",
+          "jersey": 86,
+          "status": "Out"
+        },
+        {
+          "playerId": "4702562",
+          "name": "Jalen Woods",
+          "position": "LB",
+          "jersey": 9,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5306734",
+          "name": "Jonah Smith",
+          "position": "WR",
+          "jersey": 24,
+          "status": "Out"
+        },
+        {
+          "playerId": "4921306",
+          "name": "Mikey Matthews",
+          "position": "WR",
+          "jersey": 7,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870799",
+          "name": "Nico Iamaleava",
+          "position": "QB",
+          "jersey": 9,
+          "status": "Out"
+        },
+        {
+          "playerId": "5092420",
+          "name": "Riley Robell",
+          "position": "OL",
+          "jersey": 51,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5161140",
+          "name": "Ryan McCulloch",
+          "position": "OLB",
+          "jersey": 19,
+          "status": "Out"
+        },
+        {
+          "playerId": "4889169",
+          "name": "Sam Yoon",
+          "position": "OL",
+          "jersey": 64,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5209306",
+          "name": "Shane Rosenthal",
+          "position": "WR",
+          "jersey": 20,
+          "status": "Out"
+        },
+        {
+          "playerId": "5092275",
+          "name": "Ty Dieffenbach",
+          "position": "QB",
+          "jersey": 14,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401858528",
       "kickoff": "2026-11-21T20:30:00.000Z",
       "opponentId": "130",

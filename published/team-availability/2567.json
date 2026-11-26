@@ -4,6 +4,96 @@
   "teamId": "2567",
   "reports": [
     {
+      "gameId": "401858316",
+      "kickoff": "2026-11-28T20:30:00.000Z",
+      "opponentId": "24",
+      "opponentName": "Stanford",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-26T04:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.055Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4685485",
+          "name": "Addison Nichols",
+          "position": "OL",
+          "jersey": 63,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4917622",
+          "name": "Brandon Miyazono",
+          "position": "LB",
+          "jersey": 29,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5164352",
+          "name": "Carterrious Brown",
+          "position": "WR",
+          "jersey": 11,
+          "status": "Out"
+        },
+        {
+          "playerId": "5204683",
+          "name": "Evan Goodwin",
+          "position": "OL",
+          "jersey": 60,
+          "status": "Out"
+        },
+        {
+          "playerId": "5207891",
+          "name": "I'Zayah Young",
+          "position": "LB",
+          "jersey": 25,
+          "status": "Out"
+        },
+        {
+          "playerId": "5148841",
+          "name": "Ira Singleton IV",
+          "position": "DE",
+          "jersey": 9,
+          "status": "Out"
+        },
+        {
+          "playerId": "4916238",
+          "name": "Jaelyn Davis-Robinson",
+          "position": "CB",
+          "jersey": 13,
+          "status": "Out"
+        },
+        {
+          "playerId": "4678012",
+          "name": "Jimmy Wyrick",
+          "position": "S",
+          "jersey": 21,
+          "status": "Out"
+        },
+        {
+          "playerId": "5295336",
+          "name": "Link Rhodes",
+          "position": "RB",
+          "jersey": 24,
+          "status": "Out"
+        },
+        {
+          "playerId": "4871072",
+          "name": "Trey Wilson",
+          "position": "DE",
+          "jersey": 14,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141639",
+          "name": "Tyren Polley Jr.",
+          "position": "S",
+          "jersey": 10,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858301",
       "kickoff": "2026-11-14T17:00:00.000Z",
       "opponentId": "154",

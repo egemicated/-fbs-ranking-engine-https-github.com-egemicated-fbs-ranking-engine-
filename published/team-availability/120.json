@@ -4,6 +4,124 @@
   "teamId": "120",
   "reports": [
     {
+      "gameId": "401858539",
+      "kickoff": "2026-11-28T20:30:00.000Z",
+      "opponentId": "213",
+      "opponentName": "Penn State",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-26T01:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:57.896Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5217418",
+          "name": "Amory Hills",
+          "position": "OL",
+          "jersey": 77,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4872721",
+          "name": "Cardell Williams",
+          "position": "QB",
+          "jersey": 6,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5193298",
+          "name": "Chris Durr Jr.",
+          "position": "WR",
+          "jersey": 13,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "4921326",
+          "name": "Daniel Wingate",
+          "position": "LB",
+          "jersey": 1,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5178090",
+          "name": "Darrell Carey",
+          "position": "DB",
+          "jersey": 5,
+          "status": "Out"
+        },
+        {
+          "playerId": "4950548",
+          "name": "DJ Samuels",
+          "position": "RB",
+          "jersey": 20,
+          "status": "Out"
+        },
+        {
+          "playerId": null,
+          "name": "Dontay Joyner",
+          "position": "DB",
+          "jersey": 29,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141419",
+          "name": "Harry Dalton III",
+          "position": "RB",
+          "jersey": 25,
+          "status": "Out"
+        },
+        {
+          "playerId": "5220193",
+          "name": "Jordan Scruggs",
+          "position": "DB",
+          "jersey": 6,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5327246",
+          "name": "Josiah Teasley",
+          "position": "WR",
+          "jersey": 18,
+          "status": "Out"
+        },
+        {
+          "playerId": "4873464",
+          "name": "Lavain Scruggs",
+          "position": "DB",
+          "jersey": 2,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5213305",
+          "name": "Nahsir Taylor",
+          "position": "LB",
+          "jersey": 40,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5219864",
+          "name": "Terrez Worthy",
+          "position": "RB",
+          "jersey": 26,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5146851",
+          "name": "Trevor Szymanski",
+          "position": "OL",
+          "jersey": 50,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141583",
+          "name": "Zahir Mathis",
+          "position": "LB",
+          "jersey": 9,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858534",
       "kickoff": "2026-11-21T23:15:00.000Z",
       "opponentId": "30",

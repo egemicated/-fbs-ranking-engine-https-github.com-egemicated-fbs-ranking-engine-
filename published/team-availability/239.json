@@ -4,6 +4,82 @@
   "teamId": "239",
   "reports": [
     {
+      "gameId": "401856874",
+      "kickoff": "2026-11-29T02:30:00.000Z",
+      "opponentId": "248",
+      "opponentName": "Houston",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-26T03:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.009Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5164359",
+          "name": "Ashton Jones",
+          "position": "WR",
+          "jersey": 87,
+          "status": "Out"
+        },
+        {
+          "playerId": "5159678",
+          "name": "Cayden Tone",
+          "position": "OL",
+          "jersey": 61,
+          "status": "Out"
+        },
+        {
+          "playerId": "5202293",
+          "name": "Colin Peacock",
+          "position": "S",
+          "jersey": 26,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5151076",
+          "name": "Daniel Cobbs",
+          "position": "S",
+          "jersey": 14,
+          "status": "Probable"
+        },
+        {
+          "playerId": "4912039",
+          "name": "Devonte Tezino",
+          "position": "DL",
+          "jersey": 59,
+          "status": "Out"
+        },
+        {
+          "playerId": "5159674",
+          "name": "Jacob Redding",
+          "position": "S",
+          "jersey": 8,
+          "status": "Out"
+        },
+        {
+          "playerId": "5278567",
+          "name": "Jamarion Richardson",
+          "position": "CB",
+          "jersey": 38,
+          "status": "Out"
+        },
+        {
+          "playerId": "5149009",
+          "name": "Kyland Reed",
+          "position": "LB",
+          "jersey": 10,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5160471",
+          "name": "Quinn Murphy",
+          "position": "QB",
+          "jersey": 13,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856871",
       "kickoff": "2026-11-21T20:30:00.000Z",
       "opponentId": "2641",

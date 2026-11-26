@@ -4,6 +4,145 @@
   "teamId": "127",
   "reports": [
     {
+      "gameId": "401858542",
+      "kickoff": "2026-11-28T21:15:00.000Z",
+      "opponentId": "164",
+      "opponentName": "Rutgers",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-26T01:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:57.896Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5146670",
+          "name": "Alessio Milivojevic",
+          "position": "QB",
+          "jersey": 11,
+          "status": "Out"
+        },
+        {
+          "playerId": "4869649",
+          "name": "Ben Roberts",
+          "position": "DL",
+          "jersey": 55,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5124585",
+          "name": "Brady Pretzlaff",
+          "position": "LB",
+          "jersey": 45,
+          "status": "Out"
+        },
+        {
+          "playerId": "4894451",
+          "name": "Brennan Parachek",
+          "position": "TE",
+          "jersey": 82,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5086034",
+          "name": "Cam Edwards",
+          "position": "RB",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "4700135",
+          "name": "Cam Fancher",
+          "position": "QB",
+          "jersey": 2,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5093392",
+          "name": "Conner Moore",
+          "position": "OL",
+          "jersey": 58,
+          "status": "Out"
+        },
+        {
+          "playerId": "5153819",
+          "name": "Devin Vaught",
+          "position": "S",
+          "jersey": 2,
+          "status": "Out"
+        },
+        {
+          "playerId": "5297778",
+          "name": "Eli Coenen",
+          "position": "DL",
+          "jersey": 96,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5084950",
+          "name": "Jay Coyne",
+          "position": "FB",
+          "jersey": 44,
+          "status": "Out"
+        },
+        {
+          "playerId": "5214448",
+          "name": "Jayden Savoury",
+          "position": "TE",
+          "jersey": 31,
+          "status": "Out"
+        },
+        {
+          "playerId": "5264656",
+          "name": "Joe Caudill",
+          "position": "TE",
+          "jersey": 87,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870737",
+          "name": "Jordan Hall",
+          "position": "LB",
+          "jersey": 5,
+          "status": "Out"
+        },
+        {
+          "playerId": "5258024",
+          "name": "Marvis Parrish",
+          "position": "RB",
+          "jersey": 21,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870991",
+          "name": "Michael Richard",
+          "position": "S",
+          "jersey": 7,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5260691",
+          "name": "Rodney Bullard Jr.",
+          "position": "WR",
+          "jersey": 3,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5290642",
+          "name": "Tristan Comer",
+          "position": "OL",
+          "jersey": 79,
+          "status": "Out"
+        },
+        {
+          "playerId": "5225872",
+          "name": "Tyran Chappell",
+          "position": "CB",
+          "jersey": 22,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858529",
       "kickoff": "2026-11-21T01:00:00.000Z",
       "opponentId": "2483",

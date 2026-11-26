@@ -4,6 +4,131 @@
   "teamId": "356",
   "reports": [
     {
+      "gameId": "401858537",
+      "kickoff": "2026-11-28T17:30:00.000Z",
+      "opponentId": "77",
+      "opponentName": "Northwestern",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-26T01:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:57.896Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5106299",
+          "name": "Ca'Lil Valentine",
+          "position": "RB",
+          "jersey": 5,
+          "status": "Out"
+        },
+        {
+          "playerId": "5191859",
+          "name": "Carter Smith",
+          "position": "DL",
+          "jersey": 48,
+          "status": "Out"
+        },
+        {
+          "playerId": "5148652",
+          "name": "Grant Beerman",
+          "position": "LB",
+          "jersey": 33,
+          "status": "Out"
+        },
+        {
+          "playerId": "5100582",
+          "name": "Hudson Clement",
+          "position": "WR",
+          "jersey": 13,
+          "status": "Out"
+        },
+        {
+          "playerId": "5271188",
+          "name": "Jacob Eberhart",
+          "position": "DB",
+          "jersey": 8,
+          "status": "Out"
+        },
+        {
+          "playerId": "4575844",
+          "name": "Jake Renfro",
+          "position": "OL",
+          "jersey": 59,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5203604",
+          "name": "Javari Barnett",
+          "position": "RB",
+          "jersey": 24,
+          "status": "Out"
+        },
+        {
+          "playerId": "4834817",
+          "name": "Jayshon Platt",
+          "position": "WR",
+          "jersey": 1,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870728",
+          "name": "Kaden Feagin",
+          "position": "TE",
+          "jersey": 83,
+          "status": "Out"
+        },
+        {
+          "playerId": "5210855",
+          "name": "Kai Pritchard",
+          "position": "OL",
+          "jersey": 53,
+          "status": "Out"
+        },
+        {
+          "playerId": "4795295",
+          "name": "Katin Houser",
+          "position": "QB",
+          "jersey": 4,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5198286",
+          "name": "Michael Clayton II",
+          "position": "QB",
+          "jersey": 7,
+          "status": "Out"
+        },
+        {
+          "playerId": "5158882",
+          "name": "Robert Edmonson",
+          "position": "LB",
+          "jersey": 45,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4921262",
+          "name": "TJ McMillen",
+          "position": "OL",
+          "jersey": 55,
+          "status": "Out"
+        },
+        {
+          "playerId": "4689721",
+          "name": "Ty Robinson",
+          "position": "WR",
+          "jersey": 10,
+          "status": "Out"
+        },
+        {
+          "playerId": "5214494",
+          "name": "Tywan Cox",
+          "position": "DB",
+          "jersey": 32,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858527",
       "kickoff": "2026-11-21T19:30:00.000Z",
       "opponentId": "2294",

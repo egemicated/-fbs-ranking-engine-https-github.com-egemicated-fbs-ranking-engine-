@@ -4,6 +4,82 @@
   "teamId": "238",
   "reports": [
     {
+      "gameId": "401856765",
+      "kickoff": "2026-11-29T00:00:00.000Z",
+      "opponentId": "2633",
+      "opponentName": "Tennessee",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-26T01:10:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.990Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4801729",
+          "name": "Aaron Bryant",
+          "position": "DL",
+          "jersey": 55,
+          "status": "Out"
+        },
+        {
+          "playerId": "5121691",
+          "name": "Blaze Berlowitz",
+          "position": "QB",
+          "jersey": 1,
+          "status": "Out"
+        },
+        {
+          "playerId": "5225447",
+          "name": "Clinton Azubuike",
+          "position": "OL",
+          "jersey": 51,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5141667",
+          "name": "Cobey Sellers",
+          "position": "CB",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": null,
+          "name": "Daniel Vollmer Jr.",
+          "position": "LB",
+          "jersey": 34,
+          "status": "Out"
+        },
+        {
+          "playerId": "5080692",
+          "name": "Edwin Kolenge",
+          "position": "EDG",
+          "jersey": 17,
+          "status": "Out"
+        },
+        {
+          "playerId": "5245128",
+          "name": "Evan Hampton",
+          "position": "RB",
+          "jersey": 23,
+          "status": "Out"
+        },
+        {
+          "playerId": "4685352",
+          "name": "Gunner Givens",
+          "position": "OL",
+          "jersey": 50,
+          "status": "Out"
+        },
+        {
+          "playerId": "5198326",
+          "name": "Josiah Broxton",
+          "position": "LB",
+          "jersey": 18,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856748",
       "kickoff": "2026-11-21T17:00:00.000Z",
       "opponentId": "57",

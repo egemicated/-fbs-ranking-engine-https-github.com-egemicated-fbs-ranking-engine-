@@ -4,6 +4,138 @@
   "teamId": "25",
   "reports": [
     {
+      "gameId": "401858315",
+      "kickoff": "2026-11-29T00:30:00.000Z",
+      "opponentId": "221",
+      "opponentName": "Pittsburgh",
+      "source": "ACC",
+      "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
+      "reportAt": "2026-11-26T04:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.055Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5141574",
+          "name": "Aiden Manutai",
+          "position": "DB",
+          "jersey": 14,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5249499",
+          "name": "AJ Tuitele",
+          "position": "ILB",
+          "jersey": 9,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5192899",
+          "name": "Ashten Emory",
+          "position": "RB",
+          "jersey": 20,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5218832",
+          "name": "Ashun Shepphard",
+          "position": "DL",
+          "jersey": 99,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4685557",
+          "name": "Cam Sidney",
+          "position": "DB",
+          "jersey": 20,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5148905",
+          "name": "Carter Vargas",
+          "position": "RB",
+          "jersey": 1,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870753",
+          "name": "Daniel Harris",
+          "position": "DB",
+          "jersey": 7,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4908552",
+          "name": "Dorian Thomas",
+          "position": "TE",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "5075390",
+          "name": "Ian Strong",
+          "position": "WR",
+          "jersey": 9,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5218740",
+          "name": "Isaiah Crosby",
+          "position": "DB",
+          "jersey": 23,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5194311",
+          "name": "Jayden Williams",
+          "position": "DL",
+          "jersey": 51,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5084987",
+          "name": "Kahlee Tafai",
+          "position": "OL",
+          "jersey": 51,
+          "status": "Out"
+        },
+        {
+          "playerId": "5196843",
+          "name": "Khamani Hudson",
+          "position": "DB",
+          "jersey": 25,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4685281",
+          "name": "Nate Burrell",
+          "position": "DL",
+          "jersey": 98,
+          "status": "Out"
+        },
+        {
+          "playerId": "4871019",
+          "name": "Rico Walker",
+          "position": "TE",
+          "jersey": 8,
+          "status": "Out"
+        },
+        {
+          "playerId": "5217177",
+          "name": "Taimane Purcell",
+          "position": "TE",
+          "jersey": 22,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5115243",
+          "name": "Trevor Rogers",
+          "position": "WR",
+          "jersey": 19,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401858308",
       "kickoff": "2026-11-22T00:30:00.000Z",
       "opponentId": "24",

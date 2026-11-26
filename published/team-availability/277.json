@@ -10,8 +10,8 @@
       "opponentName": "Utah",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-25T03:00:00.000Z",
-      "checkedAt": "2026-11-25T14:34:34.507Z",
+      "reportAt": "2026-11-26T03:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.009Z",
       "final": false,
       "players": [
         {
@@ -19,7 +19,7 @@
           "name": "Andrew Powdrell",
           "position": "S",
           "jersey": 0,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4890881",
@@ -47,7 +47,7 @@
           "name": "Isaiah Patterson",
           "position": "LB",
           "jersey": 16,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4683719",
@@ -61,7 +61,7 @@
           "name": "Matt Sieg",
           "position": "S",
           "jersey": 3,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5079465",

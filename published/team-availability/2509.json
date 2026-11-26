@@ -4,6 +4,40 @@
   "teamId": "2509",
   "reports": [
     {
+      "gameId": "401858538",
+      "kickoff": "2026-11-29T00:00:00.000Z",
+      "opponentId": "84",
+      "opponentName": "Indiana",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-26T01:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:57.896Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5079462",
+          "name": "Kylan Fox",
+          "position": "TE",
+          "jersey": 16,
+          "status": "Out"
+        },
+        {
+          "playerId": "5274360",
+          "name": "Raderrion Daniels",
+          "position": "DB",
+          "jersey": 24,
+          "status": "Out"
+        },
+        {
+          "playerId": "5077897",
+          "name": "Rodney Lora",
+          "position": "DL",
+          "jersey": 94,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858533",
       "kickoff": "2026-11-21T17:00:00.000Z",
       "opponentId": "275",

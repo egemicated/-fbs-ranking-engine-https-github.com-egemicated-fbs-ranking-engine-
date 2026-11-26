@@ -10,8 +10,8 @@
       "opponentName": "TCU",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-25T03:00:00.000Z",
-      "checkedAt": "2026-11-25T14:34:34.507Z",
+      "reportAt": "2026-11-26T03:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.009Z",
       "final": false,
       "players": [
         {
@@ -26,21 +26,21 @@
           "name": "Bryce Butler",
           "position": "DL",
           "jersey": 92,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5156431",
           "name": "Cash Cleveland",
           "position": "OL",
           "jersey": 52,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "4916941",
           "name": "Coy Eakin",
           "position": "WR",
           "jersey": 3,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5227057",
@@ -54,28 +54,28 @@
           "name": "Kenny Johnson",
           "position": "WR",
           "jersey": 2,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5280093",
           "name": "LaDamion Guyton",
           "position": "OLB",
           "jersey": 32,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "4921233",
           "name": "Marcus Ramon-Edwards",
           "position": "S",
           "jersey": 22,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "5079492",
           "name": "Micah Hudson",
           "position": "WR",
           "jersey": 1,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5077501",
@@ -89,7 +89,7 @@
           "name": "Peyton Morgan",
           "position": "S",
           "jersey": 3,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4917949",

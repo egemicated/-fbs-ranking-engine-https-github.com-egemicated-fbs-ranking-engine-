@@ -4,6 +4,61 @@
   "teamId": "8",
   "reports": [
     {
+      "gameId": "401856758",
+      "kickoff": "2026-11-28T17:45:00.000Z",
+      "opponentId": "99",
+      "opponentName": "LSU",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-26T01:10:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.990Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5079493",
+          "name": "Braydon Lee",
+          "position": "DB",
+          "jersey": 3,
+          "status": "Out"
+        },
+        {
+          "playerId": "4905593",
+          "name": "Brylan Green",
+          "position": "DB",
+          "jersey": 34,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5236182",
+          "name": "Gavin Garretson",
+          "position": "TE",
+          "jersey": 89,
+          "status": "Out"
+        },
+        {
+          "playerId": "5104279",
+          "name": "Kavion Broussard",
+          "position": "OL",
+          "jersey": 75,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5150266",
+          "name": "Maddox Lassiter",
+          "position": "TE",
+          "jersey": 47,
+          "status": "Out"
+        },
+        {
+          "playerId": "4875604",
+          "name": "Phoenix Jackson",
+          "position": "LB",
+          "jersey": 8,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401856755",
       "kickoff": "2026-11-21T20:30:00.000Z",
       "opponentId": "251",

@@ -4,6 +4,103 @@
   "teamId": "77",
   "reports": [
     {
+      "gameId": "401858537",
+      "kickoff": "2026-11-28T17:30:00.000Z",
+      "opponentId": "356",
+      "opponentName": "Illinois",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-26T01:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:57.896Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5075805",
+          "name": "Aidan Chiles",
+          "position": "QB",
+          "jersey": 0,
+          "status": "Out"
+        },
+        {
+          "playerId": "5295998",
+          "name": "Brennan Saxe",
+          "position": "WR",
+          "jersey": 16,
+          "status": "Probable"
+        },
+        {
+          "playerId": "4812341",
+          "name": "Chris Petrucci",
+          "position": "TE",
+          "jersey": 81,
+          "status": "Out"
+        },
+        {
+          "playerId": "5149001",
+          "name": "Daniel Anderson",
+          "position": "RB",
+          "jersey": 22,
+          "status": "Out"
+        },
+        {
+          "playerId": "4685712",
+          "name": "Deuce McGuire",
+          "position": "OL",
+          "jersey": 73,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5195388",
+          "name": "Ezomo Oratokhai",
+          "position": "OL",
+          "jersey": 62,
+          "status": "Out"
+        },
+        {
+          "playerId": "4921317",
+          "name": "Jack Sadowsky V",
+          "position": "LB",
+          "jersey": 45,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "4923270",
+          "name": "Josh Fussell",
+          "position": "DB",
+          "jersey": 13,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5291097",
+          "name": "Max Mohring",
+          "position": "LB",
+          "jersey": 37,
+          "status": "Out"
+        },
+        {
+          "playerId": "4685233",
+          "name": "Migo Jackson",
+          "position": "DL",
+          "jersey": 88,
+          "status": "Out"
+        },
+        {
+          "playerId": "5193589",
+          "name": "Qayvier Johnson",
+          "position": "LB",
+          "jersey": 50,
+          "status": "Out"
+        },
+        {
+          "playerId": "4833594",
+          "name": "Robert Fitzgerald",
+          "position": "DB",
+          "jersey": 6,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401858530",
       "kickoff": "2026-11-21T17:00:00.000Z",
       "opponentId": "135",

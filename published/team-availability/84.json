@@ -4,6 +4,82 @@
   "teamId": "84",
   "reports": [
     {
+      "gameId": "401858538",
+      "kickoff": "2026-11-29T00:00:00.000Z",
+      "opponentId": "2509",
+      "opponentName": "Purdue",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-26T01:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:57.896Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4870721",
+          "name": "A.J. Harris",
+          "position": "DB",
+          "jersey": 4,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5146680",
+          "name": "Adedamola Ajani",
+          "position": "OL",
+          "jersey": 72,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5151227",
+          "name": "Austin Leibfried",
+          "position": "OL",
+          "jersey": 70,
+          "status": "Probable"
+        },
+        {
+          "playerId": "4833364",
+          "name": "Bray Lynch",
+          "position": "OL",
+          "jersey": 74,
+          "status": "Out"
+        },
+        {
+          "playerId": null,
+          "name": "Drew Clausen",
+          "position": "LS",
+          "jersey": 49,
+          "status": "Out"
+        },
+        {
+          "playerId": "4685276",
+          "name": "Joe Brunner",
+          "position": "OL",
+          "jersey": 56,
+          "status": "Out"
+        },
+        {
+          "playerId": "4695703",
+          "name": "Kellan Wyatt",
+          "position": "DL",
+          "jersey": 18,
+          "status": "Out"
+        },
+        {
+          "playerId": "5142140",
+          "name": "Khobie Martin",
+          "position": "RB",
+          "jersey": 28,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5212941",
+          "name": "Rolijah Hardy",
+          "position": "LB",
+          "jersey": 5,
+          "status": "Probable"
+        }
+      ]
+    },
+    {
       "gameId": "401858535",
       "kickoff": "2026-11-21T20:30:00.000Z",
       "opponentId": "264",

@@ -4,6 +4,75 @@
   "teamId": "2305",
   "reports": [
     {
+      "gameId": "401856877",
+      "kickoff": "2026-11-28T23:15:00.000Z",
+      "opponentId": "197",
+      "opponentName": "Oklahoma State",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-26T03:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.009Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4837267",
+          "name": "Bam Crouch",
+          "position": "LB",
+          "jersey": 7,
+          "status": "Out"
+        },
+        {
+          "playerId": "5151070",
+          "name": "Grady Seyfert",
+          "position": "DT",
+          "jersey": 71,
+          "status": "Out"
+        },
+        {
+          "playerId": "5163002",
+          "name": "Jack Utz",
+          "position": "TE",
+          "jersey": 35,
+          "status": "Out"
+        },
+        {
+          "playerId": "5151966",
+          "name": "Jailen Butler",
+          "position": "TE",
+          "jersey": 9,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5193112",
+          "name": "Jalen Dupree",
+          "position": "RB",
+          "jersey": 4,
+          "status": "Out"
+        },
+        {
+          "playerId": "5091820",
+          "name": "Kasen Carpenter",
+          "position": "OL",
+          "jersey": 51,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4912139",
+          "name": "Mason Ellis",
+          "position": "S",
+          "jersey": 23,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5290670",
+          "name": "Nakwaine Carter",
+          "position": "DT",
+          "jersey": 92,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401856866",
       "kickoff": "2026-11-21T17:00:00.000Z",
       "opponentId": "252",

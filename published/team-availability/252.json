@@ -4,6 +4,61 @@
   "teamId": "252",
   "reports": [
     {
+      "gameId": "401856876",
+      "kickoff": "2026-11-28T20:30:00.000Z",
+      "opponentId": "2132",
+      "opponentName": "Cincinnati",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-26T03:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.009Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4912156",
+          "name": "Andrew Gentry",
+          "position": "OL",
+          "jersey": 75,
+          "status": "Probable"
+        },
+        {
+          "playerId": "4917351",
+          "name": "Evan Johnson",
+          "position": "CB",
+          "jersey": 0,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5080697",
+          "name": "Isaiah Glasker",
+          "position": "LB",
+          "jersey": 16,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5130407",
+          "name": "Roger Saleapaga II",
+          "position": "TE",
+          "jersey": 2,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5219689",
+          "name": "Sione Moa",
+          "position": "RB",
+          "jersey": 30,
+          "status": "Out"
+        },
+        {
+          "playerId": "5219646",
+          "name": "Will Zundel",
+          "position": "TE",
+          "jersey": 83,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856866",
       "kickoff": "2026-11-21T17:00:00.000Z",
       "opponentId": "2305",

@@ -4,6 +4,96 @@
   "teamId": "30",
   "reports": [
     {
+      "gameId": "401858543",
+      "kickoff": "2026-11-28T20:30:00.000Z",
+      "opponentId": "26",
+      "opponentName": "UCLA",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-26T01:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:57.896Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4870993",
+          "name": "Braylan Shelby",
+          "position": "DE",
+          "jersey": 10,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5148664",
+          "name": "Corey Simms",
+          "position": "WR",
+          "jersey": 10,
+          "status": "Out"
+        },
+        {
+          "playerId": "5152637",
+          "name": "GianCarlo Rufo",
+          "position": "LB",
+          "jersey": 58,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5146426",
+          "name": "Hayden Treter",
+          "position": "OL",
+          "jersey": 68,
+          "status": "Out"
+        },
+        {
+          "playerId": "5079706",
+          "name": "Isaiah Rubin",
+          "position": "S",
+          "jersey": 38,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141644",
+          "name": "Kendarius Reddick",
+          "position": "S",
+          "jersey": 23,
+          "status": "Out"
+        },
+        {
+          "playerId": "5085032",
+          "name": "Kilian O'Connor",
+          "position": "OL",
+          "jersey": 67,
+          "status": "Out"
+        },
+        {
+          "playerId": "5085031",
+          "name": "Roman Marchetti",
+          "position": "LB",
+          "jersey": 57,
+          "status": "Out"
+        },
+        {
+          "playerId": null,
+          "name": "Taylor \"Taybo\" Johnson",
+          "position": "LB",
+          "jersey": 50,
+          "status": "Out"
+        },
+        {
+          "playerId": "5084658",
+          "name": "Terrell Anderson",
+          "position": "WR",
+          "jersey": 9,
+          "status": "Out"
+        },
+        {
+          "playerId": "5166804",
+          "name": "Trestin Castro",
+          "position": "S",
+          "jersey": 37,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858534",
       "kickoff": "2026-11-21T23:15:00.000Z",
       "opponentId": "120",

@@ -10,8 +10,8 @@
       "opponentName": "Mississippi State",
       "source": "SEC",
       "sourceUrl": "https://www.secsports.com/fbreports",
-      "reportAt": "2026-11-25T01:10:00.000Z",
-      "checkedAt": "2026-11-25T14:34:34.822Z",
+      "reportAt": "2026-11-26T01:10:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.990Z",
       "final": false,
       "players": [
         {
@@ -33,7 +33,7 @@
           "name": "Caleb Cunningham",
           "position": "WR",
           "jersey": 3,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5079647",
@@ -54,7 +54,7 @@
           "name": "Deuce Knight",
           "position": "QB",
           "jersey": 2,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "4870765",
@@ -89,14 +89,14 @@
           "name": "Johntay Cook II",
           "position": "WR",
           "jersey": 0,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5079400",
           "name": "Kam Franklin",
           "position": "DE",
           "jersey": 5,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5102910",
@@ -131,14 +131,14 @@
           "name": "Patrick Kutas",
           "position": "OL",
           "jersey": 75,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "4870700",
           "name": "Sharif Denson",
           "position": "S",
           "jersey": 7,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5214395",

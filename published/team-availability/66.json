@@ -4,6 +4,40 @@
   "teamId": "66",
   "reports": [
     {
+      "gameId": "401856878",
+      "kickoff": "2026-11-28T19:00:00.000Z",
+      "opponentId": "2306",
+      "opponentName": "Kansas State",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-26T03:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.009Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4875853",
+          "name": "Cody Jackson",
+          "position": "WR",
+          "jersey": 2,
+          "status": "Out"
+        },
+        {
+          "playerId": "5140620",
+          "name": "Connor Moberly",
+          "position": "QB",
+          "jersey": 5,
+          "status": "Out"
+        },
+        {
+          "playerId": "5154698",
+          "name": "Ka'Mori Moore",
+          "position": "DT",
+          "jersey": 95,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856869",
       "kickoff": "2026-11-20T23:00:00.000Z",
       "opponentId": "2116",

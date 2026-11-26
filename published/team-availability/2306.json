@@ -4,6 +4,68 @@
   "teamId": "2306",
   "reports": [
     {
+      "gameId": "401856878",
+      "kickoff": "2026-11-28T19:00:00.000Z",
+      "opponentId": "66",
+      "opponentName": "Iowa State",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-26T03:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.009Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "4870857",
+          "name": "Avery Johnson",
+          "position": "QB",
+          "jersey": 2,
+          "status": "Out"
+        },
+        {
+          "playerId": "5121993",
+          "name": "Ben Osueke",
+          "position": "CB",
+          "jersey": 47,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5164321",
+          "name": "Dillon Duff",
+          "position": "QB",
+          "jersey": 10,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5384689",
+          "name": "Eli Jackson",
+          "position": "DT",
+          "jersey": 88,
+          "status": "Out"
+        },
+        {
+          "playerId": "5219394",
+          "name": "Holden Bass",
+          "position": "DT",
+          "jersey": 75,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5209749",
+          "name": "Sawyer Schilke",
+          "position": "LB",
+          "jersey": 26,
+          "status": "Out"
+        },
+        {
+          "playerId": "5189028",
+          "name": "Zashon Rich",
+          "position": "CB",
+          "jersey": 25,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401856865",
       "kickoff": "2026-11-22T00:00:00.000Z",
       "opponentId": "12",

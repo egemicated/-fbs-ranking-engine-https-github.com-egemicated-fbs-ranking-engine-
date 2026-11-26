@@ -4,6 +4,138 @@
   "teamId": "213",
   "reports": [
     {
+      "gameId": "401858539",
+      "kickoff": "2026-11-28T20:30:00.000Z",
+      "opponentId": "120",
+      "opponentName": "Maryland",
+      "source": "Big Ten",
+      "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
+      "reportAt": "2026-11-26T01:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:57.896Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5195702",
+          "name": "Alex Tatsch",
+          "position": "LB",
+          "jersey": 25,
+          "status": "Out"
+        },
+        {
+          "playerId": "4899484",
+          "name": "Andrew Rappleyea",
+          "position": "TE",
+          "jersey": 87,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5148535",
+          "name": "Brett Eskildsen",
+          "position": "WR",
+          "jersey": 4,
+          "status": "Doubtful"
+        },
+        {
+          "playerId": "5171684",
+          "name": "Brock Riker",
+          "position": "OL",
+          "jersey": 51,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5081877",
+          "name": "Caleb Bacon",
+          "position": "DE",
+          "jersey": 10,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5121541",
+          "name": "Cam Wallace",
+          "position": "RB",
+          "jersey": 26,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5077502",
+          "name": "Carson Hansen",
+          "position": "RB",
+          "jersey": 21,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5079496",
+          "name": "Donnie Harbour",
+          "position": "OL",
+          "jersey": 79,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141548",
+          "name": "Jahmir Joseph",
+          "position": "CB",
+          "jersey": 0,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5110454",
+          "name": "James Peoples",
+          "position": "RB",
+          "jersey": 1,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141525",
+          "name": "Koby Howard",
+          "position": "WR",
+          "jersey": 6,
+          "status": "Out"
+        },
+        {
+          "playerId": "5291142",
+          "name": "Lucas Tenbrock",
+          "position": "P",
+          "jersey": 96,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5141483",
+          "name": "Max Granville",
+          "position": "DE",
+          "jersey": 18,
+          "status": "Out"
+        },
+        {
+          "playerId": "4921242",
+          "name": "Trevor Buhr",
+          "position": "OL",
+          "jersey": 70,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "4899469",
+          "name": "Ty Blanding",
+          "position": "DT",
+          "jersey": 39,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5230372",
+          "name": "Tyler Armstead",
+          "position": "CB",
+          "jersey": 35,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5100946",
+          "name": "Zion Tracy",
+          "position": "CB",
+          "jersey": 7,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401858532",
       "kickoff": "2026-11-21T20:30:00.000Z",
       "opponentId": "164",

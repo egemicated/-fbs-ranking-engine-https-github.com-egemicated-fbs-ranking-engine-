@@ -4,6 +4,96 @@
   "teamId": "99",
   "reports": [
     {
+      "gameId": "401856758",
+      "kickoff": "2026-11-28T17:45:00.000Z",
+      "opponentId": "8",
+      "opponentName": "Arkansas",
+      "source": "SEC",
+      "sourceUrl": "https://www.secsports.com/fbreports",
+      "reportAt": "2026-11-26T01:10:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.990Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5207618",
+          "name": "Aidan Anding",
+          "position": "CB",
+          "jersey": 23,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5201881",
+          "name": "Charles Ross II",
+          "position": "LB",
+          "jersey": 26,
+          "status": "Out"
+        },
+        {
+          "playerId": "5218723",
+          "name": "Dashawn Spears",
+          "position": "S",
+          "jersey": 10,
+          "status": "Out"
+        },
+        {
+          "playerId": "5114311",
+          "name": "Jackson Harris",
+          "position": "WR",
+          "jersey": 4,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5121334",
+          "name": "Jayce Brown",
+          "position": "WR",
+          "jersey": 1,
+          "status": "Out"
+        },
+        {
+          "playerId": "5209113",
+          "name": "Jhase Thomas",
+          "position": "S",
+          "jersey": 28,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5197034",
+          "name": "Malachi Thomas",
+          "position": "TE",
+          "jersey": 12,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5149484",
+          "name": "Phillip Wright III",
+          "position": "WR",
+          "jersey": 15,
+          "status": "Out"
+        },
+        {
+          "playerId": "5161801",
+          "name": "Richard Anderson",
+          "position": "DT",
+          "jersey": 88,
+          "status": "Out"
+        },
+        {
+          "playerId": "4871034",
+          "name": "Whit Weeks",
+          "position": "LB",
+          "jersey": 7,
+          "status": "Out"
+        },
+        {
+          "playerId": "5141697",
+          "name": "Winston Watkins Jr.",
+          "position": "WR",
+          "jersey": 6,
+          "status": "Questionable"
+        }
+      ]
+    },
+    {
       "gameId": "401856754",
       "kickoff": "2026-11-21T20:30:00.000Z",
       "opponentId": "2633",

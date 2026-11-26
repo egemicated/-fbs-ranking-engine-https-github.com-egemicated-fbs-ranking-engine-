@@ -4,6 +4,75 @@
   "teamId": "38",
   "reports": [
     {
+      "gameId": "401856875",
+      "kickoff": "2026-11-28T19:00:00.000Z",
+      "opponentId": "2116",
+      "opponentName": "UCF",
+      "source": "Big 12",
+      "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
+      "reportAt": "2026-11-26T03:00:00.000Z",
+      "checkedAt": "2026-11-26T14:35:58.009Z",
+      "final": false,
+      "players": [
+        {
+          "playerId": "5082663",
+          "name": "Brady Kopetz",
+          "position": "TE",
+          "jersey": 86,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5281120",
+          "name": "Braylon Edwards",
+          "position": "DB",
+          "jersey": 26,
+          "status": "Out"
+        },
+        {
+          "playerId": "5148610",
+          "name": "Cree Thomas",
+          "position": "DB",
+          "jersey": 20,
+          "status": "Out"
+        },
+        {
+          "playerId": "5152815",
+          "name": "Danny Scudero",
+          "position": "WR",
+          "jersey": 18,
+          "status": "Out"
+        },
+        {
+          "playerId": "4870862",
+          "name": "Liona Lefau",
+          "position": "LB",
+          "jersey": 17,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5078018",
+          "name": "Naeten Mitchell",
+          "position": "DB",
+          "jersey": 4,
+          "status": "Out"
+        },
+        {
+          "playerId": "4922985",
+          "name": "Randon Fontenette",
+          "position": "DB",
+          "jersey": 7,
+          "status": "Probable"
+        },
+        {
+          "playerId": "5092432",
+          "name": "Sam Gadie",
+          "position": "DE",
+          "jersey": 92,
+          "status": "Out"
+        }
+      ]
+    },
+    {
       "gameId": "401856867",
       "kickoff": "2026-11-21T17:00:00.000Z",
       "opponentId": "2132",
