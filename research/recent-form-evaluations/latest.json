@@ -5,9 +5,9 @@
   "frozenAt": "2026-11-16T14:53:35.000Z",
   "season": 2026,
   "status": "collecting-evidence",
-  "asOf": "2026-11-25T14:30:36.788Z",
-  "generatedAt": "2026-11-25T14:30:38.746Z",
-  "resultSourceHash": "396fc55aead582d5f1a350e204ea91bc9a3786cfea732599f60413540bd89e69",
+  "asOf": "2026-11-27T14:35:19.260Z",
+  "generatedAt": "2026-11-27T14:35:21.054Z",
+  "resultSourceHash": "f256f1e0769e26e1be48124463dc8e508b622fe6409fea227e8e5d1b3a11b461",
   "observationsRead": 4,
   "selectedForecasts": 59,
   "duplicateCheckpoints": 0,
@@ -53,10 +53,6 @@
       "reason": "awaiting-confirmed-final"
     },
     {
-      "gameId": "401856879",
-      "reason": "awaiting-confirmed-final"
-    },
-    {
       "gameId": "401856880",
       "reason": "awaiting-confirmed-final"
     },
@@ -78,10 +74,6 @@
     },
     {
       "gameId": "401858317",
-      "reason": "awaiting-confirmed-final"
-    },
-    {
-      "gameId": "401858536",
       "reason": "awaiting-confirmed-final"
     },
     {
@@ -241,34 +233,61 @@
       "reason": "awaiting-confirmed-final"
     }
   ],
-  "excluded": [],
+  "excluded": [
+    {
+      "gameId": "401858536",
+      "reason": "kickoff-changed",
+      "forecastKickoff": "2026-11-27T17:00:00.000Z",
+      "resultKickoff": "2026-11-27T17:08:00.000Z"
+    }
+  ],
   "scores": {
-    "games": 2,
+    "games": 3,
     "baseline": {
-      "correct": 1,
+      "correct": 2,
       "missed": 1,
       "even": 0,
-      "accuracy": 0.5,
-      "brier": 0.31094430415504865,
-      "logLoss": 0.8318087356060709
+      "accuracy": 0.6666666666666666,
+      "brier": 0.22017763687807393,
+      "logLoss": 0.6274990175427856
     },
     "challenger": {
-      "correct": 1,
+      "correct": 2,
       "missed": 1,
       "even": 0,
-      "accuracy": 0.5,
-      "brier": 0.29998532252938787,
-      "logLoss": 0.8046191940851166
+      "accuracy": 0.6666666666666666,
+      "brier": 0.21288731386371765,
+      "logLoss": 0.6094222367969145
     },
     "changedFavorites": 0,
     "challengerMinusBaseline": {
       "correct": 0,
       "accuracy": 0,
-      "brier": -0.01095898162566078,
-      "logLoss": -0.02718954152095432
+      "brier": -0.007290323014356281,
+      "logLoss": -0.018076780745871046
     }
   },
   "evaluated": [
+    {
+      "gameId": "401856879",
+      "home": "2641",
+      "away": "2628",
+      "neutral": false,
+      "seasonType": "regular",
+      "week": 13,
+      "kickoff": "2026-11-27T01:00:00.000Z",
+      "baselineCapturedAt": "2026-11-20T14:13:29.051Z",
+      "baselineProbability": 0.8034184588418217,
+      "challengerProbability": 0.8032989666209726,
+      "forecastCapturedAt": "2026-11-20T14:13:29.675Z",
+      "asOf": "2026-11-20T14:13:27.254Z",
+      "sourceHash": "0e0004014303ca595e0e456d59229749c094112d7c6d88ee02649e56b26bc93c",
+      "snapshotHash": "e28b48d559b8ddde703168997b86045be1178fed1b779f2a60f5b37ff7fcc9ec",
+      "resultKickoff": "2026-11-27T01:00:00.000Z",
+      "homePoints": 48,
+      "awayPoints": 27,
+      "outcome": 1
+    },
     {
       "gameId": "401866470",
       "home": "2199",
@@ -311,5 +330,5 @@
     }
   ],
   "interpretation": "Compare the same FBS vs. FBS outcomes from the first valid paired pregame forecast for each game. A 50% forecast receives half credit for accuracy. Brier score and log loss reward the probabilities themselves, with lower values better. Early summaries are descriptive.",
-  "reportSha256": "b58a192b21c6070882f166ca523bd2500cc10b038c78e196b72b826ec99fa476"
+  "reportSha256": "ed4b01a2c053fa80b9038964b46fab665135b0b54baf18de7abf221db308e474"
 }

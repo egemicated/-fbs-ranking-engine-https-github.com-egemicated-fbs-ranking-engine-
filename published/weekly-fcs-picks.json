@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "season": 2026,
-  "asOf": "2026-11-25T14:30:38.836Z",
+  "asOf": "2026-11-27T14:35:21.162Z",
   "source": {
     "provider": "cfbd",
-    "scheduleAsOf": "2026-11-25T14:30:32.157Z",
-    "rankingAsOf": "2026-11-25T14:30:36.788Z",
-    "snapshotHash": "e2237467849d8e22f61e33698c9c3dca21b28feed282ef254dea6968555848c5",
+    "scheduleAsOf": "2026-11-27T14:35:04.795Z",
+    "rankingAsOf": "2026-11-27T14:35:19.260Z",
+    "snapshotHash": "08f2ba5a60ca0a70238b7dc04ef0da276b2aad69e6792294a2f6319af77e457e",
     "modelVersion": "0.2.0",
     "probabilityScale": 6.74434303402901,
     "calibrated": true,
