@@ -10,8 +10,8 @@
       "opponentName": "Maryland",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-26T01:00:00.000Z",
-      "checkedAt": "2026-11-26T14:35:57.896Z",
+      "reportAt": "2026-11-27T01:00:00.000Z",
+      "checkedAt": "2026-11-27T14:37:55.648Z",
       "final": false,
       "players": [
         {
@@ -75,7 +75,7 @@
           "name": "Jahmir Joseph",
           "position": "CB",
           "jersey": 0,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5110454",
@@ -124,7 +124,7 @@
           "name": "Tyler Armstead",
           "position": "CB",
           "jersey": 35,
-          "status": "Questionable"
+          "status": "Doubtful"
         },
         {
           "playerId": "5100946",

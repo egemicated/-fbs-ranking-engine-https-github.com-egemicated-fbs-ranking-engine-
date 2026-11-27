@@ -10,8 +10,8 @@
       "opponentName": "West Virginia",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-26T03:00:00.000Z",
-      "checkedAt": "2026-11-26T14:35:58.009Z",
+      "reportAt": "2026-11-27T03:00:00.000Z",
+      "checkedAt": "2026-11-27T14:37:57.001Z",
       "final": false,
       "players": [
         {
@@ -19,7 +19,7 @@
           "name": "Braden Pegan",
           "position": "WR",
           "jersey": 7,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5084830",
@@ -33,7 +33,7 @@
           "name": "Marcus Wimberly",
           "position": "S",
           "jersey": 24,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5229934",
@@ -54,7 +54,7 @@
           "name": "Wayshawn Parker",
           "position": "RB",
           "jersey": 1,
-          "status": "Questionable"
+          "status": "Probable"
         }
       ]
     },

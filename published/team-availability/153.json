@@ -10,8 +10,8 @@
       "opponentName": "NC State",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-26T01:00:00.000Z",
-      "checkedAt": "2026-11-26T14:35:58.055Z",
+      "reportAt": "2026-11-27T01:00:00.000Z",
+      "checkedAt": "2026-11-27T14:37:57.702Z",
       "final": false,
       "players": [
         {
@@ -20,6 +20,13 @@
           "position": "DB",
           "jersey": 3,
           "status": "Out"
+        },
+        {
+          "playerId": "4592532",
+          "name": "Billy Edwards Jr.",
+          "position": "QB",
+          "jersey": 9,
+          "status": "Questionable"
         },
         {
           "playerId": "5159086",

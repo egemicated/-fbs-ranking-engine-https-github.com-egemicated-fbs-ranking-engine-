@@ -10,8 +10,8 @@
       "opponentName": "Michigan",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-26T01:00:00.000Z",
-      "checkedAt": "2026-11-26T14:35:57.896Z",
+      "reportAt": "2026-11-27T01:00:00.000Z",
+      "checkedAt": "2026-11-27T14:37:55.648Z",
       "final": false,
       "players": [
         {
@@ -33,7 +33,7 @@
           "name": "Deshawn Stewart",
           "position": "S",
           "jersey": 29,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5151892",
@@ -54,6 +54,13 @@
           "name": "Jay Timmons",
           "position": "CB",
           "jersey": 25,
+          "status": "Questionable"
+        },
+        {
+          "playerId": "5150710",
+          "name": "Jermaine Mathews Jr.",
+          "position": "CB",
+          "jersey": 7,
           "status": "Questionable"
         },
         {

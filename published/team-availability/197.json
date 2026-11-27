@@ -10,8 +10,8 @@
       "opponentName": "Kansas",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-26T03:00:00.000Z",
-      "checkedAt": "2026-11-26T14:35:58.009Z",
+      "reportAt": "2026-11-27T03:00:00.000Z",
+      "checkedAt": "2026-11-27T14:37:57.001Z",
       "final": false,
       "players": [
         {
@@ -20,6 +20,13 @@
           "position": "TE",
           "jersey": 44,
           "status": "Out"
+        },
+        {
+          "playerId": "5103954",
+          "name": "Harrison Dempsey",
+          "position": "S",
+          "jersey": 47,
+          "status": "Questionable"
         },
         {
           "playerId": "4715344",
@@ -33,7 +40,7 @@
           "name": "Miles Coleman",
           "position": "WR",
           "jersey": 1,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5092199",

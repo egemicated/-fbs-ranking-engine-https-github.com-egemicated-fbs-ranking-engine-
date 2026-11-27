@@ -10,16 +10,16 @@
       "opponentName": "Texas Tech",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-26T03:00:00.000Z",
-      "checkedAt": "2026-11-26T14:35:58.009Z",
-      "final": false,
+      "reportAt": "2026-11-26T23:30:00.000Z",
+      "checkedAt": "2026-11-27T14:37:57.001Z",
+      "final": true,
       "players": [
         {
           "playerId": "5101112",
           "name": "Ansel Din-Mbuh",
           "position": "DT",
           "jersey": 92,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5280795",
@@ -47,7 +47,7 @@
           "name": "Kari Ashley",
           "position": "TE",
           "jersey": 81,
-          "status": "Questionable"
+          "status": "Game Time Decision"
         },
         {
           "playerId": "5147339",
@@ -61,7 +61,7 @@
           "name": "Lafayette Kaiuway",
           "position": "TE",
           "jersey": 12,
-          "status": "Probable"
+          "status": "Available"
         }
       ]
     },

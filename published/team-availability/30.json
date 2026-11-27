@@ -10,8 +10,8 @@
       "opponentName": "UCLA",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-26T01:00:00.000Z",
-      "checkedAt": "2026-11-26T14:35:57.896Z",
+      "reportAt": "2026-11-27T01:00:00.000Z",
+      "checkedAt": "2026-11-27T14:37:55.648Z",
       "final": false,
       "players": [
         {
@@ -19,7 +19,7 @@
           "name": "Braylan Shelby",
           "position": "DE",
           "jersey": 10,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5148664",
@@ -33,7 +33,7 @@
           "name": "GianCarlo Rufo",
           "position": "LB",
           "jersey": 58,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5146426",

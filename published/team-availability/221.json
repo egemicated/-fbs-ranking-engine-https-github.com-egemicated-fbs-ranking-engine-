@@ -10,8 +10,8 @@
       "opponentName": "California",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-26T04:00:00.000Z",
-      "checkedAt": "2026-11-26T14:35:58.055Z",
+      "reportAt": "2026-11-27T04:00:00.000Z",
+      "checkedAt": "2026-11-27T14:37:57.702Z",
       "final": false,
       "players": [
         {
@@ -33,7 +33,7 @@
           "name": "Damon Ferguson Jr.",
           "position": "RB",
           "jersey": 26,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "5296040",
@@ -54,7 +54,14 @@
           "name": "Jordan Fields",
           "position": "TE",
           "jersey": 49,
-          "status": "Doubtful"
+          "status": "Out"
+        },
+        {
+          "playerId": "4683234",
+          "name": "La’Vell Wright",
+          "position": "RB",
+          "jersey": 11,
+          "status": "Out"
         },
         {
           "playerId": "5208095",
@@ -96,7 +103,7 @@
           "name": "Shadarian Harrison",
           "position": "DB",
           "jersey": 21,
-          "status": "Questionable"
+          "status": "Out"
         },
         {
           "playerId": "5196024",

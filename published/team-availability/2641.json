@@ -10,30 +10,37 @@
       "opponentName": "TCU",
       "source": "Big 12",
       "sourceUrl": "https://big12sports.com/sports/2025/8/14/FBreporting.aspx",
-      "reportAt": "2026-11-26T03:00:00.000Z",
-      "checkedAt": "2026-11-26T14:35:58.009Z",
-      "final": false,
+      "reportAt": "2026-11-26T23:30:00.000Z",
+      "checkedAt": "2026-11-27T14:37:57.001Z",
+      "final": true,
       "players": [
         {
           "playerId": "5075540",
           "name": "Brice Pollock",
           "position": "CB",
           "jersey": 14,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5219124",
           "name": "Bryce Butler",
           "position": "DL",
           "jersey": 92,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5156431",
           "name": "Cash Cleveland",
           "position": "OL",
           "jersey": 52,
-          "status": "Probable"
+          "status": "Available"
+        },
+        {
+          "playerId": "5205094",
+          "name": "Connor Carty",
+          "position": "OL",
+          "jersey": 61,
+          "status": "Game Time Decision"
         },
         {
           "playerId": "4916941",
@@ -54,7 +61,7 @@
           "name": "Kenny Johnson",
           "position": "WR",
           "jersey": 2,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5280093",
@@ -75,7 +82,7 @@
           "name": "Micah Hudson",
           "position": "WR",
           "jersey": 1,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5077501",

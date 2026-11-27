@@ -10,8 +10,8 @@
       "opponentName": "Penn State",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-26T01:00:00.000Z",
-      "checkedAt": "2026-11-26T14:35:57.896Z",
+      "reportAt": "2026-11-27T01:00:00.000Z",
+      "checkedAt": "2026-11-27T14:37:55.648Z",
       "final": false,
       "players": [
         {
@@ -19,7 +19,7 @@
           "name": "Amory Hills",
           "position": "OL",
           "jersey": 77,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "4872721",
@@ -40,7 +40,7 @@
           "name": "Daniel Wingate",
           "position": "LB",
           "jersey": 1,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5178090",
@@ -75,7 +75,7 @@
           "name": "Jordan Scruggs",
           "position": "DB",
           "jersey": 6,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5327246",
@@ -89,7 +89,7 @@
           "name": "Lavain Scruggs",
           "position": "DB",
           "jersey": 2,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5213305",
@@ -103,7 +103,7 @@
           "name": "Terrez Worthy",
           "position": "RB",
           "jersey": 26,
-          "status": "Questionable"
+          "status": "Probable"
         },
         {
           "playerId": "5146851",

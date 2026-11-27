@@ -10,8 +10,8 @@
       "opponentName": "Purdue",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-26T01:00:00.000Z",
-      "checkedAt": "2026-11-26T14:35:57.896Z",
+      "reportAt": "2026-11-27T01:00:00.000Z",
+      "checkedAt": "2026-11-27T14:37:55.648Z",
       "final": false,
       "players": [
         {
@@ -19,7 +19,7 @@
           "name": "A.J. Harris",
           "position": "DB",
           "jersey": 4,
-          "status": "Probable"
+          "status": "Out"
         },
         {
           "playerId": "5146680",
@@ -75,7 +75,7 @@
           "name": "Rolijah Hardy",
           "position": "LB",
           "jersey": 5,
-          "status": "Probable"
+          "status": "Available"
         }
       ]
     },

@@ -10,8 +10,8 @@
       "opponentName": "Auburn",
       "source": "SEC",
       "sourceUrl": "https://www.secsports.com/fbreports",
-      "reportAt": "2026-11-26T01:10:00.000Z",
-      "checkedAt": "2026-11-26T14:35:58.990Z",
+      "reportAt": "2026-11-27T01:10:00.000Z",
+      "checkedAt": "2026-11-27T14:37:56.770Z",
       "final": false,
       "players": [
         {
@@ -40,14 +40,14 @@
           "name": "Desmond Umeozulu",
           "position": "LB",
           "jersey": 9,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5293575",
           "name": "Fatutoa Henry",
           "position": "DL",
           "jersey": 14,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5079317",
@@ -75,7 +75,7 @@
           "name": "Luke Metz",
           "position": "LB",
           "jersey": 4,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5276934",

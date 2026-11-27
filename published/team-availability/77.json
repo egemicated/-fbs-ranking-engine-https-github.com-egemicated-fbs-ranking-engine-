@@ -10,8 +10,8 @@
       "opponentName": "Illinois",
       "source": "Big Ten",
       "sourceUrl": "https://bigten.org/sports/2026/9/10/FB_Availability_Reports.aspx",
-      "reportAt": "2026-11-26T01:00:00.000Z",
-      "checkedAt": "2026-11-26T14:35:57.896Z",
+      "reportAt": "2026-11-27T01:00:00.000Z",
+      "checkedAt": "2026-11-27T14:37:55.648Z",
       "final": false,
       "players": [
         {
@@ -26,7 +26,7 @@
           "name": "Brennan Saxe",
           "position": "WR",
           "jersey": 16,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "4812341",
@@ -47,7 +47,7 @@
           "name": "Deuce McGuire",
           "position": "OL",
           "jersey": 73,
-          "status": "Probable"
+          "status": "Available"
         },
         {
           "playerId": "5195388",
@@ -61,14 +61,14 @@
           "name": "Jack Sadowsky V",
           "position": "LB",
           "jersey": 45,
-          "status": "Doubtful"
+          "status": "Out"
         },
         {
           "playerId": "4923270",
           "name": "Josh Fussell",
           "position": "DB",
           "jersey": 13,
-          "status": "Questionable"
+          "status": "Doubtful"
         },
         {
           "playerId": "5291097",

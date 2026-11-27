@@ -10,8 +10,8 @@
       "opponentName": "Miami",
       "source": "ACC",
       "sourceUrl": "https://theacc.com/sports/2025/8/28/availability-reporting-football.aspx",
-      "reportAt": "2026-11-26T01:00:00.000Z",
-      "checkedAt": "2026-11-26T14:35:58.055Z",
+      "reportAt": "2026-11-27T01:00:00.000Z",
+      "checkedAt": "2026-11-27T14:37:57.702Z",
       "final": false,
       "players": [
         {
@@ -61,7 +61,7 @@
           "name": "Micah Amedee",
           "position": "DL",
           "jersey": 59,
-          "status": "Questionable"
+          "status": "Available"
         },
         {
           "playerId": "5157579",
